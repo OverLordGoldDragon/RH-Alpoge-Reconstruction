@@ -77,7 +77,7 @@ The formal check of the archive is the one made by the Lean and Mathlib communit
 
 | Document | Version | SHA-256 |
 |---|---|---|
-| `RH_Route_Notes.tex` | 21 November 2026 (end-to-end reconciliation pass), 66 pages | `d2109cb9a68cb4dd2e72a65871e41220645bc538684c4bb9ab99884568b0868d` |
+| `RH_Route_Notes.tex` | 21 November 2026 (end-to-end reconciliation pass), 66 pages | `12d18bb0b00c507ecf7cdb1e597266e4fba8fc3254d3ae44f3d29571c6d18d80` |
 | `RH_Route_Notes.pdf` | compiled from the source above on 21 November 2026 | `7a403dc745cad5d665bf78dddb1cacf2936d3b94e8434eab051506cad6e397cd` |
 | `audit/Post_Closure_Synthesis.pdf` | post-closure-wave synthesis, 21 November 2026 | `0c7972aa3b155af86255865830b6dda90cce3e498c0cfaaa3610ab27ab56a4fc` |
 | `audit/Post_Closure_Internal_Residuals.md` | 21 November 2026 | `7fdc8a6f58111cb168e67630921dd659e36896c56d357e120555c8478e588e4a` |
