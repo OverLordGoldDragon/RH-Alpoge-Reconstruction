@@ -2,7 +2,7 @@
 
 This repository contains a reconstruction, in conventional mathematical language, of the argument in the Lean archive that Levent Alpöge released on 20 November 2026 together with a four-page note ([Alpöge, *Remark*](https://alpo.ge/remark.pdf)). In that note, Alpöge states his belief that he has, working with Claude, discovered a proof of the Riemann hypothesis, and that the method also gives the generalized Riemann hypothesis for Dirichlet $L$-functions. On 21 November 2026, the Lean and Mathlib communities published a joint statement, endorsed by the Lean FRO and the Mathlib Initiative, certifying that both the statement and the proof of the Riemann hypothesis in Alpöge's Lean library are correct ([Lean community blog, *Lean verification of the Riemann Hypothesis*](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)).
 
-The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. I am actively working through it and hope that the fact that the manuscript here is currently less than 70 pages provides some relief as we collectively process these astonishing results. All priority of the results belongs to Levent and Claude. Please note that the reconstruction here still has a few small gaps, each confined to one of the isolated internal packages listed in RECONSTRUCTION_STATUS.md, yet the architecture of the argument and all of its major mechanisms  fully reconstructed.
+The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. I am actively working through it and hope that the fact that the manuscript here is currently fewer than 70 pages provides some relief as we collectively process these astonishing results. All priority of the results belongs to Levent and Claude. Please note that the reconstruction here still has a few small gaps, each confined to one of the isolated internal packages listed in [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md), yet the architecture of the argument and all of its major mechanisms have been fully reconstructed. I am actively working to clean up the manuscript so that it reads more clearly. My ultimate hope is that this makes the process of human verification easier for the community.
 
 ## What this repository contains
 
@@ -19,7 +19,7 @@ The argument, its proof ideas and the formal Lean proof archive originate with *
 
 This repository concerns a separate piece of work, the **independent reconstruction, organization and audit** of that argument in conventional mathematical language. The manuscript is by **Jimmie Adriazola** (School of Mathematical and Statistical Sciences and Simon A. Levin Mathematical, Computational and Modeling Sciences Center, Arizona State University). As its acknowledgements state, Claude (Anthropic) read the Lean archive, drafted the proofs and ran the computations of the manuscript under the author's direction. The audit reports in [`audit/`](audit/) were prepared by Claude as working reports for the author.
 
-Reconstruction is not discovery. Nothing in this repository should be read as a claim of authorship of the argument itself.
+To be clear, reconstruction is not discovery, and nothing in this repository should be read as a claim of authorship of the argument itself.
 
 ## Current status
 
