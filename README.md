@@ -46,7 +46,7 @@ In more detail.
 | [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md) | The exact archive reconstructed (tarball hash, toolchain, Mathlib revision, final theorem), and the versions of the manuscript and audit synthesis. |
 | [`audit/`](audit/) | The current audit synthesis and a small set of reports documenting the major mechanisms and the main corrections. |
 | [`CITATION.cff`](CITATION.cff) | Citation metadata. |
-| [`LICENSE`](LICENSE) | License placeholder (see the file). |
+| [`LICENSE`](LICENSE) | Creative Commons Attribution 4.0 International (CC BY 4.0). It covers the manuscript, the documentation and the audit reports in this repository. The Lean archive is not part of this repository and is not covered. |
 
 ## Building the manuscript
 

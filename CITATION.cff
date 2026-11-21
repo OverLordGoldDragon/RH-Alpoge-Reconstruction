@@ -24,6 +24,9 @@ authors:
       Mathematical, Computational and Modeling Sciences Center, Arizona State
       University
 date-released: "2026-11-21"
+license: CC-BY-4.0
+repository-code: "https://github.com/jimjamzola/RH-Alpoge-Reconstruction"
+url: "https://github.com/jimjamzola/RH-Alpoge-Reconstruction"
 keywords:
   - Riemann hypothesis
   - Dirichlet L-functions
