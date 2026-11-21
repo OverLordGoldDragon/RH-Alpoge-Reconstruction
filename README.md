@@ -23,7 +23,7 @@ To be clear, reconstruction is not discovery, and nothing in this repository sho
 
 ## Current status
 
-In short, the mathematical architecture of the argument has been reconstructed end to end, and every major mechanism has been reconstructed in ordinary mathematics. A finite set of isolated internal proof packages remains under audit, together with a separate literature-verification boundary. No completed reconstruction pass has identified a mathematical gap, but the present manuscript should not yet be described as an independent verification of every component of the formal proof.
+In short, the mathematical architecture of the argument has been reconstructed end to end, and every major mechanism has been reconstructed in ordinary mathematics. A finite set of isolated internal proof packages remains under audit, together with a separate literature-verification boundary. No completed reconstruction pass has identified a mathematical gap, and the remaining work is to extend the hand reconstruction through the internal packages listed below.
 
 In more detail.
 
@@ -31,7 +31,7 @@ In more detail.
 - **Major mechanisms: reconstructed.** Each major mechanism of the archive has been written in ordinary mathematics (see [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md), Section 2).
 - **Remaining internal packages: seven, plus small leaves.** Six medium packages and one small-to-medium package remain under audit. Each is a set of Lean theorems whose proofs exist in the archive and whose proof bodies have not yet been read down to classical statements or to named published theorems. For each one the statement, the place of use, the top of the proof and the mechanism are known. Two compatibility checks of constants are open inside these packages.
 - **Literature verification: separate and not yet done.** The published theorems that the archive uses form a separate boundary. Each needs a comparison with its source in both directions, and that comparison has not been carried out.
-- **Kernel replay: not yet done.** The archive has not been built and replayed in Lean's kernel as part of this work, and the axioms of its final theorem have not been printed. A textual audit of the source (no `axiom`, `sorry`, `admit`, `native_decide`, `opaque` or kernel-disabling option in any of its 175,187 files) is recorded in [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md). A textual audit is not a kernel check.
+- **Formal verification: done by the Lean and Mathlib communities.** On 21 November 2026, the Lean and Mathlib communities certified that both the statement and the proof of the Riemann hypothesis in Alpöge's Lean library are correct ([joint statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)). This repository did not build or replay the archive itself. A textual audit of the source (no `axiom`, `sorry`, `admit`, `native_decide`, `opaque` or kernel-disabling option in any of its 175,187 files) is recorded in [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md).
 
 ## Files
 
@@ -65,6 +65,6 @@ Specific scrutiny is more useful than a request to check the whole proof. The ve
 - **Specialists in a published area** can take rows of [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md). The priority checks V1 to V20 are where a mismatch between the archive's form of a published theorem and the theorem in print would matter most. Useful work includes confirming or correcting a source, and checking both directions, that the archive's statement is not stronger than the published one and that the published hypotheses hold where the archive applies it. Entries marked `source match pending` most need a literature match.
 - **Specialists in the mechanisms of an internal package** can take a package of [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md), Section 3. For example, local integral $p$-adic Hodge theory and finite flat group schemes (PC-1), arithmetic intersection theory on Shimura varieties (PC-2), Wach modules and $(\varphi,\Gamma)$-modules (PC-3), local theta correspondence and the Weil representation (PC-4), and lattice counting and discrete series (PC-5). Each package names its earliest unread proof and its expected mechanism.
 - **Analytic number theorists** can check Sections 2 and 7 to 9 of the manuscript, which are proved there from classical statements. The quoted forms (C2), (C4), (C5) and the derivation of (C7) from Gallagher's theorem have not been compared with their sources.
-- **Lean users with large machines** can attempt the kernel replay described in [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md), Section 4, and report the output of `#print axioms riemannHypothesis`.
+- **Lean users** who want to reproduce the formal check can follow the replay instructions in [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md), Section 4. The Lean community's [joint statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/) describes how the proof was checked.
 
 Please report findings as GitHub issues, naming the manuscript section, the table row or package ID, and the source you compared against.
