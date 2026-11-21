@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+message: >-
+  If you cite this reconstruction, please cite it as below. The argument and
+  the formal Lean proof archive that it reconstructs originate with Levent
+  Alpöge and Claude (Anthropic); please cite Alpöge's note for the argument
+  itself (see "references").
+type: software
+title: >-
+  An End-to-End Reconstruction of the Alpöge–Claude Route to the Riemann
+  Hypothesis
+abstract: >-
+  A reconstruction, in conventional mathematical language, of the Lean proof
+  archive released by Levent Alpöge on November 20, 2026. The architecture and
+  major mechanisms of the argument are reconstructed end to end. A finite set
+  of isolated internal proof packages remains under audit, together with a
+  separate literature-verification boundary. The reconstruction is not an
+  independent verification of every component of the formal proof.
+authors:
+  - family-names: Adriazola
+    given-names: Jimmie
+    email: jimmie.adriazola@asu.edu
+    affiliation: >-
+      School of Mathematical and Statistical Sciences and Simon A. Levin
+      Mathematical, Computational and Modeling Sciences Center, Arizona State
+      University
+date-released: "2026-11-21"
+keywords:
+  - Riemann hypothesis
+  - Dirichlet L-functions
+  - Landau's theorem
+  - Stepanov's method
+  - slope inequality
+  - theta lifts
+  - formal verification
+references:
+  - type: report
+    title: Remark
+    authors:
+      - family-names: Alpöge
+        given-names: Levent
+    date-published: "2026-11-20"
+    url: "https://alpo.ge/remark.pdf"

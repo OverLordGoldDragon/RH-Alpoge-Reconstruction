@@ -1,0 +1,62 @@
+# TeX auxiliary and intermediate files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.dvi
+*-blx.bib
+_minted*/
+build/
+build.log
+
+# The public PDFs are tracked. Do not add a rule that ignores *.pdf.
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+*.swp
+*.swo
+*~
+\#*\#
+.#*
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Caches
+__pycache__/
+*.pyc
+.cache/
+.ipynb_checkpoints/
+
+# Lean build artifacts, if anyone unpacks the archive here
+.lake/
+*.olean
+*.ilean
+lean.tar.gz*
+
+# Audit scratch files
+_to_delete/
+untitled folder*/
+*_Working_Notes.md
+HANDOFF*.md
+scratch/
+tmp/
