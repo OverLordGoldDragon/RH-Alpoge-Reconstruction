@@ -13,7 +13,7 @@ The mathematical architecture of the argument has been reconstructed end to end,
 | Has any completed audit pass identified a mathematical gap? | No. None of the completed passes identified a mathematical gap, circular dependency, vacuous existence assumption, incompatible hypothesis, failed constant inequality or normalization mismatch. Seven hidden dependencies were found and recorded, and two constant checks remain open (Section 4). |
 | Is the reconstruction closed down to classical statements and named external theorems? | Not yet. Seven internal packages (PC-1 to PC-7) and five groups of small leaves (SL-1 to SL-5) remain (Section 3). |
 | Have the external theorems been checked against the literature? | Not yet. This is a separate task ([`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md)). |
-| Has the archive been replayed in Lean's kernel? | Not in this work (see [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md)). |
+| Has the archive been checked in Lean? | Yes. On 21 November 2026 the Lean and Mathlib communities certified that both the statement and the proof of the Riemann hypothesis in the archive are correct ([joint statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)). This repository did not build the archive itself (see [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md)). |
 
 The remaining internal packages are not gaps. Each is a set of Lean theorems of the archive whose proofs exist and have not yet been read down to classical statements or to named published theorems. The archive contains no `axiom`, `sorry`, `opaque` or `native_decide` in any of its 175,187 files, and its final theorem has no hypotheses. For each package the statement, the place of use, the top of the proof and the mechanism are known, and the earliest unread proof is located.
 
@@ -114,9 +114,9 @@ None of these involves a new mechanism.
 
 ## 5. What this status does not claim
 
-- It does not claim that the Riemann hypothesis is proved.
+- It is not yet a complete written proof. The internal packages of Section 3 still have to be written out in ordinary mathematics.
 - It is not an independent verification of the remaining internal packages, of the published theorems that the archive quotes, or of the archive's own Lean proofs of statements of published type.
-- It is not a kernel check. The reconstruction was done by reading the Lean source as text.
+- It is not itself a Lean check. The reconstruction was done by reading the Lean source as text, and the formal check of the archive is the one certified by the Lean and Mathlib communities ([joint statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)).
 - It does not certify that every internal definition of the archive means what its name suggests, beyond the definitions the manuscript states in ordinary terms.
 
 ## 6. Tasks that remain outside the reconstruction
@@ -124,5 +124,4 @@ None of these involves a new mechanism.
 1. Closure of the internal packages of Section 3.
 2. Comparison of each external theorem with its published source in both directions ([`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md)), including locating the term behind each of the 54 `Fact` instances on the route.
 3. The archive's own Lean proofs of published theorems (called Layer 3 in the audit).
-4. A replay of the archive in Lean's kernel with a report of the axioms of its final theorem.
-5. Refereeing of Sections 7 to 9 of the manuscript.
+4. Refereeing of Sections 7 to 9 of the manuscript.

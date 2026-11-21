@@ -13,8 +13,9 @@ abstract: >-
   archive released by Levent Alpöge on November 20, 2026. The architecture and
   major mechanisms of the argument are reconstructed end to end. A finite set
   of isolated internal proof packages remains under audit, together with a
-  separate literature-verification boundary. The reconstruction is not an
-  independent verification of every component of the formal proof.
+  separate literature-verification boundary. On November 21, 2026, the Lean
+  and Mathlib communities certified that both the statement and the proof in
+  the archive are correct.
 authors:
   - family-names: Adriazola
     given-names: Jimmie

@@ -166,5 +166,4 @@ These are comparisons or internal theorems. They should not be cited as places w
 ## 5. Separate campaigns
 
 - The archive's own Lean proofs of published theorems (Layer 3), including `litN`, the explicit-constant versions behind Theorem TB (a), the archive's proof of V18 and the internal `RootEx` proof of root exchange.
-- A replay of the archive in Lean's kernel.
 - Refereeing of Sections 7 to 9 of the manuscript.

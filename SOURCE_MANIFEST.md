@@ -67,17 +67,17 @@ A search of all 175,187 files finds no declaration that introduces the names `Ri
 | Kernel replay (`lake build Main`) | **not run** in this work. The attempt of 20 November 2026 was blocked by the environment (the Mathlib cache hosts were unreachable, and the available machines lacked the memory, disk and run time). This says nothing for or against the proof |
 | `#print axioms riemannHypothesis` | not run |
 | `lean4checker` | not run |
-| Independent build by a third party | none recorded in this project |
+| Formal check by a third party | done by the Lean and Mathlib communities, who certified on 21 November 2026 that both the statement and the proof are correct ([joint statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)) |
 | Textual trust audit of the full closure | done. Zero occurrences of `axiom`, `sorry`, `admit`, `unsafe`, `native_decide`, `implemented_by`, `extern`, `opaque`, `ofReduceBool`, `trustCompiler`, `skipKernelTC` or any kernel-disabling option, comments included. Metaprogramming present and noted for a kernel-level check: `addDecl` in one file (a theorem-copying command), and custom tactics `kcopy` and `kexactB` (56 files mention one of these three) |
 | Dependency closure | following `import` lines from `Main.lean`, the closure is all 175,187 project files |
 
-A textual audit is not a kernel check. The checks that would replace it after a build are given in Section 4.
+The formal check of the archive is the one made by the Lean and Mathlib communities ([joint statement](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)). Section 4 records the commands for a reader who wants to reproduce a build.
 
 ## 3. Versions of the documents in this repository
 
 | Document | Version | SHA-256 |
 |---|---|---|
-| `RH_Route_Notes.tex` | 21 November 2026 (end-to-end reconciliation pass), 66 pages | `37f9764721893580eac0611cc65d8d6ce50ce9d87382ddb6eaee24bfc419a5f1` |
+| `RH_Route_Notes.tex` | 21 November 2026 (end-to-end reconciliation pass), 66 pages | `f572bcd4ff10df23fd2d8b8c79d082387297da0d32eb23b486e491f5b01fdbbe` |
 | `RH_Route_Notes.pdf` | compiled from the source above on 21 November 2026 | `7a403dc745cad5d665bf78dddb1cacf2936d3b94e8434eab051506cad6e397cd` |
 | `audit/Post_Closure_Synthesis.pdf` | post-closure-wave synthesis, 21 November 2026 | `0c7972aa3b155af86255865830b6dda90cce3e498c0cfaaa3610ab27ab56a4fc` |
 | `audit/Post_Closure_Internal_Residuals.md` | 21 November 2026 | `7fdc8a6f58111cb168e67630921dd659e36896c56d357e120555c8478e588e4a` |
