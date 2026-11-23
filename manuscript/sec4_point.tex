@@ -1,0 +1,148 @@
+\section{From the excess to a bound at a point}\label{sec:point}
+
+Corollary~\ref{acctexcess} bounds a sum of excesses over many weights $a_t$ and many nodes $w_j(\rho)$. Corollary~\ref{corA} needs an upper bound for a positive combination of the functions $G_\psi$ at one point $x$. This section proves the step from the first to the second. Two averages make it work. An average over translations by a subgroup $A_0$ of $H$ removes every character that is nontrivial on $A_0$, and the sum over a set $T$ of weights that is equidistributed in a suitable sense gives each remaining character a positive weight. The cost of the step is the value $\lvert G_\psi(x)\rvert$ for finitely many auxiliary characters $\psi$, which Section~\ref{sec:auxiliary} bounds.
+
+\subsection{Regularity of the smoothed sums}
+
+\begin{lemma}\label{reg}
+Let $\mathcal G$ and the functions $G_\psi$ be as in Proposition~\ref{excess}, with $\ell_\psi=L'(1,\chi_\psi)/L(1,\chi_\psi)$ for the primitive Dirichlet characters $\chi_\psi$ attached to the nontrivial $\psi$. There is an absolute constant $C_d$ such that for every character $\psi$ of $\mathcal G$ the following hold.
+\begin{enumerate}
+\item[(i)] For $A>0$ and $0<w,w'\le A$, $\lvert w\,G_\psi(A/w)-w'G_\psi(A/w')\rvert\le3A\lvert w-w'\rvert/\min(w,w')$.
+\item[(ii)] For $x\ge2$ and $\lvert y-x\rvert\le1$, $\lvert G_\psi(y)-G_\psi(x)\rvert\le\log(x+1)+C_d+\lvert\ell_\psi\rvert$, with $\ell_\psi=0$ for trivial $\psi$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Every coefficient satisfies $\lvert\psi(n)\rvert\le1$. Put $\Theta(y)=\sum_{n\le y}\Lambda(n)$, which satisfies $0\le\Theta(y)\le1.04\,y$ for $y>0$ by the theorem of Rosser and Schoenfeld~\cite[Theorem~12]{rosserschoenfeld}.
+
+(i) For nontrivial $\psi$ put $\varphi(w)=wG_\psi(A/w)=\sum_{n\le A/w}\Lambda(n)\psi(n)(A/n-w)+\ell_\psi A$. The function $\varphi$ is continuous, because the term of index $n$ vanishes when $A/w=n$, and away from the finitely many points $w=A/n$ its derivative is $-\sum_{n\le A/w}\Lambda(n)\psi(n)$, of absolute value at most $\Theta(A/w)\le1.04A/w$. For trivial $\psi$, the formula \eqref{G} gives $\varphi(w)=\sum_{n\le A/w}\Lambda(n)(A/n-w)-A\log(A/w)+(1+\gamma)A$, whose derivative away from the points $w=A/n$ is $A/w-\Theta(A/w)$, of absolute value at most $A/w$. In both cases the mean value theorem on each interval between consecutive points $A/n$ gives $\lvert\varphi(w)-\varphi(w')\rvert\le1.04A\lvert w-w'\rvert/\min(w,w')$.
+
+(ii) The function $G_\psi$ is continuous, and away from the integers its derivative is $\sum_{n\le y}\Lambda(n)\psi(n)/n+\ell_\psi$ for nontrivial $\psi$ and $\sum_{n\le y}\Lambda(n)/n-\log y+\gamma$ for trivial $\psi$. Mertens' estimate gives $\sum_{n\le y}\Lambda(n)/n\le\log y+C$ for $y\ge1$, so both derivatives are at most $\log(x+1)+C_d+\lvert\ell_\psi\rvert$ in absolute value for $x-1\le y\le x+1$ and $x\ge2$.
+\end{proof}
+
+\subsection{The main step}\label{sec:step5}
+
+Let $H$, $\mathcal G$, $\Phi$, $f$ and $p_t$ be as in Section~\ref{sec:excess}. Let $A_0$ be a subgroup of $H$ and $T_2$ a nonempty subset of $A_0$, and put $\delta_2=\lvert T_2\rvert/\lvert H\rvert$. For $u_0\in A_0$ call an element $\rho=(0,e_2,h)\in\Phi$ thick with respect to $u_0$ when $e_2=1$ and $h\in T_2+u_0$. Let $\Psi_0$ be the set of characters $\psi$ of $\mathcal G$ with $\psi(0,0,s)=1$ for every $s\in A_0$, a set with $4\lvert H/A_0\rvert$ elements.
+
+\begin{theorem}\label{step5}
+Let the notation be as above, and for each character $\psi$ of $\mathcal G$ let $G_\psi\colon(0,\infty)\to\mathbb C$ be a function. Let $K\subset\Psi_0$ be a set of characters that contains the trivial character and satisfies $\psi(1,0,0)=1$ for every $\psi\in K$. Let $T\subset H$ have $N_T\ge1$ elements, let $c,\nu\ge0$, and suppose that every $\psi\in K$ that is nontrivial on $\{0\}\times\{0\}\times H$ satisfies
+\begin{equation}\label{equi}
+\Big\lvert\sum_{t\in T}\psi(0,0,t)-c\,N_T\Big\rvert\le\nu\,N_T .
+\end{equation}
+Put $c_\psi=1$ when $\psi\in K$ is trivial on $\{0\}\times\{0\}\times H$, and $c_\psi=c$ for the other $\psi\in K$. Let $x\ge3$, let $b,b',X'>0$ with $b'X'\le xb$, and let $\omega,M\ge0$ and $0\le\eta'\le b$. Let $m\ge1$ be an integer, let $a_t>0$ satisfy $\lvert a_t/b-x\rvert\le1$ for $t\in T$, and for $u_0\in A_0$ and $1\le j\le m$ let $w_{u_0,j}\colon\Phi\to(0,\infty)$ satisfy $b\le w_{u_0,j}(\rho)\le b+\eta'$ when $\rho$ is thick with respect to $u_0$ and $w_{u_0,j}(\rho)\le2b'$ otherwise. Suppose that for every character $\psi$ of $\mathcal G$
+\begin{align}
+\big\lvert w\,G_\psi(A/w)-w'G_\psi(A/w')\big\rvert&\le\frac{3A\,\lvert w-w'\rvert}{\min(w,w')}&&(A>0,\ 0<w,w'\le A),\label{L1}\\
+\lvert G_\psi(y)-G_\psi(x)\rvert&\le M&&(\lvert y-x\rvert\le1),\label{L2}\\
+\lvert G_\psi(y)\rvert&\le\omega\,y&&(y\ge X'/3),\label{L3}
+\end{align}
+and that
+\[
+\frac1{\lvert A_0\rvert}\sum_{u_0\in A_0}\sum_{t\in T}\sum_{j=1}^m\operatorname{Re}\mathrm{De}(a_t,t,w_{u_0,j})\le\mathrm{Err}.
+\]
+Then
+\begin{multline}\label{step5conc}
+N_T\,m\,b\,\frac{\delta_2}2\Big(\sum_{\psi\in K}c_\psi\operatorname{Re}G_\psi(x)-\nu\sum_{\psi\in K}\lvert G_\psi(x)\rvert-\sum_{\psi\in\Psi_0\setminus K}\lvert G_\psi(x)\rvert-\lvert\Psi_0\rvert\,M\Big)\\
+\le\mathrm{Err}+N_T\,m\Big(2f\omega(x+1)b+6f(x+1)\eta'\Big).
+\end{multline}
+\end{theorem}
+
+\begin{proof}
+Fix $u_0\in A_0$, $t\in T$ and $j$, and write $w=w_{u_0,j}$ and $a=a_t$, so that $(x-1)b\le a\le(x+1)b$. We split the sum over $g\notin\Phi$ in $\mathrm{De}(a,t,w)$ according to whether $p_tg$ is thick with respect to $u_0$.
+
+\emph{The thin classes.} If $p_tg$ is not thick, then $w(p_tg)\le2b'$, so $y=a/w(p_tg)$ satisfies
+\[
+y\ge\frac{(x-1)b}{2b'}\ge\frac{(x-1)X'}{2x}\ge\frac{X'}3 ,
+\]
+and \eqref{L3} gives $\lvert w(p_tg)\,G_\psi(y)\rvert\le\omega a$. There are $2f$ characters and at most $f$ such $g$, so the thin part of $\mathrm{De}(a,t,w)$ has absolute value at most $2f\omega a\le2f\omega(x+1)b$.
+
+\emph{The nodes of the thick classes.} If $p_tg$ is thick, then $b\le w(p_tg)\le b+\eta'\le2b\le a$, and \eqref{L1} with $A=a$ and $w'=b$ gives
+\[
+\Big\lvert w(p_tg)\,G_\psi\Big(\frac a{w(p_tg)}\Big)-b\,G_\psi\Big(\frac ab\Big)\Big\rvert\le\frac{3a\,\eta'}b\le3(x+1)\eta' .
+\]
+Replacing every thick node by $b$ therefore changes $\mathrm{De}(a,t,w)$ by at most $\frac1f\cdot f\cdot2f\cdot3(x+1)\eta'=6f(x+1)\eta'$.
+
+\emph{The mean over $u_0$.} The class $g=(1,e_2,h)$ has $p_tg=(0,e_2+1,h+t)$, which is thick with respect to $u_0$ exactly when $e_2=0$ and $h=s+u_0-t$ for some $s\in T_2$. Hence for every character $\psi$ of $\mathcal G$
+\[
+\frac1{\lvert A_0\rvert}\sum_{u_0\in A_0}\ \sum_{\substack{g\notin\Phi\\ p_tg\ \mathrm{thick}}}\overline{\psi(g)}
+=\overline{\psi(1,0,0)}\;\psi(0,0,t)\sum_{s\in T_2}\overline{\psi(0,0,s)}\;\frac1{\lvert A_0\rvert}\sum_{u_0\in A_0}\overline{\psi(0,0,u_0)} .
+\]
+The mean over $u_0$ vanishes when $\psi\notin\Psi_0$ and equals $1$ when $\psi\in\Psi_0$. For $\psi\in\Psi_0$ the sum over $s$ equals $\lvert T_2\rvert$ because $T_2\subset A_0$, and $\epsilon_\psi=\psi(1,0,0)$ equals $1$ or $-1$ because $(1,0,0)$ has order two. Since $\lvert T_2\rvert/f=\delta_2/2$, the mean over $u_0$ of the thick part of $\mathrm{De}(a_t,t,w_{u_0,j})$, with every thick node replaced by $b$, equals
+\[
+\frac{\delta_2}2\,b\sum_{\psi\in\Psi_0}\epsilon_\psi\,\psi(0,0,t)\,G_\psi\Big(\frac{a_t}b\Big).
+\]
+
+\emph{The sum over $t$.} By \eqref{L2}, replacing $G_\psi(a_t/b)$ by $G_\psi(x)$ changes the last display by at most $\frac{\delta_2}2\,b\,\lvert\Psi_0\rvert\,M$. Put $S_\psi=\sum_{t\in T}\psi(0,0,t)$, so that $\lvert S_\psi\rvert\le N_T$. For $\psi\in K$ we have $\epsilon_\psi=1$ and, by \eqref{equi}, $\lvert S_\psi-c_\psi N_T\rvert\le\nu N_T$, where the left side vanishes when $\psi$ is trivial on $\{0\}\times\{0\}\times H$. Therefore
+\[
+\operatorname{Re}\sum_{\psi\in\Psi_0}\epsilon_\psi\,S_\psi\,G_\psi(x)\ge N_T\Big(\sum_{\psi\in K}c_\psi\operatorname{Re}G_\psi(x)-\nu\sum_{\psi\in K}\lvert G_\psi(x)\rvert-\sum_{\psi\in\Psi_0\setminus K}\lvert G_\psi(x)\rvert\Big).
+\]
+
+\emph{Conclusion.} For each $j$, the four estimates give
+\begin{multline*}
+N_T\,b\,\frac{\delta_2}2\Big(\sum_{\psi\in K}c_\psi\operatorname{Re}G_\psi(x)-\nu\sum_{\psi\in K}\lvert G_\psi(x)\rvert-\sum_{\psi\in\Psi_0\setminus K}\lvert G_\psi(x)\rvert-\lvert\Psi_0\rvert\,M\Big)\\
+\le\frac1{\lvert A_0\rvert}\sum_{u_0\in A_0}\sum_{t\in T}\operatorname{Re}\mathrm{De}(a_t,t,w_{u_0,j})+N_T\Big(2f\omega(x+1)b+6f(x+1)\eta'\Big),
+\end{multline*}
+and the sum over $j$ is \eqref{step5conc}.
+\end{proof}
+
+For $A_0=H$ and $K=\{1\}$ the set $\Psi_0$ consists of the trivial character and the three characters $(-1)^{e_1}$, $(-1)^{e_2}$ and $(-1)^{e_1+e_2}$, and \eqref{step5conc} bounds $G(x)$ by the excess plus the three values $\lvert G_\psi(x)\rvert$. This is the case of one imaginary quadratic field, where the sum over inert primes controls $G-G_\chi$ and a bound for $G$ needs a separate bound for $G_\chi(x)$.
+
+\subsection{The sizes}\label{sec:sizes}
+
+Part~II bounds the excess by $x^{C\varepsilon}$ times the quantity $\mathcal B$ of \eqref{calB}. Proposition~\ref{sizes} divides $\mathcal B$ by the factor $N_Tmb\,\delta_2/2$ on the left of \eqref{step5conc} and obtains a square-root bound.
+
+\begin{proposition}\label{sizes}
+Let $x\ge3$, $\varepsilon>0$ and $C\ge0$, let $n,N_T,N_2,m\ge1$ be integers and $a,b,k>0$ real numbers, and suppose that
+\begin{gather}
+a\le2xb,\qquad N_T\ge\tfrac12x^{-\varepsilon/8}\,n,\qquad x^{-\varepsilon}n\le N_2\le n,\label{sz1}\\
+x^{1/2-\varepsilon}\le m\le x^{1/2+\varepsilon/2},\qquad xm\le k\le n^2x^{1/2-\varepsilon},\qquad x^{3\varepsilon/8}\ge26.\label{sz2}
+\end{gather}
+Put $\delta_2=N_2/n$ and
+\begin{equation}\label{calB}
+\mathcal B=N_T\,a\Big(1+\frac{m^2}k\Big)+m\Big(2\,n\,m\,b\,x^{\varepsilon}+\frac{N_2\,k\,b\,x^{2\varepsilon}}{n^2}\Big).
+\end{equation}
+Then
+\[
+x^{C\varepsilon}\,\mathcal B\le\frac{10}{13}\,x^{1/2+(C+3)\varepsilon}\cdot N_T\,m\,b\,\frac{\delta_2}2 .
+\]
+\end{proposition}
+
+\begin{proof}
+We divide $\mathcal B$ by $N_Tmb\,\delta_2/2$ and bound the three terms with \eqref{sz1} and \eqref{sz2}. In the first term $m/k\le1/x$ and $1/\delta_2\le x^{\varepsilon}$, so
+\[
+\frac{2a}{m\,b\,\delta_2}\Big(1+\frac{m^2}k\Big)=\frac{2a}{b\,\delta_2}\Big(\frac1m+\frac mk\Big)\le4x^{1+\varepsilon}\Big(x^{-1/2+\varepsilon}+\frac1x\Big)=4x^{1/2+2\varepsilon}+4x^{\varepsilon}.
+\]
+Since $n/N_T\le2x^{\varepsilon/8}$,
+\[
+\frac{2m\cdot2\,n\,m\,b\,x^{\varepsilon}}{N_T\,m\,b\,\delta_2}=\frac{4\,n\,m\,x^{\varepsilon}}{N_T\,\delta_2}\le8\,x^{1/2+21\varepsilon/8}.
+\]
+Since $N_2/\delta_2=n$ and $k\le n^2x^{1/2-\varepsilon}$,
+\[
+\frac{2m\,N_2\,k\,b\,x^{2\varepsilon}}{n^2\,N_T\,m\,b\,\delta_2}=\frac{2\,k\,x^{2\varepsilon}}{n\,N_T}\le\frac{2\,n\,x^{1/2+\varepsilon}}{N_T}\le4\,x^{1/2+9\varepsilon/8}.
+\]
+Each of the four bounds is at most its coefficient times $x^{1/2+21\varepsilon/8}$, so
+\[
+\frac{\mathcal B}{N_T\,m\,b\,\delta_2/2}\le20\,x^{1/2+21\varepsilon/8}=20\,x^{-3\varepsilon/8}\,x^{1/2+3\varepsilon}\le\frac{20}{26}\,x^{1/2+3\varepsilon}.\qedhere
+\]
+\end{proof}
+
+After division by $N_Tmb\,\delta_2/2$ the bracket $\mathcal B$ has the four shapes
+\[
+\frac xm,\qquad\frac{xm}k,\qquad m\,x^{c\varepsilon},\qquad\frac{k\,x^{c\varepsilon}}{n\,N_T}.
+\]
+The first comes from slopes that do not grow with the number of lifts, and the third from a cost that each lift adds. They balance at $m=\sqrt x$, which is the balance $M=\sqrt q$ of Remark~\ref{rem:stepanov} with the number of lifts in the role of the order of vanishing. The second shape is at most $1$ because $xm\le k$, and the fourth is at most $x^{1/2+c\varepsilon}$ because $k\le n^2x^{1/2-\varepsilon}$. The two conditions on $k$ are compatible when $n^2\ge x^{1/2+\varepsilon}m$, so the group $H$ must have at least about $\sqrt x$ elements.
+
+\begin{corollary}\label{asm}
+Suppose that the hypotheses of Theorem~\ref{step5} hold, and that the hypotheses of Proposition~\ref{sizes} hold with $n=\lvert H\rvert$ and $N_2=\lvert T_2\rvert$. Suppose further that
+\begin{gather*}
+\mathrm{Err}\le x^{C\varepsilon}\,\mathcal B,\qquad2f(x+1)\omega\le\frac1x,\qquad6f(x+1)\eta'\le\frac bx,\\
+4x^{\varepsilon-1}+\nu\sum_{\psi\in K}\lvert G_\psi(x)\rvert+\lvert\Psi_0\rvert\,M\le\frac3{13}\,x^{1/2+(C+3)\varepsilon}.
+\end{gather*}
+Then
+\[
+\sum_{\psi\in K}c_\psi\operatorname{Re}G_\psi(x)\le x^{1/2+(C+3)\varepsilon}+\sum_{\psi\in\Psi_0\setminus K}\lvert G_\psi(x)\rvert .
+\]
+\end{corollary}
+
+\begin{proof}
+We divide \eqref{step5conc} by $N_Tmb\,\delta_2/2$. Proposition~\ref{sizes} bounds the term with $\mathrm{Err}$ by $\frac{10}{13}x^{1/2+(C+3)\varepsilon}$. The conditions on $\omega$ and $\eta'$ bound the last bracket of \eqref{step5conc} by $2b/x$, and $2b/x$ divided by $b\,\delta_2/2$ equals $4/(x\delta_2)\le4x^{\varepsilon-1}$. The last hypothesis bounds this term, together with the terms of \eqref{step5conc} that contain $\nu$ and $M$, by $\frac3{13}x^{1/2+(C+3)\varepsilon}$.
+\end{proof}

@@ -1,0 +1,533 @@
+\section{Bessel Poincar\'e series}\label{sec:bessel}
+
+This section proves the three automorphic inputs (d) and (e) of Theorem~\ref{r3:A3} from the statements listed in it: the near orthogonality of Bessel Poincar\'e series, the share of irreducible rows, and the Bessel identity for the period maps.
+
+
+
+\subsection{The three statements}\label{w2:sec:statements}
+
+We keep the notation of Section~\ref{r3:sec}. The field $K$ is a totally complex Galois number field, $v$ is a complex place of $K$, $Y$ is a $K$-vector space with a hermitian lattice $R$ of rank $D_{\mathrm{rows}}$, and for each word $u$ of the finite set $W$ the period map is a $K$-linear map $B_u\colon V_u\to Y^*$. Write $Y_v=Y\otimes_{K,\sigma_v}\C$ and $V_{u,v}=V_u\otimes_{K,\sigma_v}\C$, with the hermitian norms of $R$ and of $N_u$ at $v$.
+
+On the automorphic side $F$ is a totally real field of degree $f$, $E/F$ is a CM extension, $V$ is a nondegenerate hermitian space over $E$, and $G=\mathrm U(V)$ is its unitary group over $F$. Write $\A$ and $\Af$ for the adeles and the finite adeles of $F$, $G_\infty=G(F\otimes_{\mathbb Q}\R)$ and $[G]=G(F)\backslash G(\A)$. The space $\mathcal H$ is the finite dimensional space of automorphic forms on $G$ whose archimedean component is a fixed discrete series and whose finite part is fixed by the level idempotent of the construction, with the Petersson inner product, which is conjugate linear in the first variable. Its dimension is $D_{\mathrm{all}}$. The number $D^*$ is the product of the formal degree of the discrete series, the volume of $[G]$ and the value at $1$ of the level idempotent.
+
+For each word $u$ the column space $\mathcal C_u$ has dimension $d^S_u$, the Poincar\'e map $\mathcal P_u\colon\mathcal C_u\to\mathcal H$ sends a column form to its Bessel Poincar\'e series (Section~\ref{w2:sec:unfold}), $c_u>0$ is its normalizing volume, and
+\[
+K_{uu'}=(c_uc_{u'})^{-1/2}\mathcal P_u^*\mathcal P_{u'}\colon\mathcal C_{u'}\to\mathcal C_u .
+\]
+The family parameters are $x$, $\varepsilon$, $b=e^{x^\varepsilon}$, $L=\log b=x^\varepsilon$, the ranks $m,k,r$ of the datum and $\Gamma_0=\exp(C_\Gamma m^5fL)$.
+
+\begin{theorem}[near orthogonality]\label{w2:S}
+There are absolute constants $C_0\ge1$ and $C_\Gamma>0$ with the following property. For every $\varepsilon$, every $x$ large in terms of $\varepsilon$, and every family of data of Part~II at the scale $x$ whose words satisfy
+\begin{equation}\label{w2:window}
+C_0^{-1}\le d^S_u\Gamma_0^2/D^*\le C_0\qquad\text{for every }u\in W,
+\end{equation}
+the Gram operators satisfy
+\[
+\lVert K_{uu'}\rVert_\HS^2\le(1+\eta_0)\frac{d^S_ud^S_{u'}}{D^*}\ (u\ne u'),\qquad\lVert K_{uu}-1\rVert_\HS^2\le e_0\,d^S_u,\qquad D_{\mathrm{all}}\le(1+\eta_1)D^*,
+\]
+with $e_0\ge0$ and $\eta_0,\eta_1,\sqrt{e_0}\le\exp(-x^{\varepsilon/8})$.
+\end{theorem}
+
+\begin{theorem}[share of irreducible rows]\label{w2:I}
+Let $J\ge1$ be the fixed integer of the construction and $\varepsilon_z=\varepsilon/J$. Let $E_{\mathrm{row}}\subset\mathcal H$ be the span of the image of $R\otimes_{K,\sigma_v}\C$ under the row embedding, and define $\delta$ by $D_{\mathrm{rows}}=\dim E_{\mathrm{row}}=(1-\delta)D_{\mathrm{all}}$. For every family of data of Part~II and every $x$ large in terms of the family constants,
+\[
+0\le\delta\le\exp\bigl(-x^{\varepsilon_z/7}\bigr).
+\]
+\end{theorem}
+
+\begin{theorem}[Bessel identity]\label{w2:B}
+For every family of data of Part~II and every $x$ large, the following holds at the complex place $v$. There are a unitary operator $\mathcal V$ of $Y_v$, and for each $u\in W$ a unitary operator $\mathcal U_u$ of $V_{u,v}$ and a number $a_u\ne0$, such that
+\begin{equation}\label{w2:besselid}
+(B_{u,v}\varphi)(F)=a_u\,\bigl\langle\mathbf s(\mathcal VF),\,\mathcal P_u\iota_u\mathcal U_u\varphi\bigr\rangle_{\mathcal H}\qquad(\varphi\in V_{u,v},\ F\in Y_v),
+\end{equation}
+where $\mathbf s\colon Y_v\to\mathcal H$ is the conjugate linear isometric row embedding and $\iota_u\colon V_{u,v}\to\mathcal C_u$ is the linear isometric column embedding of Definition~\ref{r3:bessel}. In addition $B_u$ is $K$-rational in the sense that $(B_{u,v}(\varphi\otimes1))(y\otimes1)=\sigma_v\bigl(B_u(\varphi)(y)\bigr)$ for $\varphi\in V_u$ and $y\in Y$.
+\end{theorem}
+
+Theorem~\ref{w2:B} together with Theorem~\ref{w2:I} is hypothesis (d) of Theorem~\ref{r3:A3}, and Theorem~\ref{w2:S} is hypothesis (e) there. 
+
+\subsection{The Bessel identity}\label{w2:sec:bessel}
+
+The identity \eqref{w2:besselid} is the end of a chain with four links. The period map is defined by a period of the chain of theta lifts on the definite side. The seesaw relation transfers every linear relation among those periods to the local Bessel periods of the theta lifts on the indefinite side. Unfolding the Poincar\'e series transfers every linear relation among local Bessel periods to the pairings with Poincar\'e series. One nonzero pairing then turns the transfer of relations into proportionality. Section~\ref{w2:sec:unfold} proves the unfolding, Section~\ref{w2:sec:prop} proves the passage from transfer of relations to proportionality, and Section~\ref{w2:sec:assembleB} assembles the theorem.
+
+\subsubsection{Bessel Poincar\'e series and their unfolding}\label{w2:sec:unfold}
+
+Fix a word $u$ and drop it from the notation where no confusion arises. The construction gives the following objects.
+
+\begin{enumerate}[label=(P\arabic*),leftmargin=*]
+\item\label{w2:P1} A closed $F$-subgroup $S=N\rtimes H$ of $G$, the Bessel subgroup of the flag of $u$. Here $N$ is a unipotent $F$-group and $H=\mathrm U(W)$ for a hermitian space $W$ over $E$ that is positive definite at every real place of $F$. A unitary character $\psi\colon N(\A)\to\C^\times$, trivial on $N(F)$ and invariant under conjugation by $H(\A)$.
+\item\label{w2:P2} A compact open subgroup $K_2\subset G(\Af)$ with a unitary character $\chi_2$, and an element $x_u\in G(\Af)$.
+\item\label{w2:P3} A finite dimensional unitary representation $(\sigma,V_\sigma)$ of the compact group $H_\infty=H(F\otimes\R)$, extended to $S_\infty=N_\infty H_\infty$ by $\sigma(nh)=\psi_\infty(n)\sigma(h)$, and a measurable function $W_u\colon G_\infty\to V_\sigma$ with $W_u(sy)=\sigma(s)W_u(y)$ for $s\in S_\infty$ and
+\begin{equation}\label{w2:Wint}
+\int_{S_\infty\backslash G_\infty}\lVert W_u(y)\rVert\,d\nu(y)<\infty .
+\end{equation}
+\item\label{w2:P4} The space $\mathcal C$ of column forms. A column form is a linear map $T$ from $V_\sigma$ to functions on $H(\A)$ with $T(\xi)(\gamma a)=T(\xi)(a)$ for $\gamma\in H(F)$, $T(\sigma(h)\xi)(a)=T(\xi)(ah)$ for $h\in H_\infty$, and $\lvert T(\xi)(a)\rvert\le C_T\lVert\xi\rVert$.
+\item\label{w2:P5} For each $T\in\mathcal C$ a measurable seed $\mathrm{Ph}_T$ on $G(\A)$, supported on $G_\infty\times S(\Af)x_uK_2$, with $\mathrm{Ph}_T(gk)=\chi_2(k)\mathrm{Ph}_T(g)$ for $k\in K_2$, and
+\begin{equation}\label{w2:seed}
+\mathrm{Ph}_T\bigl(na\cdot(y,x_u)\bigr)=\psi(n)\,T\bigl(W_u(y)\bigr)(a)\qquad(n\in N(\A),\ a\in H(\A),\ y\in G_\infty).
+\end{equation}
+\end{enumerate}
+
+Measures are fixed as follows. $G(\A)=G_\infty\times G(\Af)$ has a product Haar measure, $S(\A)$, $N(\A)$ and $H(\A)$ have Haar measures with $ds=dn\,da$, discrete groups have counting measure, and $\nu$ is the quotient measure on $S_\infty\backslash G_\infty$. Lemma~\ref{w2:unimod} below shows that these quotient measures exist.
+
+For a bounded measurable function $\theta$ on $G(\A)$ that is left $N(F)$-invariant put
+\begin{equation}\label{w2:per}
+\per(\Psi,\theta)=\int_{H(F)\backslash H(\A)}\int_{N(F)\backslash N(\A)}\theta(na)\,\psi(n)\,\Psi(a)\,dn\,da
+\end{equation}
+for every bounded measurable left $H(F)$-invariant function $\Psi$ on $H(\A)$. This is the Bessel period of $\theta$ against $\Psi$.
+
+\begin{lemma}\label{w2:unimod}
+Under \ref{w2:P1} the groups $N(\A)$, $H(\A)$ and $S(\A)$ are unimodular, the quotients $N(F)\backslash N(\A)$ and $H(F)\backslash H(\A)$ are compact, and $S(F)\backslash S(\A)$ is compact.
+\end{lemma}
+
+\begin{proof}
+The modular function of $S(\A)=N(\A)\rtimes H(\A)$ is $nh\mapsto\lvert\det\mathrm{Ad}(h)|_{\mathrm{Lie}\,N}\rvert_\A^{-1}$ times the modular functions of $N(\A)$ and $H(\A)$. The map $h\mapsto\det\mathrm{Ad}(h)|_{\mathrm{Lie}\,N}$ is an $F$-rational character of $H=\mathrm U(W)$. Every $F$-rational character of $\mathrm U(W)$ factors through the determinant $\mathrm U(W)\to\mathrm U(1)$, and $\mathrm U(1)=\ker(N_{E/F}\colon R_{E/F}\mathbb G_m\to\mathbb G_m)$ is an anisotropic torus, so it has no nontrivial $F$-rational character. Hence $\det\mathrm{Ad}(h)|_{\mathrm{Lie}\,N}=1$ identically, so at every place and on the adelic points. The same argument shows that $S_\infty$ and $S(\Af)$ are unimodular. Unipotent groups and reductive groups have unimodular adelic points, so $S(\A)$ is unimodular. The quotient $N(F)\backslash N(\A)$ is compact for every unipotent $F$-group \cite{w2borel}. Since $W$ is positive definite at a real place, it has no isotropic vector over $F$, so $H$ is $F$-anisotropic and $H(F)\backslash H(\A)$ is compact by the theorem of Borel and Harish-Chandra and of Mostow and Tamagawa \cite{w2bhc}. The image of the compact set $C_N\times C_H$ under multiplication, with $C_N$ and $C_H$ compact sets mapping onto the two quotients, maps onto $S(F)\backslash S(\A)$, because $S(F)=N(F)H(F)$ and $H(\A)$ normalizes $N(\A)$.
+\end{proof}
+
+\begin{proposition}[unfolding]\label{w2:unfold}
+Assume \ref{w2:P1} to \ref{w2:P5} and let $T\in\mathcal C$. The series
+\[
+P_T(g)=\sum_{\gamma\in S(F)\backslash G(F)}\mathrm{Ph}_T(\gamma g)
+\]
+converges absolutely for almost every $g\in G(\A)$, defines an element of $L^1([G])$ that does not depend on the choice of representatives, and is right $(K_2,\chi_2)$-equivariant. There is a number $c_u>0$, depending on the Haar measures and on $u$ and not on $T$, such that for every bounded measurable function $\theta$ on $G(\A)$ that is left $G(F)$-invariant and right $(K_2,\overline{\chi_2})$-equivariant,
+\begin{equation}\label{w2:perlaw}
+\int_{[G]}\theta(g)\,P_T(g)\,dg=c_u\int_{S_\infty\backslash G_\infty}\per\Bigl(T\bigl(W_u(y)\bigr),\ R_{(y,x_u)}\theta\Bigr)\,d\nu(y),
+\end{equation}
+where $R_{(y,x_u)}\theta(g)=\theta(g\cdot(y,x_u))$, and both sides converge absolutely.
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1, integration in stages.} Since $G(\A)$, $S(\A)$, $S(F)$ and $G(F)$ are unimodular (Lemma~\ref{w2:unimod}), the quotient integral formula of Weil \cite[\S2.6]{w2folland} applies to $S(F)\subset S(\A)\subset G(\A)$ and to $S(F)\subset G(F)\subset G(\A)$. For every measurable $\Phi\ge0$ on $G(\A)$ that is left $S(F)$-invariant,
+\begin{align}
+\int_{S(F)\backslash G(\A)}\Phi&=\int_{S(\A)\backslash G(\A)}\int_{S(F)\backslash S(\A)}\Phi(s\dot g)\,ds\,d\dot g,\label{w2:stage1}\\
+\int_{S(F)\backslash G(\A)}\Phi&=\int_{[G]}\sum_{\gamma\in S(F)\backslash G(F)}\Phi(\gamma g)\,dg.\label{w2:stage2}
+\end{align}
+The second identity is the unfolding. To see it directly, let $\mathfrak F$ be a measurable fundamental domain for $G(F)$ in $G(\A)$, which exists because $G(F)$ is a countable discrete subgroup of a second countable locally compact group, and let $D$ be a set of representatives of $S(F)\backslash G(F)$. The sets $\delta\gamma\mathfrak F$ with $\delta\in S(F)$ and $\gamma\in D$ are disjoint and cover $G(\A)$, so $\bigcup_{\gamma\in D}\gamma\mathfrak F$ is a fundamental domain for $S(F)$. Left invariance of Haar measure and Tonelli's theorem give \eqref{w2:stage2}.
+
+\emph{Step 2, the finite part.} Put $\Omega=S(\Af)x_uK_2$, an open subset of $G(\Af)$. Let $\Phi\ge0$ be measurable on $G(\A)$ with $\Phi(sg)=\Phi(g)$ for $s\in S(\A)$, right $K_2$-invariant and supported on $G_\infty\times\Omega$. Then $\Phi$ factors through $S(\A)\backslash G(\A)=(S_\infty\backslash G_\infty)\times(S(\Af)\backslash G(\Af))$ and is a function of the first coordinate on the subset $S(\Af)\backslash\Omega$, which is the image of $K_2$ under $k\mapsto S(\Af)x_uk$. The quotient measure on a product of quotients is the product of the quotient measures, so
+\begin{equation}\label{w2:finite}
+\int_{S(\A)\backslash G(\A)}\Phi(\dot g)\,d\dot g=c_u\int_{S_\infty\backslash G_\infty}\Phi\bigl((y,x_u)\bigr)\,d\nu(y),
+\end{equation}
+where $c_u$ is the quotient measure of $S(\Af)\backslash\Omega$. It is finite because $S(\Af)\backslash\Omega$ is the continuous image of the compact group $K_2$, and positive because it is open.
+
+\emph{Step 3, absolute convergence.} Let $\theta$ be as in the statement. The product $\Phi_0=\lvert\theta\,\mathrm{Ph}_T\rvert$ is left $S(F)$-invariant, because $\theta$ is left $G(F)$-invariant and $\mathrm{Ph}_T$ is left $S(F)$-invariant. For the latter, the support $G_\infty\times\Omega=S(\A)\cdot(G_\infty\times\{x_u\})\cdot K_2$ is stable under $S(F)$, and for $\gamma=n_0a_0\in S(F)$, \eqref{w2:seed} gives $\mathrm{Ph}_T(\gamma na(y,x_u))=\psi(n_0)\psi(a_0na_0^{-1})T(W_u(y))(a_0a)=\psi(n)T(W_u(y))(a)$, by the triviality of $\psi$ on $N(F)$, its invariance under $H(\A)$, and the $H(F)$-invariance in \ref{w2:P4}. It is right $K_2$-invariant, because the characters $\chi_2$ and $\overline{\chi_2}$ cancel, and it is supported on $G_\infty\times\Omega$. By \eqref{w2:stage1}, then \eqref{w2:finite} applied to the left $S(\A)$-invariant function $g\mapsto\int_{S(F)\backslash S(\A)}\Phi_0(sg)\,ds$, then \eqref{w2:seed} and the integration formula $ds=dn\,da$ on $S(F)\backslash S(\A)$,
+\begin{align*}
+\int_{S(F)\backslash G(\A)}\Phi_0
+&=c_u\int_{S_\infty\backslash G_\infty}\int_{[H]}\int_{[N]}\bigl\lvert\theta(na(y,x_u))\bigr\rvert\,\bigl\lvert T(W_u(y))(a)\bigr\rvert\,dn\,da\,d\nu(y)\\
+&\le c_u\lVert\theta\rVert_\infty\vol[N]\vol[H]\,C_T\int_{S_\infty\backslash G_\infty}\lVert W_u\rVert\,d\nu,
+\end{align*}
+which is finite by Lemma~\ref{w2:unimod} and \eqref{w2:Wint}. The same computation applies to $\Phi_0=\lvert\mathrm{Ph}_T\rvert$, which is right $K_2$-invariant because $\lvert\chi_2\rvert=1$, and with \eqref{w2:stage2} it shows that $\sum_\gamma\lvert\mathrm{Ph}_T(\gamma g)\rvert$ is integrable on $[G]$, hence finite almost everywhere, so $P_T$ converges absolutely almost everywhere and lies in $L^1([G])$. Independence of representatives is the left $S(F)$-invariance of $\mathrm{Ph}_T$, and right equivariance under $(K_2,\chi_2)$ passes to the sum.
+
+\emph{Step 4, the identity.} Since $\theta\,\mathrm{Ph}_T$ is absolutely integrable on $S(F)\backslash G(\A)$ by Step 3, the identities \eqref{w2:stage2}, \eqref{w2:stage1} and \eqref{w2:finite} hold for it by Fubini's theorem applied to the positive and negative parts of its real and imaginary parts. The left side of \eqref{w2:stage2} is $\int_{[G]}\theta P_T$ because $\theta$ is left $G(F)$-invariant. On the right, \eqref{w2:seed} gives
+\[
+\begin{aligned}
+\int_{S(F)\backslash S(\A)}(\theta\,\mathrm{Ph}_T)(s(y,x_u))\,ds&=\int_{[H]}\int_{[N]}\theta(na(y,x_u))\,\psi(n)\,T(W_u(y))(a)\,dn\,da\\
+&=\per\bigl(T(W_u(y)),R_{(y,x_u)}\theta\bigr).
+\end{aligned}
+\]
+This is \eqref{w2:perlaw}.
+\end{proof}
+
+\begin{remark}\label{w2:rem:perlaw}
+The argument shows $c_u>0$. The identity \eqref{w2:perlaw} does not need $P_T\in L^2([G])$, nor that $P_T$ is fixed by the archimedean projector. Both facts are needed to know that $P_T\in\mathcal H$, which Lemma~\ref{w2:anchor} uses.
+\end{remark}
+
+\begin{corollary}[transfer of relations from Bessel periods to Poincar\'e pairings]\label{w2:bottom}
+Assume \ref{w2:P1} to \ref{w2:P5}. Let $T_1,\dots,T_\ell\in\mathcal C$, let $\theta_1,\dots,\theta_\ell$ be bounded measurable functions on $G(\A)$, left $G(F)$-invariant and right $(K_2,\overline{\chi_2})$-equivariant, and let $\alpha_1,\dots,\alpha_\ell\in\C$. If
+\begin{equation}\label{w2:bothyp}
+\sum_{i=1}^\ell\alpha_i\,\per\bigl(T_i(\xi),\,R_{(y,x_u)}\theta_i\bigr)=0\qquad\text{for every }\xi\in V_\sigma\text{ and every }y\in G_\infty,
+\end{equation}
+then $\sum_i\alpha_i\int_{[G]}\theta_iP_{T_i}=0$. If \eqref{w2:bothyp} holds for $\xi$ in a spanning set of $V_\sigma$ and every $y$, it holds for every $\xi$.
+\end{corollary}
+
+\begin{proof}
+The period \eqref{w2:per} is linear in $\Psi$ and $T_i$ is linear, so the left side of \eqref{w2:bothyp} is linear in $\xi$, which proves the last sentence. Apply Proposition~\ref{w2:unfold} to each $i$ with the same $c_u$, and put $\xi=W_u(y)$ in \eqref{w2:bothyp}. The integrand of the sum of the right sides of \eqref{w2:perlaw} vanishes for every $y$.
+\end{proof}
+
+\subsubsection{From transfer of relations to proportionality}\label{w2:sec:prop}
+
+\begin{lemma}\label{w2:prop}
+Let $X$ be a set and $\lambda,\mu\colon X\to\C$ functions. Assume that for every finite family $x_1,\dots,x_\ell\in X$ and $\alpha_1,\dots,\alpha_\ell\in\C$ with $\sum_i\alpha_i\lambda(x_i)=0$ one has $\sum_i\alpha_i\mu(x_i)=0$. Assume $\mu(x_0)\ne0$ for some $x_0\in X$. Then $\lambda(x_0)\ne0$, and $\mu=\kappa\lambda$ on $X$ with $\kappa=\mu(x_0)/\lambda(x_0)\ne0$.
+\end{lemma}
+
+\begin{proof}
+If $\lambda(x_0)=0$, the family consisting of $x_0$ with coefficient $1$ satisfies the hypothesis, so $\mu(x_0)=0$, a contradiction. For $x\in X$ the family $(x_0,x)$ with coefficients $(\lambda(x),-\lambda(x_0))$ satisfies $\lambda(x)\lambda(x_0)-\lambda(x_0)\lambda(x)=0$, so $\lambda(x)\mu(x_0)-\lambda(x_0)\mu(x)=0$.
+\end{proof}
+
+\begin{lemma}[central translations]\label{w2:central}
+Let $z$ be an element of the center of $G(\Af)$ and $R_z\theta(g)=\theta(gz)$. Then $R_z$ is a unitary operator of $L^2([G])$ that commutes with the right action of $G(\A)$. It maps the right $(K_2,\chi_2)$-equivariant functions to themselves and preserves every $G(\A)$-isotypic subspace, in particular $\mathcal H$.
+\end{lemma}
+
+\begin{proof}
+$R_z$ is well defined on $[G]$ and preserves Haar measure because $G(\A)$ is unimodular, and it is invertible with inverse $R_{z^{-1}}$. Since $z$ is central, $R_zR_h=R_hR_z$ for $h\in G(\A)$, which gives the last two assertions, and $\theta(gkz)=\theta(gzk)=\chi_2(k)\theta(gz)$ for $k\in K_2$.
+\end{proof}
+
+\subsubsection{Assembly of the Bessel identity}\label{w2:sec:assembleB}
+
+The theorem uses four inputs of the construction. The first is a definition, the second is the seesaw relation of the theta tower, the third is a pair of dictionaries between the abstract realization of Definition~\ref{r3:bessel} and the automorphic objects of Section~\ref{w2:sec:unfold}, and the fourth is rationality. They are stated here in the form used, for one word $u$ at the place $v$.
+
+\begin{hypothesis}[the period map and the seesaw relation]\label{w2:H-see}
+There are a central element $z\in G(\Af)$, a linear map $U_u$ of $V_{u,v}$ with $\lVert U_u\varphi\rVert=r_u\lVert\varphi\rVert$ for some $r_u>0$, a set $X_u$ containing $V_{u,v}\times Y_v$, a function $\lambda_u\colon X_u\to\C$ with $\lambda_u(\varphi,F)=(B_{u,v}\varphi)(F)$ on $V_{u,v}\times Y_v$, and for each $x\in X_u$ a column form $T_x\in\mathcal C_u$ and a function $\theta_x\in\mathcal H$, with $T_{(\varphi,F)}=\iota_u(U_u\varphi)$ and $\theta_{(\varphi,F)}=\mathbf s(F)$ on $V_{u,v}\times Y_v$, such that the following holds. For every finite family $x_i\in X_u$ and $\alpha_i\in\C$ with $\sum_i\alpha_i\lambda_u(x_i)=0$,
+\[
+\sum_i\alpha_i\,\per\Bigl(T_{x_i}(\xi),\,R_{(y,x_u)}R_z\overline{\theta_{x_i}}\Bigr)=0\qquad\text{for every }\xi\in V_\sigma\text{ and }y\in G_\infty.
+\]
+Moreover $X_u$ contains an element $x_0$ with $T_{x_0}=\iota_u(U_u\varphi_0)$ for some $\varphi_0$ and $\theta_{x_0}=R_z^{-1}\mathcal P_u\iota_u(U_u\varphi_0)$.
+\end{hypothesis}
+
+\begin{hypothesis}[dictionaries]\label{w2:H-dict}
+The space $\mathcal H$ consists of bounded continuous functions on $G(\A)$, left $G(F)$-invariant and right $(K_2,\chi_2)$-equivariant. The column space $\mathcal C_u$ of Definition~\ref{r3:bessel} is the space $\mathcal C$ of \ref{w2:P4} with the norm for which $\mathcal P_u$ is the map $T\mapsto P_T$ of Proposition~\ref{w2:unfold}, and $P_T\in\mathcal H$ for every $T$. The central translation $R_z$ maps $\mathbf s(Y_v)$ onto itself.
+\end{hypothesis}
+
+\begin{hypothesis}[rationality]\label{w2:H-rat}
+For $\varphi\in V_u$ and $y\in Y$ the number $(B_{u,v}(\varphi\otimes1))(y\otimes1)$ lies in $\sigma_v(K)$ and equals $\sigma_v(B_u(\varphi)(y))$.
+\end{hypothesis}
+
+\begin{lemma}[anchor]\label{w2:anchor}
+Assume Hypotheses~\ref{w2:H-see} and~\ref{w2:H-dict}, and assume $\mathcal P_u\iota_u(U_u\varphi_0)\ne0$. Put $\mu_u(x)=\int_{[G]}R_z\overline{\theta_x}\,P_{T_x}$ for $x\in X_u$. Then $\mu_u(x_0)\ne0$.
+\end{lemma}
+
+\begin{proof}
+With $P=\mathcal P_u\iota_u(U_u\varphi_0)\in\mathcal H$ one has $R_z\theta_{x_0}=P$, so $\mu_u(x_0)=\int_{[G]}\overline P\,P=\lVert P\rVert^2>0$.
+\end{proof}
+
+\begin{lemma}\label{w2:punz}
+Assume $\lVert K_{uu}-1\rVert_\HS^2\le e_0\,d^S_u$ and $\dim\iota_u(V_{u,v})>e_0\,d^S_u$. Then there is $\varphi_0\in V_{u,v}$ with $\mathcal P_u\iota_u(U_u\varphi_0)\ne0$.
+\end{lemma}
+
+\begin{proof}
+For $w\in\mathcal C_u$ one has $\lVert\mathcal P_uw\rVert^2=c_u\langle w,K_{uu}w\rangle$, so $\ker\mathcal P_u=\ker K_{uu}$, because $K_{uu}$ is positive semidefinite. On this kernel $K_{uu}-1$ acts as $-1$, so $\dim\ker\mathcal P_u\le\lVert K_{uu}-1\rVert_\HS^2\le e_0d^S_u$. Since $U_u$ is invertible, $\iota_uU_u(V_{u,v})=\iota_u(V_{u,v})$ has dimension larger than $\dim\ker\mathcal P_u$ and is not contained in it.
+\end{proof}
+
+Under the conclusion of Theorem~\ref{w2:S}, $e_0\le\tfrac12$ for large $x$, and $\dim\iota_u(V_{u,v})=d_u\ge(1-2f/T_u)d^S_u>\tfrac12d^S_u$ by Lemma~\ref{r3:ramshare}, since $T_u\ge b>8f$. So Lemma~\ref{w2:punz} applies.
+
+\begin{theorem}\label{w2:Bproof}
+Assume \ref{w2:P1} to \ref{w2:P5} for the word $u$, Hypotheses~\ref{w2:H-see}, \ref{w2:H-dict} and \ref{w2:H-rat}, and $\mathcal P_u\iota_u(U_u\varphi_0)\ne0$. Then \eqref{w2:besselid} holds for $u$ with $\mathcal V$ the unitary operator of $Y_v$ defined by $\mathbf s(\mathcal VF)=R_z\mathbf s(F)$, with $\mathcal U_u=r_u^{-1}U_u$ and with a number $a_u\ne0$. If the hypotheses hold for every $u\in W$ with one $z$, then $\mathcal V$ does not depend on $u$ and Theorem~\ref{w2:B} holds.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{w2:central} and Hypothesis~\ref{w2:H-dict}, $R_z$ restricts to a unitary operator of $\mathbf s(Y_v)$, and since $\mathbf s$ is a conjugate linear isometry onto its image, $\mathcal V=\mathbf s^{-1}R_z\mathbf s$ is a linear unitary operator of $Y_v$.
+
+Let $\mu_u$ be as in Lemma~\ref{w2:anchor}. Every $\theta_x\in\mathcal H$ is bounded, and so is $R_z\overline{\theta_x}$, which is left $G(F)$-invariant and right $(K_2,\overline{\chi_2})$-equivariant by Lemma~\ref{w2:central}. Hypothesis~\ref{w2:H-see} and Corollary~\ref{w2:bottom} show that every linear relation among the values of $\lambda_u$ holds among the values of $\mu_u$. By Lemma~\ref{w2:anchor}, $\mu_u(x_0)\ne0$. Lemma~\ref{w2:prop} gives $\kappa_u\ne0$ with $\mu_u=\kappa_u\lambda_u$ on $X_u$. On $V_{u,v}\times Y_v$ this reads
+\[
+\kappa_u\,(B_{u,v}\varphi)(F)=\int_{[G]}\overline{R_z\mathbf s(F)}\;\mathcal P_u\iota_u(U_u\varphi)=\bigl\langle\mathbf s(\mathcal VF),\mathcal P_u\iota_u(U_u\varphi)\bigr\rangle_{\mathcal H}=r_u\bigl\langle\mathbf s(\mathcal VF),\mathcal P_u\iota_u\mathcal U_u\varphi\bigr\rangle_{\mathcal H}.
+\]
+So \eqref{w2:besselid} holds with $a_u=r_u/\kappa_u\ne0$, and $\mathcal U_u=r_u^{-1}U_u$ is unitary because it is a linear isometry of a finite dimensional space. The rationality clause is Hypothesis~\ref{w2:H-rat}.
+\end{proof}
+
+\begin{remark}[what Theorem~\ref{w2:Bproof} leaves open]\label{w2:rem:Bopen}
+Hypothesis~\ref{w2:H-see} combines a definition and a relation. The period map is defined from the period $\mathrm{perCol}$ of the chain of theta lifts on the definite side. The seesaw relation transfers relations among the numbers $c(t)\,\mathrm{perCol}$ to relations among the local Bessel periods of the indefinite theta lifts translated by $z$, with $c(t)=c_{\mathrm{top}}(t)s/c_{\mathrm{bot}}(t)$. The seesaw relation is the one statement among the inputs with mathematical content beyond this section. Its proof needs the chain of seesaw identities for the unitary dual pairs of the theta tower, the anisotropic Siegel--Weil formula, the analytic theory of Siegel Eisenstein series, and the local matching of the doubling zeta integrals that give the constants $c_{\mathrm{top}}$ and $c_{\mathrm{bot}}$.
+\end{remark}
+
+\subsection{The share of irreducible rows}\label{w2:sec:irr}
+
+\subsubsection{Labels and weights}
+
+Let $g$ be a prime and $\Gamma_N=\mathrm{GL}_N(\F_g)$. A \emph{label} is a monic polynomial $c\in\F_g[X]$ of degree $N$ with $c(0)\ne0$. Every irreducible representation $\pi$ of $\Gamma_N$ has a label, the characteristic polynomial of the semisimple class $s_\pi$ of its Deligne--Lusztig series. For a label $c$ let $E_c\in\C[\Gamma_N]$ be the sum of the central idempotents of the irreducible representations with label $c$. The $E_c$ are orthogonal central idempotents with $\sum_cE_c=1$. For $e\in\C[\Gamma_N]$ with $e(1)\ne0$ put
+\[
+\mathrm{wt}(e,c)=\frac{\operatorname{Re}(eE_c)(1)}{\operatorname{Re}e(1)},
+\]
+where $a(1)$ is the coefficient of the identity. For a squarefree label put $\sq(c)=\prod_{P\mid c}(g^{\deg P}-1)^{-1}$, the product over the monic irreducible factors.
+
+\begin{lemma}\label{w2:wtprob}
+If $e=e^*=e^2$ and $e(1)>0$, then $\mathrm{wt}(e,c)\ge0$ for every label and $\sum_c\mathrm{wt}(e,c)=1$.
+\end{lemma}
+
+\begin{proof}
+In the left regular representation $\lambda$ on $\ell^2(\Gamma_N)$ one has $a(1)=\langle\lambda(a)\delta_1,\delta_1\rangle$. Central idempotents of $\C[\Gamma_N]$ are self-adjoint, so $eE_c=E_ceE_c$ and $(eE_c)(1)=\lVert\lambda(e)\lambda(E_c)\delta_1\rVert^2\ge0$. Summing over $c$ gives $e(1)$.
+\end{proof}
+
+Let $U\subset\Gamma_N$ be the upper unitriangular group, $\psi_0$ a nontrivial additive character of $\F_g$, and $e_U=|U|^{-1}\sum_{u\in U}\overline{\psi_0(\sum_iu_{i,i+1})}\,u$ the Gelfand--Graev idempotent. It is a self-adjoint idempotent with $e_U(1)=|U|^{-1}$, because $u\mapsto\psi_0(\sum_iu_{i,i+1})$ is a character of $U$.
+
+\begin{proposition}[Gelfand--Graev weights]\label{w2:GG}
+For every squarefree label $c$, $\mathrm{wt}(e_U,c)=\sq(c)$.
+\end{proposition}
+
+\begin{proof}
+By Frobenius reciprocity $(e_UE_\pi)(1)=|\Gamma_N|^{-1}\dim\pi\cdot m_\pi$, where $m_\pi$ is the multiplicity of $\pi$ in the Gelfand--Graev representation $\mathrm{Ind}_U^{\Gamma_N}\psi$, so $\mathrm{wt}(e_U,c)=[\Gamma_N:U]^{-1}\sum_{\pi\text{ of label }c}m_\pi\dim\pi$. By Gelfand--Graev multiplicity one and the theory of Deligne and Lusztig \cite[\S10]{w2dl}, \cite[Ch.~8]{w2carter}, each series contains exactly one constituent of the Gelfand--Graev representation, with multiplicity one, the regular character $\chi_{s,\mathrm{reg}}$, and $\chi_{s,\mathrm{reg}}(1)=[\Gamma_N:C(s)]_{g'}$, the prime-to-$g$ part of the index of the centralizer. For $\Gamma_N=\mathrm{GL}_N(\F_g)$ this is also Green's theorem \cite{w2green}. If $c$ is squarefree with irreducible factors of degrees $d_1,\dots,d_j$, the centralizer of $s$ is the torus $\prod_i\F_{g^{d_i}}^\times$, of order $\prod_i(g^{d_i}-1)$, prime to $g$. Since $[\Gamma_N:U]=|\Gamma_N|_{g'}$, $\mathrm{wt}(e_U,c)=|\Gamma_N|_{g'}/(\prod_i(g^{d_i}-1)\,|\Gamma_N|_{g'})=\sq(c)$.
+\end{proof}
+
+\subsubsection{Good tuples}
+
+Fix a prime $g$, an integer $N\ge100$, a finite set $\Pi$ of $f$ places, a finite set $J$ of $m$ indices and elements $\chi_{w,j}\in\F_g^\times$ for $w\in\Pi$, $j\in J$. Let $\bar\F_g$ be an algebraic closure. For a prime $\ell\ne g$ and $x\in\bar\F_g^\times$ let $x_{\ell'}$ be the prime-to-$\ell$ component of $x$ in the torsion group $\bar\F_g^\times$, and let
+\[
+BB(g,N)=\{g\}\cup\bigl\{\ell\le g^N\text{ prime}:\ g^d<\ell^{4v_\ell(g^d-1)}\text{ for some }1\le d\le N\bigr\}.
+\]
+A tuple $(c_w)_{w\in\Pi}$ of labels is \emph{good} if the following hold.
+\begin{enumerate}[label=(G\arabic*),leftmargin=*]
+\item\label{w2:G1} Every $c_w$ is squarefree.
+\item\label{w2:G2} For every prime $\ell\notin BB(g,N)$ and every $w$, the map $x\mapsto x_{\ell'}$ is injective on the roots of $c_w$.
+\item\label{w2:G3} For every prime $\ell\ne g$, every $w$, $j$, every sign and every root $x$ of $c_w$, $x_{\ell'}\ne(\chi_{w,j}^{\pm1})_{\ell'}$.
+\item\label{w2:G4} For every $1\le a\le N/2$ there is $w$ such that $c_w$ has no divisor of degree $a$.
+\item\label{w2:G5} There is $w$ such that $c_w$ has an irreducible factor of prime degree $p$ with $N<2p$ and $p+3\le N$.
+\end{enumerate}
+
+
+\subsubsection{Counting lemmas}
+
+\begin{lemma}\label{w2:counts}
+Let $N\ge2$ and $g\ge2$. (i) The number $I_d$ of monic irreducible polynomials of degree $d$ in $\F_g[X]$ other than $X$ satisfies $dI_d\le g^d-1$. (ii) At least $g^N-2g^{N-1}$ labels of degree $N$ are squarefree. (iii) For every squarefree label $c$ of degree $N$, $\sq(c)\ge g^{-N}$.
+\end{lemma}
+
+\begin{proof}
+(i) The roots of the counted polynomials are distinct elements of $\F_{g^d}^\times$, so $dI_d\le g^d-1$. (ii) The number of squarefree monic polynomials of degree $N\ge2$ is $g^N-g^{N-1}$ \cite[Prop.~2.3]{w2rosen}, and those with $c(0)=0$ are $X$ times a squarefree monic polynomial of degree $N-1$, at most $g^{N-1}$ of them. (iii) $\prod_P(g^{\deg P}-1)^{-1}\ge\prod_Pg^{-\deg P}=g^{-N}$.
+\end{proof}
+
+\begin{lemma}[types versus cycle types]\label{w2:types}
+Let $\mathcal A$ be a property of partitions of $N$. Then
+\[
+\sum_{\substack{c\text{ squarefree label}\\ \mathcal A(\text{degrees of the factors of }c)}}\sq(c)\le\frac{\#\{\tau\in S_N:\ \mathcal A(\text{cycle type of }\tau)\}}{N!}.
+\]
+In particular $\sum_{c\text{ squarefree}}\sq(c)\le1$.
+\end{lemma}
+
+\begin{proof}
+A squarefree label with $n_d$ irreducible factors of degree $d$ is a choice of $n_d$ distinct irreducibles of each degree $d$, none equal to $X$. The total weight of the labels of this type is $\prod_d\binom{I_d}{n_d}(g^d-1)^{-n_d}\le\prod_d\frac{1}{n_d!}\bigl(\frac{I_d}{g^d-1}\bigr)^{n_d}\le\prod_d\frac{1}{d^{n_d}n_d!}$ by Lemma~\ref{w2:counts}(i). By Cauchy's formula the last product is the proportion of permutations of cycle type $(n_d)$. Sum over the types with property $\mathcal A$.
+\end{proof}
+
+\begin{lemma}[multiples]\label{w2:mult}
+Let $h$ be a squarefree monic polynomial of degree at most $N$ with $h(0)\ne0$. Then $\sum\sq(c)\le\sq(h)$, the sum over squarefree labels $c$ of degree $N$ divisible by $h$.
+\end{lemma}
+
+\begin{proof}
+Such $c$ are $c=hk$ with $k$ squarefree, prime to $h$, of degree $N-\deg h$ and $k(0)\ne0$, and $\sq(hk)=\sq(h)\sq(k)$. By Lemma~\ref{w2:types} in degree $N-\deg h$ (or trivially if the degree is $0$), $\sum_k\sq(k)\le1$.
+\end{proof}
+
+\begin{lemma}[invariant sets of permutations]\label{w2:78}
+For $1\le a<n$, the proportion of $\tau\in S_n$ that leave some $a$-element subset invariant is at most $7/8$.
+\end{lemma}
+
+\begin{proof}
+Let $X(\tau)$ be the number of $\tau$-invariant $a$-subsets. Counting pairs $(\tau,A)$ with $A$ invariant gives $\sum_\tau X(\tau)=\binom na\,a!\,(n-a)!=n!$. Among these pairs consider those for which $\tau|_A$ and $\tau|_{A^c}$ both have a fixed point. With $D_j$ the number of derangements of $j$ points, $2D_j\le j!$ for $j\ge1$, so the proportion of such pairs is $(1-D_a/a!)(1-D_{n-a}/(n-a)!)\ge1/4$. If $(\tau,A)$ is such a pair, with fixed points $p\in A$ and $q\notin A$, then $A\setminus\{p\}\cup\{q\}$ is another invariant $a$-subset, so $X(\tau)\ge2$. Let $B=\{\tau:X(\tau)\ge2\}$ and $n_1=\#\{\tau:X(\tau)=1\}$. Then $\sum_{\tau\in B}X(\tau)\ge n!/4$, so $n_1=n!-\sum_{\tau\in B}X(\tau)\le\tfrac34n!$, and $\#B\le\tfrac12\sum_{\tau\in B}X(\tau)=\tfrac12(n!-n_1)$. Hence $\#\{X\ge1\}=n_1+\#B\le\tfrac12n!+\tfrac12n_1\le\tfrac78n!$.
+\end{proof}
+
+\begin{lemma}[long prime cycles]\label{w2:primecycles}
+For $N\ge100$ the proportion of $\tau\in S_N$ that have a cycle of prime length $p$ with $N/2<p\le N-3$ is $\sum_{N/2<p\le N-3}1/p\ge1/(5\log N)$.
+\end{lemma}
+
+\begin{proof}
+A permutation has at most one cycle of length greater than $N/2$, and the number of permutations with a cycle of a given length $L>N/2$ is $N!/L$, so the events are disjoint and the proportion is the sum. For $100\le N\le2\cdot10^6$ the inequality was checked by direct computation (the smallest value of $5\log N\sum1/p$ is $2.94$, at $N=226$). For $N>2\cdot10^6$, the bounds $x/\log x<\pi(x)<1.25506\,x/\log x$ of Rosser and Schoenfeld \cite[Cor.~1]{w2rs}, valid for $x\ge17$, give $\sum_{N/2<p\le N-3}1/p\ge(\pi(N-3)-\pi(N/2))/(N-3)$ with $\pi(N-3)-\pi(N/2)\ge\frac{N-3}{\log N}-0.6276\frac{N}{\log(N/2)}\ge\frac{0.339N-3}{\log N}$, because $\log(N/2)\ge0.95\log N$ for $N>2\cdot10^6$, and $(0.339N-3)/(N-3)\ge1/5$.
+\end{proof}
+
+\begin{lemma}[prime power parts of $g-1$]\label{w2:share}
+Let $g$ be a prime with $16\mid g-1$ and let $q_1\ne d$ be odd primes dividing $g-1$ with $\max(q_1,d)\ge16$. Then $s(g):=\sum_{\ell\mid g-1}\ell^{v_\ell(g-1)}/(g-1)\le\frac{49}{256\min(q_1,d)}$.
+\end{lemma}
+
+\begin{proof}
+Write $g-1=\prod_ia_i$ with $a_i=\ell_i^{v_{\ell_i}(g-1)}$, so $s(g)=\sum_i1/\prod_{j\ne i}a_j$. Here $a_2\ge16$, $a_{q_1}\ge q_1$, $a_d\ge d$, and the remaining factors $b_1,\dots,b_t\ge3$ have product $B$ with $\sum_ib_i\le B$ when $t\ge1$. The terms are at most $1/(q_1d)$, $1/(16d)$, $1/(16q_1)$, and $\sum_ib_i/(16q_1dB)\le1/(16q_1d)$. With $m_0=\min(q_1,d)$ and $\max(q_1,d)\ge16$ the total is at most $(1/16+1/8+1/256)/m_0=49/(256m_0)$.
+\end{proof}
+
+\subsubsection{The bad weight at one prime}
+
+\begin{theorem}\label{w2:badweight}
+Let $g\ge2^{12}$ be a prime, $N\ge100$, and let $q_1,d$ be as in Lemma~\ref{w2:share} with $m_0=\min(q_1,d)$. Let $P$ be a nonnegative function on labels of degree $N$ with total mass $1$ that equals $\sq$ on squarefree labels. Then the $P^{\otimes\Pi}$-mass of the tuples that are not good is at most
+\[
+\begin{aligned}
+W(g)={}&\frac{2f}{g}+\frac{f\log_2g}{\sqrt g}\Bigl(1.31+\frac{2.02\,(1+\log N)}{g^{1/4}}\Bigr)\\
+&+2fm\Bigl(\frac1{4m_0}+\frac{1+\log N}{g-1}\Bigr)+\frac N2\Bigl(\frac78\Bigr)^f+e^{-f/(5\log N)}.
+\end{aligned}
+\]
+\end{theorem}
+
+\begin{proof}
+A tuple that is not good satisfies one of the following: (I) some $c_w$ is not squarefree; (II) some $c_w$ is squarefree and fails \ref{w2:G2}; (III) for some $(w,j,\pm)$, $c_w$ is squarefree and fails \ref{w2:G3} for that index; (IV) all $c_w$ are squarefree and \ref{w2:G4} fails; (V) all $c_w$ are squarefree and \ref{w2:G5} fails. The mass is at most the sum of the masses of the five events. For an event that concerns one place $w$, the mass is the $P$-mass of the corresponding set of labels at $w$, because $P$ has mass $1$ at the other places.
+
+(I) By Lemma~\ref{w2:counts}(ii),(iii), the squarefree labels have $\sq$-mass at least $(g^N-2g^{N-1})g^{-N}=1-2/g$. So the non-squarefree labels have $P$-mass at most $2/g$, and the union over $f$ places at most $2f/g$.
+
+(II) Fix $w$ and a prime $\ell\notin BB(g,N)$. For $1\le\delta\le N$ the Sylow $\ell$-subgroup of $\F_{g^\delta}^\times$ has order $\ell^{v_\ell(g^\delta-1)}\le g^{\delta/4}$: for $\ell\le g^N$ this is the definition of $BB$, and for $\ell>g^N$ the group is trivial. A squarefree label fails \ref{w2:G2} if it has two distinct roots with equal $\ell'$-components. Either both are roots of one irreducible factor, or they are roots of two distinct factors. By Lemma~\ref{w2:mult} the mass is at most the sum of $\sq(Q)$ over the irreducible $Q$ with a self-collision plus the sum of $\sq(QQ')$ over the ordered pairs $Q\ne Q'$ with a cross collision.
+
+Self-collisions. Let $Q$ have degree $\delta\ge2$ and roots $x,x^{g^i}$ with $1\le i<\delta$ and $(x^{g^i})_{\ell'}=x_{\ell'}$, so $x^{g^i-1}$ lies in the Sylow $\ell$-subgroup of $\F_{g^\delta}^\times$, which is then nontrivial, so $\ell\mid g^\delta-1$. The kernel of $y\mapsto y^{g^i-1}$ on $\F_{g^\delta}^\times$ is $\F_{g^{\gcd(i,\delta)}}^\times$, of order less than $g^{\delta/2}$. So for fixed $i$ and $\ell$ there are at most $g^{3\delta/4}$ such $x$. There are at most $\delta\log_2g$ primes dividing $g^\delta-1$ and $\delta-1$ values of $i$, so at most $(\delta-1)\log_2g\,g^{3\delta/4}$ such $Q$ of degree $\delta$, summed over all $\ell\notin BB$. With $\rho=g^{-1/4}\le1/8$ their mass is at most
+\[
+\log_2g\sum_{\delta\ge2}(\delta-1)\frac{g^{3\delta/4}}{g^\delta-1}\le\bigl(1+2^{-23}\bigr)\log_2g\,\frac{\rho^2}{(1-\rho)^2}\le1.31\,\frac{\log_2g}{\sqrt g}.
+\]
+Cross collisions. Let $Q\ne Q'$ have degrees $\delta,\delta'$ and roots $x,y$ with $x_{\ell'}=y_{\ell'}=:z$. Write $x=zx_\ell$, $y=zy_\ell$ with $\ell$-power components $x_\ell\in\F_{g^\delta}^\times$, $y_\ell\in\F_{g^{\delta'}}^\times$. Since $x\ne y$, one of $x_\ell,y_\ell$ is not $1$. Let $\mathcal A$ be the set of $(Q,Q')$ that admit such $(x,y,\ell)$ with $y_\ell\ne1$, and $\mathcal B$ the set with $x_\ell\ne1$. The Frobenius $t\mapsto t^g$ maps such a triple $(x,y,\ell)$ to another one with the same property, and moves $x$ through all $\delta$ roots of $Q$. So every $(Q,Q')\in\mathcal A$ yields at least $\delta$ triples with distinct $x$. Given $x$, the prime $\ell$ divides $g^{\delta'}-1$ (at most $\delta'\log_2g$ choices) and $y=x_{\ell'}y_\ell$ is determined by $y_\ell$ (at most $g^{\delta'/4}$ choices). Hence $\#\mathcal A\le g^\delta\delta'\log_2g\,g^{\delta'/4}/\delta$, and symmetrically $\#\mathcal B\le g^{\delta'}\delta\log_2g\,g^{\delta/4}/\delta'$. The mass is at most
+\[
+\sum_{\delta,\delta'=1}^N\frac{\#\mathcal A+\#\mathcal B}{(g^\delta-1)(g^{\delta'}-1)}\le2\Bigl(1+\frac1{g-1}\Bigr)^2\log_2g\Bigl(\sum_{\delta\le N}\frac1\delta\Bigr)\sum_{k\ge1}kg^{-3k/4}\le2.02\,\frac{(1+\log N)\log_2g}{g^{3/4}}.
+\]
+Adding and summing over the $f$ places gives the second term of $W(g)$.
+
+(III) Fix $(w,j,\pm)$ and put $\chi=\chi_{w,j}^{\pm1}\in\F_g^\times$. For $\ell\ne g$, $x_{\ell'}=\chi_{\ell'}$ holds exactly when $x/\chi$ has $\ell$-power order. Let $Q$ be irreducible of degree $\delta$ with such a root $x$. Then $x\in\chi\cdot\Syl_\ell(\F_{g^\delta}^\times)$, and every root of $Q$ has the same property because $t\mapsto t^g$ fixes $\chi$. Hence the number of such $Q$ is at most $\delta^{-1}\sum_{\ell\mid g^\delta-1}\ell^{v_\ell(g^\delta-1)}$; the primes $\ell\nmid g^\delta-1$ contribute the single element $x=\chi$, which lies in every coset counted. For $\ell\mid g-1$, the lifting of the exponent gives $v_\ell(g^\delta-1)=v_\ell(g-1)+v_\ell(\delta)$, valid for odd $\ell$ and for $\ell=2$ because $4\mid g-1$, so $\ell^{v_\ell(g^\delta-1)}\le\delta\,\ell^{v_\ell(g-1)}$. For $\ell\nmid g-1$ the prime powers $\ell^{v_\ell(g^\delta-1)}$ are pairwise coprime divisors of $(g^\delta-1)/(g-1)$, so their sum is at most $(g^\delta-1)/(g-1)$. With $s(g)$ of Lemma~\ref{w2:share}, the mass of the labels with a bad factor is at most, by Lemma~\ref{w2:mult},
+\[
+\sum_{\delta=1}^N\frac{\delta(g-1)s(g)+(g^\delta-1)/(g-1)}{\delta\,(g^\delta-1)}\le s(g)\Bigl(1+\frac1{g-1}\Bigr)+\frac{1+\log N}{g-1}\le\frac1{4m_0}+\frac{1+\log N}{g-1}.
+\]
+There are $2fm$ indices $(w,j,\pm)$.
+
+(IV) A squarefree label has a divisor of degree $a$ exactly when the degrees of its irreducible factors have a sub-multiset with sum $a$, a property of the type. By Lemmas~\ref{w2:types} and~\ref{w2:78} the $\sq$-mass of the squarefree labels with a divisor of degree $a$ is at most $7/8$. For fixed $a$ the event that this holds at every place has mass at most $(7/8)^f$, and there are at most $N/2$ values of $a$.
+
+(V) By Lemmas~\ref{w2:types} and~\ref{w2:primecycles} the $\sq$-mass of the squarefree labels without an irreducible factor of prime degree in $(N/2,N-3]$ is at most $1-1/(5\log N)$. At all $f$ places the mass is at most $(1-1/(5\log N))^f\le e^{-f/(5\log N)}$.
+\end{proof}
+
+\subsubsection{From weights to dimensions}
+
+The construction attaches to each element $\tau$ of an orthonormal eigenbasis of $\mathcal H$ a tuple of labels $\mathrm{lab}_k(\tau)=(\mathrm{lab}_{k,w}(\tau))_{w\in\Pi_k}$ at each of two auxiliary primes $g_0,g_1$, where $\Pi_k$ is the set of $f$ places of $F$ above $g_k$ and the level at $w$ contains $\mathrm{GL}_N(\F_{g_k})$ as a quotient, with $N=r$. For each $(k,w)$ it fixes an element $e_{k,w}\in\C[\mathrm{GL}_N(\F_{g_k})]$, the local factor of the level idempotent, and characters $\chi_{w,j}\in\F_{g_k}^\times$, $j\in J$, $|J|=m$. For a set $S$ of label tuples at $k$ put
+\[
+w_k(S)=\sum_{t\in S}\prod_{w\in\Pi_k}\mathrm{wt}(e_{k,w},t_w).
+\]
+
+\begin{hypothesis}[local weights]\label{w2:H-wt}
+Each $e_{k,w}$ is a self-adjoint idempotent with $e_{k,w}(1)>0$, and $(1-1/g_k)\,\mathrm{wt}(e_U,c)\le\mathrm{wt}(e_{k,w},c)$ for every label $c$.
+\end{hypothesis}
+
+\begin{hypothesis}[multiplicity formula]\label{w2:H-cnt}
+There is $\varepsilon_C\in[0,\tfrac12]$ with $\lvert D_{\mathrm{all}}-D^*\rvert\le\varepsilon_CD^*$ and, for $k\in\{0,1\}$ and every set $S$ of label tuples at $k$,
+\[
+\Bigl\lvert\#\{\tau:\mathrm{lab}_k(\tau)\in S\}-D^*w_k(S)\Bigr\rvert\le\varepsilon_C\,D^*w_k(S).
+\]
+\end{hypothesis}
+
+\begin{hypothesis}[rows are the good forms]\label{w2:H-rows}
+$D_{\mathrm{rows}}$ equals the number of $\tau$ whose label tuples at $g_0$ and at $g_1$ are both good for the characters $\chi_{w,j}$.
+\end{hypothesis}
+
+\begin{lemma}[comparison of weights]\label{w2:transfer}
+Let $w_U,w_J$ be probability weights on a finite set at each of $f$ places with $(1-1/g)w_U\le w_J$. For every set $A$ of tuples, $w_J^{\otimes f}(A)\le w_U^{\otimes f}(A)+f/g$.
+\end{lemma}
+
+\begin{proof}
+Write $w_J=(1-1/g)w_U+\tfrac1g\nu$ with $\nu$ a probability weight. Expand the product. The term $(1-1/g)^fw_U^{\otimes f}(A)$ is at most $w_U^{\otimes f}(A)$, and the other terms have total mass $1-(1-1/g)^f\le f/g$.
+\end{proof}
+
+\begin{theorem}\label{w2:Iproof}
+Assume Hypotheses~\ref{w2:H-wt}, \ref{w2:H-cnt} and~\ref{w2:H-rows}, that $16\mid g_k-1$ and $q_1,d$ divide $g_k-1$ for both $k$, with $q_1\ne d$ odd primes and $\max(q_1,d)\ge16$, and the sizes
+\begin{equation}\label{w2:sizes}
+g_k\ge e^{8x^{\varepsilon'}},\quad x^2\le f\le x^{C_s},\quad m\le x^{C_s},\quad100\le N\le x^{C_s},\quad\min(q_1,d)\ge e^{x^{\varepsilon'/6}},
+\end{equation}
+with $0<\varepsilon'\le1$ and $C_s\ge1$. Then $0\le\delta\le\exp(-x^{\varepsilon'/7})$ for $x\ge x_0(\varepsilon',C_s)$. With $\varepsilon'=\varepsilon_z$ this is Theorem~\ref{w2:I}.
+\end{theorem}
+
+\begin{proof}
+Let $B_k$ be the set of label tuples at $g_k$ that are not good. By Hypothesis~\ref{w2:H-rows} every $\tau$ outside the rows has $\mathrm{lab}_0(\tau)\in B_0$ or $\mathrm{lab}_1(\tau)\in B_1$, so $0\le D_{\mathrm{all}}-D_{\mathrm{rows}}\le\sum_k\#\{\tau:\mathrm{lab}_k(\tau)\in B_k\}$, which gives $\delta\ge0$. By Hypothesis~\ref{w2:H-cnt},
+\[
+\delta=\frac{D_{\mathrm{all}}-D_{\mathrm{rows}}}{D_{\mathrm{all}}}\le\frac{(1+\varepsilon_C)D^*(w_0(B_0)+w_1(B_1))}{(1-\varepsilon_C)D^*}\le3\bigl(w_0(B_0)+w_1(B_1)\bigr).
+\]
+By Lemma~\ref{w2:wtprob} and Hypothesis~\ref{w2:H-wt} the weights $\mathrm{wt}(e_{k,w},\cdot)$ and $\mathrm{wt}(e_U,\cdot)$ are probability weights with $(1-1/g_k)\mathrm{wt}(e_U,\cdot)\le\mathrm{wt}(e_{k,w},\cdot)$, so Lemma~\ref{w2:transfer} gives $w_k(B_k)\le\mathrm{wt}(e_U,\cdot)^{\otimes f}(B_k)+f/g_k$. By Proposition~\ref{w2:GG} the weight $P=\mathrm{wt}(e_U,\cdot)$ satisfies the hypothesis of Theorem~\ref{w2:badweight}, and the sizes give $g_k\ge2^{12}$ for large $x$. Hence $w_k(B_k)\le W(g_k)+f/g_k$.
+
+Under \eqref{w2:sizes} the terms of $W(g_k)+f/g_k$ are bounded as follows for large $x$. The terms $3f/g_k$ and $2fm(1+\log N)/(g_k-1)$ are at most $4x^{2C_s}(1+C_s\log x)e^{-8x^{\varepsilon'}}$. Since $t\mapsto\log t/\sqrt t$ decreases for $t\ge e^2$, the second term is at most $3x^{C_s}\cdot12x^{\varepsilon'}e^{-4x^{\varepsilon'}}$. The term $2fm/(4m_0)$ is at most $\tfrac12x^{2C_s}e^{-x^{\varepsilon'/6}}$. Finally $\tfrac N2(7/8)^f\le x^{C_s}e^{-x^2/8}$ and $e^{-f/(5\log N)}\le e^{-x^2/(5C_s\log x)}$. Since $\varepsilon'\le1$, every term is at most $x^{2C_s}e^{-x^{\varepsilon'/6}}$ for large $x$, so $\delta\le36\,x^{2C_s}e^{-x^{\varepsilon'/6}}\le e^{-x^{\varepsilon'/7}}$ once $x^{\varepsilon'/6}-x^{\varepsilon'/7}\ge2C_s\log x+\log36$.
+\end{proof}
+
+\begin{remark}\label{w2:rem:irr}
+The irreducibility certificates \ref{w2:G2} to \ref{w2:G5} are used later, where Jordan\'s theorem enters. Theorem~\ref{w2:I} itself is a count and does not use them.
+\end{remark}
+
+\subsection{Near orthogonality of Bessel Poincar\'e series}\label{w2:sec:S}
+
+\subsubsection{Assembly}
+
+\begin{proposition}\label{w2:assembly}
+Let $C_0\ge1$, $\Gamma_0>1$, $D^*>0$, $\eta_0\ge0$, $\xi\ge0$, $\eta_1\ge0$, and assume \eqref{w2:window}. Let $K_{uu'}=K^0_{uu'}+K^{\deg}_{uu'}$ with
+\begin{enumerate}[label=(\roman*),leftmargin=*]
+\item $K^{\deg}_{uu'}=0$ for $u\ne u'$,
+\item $\lVert K^{\deg}_{uu}\rVert_\HS^2\le\xi d^S_u$,
+\item $\lVert K^0_{uu'}\rVert_\HS^2\le(1+\eta_0)d^S_ud^S_{u'}/D^*$ for $u\ne u'$,
+\item $\lVert K^0_{uu}-1\rVert_\HS^2\le\Gamma_0(d^S_u)^2/D^*$,
+\item $\lvert D_{\mathrm{all}}-D^*\rvert\le\eta_1D^*$.
+\end{enumerate}
+Then the conclusion of Theorem~\ref{w2:S} holds with these $\eta_0,\eta_1$ and $e_0=2C_0/\Gamma_0+2\xi$.
+\end{proposition}
+
+\begin{proof}
+Off the diagonal use (i) and (iii). On the diagonal, $\lVert A+B\rVert^2\le2\lVert A\rVert^2+2\lVert B\rVert^2$ with $A=K^0_{uu}-1$, $B=K^{\deg}_{uu}$ and (iv), (ii) give $\lVert K_{uu}-1\rVert_\HS^2\le2\Gamma_0(d^S_u)^2/D^*+2\xi d^S_u$, and \eqref{w2:window} gives $\Gamma_0(d^S_u)^2/D^*\le(C_0/\Gamma_0)d^S_u$.
+\end{proof}
+
+\subsubsection{The pair bound}
+
+Unfolding $\langle\mathcal P_uT,\mathcal P_{u'}T'\rangle$ as in Proposition~\ref{w2:unfold}, with $\theta=\overline{P_{T}}$, writes $K_{uu'}$ as a sum over $S_u(F)\backslash G(F)/S_{u'}(F)$ of archimedean orbital integrals of $W_u\otimes\overline{W_{u'}}$. We organize the terms as follows, and the next theorem is the Hilbert space lemma that closes the off-diagonal clause.
+
+\begin{definition}[term families]\label{w2:terms}
+A term family consists of a countable set of terms $t$, each with an operator $\mathrm{op}(t)$ in a Hilbert space of operators, a vector $\mathrm{vec}(t)$ in a Hilbert space $H_1$, a row $\mathrm{row}(t)$, a Gram value $G(t)$ and two flags, $\mathrm{isId}(t)$ and $\mathrm{gen}(t)$; a finite set $I$ with a map $\iota$ from rows to $I$; a hermitian matrix $(\Gamma_{ij})_{i,j\in I}$ and a number $\Gamma_1>0$; for pairs of terms in one row a corank $s_0(t,t')\in\mathbb Z_{\ge0}$ and a flag $\mathrm{scal}(t,t')$. Put $\mathrm{id}=\{\mathrm{isId}\}$, $\mathrm{deg}=\{G=0,\neg\mathrm{isId}\}$, $\mathrm{ng}=\{G\ne0,\neg\mathrm{gen}\}$, $\mathrm{gen}=\{G\ne0,\mathrm{gen}\}$, $\mathrm{part}(S)=\sum_{t\in S}\mathrm{op}(t)$, $v_i(S)=\sum_{t\in S,\ \iota(\mathrm{row}\,t)=i}\mathrm{vec}(t)$. For a set $Q$ of pairs in one row put $\Sigma(Q)=\Gamma_1\sum_Q\operatorname{Re}\langle\mathrm{vec}(t),\mathrm{vec}(t')\rangle$ and $\lvert\Sigma\rvert(Q)=\Gamma_1\sum_Q\lvert\langle\mathrm{vec}(t),\mathrm{vec}(t')\rangle\rvert$. Let $\mathrm{big}(S)$ be the pairs in $S\times S$ in one row with $s_0\ge2$, $\mathrm{one}(S)$ those with $s_0=1$, split into $\mathrm{sc}(S)$ (with $\mathrm{scal}$) and $\mathrm{nsc}(S)$.
+\end{definition}
+
+\begin{theorem}[pair bound]\label{w2:pair}
+Assume $\sum_t\lVert\mathrm{op}(t)\rVert<\infty$, $\sum_t\lVert\mathrm{vec}(t)\rVert<\infty$, and
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item $\lVert\mathrm{part}(S)\rVert^2=\operatorname{Re}\sum_{i,j}\Gamma_{ij}\langle v_i(S),v_j(S)\rangle$ for $S=\mathrm{gen}$ and $S=\mathrm{ng}$,
+\item $P_g\Gamma_1\cdot1-(\Gamma_{ij})$ is positive semidefinite for some $P_g\ge0$,
+\item $\langle\mathrm{vec}(t),\mathrm{vec}(t')\rangle=0$ if $\iota(\mathrm{row}\,t)=\iota(\mathrm{row}\,t')$ and $\mathrm{row}\,t\ne\mathrm{row}\,t'$,
+\item $s_0(t,t')\ge1$ if $t,t'$ lie in one row and $G(t),G(t')\ne0$,
+\item $\mathrm{part}(\mathrm{id})=0$ and $\mathrm{part}(\mathrm{deg})=0$,
+\item with $dd\ge0$: $\lvert\Sigma\rvert(\mathrm{big}(\mathrm{gen}\cup\mathrm{ng}))\le\varepsilon\,dd$, $\lvert\Sigma\rvert(\mathrm{nsc}(\mathrm{gen}))\le\varepsilon\,dd$, $\Sigma(\mathrm{sc}(\mathrm{gen}))\le A\,dd$ and $\Sigma(\mathrm{one}(\mathrm{ng}))\le\varepsilon'\,dd$.
+\end{enumerate}
+Then $\lVert\sum_t\mathrm{op}(t)\rVert^2\le\bigl(\sqrt{P_g(A+2\varepsilon)}+\sqrt{P_g(\varepsilon+\varepsilon')}\bigr)^2dd$.
+\end{theorem}
+
+\begin{proof}
+By (b), $\operatorname{Re}\sum_{ij}\Gamma_{ij}\langle a_i,a_j\rangle\le P_g\Gamma_1\sum_i\lVert a_i\rVert^2$ for all vectors $a_i$. With (a), $\lVert\mathrm{part}(S)\rVert^2\le P_g\Phi(S)$ where $\Phi(S)=\Gamma_1\sum_i\lVert v_i(S)\rVert^2$. Expanding $\lVert v_i(S)\rVert^2$ and using (c), only pairs in one row remain, so $\Phi(S)=\Sigma(\text{pairs of }S\text{ in one row})$. By (d), $\Phi(\mathrm{gen})=\Sigma(\mathrm{big}(\mathrm{gen}))+\Sigma(\mathrm{nsc}(\mathrm{gen}))+\Sigma(\mathrm{sc}(\mathrm{gen}))\le(A+2\varepsilon)dd$ and $\Phi(\mathrm{ng})=\Sigma(\mathrm{big}(\mathrm{ng}))+\Sigma(\mathrm{one}(\mathrm{ng}))\le(\varepsilon+\varepsilon')dd$, using $\Sigma\le\lvert\Sigma\rvert$ and monotonicity of $\lvert\Sigma\rvert$. By (e), $\sum_t\mathrm{op}(t)=\mathrm{part}(\mathrm{gen})+\mathrm{part}(\mathrm{ng})$, and the triangle inequality ends the proof.
+\end{proof}
+
+\begin{lemma}\label{w2:partition}
+For $g\ge3$ and every $k$, $\prod_{i=1}^k(1-g^{-i})^{-1}\le1+3/g$.
+\end{lemma}
+
+\begin{proof}
+With $y=1/g$, $\prod_{i\ge1}(1-y^i)^{-1}=\sum_{n\ge0}p(n)y^n$, and $p(n)\le2^{n-1}$ for $n\ge1$ because sorting the parts of a composition gives every partition. So the product is at most $1+y/(1-2y)\le1+3y$ for $y\le1/3$.
+\end{proof}
+
+Lemma~\ref{w2:partition} is the estimate behind the value $P_g=(1+3/g_1)^f(1+3/g_2)^f$ in Hypothesis~\ref{w2:H-KE} below: the matrix $(\Gamma_{ij})$ contains the finite group factors at the typed places, and its diagonal dominance costs a $p$-adic volume factor of the form $\prod_i(1-g^{-i})^{-1}$ at each of them.
+
+\begin{lemma}[closing numerics]\label{w2:close}
+Let $b\ge16$, $0\le P_g\le e^{6b^{-7}}$, $A\le(1+b^{-7})e^{b^{-14}}$ and $0\le\varepsilon,\varepsilon'\le b^{-14}$. Then $\bigl(\sqrt{P_g(A+2\varepsilon)}+\sqrt{P_g(\varepsilon+\varepsilon')}\bigr)^2\le1+b^{-6}$.
+\end{lemma}
+
+\begin{proof}
+Put $t=b^{-7}\le16^{-7}$. Then $P_g(A+2\varepsilon)\le e^{6t}(1+t)e^{t^2}+2e^{6t}t^2\le1+8t$ and $P_g(\varepsilon+\varepsilon')\le2e^{6t}t^2\le3t^2$. The square is at most $1+8t+3t^2+2\sqrt{3t^2(1+8t)}\le1+12t$, and $12t=12b^{-1}b^{-6}\le b^{-6}$.
+\end{proof}
+
+\begin{corollary}[off-diagonal and diagonal clauses from the row estimates]\label{w2:offdiag}
+Let $b\ge16$. Suppose that for each pair of words the terms of $K_{uu'}$ form a term family with (a) to (d) of Theorem~\ref{w2:pair}, with $P_g\le e^{6b^{-7}}$, and with $\mathrm{part}(\mathrm{deg})=K^{\deg}_{uu'}$, $\mathrm{part}(\mathrm{id})=0$ for $u\ne u'$ and $\mathrm{part}(\mathrm{id})=1$ for $u=u'$. Suppose the row estimates (f) hold with $\varepsilon,\varepsilon'\le b^{-14}$ and
+\[
+dd=d^S_ud^S_{u'}/D^*,\qquad A\le(1+b^{-7})e^{b^{-14}}\ (u\ne u'),\qquad A\le\gamma_B\ (u=u'),
+\]
+with $\gamma_B\ge1$ and $\Gamma_0\ge6\gamma_B$. Then (iii) of Proposition~\ref{w2:assembly} holds with $\eta_0=b^{-6}$, and (iv) holds.
+\end{corollary}
+
+\begin{proof}
+For $u\ne u'$ apply Theorem~\ref{w2:pair} to the terms other than the degenerate ones, whose sum is $K^0_{uu'}$, and Lemma~\ref{w2:close}. For $u=u'$ apply Theorem~\ref{w2:pair} to the terms other than the identity and degenerate ones, whose sum is $K^0_{uu}-1$. With $(\sqrt a+\sqrt b)^2\le2a+2b$ the bound is $2P_g(\gamma_B+4b^{-14})(d^S_u)^2/D^*\le6\gamma_B(d^S_u)^2/D^*\le\Gamma_0(d^S_u)^2/D^*$.
+\end{proof}
+
+\subsubsection{The inputs from the construction}\label{w2:sec:Sinputs}
+
+Proposition~\ref{w2:assembly} and Corollary~\ref{w2:offdiag} reduce Theorem~\ref{w2:S} to the following statements about the concrete Gram operators.
+
+\begin{hypothesis}[S-KE, kernel expansion]\label{w2:H-KE}
+For every pair of words the unfolding of $\langle\mathcal P_uT,\mathcal P_{u'}T'\rangle$ converges absolutely and produces a term family with (a) to (d) of Theorem~\ref{w2:pair}, $P_g=(1+3/g_1)^f(1+3/g_2)^f$, $\mathrm{part}(\mathrm{id})=0$ and $\mathrm{part}(\mathrm{deg})=0$ for $u\ne u'$, $\mathrm{part}(\mathrm{id})=1$ for $u=u'$.
+\end{hypothesis}
+
+\begin{hypothesis}[S-MR, main row]\label{w2:H-MR}
+$\Sigma(\mathrm{sc}(\mathrm{gen}))\le(1+\delta)e_1\,d^S_ud^S_{u'}/D^*$ for $u\ne u'$, with $0\le\delta\le b^{-7}$ and $1\le e_1\le\exp(12f2^{-(k-2r-2)})$; and $\Sigma(\mathrm{sc}(\mathrm{gen}))\le\gamma_B(d^S_u)^2/D^*$ for $u=u'$, with $\gamma_B=\exp(C_Bm^5f\log b)$.
+\end{hypothesis}
+
+\begin{hypothesis}[S-LR, loops]\label{w2:H-LR}
+Each of the sums $\lvert\Sigma\rvert(\mathrm{big}(\mathrm{gen}\cup\mathrm{ng}))$ and $\lvert\Sigma\rvert(\mathrm{nsc}(\mathrm{gen}))$ is at most $\exp(-\tfrac13kf\log k)\,dd$.
+\end{hypothesis}
+
+\begin{hypothesis}[S-NG, nongeneric terms]\label{w2:H-NG}
+$\Sigma(\mathrm{one}(\mathrm{ng}))\le2^{-(k-2r-5)}\exp(C_4m^5f\log b)\,dd$.
+\end{hypothesis}
+
+\begin{hypothesis}[S-DG, degenerate terms]\label{w2:H-DG}
+$\lVert K^{\deg}_{uu}\rVert_\HS^2\le\exp(-kf\log k)\,d^S_u$.
+\end{hypothesis}
+
+\begin{hypothesis}[S-DIM, multiplicity formula]\label{w2:H-DIM}
+$\lvert D_{\mathrm{all}}-D^*\rvert\le\exp(-c\,rf\log r)\,D^*$ for an absolute $c>0$.
+\end{hypothesis}
+
+\begin{hypothesis}[S-SZ, sizes]\label{w2:H-SZ}
+$b=e^{x^\varepsilon}\ge16$, $(kb)^8\le g_1,g_2$, $f\le k^8b$, $70\log b\le k$, $k\ge8\log\Gamma_0$, $C_\Gamma\ge\max(C_B,C_4)+1$, the quantities $\exp(-\tfrac13kf\log k)$ and $2^{-(k-2r-5)}\exp(C_4m^5f\log b)$ are at most $b^{-14}$, $12f2^{-(k-2r-2)}\le b^{-14}$, and $c\,rf\log r\ge x^{\varepsilon/8}$.
+\end{hypothesis}
+
+\begin{theorem}\label{w2:Sproof}
+Hypotheses~\ref{w2:H-KE} to~\ref{w2:H-SZ} imply Theorem~\ref{w2:S} for $x$ large in terms of $\varepsilon$ and $C_0$.
+\end{theorem}
+
+\begin{proof}
+By \ref{w2:H-SZ}, $P_g\le\exp(3f(g_1^{-1}+g_2^{-1}))\le\exp(6f(kb)^{-8})\le e^{6b^{-7}}$, $(1+\delta)e_1\le(1+b^{-7})e^{b^{-14}}$, and $\varepsilon=\exp(-\tfrac13kf\log k)$, $\varepsilon'$ of \ref{w2:H-NG} are at most $b^{-14}$. Also $\Gamma_0/\gamma_B=\exp((C_\Gamma-C_B)m^5fL)\ge e^{L}\ge6$ since $L=\log b$. Corollary~\ref{w2:offdiag} gives (iii) with $\eta_0=b^{-6}$ and (iv) of Proposition~\ref{w2:assembly}; \ref{w2:H-KE} gives (i); \ref{w2:H-DG} gives (ii) with $\xi=\exp(-kf\log k)$; \ref{w2:H-DIM} gives (v) with $\eta_1=\exp(-crf\log r)$. Proposition~\ref{w2:assembly} gives the three clauses with $e_0=2C_0/\Gamma_0+2\xi$. With $y=x^{\varepsilon/8}$: $\eta_0=e^{-6y^8}\le e^{-y}$; $\eta_1\le e^{-y}$ by \ref{w2:H-SZ}; $\log\Gamma_0\ge C_\Gamma y^8$ and $k\ge8\log\Gamma_0$ give $2C_0/\Gamma_0+2\xi\le e^{-2y}$ for large $y$, so $\sqrt{e_0}\le e^{-y}$.
+\end{proof}
+
+\begin{remark}[the window]\label{w2:rem:window}
+Theorem~\ref{w2:S} assumes \eqref{w2:window}. Theorem~\ref{r3:A3} uses its conclusion, so the construction of the words must establish \eqref{w2:window}. The lower half of \eqref{w2:window} is the hypothesis $d^S_u\ge D^*/(C_0\Gamma_0^2)$ of Lemma~\ref{r3:sizecond}.
+\end{remark}
+
+\begin{remark}[no circularity]\label{w2:rem:circ}
+Lemma~\ref{w2:punz} derives the nonvanishing used in the proof of Theorem~\ref{w2:B} from the diagonal clause of Theorem~\ref{w2:S}. Theorem~\ref{w2:S} is a statement about Poincar\'e series alone and its inputs \ref{w2:H-KE} to \ref{w2:H-SZ} do not involve the period maps, so there is no cycle. Theorem~\ref{r3:A3} uses all three theorems.
+\end{remark}
+
+\notgiven{Hypotheses~\ref{w2:H-see} to~\ref{w2:H-SZ} are not proved here.} Section~\ref{fr:sec:frame} describes their content and status.

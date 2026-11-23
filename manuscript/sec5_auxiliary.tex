@@ -1,0 +1,637 @@
+\section{The auxiliary characters and the host field}\label{sec:auxiliary}
+
+Corollary~\ref{asm} leaves two kinds of terms. The first is the bound \eqref{L3} at very large scales, and the second is the value $\lvert G_\psi(x)\rvert$ for the characters $\psi\in\Psi_0\setminus K$. In the application the characters of $\Psi_0\setminus K$ are products of characters of a fixed modulus with the quadratic characters of two auxiliary primes $q$ and $d$. The conductors of these characters exceed every power of $x$, so the required bound at the single point $x$ does not follow from any zero-free region for a fixed $L$-function. This section chooses $q$ and $d$ so that the bound holds on a whole window of values of $x$, by a mean square over a family of prime moduli. It then constructs the CM field $E$ cut out by $q$, $d$ and the target character, together with the remaining data that the arithmetic part of the argument uses.
+
+\subsection{Notation and classical statements}\label{sec:classical}
+
+For a Dirichlet character $\chi$ put $\Theta(u,\chi)=\sum_{n\le u}\Lambda(n)\chi(n)$ and $\Theta(u)=\sum_{n\le u}\Lambda(n)$. For a primitive character $\chi$ modulo $N\ge3$ and $y\ge1$ put
+\begin{equation}\label{Gstar}
+G^\ast_\chi(y)=\sum_{n\le y}\Lambda(n)\chi(n)\Big(\frac yn-1\Big)+\frac{L'(1,\chi)}{L(1,\chi)}\,y ,
+\end{equation}
+so that the function \eqref{Gchi} is $G_\chi=\operatorname{Re}G^\ast_\chi$ and $\lvert G_\chi(y)\rvert\le\lvert G^\ast_\chi(y)\rvert$. A zero of $L(s,\chi)$ means a zero in the strip $0<\operatorname{Re}s<1$. Write $N(\sigma,T,\chi)$ for the number of zeros $\rho$ with $\operatorname{Re}\rho\ge\sigma$ and $\lvert\operatorname{Im}\rho\rvert\le T$, and $\operatorname{li}(X)=\int_2^Xdt/\log t$. We use the following eight statements, in which every constant is absolute.
+\begin{enumerate}
+\item[(C1)] Chebyshev~\cite{chebyshev}. There is $c_0\ge1$ with $\Theta(u)\le c_0u$ and $\pi(u)\log u\le c_0u$ for every $u\ge1$.
+\item[(C2)] The prime number theorem for characters~\cite[Theorem~5.27]{ik}, \cite[Ch.~20]{davenport}. There are $0<c_1\le\frac12$ and $C_1\ge1$ such that for every primitive character $\chi$ modulo $N\ge3$ and every $u\ge2$
+\[
+\Big\lvert\Theta(u,\chi)+\frac{u^{\beta}}{\beta}\Big\rvert\le C_1\,u\,(\log N)^4\exp\Big(-\frac{c_1\log u}{\sqrt{\log u}+\log N}\Big),
+\]
+where the term with $\beta$ is present when $\chi$ is real and $L(s,\chi)$ has a real zero $\beta>1-c_1/\log N$, and is absent otherwise. Moreover $\lvert\Theta(u)-u\rvert\le C_1u\exp(-c_1\sqrt{\log u})$ for $u\ge2$, and the series $\sum_n\Lambda(n)\chi(n)/n$ converges to $-L'(1,\chi)/L(1,\chi)$.
+\item[(C3)] Page~\cite{page}, \cite[Ch.~14]{davenport}. There is $c_2>0$ such that for every $R\ge3$ at most one primitive real character of conductor at most $R$ has a real zero $\beta>1-c_2/\log R$.
+\item[(C4)] Zeros and the explicit formula~\cite[Ch.~16 and~19]{davenport}. Let $\chi$ be a primitive character modulo $N\ge3$. The map $\rho\mapsto1-\bar\rho$ permutes the zeros of $L(s,\chi)$, and for every real $t$ the number of zeros with $\lvert\operatorname{Im}\rho-t\rvert\le1$ is at most $C_2\log(N(\lvert t\rvert+2))$. For $2\le T\le u$,
+\[
+\Big\lvert\Theta(u,\chi)+\frac{u^{\beta_1}}{\beta_1}+\sum_{\lvert\operatorname{Im}\rho\rvert<T}\frac{u^\rho}{\rho}\Big\rvert\le C_2\Big(\frac{u\log^2(Nu)}T+u^{1/4}\log u\Big),
+\]
+where the term with $\beta_1$ is present when the zero $\beta$ of (C2) exists, in which case $\beta_1=\beta$ and the sum omits $\beta_1$ and $1-\beta_1$.
+\item[(C5)] Montgomery's density theorem~\cite[Theorem~12.2]{montgomerytopics}. There is $C_3$ such that for $Q,T\ge2$ and $\frac45\le\sigma\le1$
+\[
+\sum_{N\le Q}\ \sum_{\chi}N(\sigma,T,\chi)\le C_3\,(Q^2T)^{5(1-\sigma)/2}\log^{14}(QT),
+\]
+where the inner sum runs over the primitive characters modulo $N$.
+\item[(C6)] Primes in the class $3$ modulo $8$~\cite[Ch.~20]{davenport}. There is $U_0$ such that for $U\ge U_0$ the number of primes $q\equiv3\pmod8$ with $\sqrt U<q\le U$ is at least $U/(5\log U)$.
+\item[(C7)] Primes in progressions of large modulus. There are $c_6>0$, $A_0'$ and $C_0$ with the following property. For every integer $M$ divisible by $8$, consider the pairs $(\chi_1,\beta_1)$ in which $\chi_1$ is a real nonprincipal character modulo $M$ and $\beta_1$ is a real zero of $L(s,\chi_1)$ with $1-1/(8\log M)<\beta_1<1$. If such pairs exist, one of them can be chosen so that the following estimate holds with the chosen pair, and if no such pair exists the estimate holds with the second form of the main term. For every $X\ge2$ with $C_0\log M\cdot\log(\log M+2)\le\log X$ and every $b$ coprime to $M$, the number $\pi(X;M,b)$ of primes $p\le X$ with $p\equiv b\pmod M$ satisfies
+\[
+\big\lvert\pi(X;M,b)-\mathfrak m(X;M,b)\big\rvert\le A_0'\Big(e^{-c_6\log X/\log M}+e^{-\sqrt{c_6\log X}}\Big)\,\mathfrak m(X;M,b),
+\]
+where $\mathfrak m(X;M,b)=\big(\operatorname{li}(X)-\chi_1(b)\operatorname{li}(X^{\beta_1})\big)/\varphi(M)$ for the chosen pair, and $\mathfrak m(X;M,b)=\operatorname{li}(X)/\varphi(M)$ when no such pair exists.
+\item[(C8)] The distance of a real zero from $1$~\cite[Ch.~14]{davenport}. There is $0<c_7\le1$ such that every real zero $\beta$ of $L(s,\chi)$, for a real nonprincipal character $\chi$ modulo $M\ge3$, satisfies $\beta\le1-c_7/(M^{1/2}\log^2M)$.
+\end{enumerate}
+% TODO(external, C7): source fidelity of (C7) is pending in the external-theorem audit.
+% The derivation below from Gallagher [Invent. Math. 11 (1970), Thm 7] has not been
+% compared line by line with Gallagher's paper. See REWRITE_NOTES.md.
+Statement (C7) is the prime number theorem in arithmetic progressions in the range of Linnik, with the exceptional zero kept in the main term. It follows by partial summation from Gallagher's prime number theorem~\cite[Theorem~7]{gallagher}, which gives the sum of $\log p$ over the primes $p\le X$ in a class modulo $q$ with a relative error $O(e^{-c\log X/\log R})$, uniformly for $q\le R$ and $e^{\sqrt{\log X}}\le R\le X^{c'}$, with the exceptional zero in the main term. With $R=\max(M,e^{\sqrt{\log X}})$ this is the error of (C7), and the hypothesis $C_0\log M\log(\log M+2)\le\log X$ gives $R\le X^{c'}$ when $C_0$ is large. A real zero that lies in one of the two exceptional ranges and not in the other contributes $O(X^{\beta_1-1})$ relative to the main term, which is absorbed after $c_6$ is reduced.
+
+\begin{lemma}\label{boxpsi}
+Let $\chi$ be a primitive character modulo $N\ge3$ and let $Q\ge2$. Suppose that $L(s,\chi)\ne0$ for every $s$ with $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le Q$. Then for every $u\ge2$ and every $T$ with $2\le T\le\min(u,Q)$
+\[
+\lvert\Theta(u,\chi)\rvert\le C_4\Big(u^{1-1/400}\log^2(NT)+\frac{u\log^2(Nu)}T\Big),
+\]
+with an absolute constant $C_4$.
+\end{lemma}
+
+\begin{proof}
+Let $\rho=\beta+i\gamma$ be a zero with $\lvert\gamma\rvert<T$. Then $\beta\le1-\frac1{400}$ by hypothesis, and the same bound for the zero $1-\bar\rho$ gives $\beta\ge\frac1{400}$, so $\lvert u^\rho/\rho\rvert\le u^{1-1/400}/\max(\frac1{400},\lvert\gamma\rvert)$. By the count of zeros in (C4),
+\[
+\sum_{\lvert\gamma\rvert<T}\frac1{\max(\frac1{400},\lvert\gamma\rvert)}\le400\,C_2\log(3N)+\sum_{1\le k\le T}\frac{2C_2\log(N(k+3))}{k}\le C\log^2(NT).
+\]
+If the term with $\beta_1$ is present, then $\frac12\le\beta_1\le1-\frac1{400}$ and $u^{\beta_1}/\beta_1\le2u^{1-1/400}$. Finally $u^{1/4}\log u\le Cu^{1-1/400}$, and the explicit formula of (C4) gives the claim.
+\end{proof}
+
+\subsection{Identities and the thin scales}
+
+\begin{lemma}\label{gchisplit}
+Let $\chi$ be a primitive character modulo $N\ge3$, and let $1\le y\le y'\le Z$. Then
+\begin{align}
+G^\ast_\chi(y)&=-\Theta(y,\chi)-y\sum_{n>y}\frac{\Lambda(n)\chi(n)}{n}=-y\int_y^\infty\frac{\Theta(u,\chi)}{u^2}\,du,\label{id1}\\
+G^\ast_\chi(y)&=-S_Z(y)-y\,T_Z,\label{id2}\\
+\frac{S_Z(y')}{y'}-\frac{S_Z(y)}{y}&=-\int_y^{y'}\frac{\Theta(u,\chi)}{u^2}\,du,\label{id3}
+\end{align}
+where
+\[
+S_Z(y)=\sum_{n\le Z}\Lambda(n)\chi(n)\min\Big(1,\frac yn\Big),\qquad T_Z=\sum_{n>Z}\frac{\Lambda(n)\chi(n)}{n}=-\frac{\Theta(Z,\chi)}{Z}+\int_Z^\infty\frac{\Theta(u,\chi)}{u^2}\,du .
+\]
+The identity \eqref{id3} holds with $\Lambda(n)\chi(n)$ replaced by arbitrary complex coefficients in $S_Z$ and in $\Theta$. Moreover $G(y)=-y\int_y^\infty(\Theta(u)-u)\,u^{-2}\,du$ for the function $G$ of \eqref{G}.
+\end{lemma}
+
+\begin{proof}
+By (C2) the series $\sum_n\Lambda(n)\chi(n)/n$ converges to $-L'(1,\chi)/L(1,\chi)$, so
+\[
+G^\ast_\chi(y)=y\sum_{n\le y}\frac{\Lambda(n)\chi(n)}n-\Theta(y,\chi)-y\sum_{n\ge1}\frac{\Lambda(n)\chi(n)}n ,
+\]
+which is the first equality of \eqref{id1}. For $V>y$, summation by parts gives
+\begin{equation}\label{parts}
+\sum_{y<n\le V}\frac{\Lambda(n)\chi(n)}n=\frac{\Theta(V,\chi)}V-\frac{\Theta(y,\chi)}y+\int_y^V\frac{\Theta(u,\chi)}{u^2}\,du .
+\end{equation}
+By (C2), $\Theta(V,\chi)/V$ tends to zero as $V\to\infty$ and the integral converges, which gives the second equality of \eqref{id1} and, with $y=Z$, the formula for $T_Z$. Splitting the sum over $n>y$ at $Z$ gives \eqref{id2}, because $\min(1,y/n)$ equals $1$ for $n\le y$ and $y/n$ for $y<n\le Z$. The same splitting and \eqref{parts} with $V=Z$ give
+\[
+\frac{S_Z(y)}y=\frac{\Theta(y,\chi)}y+\sum_{y<n\le Z}\frac{\Lambda(n)\chi(n)}n=\frac{\Theta(Z,\chi)}Z+\int_y^Z\frac{\Theta(u,\chi)}{u^2}\,du ,
+\]
+and the difference of this identity at $y'$ and at $y$ is \eqref{id3}. This step is a summation by parts, valid for arbitrary coefficients. For $G$, the same summation by parts gives $\sum_{n\le y}\Lambda(n)/n=\Theta(y)/y+\int_1^y\Theta(u)u^{-2}\,du$, and (C2) together with the expansion of $\zeta'/\zeta$ at $s=1$ gives $\int_1^\infty(\Theta(u)-u)u^{-2}\,du=-1-\gamma$. Hence
+\[
+y\sum_{n\le y}\frac{\Lambda(n)}n-\Theta(y)=y\log y-(1+\gamma)y-y\int_y^\infty\frac{\Theta(u)-u}{u^2}\,du ,
+\]
+and \eqref{G} gives the claim.
+\end{proof}
+
+\begin{proposition}\label{thinprop}
+Let $\chi$ be a primitive character modulo $N\ge3$, let $\lambda\ge\max(1,\log N)$ and $0<c_\ast\le\frac12$, and suppose that either $\chi$ is not real, or $L(\beta,\chi)\ne0$ for every real $\beta$ with $1-c_\ast<\beta<1$. Then for every $y\ge2$, with $t_0=\log y$,
+\[
+\frac{\lvert G^\ast_\chi(y)\rvert}{y}\le\frac{2e^{-c_\ast t_0}}{c_\ast}+C_1\lambda^4\Big(\frac{2\lambda}{c_1}\,e^{-c_1t_0/(2\lambda)}+\frac8{c_1^2}\Big(1+\frac{c_1\sqrt{t_0}}2\Big)e^{-c_1\sqrt{t_0}/2}\Big).
+\]
+\end{proposition}
+
+\begin{proof}
+If the term with $\beta$ in (C2) is present, then $\frac12\le\beta\le1-c_\ast$, so $u^\beta/\beta\le2u^{1-c_\ast}$. Since $\log N\le\lambda$, the bound of (C2) gives, for every $u\ge2$,
+\[
+\lvert\Theta(u,\chi)\rvert\le2u^{1-c_\ast}+C_1\,u\,\lambda^4\exp\Big(-\frac{c_1\log u}{\sqrt{\log u}+\lambda}\Big).
+\]
+For $t>0$ the quotient $t/(\sqrt t+\lambda)$ is at least $\sqrt t/2$ when $\sqrt t\ge\lambda$ and at least $t/(2\lambda)$ otherwise, so with $t=\log u$ the exponential is at most $e^{-c_1t/(2\lambda)}+e^{-c_1\sqrt t/2}$. By \eqref{id1} and the substitution $u=e^t$,
+\[
+\frac{\lvert G^\ast_\chi(y)\rvert}y\le\int_y^\infty\frac{2\,du}{u^{1+c_\ast}}+C_1\lambda^4\int_{t_0}^\infty\Big(e^{-c_1t/(2\lambda)}+e^{-c_1\sqrt t/2}\Big)dt ,
+\]
+and the three integrals equal $2y^{-c_\ast}/c_\ast$, $(2\lambda/c_1)e^{-c_1t_0/(2\lambda)}$ and $(8/c_1^2)(1+c_1\sqrt{t_0}/2)e^{-c_1\sqrt{t_0}/2}$.
+\end{proof}
+
+For the trivial character, the last identity of Lemma~\ref{gchisplit} and the second bound of (C2) give the same decay for $G$.
+
+\subsection{A mean square over prime moduli}
+
+\begin{proposition}\label{meansq}
+Let $Z\ge1$ and $\eta\ge0$, let $P$ be a finite set of primes $q>Z$, let $E_0$ be a finite set of squarefree integers $s>1$, and let $c_n$ for $1\le n\le Z$ be complex numbers. Suppose that $\lvert\sum_{q\in P}(\frac sq)\rvert\le\eta\,\lvert P\rvert$ for every squarefree integer $s$ with $1<s\le Z^2$ and $s\notin E_0$. Then
+\[
+\sum_{q\in P}\Big\lvert\sum_{n\le Z}c_n\Big(\frac nq\Big)\Big\rvert^2\le\lvert P\rvert\Big(\sum_{\substack{n,n'\le Z\\ nn'\ \mathrm{a\ square}}}\lvert c_nc_{n'}\rvert+\sum_{s\in E_0}\ \sum_{\substack{n,n'\le Z\\ nn'/s\ \mathrm{a\ square}}}\lvert c_nc_{n'}\rvert+\eta\Big(\sum_{n\le Z}\lvert c_n\rvert\Big)^2\Big).
+\]
+\end{proposition}
+
+\begin{proof}
+Expanding the square gives $\sum_{n,n'}c_n\overline{c_{n'}}\sum_{q\in P}(\frac{nn'}q)$. Each $q\in P$ exceeds $Z$, so $q$ does not divide $nn'$. Write $nn'=sr^2$ with $s$ squarefree, so that $s\le Z^2$ and the symbol equals $(\frac sq)$. If $s=1$ the inner sum is $\lvert P\rvert$, if $s\in E_0$ it has absolute value at most $\lvert P\rvert$, and otherwise it has absolute value at most $\eta\lvert P\rvert$.
+\end{proof}
+
+In both choices of auxiliary primes the sum of the symbols $(\frac sq)$ over the candidates is small for most squarefree $s$ and large for the $s$ in a set of the following kind. For $z\ge2$ and an integer $s^\ast\ge1$ without prime factors $p\le z$, let $\mathcal S(z,s^\ast)$ be the set of squarefree integers $s>1$ whose largest divisor without prime factors $p\le z$ equals $1$ or $s^\ast$.
+
+\begin{lemma}\label{coef}
+Let $3\le y\le Z$, let $\kappa(n)$ be complex numbers with $\lvert\kappa(n)\rvert\le1$, and put $c_n=\Lambda(n)\kappa(n)\min(1,y/n)$ for $n\le Z$. Let $z\ge2$ with $z\log y\le\sqrt y$, and let $s^\ast\ge1$ be an integer without prime factors $p\le z$. With the constant $c_0$ of \textup{(C1)},
+\begin{align*}
+\sum_{\substack{n,n'\le Z\\ nn'\ \mathrm{a\ square}}}\lvert c_nc_{n'}\rvert&\le60\,c_0^2\,y\log y,\\
+\sum_{s\in\mathcal S(z,s^\ast)}\ \sum_{\substack{n,n'\le Z\\ nn'/s\ \mathrm{a\ square}}}\lvert c_nc_{n'}\rvert&\le81\,c_0^2\,y,\\
+\sum_{n\le Z}\lvert c_n\rvert&\le3\,c_0\,y\log Z .
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+For a prime $p$ put $W_p=\sum_{a\ge1}\log p\,\min(1,y/p^a)$, and put $W_\square=\sum_m\Lambda(m)\min(1,y/m^2)$, which bounds the sum of $\lvert c_n\rvert$ over the squares $n$.
+
+If $p\le y$, the powers $p^a\le y$ contribute at most $\log y$ to $W_p$, and the powers $p^a>y$ contribute at most $2\log p$, because the numbers $y/p^a$ are less than one and decrease by the factor $p\ge2$. If $p>y$, then $W_p\le2y\log p/p\le2\log y$. Hence $W_p\le3\log y$ for every $p$, and by (C1)
+\[
+\sum_{p\le y}W_p^2\le9\,\pi(y)\log^2y\le9c_0\,y\log y .
+\]
+For $p>y$ we group the primes in the intervals $2^ky<p\le2^{k+1}y$ and use (C1) again,
+\[
+\sum_{p>y}W_p^2\le4y^2\sum_{k\ge0}\pi(2^{k+1}y)\,\frac{\log^2(2^{k+1}y)}{4^ky^2}\le8c_0\,y\sum_{k\ge0}\frac{\log y+(k+1)\log2}{2^k}\le40c_0\,y\log y ,
+\]
+since $\sum_k2^{-k}=2$, $\sum_k(k+1)2^{-k}=4$ and $4\log2\le3\log y$. By (C1) and a summation by parts,
+\[
+W_\square\le\Theta(\sqrt y)+y\sum_{m>\sqrt y}\frac{\Lambda(m)}{m^2}\le c_0\sqrt y+2y\int_{\sqrt y}^\infty\frac{\Theta(u)}{u^3}\,du\le3c_0\sqrt y .
+\]
+Let $n=p^a$ and $n'=p'^{\,b}$ be prime powers. If $nn'$ is a square, then either $p=p'$, or $n$ and $n'$ are both squares, so the first sum is at most $\sum_pW_p^2+W_\square^2\le49c_0y\log y+9c_0^2y\le60c_0^2y\log y$.
+
+For the second sum, write $nn'=sr^2$ with $s>1$ squarefree, so that the prime factors of $s$ are the primes that occur in $nn'$ to an odd power. Let $\mathcal A$ be the set of the $n\le Z$ that are squares or powers of a prime $p\le z$. The sum of $\lvert c_n\rvert$ over $\mathcal A$ is at most
+\[
+W_\square+\sum_{p\le z}W_p\le3c_0\sqrt y+3z\log y\le6c_0\sqrt y .
+\]
+If every prime factor of $s$ is at most $z$, then $n$ and $n'$ both lie in $\mathcal A$, because a prime $p>z$ that occurs in $n$ to an odd power must occur in $n'$ to an odd power, and then $nn'$ is a square. These pairs contribute at most $36c_0^2y$. Otherwise $s\in\mathcal S(z,s^\ast)$ forces the primes $p>z$ dividing $s$ to be the prime factors of $s^\ast$, and $nn'$ has at most two prime factors. If $s^\ast$ is a prime $p^\ast$, then one of $n$, $n'$ is an odd power of $p^\ast$ and the other lies in $\mathcal A$, which contributes at most $2W_{p^\ast}\cdot6c_0\sqrt y\le36c_0\sqrt y\log y$. If $s^\ast$ is a product of two primes, then $n$ and $n'$ are odd powers of these primes, which contributes at most $18\log^2y$. The integer $s^\ast$ is fixed, so at most one of the last two cases occurs, and $18\log^2y\le36c_0\sqrt y\log y\le36c_0^2y$ because $\log y\le\sqrt y$ and $c_0\ge1$. The second sum is therefore at most $72c_0^2y$. Finally, by (C1) and a summation by parts,
+\[
+\sum_{n\le Z}\lvert c_n\rvert\le\Theta(y)+y\sum_{y<n\le Z}\frac{\Lambda(n)}n\le c_0y+y\Big(c_0+c_0\log\frac Zy\Big)\le3c_0\,y\log Z .\qedhere
+\]
+\end{proof}
+
+\subsection{Uniformity on a window}
+
+A mean square bounds a sum at one point $y$ for most $q$, and Corollary~\ref{asm} needs the bound at every point of a window. The identity \eqref{id3} controls a dyadic block of values of $y$ by its left endpoint and one integral.
+
+\begin{proposition}\label{window}
+Let $0<\tau\le\frac12$, $8\le Y\le X$ and $Z\ge2X$, and let $\eta\ge0$ with $\eta\,X\log^2Z\le1$. Let $z\ge2$ with $z\log Y\le\sqrt Y$, and let $s^\ast\ge1$ be an integer without prime factors $p\le z$. Let $P$ be a finite set of primes $q>Z$, and suppose that $\lvert\sum_{q\in P}(\frac sq)\rvert\le\eta\lvert P\rvert$ for every squarefree $s$ with $1<s\le Z^2$ and $s\notin\mathcal S(z,s^\ast)$. Let $\lvert\kappa(n)\rvert\le1$, and for $q\in P$ put
+\[
+S_q(y)=\sum_{n\le Z}\Lambda(n)\kappa(n)\Big(\frac nq\Big)\min\Big(1,\frac yn\Big).
+\]
+Then the number of $q\in P$ for which $\lvert S_q(y)\rvert>\frac12y^{1/2+\tau}$ for some $y$ with $Y\le y\le X$ is at most
+\[
+\frac{16000\,c_0^2}{(1-4^{-\tau})^2}\;\lvert P\rvert\;Y^{-2\tau}\log(2Y).
+\]
+\end{proposition}
+
+\begin{proof}
+Put $\Theta_q(u)=\sum_{n\le u}\Lambda(n)\kappa(n)(\frac nq)$. The function $\sqrt y/\log y$ increases for $y\ge8$, so $z\log y\le\sqrt y$ for every $y\ge Y$. For $Y\le y\le2X$, Proposition~\ref{meansq} with $E_0$ the set of the $s\le Z^2$ in $\mathcal S(z,s^\ast)$, together with Lemma~\ref{coef}, gives
+\[
+\sum_{q\in P}\lvert S_q(y)\rvert^2\le\lvert P\rvert\,c_0^2\Big(60\,y\log y+81\,y+9\,\eta\,y^2\log^2Z\Big)\le159\,c_0^2\,\lvert P\rvert\,y\log y ,
+\]
+because $\eta y^2\log^2Z\le2y$. The same two results with $Z$ replaced by $u$ and $y=u$ give $\sum_{q\in P}\lvert\Theta_q(u)\rvert^2\le159c_0^2\lvert P\rvert u\log u$ for $Y\le u\le2X$. Put $J_q(y)=\int_y^{2y}\lvert\Theta_q(u)\rvert^2u^{-2}\,du$, so that for $Y\le y\le X$
+\[
+\sum_{q\in P}J_q(y)\le159\,c_0^2\,\lvert P\rvert\int_y^{2y}\frac{\log u}u\,du\le159\,c_0^2\,\lvert P\rvert\log(2y).
+\]
+Fix $y$ with $Y\le y\le X$ and let $y\le y'\le2y$. By \eqref{id3} and the Cauchy--Schwarz inequality,
+\begin{equation}\label{block}
+\begin{aligned}
+\lvert S_q(y')\rvert&\le\frac{y'}y\,\lvert S_q(y)\rvert+y'\int_y^{2y}\frac{\lvert\Theta_q(u)\rvert}{u^2}\,du\\
+&\le2\,\lvert S_q(y)\rvert+2y\,J_q(y)^{1/2}\Big(\int_y^{2y}\frac{du}{u^2}\Big)^{1/2}=2\,\lvert S_q(y)\rvert+\sqrt{2y}\,J_q(y)^{1/2}.
+\end{aligned}
+\end{equation}
+By Chebyshev's inequality, the number of $q$ with $\lvert S_q(y)\rvert>\frac18y^{1/2+\tau}$ is at most $64\cdot159\,c_0^2\lvert P\rvert y^{-2\tau}\log y$, and the number of $q$ with $J_q(y)>\frac1{32}y^{2\tau}$ is at most $32\cdot159\,c_0^2\lvert P\rvert y^{-2\tau}\log(2y)$. For every other $q$, \eqref{block} gives
+\[
+\lvert S_q(y')\rvert\le\tfrac14y^{1/2+\tau}+\sqrt{2y}\,\frac{y^{\tau}}{\sqrt{32}}=\tfrac12y^{1/2+\tau}\le\tfrac12y'^{\,1/2+\tau}\qquad(y\le y'\le2y).
+\]
+The blocks with left endpoints $y_i=2^iY$, $0\le i\le\log_2(X/Y)$, cover the interval from $Y$ to $X$. The number of exceptional $q$ is therefore at most
+\[
+96\cdot159\,c_0^2\,\lvert P\rvert\sum_{i\ge0}(2^iY)^{-2\tau}\big(\log(2Y)+i\log2\big)\le\frac{15264\,c_0^2}{(1-4^{-\tau})^2}\,\lvert P\rvert\,Y^{-2\tau}\log(2Y),
+\]
+since $\sum_ir^i+\sum_iir^i=(1-r)^{-2}$ for $r=4^{-\tau}$.
+\end{proof}
+
+\subsection{The first auxiliary prime}
+
+\begin{proposition}\label{legendre}
+There are absolute constants $c_3>0$ and $z_0$ with the following property. Let $z\ge z_0$, let $P$ be the set of primes $q\equiv3\pmod8$ with $e^{z/2}<q\le e^z$, and let $R\ge3$ with $\log(8R)\le\sqrt{z/2}$. Then there is an odd integer $s^\ast\ge1$ such that
+\[
+\Big\lvert\sum_{q\in P}\Big(\frac sq\Big)\Big\rvert\le e^{-c_3\sqrt z}\,\lvert P\rvert\qquad\text{for every squarefree }s\text{ with }1<s\le R\text{ and }s\notin\mathcal S(2,s^\ast).
+\]
+\end{proposition}
+
+\begin{proof}
+Put $U=e^z$. Let $r^\ast$ be the conductor of the character excluded in (C3) at the level $8R$, and let $s^\ast$ be the odd part of $r^\ast$. If that character does not exist, put $s^\ast=1$. Let $s\notin\mathcal S(2,s^\ast)$ be squarefree with $1<s\le R$, and write $s=2^es_1$ with $s_1$ odd, so that $s_1\ne1$ and $s_1\ne s^\ast$. Every $q\in P$ exceeds $s$ and satisfies $q\equiv3\pmod8$, so $(\frac2q)=-1$, and the reciprocity law for the Jacobi symbol gives $(\frac{s_1}q)=(-1)^{(s_1-1)/2}(\frac q{s_1})$. We detect the class of $q$ modulo $8$ with the four characters $\varpi$ modulo $8$ and obtain
+\[
+\sum_{q\in P}\Big(\frac sq\Big)=\pm\frac14\sum_{\varpi}\varpi(3)\sum_{\substack{\sqrt U<q\le U\\ q\ \mathrm{prime}}}\chi'_\varpi(q),
+\]
+where $\chi'_\varpi$ is the primitive real character that induces $\varpi\cdot(\frac{\cdot}{s_1})$. Its conductor is $s_1$ times the conductor of $\varpi$, so it is at least $3$ and at most $8R$, its odd part is $s_1\ne s^\ast$, and $\chi'_\varpi$ is not the character excluded in (C3).
+
+Let $\chi'$ be one of these four characters and let $\sqrt U\le V\le U$, so that $\log V\ge z/2$ and $\log(8R)\le\sqrt{\log V}$. If the term with $\beta$ in (C2) is present, then $\frac12\le\beta\le1-c_2/\log(8R)$ by (C3), and $V^\beta/\beta\le2V\exp(-c_2\sqrt{z/2})$. The exponent in (C2) is at least $c_1\sqrt{\log V}/2\ge c_1\sqrt z/3$, and $(\log8R)^4\le z^2/4$. Hence
+\[
+\lvert\Theta(V,\chi')\rvert\le V\epsilon_1,\qquad\epsilon_1=2e^{-c_2\sqrt{z/2}}+\tfrac14C_1z^2e^{-c_1\sqrt z/3}.
+\]
+The prime powers $p^a\le V$ with $a\ge2$ contribute at most $2c_0\sqrt V\log V$ to $\Theta(V,\chi')$ by (C1), so $\vartheta(V)=\sum_{p\le V}\chi'(p)\log p$ satisfies $\lvert\vartheta(V)\rvert\le V(\epsilon_1+2c_0ze^{-z/4})$ for $\sqrt U\le V\le U$. A summation by parts gives
+\[
+\Big\lvert\sum_{\sqrt U<q\le U}\chi'(q)\Big\rvert=\Big\lvert\frac{\vartheta(U)}{\log U}-\frac{\vartheta(\sqrt U)}{\log\sqrt U}+\int_{\sqrt U}^U\frac{\vartheta(V)}{V\log^2V}\,dV\Big\rvert\le\frac{4U}z\big(\epsilon_1+2c_0ze^{-z/4}\big)
+\]
+for $z\ge4$. By (C6), $\lvert P\rvert\ge U/(5z)$ for large $z$, and therefore
+\[
+\Big\lvert\sum_{q\in P}\Big(\frac sq\Big)\Big\rvert\le20\,\lvert P\rvert\,\big(\epsilon_1+2c_0ze^{-z/4}\big)\le e^{-c_3\sqrt z}\,\lvert P\rvert
+\]
+for $z\ge z_0$, with $c_3=\frac14\min(c_1,c_2)$.
+\end{proof}
+
+\begin{proposition}\label{tailprop}
+There is an absolute constant $C_5$ with the following property. Let $\chi$ be a primitive character modulo $N\ge3$, put $\lambda=\log N$, and let $Q\ge N$. Suppose that $L(s,\chi)\ne0$ for every $s$ with $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le Q$. Then for every $Z$ with $e^{800}\le Z\le\exp(\lambda^4)$ the number $T_Z=\sum_{n>Z}\Lambda(n)\chi(n)/n$ satisfies
+\[
+\lvert T_Z\rvert\le C_5\,\lambda^{12}\Big(Z^{-1/400}+\frac1Q+e^{-c_1\lambda^2/2}\Big),\qquad\Big\lvert\frac{L'(1,\chi)}{L(1,\chi)}\Big\rvert\le c_0(1+\log Z)+\lvert T_Z\rvert .
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{gchisplit}, $T_Z=-\Theta(Z,\chi)/Z+\int_Z^\infty\Theta(u,\chi)u^{-2}\,du$. Put $V_1=\exp(\lambda^4)$. For $Z\le u\le V_1$ we apply Lemma~\ref{boxpsi} with $T=\min(u^{1/400},Q)$, which satisfies $2\le T\le\min(u,Q)$ and $1/T\le u^{-1/400}+1/Q$. Since $\log(Nu)\le2\lambda^4$,
+\[
+\lvert\Theta(u,\chi)\rvert\le4C_4\lambda^8\Big(2u^{1-1/400}+\frac uQ\Big)\qquad(Z\le u\le V_1).
+\]
+This bounds $\lvert\Theta(Z,\chi)\rvert/Z$ by $4C_4\lambda^8(2Z^{-1/400}+1/Q)$, and
+\[
+\int_Z^{V_1}\frac{\lvert\Theta(u,\chi)\rvert}{u^2}\,du\le4C_4\lambda^8\Big(800\,Z^{-1/400}+\frac{\lambda^4}Q\Big).
+\]
+For $u\ge V_1$ we use (C2). If the term with $\beta$ is present, then $\frac12\le\beta\le1-\frac1{400}$ by hypothesis, and $\log u\ge\lambda^2$ gives the exponent $c_1\sqrt{\log u}/2$, so
+\[
+\lvert\Theta(u,\chi)\rvert\le2u^{1-1/400}+C_1\,u\,\lambda^4\,e^{-c_1\sqrt{\log u}/2}\qquad(u\ge V_1).
+\]
+The integral of the first term against $u^{-2}du$ over $u\ge V_1$ is $800V_1^{-1/400}\le800Z^{-1/400}$. With $u=e^t$ the integral of the second term is
+\[
+C_1\lambda^4\int_{\lambda^4}^\infty e^{-c_1\sqrt t/2}\,dt=\frac{8C_1\lambda^4}{c_1^2}\Big(1+\frac{c_1\lambda^2}2\Big)e^{-c_1\lambda^2/2}.
+\]
+The sum of these bounds gives the first claim. For the second, $-L'(1,\chi)/L(1,\chi)=\sum_{n\le Z}\Lambda(n)\chi(n)/n+T_Z$, and (C1) with a summation by parts gives $\sum_{n\le Z}\Lambda(n)/n\le c_0(1+\log Z)$.
+\end{proof}
+
+\begin{proposition}\label{boxes}
+Let $N_0\ge1$ and $Q\ge2$, and let $B$ be a set of odd primes $q>N_0$ with $N_0q\le Q$. Suppose that for every $q\in B$ there is a primitive character $\xi$ of conductor $r$ dividing $N_0$ such that $L(s,\xi\cdot(\frac{\cdot}{q}))$ has a zero with $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le Q$. Then
+\[
+\lvert B\rvert\le C_3\,Q^{3/160}\,(2\log Q)^{14}.
+\]
+\end{proposition}
+
+\begin{proof}
+The character $\xi\cdot(\frac{\cdot}{q})$ is primitive of conductor $rq\le Q$, because $q$ does not divide $N_0$. Since $q$ is the largest prime factor of $rq$, different $q\in B$ give different primitive characters, each with $N(1-\frac1{400},Q,\chi)\ge1$. Statement (C5) with $T=Q$ and $\sigma=1-\frac1{400}$ bounds their number by $C_3(Q^3)^{1/160}\log^{14}(Q^2)$.
+\end{proof}
+
+\begin{theorem}\label{stage1}
+Let $N_0\ge1$ be an integer, and let $K\ge1$, $0<\varepsilon\le\frac1{52}$ and $0<\tau\le\frac12$. There is $Y_0$ such that the following holds for every $Y\ge Y_0$. Put $z=Y^{\varepsilon/5}$, and let $P$ be the set of primes $q\equiv3\pmod8$ with $e^{z/2}<q\le e^z$. Then $P$ is nonempty, and for all $q\in P$ outside a set of at most $Y^{-\tau}\lvert P\rvert$ elements, every primitive character $\xi$ of conductor dividing $N_0$ and the character $\chi=\xi\cdot(\frac{\cdot}{q})$ satisfy
+\begin{enumerate}
+\item[(i)] $L(s,\chi)\ne0$ for every $s$ with $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le N_0e^z$,
+\item[(ii)] $\lvert L'(1,\chi)/L(1,\chi)\rvert\le401\,c_0\,K\log Y$,
+\item[(iii)] $\lvert G^\ast_\chi(y)\rvert\le y^{1/2+\tau}$ for every $y$ with $Y\le y\le Y^K$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Put $X=Y^K$, $Z=X^{400}$, $Q=N_0e^z$ and $U=e^z$. Every inequality that we use between powers of $Y$, powers of $\log Y$ and exponentials of powers of $Y$ holds for $Y\ge Y_0$, with $Y_0$ depending on $N_0$, $K$, $\varepsilon$ and $\tau$. In particular $e^{z/2}>Z^2\ge N_0$, $2X\le Z$, and $\log(8Z^2)\le\sqrt{z/2}$.
+
+\emph{The Legendre symbols.} By (C6) the set $P$ is nonempty and $\lvert P\rvert\ge e^z/(5z)$. Proposition~\ref{legendre} with $R=Z^2$ gives an odd integer $s^\ast$ for which the hypothesis of Proposition~\ref{window} holds with the parameter $2$ in place of $z$ and with $\eta=e^{-c_3\sqrt z}$, and this $\eta$ satisfies $\eta X\log^2Z\le1$.
+
+\emph{The truncated sums.} Let $\xi$ be a primitive character of conductor $r$ dividing $N_0$. For $q\in P$ the character $\chi=\xi\cdot(\frac{\cdot}{q})$ is primitive modulo $rq$, and the sum $S_Z(y)$ of Lemma~\ref{gchisplit} for $\chi$ is the sum $S_q(y)$ of Proposition~\ref{window} with $\kappa=\xi$. There are at most $N_0$ characters $\xi$, so Proposition~\ref{window} gives $\lvert S_Z(y)\rvert\le\frac12y^{1/2+\tau}$ for all $\xi$ and all $Y\le y\le X$, for all $q\in P$ outside a set with at most
+\[
+\frac{16000\,c_0^2\,N_0}{(1-4^{-\tau})^2}\;\lvert P\rvert\;Y^{-2\tau}\log(2Y)\le\tfrac12Y^{-\tau}\lvert P\rvert
+\]
+elements.
+
+\emph{The boxes.} By Proposition~\ref{boxes}, the number of $q\in P$ for which (i) fails for some $\xi$ is at most $C_3Q^{3/160}(2\log Q)^{14}\le Q^{1/4}\le\frac12Y^{-\tau}\lvert P\rvert$, because $\lvert P\rvert\ge e^z/(5z)$ and $Q^{1/4}=N_0^{1/4}e^{z/4}$.
+
+\emph{The tail.} Let $q$ lie outside both exceptional sets, and let $\chi$ be as above, with conductor $N=rq$ and $\lambda=\log N$, so that $z/2<\lambda\le2z$ and $N\le Q$. Then $e^{800}\le Z\le\exp(\lambda^4)$, and Proposition~\ref{tailprop} gives
+\[
+\lvert T_Z\rvert\le C_5(2z)^{12}\Big(\frac1X+\frac1{N_0e^z}+e^{-c_1z^2/8}\Big)\le\frac{2^{13}C_5\,Y^{12\varepsilon/5}}X .
+\]
+Since $12\varepsilon/5<\frac12$, this gives $y\lvert T_Z\rvert\le2^{13}C_5Y^{12\varepsilon/5}\le\frac12y^{1/2+\tau}$ for $Y\le y\le X$, and \eqref{id2} gives (iii). It also gives $\lvert T_Z\rvert\le1$, and the second bound of Proposition~\ref{tailprop} gives
+\[
+\Big\lvert\frac{L'(1,\chi)}{L(1,\chi)}\Big\rvert\le c_0\big(1+400K\log Y\big)+1\le401\,c_0\,K\log Y ,
+\]
+which is (ii).
+\end{proof}
+
+The proof of Theorem~\ref{stage1} uses the classical zero-free region through (C2), the possible exceptional character through (C3), and the density of zeros through (C5). It does not use a zero-free half-plane for any character. The square root in (iii) comes from the mean square over the family of moduli.
+
+\subsection{The second auxiliary prime}\label{sec:stage2}
+
+The second auxiliary prime $d$ is chosen in one residue class of a large modulus. Let $z\ge2$, let $q>z$ be a prime, and put
+\[
+m_0=16\,q\prod_{2<p\le z}p .
+\]
+Let $a_0$ be the residue class modulo $m_0$ with $a_0\equiv7\pmod{16}$ and $a_0\equiv-1$ modulo $q$ and modulo every odd prime $p\le z$. For a prime $d\equiv a_0\pmod{m_0}$ these congruences give $(\frac{-d}p)=1$ for the odd primes $p\le z$ and for $p=q$. They also fix the symbols $(\frac sd)$ for every $s$ whose prime factors are at most $z$, and this is the reason for the sets $\mathcal S(z,s^\ast)$.
+
+\begin{proposition}\label{legendre2}
+There is an absolute constant $U_1$ with the following property. Let $z\ge2$, let $R\ge3$, let $q$ be a prime with $q>\max(z,R)$, and let $m_0$ and $a_0$ be as above. Put $\ell=\log(m_0R)$, let $U\ge U_1$ with
+\[
+\log U\ge16\,\ell\qquad\text{and}\qquad\log U\ge C_0\,\ell\,\log(\ell+2),
+\]
+and let $P$ be the set of primes $d\equiv a_0\pmod{m_0}$ with $\sqrt U<d\le U$. Put
+\[
+\eta=4\log U\,e^{-c_2\log U/\ell}+2A_0'\Big(e^{-c_6\log U/\ell}+e^{-\sqrt{c_6\log U}}\Big)+2U^{-3/8},
+\]
+and suppose that $A_0'\big(e^{-c_6\log U/\ell}+e^{-\sqrt{c_6\log U}}\big)\le\frac14$. Then $\lvert P\rvert\ge U^{3/4}$, and there is an integer $s^\ast\ge1$ without prime factors $p\le z$ such that
+\[
+\Big\lvert\sum_{d\in P}\Big(\frac sd\Big)\Big\rvert\le\eta\,\lvert P\rvert\qquad\text{for every squarefree }s\text{ with }1<s\le R\text{ and }s\notin\mathcal S(z,s^\ast).
+\]
+\end{proposition}
+
+\begin{proof}
+\emph{The symbols.} Let $d\in P$. Then $d\equiv7\pmod8$, so $(\frac2d)=1$ and $d\equiv3\pmod4$. For an odd prime $p\le z$ the reciprocity law and $d\equiv-1\pmod p$ give $(\frac pd)=(-1)^{(p-1)/2}(\frac{-1}p)=1$. Let $s$ be squarefree with $1<s\le R$, and let $s_b$ be its largest divisor without prime factors $p\le z$. Since $s\le R<q$, the integer $s_b$ is coprime to $m_0$, and
+\[
+\Big(\frac sd\Big)=\Big(\frac{s_b}d\Big)=(-1)^{(s_b-1)/2}\,\chi(d),\qquad\chi=\Big(\frac{\cdot}{s_b}\Big).
+\]
+Let $\chi^\ast$ be the character excluded in (C3) at the level $m_0R$, let $s^\ast$ be the largest divisor of its conductor that is coprime to $m_0$, and put $s^\ast=1$ if $\chi^\ast$ does not exist. From now on let $s\notin\mathcal S(z,s^\ast)$, so that $s_b\ne1$ and $s_b\ne s^\ast$, and $\chi$ is a primitive real character modulo $s_b$.
+
+\emph{The progression.} Put $M=m_0s_b$, so that $8$ divides $M$ and $\log M\le\ell$. For $b$ coprime to $s_b$ let $c_b$ be the class modulo $M$ with $c_b\equiv a_0\pmod{m_0}$ and $c_b\equiv b\pmod{s_b}$. Write $\pi_b=\pi(U;M,c_b)$ and $\mathfrak m_b=\mathfrak m(U;M,c_b)$ in the notation of (C7), and put $\mathfrak M=\sum_b\mathfrak m_b$ and $\delta=A_0'(e^{-c_6\log U/\ell}+e^{-\sqrt{c_6\log U}})$. Each $\mathfrak m_b$ is nonnegative, and (C7) gives $\lvert\pi_b-\mathfrak m_b\rvert\le\delta\,\mathfrak m_b$. The primes $d\le U$ in the class $a_0$ modulo $m_0$ that do not divide $s_b$ are counted by $\sum_b\pi_b$, so
+\begin{equation}\label{st2a}
+\Big\lvert\sum_{d\in P}\chi(d)-\sum_b\chi(b)\,\mathfrak m_b\Big\rvert\le\delta\,\mathfrak M+\sqrt U,\qquad\lvert P\rvert\ge(1-\delta)\,\mathfrak M-\sqrt U .
+\end{equation}
+
+\emph{The main terms.} If the pair $(\chi_1,\beta_1)$ of (C7) for the modulus $M$ does not exist, then $\sum_b\chi(b)\mathfrak m_b=0$ and $\mathfrak M=\operatorname{li}(U)/\varphi(m_0)$. If it exists, write $\chi_1=\chi_1'\chi_1''$ with characters $\chi_1'$ modulo $m_0$ and $\chi_1''$ modulo $s_b$, so that $\chi_1(c_b)=\chi_1'(a_0)\chi_1''(b)$. The sum $\sum_b\chi(b)\chi_1''(b)$ equals $\varphi(s_b)$ when $\chi_1''=\chi$ and vanishes otherwise, and $\sum_b\chi_1''(b)$ equals $\varphi(s_b)$ when $\chi_1''$ is principal and vanishes otherwise. Hence
+\begin{equation}\label{st2b}
+\Big\lvert\sum_b\chi(b)\,\mathfrak m_b\Big\rvert\le\frac{\operatorname{li}(U^{\beta_1})}{\varphi(m_0)}\ \text{ if }\chi_1''=\chi,\qquad\sum_b\chi(b)\,\mathfrak m_b=0\ \text{ otherwise},
+\end{equation}
+and $\mathfrak M\ge(\operatorname{li}(U)-\operatorname{li}(U^{\beta_1}))/\varphi(m_0)$ in every case.
+
+\emph{A lower bound for $\mathfrak M$.} By (C8), $1-\beta_1\ge c_7/(M^{1/2}\log^2M)$. Since $1-e^{-t}\ge\frac12\min(1,t)$ for $t\ge0$,
+\[
+\operatorname{li}(U)-\operatorname{li}(U^{\beta_1})\ge\frac{U-U^{\beta_1}}{\log U}\ge\frac U{2\log U}\min\big(1,(1-\beta_1)\log U\big)\ge\frac{c_7\,U}{2M^{1/2}\log^2M\,\log U}
+\]
+for large $U$. With $\varphi(m_0)\le M\le U^{1/16}$ this gives $\mathfrak M\ge U^{7/8}$ for $U\ge U_1$, and the same bound holds when the pair does not exist. Since $\delta\le\frac14$ and $\sqrt U\le U^{-3/8}\mathfrak M$, the second inequality of \eqref{st2a} gives $\lvert P\rvert\ge\frac12\mathfrak M\ge U^{3/4}$.
+
+\emph{The exceptional term.} Suppose that the pair exists and $\chi_1''=\chi$. The primitive character that induces $\chi_1$ is real, its conductor is at most $M\le m_0R$, and the largest divisor of its conductor that is coprime to $m_0$ is $s_b$. Since $s_b\ne s^\ast$, this character is not $\chi^\ast$, and (C3) gives $\beta_1\le1-c_2/\ell$. Then $\operatorname{li}(U^{\beta_1})\le U^{\beta_1}\le Ue^{-c_2\log U/\ell}$ and $\operatorname{li}(U)\ge U/(2\log U)$, and in this case $\mathfrak M=\operatorname{li}(U)/\varphi(m_0)$, so \eqref{st2b} gives
+\[
+\Big\lvert\sum_b\chi(b)\,\mathfrak m_b\Big\rvert\le2\log U\,e^{-c_2\log U/\ell}\;\mathfrak M .
+\]
+This bound also holds in the other cases, where the left side vanishes.
+
+\emph{Conclusion.} The first inequality of \eqref{st2a} and $\mathfrak M\le2\lvert P\rvert$ give
+\[
+\Big\lvert\sum_{d\in P}\chi(d)\Big\rvert\le\Big(2\log U\,e^{-c_2\log U/\ell}+\delta+U^{-3/8}\Big)\mathfrak M\le\eta\,\lvert P\rvert .\qedhere
+\]
+\end{proof}
+
+\begin{theorem}\label{stage2}
+Let $N_0\ge1$ be an integer, and let $K\ge1$, $0<\varepsilon\le\frac1{52}$ and $0<\tau\le\frac12$. There is $Y_0$ such that the following holds for every $Y\ge Y_0$. Put $z=Y^{\varepsilon/5}$, let $q\equiv3\pmod8$ be a prime with $e^{z/2}<q\le e^z$, let $z'$ satisfy $z\log^2Y\le z'\le K^2z\log^2Y$, and let $P$ be the set of primes $d$ with $e^{z'/2}<d\le e^{z'}$, $d\equiv7\pmod{16}$ and $d\equiv-1$ modulo $q$ and modulo every odd prime $p\le z$. Then $P$ is nonempty, and for all $d\in P$ outside a set of at most $Y^{-\tau}\lvert P\rvert$ elements, every primitive character $\xi$ of conductor dividing $N_0$, every $a\in\{0,1\}$ and the character $\chi=\xi\cdot(\frac{\cdot}{q})^a(\frac{\cdot}{d})$ satisfy
+\begin{enumerate}
+\item[(i)] $L(s,\chi)\ne0$ for every $s$ with $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le N_0e^{z+z'}$,
+\item[(ii)] $\lvert L'(1,\chi)/L(1,\chi)\rvert\le401\,c_0\,K\log Y$,
+\item[(iii)] $\lvert G^\ast_\chi(y)\rvert\le y^{1/2+\tau}$ for every $y$ with $Y\le y\le Y^K$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Put $X=Y^K$, $Z=X^{400}$, $R=Z^2$, $U=e^{z'}$ and $Q=N_0e^{z+z'}$, and let $m_0$ and $a_0$ be as above, so that $P$ is the set of Proposition~\ref{legendre2}. As in the proof of Theorem~\ref{stage1}, the inequalities between powers of $Y$, powers of $\log Y$ and exponentials that we use hold for $Y\ge Y_0$.
+
+\emph{The Legendre symbols.} By (C1), $\log m_0\le\log16+z+c_0z$, so $\ell=\log(m_0R)\le(2+c_0)z$ and
+\[
+\frac{\log U}{\ell}\ge\frac{\log^2Y}{2+c_0}.
+\]
+The hypotheses of Proposition~\ref{legendre2} therefore hold, with $q>e^{z/2}>\max(z,R)$, and its number $\eta$ is at most $\exp(-c\log^2Y)$ for a constant $c>0$, so that $\eta X\log^2Z\le1$. The proposition gives $\lvert P\rvert\ge e^{3z'/4}$ and an integer $s^\ast$ for which the hypothesis of Proposition~\ref{window} holds with this $\eta$ and this $z$. The condition $z\log Y\le\sqrt Y$ of Proposition~\ref{window} holds because $\varepsilon/5<\frac12$, and every $d\in P$ exceeds $Z$.
+
+\emph{The truncated sums.} Let $\xi$ be a primitive character of conductor $r$ dividing $N_0$ and let $a\in\{0,1\}$. For $d\in P$ the character $\chi=\xi\cdot(\frac{\cdot}{q})^a(\frac{\cdot}{d})$ is primitive modulo $rq^ad$, and its sum $S_Z(y)$ is the sum $S_d(y)$ of Proposition~\ref{window} with $\kappa=\xi\cdot(\frac{\cdot}{q})^a$. There are at most $2N_0$ pairs $(\xi,a)$, so $\lvert S_Z(y)\rvert\le\frac12y^{1/2+\tau}$ for all pairs and all $Y\le y\le X$, for all $d\in P$ outside a set with at most
+\[
+\frac{32000\,c_0^2\,N_0}{(1-4^{-\tau})^2}\;\lvert P\rvert\;Y^{-2\tau}\log(2Y)\le\tfrac12Y^{-\tau}\lvert P\rvert
+\]
+elements.
+
+\emph{The boxes.} The characters $\chi$ are primitive of conductor at most $Q$, and different $d$ give different characters because $d$ is the largest prime factor of the conductor. As in Proposition~\ref{boxes}, (C5) bounds the number of $d\in P$ for which (i) fails for some pair $(\xi,a)$ by $C_3Q^{3/160}(2\log Q)^{14}\le Q^{1/4}$, and $Q^{1/4}=N_0^{1/4}e^{(z+z')/4}\le\frac12Y^{-\tau}e^{3z'/4}$.
+
+\emph{The tail.} Let $d$ lie outside both exceptional sets and let $\chi$ be as above, with conductor $N=rq^ad$ and $\lambda=\log N$, so that $z'/2<\lambda\le2z'$ and $N\le Q$. Then $e^{800}\le Z\le\exp(\lambda^4)$, and Proposition~\ref{tailprop} gives
+\[
+\lvert T_Z\rvert\le C_5(2z')^{12}\Big(\frac1X+\frac1Q+e^{-c_1z'^2/8}\Big)\le\frac{2^{13}C_5\,K^{24}\,Y^{12\varepsilon/5}\log^{24}Y}X .
+\]
+Since $12\varepsilon/5<\frac12$, this gives $y\lvert T_Z\rvert\le\frac12y^{1/2+\tau}$ for $Y\le y\le X$, and \eqref{id2} gives (iii). It also gives $\lvert T_Z\rvert\le1$, and the second bound of Proposition~\ref{tailprop} gives $\lvert L'(1,\chi)/L(1,\chi)\rvert\le c_0(1+400K\log Y)+1\le401\,c_0\,K\log Y$, which is (ii).
+\end{proof}
+
+The modulus $m_0$ has $\log m_0$ of order $z$, while $\log d$ has order $z\log^2Y$. This ratio produces the factor $\exp(-c\log^2Y)$ in the proof, and it takes the argument outside the range of (C2) and (C3) into the range of (C7).
+
+\begin{corollary}\label{realbox}
+Let $M_1\ge1$ be an odd integer and $N_0=8M_1$, let $z,z'>0$, and let $q\le e^z$ and $d\le e^{z'}$ be distinct primes larger than $N_0$. Suppose that $L(s,\xi\cdot(\frac{\cdot}{q}))\ne0$ for $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le N_0e^z$, and that $L(s,\xi\cdot(\frac{\cdot}{q})^a(\frac{\cdot}{d}))\ne0$ for $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le N_0e^{z+z'}$, for every primitive character $\xi$ of conductor dividing $N_0$ and every $a\in\{0,1\}$. Let $\chi$ be a real primitive Dirichlet character whose conductor $N$ divides $2^jM_1qd$ for some $j\ge0$. If $d$ divides $N$, then $N\le N_0e^{z+z'}$ and $L(s,\chi)\ne0$ for $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le N_0e^{z+z'}$. If $q$ divides $N$ and $d$ does not, the same holds with $N_0e^z$ in place of $N_0e^{z+z'}$.
+\end{corollary}
+
+\begin{proof}
+A real primitive character is the product of real primitive characters whose conductors are the prime powers that divide its conductor exactly. The conductor at $2$ is $1$, $4$ or $8$, and the conductor at an odd prime $p$ is $p$, with the character $(\frac{\cdot}{p})$~\cite[Ch.~5]{davenport}. Hence $\chi=\xi\cdot(\frac{\cdot}{q})^a(\frac{\cdot}{d})^b$, where $a=1$ when $q$ divides $N$, $b=1$ when $d$ divides $N$, and $\xi$ is a real primitive character whose conductor divides $8M_1=N_0$. The conductor is $N\le N_0q^ad^b$, and the two hypotheses give the two claims.
+\end{proof}
+
+\subsection{The host field}\label{sec:field}
+
+The CM field of the argument is cut out by the target character $\psi_0$ and by the primes $q$ and $d$.
+
+\begin{proposition}\label{field}
+Let $\psi_0$ be a Dirichlet character of conductor $M_\psi$ and order $o$, let $e\ge0$ be an integer, and let $q\ne d$ be primes with $q\equiv d\equiv3\pmod4$ that do not divide $M_\psi$. Put $N_1=\operatorname{lcm}(2^{e+2},M_\psi)$ and $N=N_1qd$, let $U_1$ be the group of the classes $a\in(\mathbb Z/N_1)^\times$ with $a\equiv\pm1\pmod{2^{e+2}}$ and $\psi_0(a)=1$, and let $U$ be the group of the classes $a\in(\mathbb Z/N)^\times$ whose reduction modulo $N_1$ lies in $U_1$ and that are squares modulo $q$ and modulo $d$. Let $E$ be the subfield of $\mathbb Q(\zeta_N)$ fixed by the automorphisms $\zeta_N\mapsto\zeta_N^a$ with $a\in U$, and put $H=(\mathbb Z/N_1)^\times/U_1$.
+\begin{enumerate}
+\item[(i)] The field $E$ is Galois over $\mathbb Q$ with group isomorphic to $(\mathbb Z/2)^2\times H$.
+\item[(ii)] The field $E$ is a CM field, and it contains $\sqrt{-q}$ and $\sqrt{-d}$.
+\item[(iii)] Reduction modulo $2^{e+2}$ induces a surjection of $H$ onto the cyclic group $(\mathbb Z/2^{e+2})^\times/\{\pm1\}$ of order $2^e$. Its kernel has order $c$ for a divisor $c$ of $o$, so that $[E:\mathbb Q]=4n$ with $n=c\,2^e$.
+\item[(iv)] The image $A_0$ in $H$ of the kernel of $\psi_0$ is a cyclic group of index $o$ and order $n/o$, the surjection of (iii) is injective on $A_0$, and the characters of $H$ that are trivial on $A_0$ are the powers of $\psi_0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) The integers $N_1$, $q$ and $d$ are pairwise coprime, so $(\mathbb Z/N)^\times$ is the product of $(\mathbb Z/N_1)^\times$, $(\mathbb Z/q)^\times$ and $(\mathbb Z/d)^\times$, and $U$ is the product of $U_1$ and the two groups of squares. The Galois group of $\mathbb Q(\zeta_N)$ over $\mathbb Q$ is $(\mathbb Z/N)^\times$, which is abelian, so $E$ is Galois over $\mathbb Q$ with group $(\mathbb Z/N)^\times/U$. This quotient is the product of $H$ with the quotients of $(\mathbb Z/q)^\times$ and $(\mathbb Z/d)^\times$ by their squares, each of order $2$.
+
+(ii) The subfield of $\mathbb Q(\zeta_q)$ fixed by the squares modulo $q$ is the quadratic field of discriminant $(-1)^{(q-1)/2}q$, which is $\mathbb Q(\sqrt{-q})$ because $q\equiv3\pmod4$. Every element of $U$ is a square modulo $q$, so $\sqrt{-q}\in E$, and $\sqrt{-d}\in E$ for the same reason. Complex conjugation is the automorphism with $a=-1$, and it maps $\sqrt{-q}$ to $-\sqrt{-q}$. Since $E$ is abelian over $\mathbb Q$, complex conjugation commutes with every embedding of $E$ into $\mathbb C$, so its fixed field is totally real and $E$ is a totally imaginary quadratic extension of it.
+
+(iii) The group $(\mathbb Z/2^{e+2})^\times$ is the product of $\{\pm1\}$ and the cyclic group of order $2^e$ generated by $5$, so its quotient by $\{\pm1\}$ is cyclic of order $2^e$. Reduction from $(\mathbb Z/N_1)^\times$ to $(\mathbb Z/2^{e+2})^\times$ is surjective and maps $U_1$ into $\{\pm1\}$, which gives the surjection. Let $V$ be the group of the classes $a\in(\mathbb Z/N_1)^\times$ with $a\equiv\pm1\pmod{2^{e+2}}$. The kernel of the surjection is $V/U_1$, and $\psi_0$ maps $V$ to the group of the $o$-th roots of unity with kernel $U_1$. Hence $V/U_1$ is isomorphic to a subgroup of a cyclic group of order $o$, and its order $c$ divides $o$. Then $\lvert H\rvert=c\,2^e$, and (i) gives the degree.
+
+(iv) The kernel of $\psi_0$ in $(\mathbb Z/N_1)^\times$ contains $U_1$ and has index $o$, because $\psi_0$ maps onto the $o$-th roots of unity. So $A_0$ has index $o$ in $H$ and order $n/o$. If a class $a$ in the kernel of $\psi_0$ satisfies $a\equiv\pm1\pmod{2^{e+2}}$, then $a\in U_1$, so the surjection of (iii) is injective on $A_0$, and $A_0$ is cyclic as a subgroup of a cyclic group. A character of $H$ that is trivial on $A_0$ is a character of the quotient of $(\mathbb Z/N_1)^\times$ by the kernel of $\psi_0$, which is cyclic of order $o$, and the $o$ characters of this quotient are the powers of $\psi_0$.
+\end{proof}
+
+We identify the Galois group of $E$ with $\mathcal G=(\mathbb Z/2)^2\times H$ as follows. An element $(s_1,s_2,h)\in\{\pm1\}^2\times H$, where $s_1$ is the sign of the action on $\sqrt{-q}$ and $s_2$ the sign of the action on $\sqrt{-d}$, corresponds to $(e_1,e_2,h)\in\mathcal G$ with $(-1)^{e_1}=s_2$ and $(-1)^{e_2}=s_1$. The set $\Phi$ of Section~\ref{sec:excess} is then the CM type of the elements with $s_2=1$. Each character $\psi$ of $\mathcal G$ gives a primitive Dirichlet character $\chi_\psi$ through the Artin map of $\mathbb Q(\zeta_N)$, and we put $\ell_\psi=L'(1,\chi_\psi)/L(1,\chi_\psi)$ in Proposition~\ref{excess}. The character $\chi_1$ of Proposition~\ref{excess} then corresponds to the quadratic character $(\frac{-d}{\cdot})$ of $\mathbb Q(\sqrt{-d})$, and $\lambda_1=\ell_{\chi_1}=L'(1,\chi_{-d})/L(1,\chi_{-d})$ is the number that enters the Chowla--Selberg period $\log\Omega$ of the CM elliptic curve in Part~II.
+
+\subsection{The remaining data}\label{sec:data}
+
+This subsection constructs the sizes, the nodes and the sets $T$ and $T_2$ that enter Theorem~\ref{step5}, and two families of auxiliary primes that Part~II uses.
+
+\paragraph{The scale and the ranks.} A scale consists of a real number $x>1$ and a number $0<\varepsilon<\frac1{52}$. To it we attach
+\begin{equation}\label{scale}
+L_\varepsilon=x^{\varepsilon},\qquad b=e^{L_\varepsilon},\qquad a=x\,b,\qquad X'=\exp\big(x^{\varepsilon/3}\big),\qquad b'=\frac a{X'},\qquad\delta_1=x^{-\varepsilon/8}.
+\end{equation}
+The ranks of the chain are integers $n$, $k$, $m$ and $t_r$, where $n=\lvert H\rvert$, $m$ is the number of lifts, the hermitian space of the $j$-th step of the chain has signature $(k+j-1,m-j)$, and the lattices have rank $r+jt_r$ with $r=k+m-1$. Put $f=2n$, $T_O=\lceil x^{377}\rceil$ and
+\[
+n_W=8\Big\lceil\frac{10\,r}8\Big(f+\frac{f^2(k-1)^3L_\varepsilon^2}{m}\Big)\Big\rceil .
+\]
+
+\begin{proposition}\label{ranks}
+Let $0<\varepsilon<\frac1{52}$. There is $x_0$ such that for every $x\ge x_0$ and every integer $n$ with $x^{2+8\varepsilon}\le n\le2x^{2+8\varepsilon}$ the following holds.
+\begin{enumerate}
+\item[(i)] There are even integers $m$ and $k$ and an odd integer $t_r$ with
+\begin{gather*}
+\sqrt{x\delta_1}\le m\le2\sqrt{x\delta_1},\qquad x^{9/2+10\varepsilon}\le k\le2x^{9/2+10\varepsilon},\qquad r+t_r=8fr+4+T_O\,n_W,\\
+2\le m,\qquad m+3\le k,\qquad k+m+4\le t_r,\\
+3m<t_r,\qquad m\le2n\le k,\qquad m^2\le k+m(t_r+1),
+\end{gather*}
+where $r=k+m-1$.
+\item[(ii)] For every such $m$ and $k$ and all integers $N_T$ and $N_2$ with $N_T\ge\frac12\delta_1n$ and $x^{-\varepsilon}n\le N_2\le n$, the hypotheses \eqref{sz1} and \eqref{sz2} of Proposition~\ref{sizes} hold.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Let $x_0$ be so large that $\sqrt{x\delta_1}\ge2$, $x^{9\varepsilon/16}\ge2$, $x^{5\varepsilon}\ge2$, $x^{3\varepsilon/8}\ge26$ and $x^{5/2}\ge4$ for $x\ge x_0$.
+
+(i) Each of the intervals from $\sqrt{x\delta_1}$ to $2\sqrt{x\delta_1}$ and from $x^{9/2+10\varepsilon}$ to $2x^{9/2+10\varepsilon}$ has length at least $2$ and contains an even integer, which gives $m$ and $k$. Define $t_r$ by the equation $r+t_r=8fr+4+T_On_W$. The integer $r=k+m-1$ is odd, and $8fr+4$ and $n_W$ are even, so $t_r$ is odd. Since $f\ge1$ and $T_On_W\ge0$, we get $t_r\ge7r+4\ge k+m+4$. Since $r\ge m$, this gives $t_r\ge7m+4$, so that $3m<t_r$ and $m^2\le m(t_r+1)$. The inequalities $2\le m$ and $m+3\le k$ are clear, $m\le2\sqrt x\le2n$, and $2n\le4x^{2+8\varepsilon}\le x^{9/2+10\varepsilon}\le k$.
+
+(ii) The inequalities $a\le2xb$ and $N_T\ge\frac12x^{-\varepsilon/8}n$ hold because $a=xb$ and $\delta_1=x^{-\varepsilon/8}$. Since $\sqrt{x\delta_1}=x^{1/2-\varepsilon/16}$, we have $m\ge x^{1/2-\varepsilon}$ and $m\le2x^{1/2-\varepsilon/16}\le x^{1/2+\varepsilon/2}$. Then $xm\le2x^{3/2}\le k$, and
+\[
+k\le2x^{9/2+10\varepsilon}\le x^{9/2+15\varepsilon}=\big(x^{2+8\varepsilon}\big)^2x^{1/2-\varepsilon}\le n^2x^{1/2-\varepsilon}.\qedhere
+\]
+\end{proof}
+
+\paragraph{The nodes.} Each node has the form $b_1+(j+\frac12)h_0$ with $0\le j<m$, where $h_0=2\lceil x^{c_h}\rceil$ for a constant $c_h\ge0$ and the integer $b_1$ depends on the place. Let $W$ be the number of roots of unity in $E$.
+
+\begin{proposition}\label{nodes}
+Let $0<\varepsilon<\frac1{52}$ and $c_h\ge0$. There is $x_0$ such that the following holds for every $x\ge x_0$. Let $b$, $a$, $X'$ and $b'$ be as in \eqref{scale}. Let $n$, $m$, $k$ and $W$ be positive integers with $n\le2x^{9/4}$, $m\le2\sqrt x$ and $W\le32n^2$, put $f=2n$ and $h_0=2\lceil x^{c_h}\rceil$, let $b_1$ be an integer, and put $w_j=b_1+(j+\frac12)h_0$ for $0\le j<m$.
+\begin{enumerate}
+\item[(i)] If $\lceil b\rceil\le b_1<\lceil b\rceil+W$, then $b\le w_j\le b+\eta'$ with $\eta'=W+mh_0$, and $\eta'\le b$ and $6f(x+1)\eta'\le b/x$.
+\item[(ii)] If $b_1=\lceil b'/(xn)\rceil$, or if $b'\le b_1-\lfloor b'/x\rfloor\le\frac54b'$, then $0<w_j\le2b'$.
+\item[(iii)] If $a\le a_t\le a+a/(kx^{13})$, then $\lvert a_t/b-x\rvert\le1$.
+\item[(iv)] $b'X'=xb$, and $\omega=\exp(-x^{\varepsilon/8})$ satisfies $2f(x+1)\omega\le1/x$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The numbers $n$, $m$, $h_0$ and $W$ are bounded by powers of $x$, while $b$, $b'$ and $1/\omega$ grow faster than every power of $x$. Let $x_0$ be so large that the inequalities between these quantities used below hold for $x\ge x_0$.
+
+(i) We have $w_j\ge\lceil b\rceil\ge b$ and $w_j\le\lceil b\rceil+W-1+(m-\frac12)h_0\le b+W+mh_0$. The number $12n(x+1)x\,\eta'$ is bounded by a power of $x$, so it is at most $b$.
+
+(ii) In the first case $w_j\le b'/(xn)+1+mh_0\le2b'$. In the second case $b_1\le\frac54b'+b'/x$, so $w_j\le b'(\frac54+\frac1x)+mh_0\le2b'$. In both cases $w_j>0$.
+
+(iii) The hypothesis gives $0\le a_t/b-x\le x/(kx^{13})\le1$.
+
+(iv) The first claim is the definition of $b'$, and $4n(x+1)x\le\exp(x^{\varepsilon/8})$ for large $x$.
+\end{proof}
+
+The bound $W\le32n^2$ holds because the field of $W$-th roots of unity lies in $E$, so that $\varphi(W)\le4n$, while $\varphi(W)\ge\sqrt{W/2}$. The three cases of Proposition~\ref{nodes} are the thick places, the thin places and the places attached to the elements of $T$. Under the identification of Section~\ref{sec:field}, the places attached to $T$ are the elements $(1,1,t)$ with $t\in T$, whose images in $\mathcal G$ are $(0,0,t)$. The thick places are the elements $(-1,1,s\,a_0+u_0)$, where $a_0$ is a generator of $A_0$ and $s$ runs over the set of integers $T_2$ of Proposition~\ref{behrend} below. The image of such an element is $(0,1,s\,a_0+u_0)$, so the thick places are the classes that are thick with respect to $u_0$ for the subset $\{s\,a_0:s\in T_2\}$ of $A_0$. The map $s\mapsto s\,a_0$ is injective on $T_2$ because every element of $T_2$ is smaller than the order of $a_0$, so this subset has $\lvert T_2\rvert$ elements.
+
+\paragraph{The set $T_2$.}
+
+\begin{proposition}\label{behrend}
+For all integers $n_0\ge1$ and $L\ge2$ there is a set $T_2$ of nonnegative integers with the following properties. Every $s\in T_2$ satisfies $4Ls<n_0$. There are no distinct $s_1,s_2,s_3\in T_2$ and integers $i\ne j$ with $0<\lvert i\rvert,\lvert j\rvert\le L$ and $j(s_2-s_1)=i(s_3-s_1)$. Finally
+\[
+\lvert T_2\rvert\ge\frac{n_0}L\exp\Big(-36\sqrt{\log n_0\,\log L}\Big).
+\]
+\end{proposition}
+
+\begin{proof}
+Put $N=n_0/(4L)$ and $\lambda=\log(8L)$, so that $2<\lambda\le4\log L$. The set $T_2=\{0\}$ has the first two properties, and it has the third when the right side of the claim is at most $1$. This is the case when $n_0<L$. It is also the case when $n_0\ge L$ and $\log N\le8\lambda$, because then $\log(n_0/L)\le9\lambda\le36\log L\le36\sqrt{\log n_0\log L}$.
+
+Let $\log N>8\lambda$, so that $n_0>L$, and put $D=\lfloor\sqrt{2\log N/\lambda}\rfloor$, so that $D\ge4$ and $\frac34\sqrt{2\log N/\lambda}\le D\le\sqrt{2\log N/\lambda}$. Then $\log N/D\ge\sqrt{\lambda\log N/2}\ge2\lambda$, so $N^{1/D}\ge(8L)^2$. Put $B=\lfloor N^{1/D}\rfloor$ and $g=\lfloor B/(2L)\rfloor$, so that $B^D\le N$, $B\ge\frac12N^{1/D}$ and $g\ge B/(4L)\ge N^{1/D}/(8L)$. For a vector $v=(v_0,\dots,v_{D-1})$ of integers with $0\le v_\nu<g$ put $s(v)=\sum_\nu v_\nu B^\nu$. The map $s$ is injective, and $4L\,s(v)<4LB^D\le n_0$. The number $\sum_\nu v_\nu^2$ takes at most $Dg^2$ values, so there is an integer $\varrho$ such that the set $V$ of the vectors $v$ with $\sum_\nu v_\nu^2=\varrho$ has at least $g^{D-2}/D$ elements. Let $T_2=s(V)$.
+
+Suppose that $s_k=s(v^{(k)})$ for $k=1,2,3$ are distinct elements of $T_2$ and that $j(s_2-s_1)=i(s_3-s_1)$ with $0<\lvert i\rvert,\lvert j\rvert\le L$. The integers $c_\nu=j(v^{(2)}_\nu-v^{(1)}_\nu)-i(v^{(3)}_\nu-v^{(1)}_\nu)$ satisfy $\lvert c_\nu\rvert\le2L(g-1)<B$ and $\sum_\nu c_\nu B^\nu=0$, and an induction on $\nu$ gives $c_\nu=0$ for every $\nu$. Hence $v^{(3)}-v^{(1)}=\frac ji(v^{(2)}-v^{(1)})$, so the three distinct points $v^{(1)},v^{(2)},v^{(3)}$ lie on one line and on the sphere $\sum_\nu v_\nu^2=\varrho$. A line meets a sphere in at most two points, which is a contradiction.
+
+For the size, $g^{D-2}/D\ge N^{1-2/D}(8L)^{-(D-2)}/D\ge N\exp\big(-\frac2D\log N-D\lambda-\log D\big)$. The bounds for $D$ give $\frac2D\log N\le\frac8{3\sqrt2}\sqrt{\lambda\log N}$, $D\lambda\le\sqrt{2\lambda\log N}$ and $\log D\le\sqrt{\lambda\log N}$, so the exponent is at least $-5\sqrt{\lambda\log N}\ge-10\sqrt{\log n_0\log L}$. Since $\sqrt{\log n_0\log L}\ge\log L\ge\log2$, we get $\lvert T_2\rvert\ge\frac{n_0}{4L}e^{-10\sqrt{\log n_0\log L}}\ge\frac{n_0}Le^{-36\sqrt{\log n_0\log L}}$.
+\end{proof}
+
+Proposition~\ref{behrend} is the construction of Behrend~\cite{behrend} with digits below $B/(2L)$ in place of digits below $B/2$. We apply it with $n_0=n/o$, where the order $o$ of $\psi_0$ is fixed, and with $L=L_w$ of order $\log x$. Then $\sqrt{\log n_0\log L_w}$ has smaller order than $\log x$, and the set has at least $x^{-\varepsilon}n$ elements for large $x$.
+
+\paragraph{The set $T$.} A set $T\subset H$ indexes the weights $a_t$, and it must have two properties. The first is a condition on its shares on the cosets of $A_0$, which produces the positive constant $c$ in \eqref{equi}.
+
+\begin{lemma}\label{shares}
+Let $H$ be a finite abelian group, $A_0$ a subgroup of index $o$, $T$ a nonempty subset of $H$ with $N_T$ elements, and $\delta\ge0$. Put $\lambda_\gamma=4/(3o+1)$ for $\gamma\in A_0$ and $\lambda_\gamma=3/(3o+1)$ for $\gamma\in H\setminus A_0$, and suppose that for every $\gamma\in H$
+\[
+\Big\lvert\#\{t\in T:t-\gamma\in A_0\}-\lambda_\gamma N_T\Big\rvert\le\delta\,N_T .
+\]
+Then every nontrivial character $\chi$ of $H$ that is trivial on $A_0$ satisfies
+\[
+\Big\lvert\sum_{t\in T}\chi(t)-\frac{N_T}{3o+1}\Big\rvert\le o\,\delta\,N_T .
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\gamma_1=0,\gamma_2,\dots,\gamma_o$ represent the cosets of $A_0$, and let $n_i$ be the number of $t\in T$ with $t-\gamma_i\in A_0$. The character $\chi$ is constant on each coset, so $\sum_{t\in T}\chi(t)=\sum_i\chi(\gamma_i)\,n_i$. It induces a nontrivial character of $H/A_0$, so $\sum_i\chi(\gamma_i)=0$ and
+\[
+\sum_{i=1}^o\chi(\gamma_i)\,\lambda_{\gamma_i}=\frac{4+3\sum_{i\ge2}\chi(\gamma_i)}{3o+1}=\frac{4-3}{3o+1}=\frac1{3o+1}.
+\]
+Therefore $\sum_{t\in T}\chi(t)-N_T/(3o+1)=\sum_i\chi(\gamma_i)(n_i-\lambda_{\gamma_i}N_T)$, and each of the $o$ terms of the last sum has absolute value at most $\delta N_T$.
+\end{proof}
+
+With $\delta=x^{-1+\varepsilon}$, Lemma~\ref{shares} gives \eqref{equi} with $c=1/(3o+1)$ and $\nu=o\,x^{-1+\varepsilon}$. The second property of $T$ is a regularity condition along the orbits of Frobenius elements, which the gain at inert primes in Section~\ref{sec:gain} uses.
+
+\begin{definition}\label{def:goodorbit}
+Let $h\in H$ have order $n_h$, let $t\in H$, and let $P_t\subset\mathbb Z/n_h\mathbb Z$ be the set of the residues $i$ with $t_0+ih\in T$, where $t_0$ is a fixed base point of the orbit $t+\mathbb Zh$. Let $K_\varepsilon=\lceil8(4+8\varepsilon)/\varepsilon\rceil$, $r_0=K_\varepsilon+1$, $u=\lceil1/\delta_1\rceil$, $M_0=\lceil(5+8\varepsilon)\,10^{6r_0+1}\log x\rceil$ and $G'=(M_0+5)(6r_0+1)u$, and let $L_2\ge1$ be an integer. The orbit of $t$ under $h$ is \emph{good for $T$} when the following hold.
+\begin{enumerate}
+\item[(i)] Every window of $L_2$ consecutive residues contains at most $K_\varepsilon$ elements of $P_t$.
+\item[(ii)] Every window of $G'$ consecutive residues contains at most $\lceil\max(6e\,G'\delta_1,(5+8\varepsilon)\log_2x)\rceil+1$ elements of $P_t$.
+\item[(iii)] Cut the integers from $0$ to $n_h$ into consecutive tiles of length $(6r_0+1)u$, and each tile into $6r_0+1$ cells of length $u$. Among every $M_0+1$ cyclically consecutive tiles there is one in which the cells in odd position are disjoint from $P_t$ and each cell in even position contains exactly one element of $P_t$, and that element is an even integer.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{tops}
+Let $0<\varepsilon<\frac1{52}$. There are an absolute constant $C_b$ and, for every integer $o\ge1$, a number $x_0$ with the following property. Let $x\ge x_0$, let $H$ and $A_0$ be as in Proposition~\ref{field}, with $A_0$ of index $o$, with $x^{2+8\varepsilon}\le n\le2x^{2+8\varepsilon}$, let $\mathcal P$ be a finite set of primes, and for $p\in\mathcal P$ let $h_p\in H$ have order at least $x^{\varepsilon/4}$ and let $L_{2,p}\le400\log x$ be a positive integer. Then there is a set $T\subset H$ with $\frac12\delta_1n\le\lvert T\rvert\le2\delta_1n$ that satisfies the hypothesis of Lemma~\ref{shares} with $\delta=x^{-1+\varepsilon}$ and such that the number $\beta_p(T)$ of the $t\in T$ whose orbit under $h_p$ is not good for $T$, with $L_2=L_{2,p}$, satisfies
+\[
+\sum_{p\in\mathcal P}\frac{\log p}p\,\beta_p(T)\le4C_b\,x^{-2}\,\delta_1n\sum_{p\in\mathcal P}\frac{\log p}p .
+\]
+\end{proposition}
+
+\begin{proof}
+Throughout, $x$ is large in terms of $\varepsilon$ and $o$. Put $a_\gamma=o\lambda_\gamma\delta_1$. Since $o\lambda_\gamma$ is $1$ for $o=1$ and lies between $\frac67$ and $\frac87$ for $o\ge2$, we have $\frac67\delta_1\le a_\gamma\le\frac87\delta_1$. Choose $T$ at random, each $t\in H$ belonging to $T$ independently with probability $a_t$, where $a_t=a_\gamma$ for $t\in\gamma+A_0$. Let $\gamma_1,\dots,\gamma_o$ represent the cosets of $A_0$ and let $X_i$ be the number of elements of $T$ in $\gamma_i+A_0$, a sum of $n/o$ independent Bernoulli variables with mean $\mu_i=\lambda_{\gamma_i}\delta_1n$ and variance at most $\mu_i\le\delta_1n$.
+
+\emph{Size and shares.} Put $\eta=\delta\,\delta_1n/(2(o+1))$ with $\delta=x^{-1+\varepsilon}$. Chebyshev's inequality gives
+\[
+\mathbb P\big(\lvert X_i-\mu_i\rvert>\eta\ \text{for some }i\big)\le\frac{o\,\delta_1n}{\eta^2}=\frac{4o(o+1)^2}{\delta^2\delta_1n}\le4o(o+1)^2\,x^{-10\varepsilon+\varepsilon/8},
+\]
+because $n\ge x^{2+8\varepsilon}$ and $\delta_1=x^{-\varepsilon/8}$. Suppose that $\lvert X_i-\mu_i\rvert\le\eta$ for every $i$. Since $\sum_i\lambda_{\gamma_i}=1$, the number $N_T=\sum_iX_i$ satisfies $\lvert N_T-\delta_1n\rvert\le o\eta\le\frac12\delta_1n$, and
+\[
+\lvert X_i-\lambda_{\gamma_i}N_T\rvert\le\lvert X_i-\mu_i\rvert+\lambda_{\gamma_i}\lvert\delta_1n-N_T\rvert\le(1+o)\eta=\tfrac12\delta\,\delta_1n\le\delta N_T .
+\]
+So with probability at least $\frac23$ the set $T$ has the required size and satisfies the hypothesis of Lemma~\ref{shares}.
+
+\emph{One orbit.} Fix $p\in\mathcal P$ and $t\in H$, write $h=h_p$, $n_h$ for its order and $i_t$ for the residue of $t$ on its orbit. The points $t_0+ih$ with $i\in\mathbb Z/n_h$ are distinct, so the events $i\in P_t$ are independent, each of probability at most $\delta'=\frac87\delta_1$ and at least $\frac67\delta_1$. We bound the conditional probability, given $t\in T$, that the orbit is not good. The numbers $L_{2,p}\le400\log x$ and $G'$ are smaller than $x^{\varepsilon/4}\le n_h$, so a window is a set of distinct residues, and there are $n_h\le n\le2x^{2+8\varepsilon}$ windows of each length. The number of tiles is at least $M_0+1$, because a tile has length $(6r_0+1)u\le(6r_0+1)(x^{\varepsilon/8}+1)$ and $M_0$ has the order of $\log x$.
+
+Condition (i) fails when some window of $L_2$ residues contains at least $K_\varepsilon+1$ elements of $P_t$. A window that does not contain $i_t$ has this property with probability at most $\binom{L_2}{K_\varepsilon+1}\delta'^{K_\varepsilon+1}\le(L_2\delta')^{K_\varepsilon+1}$, independently of the event $t\in T$. A window that contains $i_t$ must contain $K_\varepsilon$ further elements, which has probability at most $(L_2\delta')^{K_\varepsilon}$, and there are $L_2$ such windows. Since $\delta_1^{K_\varepsilon}=x^{-\varepsilon K_\varepsilon/8}\le x^{-4-8\varepsilon}$, the conditional probability that (i) fails is at most
+\[
+2x^{2+8\varepsilon}\,(458\log x)^{K_\varepsilon+1}x^{-4-8\varepsilon-\varepsilon/8}+400\log x\,(458\log x)^{K_\varepsilon}x^{-4-8\varepsilon}\le x^{-2}.
+\]
+
+Put $N_0=\lceil\max(6eG'\delta_1,(5+8\varepsilon)\log_2x)\rceil$. Condition (ii) fails when some window of $G'$ residues contains at least $N_0+2$ elements. Given $t\in T$, a window then contains at least $N_0+1$ elements other than $i_t$. For $N\ge N_0+1$ the probability that $N$ of at most $G'$ independent events of probability at most $\delta'$ occur is at most $\binom{G'}N\delta'^N\le(eG'\delta'/N)^N$, by $\binom{G'}N\le G'^N/N!$ and $N!\ge(N/e)^N$, and $eG'\delta'/N\le\frac87eG'\delta_1/(6eG'\delta_1)\le\frac12$. So each window fails with conditional probability at most $2^{-N_0-1}\le\frac12x^{-5-8\varepsilon}$, and (ii) fails with conditional probability at most $x^{-3}$.
+
+For condition (iii), consider one cell, a set of $u=\lceil1/\delta_1\rceil$ consecutive integers. It is disjoint from $P_t$ with probability at least $(1-\frac87\delta_1)^u$, which tends to $e^{-8/7}>0.31$ as $x\to\infty$. It contains exactly one element of $P_t$, an even integer, with probability at least
+\[
+\frac{u-1}2\cdot\frac67\delta_1\cdot\big(1-\tfrac87\delta_1\big)^{u-1},
+\]
+since the cell contains at least $(u-1)/2$ even integers, and this lower bound tends to $\frac37e^{-8/7}>0.13$. So for large $x$ each cell has its required property with probability at least $\frac1{10}$, and a tile, which consists of $6r_0+1$ disjoint cells, has the pattern of (iii) with probability at least $\rho=10^{-(6r_0+1)}$. Among $M_0+1$ cyclically consecutive tiles at most one contains $i_t$, and the others are independent of the event $t\in T$ and of each other. Hence, given $t\in T$, the probability that none of them has the pattern is at most $(1-\rho)^{M_0}\le e^{-\rho M_0}\le x^{-5-8\varepsilon}$. There are at most $n_h\le2x^{2+8\varepsilon}$ runs of $M_0+1$ cyclically consecutive tiles, so (iii) fails with conditional probability at most $2x^{-3}$.
+
+Altogether $\mathbb P(\text{the orbit of }t\text{ under }h_p\text{ is not good}\mid t\in T)\le C_bx^{-2}$ with $C_b=2$.
+
+\emph{Conclusion.} By the last bound and $\mathbb P(t\in T)\le\frac87\delta_1$,
+\[
+\mathbb E\Big[\sum_{p\in\mathcal P}\frac{\log p}p\,\beta_p(T)\Big]=\sum_{p\in\mathcal P}\frac{\log p}p\sum_{t\in H}\mathbb P\big(t\in T,\ \text{orbit not good}\big)\le\frac87\,C_b\,x^{-2}\,\delta_1n\sum_{p\in\mathcal P}\frac{\log p}p .
+\]
+The number $4C_bx^{-2}\delta_1n\sum_p\frac{\log p}p$ is $\frac72$ times this bound, so by Markov's inequality the sum on the left exceeds it with probability at most $\frac27$. Since $\frac27<\frac23$, some set $T$ has all the required properties.
+\end{proof}
+
+\paragraph{Two families of auxiliary primes.} Part~II uses three primes congruent to $1$ modulo $Q_Sqd$ and two primes $g_0\ne g_1$ that split in $\mathbb Q(\sqrt{-d})$ into principal primes with a generator congruent to $1$ modulo $Q_Sqd$, where $Q_S$ is the part of the conductor of $E$ prime to $qd$. Linnik's theorem~\cite{linnik} gives a constant $A_L\ge1$ such that for every integer $M\ge2$ there is a prime $p\equiv1\pmod M$ with $p\le M^{A_L}$.
+
+\begin{lemma}\label{three}
+Let $A\ge1$ be a number such that for every integer $M\ge2$ there is a prime $p\equiv1\pmod M$ with $p\le M^A$. Then for every integer $M\ge2$ there are three distinct primes $p_1,p_2,p_3\equiv1\pmod M$ with $p_i\le M^{A(1+A)^2}$.
+\end{lemma}
+
+\begin{proof}
+Choose a prime $p_1\equiv1\pmod M$ with $p_1\le M^A$, then a prime $p_2\equiv1\pmod{Mp_1}$ with $p_2\le(Mp_1)^A\le M^{A(1+A)}$, and then a prime $p_3\equiv1\pmod{Mp_1p_2}$ with $p_3\le(Mp_1p_2)^A\le M^{A(1+A)^2}$. Then $p_2>Mp_1$ and $p_3>Mp_1p_2$, so the three primes are distinct, and each is congruent to $1$ modulo $M$.
+\end{proof}
+
+For the primes $g_0$ and $g_1$ we use a prime number theorem for a ray class of an imaginary quadratic field, uniform in the conductor.
+\begin{enumerate}
+\item[(C9)] There are constants $c,c'>0$ and $A_1\ge1$ such that for every prime $d\equiv3\pmod4$, every integer $M\ge1$ and every $X\ge2$ with $\log(4dM^2)\le c\sqrt{\log X}$, and for every $e^{-c\sqrt{\log X}}\le h\le1$, the number of primes $g$ with $X<g\le X(1+h)$ of the form $g=\pi\bar\pi$ with $\pi\in\mathbb Z[\frac{1+\sqrt{-d}}2]$ and $\pi\equiv1\pmod M$ is at least $c'hX/((4dM^2)^{A_1}\log X)$.
+\end{enumerate}
+% TODO(external, C9): source fidelity pending. (C9) is a prime number theorem for a ray class
+% of an imaginary quadratic field in the Landau--Page range with the exceptional zero in the main
+% term. A citation with the exact uniformity has not been verified. See REWRITE_NOTES.md.
+Statement (C9) is the prime ideal theorem for the ray class group of $\mathbb Q(\sqrt{-d})$ modulo $M$, in the range of Landau and Page~\cite{page} in which the logarithm of the conductor is at most a multiple of $\sqrt{\log X}$, with the possible exceptional zero absorbed into the lower bound. We apply it with $h=1$ and with the logarithm of the conductor at most $10(\log X)^{2/5}$. With $X=(kb)^8$ it gives at least $X^{9/10}$ primes $g$ of the required form between $X$ and $2X$, and the next lemma chooses $g_0$ and $g_1$ among them.
+
+\begin{lemma}\label{disjoint}
+For integers $g\ge2$ and $N\ge1$ let $B_N(g)$ be the set that consists of $g$ and of the primes $l$ for which there is an integer $1\le c\le N$ with $l^{4v}>g^{c}$, where $l^{v}$ is the exact power of $l$ that divides $g^{c}-1$. Let $Y\ge2$ be a real number, let $N\ge1$ be an integer, let $\mathcal P$ be a finite set of primes $g$ with $Y\le g\le2Y$, and suppose that
+\[
+\lvert\mathcal P\rvert>(3N+1)\big(1+2N^2(Y^{3/4}+1)\big).
+\]
+Then for every $g_1\in\mathcal P$ there is $g_0\in\mathcal P$ with $B_N(g_0)\cap B_N(g_1)=\emptyset$, and such a $g_0$ differs from $g_1$.
+\end{lemma}
+
+\begin{proof}
+Fix $g\ge2$ and $1\le c\le N$. If four distinct primes $l_1,\dots,l_4$ satisfied $l_i^{4v_i}>g^{c}$ with $l_i^{v_i}$ the exact power dividing $g^{c}-1$, then the product of the four numbers $l_i^{v_i}$ would exceed $g^{c}$ and divide the positive integer $g^{c}-1$. Hence at most three primes belong to each $c$, and $\lvert B_N(g)\rvert\le3N+1$.
+
+Fix a prime $l$ and $1\le c\le N$, and let $w\ge1$ be the least integer with $l^{w}>Y^{c/4}$. Let $g$ be an integer with $Y\le g\le2Y$ such that $l^{4v}>g^{c}$ for the exact power $l^{v}$ dividing $g^{c}-1$. Then $l^{v}>g^{c/4}\ge Y^{c/4}$, so $v\ge w$ and $g^{c}\equiv1\pmod{l^{w}}$. The group of units modulo $l^{w}$ is cyclic when $l$ is odd, and it is the product of a group of order at most $2$ and a cyclic group when $l=2$, so the congruence $y^{c}\equiv1\pmod{l^{w}}$ has at most $2c$ solutions modulo $l^{w}$. Each residue class modulo $l^{w}$ contains at most $Y/l^{w}+1$ integers between $Y$ and $2Y$, and $Y/l^{w}<Y^{1-c/4}\le Y^{3/4}$. So at most $2c\,(Y^{3/4}+1)$ integers $g$ between $Y$ and $2Y$ satisfy the condition for this $c$, and the sum over $c\le N$ is at most $N(N+1)(Y^{3/4}+1)\le2N^2(Y^{3/4}+1)$. Together with the possibility $g=l$, the prime $l$ lies in $B_N(g)$ for at most $1+2N^2(Y^{3/4}+1)$ integers $g$ between $Y$ and $2Y$.
+
+Let $g_1\in\mathcal P$. Every element of $B_N(g_1)$ is a prime, so the two counts bound the number of $g\in\mathcal P$ for which $B_N(g)$ meets $B_N(g_1)$ by $(3N+1)\big(1+2N^2(Y^{3/4}+1)\big)$, which is less than $\lvert\mathcal P\rvert$. This gives $g_0$, and $g_0\ne g_1$ because $g_1\in B_N(g_1)$.
+\end{proof}
+
+We apply Lemma~\ref{disjoint} with $N=r$, $Y=(kb)^8$ and $\mathcal P$ the set of primes given by (C9). The rank $r$ is at most a power of $x$, while $Y^{9/10-3/4}\ge\exp(x^{\varepsilon})$, so $\lvert\mathcal P\rvert\ge Y^{9/10}$ exceeds the bound of the lemma for large $x$.

@@ -1,0 +1,510 @@
+\section{The theta function at an inert prime}\label{sec:inert}
+
+Section~\ref{sec:gain} studies a series of the form $\exp\big(-\sum\beta(x,y)\big)\,U$ in the parameters of the formal group of height two, with $U$ integral and $\beta$ a pairing that is biadditive and semilinear for Frobenius up to series with integral exponential. This section proves that the theta kernels of Section~\ref{sec:chain} have this form at a prime inert in $\mathbb Q(\sqrt{-d})$. It begins with the theta function of one variable. It constructs $\beta$ as the coboundary of the logarithm of the reduced theta function, and proves the properties of $\beta$ that Theorem~\ref{thm:betaisg} requires. It then passes to theta functions of hermitian lattices, first in coordinates along an orthonormal basis of the lattice at $p$ and then in hyperbolic coordinates, and proves the form $c\exp\big(-\sum\beta(x,y)\big)U$ in Theorem~\ref{kernellaw}.
+% TODO(structure): subsections on the kernels (orthonormal coordinates, fourth power, hyperbolic frame, Theorem H) to be written next. Every integrality statement comes from one principle. A rational function on a power of an elliptic curve with good reduction, whose divisor near the origin is a combination of formal subgroups, is a unit of the formal power series ring after division by the local equations of those subgroups.
+
+\subsection{The reduced theta function}\label{sec:reducedtheta}
+
+Let $\Lambda\subset\mathbb C$ be a lattice and $A$ the area of $\mathbb C/\Lambda$. Let $\sigma_\Lambda$, $\zeta_\Lambda$ and $\wp_\Lambda$ be the Weierstrass functions of $\Lambda$, with $\zeta_\Lambda'=-\wp_\Lambda$ and $\sigma_\Lambda'/\sigma_\Lambda=\zeta_\Lambda$, and let $g_2$, $g_3$ be the invariants of $\Lambda$, so that $\wp_\Lambda'^2=4\wp_\Lambda^3-g_2\wp_\Lambda-g_3$. The quasi-period map $\eta_\Lambda\colon\Lambda\to\mathbb C$ is defined by $\zeta_\Lambda(z+\omega)=\zeta_\Lambda(z)+\eta_\Lambda(\omega)$, and it is additive. We drop the index $\Lambda$ when the lattice is fixed. We use two classical facts~\cite[Chapter~18]{langelliptic}. The function $\sigma$ satisfies
+\begin{equation}\label{sigmaqp}
+\sigma(z+\omega)=\psi(\omega)\,\sigma(z)\,e^{\eta(\omega)(z+\omega/2)},\qquad\omega\in\Lambda,
+\end{equation}
+with $\psi(\omega)=1$ for $\omega\in2\Lambda$ and $\psi(\omega)=-1$ otherwise. If $\omega_1,\omega_2$ is a basis of $\Lambda$ with $\operatorname{Im}(\omega_2/\omega_1)>0$, then Legendre's relation $\eta(\omega_1)\omega_2-\eta(\omega_2)\omega_1=2\pi i$ holds.
+% TODO(external): check the chapter/section numbers in Lang, Elliptic Functions (2nd ed., GTM 112).
+
+For $\omega,\lambda\in\Lambda$ the number $\operatorname{Im}(\bar\omega\lambda)$ is an integer multiple of $A$. Indeed, if $\omega=m_1\omega_1+m_2\omega_2$ and $\lambda=n_1\omega_1+n_2\omega_2$, then $\operatorname{Im}(\bar\omega\lambda)=(m_1n_2-m_2n_1)\operatorname{Im}(\bar\omega_1\omega_2)$, and $\operatorname{Im}(\bar\omega_1\omega_2)=\lvert\omega_1\rvert^2\operatorname{Im}(\omega_2/\omega_1)=A$.
+
+\begin{lemma}\label{s2}
+Let $\Lambda\subset\mathbb C$ be a lattice of area $A$. There is a unique complex number $s_2=s_2(\Lambda)$ with
+\[
+\eta(\omega)=s_2\,\omega+\frac\pi A\,\bar\omega\qquad\text{for every }\omega\in\Lambda .
+\]
+For $c\in\mathbb C^\times$ one has $s_2(c\Lambda)=c^{-2}s_2(\Lambda)$.
+\end{lemma}
+
+\begin{proof}
+The additive map $\eta$ extends to an $\mathbb R$-linear map $\mathbb C\to\mathbb C$, and every such map has the form $z\mapsto s_2z+b\bar z$ for unique complex numbers $s_2$ and $b$. Legendre's relation gives $2\pi i=b(\bar\omega_1\omega_2-\bar\omega_2\omega_1)=2ib\operatorname{Im}(\bar\omega_1\omega_2)=2ibA$, so $b=\pi/A$. For the scaling, $\zeta_{c\Lambda}(cz)=c^{-1}\zeta_\Lambda(z)$ gives $\eta_{c\Lambda}(c\omega)=c^{-1}\eta_\Lambda(\omega)$, and the area of $c\Lambda$ is $\lvert c\rvert^2A$, so $c^{-1}\big(s_2(\Lambda)\omega+\frac\pi A\bar\omega\big)=s_2(c\Lambda)\,c\omega+\frac{\pi}{\lvert c\rvert^2A}\,\bar c\bar\omega$, and the coefficients of $\omega$ agree.
+\end{proof}
+
+The \emph{reduced theta function} of $\Lambda$ is
+\[
+\theta(z)=\theta_\Lambda(z)=\sigma_\Lambda(z)\,e^{-s_2(\Lambda)z^2/2}.
+\]
+It is an odd entire function with simple zeros at the points of $\Lambda$ and no other zeros, and $\theta'(0)=1$. For $c\in\mathbb C^\times$, the homogeneity $\sigma_{c\Lambda}(cz)=c\,\sigma_\Lambda(z)$ and Lemma~\ref{s2} give $\theta_{c\Lambda}(cz)=c\,\theta_\Lambda(z)$. Write $\wp(z)=z^{-2}+\sum_{k\ge2}e_kz^{2k-2}$. The coefficients $e_k$ are polynomials in $g_2,g_3$ with rational coefficients, by the recursion that follows from $\wp''=6\wp^2-g_2/2$. Integrating $-\wp+z^{-2}$ twice and using that $\sigma(z)/z$ is even with value $1$ at $0$, we obtain
+\begin{equation}\label{logtheta}
+\log\frac{\theta(z)}z=-\frac{s_2}2z^2-\sum_{k\ge2}\frac{e_k}{(2k-1)2k}\,z^{2k}.
+\end{equation}
+
+\begin{lemma}\label{thetaqp}
+For $\omega\in\Lambda$,
+\[
+\theta(z+\omega)=\psi(\omega)\,\theta(z)\,\exp\Big(\frac\pi A\,\bar\omega\,\big(z+\tfrac\omega2\big)\Big).
+\]
+\end{lemma}
+
+\begin{proof}
+By \eqref{sigmaqp} and Lemma~\ref{s2},
+\begin{align*}
+\frac{\theta(z+\omega)}{\psi(\omega)\theta(z)}&=\exp\Big(\eta(\omega)\big(z+\tfrac\omega2\big)-\frac{s_2}2\big((z+\omega)^2-z^2\big)\Big)\\
+&=\exp\Big(\big(s_2\omega+\tfrac\pi A\bar\omega\big)\big(z+\tfrac\omega2\big)-s_2\omega\big(z+\tfrac\omega2\big)\Big).\qedhere
+\end{align*}
+\end{proof}
+
+The factor in Lemma~\ref{thetaqp} is the automorphy factor of the hermitian form $\pi z\bar w/A$ with the semicharacter $\psi$, so $\theta$ is a classical theta function on $\mathbb C/\Lambda$ in the sense of Section~\ref{sec:fock}. In the following lemma, a meromorphic function on $\mathbb C^n$ is called \emph{periodic} when it is invariant under translation by $\Lambda^n$. A periodic function is a rational function on the $n$-th power of the elliptic curve $\mathbb C/\Lambda$, and we describe its divisor by its zeros and poles.
+
+\begin{lemma}\label{thetaquot}
+Let $\Lambda$ be a lattice with $\mathcal O_K\Lambda\subset\Lambda$, where $K$ is an imaginary quadratic field, and identify $K$ with a subfield of $\mathbb C$.
+\begin{enumerate}
+\item[(i)] Let $N\ge1$ and let $t\in\mathbb C$ with $Nt\in\Lambda$ and $t\notin\Lambda$. Put
+\[
+k_t(z)=\frac{\theta(z+t)}{\theta(z)\,\theta(t)}\,e^{-\pi\bar tz/A}.
+\]
+Then $k_t^N$ is periodic, its divisor is $N[-t]-N[0]$, and $zk_t(z)\to1$ as $z\to0$.
+\item[(ii)] The function
+\[
+c(z_1,z_2,z_3)=\frac{\theta(z_1+z_2+z_3)\,\theta(z_1)\,\theta(z_2)\,\theta(z_3)}{\theta(z_1+z_2)\,\theta(z_1+z_3)\,\theta(z_2+z_3)}
+\]
+is periodic, and its divisor is the sum of the four divisors $z_1+z_2+z_3=0$, $z_1=0$, $z_2=0$, $z_3=0$, minus the sum of the three divisors $z_1+z_2=0$, $z_1+z_3=0$, $z_2+z_3=0$.
+\item[(iii)] Let $a\in\mathcal O_K$, $a\ne0$. The function
+\[
+R_a(z,w)=\frac{\theta(az+w)\,\theta(z)\,\theta(\bar aw)}{\theta(az)\,\theta(w)\,\theta(z+\bar aw)}
+\]
+is periodic. Its divisor is $D_1+D_2-D_3-D_4$, where $D_1$ is $az+w=0$, $D_2$ is $\bar aw=0$ together with $z=0$, $D_3$ is $az=0$ together with $w=0$, and $D_4$ is $z+\bar aw=0$.
+\item[(iv)] Let $a\in\mathcal O_K$ with $a\bar a$ odd, and let $S$ be the set of nonzero points of $a^{-1}\Lambda/\Lambda$. Then $S$ has $a\bar a-1$ elements, it is stable under $P\mapsto-P$ and contains no point of order two, and
+\[
+\frac{\theta(az)}{\theta(z)^{a\bar a}}=a\prod_{\{P,-P\}\subset S}\big(\wp(z)-\wp(P)\big),
+\]
+the product running over the $(a\bar a-1)/2$ pairs. Consequently $a(a-\bar a)\,s_2(\Lambda)=\sum_{P\in S}\wp(P)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For a product of values of $\theta$ at linear forms, Lemma~\ref{thetaqp} computes the factor acquired under a translation, and in each case we compare the exponents and the signs $\psi$.
+
+(i) Lemma~\ref{thetaqp} gives $k_t(z+\omega)=k_t(z)\exp\big(\frac\pi A(\bar\omega t-\bar t\omega)\big)=k_t(z)\exp\big(\frac{2\pi i}A\operatorname{Im}(\bar\omega t)\big)$. Since $N\operatorname{Im}(\bar\omega t)=\operatorname{Im}(\bar\omega\cdot Nt)$ is an integer multiple of $A$, the function $k_t^N$ is periodic. The zeros of $\theta(z+t)$ are the points $z\in-t+\Lambda$, and those of $\theta(z)$ are the points of $\Lambda$, all simple, and $t\notin\Lambda$ makes these sets disjoint. Finally $\theta(z+t)\to\theta(t)$ and $\theta(z)/z\to1$.
+
+(ii) Translate $z_1$ by $\omega$. Lemma~\ref{thetaqp} multiplies the numerator by $\psi(\omega)^2$ times the exponential of $\frac\pi A\bar\omega$ times $(z_1+z_2+z_3+\frac\omega2)+(z_1+\frac\omega2)$, and the denominator by $\psi(\omega)^2$ times the exponential of $\frac\pi A\bar\omega$ times $(z_1+z_2+\frac\omega2)+(z_1+z_3+\frac\omega2)$. The two sums agree. The function is symmetric in $z_1,z_2,z_3$, so it is periodic. The divisor is read from the zeros of $\theta$.
+
+(iii) Translate $z$ by $\omega$. Since $a\omega\in\Lambda$, the numerator acquires $\psi(a\omega)\psi(\omega)$ times the exponential of $\frac\pi A$ times
+\[
+\bar a\bar\omega\big(az+w+\tfrac{a\omega}2\big)+\bar\omega\big(z+\tfrac\omega2\big)=a\bar a\bar\omega z+\bar a\bar\omega w+\tfrac{a\bar a}2\lvert\omega\rvert^2+\bar\omega z+\tfrac12\lvert\omega\rvert^2,
+\]
+and the denominator acquires $\psi(a\omega)\psi(\omega)$ times the exponential of $\frac\pi A$ times
+\[
+\bar a\bar\omega\big(az+\tfrac{a\omega}2\big)+\bar\omega\big(z+\bar aw+\tfrac\omega2\big),
+\]
+which is the same number. Translating $w$ by $\omega$ is the same computation with the roles of $(a,z)$ and $(\bar a,w)$ exchanged. The divisor is read from the zeros of $\theta$.
+
+(iv) Multiplication by $a$ is an $\mathbb R$-linear map of $\mathbb C$ with determinant $\lvert a\rvert^2$, so $[\Lambda:a\Lambda]=a\bar a$ and $a^{-1}\Lambda/\Lambda$ has $a\bar a$ elements. If $P\in a^{-1}\Lambda$ and $2P\in\Lambda$, choose integers $u,v$ with $ua\bar a+2v=1$. Then $P=u\bar a(aP)+v(2P)\in\Lambda$, so $S$ contains no point of order two. Put $g(z)=\theta(az)/\theta(z)^{a\bar a}$. By Lemma~\ref{thetaqp}, translation by $\omega$ multiplies $\theta(az)$ by $\psi(a\omega)$ times the exponential of $\frac\pi A\bar a\bar\omega(az+\frac{a\omega}2)$, and $\theta(z)^{a\bar a}$ by $\psi(\omega)^{a\bar a}$ times the exponential of $\frac\pi A a\bar a\bar\omega(z+\frac\omega2)$. The exponents agree. The number $a\bar a$ is odd, so $\psi(\omega)^{a\bar a}=\psi(\omega)$, and $a\omega\in2\Lambda$ exactly when $\omega\in2\Lambda$, because multiplication by $a$ is invertible on $\Lambda/2\Lambda$. So $g$ is periodic. Its zeros are the points of $a^{-1}\Lambda\setminus\Lambda$, all simple, and its pole at the points of $\Lambda$ has order $a\bar a-1$. For each pair $\{P,-P\}\subset S$ the function $\wp(z)-\wp(P)$ has simple zeros at $\pm P$, since $P$ is not of order two, and a double pole at $0$. So $g$ and the product have the same divisor, and their quotient is constant. Near $0$ we have $g(z)=az^{1-a\bar a}(1+O(z^2))$ and the product is $z^{1-a\bar a}(1+O(z^2))$, so the constant is $a$. For the last statement we compare the coefficients of $z^2$ in the logarithms of both sides divided by $az^{1-a\bar a}$. By \eqref{logtheta} the left side gives $-\frac{s_2}2(a^2-a\bar a)$. The right side gives $\sum_{\{P,-P\}}\log\big(1-\wp(P)z^2+O(z^4)\big)$, whose coefficient of $z^2$ is $-\sum_{\{P,-P\}}\wp(P)=-\frac12\sum_{P\in S}\wp(P)$.
+\end{proof}
+
+\subsection{The integral model at an inert prime}\label{sec:intmodel}
+
+From now on, $d$ is the prime of Section~\ref{sec:auxiliary}, with $d\equiv7\pmod{16}$, and $K=\mathbb Q(\sqrt{-d})$. Since $d>3$, the units of $\mathcal O_K$ are $\pm1$, and $j=0$ and $j=1728$ do not have complex multiplication by $\mathcal O_K$. Let $\Lambda\subset\mathbb C$ be a lattice with $\mathcal O_K\Lambda\subset\Lambda$ and $g_2(\Lambda)^3-27g_3(\Lambda)^2=1$. Every lattice with multiplication by $\mathcal O_K$ has a complex multiple with this property, since the discriminant $g_2^3-27g_3^2$ is homogeneous of weight $12$ and does not vanish.
+
+Let $p\ge5$ be a prime that is inert in $K$. Let $W=W(\overline{\mathbb F}_p)$, let $\mathcal K_0=W[1/p]$ with its Frobenius $\sigma$, and let $\mathbb C_p$ be the completion of an algebraic closure of $\mathcal K_0$. We fix a field isomorphism $\iota\colon\mathbb C\to\mathbb C_p$, and through it regard algebraic numbers as elements of $\mathbb C_p$. A power series with algebraic coefficients then has a meaning over $\mathbb C$ and over $\mathbb C_p$, and an identity between such series holds in both. The completion of $K$ at $p$ is the unramified quadratic extension $\mathbb Q_{p^2}$ of $\mathbb Q_p$, so $\iota(K)\subset\mathcal K_0$. The nontrivial automorphism of $\mathbb Q_{p^2}$ is the restriction of $\sigma$, so
+\begin{equation}\label{conjfrob}
+\iota(\bar a)=\sigma\big(\iota(a)\big)\qquad(a\in K).
+\end{equation}
+
+\begin{proposition}\label{goodmodel}
+There are an algebraic number $u$ and elements $G_2,G_3$ of the Hilbert class field of $K$ with $G_2=u^4g_2(\Lambda)$ and $G_3=u^6g_3(\Lambda)$, such that $\iota(G_2)$ and $\iota(G_3)$ lie in $W$, $\iota(G_2^3-27G_3^2)$ is a unit of $W$, and $\lvert\iota(u)\rvert=1$.
+\end{proposition}
+
+\begin{proof}
+By the theory of complex multiplication~\cite[Chapter~II, Theorems~4.1 and~2.2]{silvermanadv}, the number $j=j(\Lambda)$ is an algebraic integer, it lies in the Hilbert class field $H$ of $K$, and there is an elliptic curve $E_H$ over $H$ with $j(E_H)=j$ whose endomorphisms are all defined over $H$ and form a ring isomorphic to $\mathcal O_K$. Let $v$ be the place of $H$ above $p$ determined by $\iota$. The prime $p$ is unramified in $H$, so the completion $H_v$ is unramified over $\mathbb Q_p$ and its ring of integers lies in $W$. By the theorem of Serre and Tate on abelian varieties with complex multiplication~\cite[Theorem~6 and Corollary~1 to Theorem~7]{serretate}, $E_H$ has potentially good reduction at $v$, and the inertia group at $v$ acts on the Tate module $T_\ell E_H$, for a prime $\ell\ne p$, through a finite group of automorphisms of $E_H$ that commute with $\mathcal O_K$, hence through $\mathcal O_K^\times=\{\pm1\}$. If this action is trivial, $E_H$ has good reduction at $v$ by the criterion of N\'eron, Ogg and Shafarevich~\cite[Theorem~1]{serretate}. Otherwise it is the unique quadratic character of the tame inertia group, and the quadratic twist of $E_H$ by the ramified quadratic extension $H_v(\sqrt{p})$ has trivial inertia action and good reduction at $v$. The quadratic twist by $H(\sqrt p)$ is defined over $H$, so in both cases we obtain an elliptic curve $E'$ over $H$ with $j(E')=j$ and good reduction at $v$. Choose a Weierstrass equation $y^2=4x^3-A_2x-A_3$ for $E'$ over $H$. Since $p\ge5$, a minimal model of $E'$ at $v$ is obtained by the scaling $(x,y)\mapsto(p^{2k}x,p^{3k}y)$ for some integer $k$, because $p$ is a uniformizer of $H_v$~\cite[Chapter~VII, Section~1]{silvermanaec}. So $G_2=p^{4k}A_2$ and $G_3=p^{6k}A_3$ lie in $H$, are integral at $v$, and $G_2^3-27G_3^2$ is a unit at $v$. Since $j\ne0,1728$, the numbers $g_2,g_3,G_2,G_3$ are nonzero, and two short Weierstrass equations with the same $j$ are related by $G_2=u^4g_2$ and $G_3=u^6g_3$ for an algebraic number $u\ne0$. Finally $u^{12}=(G_2^3-27G_3^2)/(g_2^3-27g_3^2)=G_2^3-27G_3^2$ is a unit at $v$, so $\lvert\iota(u)\rvert=1$.
+\end{proof}
+% TODO(external): check theorem numbers in Silverman, Advanced Topics (GTM 151), Ch. II; Serre--Tate,
+% Ann. of Math. 88 (1968); Silverman AEC (GTM 106), Ch. VII. The archive derives this statement (CM2)
+% from global Artin reciprocity; here it is cited.
+
+Fix $u$, $G_2$ and $G_3$ as in Proposition~\ref{goodmodel} and let $\mathcal E$ be the curve $y^2=4x^3-G_2x-G_3$ over $W$. Since $2$, $3$ and $G_2^3-27G_3^2$ are units, $\mathcal E$ is an elliptic curve over $W$, smooth and proper. Over $\mathbb C$ the same equation defines a curve isomorphic to $\mathbb C/\Lambda$ by $z\mapsto(x,y)=(u^2\wp(z),u^3\wp'(z))$, since $u^6\wp'^2=4(u^2\wp)^3-u^4g_2(u^2\wp)-u^6g_3$. We write $E$ for this curve over the algebraic numbers, and regard it over $\mathbb C$ and over $\mathbb C_p$ as needed. Put $T=-2x/y$. It is a parameter at the origin of every fiber of $\mathcal E$, and $x$ and $y$ have expansions
+\begin{equation}\label{xexp}
+x=T^{-2}\,\mathsf x(T),\qquad y=-2T^{-3}\,\mathsf x(T),\qquad\mathsf x(T)\in1+T\,W[[T]]
+\end{equation}
+\cite[Chapter~IV, Section~1]{silvermanaec}. The formal group law $T_1+_{\mathcal E}T_2$ of $\mathcal E$ has coefficients in $W$, and its logarithm $\ell(T)=T+\cdots$ has coefficients in $\mathcal K_0$. On the complex side, $T=-2u^{-1}\wp(z)/\wp'(z)=u^{-1}z+O(z^5)$, and $z=u\,\ell(T)$ as power series, because both sides are additive for the group law and have derivative $u$ at $0$. Endomorphisms of $E$ extend to $\mathcal E$, because $\mathcal E$ is the N\'eron model of $E$~\cite[Section~1.2, Proposition~8]{blr}. For $a\in\mathcal O_K$ let $[a](T)$ be the formal series of the endomorphism $z\mapsto az$. It has coefficients in $W$ and satisfies $\ell([a](T))=\iota(a)\,\ell(T)$.
+
+\begin{lemma}\label{torsint}
+Let $P$ be a point of $E$ of finite order prime to $p$, $P\ne0$. Then $P$ is defined over $\mathcal K_0$, its coordinates $x(P),y(P)$ lie in $W$, and its reduction is not the origin.
+\end{lemma}
+
+\begin{proof}
+Let $N$ be the order of $P$. The kernel of multiplication by $N$ on $\mathcal E$ is finite and \'etale over $W$, because $p\nmid N$, and the residue field of $W$ is algebraically closed, so all its points are $W$-points. A $W$-point of $\mathcal E$ other than the origin has integral coordinates or reduces to the origin, and reduction is injective on the kernel of $N$ because the kernel is \'etale~\cite[Chapter~VII, Proposition~3.1]{silvermanaec}.
+\end{proof}
+
+Choose $a=m+n\frac{1+\sqrt{-d}}2\in\mathcal O_K$ with $a\bar a$ odd and prime to $p$ and $n$ prime to $p$. Then $a-\bar a=n\sqrt{-d}$ is nonzero and prime to $p$, since $p\ne d$. Lemma~\ref{thetaquot}(iv) gives $s_2(\Lambda)=\sum_{P\in S}\wp(P)/\big(a(a-\bar a)\big)$, and $\wp(P)=u^{-2}x(P)$ with $x(P)\in W$ by Lemma~\ref{torsint}. So $s_2(\Lambda)$ is algebraic and $u^2s_2(\Lambda)\in W$. The coefficient $e_k$ in \eqref{logtheta} is a polynomial in $g_2,g_3$ that is homogeneous of weight $2k$, where $g_2$ has weight $4$ and $g_3$ weight $6$, so $u^{2k}e_k(g_2,g_3)=e_k(G_2,G_3)\in\mathcal K_0$.
+
+\paragraph{Fields of definition.} The functions of Lemma~\ref{thetaquot} are rational functions on powers of the curve $\mathbb C/\Lambda$, which we identify with $E$ over $\mathbb C$. Each is characterized by its divisor together with its leading coefficient at the origin in the coordinates $z_i$, and that coefficient is algebraic. The points in the divisors are algebraic, since they are torsion points of $E$. An automorphism of $\mathbb C$ over $\overline{\mathbb Q}$ fixes $E$, the divisor and the leading coefficient in the coordinates $T_i$, which differ from the $z_i$ by the algebraic factor $u$, so it fixes the function. A rational function fixed by all these automorphisms is defined over $\overline{\mathbb Q}$, hence over a number field, and $\iota$ maps it to a rational function defined over a finite extension of $\mathcal K_0$.
+
+\paragraph{The function $\Upsilon$.} Put
+\begin{equation}\label{Upsdef}
+\Upsilon(T)=-\log\frac{\theta\big(u\,\ell(T)\big)}{u\,T}.
+\end{equation}
+By \eqref{logtheta}, $\Upsilon(T)=-\log\frac{\ell(T)}T+\frac{u^2s_2}2\ell(T)^2+\sum_{k\ge2}\frac{e_k(G_2,G_3)}{(2k-1)2k}\ell(T)^{2k}$, a power series over $\mathcal K_0$ without constant term. In general it is not integral. For a series $B$ in several variables over $\mathcal K_0$ without constant term we write $B\simeq0$ when $\exp(B)$ is integral, and $B\simeq B'$ when $B-B'\simeq0$. Since the inverse of an integral series with constant term $1$ is integral, $B\simeq0$ implies $-B\simeq0$, and the relation is an equivalence relation stable under addition and under substitution of integral series without constant term. Put
+\[
+\delta\Upsilon(S,T)=\Upsilon(S+_{\mathcal E}T)-\Upsilon(S)-\Upsilon(T),
+\]
+a series in two variables whose monomials contain both variables.
+
+\subsection{Divisors near the origin}\label{sec:divisors}
+
+Let $n\ge1$, let $L$ be a finite extension of $\mathcal K_0$ in $\mathbb C_p$, with ring of integers $\mathcal O_L$ and a uniformizer $\pi_L$. The $n$-th power $\mathcal E^n_{\mathcal O_L}$ of $\mathcal E\otimes_W\mathcal O_L$ is smooth over $\mathcal O_L$, its origin $o$ in the special fiber has a regular local ring, and the completion of that ring is $\mathcal O_L[[T_1,\dots,T_n]]$, with $T_i$ the parameter $T$ on the $i$-th factor. For a family $h=(a_1,\dots,a_n)$ of elements of $\mathcal O_K$ let $h\colon E^n\to E$ be the homomorphism $(P_i)\mapsto\sum_i[a_i]P_i$, and put
+\[
+T_h=[a_1](T_1)+_{\mathcal E}\cdots+_{\mathcal E}[a_n](T_n)\ \in W[[T_1,\dots,T_n]].
+\]
+We call $h$ \emph{primitive at $p$} when some $a_i$ is prime to $p$. The identity component of the kernel of $h$ is the irreducible component of the divisor $h=0$ of $E^n$ through the origin.
+
+\begin{lemma}\label{divunit}
+Let $f$ be a nonzero rational function on $E^n$, defined over $L$. Suppose that the prime divisors of $E^n_L$ that occur in the divisor of $f$ and whose closures in $\mathcal E^n_{\mathcal O_L}$ contain $o$ are the identity components of the kernels of homomorphisms $h_1,\dots,h_k$ primitive at $p$, with multiplicities $n_1,\dots,n_k$. Then
+\[
+f=\pi_L^m\,v\prod_{i=1}^kT_{h_i}^{\,n_i}
+\]
+in the fraction field of $\mathcal O_L[[T_1,\dots,T_n]]$, with $m\in\mathbb Z$ and $v$ a unit of $\mathcal O_L[[T_1,\dots,T_n]]$.
+\end{lemma}
+
+\begin{proof}
+The local ring $R$ of $\mathcal E^n_{\mathcal O_L}$ at $o$ is regular, hence factorial~\cite[Theorem~20.3]{matsumura}, and the height one primes of $R$ correspond to the prime divisors of $\mathcal E^n_{\mathcal O_L}$ through $o$. These are the special fiber, which is irreducible with local equation $\pi_L$, and the closures of prime divisors $Z$ of $E^n_L$ whose closure contains $o$. So $f=\pi_L^mv_0\prod_Zg_Z^{\,\operatorname{ord}_Z(f)}$ with $v_0\in R^\times$, $m\in\mathbb Z$ and $g_Z$ a local equation of the closure of $Z$. By hypothesis the $Z$ with $\operatorname{ord}_Z(f)\ne0$ are the identity components $Z_i$ of the kernels of $h_i$. The homomorphism $h_i$ extends to a homomorphism $\mathcal E^n_{\mathcal O_L}\to\mathcal E_{\mathcal O_L}$, because an abelian scheme over a discrete valuation ring is the N\'eron model of its generic fiber~\cite[Section~1.2, Proposition~8]{blr}, and the zero section of $\mathcal E$ is cut out near the origin by $T$, so the closure of $Z_i$ is contained in the zero locus of $T\circ h_i$ near $o$. The image of $T\circ h_i$ in $\mathcal O_L[[T_1,\dots,T_n]]$ is $T_{h_i}$, whose linear part $\sum_j\iota(a_{ij})T_j$ has a unit coefficient because $h_i$ is primitive at $p$. So $T\circ h_i$ is part of a regular system of parameters of $R$, and $R/(T\circ h_i)$ is a regular local ring of dimension $n$, in particular a domain. Its zero locus is irreducible of dimension $n$ and contains the closure of $Z_i$, which is irreducible of dimension $n$ because it is flat over $\mathcal O_L$ with generic fiber of dimension $n-1$. The two are therefore equal, and $T\circ h_i$ is a local equation $g_{Z_i}$. Passing to the completion gives the lemma with $v$ the image of $v_0$.
+\end{proof}
+
+\begin{lemma}\label{normalize}
+In the situation of Lemma~\ref{divunit}, suppose that $f\prod_iT_{h_i}^{-n_i}$, multiplied by a series $Q$ in $\mathcal O_L[[T_1,\dots,T_n]]$ with $Q(0)\in\mathcal O_L^\times$, equals a series $B$ with $B(0)=1$. Then $m=0$, and $B$ is a unit of $\mathcal O_L[[T_1,\dots,T_n]]$. If the coefficients of $B$ lie in $\mathcal K_0$, they lie in $W$.
+\end{lemma}
+
+\begin{proof}
+We have $B=\pi_L^mvQ$, so $1=B(0)=\pi_L^mv(0)Q(0)$ with $v(0)$ and $Q(0)$ units of $\mathcal O_L$. Hence $m=0$, and $B=vQ$ is a unit. Finally $\mathcal O_L\cap\mathcal K_0=W$.
+\end{proof}
+
+\subsection{Integrality in one variable}\label{sec:onevarint}
+
+\begin{proposition}\label{transl}
+Let $N\ge1$ be prime to $p$, and let $t\in\mathbb C$ with $Nt\in\Lambda$ and $t\notin\Lambda$. Put $H_t(T)=u\,T\,k_t\big(u\,\ell(T)\big)$. Then $H_t$ is a power series with algebraic coefficients and constant term $1$, and its image under $\iota$ has coefficients of absolute value at most $1$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{thetaquot}(i), $f=k_t^N$ is a rational function on $E$ with divisor $N[-t]-N[0]$, defined over a finite extension $L$ of $\mathcal K_0$ by the paragraph on fields of definition. By Lemma~\ref{torsint} the point $-t$ reduces to a point other than the origin, so its closure does not contain $o$. Lemma~\ref{divunit} with $n=1$ and $h=(1)$ gives $f=\pi_L^mvT^{-N}$. Since $z=u\ell(T)=uT(1+O(T))$ and $zk_t(z)\to1$, the series $B=u^NT^Nf=H_t^N$ has constant term $1$, and Lemma~\ref{normalize} with $Q=u^N$ shows that $B$ is a unit of $\mathcal O_L[[T]]$. The binomial series $(1+X)^{1/N}=\sum_k\binom{1/N}kX^k$ has coefficients in $\mathbb Z_p$, because $1/N\in\mathbb Z_p$. So $B^{1/N}$, the $N$-th root of $B$ with constant term $1$, has coefficients in $\mathcal O_L$. The series $H_t$ is an $N$-th root of $B$ with constant term $1$, and the $N$-th root with constant term $1$ of a series with constant term $1$ is unique, so $H_t=B^{1/N}$. Its coefficients are algebraic, since those of $B$ are.
+\end{proof}
+
+\begin{proposition}\label{normrel}
+Let $a\in\mathcal O_K$ with $a\bar a$ odd and prime to $p$. Then $\Upsilon([a](T))\simeq a\bar a\,\Upsilon(T)$.
+\end{proposition}
+
+\begin{proof}
+Put $z=u\,\ell(T)$, so that $az=u\,\ell([a](T))$. By \eqref{Upsdef} and Lemma~\ref{thetaquot}(iv),
+\[
+\exp\big(a\bar a\,\Upsilon(T)-\Upsilon([a](T))\big)=\frac{\theta(az)}{\theta(z)^{a\bar a}}\cdot\frac{(uT)^{a\bar a}}{u\,[a](T)}=a\,u^{a\bar a-1}\,\frac{T^{a\bar a}}{[a](T)}\prod_{\{P,-P\}\subset S}\big(\wp(z)-\wp(P)\big).
+\]
+Each factor $\wp(z)-\wp(P)$ equals $u^{-2}\big(x-x(P)\big)=u^{-2}T^{-2}\big(\mathsf x(T)-x(P)T^2\big)$ by \eqref{xexp}, and the product has $(a\bar a-1)/2$ factors. So the right side is
+\[
+\frac{\iota(a)\,T}{[a](T)}\prod_{\{P,-P\}\subset S}\big(\mathsf x(T)-x(P)T^2\big).
+\]
+Each point $P\in S$ has order dividing $a\bar a$, which is prime to $p$, so $x(P)\in W$ by Lemma~\ref{torsint}, and each factor of the product lies in $1+T\,W[[T]]$. The series $[a](T)$ has coefficients in $W$ and linear coefficient $\iota(a)$, a unit, so $\iota(a)T/[a](T)$ lies in $1+T\,W[[T]]$. Hence the exponential is integral.
+\end{proof}
+
+\begin{proposition}\label{cubeadj}
+\begin{enumerate}
+\item[(i)] In the variables $T_1,T_2,T_3$,
+\[
+\delta\Upsilon(T_1+_{\mathcal E}T_2,T_3)\simeq\delta\Upsilon(T_1,T_3)+\delta\Upsilon(T_2,T_3).
+\]
+\item[(ii)] Let $a\in\mathcal O_K$ with $a\bar a$ prime to $p$. In the variables $S,T$,
+\[
+\delta\Upsilon\big([a](S),T\big)\simeq\delta\Upsilon\big(S,[\bar a](T)\big).
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Write $z_i=u\,\ell(T_i)$, $T_{12}=T_1+_{\mathcal E}T_2$, and similarly $T_{13}$, $T_{23}$, $T_{123}$. The difference of the two sides of (i) is
+\[
+D=\Upsilon(T_{123})-\Upsilon(T_{12})-\Upsilon(T_{13})-\Upsilon(T_{23})+\Upsilon(T_1)+\Upsilon(T_2)+\Upsilon(T_3),
+\]
+and \eqref{Upsdef} gives
+\[
+\exp(-D)=c(z_1,z_2,z_3)\cdot u^{-1}\,\frac{T_{12}\,T_{13}\,T_{23}}{T_{123}\,T_1\,T_2\,T_3},
+\]
+with $c$ the function of Lemma~\ref{thetaquot}(ii), a rational function on $E^3$ defined over a finite extension $L$ of $\mathcal K_0$. Each of the seven divisors in its divisor is the kernel of a homomorphism with coefficients in $\{0,1\}$, which is connected and primitive at $p$, with local series $T_{123}$, $T_1$, $T_2$, $T_3$, $T_{12}$, $T_{13}$, $T_{23}$. Lemma~\ref{divunit} gives $c=\pi_L^mv\,T_{123}T_1T_2T_3/(T_{12}T_{13}T_{23})$. Lemma~\ref{normalize}, with $Q=u^{-1}$ and $B=\exp(-D)$, whose constant term is $1$ because $D$ has no constant term and whose coefficients lie in $\mathcal K_0$, shows that $\exp(-D)$ is a unit of $W[[T_1,T_2,T_3]]$ with constant term $1$. Its inverse $\exp(D)$ is integral.
+
+(ii) Write $z=u\,\ell(S)$ and $w=u\,\ell(T)$. The difference of the two sides is
+\[
+D'=\Upsilon\big([a]S+_{\mathcal E}T\big)-\Upsilon([a]S)-\Upsilon(T)-\Upsilon\big(S+_{\mathcal E}[\bar a]T\big)+\Upsilon(S)+\Upsilon([\bar a]T),
+\]
+and \eqref{Upsdef} gives
+\[
+\exp(-D')=R_a(z,w)\cdot\frac{[a]S\cdot T\cdot\big(S+_{\mathcal E}[\bar a]T\big)}{\big([a]S+_{\mathcal E}T\big)\cdot S\cdot[\bar a]T},
+\]
+with $R_a$ the function of Lemma~\ref{thetaquot}(iii), defined over a finite extension $L$ of $\mathcal K_0$. In the divisor of $R_a$ the divisor $\bar aw=0$ is the union of the divisors $w=Q$ for $Q$ in the kernel of $\bar a$, and for $Q\ne0$ the point $Q$ has order dividing $a\bar a$, prime to $p$, so by Lemma~\ref{torsint} the closure of $w=Q$ does not contain $o$. The same holds for $az=0$. So the prime divisors through $o$ in the divisor of $R_a$ are $az+w=0$ with multiplicity $1$, $z=0$ with multiplicity $1-1=0$, $w=0$ with multiplicity $1-1=0$, and $z+\bar aw=0$ with multiplicity $-1$. The homomorphisms $(z,w)\mapsto az+w$ and $(z,w)\mapsto z+\bar aw$ have the coefficient $1$, so they are primitive at $p$. Their kernels are connected, being graphs. Lemma~\ref{divunit} gives $R_a=\pi_L^mv\,\big([a]S+_{\mathcal E}T\big)/\big(S+_{\mathcal E}[\bar a]T\big)$, and then
+\[
+\exp(-D')=\pi_L^mv\,\frac{[a]S}{S}\cdot\frac T{[\bar a]T}.
+\]
+The last two factors lie in $W[[S]]$ and $W[[T]]$ with unit constant terms $\iota(a)$ and $\iota(\bar a)^{-1}$. Lemma~\ref{normalize} with $Q=\frac{[a]S}S\cdot\frac T{[\bar a]T}$ shows that $\exp(-D')$, a series over $\mathcal K_0$ with constant term $1$, is a unit of $W[[S,T]]$, and $\exp(D')$ is integral.
+\end{proof}
+
+\subsection{The pairing in Lubin--Tate coordinates}\label{sec:ltpairing}
+
+Let $F$ be the formal group law over $\mathbb Z_p$ with logarithm $\operatorname{lg}$ of Section~\ref{sec:pairings}. For $\alpha\in W$ with $\sigma^2\alpha=\alpha$, that is $\alpha\in\mathbb Z_{p^2}$, put $[\alpha]_F(X)=\operatorname{lg}^{-1}(\alpha\operatorname{lg}X)$. Hazewinkel's functional-equation lemma~\cite[Section~2.2]{hazewinkel} shows that $[\alpha]_F$ has coefficients in $W$, since $\operatorname{lg}$ satisfies the functional equation $\operatorname{lg}(X)-p^{-1}(\operatorname{lg})^{\sigma^2}(X^{p^2})=X$ and $\sigma^2\alpha=\alpha$. So $F$ is a formal module over $\mathbb Z_{p^2}$. For a root of unity $\zeta$ of order dividing $p^2-1$ one has $\operatorname{lg}(\zeta X)=\zeta\operatorname{lg}(X)$, hence $[\zeta]_F(X)=\zeta X$.
+% TODO(external): Hazewinkel, Formal Groups and Applications, Section 2.2 (functional-equation lemma)
+% in the twisted form with sigma^2; confirm the precise statement used.
+
+\begin{proposition}\label{ltiso}
+There are $\varepsilon\in W^\times$ and a series $\varkappa\in W[[T]]$ with $\varkappa(0)=0$ and $\varkappa'(0)\in W^\times$ such that $\operatorname{lg}(\varkappa(T))=\varepsilon\,\ell(T)$.
+\end{proposition}
+
+\begin{proof}
+For $a\in\mathcal O_K$ the series $[a](T)$ is an endomorphism of the formal group $\widehat{\mathcal E}$ of $\mathcal E$ over $W$ with derivative $\iota(a)$ at $0$. The ring of endomorphisms of $\widehat{\mathcal E}$ over $W$ is complete for the $p$-adic topology, so the map $a\mapsto[a]$ extends by continuity to $\mathbb Z_{p^2}$, the completion of $\mathcal O_K$ at $p$, and makes $\widehat{\mathcal E}$ a formal $\mathbb Z_{p^2}$-module whose action on the tangent space is the inclusion $\mathbb Z_{p^2}\subset W$. The height of $\widehat{\mathcal E}$ is $1$ or $2$, because $\mathcal E$ is an elliptic curve, and it is divisible by $[\mathbb Q_{p^2}:\mathbb Q_p]=2$, because the special fiber of $\widehat{\mathcal E}$ is a formal module over $\mathbb Z_{p^2}$ and the height of a formal module over the integers of a local field is a multiple of the degree of that field. So $\widehat{\mathcal E}$ is a formal $\mathbb Z_{p^2}$-module of relative height one, as is $F$. Over the ring of integers of the completion of the maximal unramified extension of $\mathbb Q_{p^2}$, which is $W$, any two formal $\mathbb Z_{p^2}$-modules of relative height one are isomorphic~\cite{lubintate}, \cite[Chapter~IV, Section~21]{hazewinkel}. Let $\varkappa\colon\widehat{\mathcal E}\to F$ be an isomorphism over $W$. Then $\operatorname{lg}\circ\varkappa$ and $\ell$ are logarithms of $\widehat{\mathcal E}$, and the logarithm of a one-dimensional formal group over a $\mathbb Q$-algebra is unique up to a constant factor, so $\operatorname{lg}(\varkappa(T))=\varepsilon\ell(T)$ with $\varepsilon=\varkappa'(0)\in W^\times$.
+\end{proof}
+% TODO(external): exact references for (a) divisibility of the height of a formal O-module by [K:Q_p],
+% and (b) uniqueness over W of formal O-modules of relative height one (Lubin--Tate 1965, Ann. of Math. 81,
+% Theorem 1 and its corollary over the completed maximal unramified extension; Hazewinkel Ch. IV, 21.x).
+% The archive assumes this statement (LTIso) as a hypothesis on the model.
+
+Fix $\varepsilon$ and $\varkappa$ as in Proposition~\ref{ltiso}. Then $\varkappa(S+_{\mathcal E}T)=F(\varkappa S,\varkappa T)$, because $\operatorname{lg}$ of both sides is $\varepsilon(\ell(S)+\ell(T))$. For $a\in\mathcal O_K$ we have $\varkappa([a](T))=[\iota(a)]_F(\varkappa(T))$, because $\operatorname{lg}$ of both sides is $\iota(a)\varepsilon\ell(T)$. Put
+\begin{equation}\label{betadef}
+\Upsilon_F=\Upsilon\circ\varkappa^{-1},\qquad\beta(X,Y)=\Upsilon_F\big(F(X,Y)\big)-\Upsilon_F(X)-\Upsilon_F(Y)=\delta\Upsilon\big(\varkappa^{-1}X,\varkappa^{-1}Y\big).
+\end{equation}
+These are series over $\mathcal K_0$, and the relation $\simeq$ is transported by the substitution $\varkappa^{-1}$, which has coefficients in $W$.
+
+\begin{theorem}\label{betaprops}
+The series $\beta$ has the following properties.
+\begin{enumerate}
+\item[(i)] Every monomial of $\beta$ contains both variables.
+\item[(ii)] $\beta(F(X_0,X_1),X_2)\simeq\beta(X_0,X_2)+\beta(X_1,X_2)$, and the same holds in the second variable.
+\item[(iii)] $\beta([\alpha]_FX,Y)\simeq\beta(X,[\sigma\alpha]_FY)$ for every $\alpha\in\mathbb Z_{p^2}^\times$.
+\item[(iv)] $\Upsilon_F([\alpha]_FX)\simeq\alpha\,\sigma(\alpha)\,\Upsilon_F(X)$ for every $\alpha\in\mathbb Z_{p^2}^\times$.
+\end{enumerate}
+In particular $\beta$ satisfies hypotheses (i) to (iii) of Theorem~\ref{thm:betaisg} with $\mathcal K=\mathcal K_0$.
+\end{theorem}
+
+\begin{proof}
+(i) $\Upsilon_F$ has no constant term, so $\beta(X,0)=\beta(0,Y)=0$.
+
+(ii) Substitute $T_i=\varkappa^{-1}(X_i)$ in Proposition~\ref{cubeadj}(i), and use $\varkappa^{-1}F(X_0,X_1)=\varkappa^{-1}X_0+_{\mathcal E}\varkappa^{-1}X_1$. The series $\beta$ is symmetric, so the second variable follows.
+
+(iii) and (iv) First let $\alpha=\iota(a)$ with $a\in\mathcal O_K$ such that $a\bar a$ is odd and prime to $p$. By \eqref{conjfrob}, $\sigma\alpha=\iota(\bar a)$. Substituting $S=\varkappa^{-1}X$, $T=\varkappa^{-1}Y$ in Proposition~\ref{cubeadj}(ii) and in Proposition~\ref{normrel}, and using $\varkappa\circ[a]=[\iota(a)]_F\circ\varkappa$, gives (iii) and (iv) for $\alpha$, with $\iota(a\bar a)=\alpha\sigma(\alpha)$.
+
+The set of such $\iota(a)$ is dense in $\mathbb Z_{p^2}^\times$. Indeed, $\iota(\mathcal O_K)$ is dense in $\mathbb Z_{p^2}$. Given $\alpha\in\mathbb Z_{p^2}^\times$ and $k\ge1$, the Chinese remainder theorem gives $a\in\mathcal O_K$ with $\iota(a)\equiv\alpha\pmod{p^k}$ and $a\equiv1\pmod{2\mathcal O_K}$. Then $a$ is a unit at $p$, so $p\nmid a\bar a$, and $a\bar a\equiv1\pmod 2$.
+
+Let $\alpha_k\to\alpha$ with each $\alpha_k$ of this form. Then $[\alpha_k]_F\to[\alpha]_F$ and $[\sigma\alpha_k]_F\to[\sigma\alpha]_F$ coefficientwise, since $[\alpha]_F=\operatorname{lg}^{-1}(\alpha\operatorname{lg}X)$ depends continuously on $\alpha$ in each degree. The coefficient of a fixed monomial of $\exp\big(\beta([\alpha]_FX,Y)-\beta(X,[\sigma\alpha]_FY)\big)$ is a polynomial over $\mathcal K_0$ in finitely many coefficients of $[\alpha]_F$ and $[\sigma\alpha]_F$, so it is the limit of the corresponding coefficients for $\alpha_k$, which lie in $W$. Since $W$ is closed, the limit lies in $W$. The limit proves (iii), and the same argument proves (iv).
+
+For the hypotheses of Theorem~\ref{thm:betaisg}, the field $\mathcal K_0$ is complete, $\lvert\mathcal K_0^\times\rvert=p^{\mathbb Z}$, it contains the roots of unity of order $p^2-1$, and $\lvert\sigma a-a^p\rvert\le p^{-1}$ for $\lvert a\rvert\le1$. Hypothesis (iii) of that theorem is (iii) for $\alpha=\zeta$, since $\sigma\zeta=\zeta^p$ and $[\zeta]_FX=\zeta X$.
+\end{proof}
+
+\subsection{Unitary and hyperbolic changes of coordinates}\label{sec:unitarychange}
+
+For $\alpha\in\mathbb Z_{p^2}$ we write $[\alpha](T)=\ell^{-1}(\alpha\,\ell(T))$. The proof of Proposition~\ref{ltiso} shows that $[\alpha]$ has coefficients in $W$, and $\varkappa\circ[\alpha]=[\alpha]_F\circ\varkappa$. By \eqref{betadef}, $\beta(\varkappa S,\varkappa T)=\delta\Upsilon(S,T)$, so Theorem~\ref{betaprops} and Proposition~\ref{cubeadj}(i) give, in the parameter $T$ of $\mathcal E$, the relations
+\begin{equation}\label{unitrels}
+\Upsilon([\alpha]T)\simeq\alpha\sigma(\alpha)\,\Upsilon(T),\qquad\delta\Upsilon([\alpha]S,T)\simeq\delta\Upsilon(S,[\sigma\alpha]T)\qquad(\alpha\in\mathbb Z_{p^2}^\times),
+\end{equation}
+and $\delta\Upsilon$ is biadditive up to $\simeq$ in each variable. In \eqref{unitrels} the factor $\alpha\sigma(\alpha)$ lies in $\mathbb Z_p$. All coefficients that multiply $\Upsilon$ or $\delta\Upsilon$ below lie in $\mathbb Z_p$, and the relations are identities of series up to $\simeq$.
+
+\begin{lemma}\label{allalpha}
+For every $\alpha,c\in\mathbb Z_{p^2}$ the following hold.
+\begin{enumerate}
+\item[(i)] $\delta\Upsilon([\alpha]S,T)\simeq\delta\Upsilon(S,[\sigma\alpha]T)$.
+\item[(ii)] $\delta\Upsilon(T,[c]T)\simeq\big(c+\sigma(c)\big)\Upsilon(T)$.
+\item[(iii)] $\Upsilon([\alpha]T)\simeq\alpha\sigma(\alpha)\,\Upsilon(T)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Since $p$ is odd, every $\alpha\in\mathbb Z_{p^2}$ is a sum $\alpha_1+\alpha_2$ of two units, with $(\alpha_1,\alpha_2)=(2\alpha,-\alpha)$ if $\alpha$ is a unit and $(\alpha_1,\alpha_2)=(1,\alpha-1)$ otherwise. Then $[\alpha]S=[\alpha_1]S+_{\mathcal E}[\alpha_2]S$.
+
+(i) Biadditivity in the first variable, \eqref{unitrels} for $\alpha_1$ and $\alpha_2$, and biadditivity in the second variable give
+\begin{align*}
+\delta\Upsilon([\alpha]S,T)&\simeq\delta\Upsilon([\alpha_1]S,T)+\delta\Upsilon([\alpha_2]S,T)\\
+&\simeq\delta\Upsilon(S,[\sigma\alpha_1]T)+\delta\Upsilon(S,[\sigma\alpha_2]T)\simeq\delta\Upsilon(S,[\sigma\alpha]T).
+\end{align*}
+
+(ii) First let $c$ be a unit with $1+c$ a unit. Then $T+_{\mathcal E}[c]T=[1+c]T$, so \eqref{unitrels} gives
+\begin{align*}
+\delta\Upsilon(T,[c]T)&=\Upsilon([1+c]T)-\Upsilon(T)-\Upsilon([c]T)\\
+&\simeq\big((1+c)\sigma(1+c)-1-c\sigma(c)\big)\Upsilon(T)=\big(c+\sigma(c)\big)\Upsilon(T).
+\end{align*}
+For general $c$, the residue field $\mathbb F_{p^2}$ has at least $25$ elements, so there is $c'\in\mathbb Z_{p^2}$ whose residue avoids the four residues of $0$, $-1$, $c$ and $c+1$. Then $c'$, $1+c'$, $c-c'$ and $1+c-c'$ are units, and biadditivity in the second variable gives $\delta\Upsilon(T,[c]T)\simeq\delta\Upsilon(T,[c']T)+\delta\Upsilon(T,[c-c']T)$, which is $\simeq\big(c+\sigma(c)\big)\Upsilon(T)$ by the first case.
+
+(iii) Write $\alpha=\alpha_1+\alpha_2$ with units $\alpha_1,\alpha_2$. By the definition of $\delta\Upsilon$,
+\[
+\Upsilon([\alpha]T)=\Upsilon([\alpha_1]T)+\Upsilon([\alpha_2]T)+\delta\Upsilon([\alpha_1]T,[\alpha_2]T).
+\]
+Part (i), in two variables and then with $S=T$, gives $\delta\Upsilon([\alpha_1]T,[\alpha_2]T)\simeq\delta\Upsilon(T,[\sigma(\alpha_1)\alpha_2]T)$, and part (ii) with $c=\sigma(\alpha_1)\alpha_2$ turns this into $\big(\sigma(\alpha_1)\alpha_2+\alpha_1\sigma(\alpha_2)\big)\Upsilon(T)$. With \eqref{unitrels} for $\alpha_1$ and $\alpha_2$, the coefficient of $\Upsilon(T)$ is $\alpha_1\sigma(\alpha_1)+\alpha_2\sigma(\alpha_2)+\sigma(\alpha_1)\alpha_2+\alpha_1\sigma(\alpha_2)=\alpha\sigma(\alpha)$.
+\end{proof}
+
+\begin{lemma}\label{upssum}
+Let $A_1,\dots,A_k$ be integral series without constant term in some set of variables. Then
+\[
+\Upsilon\big(A_1+_{\mathcal E}\cdots+_{\mathcal E}A_k\big)\simeq\sum_{j=1}^k\Upsilon(A_j)+\sum_{1\le j<l\le k}\delta\Upsilon(A_j,A_l).
+\]
+\end{lemma}
+
+\begin{proof}
+For $k=1$ there is nothing to prove. Put $B=A_1+_{\mathcal E}\cdots+_{\mathcal E}A_{k-1}$. Then $\Upsilon(B+_{\mathcal E}A_k)=\Upsilon(B)+\Upsilon(A_k)+\delta\Upsilon(B,A_k)$, and biadditivity in the first variable, applied $k-2$ times, gives $\delta\Upsilon(B,A_k)\simeq\sum_{j<k}\delta\Upsilon(A_j,A_k)$. The induction hypothesis for $\Upsilon(B)$ completes the proof.
+\end{proof}
+
+\begin{proposition}\label{unitaryinv}
+Let $\gamma=(\gamma_{ij})$ be an $m\times m$ matrix over $\mathbb Z_{p^2}$ with $\sum_i\sigma(\gamma_{ij})\gamma_{il}=[j=l]$ for all $j,l$, and put $T'_i=[\gamma_{i1}](T_1)+_{\mathcal E}\cdots+_{\mathcal E}[\gamma_{im}](T_m)$. Then
+\[
+\sum_{i=1}^m\Upsilon(T'_i)\simeq\sum_{j=1}^m\Upsilon(T_j).
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{upssum}, then Lemma~\ref{allalpha}(iii) for the diagonal terms and Lemma~\ref{allalpha}(i) with $[\sigma(\gamma_{ij})][\gamma_{il}]=[\sigma(\gamma_{ij})\gamma_{il}]$ for the cross terms, give
+\[
+\sum_i\Upsilon(T'_i)\simeq\sum_j\Big(\sum_i\gamma_{ij}\sigma(\gamma_{ij})\Big)\Upsilon(T_j)+\sum_{j<l}\sum_i\delta\Upsilon\big(T_j,[\sigma(\gamma_{ij})\gamma_{il}]T_l\big).
+\]
+The coefficient $\sum_i\gamma_{ij}\sigma(\gamma_{ij})$ is the image under $\sigma$ of $\sum_i\sigma(\gamma_{ij})\gamma_{ij}=1$, because $\sigma^2$ fixes $\mathbb Z_{p^2}$. Biadditivity in the second variable turns the inner sum of the cross terms into $\delta\Upsilon\big(T_j,[\sum_i\sigma(\gamma_{ij})\gamma_{il}]T_l\big)=\delta\Upsilon(T_j,0)=0$ for $j<l$.
+\end{proof}
+
+A \emph{hyperbolic pair} of size $m$ is a pair of $m\times2m$ matrices $f=(f_{e,i})$ and $f'=(f'_{e,i})$ over $\mathbb Z_{p^2}$ with
+\begin{equation}\label{hyppair}
+\sum_{i=1}^{2m}\sigma(f_{e,i})f_{e',i}=0,\qquad\sum_{i=1}^{2m}\sigma(f'_{e,i})f'_{e',i}=0,\qquad\sum_{i=1}^{2m}\sigma(f_{e,i})f'_{e',i}=[e=e']
+\end{equation}
+for all $e,e'$. Equivalently, the rows of $f$ and of $f'$ span complementary isotropic subspaces of $\mathbb Q_{p^2}^{2m}$ for the standard hermitian form, in dual bases.
+
+\begin{proposition}\label{hypshape}
+Let $(f,f')$ be a hyperbolic pair of size $m$, and in the variables $X_1,\dots,X_m,Y_1,\dots,Y_m$ put
+\[
+T_i=[f_{1,i}](X_1)+_{\mathcal E}\cdots+_{\mathcal E}[f_{m,i}](X_m)+_{\mathcal E}[f'_{1,i}](Y_1)+_{\mathcal E}\cdots+_{\mathcal E}[f'_{m,i}](Y_m),\qquad1\le i\le2m.
+\]
+Then
+\[
+\sum_{i=1}^{2m}\Upsilon(T_i)\simeq\sum_{e=1}^m\delta\Upsilon(X_e,Y_e).
+\]
+\end{proposition}
+
+\begin{proof}
+We apply Lemma~\ref{upssum} to each $T_i$, with the summands in the order $X_1,\dots,X_m,Y_1,\dots,Y_m$, and then Lemma~\ref{allalpha}. The diagonal terms give
+\[
+\sum_e\Big(\sum_if_{e,i}\sigma(f_{e,i})\Big)\Upsilon(X_e)+\sum_e\Big(\sum_if'_{e,i}\sigma(f'_{e,i})\Big)\Upsilon(Y_e),
+\]
+and both coefficients vanish by \eqref{hyppair}, after applying $\sigma$. The cross terms between $X_e$ and $X_{e'}$ with $e<e'$ give $\delta\Upsilon\big(X_e,[\sum_i\sigma(f_{e,i})f_{e',i}]X_{e'}\big)=0$, and those between $Y_e$ and $Y_{e'}$ vanish in the same way. The cross terms between $X_e$ and $Y_{e'}$ give $\delta\Upsilon\big(X_e,[\sum_i\sigma(f_{e,i})f'_{e',i}]Y_{e'}\big)=[e=e']\,\delta\Upsilon(X_e,Y_e)$.
+\end{proof}
+
+\subsection{Theta functions of hermitian lattices}\label{sec:hermtheta}
+
+Let $M$ be a finitely generated torsion-free $\mathcal O_K$-module of rank $n$ with a positive definite hermitian form $h\colon M\times M\to K$, linear in the first variable. Put $V_M=M\otimes_{\mathcal O_K}\mathbb C$, a complex vector space of dimension $n$, and let $L_M\subset V_M$ be the image of $M\otimes_{\mathcal O_K}\Lambda$, a lattice. The formula
+\[
+H_M(x\otimes z,x'\otimes z')=\frac1A\,h(x,x')\,z\bar z'
+\]
+defines a positive definite hermitian form on $V_M$. For $M=\mathcal O_K^n$ with $h(x,y)=\sum_ix_i\bar y_i$ we write $V_{\mathrm{std}}=\mathbb C^n$, $L_{\mathrm{std}}=\Lambda^n$ and $H_{\mathrm{std}}(z,w)=A^{-1}\sum_iz_i\bar w_i$. The alternating form $\operatorname{Im}H_{\mathrm{std}}$ takes integer values on $L_{\mathrm{std}}$, and $L_{\mathrm{std}}$ is self-dual for it, by the computation of $\operatorname{Im}(\bar\omega\lambda)$ in Section~\ref{sec:reducedtheta}.
+
+For a lattice $L\subset V_M$ on which $\operatorname{Im}H_M$ is integral, a semicharacter $\alpha\colon L\to\{\pm1\}$ and the operators $U_x$ of Section~\ref{sec:fock} formed with $H_M$, the space $\Theta(L,\alpha)$ is the space of entire functions $G$ on $V_M$ with $\alpha(x)U_xG=G$ for $x\in L$. Its dimension is the Pfaffian of $\operatorname{Im}H_M$ on $L$, that is $[L^\perp:L]^{1/2}$ with $L^\perp=\{v\in V_M:\operatorname{Im}H_M(v,L)\subset\mathbb Z\}$~\cite[Theorem~3.2.7]{birkenhakelange}. By Lemma~\ref{thetaqp}, $\theta_{\mathrm{std}}(z)=\prod_{i=1}^n\theta(z_i)$ spans $\Theta(L_{\mathrm{std}},\psi^{\otimes n})$, where $\psi^{\otimes n}(\omega)=\prod_i\psi(\omega_i)$.
+% TODO(external): check theorem number in Birkenhake--Lange, Complex Abelian Varieties, 2nd ed., Grundlehren 302.
+
+From $U_xU_y=e^{-\pi i\operatorname{Im}H(x,y)}U_{x+y}$ we obtain $U_xU_v=e^{-2\pi i\operatorname{Im}H(x,v)}U_vU_x$. Hence, for $G\in\Theta(L,\alpha)$ and $v\in V_M$,
+\begin{equation}\label{transchar}
+U_vG\in\Theta\big(L,\alpha\cdot e^{2\pi i\operatorname{Im}H(\cdot,v)}\big).
+\end{equation}
+
+\begin{lemma}\label{thetaspan}
+Let $L'\subset V_{\mathrm{std}}$ be a lattice and $N$ an integer prime to $p$ with $NL_{\mathrm{std}}\subset L'\subset N^{-1}L_{\mathrm{std}}$, and let $\alpha'\colon L'\to\{\pm1\}$ be a semicharacter for $\operatorname{Im}H_{\mathrm{std}}$. Then $\Theta(L',\alpha')$ is contained in the span of the functions $U_t\theta_{\mathrm{std}}$ with $t\in(2N^2)^{-1}L_{\mathrm{std}}$.
+\end{lemma}
+
+\begin{proof}
+Put $L''=L'\cap L_{\mathrm{std}}$. It contains $NL_{\mathrm{std}}$, and $\Theta(L',\alpha')\subset\Theta(L'',\alpha'|_{L''})$. The semicharacters $\alpha'|_{L''}$ and $\psi^{\otimes n}|_{L''}$ have the same defect $e^{\pi i\operatorname{Im}H(x,y)}$, so their quotient is a character of $L''$ with values $\pm1$. Since $\operatorname{Im}H_{\mathrm{std}}$ is nondegenerate, this character equals $x\mapsto e^{2\pi i\operatorname{Im}H(x,q_0)}$ for some $q_0\in\frac12L''^\perp$, and $L''^\perp\subset N^{-1}L_{\mathrm{std}}$ because $L''\supset NL_{\mathrm{std}}$ and $L_{\mathrm{std}}$ is self-dual. By \eqref{transchar}, $U_{q_0}$ maps $\Theta(L'',\psi^{\otimes n})$ into $\Theta(L'',\alpha')$, injectively, and the two spaces have the same dimension, so $\Theta(L'',\alpha')=U_{q_0}\Theta(L'',\psi^{\otimes n})$.
+
+For $q\in L''^\perp$, \eqref{transchar} shows $U_q\theta_{\mathrm{std}}\in\Theta(L'',\psi^{\otimes n})$. For $y\in L_{\mathrm{std}}$ the operator $\psi^{\otimes n}(y)U_y$ multiplies $U_q\theta_{\mathrm{std}}$ by $e^{-2\pi i\operatorname{Im}H(y,q)}$, and these characters of $L_{\mathrm{std}}$ are distinct for representatives $q$ of distinct classes of $L''^\perp/L_{\mathrm{std}}$, because $L_{\mathrm{std}}$ is self-dual. So these functions are linearly independent. Their number is $[L''^\perp:L_{\mathrm{std}}]=[L_{\mathrm{std}}:L'']$, which is the dimension of $\Theta(L'',\psi^{\otimes n})$, so they span it. Finally $U_{q_0}U_q$ is a multiple of $U_{q_0+q}$, and $q_0+q\in\frac12L''^\perp\subset(2N)^{-1}L_{\mathrm{std}}\subset(2N^2)^{-1}L_{\mathrm{std}}$.
+\end{proof}
+
+For $t\in\mathbb C$ with $Nt\in\Lambda$ for some $N$ prime to $p$, put $B_t=\theta\cdot k_t$ when $t\notin\Lambda$ and $B_t=\theta$ when $t\in\Lambda$. Then $U_t\theta=c_tB_t$ with a constant $c_t\ne0$, namely $c_t=\theta(t)e^{-\pi\lvert t\rvert^2/(2A)}$ when $t\notin\Lambda$ and $c_t=\psi(t)$ when $t\in\Lambda$. The function $B_t$ has algebraic Taylor coefficients, by \eqref{logtheta} and Proposition~\ref{transl}, and
+\begin{equation}\label{Bint}
+e^{\Upsilon(T)}B_t\big(u\,\ell(T)\big)=\begin{cases}H_t(T)&t\notin\Lambda,\\uT&t\in\Lambda,\end{cases}
+\end{equation}
+an integral series. For $t\in V_{\mathrm{std}}$ with coordinates $t_j$ put $B_t(z)=\prod_jB_{t_j}(z_j)$. Since $H_{\mathrm{std}}$ is an orthogonal sum, $U_t\theta_{\mathrm{std}}=\big(\prod_jc_{t_j}\big)B_t$.
+
+\begin{lemma}\label{isometryp}
+Let $(M,h)$ be as above, and suppose that $M_p=M\otimes_{\mathcal O_K}\mathbb Z_{p^2}$ has a basis $b_1,\dots,b_n$ with $h(b_i,b_j)=[i=j]$. There is a $K$-linear isometry $g\colon(M_K^2,h\oplus h)\to(K^{2n},\sum_ix_i\bar y_i)$ with $g(M_p^2)=\mathbb Z_{p^2}^{2n}$.
+\end{lemma}
+
+\begin{proof}
+By Landherr's theorem~\cite[Chapter~10, Theorem~6.9]{scharlau}, hermitian spaces over $K$ are isometric when they have the same dimension, the same discriminant in $\mathbb Q^\times/N_{K/\mathbb Q}(K^\times)$, and the same signature at the real place of $\mathbb Q$. The discriminant $\delta$ of $h$, the determinant of a Gram matrix, lies in $\mathbb Q^\times$ because the matrix is hermitian, and the discriminant of $h\oplus h$ is $\delta^2=N_{K/\mathbb Q}(\delta)$. Both forms are positive definite of dimension $2n$. So there is an isometry $g_0$.
+% TODO(external): Scharlau, Quadratic and Hermitian Forms, Grundlehren 270, Ch. 10 (Landherr's theorem); confirm numbering.
+
+Let $\mathcal U$ be the unitary group of $(M_K^2,h\oplus h)$, and $\mathcal U_p$ its group of points over $K_p=\mathbb Q_{p^2}$. Let $\varphi_p$ be the $\mathbb Q_{p^2}$-linear isometry sending the basis $(b_i,0),(0,b_i)$ of $M_p^2$ to the standard basis, and put $w=g_0^{-1}\varphi_p\in\mathcal U_p$. For $v\in\mathcal U(K)$ the map $g=g_0v$ satisfies $g(M_p^2)=\mathbb Z_{p^2}^{2n}$ exactly when $w^{-1}v$ stabilizes $M_p^2$. The stabilizer of $M_p^2$ is an open subgroup of $\mathcal U_p$, so it suffices to show that $\mathcal U(K)$ is dense in $\mathcal U_p$.
+
+Let $\mathfrak u$ be the $\mathbb Q$-vector space of $K$-linear endomorphisms $X$ of $M_K^2$ with $X^\ast=-X$, the adjoint taken for $h\oplus h$. For $X$ with $\det(1+X)\ne0$ the Cayley transform $C(X)=(1-X)(1+X)^{-1}$ is unitary. Indeed $X^\ast=-X$ gives $C(X)^\ast=(1+X^\ast)^{-1}(1-X^\ast)=(1-X)^{-1}(1+X)$, and since $1+X$ and $1-X$ commute, $C(X)^\ast C(X)=1$. Conversely every $v\in\mathcal U$ with $\det(1+v)\ne0$ equals $C(X)$ for $X=(1-v)(1+v)^{-1}\in\mathfrak u$, and the same holds over $\mathbb Q_{p^2}$. Let $w'\in\mathcal U_p$. The norm-one elements $c=z/\bar z$ of $K$ form an infinite set, so we may choose one such that $-\bar c$ is not an eigenvalue of $w'$, so that $\det(1+cw')\ne0$. Since $\mathfrak u\otimes_{\mathbb Q}\mathbb Q_p=\mathfrak u_p$ and $\mathbb Q$ is dense in $\mathbb Q_p$, elements $X\in\mathfrak u$ approximate $C^{-1}(cw')$, and by continuity $c^{-1}C(X)\in\mathcal U(K)$ approximates $w'$.
+\end{proof}
+
+\begin{theorem}\label{orthint}
+Let $(M,h)$ be a positive definite hermitian $\mathcal O_K$-lattice of rank $n$, and let $b_1,\dots,b_n$ be a basis of $M_p$ with $h(b_i,b_j)=[i=j]$. Let $L\subset V_M$ be a lattice with $NL_M\subset L\subset N^{-1}L_M$ for some $N$ prime to $p$, let $\alpha\colon L\to\{\pm1\}$ be a semicharacter for $\operatorname{Im}H_M$, and let $G\in\Theta(L,\alpha)$ have algebraic Taylor coefficients at $0$. Put
+\[
+\Psi_G(T_1,\dots,T_n)=\exp\Big(\sum_{i=1}^n\Upsilon(T_i)\Big)\cdot G\Big(\sum_{i=1}^nb_i\otimes u\,\ell(T_i)\Big).
+\]
+Then the coefficients of $\Psi_G$ are bounded in absolute value. Consequently $\Psi_G=c\,U$ with $c\in\mathbb C_p^\times$ and $U$ integral.
+\end{theorem}
+
+In the statement, $G$ is expanded in the coordinates of a $K$-basis of $M_K$, its Taylor coefficients are moved to $\mathbb C_p$ by $\iota$, and $b_i\in M\otimes_{\mathcal O_K}\mathbb Z_{p^2}$ is substituted through $K\subset\mathbb Q_{p^2}\subset\mathcal K_0$.
+
+\begin{proof}
+Let $g$ be as in Lemma~\ref{isometryp}, and let $\hat g=g\otimes\mathrm{id}_{\mathbb C}\colon V_{M^2}\to V_{\mathrm{std}}$, with $V_{\mathrm{std}}=\mathbb C^{2n}$. It is an isometry for the hermitian forms, and it maps $L_{M^2}=L_M\oplus L_M$ onto $L_{\mathrm{std}}'=g(M^2)\otimes\Lambda$. The $\mathcal O_K$-lattices $g(M^2)$ and $\mathcal O_K^{2n}$ have the same completion at $p$, so there is $N'$ prime to $p$ with $N'\mathcal O_K^{2n}\subset g(M^2)\subset N'^{-1}\mathcal O_K^{2n}$. Hence $L'=\hat g(L\oplus L)$ satisfies $N''L_{\mathrm{std}}\subset L'\subset N''^{-1}L_{\mathrm{std}}$ with $N''=NN'$.
+
+The function $G\otimes G\colon(z,z')\mapsto G(z)G(z')$ lies in $\Theta(L\oplus L,\alpha\otimes\alpha)$, so $(G\otimes G)\circ\hat g^{-1}\in\Theta(L',\alpha')$ with $\alpha'=(\alpha\otimes\alpha)\circ\hat g^{-1}$. By Lemma~\ref{thetaspan} and $U_t\theta_{\mathrm{std}}=\big(\prod_jc_{t_j}\big)B_t$, there are a finite set $\mathcal T\subset(2N''^2)^{-1}L_{\mathrm{std}}$ of points distinct modulo $L_{\mathrm{std}}$ and complex numbers $r_t$ with
+\[
+(G\otimes G)\circ\hat g^{-1}=\sum_{t\in\mathcal T}r_t\,B_t .
+\]
+The functions $B_t$ for $t\in\mathcal T$ are linearly independent, by the proof of Lemma~\ref{thetaspan}. So finitely many of their Taylor coefficients form an invertible matrix with algebraic entries, and the $r_t$ solve a linear system with algebraic coefficients, because the Taylor coefficients of $(G\otimes G)\circ\hat g^{-1}$ are algebraic, $g$ being defined over $K$. Hence every $r_t$ is algebraic.
+
+Let $\gamma$ be the matrix of $g\otimes\mathbb Q_{p^2}$ in the basis $(b_i,0),(0,b_i)$ and the standard basis. Both bases are orthonormal and $g$ maps the lattice spanned by the first onto the lattice spanned by the second, so $\gamma$ has entries in $\mathbb Z_{p^2}$ and satisfies $\sum_i\sigma(\gamma_{ij})\gamma_{il}=[j=l]$. Write the $2n$ variables as $T_1,\dots,T_{2n}$, the first $n$ for the first copy of $M$. Then
+\[
+\hat g\Big(\sum_{i=1}^{2n}(b\oplus b)_i\otimes u\,\ell(T_i)\Big)=\sum_{j=1}^{2n}e_j\otimes u\,\ell(T'_j),\qquad T'_j=[\gamma_{j1}](T_1)+_{\mathcal E}\cdots+_{\mathcal E}[\gamma_{j,2n}](T_{2n}),
+\]
+because $\ell([\gamma_{ji}]T_i)=\gamma_{ji}\ell(T_i)$. So
+\[
+\Psi_G(T_1,\dots,T_n)\,\Psi_G(T_{n+1},\dots,T_{2n})=\exp\Big(\sum_{i=1}^{2n}\Upsilon(T_i)-\sum_{j=1}^{2n}\Upsilon(T'_j)\Big)\cdot\sum_{t\in\mathcal T}r_t\prod_{j=1}^{2n}e^{\Upsilon(T'_j)}B_{t_j}\big(u\,\ell(T'_j)\big).
+\]
+The first factor is integral by Proposition~\ref{unitaryinv}. Each product in the sum is integral by \eqref{Bint}, since the $T'_j$ are integral series without constant term. So every coefficient of the left side has absolute value at most $R=\max_t\lvert r_t\rvert$. The coefficients of the left side are the products $a_\mu a_\nu$ of coefficients $a_\mu$ of $\Psi_G$, because the two factors are in disjoint variables. Hence $\lvert a_\mu\rvert^2\le R$ for every $\mu$.
+\end{proof}
+
+Theorem~\ref{orthint} reduces the integrality of every theta function of a hermitian lattice, in coordinates along an orthonormal basis at $p$, to the one-variable statement of Proposition~\ref{transl} and the unitary invariance of $\sum\Upsilon$. The next subsection passes from orthonormal coordinates to hyperbolic coordinates, where Proposition~\ref{hypshape} turns $\sum_i\Upsilon(T_i)$ into $\sum_e\delta\Upsilon(X_e,Y_e)$.
+
+\subsection{The kernel law}\label{sec:kernellaw}
+
+\begin{lemma}\label{hypplane}
+Let $f,f'$ be elements of a hermitian $\mathbb Z_{p^2}$-module with $h(f,f)=h(f',f')=0$ and $h(f,f')=1$. Choose $\kappa\in\mathbb Z_{p^2}$ with $\kappa\sigma(\kappa)=-1$. Then $e_1=f+\frac12f'$ and $e_2=\kappa\big(f-\frac12f'\big)$ satisfy $h(e_i,e_j)=[i=j]$, and they span the same $\mathbb Z_{p^2}$-module as $f$ and $f'$.
+\end{lemma}
+
+\begin{proof}
+The norm map from $\mathbb Z_{p^2}^\times$ to $\mathbb Z_p^\times$ is surjective because $\mathbb Q_{p^2}/\mathbb Q_p$ is unramified, so $\kappa$ exists. Since $h(f,f')=1$ and $h(f',f)=\sigma(1)=1$, we get $h(f\pm\frac12f',f\pm\frac12f')=\pm\frac12\pm\frac12$, which is $1$ for the sign $+$ and $-1$ for the sign $-$, and $h(f+\frac12f',f-\frac12f')=-\frac12+\frac12=0$. Hence $h(e_1,e_1)=1$, $h(e_2,e_2)=-\kappa\sigma(\kappa)=1$ and $h(e_1,e_2)=0$. The matrix expressing $e_1,e_2$ in $f,f'$ has determinant $-\kappa$, a unit.
+\end{proof}
+
+\begin{theorem}\label{kernellaw}
+Let $(M,h)$ be a positive definite hermitian $\mathcal O_K$-lattice, let $L\subset V_M$ be a lattice with $NL_M\subset L\subset N^{-1}L_M$ for some $N$ prime to $p$, let $\alpha\colon L\to\{\pm1\}$ be a semicharacter for $\operatorname{Im}H_M$, and let $G\in\Theta(L,\alpha)$ have algebraic Taylor coefficients. Suppose that $M_p=P\oplus P^\perp$ is an orthogonal decomposition, that $P^\perp$ has a basis $b'_1,\dots,b'_k$ with $h(b'_i,b'_j)=[i=j]$, and that $P$ has a basis $f_1,\dots,f_m,f'_1,\dots,f'_m$ with
+\[
+h(f_e,f_{e'})=0,\qquad h(f'_e,f'_{e'})=0,\qquad h(f_e,f'_{e'})=[e=e'].
+\]
+In the variables $x_1,\dots,x_m,y_1,\dots,y_m$ put
+\[
+\Theta(x,y)=G\Big(\sum_{e=1}^mf_e\otimes u\varepsilon^{-1}\operatorname{lg}(x_e)+\sum_{e=1}^mf'_e\otimes u\varepsilon^{-1}\operatorname{lg}(y_e)\Big),
+\]
+with $\varepsilon$ as in Proposition~\ref{ltiso} and $\beta$ as in \eqref{betadef}. Then there are $c\in\mathbb C_p^\times$ and an integral series $U$ in the variables $x,y$ with
+\[
+\Theta(x,y)=c\,\exp\Big(-\sum_{e=1}^m\beta(x_e,y_e)\Big)\,U(x,y).
+\]
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{hypplane}, applied to each pair $(f_e,f'_e)$, gives a basis $b_1,\dots,b_{2m}$ of $P$ with $h(b_i,b_j)=[i=j]$, and $b_1,\dots,b_{2m},b'_1,\dots,b'_k$ is such a basis of $M_p$. Write $f_e=\sum_i\phi_{e,i}b_i$ and $f'_e=\sum_i\phi'_{e,i}b_i$ with $\phi,\phi'$ over $\mathbb Z_{p^2}$. Then $h(f_e,f_{e'})=\sum_i\phi_{e,i}\sigma(\phi_{e',i})$, and similarly for the other products, so $\sum_i\sigma(\phi_{e,i})\phi_{e',i}=\sigma\big(h(f_e,f_{e'})\big)=0$, $\sum_i\sigma(\phi'_{e,i})\phi'_{e',i}=0$ and $\sum_i\sigma(\phi_{e,i})\phi'_{e',i}=\sigma\big(h(f_e,f'_{e'})\big)=[e=e']$. So $(\phi,\phi')$ is a hyperbolic pair of size $m$.
+
+Put $X_e=\varkappa^{-1}(x_e)$ and $Y_e=\varkappa^{-1}(y_e)$, integral series without constant term, so that $\ell(X_e)=\varepsilon^{-1}\operatorname{lg}(x_e)$ and $\ell(Y_e)=\varepsilon^{-1}\operatorname{lg}(y_e)$ by Proposition~\ref{ltiso}. Let $T_1,\dots,T_{2m}$ be the series of Proposition~\ref{hypshape} for $(\phi,\phi')$, and put $T_{2m+1}=\cdots=T_{2m+k}=0$. Since $\ell(T_i)=\sum_e\big(\phi_{e,i}\ell(X_e)+\phi'_{e,i}\ell(Y_e)\big)$,
+\[
+\sum_{i=1}^{2m}b_i\otimes u\,\ell(T_i)=\sum_ef_e\otimes u\,\ell(X_e)+\sum_ef'_e\otimes u\,\ell(Y_e),
+\]
+which is the argument of $G$ in $\Theta(x,y)$. Theorem~\ref{orthint} for the basis $(b,b')$ gives $c$ and an integral $U_0$ with $\exp\big(\sum_{i\le2m}\Upsilon(T_i)\big)\Theta(x,y)=c\,U_0(T)$, where $\Upsilon(0)=0$ for the last $k$ variables. Proposition~\ref{hypshape} and $\delta\Upsilon(X_e,Y_e)=\beta(x_e,y_e)$ give $\sum_i\Upsilon(T_i)\simeq\sum_e\beta(x_e,y_e)$. Hence
+\[
+\Theta(x,y)=c\,\exp\Big(-\sum_e\beta(x_e,y_e)\Big)\cdot U_0(T)\cdot\exp\Big(\sum_e\beta(x_e,y_e)-\sum_i\Upsilon(T_i)\Big),
+\]
+and $U=U_0(T)\exp\big(\sum_e\beta(x_e,y_e)-\sum_i\Upsilon(T_i)\big)$ is integral, because $U_0$ is integral, the $T_i$ are integral series in $x,y$ without constant term, and the last factor is integral.
+\end{proof}
+
+\begin{corollary}\label{kernelclass}
+In the situation of Theorem~\ref{kernellaw}, let the index $e$ run over triples $(r,a,b)$ with $r<\nu$, $a<r_0$ and $b<r_1$, and let $\varpi$, $\omega_r$, $\omega_r^\ast$, $\Lambda_{r,a,b}$ and $\Lambda'_{r,a,b}$ be as in Theorem~\ref{thm:twosums}. Put
+\[
+\Theta^\flat(X)=G\Big(\sum_{r,a,b}f_{r,a,b}\otimes u\varepsilon^{-1}\Lambda_{r,a,b}(X)+\sum_{r,a,b}f'_{r,a,b}\otimes u\varepsilon^{-1}\Lambda'_{r,a,b}(X)\Big).
+\]
+Then there is a family $\upsilon$ in $W$ with $\lvert\upsilon_s\rvert\le1$ such that $c^{-1}\,\Theta^\flat(\varpi X)\in\mathcal C(h_\upsilon)$.
+\end{corollary}
+
+\begin{proof}
+Put $x_{r,a,b}=\operatorname{lg}^{-1}(\Lambda_{r,a,b})$ and $y_{r,a,b}=\operatorname{lg}^{-1}(\Lambda'_{r,a,b})$. Then $\Theta^\flat(X)=\Theta(x,y)$, and Theorem~\ref{kernellaw} gives $c^{-1}\Theta^\flat=\exp\big(-\sum\beta(x,y)\big)U(x,y)$ with $U$ integral. By Theorem~\ref{betaprops}, $\beta$ is a series over $W[1/p]$ with properties (i) to (iii) of Theorem~\ref{thm:betaisg}, so Proposition~\ref{prop:inclass} applies.
+\end{proof}
+
+Corollary~\ref{kernelclass} is the input of the valuation estimate of Section~\ref{sec:gain}. It applies to every theta function of a hermitian lattice whose completion at $p$ splits into an orthonormal part and a hyperbolic part, written in hyperbolic coordinates along the hyperbolic part. Section~\ref{sec:gain} works with the variables of one hyperbolic part at a time, and sets the variables of the orthonormal complement to zero, as in the proof of Theorem~\ref{kernellaw}.

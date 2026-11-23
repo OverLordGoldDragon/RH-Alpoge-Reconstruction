@@ -77,13 +77,15 @@ The formal check of the archive is the one made by the Lean and Mathlib communit
 
 | Document | Version | SHA-256 |
 |---|---|---|
+| `manuscript/main.tex` | 23 November 2026 (current working manuscript, multi-file source in `manuscript/`), 225 pages | `16ff5f3431987c5051866ba4f3810a8d9f9d597e0a1460fe8556cc468dea271f` |
+| `manuscript/main.pdf` | compiled from the source above on 23 November 2026 | `bb72ebe9022280c397277d103cbde8eb3da85ab5d8aed50df3192250f7b30933` |
 | `RH_Route_Notes.tex` | 21 November 2026 (end-to-end reconciliation pass), 66 pages | `9613835dadf51040b800aed1db5119f59b19ffe6b2b491ffe4345238f546506a` |
 | `RH_Route_Notes.pdf` | compiled from the source above on 21 November 2026 | `7a403dc745cad5d665bf78dddb1cacf2936d3b94e8434eab051506cad6e397cd` |
 | `audit/Post_Closure_Synthesis.pdf` | post-closure-wave synthesis, 21 November 2026 | `0c7972aa3b155af86255865830b6dda90cce3e498c0cfaaa3610ab27ab56a4fc` |
 | `audit/Post_Closure_Internal_Residuals.md` | 21 November 2026 | `7fdc8a6f58111cb168e67630921dd659e36896c56d357e120555c8478e588e4a` |
 | `audit/Post_Closure_Verification_Boundary.md` | 21 November 2026 | `fbeec4c303342fc03fb7264b5feb2f5100cbdb31c3210c81f9c22ac048652e44` |
 
-Reconstruction snapshot date: **21 November 2026**. The manuscript and the audit synthesis describe the archive identified in Section 1.
+Reconstruction snapshot dates: **21 November 2026** for `RH_Route_Notes` and the audit synthesis, **23 November 2026** for the current manuscript. All of them describe the archive identified in Section 1.
 
 ## 4. Reproducing the formal check
 

@@ -1,0 +1,274 @@
+\section{Theta kernels on powers of a CM elliptic curve}\label{sec:chain}
+
+The lattices of Theorem~A are spaces of automorphic forms on unitary groups over the CM field $E$, and the maps between consecutive levels of the chain are given by theta kernels. This section defines the kernels in the Fock model, where they are theta functions on a power of a CM elliptic curve, and proves that they are covariant under the rational unitary groups of the two lattices. The covariance is the property that makes a kernel define a map between spaces of automorphic forms. Section~\ref{sec:gain} studies the same kernels $p$-adically at a prime inert in $\mathbb Q(\sqrt{-d})$.
+
+\subsection{The Fock model}\label{sec:fock}
+
+Let $E$ be the CM field of Section~\ref{sec:field}, with complex conjugation $x\mapsto\bar x$, CM type $\Phi$, and a fixed embedding $\sigma_0\colon E\to\mathbb C$. We regard the elements of $\Phi$ as embeddings $\tau\colon E\to\mathbb C$, so that $\tau(\bar x)=\overline{\tau(x)}$. For an even integer $r\ge2$ let $h_r(x,y)=\sum_ix_i\bar y_i$ be the standard hermitian form on $E^r$ and $U_r=U(h_r)(E)$ its unitary group. An $\mathcal O_E$-lattice $N\subset E^r$ is \emph{self-dual} when it equals its dual for $h_r$. For self-dual lattices $N\subset E^r$ and $N'\subset E^{r'}$ let $\operatorname{Hom}(N,N')\subset\operatorname{Hom}_E(E^r,E^{r'})$ be the lattice of $\mathcal O_E$-linear maps from $N$ to $N'$.
+
+We use two facts about the field $E$, for admissible data in the sense of Definition~\ref{def:admissible}. Write $K=\mathbb Q(\sqrt{-d})\subset E$ and $E^+$ for the maximal totally real subfield of $E$. The elements of $\Phi$ are the embeddings of $E$ that restrict to one fixed embedding of $K$, through which we regard $K$ as a subfield of $\mathbb C$, with $\sqrt{-d}=i\sqrt d$.
+
+\begin{lemma}\label{hostideal}
+Suppose that $d\equiv7\pmod8$ and that $d\equiv-1$ modulo $q$ and modulo every odd prime that divides $M_\psi$.
+\begin{enumerate}
+\item[(i)] The extension $E/E^+$ is unramified at every finite place. A place of $E^+$ above $2$ splits in $E$.
+\item[(ii)] There is an ideal $\mathfrak b$ of $\mathcal O_E$ with $\mathfrak d_{E/K}=\mathfrak b\,\bar{\mathfrak b}$ and $\mathfrak b+\bar{\mathfrak b}=\mathcal O_E$, where $\mathfrak d_{E/K}$ is the relative different.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) The field $E^+$ contains $\sqrt{qd}$, so $E=E^+(\sqrt{-q})=E^+(\sqrt{-d})$. Let $v$ be a finite place of $E^+$. If $v$ does not divide $2q$, then $-q$ is a unit at $v$ and $v$ is odd, so $E^+_v(\sqrt{-q})$ is unramified over $E^+_v$. If $v$ divides $q$, the same holds for $E^+_v(\sqrt{-d})$. If $v$ divides $2$, then $-d\equiv1\pmod8$ is a square in $\mathbb Q_2$, so $E\otimes_{E^+}E^+_v=E^+_v\times E^+_v$.
+
+(ii) The field $E$ lies in $\mathbb Q(\zeta_N)$ with $N=N_1qd$, so a prime that ramifies in $E$ is $2$, $q$, $d$ or a prime divisor of $M_\psi$. The inertia group of $d$ in $\mathrm{Gal}(E/\mathbb Q)$ is the image of $(\mathbb Z/d)^\times$, which has order $2$, and $d$ ramifies in $K$, so $E/K$ is unramified above $d$. Every other prime $\ell$ that ramifies in $E$ splits in $K$, because $-d$ is a square modulo $\ell$ for odd $\ell$ and modulo $8$ for $\ell=2$. For each such $\ell$ choose a prime $\mathfrak l$ of $K$ above it, and let $\mathfrak b$ be the part of $\mathfrak d_{E/K}$ supported on the primes of $E$ above the chosen primes $\mathfrak l$. Complex conjugation is an automorphism of $E$ that preserves $K$, so it preserves $\mathfrak d_{E/K}$, and it exchanges the primes above $\mathfrak l$ with the primes above $\bar{\mathfrak l}$. Hence $\bar{\mathfrak b}$ is the part of $\mathfrak d_{E/K}$ above the primes $\bar{\mathfrak l}$, and the two parts are coprime with product $\mathfrak d_{E/K}$.
+\end{proof}
+
+For the primes $q$ and $d$ of admissible data with $Y$ large, the hypothesis of Lemma~\ref{hostideal} holds by the congruences on $d$ in Theorem~\ref{stage2}, since the prime divisors of $M_\psi$ are at most $z$. We fix $\mathfrak b$ as in the lemma, a nonzero ideal $\mathfrak c$ of $\mathcal O_K$ and a nonzero complex number $\delta$, and put $\Lambda=\delta\,\mathfrak c\subset\mathbb C$. The area of $\mathbb C/\Lambda$ is $A=\frac{\sqrt d}2\lvert\delta\rvert^2N\mathfrak c$. Section~\ref{sec:inert} fixes $\delta$ and restricts $\mathfrak c$.
+
+Put $V=\prod_{\tau\in\Phi}M_{r'\times r}(\mathbb C)$ and $\mathfrak a=\mathfrak c\,\mathfrak b^{-1}$, a fractional ideal of $E$, and put
+\[
+H(z,w)=\frac1A\sum_{\tau\in\Phi}\operatorname{tr}\big(z_\tau w_\tau^\ast\big),\qquad\iota(x)=\delta\big(\tau(x)\big)_{\tau\in\Phi},\qquad\Lambda(N,N')=\iota\big(\mathfrak a\operatorname{Hom}(N,N')\big).
+\]
+Since $\tau(c)=c$ for $c\in K$, the lattice $\Lambda(N,N')$ is the span of the vectors $\omega\,(\tau(x))_\tau$ with $\omega\in\Lambda$ and $x\in\mathfrak b^{-1}\operatorname{Hom}(N,N')$. Write $\langle x,y\rangle=\operatorname{tr}(xy^\ast)\in E$ for $x,y\in\operatorname{Hom}_E(E^r,E^{r'})$, where $y^\ast$ is the adjoint of $y$ for the standard forms. For $v\in V$ put $q(v)=\frac{\sqrt d}2H(v,v)$, and on the set of $v$ with $q(v)\in\mathbb Z$ put $\alpha(v)=(-1)^{q(v)}$. Finally let $E_H=\operatorname{Im}H$ and $B=\sqrt d\operatorname{Re}H-\operatorname{Im}H$, two real bilinear forms on $V$.
+
+\begin{lemma}\label{latticeF1}
+Let $N\subset E^r$ and $N'\subset E^{r'}$ be self-dual lattices.
+\begin{enumerate}
+\item[(i)] For $x,y\in\operatorname{Hom}_E(E^r,E^{r'})$, with $t=\operatorname{Tr}_{E/K}\langle x,y\rangle/N\mathfrak c\in K$,
+\begin{gather*}
+q(\iota x)=\frac{\operatorname{Tr}_{E/K}\langle x,x\rangle}{N\mathfrak c},\qquad E_H(\iota x,\iota y)=\operatorname{Tr}_{K/\mathbb Q}\Big(\frac t{\sqrt{-d}}\Big),\\
+B(\iota x,\iota y)=\operatorname{Tr}_{K/\mathbb Q}(t)-\operatorname{Tr}_{K/\mathbb Q}\Big(\frac t{\sqrt{-d}}\Big).
+\end{gather*}
+\item[(ii)] The lattice $\Lambda(N,N')$ is self-dual for $E_H$. The function $q$ takes integer values on it, $B$ takes even integer values on $\Lambda(N,N')\times\Lambda(N,N')$, and $\alpha(v+w)=\alpha(v)\alpha(w)e^{\pi iE_H(v,w)}$ for $v,w\in\Lambda(N,N')$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) We have $H(\iota x,\iota y)=\frac{\lvert\delta\rvert^2}A\sum_{\tau\in\Phi}\tau\langle x,y\rangle=\frac2{\sqrt d}\,t$, because the sum over $\Phi$ is the trace from $E$ to $K$. For $t\in K$, $2\operatorname{Re}t=\operatorname{Tr}_{K/\mathbb Q}t$ and $\frac2{\sqrt d}\operatorname{Im}t=\operatorname{Tr}_{K/\mathbb Q}(t/\sqrt{-d})$.
+
+(ii) Put $M=\mathfrak a\operatorname{Hom}(N,N')$. Since $N$ and $N'$ are self-dual, $\langle\ ,\ \rangle$ is a perfect $\mathcal O_E$-valued pairing on $\operatorname{Hom}(N,N')$, so $\langle M,M\rangle=\mathfrak a\bar{\mathfrak a}=N\mathfrak c\,\mathfrak d_{E/K}^{-1}$, and $\langle M,y\rangle\subset\mathfrak a\bar{\mathfrak a}$ exactly when $y\in M$. By the definition of the different, $\operatorname{Tr}_{E/K}$ maps $\mathfrak d_{E/K}^{-1}$ into $\mathcal O_K$, so $t\in\mathcal O_K$ for $x,y\in M$. Write $t=u+w\frac{1+\sqrt{-d}}2$ with integers $u,w$. Then $\operatorname{Tr}_{K/\mathbb Q}t=2u+w$ and $\operatorname{Tr}_{K/\mathbb Q}(t/\sqrt{-d})=w$, so $E_H$ is integral on $\Lambda(N,N')$ and $B$ is even. For $x=y$ the number $t$ is rational, so $q(\iota x)=t\in\mathbb Z$. The identity $q(v+w)=q(v)+q(w)+\sqrt d\operatorname{Re}H(v,w)$ and the evenness of $B$ give $q(v+w)\equiv q(v)+q(w)+E_H(v,w)\pmod2$, which is the stated law for $\alpha$.
+
+For self-duality, $E_H(\iota x,\iota y)=\operatorname{Tr}_{E/\mathbb Q}\big(\langle x,y\rangle/(N\mathfrak c\sqrt{-d})\big)$. The different of $E$ over $\mathbb Q$ is $\mathfrak d_{E/K}\cdot(\sqrt{-d})$, and $\langle M,y\rangle$ is an $\mathcal O_E$-module. So $E_H(\iota M,\iota y)\subset\mathbb Z$ exactly when $\langle M,y\rangle\subset N\mathfrak c\sqrt{-d}\,(\sqrt{-d})^{-1}\mathfrak d_{E/K}^{-1}=\mathfrak a\bar{\mathfrak a}$, that is, when $y\in M$.
+\end{proof}
+
+For $x\in V$ and a function $G$ on $V$ put
+\[
+(U_xG)(z)=G(z+x)\exp\big(-\pi H(z,x)-\tfrac\pi2H(x,x)\big).
+\]
+The operators $U_x$ satisfy $U_xU_y=e^{-\pi iE_H(x,y)}U_{x+y}$, so they generate a Heisenberg group. We call a lattice $\Lambda_1\subset V$ \emph{admissible} when it is self-dual for $E_H$, $q$ is integral on it, and $\alpha(v+w)=\alpha(v)\alpha(w)e^{\pi iE_H(v,w)}$ on it. Then $B$ is even on $\Lambda_1\times\Lambda_1$, by the computation in the proof of Lemma~\ref{latticeF1}. For an admissible lattice $\Lambda_1$ let $\Theta(\Lambda_1)$ be the space of entire functions $G$ on $V$ with $\alpha(x)U_xG=G$ for every $x\in\Lambda_1$. These are the classical theta functions for $\Lambda_1$ with the hermitian form $H$ and the semicharacter $\alpha$, the sections of a line bundle on the abelian variety $V/\Lambda_1$. For commensurable admissible lattices $\Lambda_1$ and $\Lambda_2$ put $\Lambda_{12}=\Lambda_1\cap\Lambda_2$ and
+\[
+I_{\Lambda_1\to\Lambda_2}G=n_{12}^{-1/2}\sum_{y\in\Lambda_2/\Lambda_{12}}\alpha(y)\,U_yG,\qquad n_{12}=[\Lambda_2:\Lambda_{12}].
+\]
+For $G\in\Theta(\Lambda_1)$ the summand depends on $y$ modulo $\Lambda_{12}$, because $\alpha(y+\lambda)U_{y+\lambda}=e^{2\pi iE_H(y,\lambda)}\alpha(y)U_y\,\alpha(\lambda)U_\lambda$ for $y,\lambda\in\Lambda_2$, and $I_{\Lambda_1\to\Lambda_2}G\in\Theta(\Lambda_2)$ by the same identity. Both lattices have covolume one for $E_H$, so $n_{12}=[\Lambda_1:\Lambda_{12}]=n_{21}$. We write $I_{(L_1,L_1')\to(L_2,L_2')}$ for $I_{\Lambda(L_1,L_1')\to\Lambda(L_2,L_2')}$.
+
+We use two facts from the theory of theta functions on abelian varieties, due to Weil~\cite{weil64}, in the form stated by Mumford~\cite{mumfordtata3}.
+\begin{enumerate}
+\item[(W1)] If $\Lambda_1$ is admissible, then $\Theta(\Lambda_1)$ is a line.
+\item[(W3)] Let $\Lambda_1$ be admissible, and let $\varrho$ be a unitary transformation of $V$ that preserves $H$ and has no fixed vector other than $0$. Put $A_\varrho=1-\varrho^{-1}$ and $M_\varrho=\Lambda_1/A_\varrho(\Lambda_1\cap\varrho\Lambda_1)$. Then for $G\in\Theta(\Lambda_1)$
+\[
+G\circ\varrho^{-1}=\frac{\lvert\det A_\varrho\rvert}{\det A_\varrho}\,g\,I_{\Lambda_1\to\varrho\Lambda_1}G,\qquad g=\lvert M_\varrho\rvert^{-1/2}\sum_{x\in M_\varrho}\phi(x),
+\]
+with $\phi(x)=\alpha(x)\exp\big(-\pi iE_H(\mathrm{cay}(x),x)\big)$ and $\mathrm{cay}$ the Cayley transform of $\varrho$.
+\end{enumerate}
+% TODO(external, W1, W3): check the exact statements and normalizations against Weil (Acta Math. 111, 1964)
+% and Mumford (Tata Lectures on Theta III). The archive proves both internally (UnitaryConstant).
+
+\subsection{Composition of intertwiners}\label{sec:triples}
+
+\begin{lemma}\label{tripleformula}
+Let $\Lambda_1,\Lambda_2,\Lambda_3$ be pairwise commensurable admissible lattices. Let $S_2$ represent $\Lambda_2/\Lambda_{12}$ and $S_3$ represent $\Lambda_3/\Lambda_{23}$. For $z\in\Lambda_3$ and $y\in\Lambda_2$ with $z+y\in\Lambda_1$ put $\psi(z,y)=\alpha(z)\alpha(y)\alpha(z+y)e^{-\pi iE_H(z,y)}$.
+\begin{enumerate}
+\item[(i)] $I_{\Lambda_2\to\Lambda_1}I_{\Lambda_1\to\Lambda_2}$ is the identity of $\Theta(\Lambda_1)$, and $I_{\Lambda_1\to\Lambda_2}G\ne0$ for $G\ne0$.
+\item[(ii)] On $\Theta(\Lambda_1)$ we have $I_{\Lambda_2\to\Lambda_3}I_{\Lambda_1\to\Lambda_2}=\mu\,I_{\Lambda_1\to\Lambda_3}$ with
+\[
+\mu=\mu(\Lambda_1,\Lambda_2,\Lambda_3)=\Big(\frac{n_{13}}{n_{12}n_{23}}\Big)^{1/2}\sum_{\substack{z\in S_3,\ y\in S_2\\z+y\in\Lambda_1}}\psi(z,y).
+\]
+\item[(iii)] $\psi(z,y)=e^{\pi iB(z,y)}$. Let $Q=(\Lambda_3\cap(\Lambda_1+\Lambda_2))/(\Lambda_{13}+\Lambda_{23})$. For $z\in\Lambda_3\cap(\Lambda_1+\Lambda_2)$ choose $y_z\in\Lambda_2$ with $z+y_z\in\Lambda_1$. Then $f(z)=e^{\pi iB(z,y_z)}$ depends on the class of $z$ in $Q$ alone, and
+\[
+\mu=\Big(\frac{n_{13}}{n_{12}n_{23}}\Big)^{1/2}[\Lambda_{13}:\Lambda_{13}\cap\Lambda_2]\sum_{z\in Q}f(z).
+\]
+\item[(iv)] $\lvert\mu\rvert=1$. Consequently $\mu=1$ as soon as $\sum_{z\in Q}f(z)$ is a positive real number.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Let $G\in\Theta(\Lambda_1)$ be nonzero. For $w\in V$ and $\lambda\in\Lambda_1$ we have $\alpha(\lambda)U_\lambda U_wG=e^{-2\pi iE_H(\lambda,w)}U_wG$. The characters $\lambda\mapsto e^{-2\pi iE_H(\lambda,w)}$ of $\Lambda_1$ are distinct for $w$ in distinct classes modulo $\Lambda_1$, because $\Lambda_1$ is self-dual, so functions $U_wG$ with $w$ in distinct classes are linearly independent. Moreover $U_{w+\lambda}G$ is a multiple of $U_wG$, and $U_\lambda G=\alpha(\lambda)G$.
+
+(i) Expanding, $n_{12}\,I_{\Lambda_2\to\Lambda_1}I_{\Lambda_1\to\Lambda_2}G=\sum_{x,y}\alpha(x)\alpha(y)e^{-\pi iE_H(x,y)}U_{x+y}G$ with $x\in\Lambda_1/\Lambda_{12}$ and $y\in\Lambda_2/\Lambda_{12}$. The left side lies in the line $\Theta(\Lambda_1)=\mathbb CG$. By the linear independence, it equals the sum of the terms with $x+y\in\Lambda_1$, that is, with $y\in\Lambda_{12}$. For the class $y=0$ these terms are $\alpha(x)U_xG=G$, and there are $n_{21}=n_{12}$ of them.
+
+(ii) Put $P=\sum_{s\in\Lambda_3/\Lambda_{13}}\alpha(s)U_sG=n_{13}^{1/2}I_{\Lambda_1\to\Lambda_3}G$ and $A=\sum_{z\in S_3}\sum_{y\in S_2}\alpha(z)\alpha(y)U_zU_yG=(n_{12}n_{23})^{1/2}I_{\Lambda_2\to\Lambda_3}I_{\Lambda_1\to\Lambda_2}G$. Both lie in the line $\Theta(\Lambda_3)$, and $P\ne0$ by (i), so $A=\kappa P$. Apply $P_1=\sum_{x\in\Lambda_1/\Lambda_{13}}\alpha(x)U_x$, which maps $\Theta(\Lambda_3)$ into $\mathbb CG$. By (i), $P_1P=n_{13}G$. The function $P_1A$ is the sum of the terms $\alpha(x)\alpha(z)\alpha(y)U_xU_zU_yG$, and by the linear independence it equals the sum of those with $x+z+y\in\Lambda_1$, that is, with $z+y\in\Lambda_1$. For such a term, $U_zU_yG=e^{-\pi iE_H(z,y)}U_{z+y}G=e^{-\pi iE_H(z,y)}\alpha(z+y)G$ and then $\alpha(x)U_xG=G$, so the term is $\psi(z,y)G$ for each of the $n_{13}$ classes $x$. Hence $\kappa=\sum\psi(z,y)$, which is (ii).
+
+(iii) For $z,y$ as in the statement, $q(z+y)=q(z)+q(y)+\sqrt d\operatorname{Re}H(z,y)$ with three integers $q$, so $\alpha(z)\alpha(y)\alpha(z+y)=e^{\pi i\sqrt d\operatorname{Re}H(z,y)}$ and $\psi(z,y)=e^{\pi iB(z,y)}$. The form $B$ is even on each $\Lambda_i\times\Lambda_i$. If $u\in\Lambda_{12}$, then $B(z,u)=B(z+y,u)-B(y,u)$ is even, so $f(z)$ does not depend on the choice of $y_z$. If $u'\in\Lambda_{13}$, then $y_{z+u'}=y_z$ is a valid choice and $B(u',y)=B(u',z+y)-B(u',z)$ is even. If $t\in\Lambda_{23}$, then $y_{z+t}=y_z-t$ is a valid choice and $B(z+t,y-t)-B(z,y)=B(t,y)-B(z,t)-B(t,t)$ is even. So $f$ is a function on $Q$. In (ii), for $z\in S_3$ there is $y\in S_2$ with $z+y\in\Lambda_1$ exactly when $z\in\Lambda_1+\Lambda_2$, and then $y$ is unique. The elements of $S_3$ in $\Lambda_1+\Lambda_2$ represent $(\Lambda_3\cap(\Lambda_1+\Lambda_2))/\Lambda_{23}$, which maps onto $Q$ with fibers of $[\Lambda_{13}+\Lambda_{23}:\Lambda_{23}]=[\Lambda_{13}:\Lambda_{13}\cap\Lambda_2]$ elements.
+
+(iv) Write $\mu_{123}=\mu(\Lambda_1,\Lambda_2,\Lambda_3)$ and $\mu_{132}=\mu(\Lambda_1,\Lambda_3,\Lambda_2)$. By (i),
+\[
+I_{\Lambda_3\to\Lambda_2}I_{\Lambda_2\to\Lambda_3}I_{\Lambda_1\to\Lambda_2}=I_{\Lambda_1\to\Lambda_2},
+\]
+and by (ii) the left side is $\mu_{123}\,\mu_{132}\,I_{\Lambda_1\to\Lambda_2}$. So $\mu_{123}\,\mu_{132}=1$. Let $Q'$ and $f'$ be the group and the function of (iii) for the triple $(\Lambda_1,\Lambda_3,\Lambda_2)$. The map $z\mapsto y_z$ induces a bijection from $Q$ to $Q'$, and $f'(y_z)=e^{\pi iB(y_z,z)}$. Since $B(y,z)+B(z,y)=B(z+y,z+y)-B(z,z)-B(y,y)$ is even, $f'(y_z)=\overline{f(z)}$. With (iii) and $n_{12}[\Lambda_{12}:\Lambda_{12}\cap\Lambda_3]=[\Lambda_1:\Lambda_1\cap\Lambda_2\cap\Lambda_3]=n_{13}[\Lambda_{13}:\Lambda_{13}\cap\Lambda_2]$ we get $\mu_{132}=\overline{\mu_{123}}$. Hence $\lvert\mu\rvert=1$, and the factor of $\sum_Qf$ in (iii) is positive.
+\end{proof}
+
+The next lemma constructs, at each prime, a decomposition of the standard hermitian space into two isotropic parts that is adapted to two given lattices.
+
+\begin{lemma}\label{hypidem}
+Let $n\ge2$ be even, let $L',L''\subset E^n$ be self-dual lattices, and let $\ell$ be a prime. Put $E_\ell=E\otimes\mathbb Q_\ell$ and $L'_\ell=L'\otimes\mathbb Z_\ell$. There is an $E_\ell$-linear idempotent $\epsilon$ of $E_\ell^n$ with $\epsilon^\ast=1-\epsilon$, $\epsilon L'_\ell\subset L'_\ell$ and $\epsilon L''_\ell\subset L''_\ell$. In particular $h_n(\epsilon x,\epsilon y)=0$ and $h_n((1-\epsilon)x,(1-\epsilon)y)=0$ for all $x,y$.
+\end{lemma}
+
+\begin{proof}
+The algebra $E_\ell$ is the product of the algebras $E_v=E\otimes_{E^+}E^+_v$ over the places $v$ of $E^+$ above $\ell$, and the lattices and the form decompose accordingly, so we treat one $v$. Let $\mathcal O_v$ be the ring of integers of $E^+_v$ and $\pi$ a uniformizer. By Lemma~\ref{hostideal}(i) there are two cases.
+
+\emph{The place $v$ splits.} Then $E_v=E^+_v\times E^+_v$, conjugation exchanges the factors, a lattice is a product $L=L_a\times L_b$, and the form is $h((x_a,x_b),(y_a,y_b))=(\beta(x_a,y_b),\beta(y_a,x_b))$ for a nondegenerate bilinear form $\beta$, with $L$ self-dual exactly when $L_b$ is the dual of $L_a$ for $\beta$. By the theory of elementary divisors there is a basis $m_1,\dots,m_n$ of $L'_a$ and integers $a_i$ such that the $\pi^{a_i}m_i$ form a basis of $L''_a$. Let $\epsilon_a$ be the projection onto the span of $m_1,\dots,m_{n/2}$ along the span of the other $m_i$, let $\epsilon_a^\dagger$ be its adjoint for $\beta$, and put $\epsilon=(\epsilon_a,1-\epsilon_a^\dagger)$. The adjoint of $(u_a,u_b)$ for $h$ is $(u_b^\dagger,u_a^\dagger)$, so $\epsilon^\ast=(1-\epsilon_a,\epsilon_a^\dagger)=1-\epsilon$. The map $\epsilon_a$ preserves $L'_a$ and $L''_a$, and $\epsilon_a^\dagger$ preserves their duals.
+
+\emph{The place $v$ is inert.} Then $E_v$ is the unramified quadratic extension of $E^+_v$, with ring of integers $\mathcal O$, and $\pi$ is a uniformizer of $E_v$. The trace and the norm map $\mathcal O$ onto $\mathcal O_v$ and $\mathcal O^\times$ onto $\mathcal O_v^\times$. Let $L',L''$ be self-dual $\mathcal O$-lattices in a hermitian space of even dimension $n\ge2$ over $E_v$. We show by induction on $n$ that there is a basis $f_1,f'_1,\dots,f_{n/2},f'_{n/2}$ of $L'$ with $h(f_i,f_j)=h(f'_i,f'_j)=0$ and $h(f_i,f'_j)=[i=j]$, and integers $a_i\ge0$ such that the $\pi^{-a_i}f_i$ and $\pi^{a_i}f'_i$ form a basis of $L''$. The projection $\epsilon$ onto the span of the $f_i$ along the span of the $f'_i$ then has the required properties, since $h(\epsilon x,y)=h(x,(1-\epsilon)y)$ in such a basis.
+
+Let $a\ge0$ be minimal with $\pi^aL''\subset L'$. We claim that there are $f,f'\in L'$ with $h(f,f')=1$, $h(f,f)\in\pi^{2a}\mathcal O_v$ and $\pi^{-a}f,\pi^af'\in L''$. If $a\ge1$, the ideal $h(L'',L')$ is $\pi^{-a}\mathcal O$, because $\pi^bL''\subset L'$ exactly when $h(\pi^bL'',L')\subset\mathcal O$. So there are $x\in L''$ and $f'\in L'$ with $h(\pi^ax,f')=1$, and $f=\pi^ax$ lies in $L'$ and has $h(f,f)=\pi^{2a}h(x,x)$. Also $\pi^af'\in\pi^aL'\subset L''$ by the symmetry of the roles. If $a=0$, then $L''=L'$. If $h(w,w)\in\pi\mathcal O_v$ for all $w\in L'$, then $\operatorname{Tr}(c\,h(w,w'))\in\pi\mathcal O_v$ for all $w,w'\in L'$ and $c\in\mathcal O$, hence $h(L',L')\subset\pi\mathcal O$, which contradicts self-duality. So there is $w_1\in L'$ with $h(w_1,w_1)$ a unit, and the same argument in the orthogonal complement of $w_1$ in $L'$ gives $w_2$ orthogonal to $w_1$ with $h(w_2,w_2)$ a unit. Choose $\kappa\in\mathcal O^\times$ with $\kappa\bar\kappa=-h(w_1,w_1)/h(w_2,w_2)$ and put $f=w_1+\kappa w_2$, so that $h(f,f)=0$. The vector $f$ is primitive in $L'$, so there is $f'\in L'$ with $h(f,f')=1$. The claim follows in both cases.
+
+We first make $f$ isotropic. For $c'\in\pi^{2a}\mathcal O$ the vector $f+c'f'$ has norm $h(f,f)+\operatorname{Tr}(c')+c'\bar c'\,h(f',f')$, and $\pi^{-a}(f+c'f')=\pi^{-a}f+c'\pi^{-2a}(\pi^af')$ lies in $L''$. For $a=0$ we have $h(f,f)=0$ already. For $a\ge1$ the equation $\operatorname{Tr}(c')+c'\bar c'\,h(f',f')=-h(f,f)$ has a solution $c'\in\pi^{2a}\mathcal O$ by successive approximation, because the trace maps $\pi^j\mathcal O$ onto $\pi^j\mathcal O_v$ and the quadratic term of a correction lies in a higher power of $\pi$. After this change $h(f,f')$ is a unit $u$, and we replace $f'$ by $\bar u^{-1}f'$, so that $h(f,f)=0$ and $h(f,f')=1$. Now replace $f'$ by $f'+cf$ with $c\in\mathcal O$ and $\operatorname{Tr}(c)=-h(f',f')$. Since $h(f,f)=0$, this gives $h(f',f')=0$ and keeps $h(f,f')=1$, and $\pi^a(f'+cf)=\pi^af'+c\pi^{2a}(\pi^{-a}f)$ lies in $L''$. The planes $\mathcal Of\oplus\mathcal Of'\subset L'$ and $\mathcal O\pi^{-a}f\oplus\mathcal O\pi^af'\subset L''$ are self-dual and span the same subspace, so $L'$ and $L''$ are the orthogonal sums of these planes with their intersections with the orthogonal complement of that subspace, which are self-dual lattices of rank $n-2$. The induction hypothesis applies to them.
+\end{proof}
+
+\begin{lemma}\label{pathind}
+Let $(L_i,L_i')$ for $i=1,2,3$ be pairs of self-dual lattices $L_i\subset E^r$ and $L_i'\subset E^{r'}$, with $r$ and $r'$ even. Suppose that the lattices $L'_1,L'_2,L'_3$ take at most two distinct values, or that the lattices $L_1,L_2,L_3$ take at most two distinct values. Then
+\[
+\mu\big(\Lambda(L_1,L_1'),\Lambda(L_2,L_2'),\Lambda(L_3,L_3')\big)=1,
+\]
+that is, $I_{(L_2,L_2')\to(L_3,L_3')}\,I_{(L_1,L_1')\to(L_2,L_2')}=I_{(L_1,L_1')\to(L_3,L_3')}$ on $\Theta(\Lambda(L_1,L_1'))$.
+\end{lemma}
+
+\begin{proof}
+Write $\Lambda_i=\Lambda(L_i,L_i')=\iota(M_i)$ with $M_i=\mathfrak a\operatorname{Hom}(L_i,L_i')$, and let $Q$ and $f$ be as in Lemma~\ref{tripleformula}(iii). By part (iv) of that lemma it suffices to show $\sum_Qf>0$. For classes $z,z'$ we have $f(z+z')=f(z)f(z')\,b(z,z')$ with $b(z,z')=e^{\pi i(B(z,y_{z'})+B(z',y_z))}$, and $b$ is biadditive on $Q$. The group $Q$ is the direct sum of its $\ell$-primary components $Q(\ell)$, and $b(z,z')=1$ when the orders of $z$ and $z'$ are coprime. So $\sum_Qf=\prod_\ell\sum_{Q(\ell)}f$, and we fix $\ell$.
+
+Put $V_\ell=\operatorname{Hom}_E(E^r,E^{r'})\otimes\mathbb Q_\ell$ and $M_{i,\ell}=M_i\otimes\mathbb Z_\ell$. By Lemma~\ref{latticeF1}(i), $B(\iota x,\iota y)=\operatorname{Tr}_{E/\mathbb Q}(c_1\langle x,y\rangle)$ with $c_1=(1-1/\sqrt{-d})/N\mathfrak c$, and we extend $\langle\ ,\ \rangle$ and $B$ to $V_\ell$ with values in $E_\ell$ and $\mathbb Q_\ell$. The form $B$ has values in $2\mathbb Z_\ell$ on each $M_{i,\ell}\times M_{i,\ell}$. Let $e_\ell\colon\mathbb Q_\ell\to\mathbb C^\times$ be the character that is trivial on $\mathbb Z_\ell$ and equals $x\mapsto e^{2\pi ix}$ on $\mathbb Z[1/\ell]$. Since localization is exact, $Q(\ell)=Q\otimes\mathbb Z_\ell$ is the quotient of $M_{3,\ell}\cap(M_{1,\ell}+M_{2,\ell})$ by $M_{1,\ell}\cap M_{3,\ell}+M_{2,\ell}\cap M_{3,\ell}$. For $\xi$ in the first group choose $\eta\in M_{2,\ell}$ with $\xi+\eta\in M_{1,\ell}$ and put $f_\ell(\xi)=e_\ell(B(\xi,\eta)/2)$. The computation in the proof of Lemma~\ref{tripleformula}(iii) shows that $f_\ell$ is a function on $Q(\ell)$. It agrees with $f$ there. Indeed, let $z\in M_3\cap(M_1+M_2)$ have its class in $Q(\ell)$, and put $x=B(z,y_z)/2\in\mathbb Q$. Then $f(z)=e^{2\pi ix}$ is the product over all primes $\ell'$ of the $\ell'$-power roots of unity $e_{\ell'}(x)$. From $f(kz)=f(z)^{k^2}$ and $\ell^jz=0$ in $Q$ for some $j$, the number $f(z)$ is an $\ell$-power root of unity, so $f(z)=e_\ell(x)=f_\ell(z)$.
+
+Suppose first that the $L_i'$ take at most two values, and let $\epsilon$ be the idempotent of Lemma~\ref{hypidem} for these values, with $n=r'$. Composition with $\epsilon$ on the left is an endomorphism of $V_\ell$ that preserves each $M_{i,\ell}$, so it induces an idempotent endomorphism of $Q(\ell)$, and $Q(\ell)=\epsilon Q(\ell)\oplus(1-\epsilon)Q(\ell)$. For $\xi$ and $\eta$ as above, $\epsilon\xi+\epsilon\eta\in M_{1,\ell}$ and $\langle\epsilon\xi,\epsilon\eta\rangle=\operatorname{tr}(\epsilon^\ast\epsilon\,\xi\eta^\ast)=0$, so $f_\ell=1$ on $\epsilon Q(\ell)$, and likewise on $(1-\epsilon)Q(\ell)$. Therefore
+\[
+\sum_{Q(\ell)}f=\sum_{u\in\epsilon Q(\ell)}\ \sum_{u'\in(1-\epsilon)Q(\ell)}b(u,u'),
+\]
+and each inner sum is the sum of a character of the finite group $(1-\epsilon)Q(\ell)$, hence $0$ or the order of that group. The inner sum for $u=0$ is positive, so the total is positive. If the $L_i$ take at most two values, the same argument applies with the idempotent $\epsilon$ of Lemma~\ref{hypidem} for $n=r$, acting on $V_\ell$ by composition on the right. It preserves each $M_{i,\ell}$, and $\langle\xi\epsilon,\eta\epsilon\rangle=\operatorname{tr}(\xi\,\epsilon\epsilon^\ast\eta^\ast)=0$ because $\epsilon\epsilon^\ast=\epsilon(1-\epsilon)=0$.
+\end{proof}
+
+\subsection{The base vector and the kernels}\label{sec:kernels}
+
+Let $\mathrm{std}$ denote the standard lattice $\mathcal O_E^r$ or $\mathcal O_E^{r'}$, and let $\theta_0$ be a nonzero element of the line $\Theta(\Lambda(\mathrm{std},\mathrm{std}))$, which exists by Lemma~\ref{latticeF1} and (W1). For an ideal $\mathfrak d$ of $E$ write $\chi(\mathfrak d)$ for the value of a fixed function $\chi$ on fractional ideals of $E$ that is multiplicative on ideals of norm one and satisfies $\chi(u\mathcal O_E)=\prod_{\tau\in\Phi}\tau(u)^{-1}$ for $u\in E$ with $u\bar u=1$. For a self-dual $L\subset E^r$ let $\mathfrak d_L$ be the ideal generated by the determinants of the matrices that map $\mathrm{std}$ onto $L$. For self-dual $L\subset E^r$ and $L'\subset E^{r'}$ put
+\begin{equation}\label{basevec}
+\theta_{L,L'}=I_{(\mathrm{std},\mathrm{std})\to(L,L')}\,\theta_0,\qquad e(L,L')=\chi(\mathfrak d_L)^{r'/2}\chi(\mathfrak d_{L'})^{-r/2}\,\theta_{L,L'} .
+\end{equation}
+The function $e(L,L')$ is the \emph{base vector} of the pair. It spans the line $\Theta(\Lambda(L,L'))$, by Lemma~\ref{tripleformula}(i).
+
+The kernels of the chain are finite combinations of Heisenberg translates of base vectors. Let $S$ be a finite set of primes of $E$ that is disjoint from its conjugate $\bar S$, and let $c\ge1$ be an integer. For self-dual $N,N'$ put $M=\mathfrak a\operatorname{Hom}(N,N')$, and let $M^A_c$ and $M^B_c$ be the $\mathcal O_E$-lattices in $\operatorname{Hom}_E(E^r,E^{r'})$ whose localizations agree with those of $M$ outside $S\cup\bar S$ and are
+\[
+(M^A_c)_P=c^{-1}M_P,\quad(M^A_c)_{\bar P}=c\,M_{\bar P},\qquad(M^B_c)_P=c\,M_P,\quad(M^B_c)_{\bar P}=c^{-1}M_{\bar P}\qquad(P\in S).
+\]
+Since $\langle M^A_c,M^A_c\rangle=\langle M,M\rangle$ locally at every prime, the proof of Lemma~\ref{latticeF1} shows that $A_c(N,N')=\iota(M^A_c)$ and $B_c(N,N')=\iota(M^B_c)$ are admissible lattices. Put
+\[
+G_c(N,N')=\big[\Lambda\cap A_c:\Lambda\cap A_c\cap B_c\big]^{-1}\sum_{y\in B_c/(\Lambda\cap B_c)}\alpha(y)\,U_y\,e(N,N'),\qquad\Lambda=\Lambda(N,N'),
+\]
+a multiple of $I_{\Lambda\to B_c}e(N,N')$ and an element of $\Theta(B_c)$. For $x\in M^A_c$ the kernel of level $c$ at $x$ is
+\begin{equation}\label{kernelcx}
+\theta_{N,N'}[c,x]=\alpha(\iota x)\,U_{-\iota x}\,G_c(N,N').
+\end{equation}
+It depends on $x$ modulo $M^A_c\cap M^B_c$. Indeed, for $m\in M^A_c\cap M^B_c$ the points $\iota x$ and $\iota m$ lie in the admissible lattice $A_c$, so $\alpha(\iota x+\iota m)U_{-\iota x-\iota m}=e^{2\pi iE_H(\iota x,\iota m)}\alpha(\iota x)U_{-\iota x}\,\alpha(\iota m)U_{-\iota m}$ with $E_H(\iota x,\iota m)\in\mathbb Z$, and $\alpha(\iota m)U_{-\iota m}$ fixes $G_c(N,N')\in\Theta(B_c)$. For a function $\Xi$ on $M^A_c$ that is periodic under $M^A_c\cap M^B_c$ put
+\begin{equation}\label{datumkernel}
+\theta_{N,N'}[\Xi]=\sum_{x\in M^A_c/(M^A_c\cap M^B_c)}\Xi(x)\,\theta_{N,N'}[c,x].
+\end{equation}
+
+The lift from level $j$ to level $j+1$ sends a form, given by its values in polynomial models of highest weight $\lambda$ of $\mathrm{GL}_r$ at the lattices of level $j$, to a form at level $j+1$. Its matrix coefficients are obtained from the Taylor coefficients of the kernels at the origin. For a family $\lambda=(\lambda_\tau)_{\tau\in\Phi}$ of dominant weights of $\mathrm{GL}_r$ let $V_\lambda\subset\mathbb C[X_{\tau,i,j}]$ be the tensor product over $\tau$ of the polynomial models of highest weight $\lambda_\tau$, with the action $\rho_\lambda(\gamma)$ of $\gamma\in U_r$ through the matrices $\tau(\gamma)^{\mathsf T}$, twisted by $\prod_\tau\tau(\det\gamma)^{-k(\lambda_\tau)}$ for the integers $k(\lambda_\tau)$ that make the polynomial model of $\lambda_\tau$ a subspace of polynomials. For a family $J$ of numbers indexed by monomials, and exponents $n=(n_\tau)$, the jet operator $j_{\lambda,\lambda',n}(J)\colon V_\lambda\to V_{\lambda'}$ substitutes $X=YD$ in $P\cdot\prod_\tau\det(X_\tau)^{n_\tau}$, replaces each monomial $D^\kappa$ by $J(\kappa)$, and projects to $V_{\lambda'}$. The jets of a kernel are $J_{N,N',c,x}(\kappa)=\chi_F(N,N')^{-1}c_D^\kappa\,\partial^\kappa\theta_{N,N'}[c,x](0)$, where $\chi_F(N,N')=\chi(\mathfrak d_N)^{r'/2}\chi(\mathfrak d_{N'})^{-r/2}$ and $c_D$ is a fixed normalizing constant. With a frame factor $\mu(N,\mathrm{fr})$, built from the local components of a Hecke character $\mu$ of $E$ at the determinants of $N$ and of its frames $\mathrm{fr}$ at the bad primes, the \emph{step kernel} is
+\begin{equation}\label{stepkernel}
+\mathrm{th}(N,\mathrm{fr},N',\mathrm{fr}',c,x)=\frac{\mu(N,\mathrm{fr})}{\mu(N',\mathrm{fr}')}\,j_{\lambda,\lambda',n}\big(J_{N,N',c,x}\big),
+\end{equation}
+for $x\in M^A_c$, and $0$ for other $x\in\operatorname{Hom}_E(E^r,E^{r'})$.
+
+\subsection{Covariance}\label{sec:covariance}
+
+For $\gamma\in U_r$ and $\gamma'\in U_{r'}$ let $R=R_{\gamma,\gamma'}\colon V\to V$ be the map $(Rz)_\tau=\tau(\gamma')z_\tau\tau(\gamma)^{-1}$, and write $\operatorname{Ad}(\gamma,\gamma')x=\gamma'x\gamma^{-1}$ on $\operatorname{Hom}_E(E^r,E^{r'})$.
+
+\begin{lemma}\label{transport}
+Let $\gamma\in U_r$ and $\gamma'\in U_{r'}$, and put $R=R_{\gamma,\gamma'}$.
+\begin{enumerate}
+\item[(i)] $H(Rz,Rw)=H(z,w)$ and $\alpha\circ R=\alpha$.
+\item[(ii)] $R\,\iota(x)=\iota(\operatorname{Ad}(\gamma,\gamma')x)$ and $R\,\Lambda(N,N')=\Lambda(\gamma N,\gamma'N')$, and $R$ maps $A_c(N,N')$ and $B_c(N,N')$ onto $A_c(\gamma N,\gamma'N')$ and $B_c(\gamma N,\gamma'N')$.
+\item[(iii)] $U_{Rx}(G\circ R^{-1})=(U_xG)\circ R^{-1}$. Hence $G\in\Theta(\Lambda)$ exactly when $G\circ R^{-1}\in\Theta(R\Lambda)$, and $I_{R\Lambda_1\to R\Lambda_2}(G\circ R^{-1})=(I_{\Lambda_1\to\Lambda_2}G)\circ R^{-1}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Since $\tau(\bar x)=\overline{\tau(x)}$, we have $\tau(\gamma)^\ast\tau(\gamma)=\tau(\gamma^\ast\gamma)=1$, and the same for $\gamma'$, so $\operatorname{tr}\big(\tau(\gamma')z\tau(\gamma)^{-1}(\tau(\gamma')w\tau(\gamma)^{-1})^\ast\big)=\operatorname{tr}(zw^\ast)$ for each $\tau$. The semicharacter depends on $v$ through $H(v,v)$.
+
+(ii) The embedding $\tau$ is a ring homomorphism, so $\tau(\gamma'x\gamma^{-1})=\tau(\gamma')\tau(x)\tau(\gamma)^{-1}$. The $\mathcal O_E$-linear isomorphism $x\mapsto\gamma'x\gamma^{-1}$ maps $\operatorname{Hom}(N,N')$ onto $\operatorname{Hom}(\gamma N,\gamma'N')$, and it maps the localizations at the primes of $S$ and the level conditions that define $A_c$ and $B_c$ onto the corresponding conditions for $(\gamma N,\gamma'N')$.
+
+(iii) We have $(U_{Rx}(G\circ R^{-1}))(z)=G(R^{-1}z+x)\exp\big(-\pi H(z,Rx)-\frac\pi2H(Rx,Rx)\big)$, and $H(z,Rx)=H(R^{-1}z,x)$ by (i). The second statement follows from the first and $\alpha(Rx)=\alpha(x)$. For the third, $R$ induces a bijection from $\Lambda_2/(\Lambda_1\cap\Lambda_2)$ onto $R\Lambda_2/(R\Lambda_1\cap R\Lambda_2)$ and preserves the index.
+\end{proof}
+
+The base vector is covariant because the character factor $\chi$ in \eqref{basevec} cancels the constant of (W3). We first compute that constant exactly.
+
+\begin{lemma}\label{normcong}
+Let $q\equiv3\pmod8$ and $d\equiv7\pmod{16}$ be distinct primes. For every integer $m\ge1$ there are integers $x,y,z,w$ with $(x^2+qy^2)(z^2+dw^2)\equiv-1\pmod m$.
+\end{lemma}
+
+\begin{proof}
+By the Chinese remainder theorem, applied to each of the four variables, it suffices to treat $m=\ell^k$ with $\ell$ prime. We use the following fact for an odd prime $\ell$ and integers $a,b,c$ prime to $\ell$. The congruence $ax^2+by^2\equiv c\pmod{\ell^k}$ has a solution. Indeed, modulo $\ell$ the sets $\{ax^2\}$ and $\{c-by^2\}$ each have $(\ell+1)/2$ elements, so they meet, and a common value gives a solution in which $x$ or $y$ is prime to $\ell$, because $c\not\equiv0$. If $x$ is prime to $\ell$, the derivative $2ax$ is a unit, and Hensel's lemma lifts the solution to every power of $\ell$ with $y$ fixed. The case of $y$ prime to $\ell$ is the same.
+
+If $\ell\notin\{2,q,d\}$, take $z=1$, $w=0$, and solve $x^2+qy^2\equiv-1\pmod{\ell^k}$ by the fact. If $\ell=q$, take $x=1$, $y=0$, and solve $z^2+dw^2\equiv-1\pmod{q^k}$, which is possible since $q\nmid d$. If $\ell=d$, take $z=1$, $w=0$, and solve $x^2+qy^2\equiv-1\pmod{d^k}$. If $\ell=2$, take $y=0$, $z=0$, $w=1$. The product is then $dx^2$, and we need $x^2\equiv-d^{-1}\pmod{2^k}$. Since $d\equiv7\pmod8$, the odd number $-d^{-1}$ is congruent to $1$ modulo $8$, and every odd residue congruent to $1$ modulo $8$ is a square modulo $2^k$.
+\end{proof}
+
+\begin{lemma}\label{weilconst}
+For $\gamma\in U_r$,
+\[
+\theta_0\circ R_{\gamma,1}^{-1}=\Big(\prod_{\tau\in\Phi}\tau\big(\overline{\det\gamma}\big)\Big)^{r'/2}I_{(\mathrm{std},\mathrm{std})\to(\gamma\,\mathrm{std},\mathrm{std})}\,\theta_0 ,
+\]
+and for $\gamma'\in U_{r'}$ the same holds with $\big(\prod_\tau\tau(\det\gamma')\big)^{r/2}$ and $I_{(\mathrm{std},\mathrm{std})\to(\mathrm{std},\gamma'\mathrm{std})}$.
+\end{lemma}
+
+\begin{proof}
+\emph{Reduction to the case without fixed vectors.} Let $u\in E$ with $u\bar u=1$, $u\ne1$, and $u$ different from every eigenvalue of $\gamma$. Such $u$ exists because the norm-one group of $E$ is infinite. Then $\gamma=\gamma_1\gamma_2$ with $\gamma_1=u\cdot1$ and $\gamma_2=u^{-1}\gamma$, and neither $\gamma_i$ has the eigenvalue $1$. Both sides of the claim are multiplicative in $\gamma$. For the left side, suppose that $\theta_0\circ R_{\gamma_i,1}^{-1}=c_i\,I_{\mathrm{std}\to\gamma_i\mathrm{std}}\theta_0$ for $i=1,2$. Lemma~\ref{transport}(iii) gives
+\[
+\theta_0\circ R_{\gamma_1\gamma_2,1}^{-1}=c_2\,\big(I_{\mathrm{std}\to\gamma_2\mathrm{std}}\theta_0\big)\circ R_{\gamma_1,1}^{-1}=c_2\,I_{\gamma_1\mathrm{std}\to\gamma_1\gamma_2\mathrm{std}}\big(c_1I_{\mathrm{std}\to\gamma_1\mathrm{std}}\theta_0\big),
+\]
+and Lemma~\ref{pathind}, applied to the lattices $\Lambda(\mathrm{std},\mathrm{std})$, $\Lambda(\gamma_1\mathrm{std},\mathrm{std})$ and $\Lambda(\gamma_1\gamma_2\mathrm{std},\mathrm{std})$, turns the composite into $c_1c_2\,I_{\mathrm{std}\to\gamma_1\gamma_2\mathrm{std}}\theta_0$. So it suffices to treat $\delta=R_{\gamma,1}$ with $1-\gamma$ invertible.
+
+\emph{Rows.} The space $V=\prod_\tau M_{r'\times r}(\mathbb C)$ is the orthogonal sum of $r'$ copies of $V_1=\prod_\tau M_{1\times r}(\mathbb C)$, by rows, and $H$, $\alpha$, $\Lambda(\mathrm{std},\mathrm{std})$, $\delta$ and $A=1-\delta^{-1}$ split accordingly. So $\det A=(\det A_1)^{r'}$ and $g=g_1^{r'}$ in (W3), and the constant of (W3) is $c=\big(\frac{\lvert a_1\rvert}{a_1}g_1\big)^{r'}$ with $a_1=\det A_1$.
+
+\emph{The Cayley determinant.} For the unitary $\delta_1$ on $V_1$ we have $\overline{\det(1-\delta_1^{-1})}=\det(1-\delta_1)=\det(-\delta_1)\det(1-\delta_1^{-1})$, so $\bar a_1=(-1)^{\dim V_1}\det(\delta_1)\,a_1$. Here $\dim_{\mathbb C}V_1=r\lvert\Phi\rvert$ is even, and $\delta_1$ is right multiplication by $\tau(\gamma)^\ast$ on the row of index $\tau$, so $\det\delta_1=\prod_\tau\tau(\overline{\det\gamma})$. Hence $(\lvert a_1\rvert/a_1)^2=\bar a_1/a_1=\prod_\tau\tau(\overline{\det\gamma})$.
+
+\emph{The Gauss sum.} The function $\phi$ is a nondegenerate quadratic function on the finite group $M_1$, so $\lvert g_1\rvert=1$. Put $m=4\lvert M_1\rvert$. Lemma~\ref{normcong} gives integers $x,y,z,w$ with $n=(x^2+qy^2)(z^2+dw^2)\equiv-1\pmod m$. The field $E$ contains $\sqrt{-q}$ and $\sqrt{-d}$ by Proposition~\ref{field}, so $\lambda=(x+y\sqrt{-q})(z+w\sqrt{-d})$ lies in $\mathcal O_E$, and $\bar\lambda\lambda=n$. Multiplication by $\lambda$ preserves $\Lambda$ and commutes with $\delta_1$, so it preserves $\Lambda\cap\delta_1\Lambda$ and $A_1(\Lambda\cap\delta_1\Lambda)$ and induces an endomorphism of $M_1$. The composite with the endomorphism induced by $\bar\lambda$ is multiplication by $n$, which is invertible on $M_1$ because $n$ is prime to $\lvert M_1\rvert$. So multiplication by $\lambda$ permutes $M_1$. Since $n$ is a rational integer, $H(\lambda v,\lambda w)=n\,H(v,w)$, and $n\equiv-1$ modulo $4\lvert M_1\rvert$ gives $\phi(\lambda x)=\overline{\phi(x)}$ for $x\in M_1$. Summing over $M_1$ gives $g_1=\bar g_1$, so $g_1=\pm1$.
+
+\emph{Conclusion.} $\big(\frac{\lvert a_1\rvert}{a_1}g_1\big)^2=\prod_\tau\tau(\overline{\det\gamma})$, and $r'$ is even, so $c=\big(\prod_\tau\tau(\overline{\det\gamma})\big)^{r'/2}$, and the sign of $g_1$ drops out. The second statement is the same computation with columns in place of rows.
+\end{proof}
+
+\begin{proposition}\label{covariance}
+Let $N\subset E^r$ and $N'\subset E^{r'}$ be self-dual lattices of even ranks, and let $\gamma\in U_r$ and $\gamma'\in U_{r'}$. Put $R=R_{\gamma,\gamma'}$.
+\begin{enumerate}
+\item[(i)] $e(\gamma N,\gamma'N')=e(N,N')\circ R^{-1}$.
+\item[(ii)] For every $c\ge1$ and every $x\in M^A_c(N,N')$, $\theta_{\gamma N,\gamma'N'}[c,\operatorname{Ad}(\gamma,\gamma')x]=\theta_{N,N'}[c,x]\circ R^{-1}$. For every function $\Xi$ on $M^A_c$ that is periodic under $M^A_c\cap M^B_c$, $\theta_{\gamma N,\gamma'N'}[\Xi\circ\operatorname{Ad}(\gamma,\gamma')^{-1}]=\theta_{N,N'}[\Xi]\circ R^{-1}$.
+\item[(iii)] Suppose that the Hecke character $\mu$ of the frame factor has infinity type $(e_\tau)$ and is trivial on $E^\times$, and that $n_\tau+\frac{r'}2-e_\tau=k(\lambda_\tau)$ and $e_\tau-\frac r2=-k(\lambda'_\tau)$ for every $\tau\in\Phi$. Then for all data in range
+\[
+\mathrm{th}\big(\gamma N,\gamma\,\mathrm{fr},\gamma'N',\gamma'\mathrm{fr}',c,\operatorname{Ad}(\gamma,\gamma')x\big)=\rho_{\lambda'}(\gamma')\circ\mathrm{th}(N,\mathrm{fr},N',\mathrm{fr}',c,x)\circ\rho_\lambda(\gamma)^{-1}.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Write $R=R_{\gamma,1}R_{1,\gamma'}$, the two factors commuting, and put $c'=\big(\prod_\tau\tau(\det\gamma')\big)^{r/2}$ and $c=\big(\prod_\tau\tau(\overline{\det\gamma})\big)^{r'/2}$. Lemma~\ref{transport}(iii) and Lemma~\ref{weilconst} give
+\[
+\theta_{L,L'}\circ R_{1,\gamma'}^{-1}=I_{(\mathrm{std},\gamma'\mathrm{std})\to(L,\gamma'L')}\big(\theta_0\circ R_{1,\gamma'}^{-1}\big)=c'\,I_{(\mathrm{std},\gamma'\mathrm{std})\to(L,\gamma'L')}\,I_{(\mathrm{std},\mathrm{std})\to(\mathrm{std},\gamma'\mathrm{std})}\,\theta_0 .
+\]
+In the three pairs $(\mathrm{std},\mathrm{std})$, $(\mathrm{std},\gamma'\mathrm{std})$, $(L,\gamma'L')$ the first lattice takes two values, so Lemma~\ref{pathind} turns the composite into $I_{(\mathrm{std},\mathrm{std})\to(L,\gamma'L')}$, and $\theta_{L,L'}\circ R_{1,\gamma'}^{-1}=c'\,\theta_{L,\gamma'L'}$. In the same way, for self-dual $X\subset E^{r'}$,
+\[
+\theta_{L,X}\circ R_{\gamma,1}^{-1}=c\,I_{(\gamma\,\mathrm{std},\mathrm{std})\to(\gamma L,X)}\,I_{(\mathrm{std},\mathrm{std})\to(\gamma\,\mathrm{std},\mathrm{std})}\,\theta_0=c\,\theta_{\gamma L,X},
+\]
+where Lemma~\ref{pathind} applies because the second lattice takes the two values $\mathrm{std}$ and $X$.
+For the character factor, $\mathfrak d_{\gamma L}=(\det\gamma)\mathfrak d_L$ with $\det\gamma$ of norm one, and $\chi$ is multiplicative on ideals of norm one with $\chi((\det\gamma))=\prod_\tau\tau(\det\gamma)^{-1}$, so
+\[
+\chi(\mathfrak d_{\gamma L})^{r'/2}\chi(\mathfrak d_{\gamma'L'})^{-r/2}=\Big(\prod_\tau\tau(\det\gamma)\Big)^{-r'/2}\Big(\prod_\tau\tau(\det\gamma')\Big)^{r/2}\chi(\mathfrak d_L)^{r'/2}\chi(\mathfrak d_{L'})^{-r/2}.
+\]
+Since $\lvert\tau(\det\gamma)\rvert=1$, we have $\tau(\overline{\det\gamma})=\tau(\det\gamma)^{-1}$, and the product of the three displays gives $e(\gamma L,\gamma'L')=e(L,L')\circ R^{-1}$.
+
+(ii) By Lemma~\ref{transport}, $R$ maps the lattices $\Lambda(N,N')$, $A_c(N,N')$ and $B_c(N,N')$ onto the corresponding lattices for $(\gamma N,\gamma'N')$, maps coset representatives to coset representatives and preserves the index in the definition of $G_c$. With (i) and Lemma~\ref{transport}(iii) this gives $G_c(\gamma N,\gamma'N')=G_c(N,N')\circ R^{-1}$. For $x\in M^A_c(N,N')$ we have $R\,\iota x=\iota(\operatorname{Ad}(\gamma,\gamma')x)$ and $\alpha(R\,\iota x)=\alpha(\iota x)$, so \eqref{kernelcx} and Lemma~\ref{transport}(iii) give the first statement. For the second, $x\mapsto\operatorname{Ad}(\gamma,\gamma')x$ is a bijection between the coset spaces in \eqref{datumkernel} for $(N,N')$ and for $(\gamma N,\gamma'N')$, and we change the summation variable.
+
+(iii) Both sides vanish unless the data are in range, and $\operatorname{Ad}(\gamma,\gamma')$ preserves the range by Lemma~\ref{transport}(ii). On the range, (ii) shows that the kernel of the moved data is $\theta_{N,N'}[c,x]\circ R^{-1}$. The Taylor coefficients of $G\circ R^{-1}$ at $0$ are those of $G$ after the linear substitution $D\mapsto hDg$ with $g=(\tau(\gamma))_\tau$ and $h=(\tau(\gamma')^{-1})_\tau$, by the chain rule. In the definition of the jet operator this substitution moves to the polynomial side, where it becomes the block action of $h$ on the variables $Y$ and of $g$ on $P$, and the factor $\prod_\tau\det(X_\tau)^{n_\tau}$ contributes $\prod_\tau\det(g_\tau)^{n_\tau}$. The block actions of $g$ and $h$ are $\rho_\lambda(\gamma)^{-1}$ and $\rho_{\lambda'}(\gamma')$ up to the determinant twists $\prod_\tau\tau(\det\gamma)^{k(\lambda_\tau)}$ and $\prod_\tau\tau(\det\gamma')^{-k(\lambda'_\tau)}$. The computation in (i) shows $\chi_F(\gamma N,\gamma'N')=\prod_\tau\tau(\det\gamma)^{-r'/2}\prod_\tau\tau(\det\gamma')^{r/2}\chi_F(N,N')$.
+
+For the frame factor put $u=\det\gamma$, an element of norm one. The frame of $\gamma N$ at a prime $P$ is $\gamma$ times the frame of $N$, so $\operatorname{ord}_P\det(\gamma N)=\operatorname{ord}_P(u)+\operatorname{ord}_P\det N$ away from the bad primes, and $\det(\gamma\,\mathrm{fr}_P)=u\det\mathrm{fr}_P$ at the bad primes. Hence $\mu(\gamma N,\gamma\,\mathrm{fr})/\mu(N,\mathrm{fr})=\prod_{v\nmid\infty}\mu_v(u)$, and since $\mu$ is trivial on $E^\times$, this equals $\mu_\infty(u)^{-1}=\prod_\tau\tau(u)^{-e_\tau}$. The same holds at rank $r'$ with $\gamma'$.
+
+Collecting the scalars, the exponent of $\prod_\tau\tau(\det\gamma)$ is $n_\tau+\frac{r'}2-e_\tau-k(\lambda_\tau)$ and the exponent of $\prod_\tau\tau(\det\gamma')$ is $e_\tau-\frac r2+k(\lambda'_\tau)$, componentwise in $\tau$. Both vanish by hypothesis, so every scalar cancels.
+\end{proof}
+
+Proposition~\ref{covariance}(iii) says that the step kernel is an intertwiner between the representations $\rho_\lambda$ and $\rho_{\lambda'}$ of the rational unitary groups. Summing the step kernels over the classes of lattices of level $j$, with the weights $1/\#\operatorname{Stab}$, therefore defines a map $K_j$ from vector-valued automorphic forms of weight $\lambda$ on the definite unitary group of rank $r$ to forms of weight $\lambda'$ on the definite unitary group of rank $r'$. The composite of $m$ such maps is the chain of lifts of Theorem~A.
+% TODO(structure): make the last paragraph a definition, with the spaces of forms and the integral
+% structures Int_j, once the lattice-level material of Section 8 (FormB, adm7) is written.

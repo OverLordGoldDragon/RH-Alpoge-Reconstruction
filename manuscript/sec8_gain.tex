@@ -1,0 +1,272 @@
+\section{Divisibility at inert primes}\label{sec:gain}
+
+Let $p$ be a prime that is inert in $\mathbb Q(\sqrt{-d})$. An elliptic curve with complex multiplication by the integers of $\mathbb Q(\sqrt{-d})$ and good reduction at $p$ has a formal group of height two, and complex conjugation acts on its endomorphisms as the Frobenius of $\mathbb Q_{p^2}$. This section proves that the theta kernel of one lift, written in the variables of one Frobenius orbit, is divisible by a power of $p$ whose main term at a top of weight $\alpha$ is $\alpha p/(p^2-1)=\sum_{i\ \mathrm{odd}}\alpha/p^i$. Section~\ref{sec:excess} showed that this number is the contribution of an inert prime to the sum $S$. The argument has three algebraic steps, which do not refer to theta functions. Section~\ref{sec:pairings} classifies the pairings on the formal group that are biadditive and semilinear for Frobenius, up to a factor whose exponential is integral. Section~\ref{sec:class} defines a class of power series built from such a pairing. Section~\ref{sec:valuation} bounds from below the valuation of every pairing of a series of that class with a product of minors.
+
+Throughout this section $p\ge5$ is a prime and $\mathcal K$ is a complete field of characteristic zero with an ultrametric absolute value such that $\lvert p\rvert=p^{-1}$. Write $\operatorname{ord}=-\log_p\lvert\cdot\rvert$. A power series over $\mathcal K$ is \emph{integral} when all its coefficients have absolute value at most $1$, and for two series $f$ and $g$ we write $f\equiv g\pmod p$ when $f-g$ is $p$ times an integral series. Put
+\[
+\gamma_p=\frac p{p^2-1}=\sum_{e\ge0}\frac1{p^{2e+1}},\qquad\rho_p=\frac1{p^2-1},\qquad\gamma_p+\rho_p=\frac1{p-1}.
+\]
+
+\subsection{Pairings on the formal group of height two}\label{sec:pairings}
+
+Put
+\[
+\operatorname{lg}(X)=\sum_{j\ge0}\frac{X^{p^{2j}}}{p^j},\qquad\operatorname{lg}^\ast(X)=\sum_{j\ge0}\frac{X^{p^{2j+1}}}{p^{j+1}}=\frac1p\operatorname{lg}(X^p),\qquad\mathcal A(X,Y)=\sum_{0\le i\le j}\frac{X^{p^{2i}}\,Y^{p^{2j+1}}}{p^{\,i+j+1}},
+\]
+and for constants $c,c'$ put $Q_{c,c'}(X,Y)=c\,\mathcal A(X,Y)-c'\,\mathcal A(Y,X)$. The series $\operatorname{lg}$ satisfies $\operatorname{lg}(X)-p^{-1}\operatorname{lg}(X^{p^2})=X$, and Hazewinkel's functional-equation lemma~\cite[Section~2.2]{hazewinkel} gives an integral series $F(X,Y)$ without constant term with $\operatorname{lg}(F(X,Y))=\operatorname{lg}(X)+\operatorname{lg}(Y)$. The series $F$ is the formal group law of height two with logarithm $\operatorname{lg}$, and its coefficients lie in $\mathbb Z_p$. For two series $f$ and $g$ write $f\simeq g$ when $f-g$ has zero constant term and $\exp(f-g)$ is integral. For a series $H$ in two variables put
+\[
+(d_FH)(X_0,X_1,X_2)=H\big(F(X_0,X_1),X_2\big)-H(X_0,X_2)-H(X_1,X_2),\qquad H^{\mathrm{sw}}(X,Y)=H(Y,X),
+\]
+and for a series $f$ in one variable put $\partial_Ff=f(F(X_0,X_1))-f(X_0)-f(X_1)$.
+
+\begin{lemma}\label{dwork}
+Let $\sigma$ be a ring endomorphism of $\mathcal K$ with $\lvert\sigma a-a^p\rvert\le p^{-1}$ whenever $\lvert a\rvert\le1$. For a series $\Psi$ in finitely many variables put $\Psi^\phi(X)=\Psi^\sigma(X^p)$, where $\sigma$ acts on the coefficients and $X^p$ raises every variable to the power $p$.
+\begin{enumerate}
+\item[(i)] Let $\Psi$ have zero constant term. Then $\exp\Psi$ is integral if and only if $\Psi^\phi\equiv p\Psi\pmod p$.
+\item[(ii)] Let $D$ satisfy $D\simeq0$, and let $b$ be a family of integral series without constant terms with $D(b)=0$. Then $(\partial D/\partial X_e)(b)$ is integral for every variable $X_e$.
+\item[(iii)] Let $\Phi$ be a series with $\partial\Phi/\partial X_e$ integral, let $\varphi$ be a family of integral series without constant terms, and let $V$ be an integral series without constant term. Then $\Phi(\varphi+pV\mathbf e_e)\equiv\Phi(\varphi)\pmod p$, where $\mathbf e_e$ is the unit vector of the variable $X_e$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) For an integral series $f$ one has $f^\phi\equiv f^p\pmod p$, because $(\sum_ia_iX^{n_i})^p\equiv\sum_ia_i^pX^{pn_i}$ and $a^p\equiv\sigma(a)$. Put $E=\exp\Psi$, so that $E^\phi=\exp(\Psi^\phi)=E^p\exp(\Psi^\phi-p\Psi)$.
+
+Suppose that $E$ is integral. Then $E^\phi\equiv E^p\pmod p$, and $E^p$ is an integral series with constant term $1$, so $D=\Psi^\phi-p\Psi$ satisfies $\exp D\equiv1\pmod p$. We show by induction on the degree that the coefficients of $D$ lie in $p\mathcal O_{\mathcal K}$. If this holds in degrees below $N$, then for $k\ge2$ the part of degree $N$ of $D^k/k!$ is a sum of products of $k$ coefficients in $p\mathcal O_{\mathcal K}$ divided by $k!$, and $\operatorname{ord}(p^k/k!)\ge k-k/(p-1)\ge1$ for $k\ge2$. So the part of degree $N$ of $\exp D-1$ is congruent to that of $D$ modulo $p$, and the coefficients of $D$ in degree $N$ lie in $p\mathcal O_{\mathcal K}$.
+
+Conversely, suppose that $\Psi^\phi-p\Psi=pR$ with $R$ integral. Then $G=\exp(pR)$ is integral with $G\equiv1\pmod p$, because $\operatorname{ord}(p^k/k!)\ge1$ for $k\ge1$, and $E^\phi=E^pG$. We show by induction on the degree $N$ that the homogeneous part $E_N$ of $E$ of degree $N$ is integral. Let $A$ be the sum of the parts of $E$ of degree less than $N$, an integral polynomial with constant term $1$ by the induction hypothesis. In degree $N$ one has $E^p=A^p+pA^{p-1}E_N+(\text{terms of degree}>N)$, and $A^{p-1}G$ has constant term $1$, so the part of degree $N$ of $E^pG$ is the part of degree $N$ of $A^pG$ plus $pE_N$. The part of degree $N$ of $E^\phi$ involves the parts of $E$ of degree $N/p<N$, so it equals the part of degree $N$ of $A^\phi$. Hence $pE_N$ is the part of degree $N$ of $A^\phi-A^pG$. Since $A^\phi\equiv A^p$ and $A^pG\equiv A^p\pmod p$, this part has coefficients in $p\mathcal O_{\mathcal K}$, and $E_N$ is integral.
+
+(ii) The series $\exp D$ is integral and $\partial_{X_e}\exp D=\exp D\cdot\partial_{X_e}D$. At the substitution $b$ the first factor equals $1$, so $(\partial_{X_e}D)(b)=(\partial_{X_e}\exp D)(b)$, which is integral.
+
+(iii) It suffices to treat a monomial $a\,X_e^kM$ with $M$ free of $X_e$ and $\lvert ka\rvert\le1$. Its increment is $aM(\varphi)\sum_{n\ge1}\binom kn\varphi_e^{k-n}(pV)^n$, and $\binom kna=\frac kn\binom{k-1}{n-1}a$, so the term $n$ is $ka\binom{k-1}{n-1}\frac{p^n}n\varphi_e^{k-n}V^nM(\varphi)$, with $\lvert p^n/n\rvert\le p^{-1}$.
+\end{proof}
+
+Part (i) of Lemma~\ref{dwork} is Dwork's lemma~\cite[Chapter~IV]{koblitz} in several variables.
+% TODO(external, citations): check the chapter references for Dwork's lemma (Koblitz, GTM 58) and for
+% Hazewinkel's functional-equation lemma (Formal Groups and Applications, 1978).
+
+\begin{lemma}\label{cob}
+Assume that $\mathcal K$ is complete.
+\begin{enumerate}
+\item[(i)] Let $f$ be a series in one variable without constant term such that $\partial_Ff$ is integral. Then there are $\alpha,\beta_1\in\mathcal K$ with $\lvert\alpha\rvert\le1$ and an integral series $R$ with $f=\alpha\operatorname{lg}^\ast+\beta_1\operatorname{lg}+R$.
+\item[(ii)] Let $H$ be a series in two variables in which every monomial contains both variables, such that $d_FH$ and $d_FH^{\mathrm{sw}}$ are integral. Then there are $\beta_2\in\mathcal K$ and an integral series $R$ with $H=\beta_2\operatorname{lg}(X)\operatorname{lg}(Y)+R$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) First, $\partial_F\operatorname{lg}=0$, and $\partial_F\operatorname{lg}^\ast$ is integral. Indeed $\partial_F\operatorname{lg}^\ast=p^{-1}\big(\operatorname{lg}(F^p)-\operatorname{lg}(F(X_0^p,X_1^p))\big)$, the two arguments differ by $p$ times an integral series because $F$ has coefficients in $\mathbb Z_p$, and $\operatorname{lg}'(X)=\sum_jp^jX^{p^{2j}-1}$ is integral, so Lemma~\ref{dwork}(iii) applies. Write $f=\sum_na_nX^n$. The coefficient $a_1$ does not enter $\partial_Ff$, and we first replace $f$ by $f-a_1\operatorname{lg}$, which does not change $\partial_Ff$. Assume now that $a_d$ is integral for $1\le d<n$, where $n\ge2$. For $0<i<n$ the coefficient of $X_0^iX_1^{n-i}$ in $\partial_Ff$ equals $a_n\binom ni$ plus a sum of products of the $a_d$ with $d<n$ and coefficients of powers of $F$, because $F\equiv X_0+X_1$ in degree one. If $n$ is not a power of $p$, some $\binom ni$ is prime to $p$, and $a_n$ is integral. If $n=p^{k+1}$, then $\operatorname{ord}\binom{p^{k+1}}{p^k}=1$, and $pa_n$ is integral. Put $\mu=pa_n$, so that $\lvert\mu\rvert\le1$. When $k+1=2j+1$ we subtract $\mu p^j\operatorname{lg}^\ast$, whose coefficient in degree $p^{2j+1}$ is $\mu p^{-1}=a_n$ and whose coefficients in the degrees $p^{2i+1}$ with $i<j$ are $\mu p^{\,j-i-1}$. When $k+1=2j$ we subtract $\mu p^{j-1}\operatorname{lg}$, whose coefficient in degree $p^{2j}$ is $a_n$ and whose coefficients in the degrees $p^{2i}$ with $i<j$ are $\mu p^{\,j-1-i}$. In both cases the coefficient in degree $n$ becomes $0$, the coefficients below degree $n$ stay integral, and $\partial_Ff$ stays integral because $\partial_F\operatorname{lg}=0$ and $\partial_F\operatorname{lg}^\ast$ is integral. The corrections at the stage $n=p^{k+1}$ have absolute value at most $p^{-\lfloor k/2\rfloor}$, so their sums converge in the complete field $\mathcal K$ to numbers $\alpha$ and $\beta_1$, and $\lvert\alpha\rvert\le1$ because each correction of $\alpha$ has absolute value at most $1$.
+
+(ii) For every $m$ the coefficient $s_m(X)$ of $Y^m$ in $H$ has an integral coboundary $\partial_Fs_m$, because $d_FH$ is integral, so part (i) gives $s_m=\alpha_m\operatorname{lg}^\ast+\beta_m\operatorname{lg}+R_m$. In the same way the coefficient $s'_i(Y)$ of $X^i$ equals $\alpha'_i\operatorname{lg}^\ast+\beta'_i\operatorname{lg}+R'_i$. The two expressions for the coefficient of $X^iY^m$ differ by an integral number. With $i=p^{2k+1}$ and $m=p^{2N}$, the number $\alpha_mp^{-(k+1)}-\beta'_ip^{-N}$ is integral for every $N$, and $\lvert\alpha_m\rvert\le1$, so $\beta'_i=0$. Then $i=p^{2N+1}$ and an arbitrary $m$ show that $\alpha_mp^{-(N+1)}$ is bounded in $N$, so $\alpha_m=0$. In the same way $\beta_m=0$ unless $m=p^{2l}$, and $\beta_{p^{2l}}=\beta_1p^{-l}$ for one number $\beta_1$. Hence $s_m-\beta_1[Y^m]\operatorname{lg}(Y)\cdot\operatorname{lg}(X)$ is integral for every $m$.
+\end{proof}
+
+\begin{theorem}\label{thm:betaisg}
+Assume that $\mathcal K$ is complete, that $\lvert\mathcal K^\times\rvert=p^{\mathbb Z}$, that $\mathcal K$ contains a primitive root of unity of order $p^2-1$, and that $\sigma$ is a ring endomorphism of $\mathcal K$ with $\lvert\sigma a-a^p\rvert\le p^{-1}$ whenever $\lvert a\rvert\le1$. Let $\beta$ be a series in two variables over $\mathcal K$ with the following properties.
+\begin{enumerate}
+\item[(i)] Every monomial of $\beta$ contains both variables.
+\item[(ii)] $d_F\beta\simeq0$ and $d_F\beta^{\mathrm{sw}}\simeq0$.
+\item[(iii)] $\beta(\zeta X,Y)\simeq\beta(X,\zeta^pY)$ for every $\zeta\in\mathcal K$ with $\zeta^{p^2-1}=1$.
+\end{enumerate}
+Then there is $c\in\mathcal K$ with $\lvert c\rvert\le1$ and $\sigma^2c=c$ such that $\beta\simeq Q_{c,\sigma c}$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 0, averaging over roots of unity.} Let $N=p^2-1$, let $\zeta$ be a primitive root of unity of order $N$, and put $G=\frac1N\sum_{k=0}^{N-1}\beta(\zeta^kX,\zeta^{-pk}Y)$. The coefficient of $X^{n_0}Y^{n_1}$ in $G$ equals that of $\beta$ when $N$ divides $n_0-pn_1$, and vanishes otherwise. So every monomial $X^{n_0}Y^{n_1}$ of $G$ satisfies $n_0,n_1\ge1$ and
+\begin{equation}\label{supp}
+n_0\equiv p\,n_1\pmod{p^2-1}.
+\end{equation}
+By (iii), each summand is $\simeq\beta$. The condition of Lemma~\ref{dwork}(i) is linear over the integers prime to $p$, and $N$ is prime to $p$, so $G\simeq\beta$. Since $F(\zeta X_0,\zeta X_1)=\zeta F(X_0,X_1)$, because $\operatorname{lg}(\zeta X)=\zeta\operatorname{lg}(X)$, the operator $d_F$ commutes with the scaling, and (ii) gives $d_FG\simeq0$ and $d_FG^{\mathrm{sw}}\simeq0$.
+
+\emph{Step 1, the first derivative.} Let $f(Y)$ be the coefficient of $X$ in $G$. The series $d_FG$ vanishes at $X_1=0$, and Lemma~\ref{dwork}(ii) shows that its derivative in $X_1$ at $X_1=0$ is integral. That derivative is $(\partial_XG)(X_0,X_2)\,\varphi(X_0)-f(X_2)$ with $\varphi(X_0)=(\partial_{X_1}F)(X_0,0)$, and differentiation of $\operatorname{lg}(F)=\operatorname{lg}(X_0)+\operatorname{lg}(X_1)$ gives $\operatorname{lg}'(X_0)\varphi(X_0)=1$. Since $\operatorname{lg}'$ is integral, $\partial_XG-\operatorname{lg}'(X)f(Y)$ is integral. Next, $d_FG^{\mathrm{sw}}$ vanishes at $X_2=0$, and its derivative in $X_2$ at $X_2=0$ is $\partial_Ff$, which Lemma~\ref{dwork}(ii) shows to be integral. Lemma~\ref{cob}(i) gives $f=\alpha\operatorname{lg}^\ast+\beta_1\operatorname{lg}+R$ with $\lvert\alpha\rvert\le1$. By \eqref{supp} with $n_0=1$, every exponent of $f$ is $\equiv p\pmod{p^2-1}$. The exponents of $\operatorname{lg}$ are $\equiv1$ and those of $\operatorname{lg}^\ast$ are $\equiv p$, and $1\not\equiv p$, so $f-\alpha\operatorname{lg}^\ast$ is integral. With $c=\alpha$,
+\begin{equation}\label{deriv}
+\partial_XG-c\,\operatorname{lg}'(X)\operatorname{lg}^\ast(Y)\quad\text{is integral},\qquad\lvert c\rvert\le1 .
+\end{equation}
+The same argument for $G^{\mathrm{sw}}$, which also satisfies \eqref{supp} after exchanging the roles of the exponents, gives a constant $c'$ with $\lvert c'\rvert\le1$ and the analogue of \eqref{deriv}.
+
+\emph{Step 2, the Frobenius defect.} Put $\Delta G=p^{-1}\big(G^\sigma(X^p,Y^p)-pG\big)$. We show that $d_F(\Delta G)-\sigma(c)\,(\partial_F\operatorname{lg}^\ast)(X_0,X_1)\operatorname{lg}(X_2)$ is integral. Put $A=F(X_0,X_1)$ and $A_p=F(X_0^p,X_1^p)=A^p+pr$ with $r$ integral. Lemma~\ref{dwork}(i) for $d_FG\simeq0$ gives $(d_FG)^\phi-p\,d_FG\equiv0\pmod p$. The series $(d_FG)^\phi$ and $d_F\big(G^\sigma(X^p,Y^p)\big)$ differ by $G^\sigma(A_p,X_2^p)-G^\sigma(A^p,X_2^p)$. Write $G^\sigma=\Phi+\sigma(c)\operatorname{lg}(X)\operatorname{lg}^\ast(Y)$. By \eqref{deriv} the series $\partial_X\Phi$ is integral, and Lemma~\ref{dwork}(iii) shows that its increment is $\equiv0\pmod p$. The increment of the second term is $\sigma(c)\big(\operatorname{lg}(A_p)-\operatorname{lg}(A^p)\big)\operatorname{lg}^\ast(X_2^p)=-\sigma(c)\,p\,(\partial_F\operatorname{lg}^\ast)\big(\operatorname{lg}(X_2)-X_2\big)$, because $\operatorname{lg}(A^p)=p\operatorname{lg}^\ast(A)$, $\operatorname{lg}(A_p)=p\operatorname{lg}^\ast(X_0)+p\operatorname{lg}^\ast(X_1)$, and $\operatorname{lg}^\ast(X^p)=\operatorname{lg}(X)-X$. Division by $p$ gives the claim.
+
+\emph{Step 3, the defect itself.} Put $H=\Delta G-\sigma(c)\operatorname{lg}^\ast(X)\operatorname{lg}(Y)-\sigma(c')\operatorname{lg}(X)\operatorname{lg}^\ast(Y)$. Since $d_F\big(\operatorname{lg}^\ast(X)\operatorname{lg}(Y)\big)=(\partial_F\operatorname{lg}^\ast)\operatorname{lg}(X_2)$ and $d_F\big(\operatorname{lg}(X)\operatorname{lg}^\ast(Y)\big)=0$, Step 2 for $G$ and for $G^{\mathrm{sw}}$ shows that $d_FH$ and $d_FH^{\mathrm{sw}}$ are integral. Lemma~\ref{cob}(ii) gives $H=\beta_2\operatorname{lg}(X)\operatorname{lg}(Y)+R$ with $R$ integral. The series $H$ satisfies \eqref{supp}, and no monomial of $\operatorname{lg}(X)\operatorname{lg}(Y)$ does, so $H$ is integral.
+
+\emph{Step 4, the two constants.} The coefficient of $XY^m$ with $m=p^{2i+1}$ is $G_{1,m}-c\,p^{-(i+1)}$ in the integral series \eqref{deriv}, and $-G_{1,m}-\sigma(c')p^{-(i+1)}$ in $H$, because $G^\sigma(X^p,Y^p)$ has no monomial of degree one in $X$ and $\operatorname{lg}^\ast$ has no term of degree one. The sum $(c+\sigma c')p^{-(i+1)}$ is integral for every $i$, so $c+\sigma c'=0$. The same argument for $G^{\mathrm{sw}}$ gives $c'+\sigma c=0$. Hence $c'=-\sigma c$ and $\sigma^2c=c$.
+
+\emph{Step 5, Dwork's lemma for the difference.} The reindexing $\mathcal A(X^p,Y^p)=p\big(\operatorname{lg}^\ast(X)\operatorname{lg}(Y)-\mathcal A(Y,X)\big)$ of the sum over $i\le j$ gives
+\[
+Q_{c',c}(X^p,Y^p)-p\,Q_{c,c'}(X,Y)=p\big(c'\operatorname{lg}^\ast(X)\operatorname{lg}(Y)-c\operatorname{lg}(X)\operatorname{lg}^\ast(Y)\big).
+\]
+Put $\Psi=G-Q_{c,\sigma c}$. Since $\sigma^2c=c$, we have $(Q_{c,\sigma c})^\sigma=Q_{\sigma c,c}$, and the identity with $c'=\sigma c$ gives
+\[
+\Psi^\phi-p\Psi=p\big(\Delta G-\sigma(c)\operatorname{lg}^\ast(X)\operatorname{lg}(Y)+c\operatorname{lg}(X)\operatorname{lg}^\ast(Y)\big)=p\,H .
+\]
+Since $H$ is integral, Lemma~\ref{dwork}(i) shows that $\exp\Psi$ is integral. Hence $G\simeq Q_{c,\sigma c}$, and Step 0 gives $\beta\simeq Q_{c,\sigma c}$.
+\end{proof}
+
+\subsection{The class of a kernel}\label{sec:class}
+
+Fix integers $\nu\ge1$ and $r_0,r_1\ge0$. A \emph{position} is an element $s$ of $\mathbb Z/2\nu$, called even or odd according to its representative in $\{0,\dots,2\nu-1\}$. The variables are $X_{s,a,b}$ with $s$ a position, $0\le a<r_0$ and $0\le b<r_1$. Put
+\[
+\mathsf S_{s,a,b}=\sum_{l\ge0}(-1)^l\,X_{s-2l,a,b}^{\,p^{2l}},
+\]
+and for a family $\upsilon=(\upsilon_s)$ of elements of $\mathcal K$ with $\lvert\upsilon_s\rvert\le1$ put
+\begin{equation}\label{hups}
+h_\upsilon=\sum_s\upsilon_s\sum_{a,b}\mathsf S_{s,a,b}^{\,p}\,\mathsf S_{s+1,a,b}.
+\end{equation}
+For a series $h$ without constant term, the class $\mathcal C(h)$ is the set of series $\Theta$ for which there are integral series $g_0,g_1,\dots$ with
+\begin{equation}\label{classdef}
+\Theta=\sum_{i\ge0}\frac{h^i}{p^i}\,g_i ,
+\end{equation}
+the sum being finite in every degree. The class is stable under multiplication by integral series and under substitution of integral series without constant term for the variables.
+
+\begin{theorem}\label{thm:twosums}
+Let $W=W(\overline{\mathbb F}_p)$ with Frobenius $\sigma$, let $\mathcal K\supset W[1/p]$ contain an element $\varpi$ with $\varpi^{p^2-1}=p$, and let $\mathcal O=W[\varpi]$. Let $\omega_r,\omega^\ast_r\in W$ for $r<\nu$ be fixed by $\sigma^{2\nu}$ with $\sum_{i<\nu}\sigma^{2i}(\omega_r\omega^\ast_{r'})=[r=r']$. Let $\lambda(T)=\varpi^{-1}\operatorname{lg}(\varpi T)$ and let $\mu$ be the series without constant term with $\lambda(\mu(T))=T$. Put $\Lambda_{r,a,b}=\sum_{s\ \mathrm{even}}\sigma^s(\omega^\ast_r)X_{s,a,b}$ and $\Lambda'_{r,a,b}=\sum_{s\ \mathrm{odd}}\sigma^s(\omega_r)X_{s,a,b}$. Let $c\in W$ with $\sigma^2c=c$. Then there is a series $V$ with coefficients in $\mathcal O$ such that
+\[
+\sum_{r,a,b}\Big(c\,\mu(\Lambda_{r,a,b})\,\mu(\Lambda'_{r,a,b})^p-\sigma(c)\,\mu(\Lambda'_{r,a,b})\,\mu(\Lambda_{r,a,b})^p\Big)=h_\upsilon+p\,V,
+\]
+with $\upsilon_s=c$ for odd $s$ and $\upsilon_s=-\sigma(c)$ for even $s$.
+\end{theorem}
+
+\begin{proof}
+Congruences are modulo $p\mathcal O$. The coefficient of $T^{p^{2j}}$ in $\lambda$ is $\varpi^{p^{2j}-1}/p^j=p^{(p^{2j}-1)/(p^2-1)-j}$, an integer power of $p$ that is divisible by $p$ for $j\ge2$. So $\lambda$ has integer coefficients and $\lambda\equiv T+T^{p^2}$. The series $\mathrm{alt}(T)=\sum_{l\ge0}(-1)^lT^{p^{2l}}$ satisfies $\mathrm{alt}(T)+\mathrm{alt}(T)^{p^2}\equiv T$, so $\mu\equiv\mathrm{alt}$. For series over $\mathcal O$ one has $(\sum_ix_i)^p\equiv\sum_ix_i^p$, and $\sigma(a)\equiv a^p$ for $a\in W$. Hence, for $w\in W$ fixed by $\sigma^{2\nu}$ and a set $P$ of positions stable under shifts by $2$,
+\[
+\Big(\sum_{s\in P}\sigma^s(w)X_s\Big)^{p^k}\equiv\sum_{s\in P}\sigma^{s+k}(w)\,X_s^{\,p^k},
+\]
+and with $\mu\equiv\mathrm{alt}$ and the reindexing $s\mapsto s-2l$, which uses the period $2\nu$,
+\[
+\mu\Big(\sum_{s\in P}\sigma^s(w)X_s\Big)\equiv\sum_{s\in P}\sigma^s(w)\,\mathsf S_s,\qquad\mu\Big(\sum_{s\in P}\sigma^s(w)X_s\Big)^p\equiv\sum_{s\in P}\sigma^{s+1}(w)\,\mathsf S_s^{\,p}.
+\]
+The hypothesis on $\omega,\omega^\ast$ says that two square matrices are inverse to each other, so the product in the other order is also the identity, and $\sum_r\sigma^a(\omega^\ast_r)\sigma^b(\omega_r)=[a=b]$ for positions $a\equiv b\pmod2$. Inserting the two congruences, the first product becomes $c\sum_r\big(\sum_{t\ \mathrm{even}}\sigma^t(\omega^\ast_r)\mathsf S_t\big)\big(\sum_{t'\ \mathrm{odd}}\sigma^{t'+1}(\omega_r)\mathsf S_{t'}^{\,p}\big)$, and the sum over $r$ keeps the terms with $t=t'+1$, which gives $c\sum_{t'\ \mathrm{odd}}\mathsf S_{t'}^{\,p}\mathsf S_{t'+1}$. The second product gives $\sigma(c)\sum_{t'\ \mathrm{even}}\mathsf S_{t'}^{\,p}\mathsf S_{t'+1}$ in the same way, after summing over $a,b$.
+\end{proof}
+
+The next proposition combines Theorems~\ref{thm:betaisg} and~\ref{thm:twosums}. It shows that the exponential of a sum of values of a semilinear pairing, at dual coordinates of even and odd positions, rescaled by $\varpi$, lies in the class of the series $h_\upsilon$.
+
+\begin{proposition}\label{prop:inclass}
+Let $W$, $\mathcal K$, $\varpi$, $\mathcal O$, $\omega_r$, $\omega_r^\ast$, $\Lambda_{r,a,b}$ and $\Lambda'_{r,a,b}$ be as in Theorem~\ref{thm:twosums}. Let $\beta$ be a series in two variables over $W[1/p]$ with properties (i) to (iii) of Theorem~\ref{thm:betaisg}, and let $U$ be an integral series in the variables $x_{r,a,b},y_{r,a,b}$. Put $x_{r,a,b}=\operatorname{lg}^{-1}(\Lambda_{r,a,b})$ and $y_{r,a,b}=\operatorname{lg}^{-1}(\Lambda'_{r,a,b})$, the parameters whose logarithms are the linear forms $\Lambda$ and $\Lambda'$, and
+\[
+\vartheta(X)=\exp\Big(-\sum_{r,a,b}\beta\big(x_{r,a,b},y_{r,a,b}\big)\Big)\,U\big(x,y\big).
+\]
+Then there is a family $\upsilon$ in $W$ with $\lvert\upsilon_s\rvert\le1$ such that $\vartheta(\varpi X)\in\mathcal C(h_\upsilon)$.
+\end{proposition}
+
+\begin{proof}
+The field $W[1/p]$ is complete, its value group is $p^{\mathbb Z}$, it contains the roots of unity of order $p^2-1$, and its Frobenius $\sigma$ satisfies $\lvert\sigma a-a^p\rvert\le p^{-1}$ for $\lvert a\rvert\le1$. Theorem~\ref{thm:betaisg} gives $c\in W$ with $\sigma^2c=c$ and $\beta\simeq Q_{c,\sigma c}$. So $\exp\big(-\sum\beta(x,y)\big)=\exp\big(-\sum Q_{c,\sigma c}(x,y)\big)\cdot V_1(x,y)$ with $V_1$ an integral series in the variables $x,y$.
+
+We substitute $X\mapsto\varpi X$. The parameter whose logarithm is $\varpi\Lambda$ is $\varpi\mu(\Lambda)$, because $\operatorname{lg}(\varpi\mu(T))=\varpi\lambda(\mu(T))=\varpi T$. In $Q_{c,\sigma c}(\varpi\mu(\Lambda),\varpi\mu(\Lambda'))$ the term $(i,j)$ of $\mathcal A$ has the coefficient $\varpi^{p^{2i}+p^{2j+1}}/p^{\,i+j+1}$, of valuation
+\[
+\frac{p^{2i}+p^{2j+1}}{p^2-1}-(i+j+1)\ \begin{cases}=\dfrac1{p-1}-1&i=j=0,\\[1.5ex]\ge\dfrac1{p-1}+p-2&j\ge1,\end{cases}
+\]
+and the same holds for $\mathcal A(Y,X)$. The exponential of a series whose coefficients have valuation at least $1/(p-1)$ is integral, because $\operatorname{ord}(k!)\le k/(p-1)$. So the terms with $j\ge1$ give an integral factor, and
+\begin{multline*}
+\exp\Big(-\sum Q_{c,\sigma c}(\varpi\mu(\Lambda),\varpi\mu(\Lambda'))\Big)\\
+=\exp\Big(-\frac{\varpi^{p+1}}p\sum_{r,a,b}\big(c\,\mu(\Lambda)\mu(\Lambda')^p-\sigma(c)\,\mu(\Lambda')\mu(\Lambda)^p\big)\Big)\cdot V_2
+\end{multline*}
+with $V_2$ integral. By Theorem~\ref{thm:twosums} the inner sum equals $h_\upsilon+pV$ with $V$ over $\mathcal O$, and $\exp(-\varpi^{p+1}V)$ is integral because $\operatorname{ord}(\varpi^{(p+1)k}/k!)\ge0$. Finally
+\[
+\exp\Big(-\frac{\varpi^{p+1}}p\,h_\upsilon\Big)=\sum_{i\ge0}\frac{h_\upsilon^i}{p^i}\cdot\frac{(-1)^i\varpi^{(p+1)i}}{i!},\qquad\operatorname{ord}\Big(\frac{\varpi^{(p+1)i}}{i!}\Big)=\frac i{p-1}-\operatorname{ord}(i!)\ge0,
+\]
+so this exponential lies in $\mathcal C(h_\upsilon)$. Since $x(\varpi X)=\varpi\mu(\Lambda)$ and $y(\varpi X)=\varpi\mu(\Lambda')$ are integral series without constant term, the series $V_1(x(\varpi X),y(\varpi X))$ and $U(x(\varpi X),y(\varpi X))$ are integral, and the class is stable under multiplication by them and by $V_2$ and $\exp(-\varpi^{p+1}V)$.
+\end{proof}
+
+\subsection{The valuation estimate}\label{sec:valuation}
+
+For a polynomial $P=\sum_\kappa P_\kappa X^\kappa$ and a series $\Theta=\sum_\kappa\Theta_\kappa X^\kappa$ put
+\[
+\langle P,\Theta\rangle=\sum_\kappa P_\kappa\,\kappa!\,\Theta_\kappa=\big(P(\partial)\Theta\big)(0),\qquad\kappa!=\prod_x\kappa_x! .
+\]
+A \emph{shape} consists of a set $\mathcal T$ of positions, called tops, and for every position $s$ a number $n_s\ge0$ of columns, a height $h_{s,c}\le r_0$ for each column $c<n_s$, and a map $I_{s,c}\colon\{0,\dots,h_{s,c}-1\}\to\{0,\dots,r_1-1\}$. For frame variables $y_{s,i,a}$ with $0\le i,a<r_0$ the operator of the shape is
+\[
+P_I=\prod_s\ \prod_{c<n_s}\ \det\Big(\sum_ay_{s,i,a}\,X_{s,a,I_{s,c}(i')}\Big)_{0\le i,i'<h_{s,c}} ,
+\]
+a polynomial in the $X_{s,a,b}$ whose coefficients are polynomials in the $y_{s,i,a}$. For a position $s$ let $\alpha_s$ be the number of columns of height one when $s\in\mathcal T$, and $\alpha_s=0$ when $s\notin\mathcal T$, let $\mathrm{cap}_s=n_s-\alpha_s$ be the number of the remaining columns, and let $\lambda_s=\sum_ch_{s,c}-\alpha_s$ be the number of boxes in the remaining columns. For $s\in\mathcal T$ let $\mathcal E(s)$ be the set of the residues in $\{0,\dots,2\nu-1\}$ of the numbers $s'-s$ with $s'\in\mathcal T$ of parity different from that of $s$. Its elements are odd. Let $\operatorname{lg}_p(0)=0$, and let $\operatorname{lg}_p(x)=\lfloor\log_px\rfloor+1$ be the number of digits of an integer $x\ge1$ in base $p$. Put
+\begin{align}
+\Delta&=\sum_s\big(r_1\operatorname{lg}_p(\alpha_s)+r_0r_1\operatorname{lg}_p(\lambda_s)\big)+\sum_{s\in\mathcal T}\operatorname{lg}_p(\alpha_s)^2,\label{Deltadef}\\
+g^A&=\sum_{s\in\mathcal T}\ \sum_{\substack{e\ge0\\2e+1\notin\mathcal E(s)}}\max\Big(\frac{\alpha_s}{p^{2e+1}}-\mathrm{cap}_{s+2e+1},\,0\Big)-\Delta,\label{gAdef}\\
+g^B&=\gamma_p\sum_{s\in\mathcal T_{\mathrm{ev}}}\alpha_s+\sum_{s\in\mathcal T_{\mathrm{odd}}}\ \sum_{e\ge0}\max\Big(\frac{\alpha_s}{p^{2e+1}}-\mathrm{cap}_{s+2e+1},\,0\Big)-\Delta,\label{gBdef}
+\end{align}
+where $\mathcal T_{\mathrm{ev}}$ and $\mathcal T_{\mathrm{odd}}$ are the even and the odd tops.
+
+\begin{theorem}\label{thm:valuation}
+Let $\varpi\in\mathcal K$ satisfy $\varpi^{p^2-1}=p$, let $\upsilon_s\in\mathcal K$ with $\lvert\upsilon_s\rvert\le1$, and let $\Theta$ be a series in the variables $X_{s,a,b}$ over $\mathcal K$ with $\Theta(\varpi X)\in\mathcal C(h_\upsilon)$. Let a shape be given, with operator $P_I$ and numbers $\alpha_s$, $\mathrm{cap}_s$, $\lambda_s$, $\Delta$, $g^A$ and $g^B$ as above.
+\begin{enumerate}
+\item[(i)] Every coefficient $c$ of the polynomial $\langle P_I,\Theta\rangle$ in the frame variables satisfies $\operatorname{ord}(c)\ge g^A$.
+\item[(ii)] Every such coefficient satisfies $\operatorname{ord}(c)\ge g^B-\sum_{s\in\mathcal T_{\mathrm{ev}}}\alpha_s$.
+\item[(iii)] Let $J\subset\{0,\dots,r_1-1\}$, and let $N_J$ be the number of the columns of height one at even tops with $I_{s,c}(0)\notin J$ and at odd tops with $I_{s,c}(0)\in J$, plus the sum, over the columns $c$ at odd positions $s$ that are not columns of height one at a top, of the number of elements of $I_{s,c}(\{0,\dots,h_{s,c}-1\})\cap J$. Then every coefficient $c$ satisfies $\operatorname{ord}(p^{N_J}c)\ge g^B$.
+\end{enumerate}
+\end{theorem}
+
+The bound (i) has the following reading. The pairing of $\Theta$ with the $\alpha_s$ linear factors at a top $s$ produces a factorial of order about $\alpha_s$, whose valuation is about $\alpha_s/(p-1)$, and the rescaling $X\mapsto\varpi X$ costs $\rho_p\alpha_s$. The difference is the credit $\gamma_p\alpha_s=\sum_{e\ge0}\alpha_s/p^{2e+1}$ of the top. Each factor $p^{-1}$ in \eqref{classdef} comes with a factor $h_\upsilon$, whose relevant monomials are $p^{2e+1}$-th powers of a top variable at $s$ times one variable at the position $s+2e+1$. A top $s$ can pay for at most $\alpha_s/p^{2e+1}$ of these, and the minors at $s+2e+1$ absorb at most $\mathrm{cap}_{s+2e+1}$ of them. The proof bounds every term of a finite expansion separately, and it does not use cancellation.
+
+The proof uses three facts about the pairing. First, if $A$ is a matrix and $\Theta'(X)=\Theta(A^{\mathsf T}X)$, then $\langle P,\Theta'\rangle=\langle P',\Theta\rangle$ with $P'(X')=P(AX')$, by the chain rule. Second, let $L_\kappa=\sum_xb_\kappa(x)X_x$ be linear forms and $\beta=(\beta_\kappa)$ a multi-index, and for a polynomial $Q$ let $H_\beta Q$ be the coefficient of $\tau^\beta$ in $Q\big(X+\sum_\kappa\tau_\kappa b_\kappa\big)$. Then $\langle Q,\prod_\kappa L_\kappa^{\beta_\kappa}\cdot G\rangle=\beta!\,\langle H_\beta Q,G\rangle$, because $Q(\partial)\circ X_x=X_x\circ Q(\partial)+(\partial_xQ)(\partial)$, so that $\langle Q,L_\kappa G\rangle=\langle D_{b_\kappa}Q,G\rangle$ with $D_b$ the derivative in the direction $b$, and $\prod_\kappa D_{b_\kappa}^{\beta_\kappa}=\beta!\,H_\beta$. Third, if $P$ is homogeneous of degree $d$, then $\langle P,\Theta(\varpi X)\rangle=\varpi^d\langle P,\Theta\rangle$.
+
+\begin{proof}
+\emph{Step 1, reduction to a fixed frame.} The operator $P_I$ is homogeneous of degree $D=\sum_s(\alpha_s+\lambda_s)$ in $X$, so $\langle P_I,\Theta(\varpi X)\rangle=\varpi^D\langle P_I,\Theta\rangle$ and $\lvert\varpi^D\rvert=p^{-\rho_pD}$. Put $\Theta_1=\Theta(\varpi X)\in\mathcal C(h_\upsilon)$. It suffices to show that every coefficient of $\langle P_I,\Theta_1\rangle$ has valuation at least $g+\rho_pD$, for $g=g^A$ in case (i) and the corresponding numbers in cases (ii) and (iii). The Gauss norm $\lvert\sum_nc_ny^n\rvert=\max_n\lvert c_n\rvert$ on $\mathcal K[y]$ is multiplicative, so it extends to an absolute value on $\mathcal K'=\mathcal K(y)$, with $\mathcal K\to\mathcal K'$ isometric, and $\lvert f(y)\rvert$ equals the largest absolute value of a coefficient of $f$. Membership in the class is preserved under the isometric embedding. So it suffices to bound $\lvert\langle P_I(y),\Theta_1\rangle\rvert$ over $\mathcal K'$, where the frame variables take the values $y$. With these values, a column of height one at a top $s$ gives the linear form $\ell_{s,b}=\sum_ay_{s,0,a}X_{s,a,b}$ with $b=I_{s,c}(0)$, and the vector $\xi_s=(y_{s,0,a})_a$ is the same for all such columns at $s$. Let $e(s,b)$ be the number of these columns with $I_{s,c}(0)=b$, and let $M_1,\dots,M_C$ be the minors of all the other columns. Then $P_I(y)=E$ with
+\[
+E=\prod_{s\in\mathcal T,\,b}\ell_{s,b}^{\,e(s,b)}\cdot Q,\qquad Q=\prod_cM_c,\qquad\sum_be(s,b)=\alpha_s .
+\]
+The minors $M_c$ have entries $\sum_a(\tau_c)_{i,a}X_{s_c,a,I_c(i')}$ with $\lvert(\tau_c)_{i,a}\rvert\le1$, there are $\mathrm{cap}_s$ of them at a position $s$, and their sizes at $s$ add up to $\lambda_s$.
+
+\emph{Step 2, a change of variables.} Introduce variables $t_{s,b}$ for $s\in\mathcal T$ and $0\le b<r_1$, and put $\widetilde\Theta(t,X)=\Theta_1\big(X_{s,a,b}+[s\in\mathcal T]\,\xi_{s,a}\,t_{s,b}\big)$. Since $\partial\widetilde\Theta/\partial t_{s,b}=\big(\ell_{s,b}(\partial_X)\Theta_1\big)(X+\xi t)$,
+\begin{equation}\label{pairingt}
+\langle E,\Theta_1\rangle=\big\langle t^{e}\,Q(X),\ \widetilde\Theta\big\rangle=\sum_nQ_n\ e!\ n!\ \widetilde\Theta_{(e,n)},
+\end{equation}
+where $n$ runs over the monomials of $Q$ and $\widetilde\Theta_{(e,n)}$ is the coefficient of $t^eX^n$. The class is stable under the substitution, so $\widetilde\Theta=\sum_ip^{-i}\widetilde h^{\,i}U_i$ with $\widetilde h=h_\upsilon(X+\xi t)$ and $U_i$ integral. Every monomial $t^eX^n$ in \eqref{pairingt} has degree $D$.
+
+\emph{Step 3, the series $\widetilde h$ modulo $p$.} We claim that there are integral series $Z$ and $V$ such that every monomial of $Z$ has degree at least $p$ in the variables $X$, and such that in all degrees up to $D$
+\begin{equation}\label{decomp}
+\widetilde h=\sum_\varphi a_\varphi\,t^{d_\varphi}+\sum_\kappa a_\kappa\,t^{d_\kappa}\,L_\kappa+Z+pV .
+\end{equation}
+The index $\varphi=(s,l,l',a,b)$ runs over positions $s$, integers $l,l'\ge0$ and pairs $(a,b)$. With $\sigma_1=s-2l$ and $\sigma_2=s+1-2l'$, one has $t^{d_\varphi}=t_{\sigma_1,b}^{\,p^{2l+1}}t_{\sigma_2,b}^{\,p^{2l'}}$ and $a_\varphi=\upsilon_s(-1)^{l+l'}\xi_{\sigma_1,a}^{\,p^{2l+1}}\xi_{\sigma_2,a}^{\,p^{2l'}}$ when $\sigma_1,\sigma_2\in\mathcal T$, and $a_\varphi=0$ otherwise. The index $\kappa=(\sigma,l,b)$ runs over positions $\sigma$, integers $l\ge0$ and $0\le b<r_1$, and
+\begin{equation}\label{kappaterm}
+t^{d_\kappa}=t_{\sigma,b}^{\,p^{2l+1}},\qquad L_\kappa=\sum_a\xi_{\sigma,a}^{\,p^{2l+1}}\,X_{\sigma+2l+1,a,b},\qquad a_\kappa=(-1)^l\upsilon_{\sigma+2l}\ \text{ if }\sigma\in\mathcal T,\quad a_\kappa=0\ \text{ otherwise}.
+\end{equation}
+For integral $f,g$ one has $(f+g)^p\equiv f^p+g^p\pmod p$. Write $\theta_{s,a,b}=[s\in\mathcal T]\,\xi_{s,a}t_{s,b}$. Then
+\[
+\mathsf S_{s+1,a,b}(X+\xi t)\equiv\sum_{l'}(-1)^{l'}X_{s+1-2l',a,b}^{\,p^{2l'}}+\sum_{l'}(-1)^{l'}\theta_{s+1-2l',a,b}^{\,p^{2l'}},
+\]
+and since $p$ is odd,
+\[
+\mathsf S_{s,a,b}(X+\xi t)^p\equiv\sum_l(-1)^lX_{s-2l,a,b}^{\,p^{2l+1}}+\sum_l(-1)^l\theta_{s-2l,a,b}^{\,p^{2l+1}}.
+\]
+In the product, the product of the two $\theta$-sums gives the first sum of \eqref{decomp}. The part of the product of the second $\theta$-sum with the first $X$-sum with $l'=0$ is $\sum_l(-1)^l\theta_{s-2l,a,b}^{\,p^{2l+1}}X_{s+1,a,b}$, and after summing over $a$ and renaming $\sigma=s-2l$ it gives the second sum. Every remaining term contains a factor $X^{p^{2l+1}}$ or a factor $X^{p^{2l'}}$ with $l'\ge1$, so its degree in $X$ is at least $p$, and these terms form $Z$. Terms with $p^{2l}>D$ or $p^{2l'}>D$ do not contribute in degrees up to $D$, so all sums are finite.
+
+\emph{Step 4, expansion and the bound for one term.} In the coefficient $\widetilde\Theta_{(e,n)}$ we may replace $\widetilde h$ by the right side of \eqref{decomp}. The multinomial theorem expresses $p^{-i}\widetilde h^{\,i}U_i$ as a sum over families $k=\big((k_\varphi),(k_\kappa),k_Z,k_V\big)$ of nonnegative integers with sum $i$ of the terms
+\[
+\frac{p^{k_V}}{p^i}\binom ik\prod_\varphi a_\varphi^{k_\varphi}\prod_\kappa a_\kappa^{k_\kappa}\cdot t^{d(k)}\prod_\kappa L_\kappa^{k_\kappa}\cdot Z^{k_Z}V^{k_V}U_i,\qquad d(k)=\sum_\varphi k_\varphi d_\varphi+\sum_\kappa k_\kappa d_\kappa .
+\]
+We pair this with $t^eQ(X)$ and apply the second fact to the product of the linear forms $L_\kappa$. Let $H_kQ$ be the coefficient of $\prod_\kappa\tau_\kappa^{k_\kappa}$ in $Q\big(X+\sum_\kappa\tau_\kappa L_\kappa\big)$, where $L_\kappa$ is read as a vector. The term becomes
+\[
+\frac{p^{k_V}}{p^i}\binom ik\prod_\kappa k_\kappa!\cdot\prod_\varphi a_\varphi^{k_\varphi}\prod_\kappa a_\kappa^{k_\kappa}\cdot\sum_n(H_kQ)_n\ e!\ n!\ \big(Z^{k_Z}V^{k_V}U_i\big)_{(e-d(k),n)} .
+\]
+Put $a=\sum_\varphi k_\varphi$ and $b=\sum_\kappa k_\kappa$. A nonzero summand satisfies four conditions.
+\begin{enumerate}
+\item[(N1)] $d(k)\le e$ in every coordinate $(s,b')$, because the operator has degree $e(s,b')$ in $t_{s,b'}$ and the exponents of $Z^{k_Z}V^{k_V}U_i$ are nonnegative.
+\item[(N2)] $H_kQ\ne0$ and $n$ is one of its monomials. Then $\lvert n\rvert=\sum_s\lambda_s-b$, and the degree of $n$ in the variables at a position $s$ is at most $\lambda_s$.
+\item[(N3)] $p\,k_Z\le\lvert n\rvert$, because every monomial of $Z$ has degree at least $p$ in $X$.
+\item[(N4)] $a_\varphi\ne0$ when $k_\varphi\ne0$, and $a_\kappa\ne0$ when $k_\kappa\ne0$. So the positions $\sigma_1,\sigma_2$ of such a $\varphi$ and the position $\sigma$ of such a $\kappa$ are tops.
+\end{enumerate}
+The numbers $a_\varphi$ and $a_\kappa$, the coefficients of $H_kQ$, and the coefficients of $Z^{k_Z}V^{k_V}U_i$ have absolute value at most $1$. The integer $b!$ divides $\binom ik\prod_\kappa k_\kappa!$, and $\lvert p^{k_V-i}\rvert=p^{\,a+b+k_Z}$. So every summand has absolute value at most $p^{\,a+b+k_Z}\lvert e!\rvert\,\lvert b!\rvert\,\lvert n!\rvert$. By the ultrametric inequality, either $\langle E,\Theta_1\rangle=0$, or there are $k$ and $n$ satisfying (N1) to (N4) with
+\begin{equation}\label{termbound}
+\operatorname{ord}\langle E,\Theta_1\rangle\ge\operatorname{ord}(e!)+\operatorname{ord}(b!)+\operatorname{ord}(n!)-a-b-k_Z .
+\end{equation}
+
+\emph{Step 5, the factorials.} Legendre's formula gives $(p-1)\operatorname{ord}(m!)=m-s_p(m)$, with $s_p(m)$ the sum of the digits of $m$ in base $p$, so $\operatorname{ord}(m!)\ge m/(p-1)-\operatorname{lg}_p(m)$. The numbers $e(s,b')$ with $s$ fixed are $r_1$ numbers with sum $\alpha_s$, so $\operatorname{ord}(e!)\ge\sum_s\big(\alpha_s/(p-1)-r_1\operatorname{lg}_p(\alpha_s)\big)$. By (N2) the exponents of $n$ at a position $s$ are $r_0r_1$ numbers with sum at most $\lambda_s$, and their total is $\sum_s\lambda_s-b$, so $\operatorname{ord}(n!)\ge(\sum_s\lambda_s-b)/(p-1)-\sum_sr_0r_1\operatorname{lg}_p(\lambda_s)$. For a top $\sigma$ and $l\ge0$ put $i(\sigma,l)=\sum_{b'}k_{(\sigma,l,b')}$. Then $\prod_{\sigma,l}i(\sigma,l)!$ divides $b!$. By (N1), summed over $b'$, one has $p^{2l+1}i(\sigma,l)\le\alpha_\sigma$, so $i(\sigma,l)\ne0$ forces $l<\operatorname{lg}_p(\alpha_\sigma)$, and $\operatorname{lg}_p(i(\sigma,l))\le\operatorname{lg}_p(\alpha_\sigma)$. Hence $\operatorname{ord}(b!)\ge b/(p-1)-\sum_{\sigma\in\mathcal T}\operatorname{lg}_p(\alpha_\sigma)^2$. By (N3), $k_Z\le(\sum_s\lambda_s-b)/p\le\gamma_p\sum_s\lambda_s$. With $1/(p-1)=\gamma_p+\rho_p$, the inequality \eqref{termbound} gives
+\begin{equation}\label{star}
+\operatorname{ord}\langle E,\Theta_1\rangle\ge\gamma_p\sum_{s\in\mathcal T}\alpha_s-a-b-\Delta+\rho_pD .
+\end{equation}
+
+\emph{Step 6, the charges.} For $s\in\mathcal T$ and $\varepsilon\ge0$ put $i(s,\varepsilon)$ as in Step 5. Let $\varphi=(s_0,l,l',a',b')$ with $k_\varphi\ne0$. Its positions $\sigma_1=s_0-2l$ and $\sigma_2=s_0+1-2l'$ are tops by (N4), and $\sigma_2-\sigma_1=1+2(l-l')$ is odd. If $l'\le l$, we charge $\varphi$ to $\sigma_1$, and let $d$ be the residue of $\sigma_2-\sigma_1$ in $\{1,\dots,2\nu-1\}$. Since $\sigma_1+(2l+1)=\sigma_2+2l'$ with $2l'<2l+1$, we have $d\le2l+1$, and the exponent of $t_{\sigma_1,b'}$ in $t^{d_\varphi}$ is $p^{2l+1}\ge p^{d}$. If $l'>l$, we charge $\varphi$ to $\sigma_2$, and let $d$ be the residue of $\sigma_1-\sigma_2$. Now $d\le2l'$, and the exponent of $t_{\sigma_2,b'}$ is $p^{2l'}\ge p^d$. In both cases $d$ is odd because $2\nu$ is even. Write $d=2\varepsilon+1$, and let $\mathrm{ch}(s,\varepsilon)$ be the sum of the $k_\varphi$ charged to the top $s$ with this $\varepsilon$. These numbers satisfy the following.
+\begin{enumerate}
+\item[(C1)] $\sum_{s,\varepsilon}\mathrm{ch}(s,\varepsilon)=a$ and $\sum_{s,\varepsilon}i(s,\varepsilon)=b$, by construction and by (N4).
+\item[(C2)] $p^{2\varepsilon+1}\big(\mathrm{ch}(s,\varepsilon)+i(s,\varepsilon)\big)\le\alpha_s$. Every $\varphi$ charged to $(s,\varepsilon)$ has exponent at least $p^{2\varepsilon+1}$ at some $t_{s,b'}$, every $\kappa=(s,\varepsilon,b')$ has exponent $p^{2\varepsilon+1}$ at $t_{s,b'}$, and the sum of (N1) over $b'$ gives the claim, because $\sum_{b'}e(s,b')=\alpha_s$.
+\item[(C3)] $\mathrm{ch}(s,\varepsilon)=0$ when $2\varepsilon+1\notin\mathcal E(s)$, because a $\varphi$ charged to $(s,\varepsilon)$ has a second top $s'$ of the other parity with $s'-s\equiv2\varepsilon+1\pmod{2\nu}$.
+\item[(C4)] $i(s,\varepsilon)\le\mathrm{cap}_{s+2\varepsilon+1}$. By \eqref{kappaterm} the directions $L_\kappa$ with $\kappa=(s,\varepsilon,b')$ and varying $b'$ replace $X_{s',a,b'}$ by $X_{s',a,b'}+\tau_{b'}\eta_a$, with the single position $s'=s+2\varepsilon+1$ and the single vector $\eta=(\xi_{s,a}^{\,p^{2\varepsilon+1}})_a$ for all $b'$. A minor at a position different from $s'$ does not change. In a minor at $s'$ the column $i'$ changes by $\tau_{I(i')}$ times the fixed vector $\tau_c\eta$. A determinant is linear in each column and vanishes when two columns are proportional, so the minor has total degree at most $1$ in the variables $\tau$. The product $Q$ therefore has total degree at most $\mathrm{cap}_{s'}$ in them, and $H_kQ=0$ when $i(s,\varepsilon)>\mathrm{cap}_{s'}$. By (N2) this does not happen.
+\end{enumerate}
+
+\emph{Step 7, the count for (i).} Fix $s\in\mathcal T$. Since $\gamma_p\alpha_s=\sum_{\varepsilon\ge0}\alpha_sp^{-(2\varepsilon+1)}$,
+\[
+\gamma_p\alpha_s-\sum_\varepsilon\mathrm{ch}(s,\varepsilon)-\sum_\varepsilon i(s,\varepsilon)=\sum_{\varepsilon\ge0}\Big(\frac{\alpha_s}{p^{2\varepsilon+1}}-\mathrm{ch}(s,\varepsilon)-i(s,\varepsilon)\Big).
+\]
+If $2\varepsilon+1\in\mathcal E(s)$, the summand is nonnegative by (C2). If $2\varepsilon+1\notin\mathcal E(s)$, then $\mathrm{ch}(s,\varepsilon)=0$ by (C3), and $i(s,\varepsilon)\le\min\big(\alpha_s/p^{2\varepsilon+1},\mathrm{cap}_{s+2\varepsilon+1}\big)$ by (C2) and (C4), so the summand is at least $\max\big(\alpha_s/p^{2\varepsilon+1}-\mathrm{cap}_{s+2\varepsilon+1},0\big)$. Summing over $s\in\mathcal T$ and using (C1) gives $\gamma_p\sum_{s\in\mathcal T}\alpha_s-a-b\ge g^A+\Delta$, and \eqref{star} gives $\operatorname{ord}\langle E,\Theta_1\rangle\ge g^A+\rho_pD$. This proves (i).
+
+\emph{Step 8, the counts for (ii) and (iii).} Let $b_{\mathrm{ev}}$ and $b_{\mathrm{odd}}$ be the parts of $b$ that belong to even and to odd tops. By (C2) and (C4), $b_{\mathrm{odd}}\le\sum_{s\in\mathcal T_{\mathrm{odd}}}\sum_\varepsilon\min(\alpha_s/p^{2\varepsilon+1},\mathrm{cap}_{s+2\varepsilon+1})$, and therefore
+\[
+\gamma_p\sum_{s\in\mathcal T}\alpha_s-b_{\mathrm{odd}}\ge\gamma_p\sum_{s\in\mathcal T_{\mathrm{ev}}}\alpha_s+\sum_{s\in\mathcal T_{\mathrm{odd}}}\sum_\varepsilon\max\Big(\frac{\alpha_s}{p^{2\varepsilon+1}}-\mathrm{cap}_{s+2\varepsilon+1},0\Big)=g^B+\Delta .
+\]
+By \eqref{star} it remains to bound $a+b_{\mathrm{ev}}$. For (ii), a monomial $t^{d_\varphi}$ involves two tops of different parity, so it has a positive exponent at an even top, and a monomial $t^{d_\kappa}$ with $\kappa$ at an even top has a positive exponent there. The sum of (N1) over all coordinates $(s,b')$ with $s\in\mathcal T_{\mathrm{ev}}$ gives $a+b_{\mathrm{ev}}\le\sum_{s\in\mathcal T_{\mathrm{ev}}}\alpha_s$, which proves (ii). For (iii), let $\mathcal P_J$ be the set of pairs $(s,b')$ with $s$ an even top and $b'\notin J$ or with $s$ an odd top and $b'\in J$. A monomial $t^{d_\varphi}$ involves the coordinates $(\sigma_1,b')$ and $(\sigma_2,b')$ with one $b'$ and two parities, so one of them lies in $\mathcal P_J$. A $\kappa=(\sigma,l,b')$ at an even top with $b'\notin J$ has $(\sigma,b')\in\mathcal P_J$. The sum of (N1) over $\mathcal P_J$ bounds the number of these by $\sum_{(s,b')\in\mathcal P_J}e(s,b')$. A $\kappa$ at an even top with $b'\in J$ is a derivative at the odd position $\sigma+2l+1$ in a column with index $b'\in J$, and a minor at that position absorbs at most one such derivative for each of its column indices in $J$. Hence $a+b_{\mathrm{ev}}\le N_J$, and (iii) follows.
+\end{proof}

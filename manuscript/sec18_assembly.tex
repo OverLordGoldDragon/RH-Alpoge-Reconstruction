@@ -1,0 +1,368 @@
+
+\section{The proof of Theorem A}\label{sec:proofA}
+
+This section assembles the proof of Theorem~A. It fixes the form of the admissible data that the arithmetic part of the argument uses, it constructs the weights $a_t$ and the nodes $w_{u_0,j}$, it states the inequalities that the chain of theta lifts satisfies, and it deduces from them the seven hypotheses \eqref{A1} to \eqref{A7} of Proposition~\ref{acct} together with the bound for the errors. The inequalities between slopes, heights and local terms are proved in the sections on the gain and the loss, on the slope inequality, on the archimedean side and on the twisted places, and Hypothesis~\ref{r6:R6:thm:records} below collects them in one statement.
+
+\subsection{Admissible data on Selmer windows}\label{r6:R6:sec:adm}
+
+The bound for the local terms at the twisted places uses a bound for Tate--Shafarevich groups of the host field. That bound holds on windows of scales whose position depends on the auxiliary primes $q$ and $d$. We therefore attach to admissible data a base scale $Y_0$, at which $q$ and $d$ are chosen, and a window $[Y,Y^{3/2}]$ above it, on which the Selmer bound holds.
+
+For a number field $F$, a prime $l$ and an integer $i$, let $S_l$ be the set of places of $F$ above $l$ and the archimedean places, let $G_{F,S_l}$ be the Galois group of the maximal extension of $F$ unramified outside $S_l$, and let $\mathbb Q_l/\mathbb Z_l(-i)$ be the group $\mathbb Q_l/\mathbb Z_l$ on which $G_{F,S_l}$ acts through the $(-i)$-th power of the $l$-adic cyclotomic character. Put
+\[
+\Sha_l(F,i)=\ker\Big(H^1\big(G_{F,S_l},\mathbb Q_l/\mathbb Z_l(-i)\big)\to\prod_{v\mid l}H^1\big(F_v,\mathbb Q_l/\mathbb Z_l(-i)\big)\Big).
+\]
+For $F$ and $t_0\ge1$ put
+\[
+V(F,t_0)=\sum_{l}\log l\sum_{i=1}^{t_0-1}\operatorname{length}_{\mathbb Z_l}\Sha_l(F,i),
+\]
+the sum over all primes $l$, whenever every group $\Sha_l(F,i)$ with $1\le i<t_0$ has finite length.
+
+Fix a primitive Dirichlet character $\psi_0$ of conductor $M_\psi$ and order $o$, put $N_0=8M_\psi$, and fix $0<\varepsilon<\frac1{52}$.
+
+\begin{definition}\label{r6:R6:def:adm}
+Let $J\ge2$, and let $x$, $Y$ and $Y_0$ be real numbers with $3\le Y_0\le Y\le x\le Y^{3/2}$ and $Y^2\le Y_0^J$. \emph{Admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$} consist of the following objects.
+\begin{enumerate}
+\item[(D1$'$)] Primes $q$ and $d$ that satisfy the conclusions of Theorems~\ref{stage1} and~\ref{stage2} with $N_0$, $K=J$, $\varepsilon$, $\tau=\varepsilon$, with $Y_0$ in place of $Y$, and with $z'=z\log^2Y_0$, where $z=Y_0^{\varepsilon/5}$. An integer $e\ge0$ with $x^{2+8\varepsilon}\le c\,2^e\le2x^{2+8\varepsilon}$, where $c$ is the integer of Proposition~\ref{field}(iii). The field $E$, the groups $H$ and $A_0$ and the integer $n=\lvert H\rvert$ of Proposition~\ref{field} for $\psi_0$, $e$, $q$ and $d$, with the identification of $\mathrm{Gal}(E/\mathbb Q)$ with $\mathcal G$ of Section~\ref{sec:field}.
+\item[(D2)--(D5)] The objects (D2) to (D5) of Definition~\ref{def:admissible}.
+\item[(D6)] With $t_0=\lfloor x^{401}\rfloor$, every group $\Sha_l(E,i)$ with $l$ prime and $1\le i<t_0$ has finite length, and $V(E,t_0)\le\exp(\frac12x^{\varepsilon})$.
+\end{enumerate}
+\end{definition}
+
+Condition (D6) asks that $V(E,t_0)\le\sqrt b$ with $b=e^{L_\varepsilon}$ as in \eqref{scale}. When $Y_0=Y$, condition (D1$'$) is condition (D1) of Definition~\ref{def:admissible} with $K=J$ in place of $K=\frac32$. The conclusions (iii) of Theorems~\ref{stage1} and~\ref{stage2} at the scale $Y_0$ hold on the window $[Y,Y^{3/2}]$, because this interval lies in $[Y_0,Y_0^J]$.
+
+The integer $t_r$ of Proposition~\ref{ranks} is the number of copies of the auxiliary space added at each step of the chain, and the twists $i<t_r$ are the twists at which the twisted places are examined. The next lemma shows that (D6) covers all of them.
+
+\begin{lemma}\label{r6:R6:lem:tr}
+Let $0<\varepsilon<\frac1{52}$. There is $x_0$ such that for every $x\ge x_0$ and all integers $n,m,k,t_r$ with $x^{2+8\varepsilon}\le n\le2x^{2+8\varepsilon}$ that satisfy the conclusions of Proposition~\ref{ranks}(i), we have $t_r\le x^{401}-1$.
+\end{lemma}
+
+\begin{proof}
+Put $r=k+m-1$ and $f=2n$, so that $r\le2k\le4x^{9/2+10\varepsilon}$, $f\le4x^{2+8\varepsilon}$, $k-1\le2x^{9/2+10\varepsilon}$ and $m\ge1$. The definition of $n_W$ in Section~\ref{sec:data} gives
+\[
+n_W\le8+10\,r\Big(f+\frac{f^2(k-1)^3L_\varepsilon^2}m\Big)\le8+20\,r\,f^2(k-1)^3x^{2\varepsilon}\le8+10240\,x^{22+58\varepsilon},
+\]
+and $58\varepsilon<\frac{58}{52}<\frac{23}{20}$. With $T_O=\lceil x^{377}\rceil\le2x^{377}$, the relation $r+t_r=8fr+4+T_On_W$ gives
+\[
+t_r\le8fr+4+2x^{377}\big(8+10240\,x^{22+23/20}\big)\le x^{401}-1
+\]
+for $x\ge x_0$, because $377+22+\frac{23}{20}<401$.
+\end{proof}
+
+The Selmer bound concerns the Galois representations attached to automorphic forms on unitary groups over the host field. We use it in the following form.
+
+\begin{hypothesis}[Selmer bound on windows, in the form of (D6)]\label{r6:R6:thm:selmer}
+Let $\psi_0$ be a primitive Dirichlet character and let $0<\varepsilon<\frac1{52}$. Let $x_e\ge1$, and let $e(x)$ be a function on $[x_e,\infty)$ with values in the nonnegative integers such that $x^{2+8\varepsilon}\le c\,2^{e(x)}\le2x^{2+8\varepsilon}$ for every $x\ge x_e$, where $c$ is the integer of Proposition~\ref{field}(iii) for $e=e(x)$. There are $J_1\ge1$ and $X_0\ge x_e^{J_1}$ with the following property. Let $X\ge X_0$, put $Y_0=X^{1/J_1}$ and $z=Y_0^{\varepsilon/5}$, and let $q$ and $d$ be primes with $q\equiv3\pmod8$, $e^{z/2}<q\le e^z$, $d\equiv7\pmod{16}$, $e^{z\log^2Y_0/2}<d\le e^{z\log^2Y_0}$, such that $q$ and every odd prime $p\le z$ divide $d+1$. Then there is $Y$ with $Y_0\le Y$ and $Y^2\le X$ such that for every $x$ with $Y\le x\le Y^2$ the field $E$ of Proposition~\ref{field} for $\psi_0$, $e(x)$, $q$ and $d$ satisfies condition (D6) at the scale $x$.
+\end{hypothesis}
+
+Hypothesis~\ref{r6:R6:thm:selmer} is Hypothesis~\ref{w4:thm:vwin} with the normalization of the exponent $e(x)$ of (D1$'$), and with the conditions on $q$ and $d$ written out. Subsection~\ref{tw:sec:vwin} reduces it to two statements and states the normalization question. \notgiven{Hypothesis~\ref{r6:R6:thm:selmer} is not proved here.}
+
+\begin{proposition}\label{r6:R6:prop:dataexist}
+For every primitive Dirichlet character $\psi_0$ and every $0<\varepsilon<\frac1{52}$ there is $J\ge2$ with the following property. For every $y$ there are real numbers $Y_0\le Y$ with $Y\ge y$ such that, for every $x$ with $Y\le x\le Y^{3/2}$, admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$ exist.
+\end{proposition}
+
+\begin{proof}
+The integer $c$ of Proposition~\ref{field}(iii) divides $o$ and does not depend on $e$ once $2^{e+2}$ is divisible by the power of $2$ in $M_\psi$, as in the proof of Proposition~\ref{dataexist}. The interval from $x^{2+8\varepsilon}$ to $2x^{2+8\varepsilon}$ has ratio $2$, so for $x$ larger than a number $x_e$ it contains a number $c\,2^e$ with this constant $c$, and we fix a function $e(x)$ on $[x_e,\infty)$ as in Hypothesis~\ref{r6:R6:thm:selmer}. Let $J_1$ and $X_0$ be the numbers of Hypothesis~\ref{r6:R6:thm:selmer} for this function, and put $J=\max(J_1,2)$. Let $y$ be given, and let $X\ge X_0$ be so large that $Y_0=X^{1/J_1}$ satisfies $Y_0\ge\max(y,3)$, that $Y_0$ is larger than the numbers $Y_0$ of Theorems~\ref{stage1} and~\ref{stage2} for $N_0$, $K=J$, $\varepsilon$ and $\tau=\varepsilon$, and that every $x\ge Y_0$ is larger than the number $Y_0$ of Proposition~\ref{dataexist}. Put $z=Y_0^{\varepsilon/5}$. Theorem~\ref{stage1} at the scale $Y_0$ gives a prime $q\equiv3\pmod8$ with $e^{z/2}<q\le e^z$ that satisfies its conclusions, because its exceptional set has at most $Y_0^{-\varepsilon}\lvert P\rvert<\lvert P\rvert$ elements. Theorem~\ref{stage2} at the scale $Y_0$, with this $q$ and with $z'=z\log^2Y_0$, gives in the same way a prime $d$ with $e^{z'/2}<d\le e^{z'}$, $d\equiv7\pmod{16}$ and $d\equiv-1$ modulo $q$ and modulo every odd prime $p\le z$, that satisfies its conclusions. These primes satisfy the hypotheses of Hypothesis~\ref{r6:R6:thm:selmer}, which gives $Y$ with $Y_0\le Y$ and $Y^2\le X$. Then $Y\ge y$ and $Y^2\le X=Y_0^{J_1}\le Y_0^J$.
+
+Let $Y\le x\le Y^{3/2}$. The primes $q,d$ and $e=e(x)$ give (D1$'$) through Proposition~\ref{field}. Since $Y\le x\le Y^{3/2}\le Y^2$, Hypothesis~\ref{r6:R6:thm:selmer} gives (D6). The objects (D2) to (D5) depend on $x$, $n$, $E$ and the conductor of $E$, and the proof of Proposition~\ref{dataexist} constructs them for $x\ge Y_0$ from Propositions~\ref{ranks}, \ref{tops} and~\ref{behrend}, statement (C9), Lemma~\ref{disjoint}, Linnik's theorem and Lemma~\ref{three}.
+\end{proof}
+
+The proof of Theorem~\ref{mainthm} uses the admissible data through the properties of $q$ and $d$ and through (D2) to (D5). With (D1$'$) in place of (D1), the same proof applies after three changes. First, the bound $\lvert\ell_\psi\rvert\le401\,c_0K\log Y_0$ of Theorems~\ref{stage1}(ii) and~\ref{stage2}(ii) holds with $K=J$, and $Y_0\le x$ gives $\lvert\ell_\psi\rvert\le401\,c_0J\log x$. Second, $\log q\le Y_0^{\varepsilon/5}$ and $\log d\le Y_0^{\varepsilon/5}\log^2Y_0$, so $\log N_\psi\le\lambda=A\,x^{\varepsilon/5}\log^2x$ with a constant $A$ that depends on $\psi_0$ and $J$, and the argument with Proposition~\ref{thinprop} and Corollary~\ref{realbox} is unchanged. Third, Theorems~\ref{stage1}(iii) and~\ref{stage2}(iii) give $\lvert G^\ast_\chi(x)\rvert\le x^{1/2+\varepsilon}$ for $Y_0\le x\le Y_0^J$, an interval that contains the window $[Y,Y^{3/2}]$. The conclusion \eqref{finalbound} then holds on windows $[Y,Y^{3/2}]$ for arbitrarily large $Y$, which is the hypothesis of Corollary~\ref{corA}.
+
+\subsection{The weights and the nodes}\label{r6:R6:sec:nodes}
+
+Fix admissible data at the scale $x$ as in Definition~\ref{r6:R6:def:adm}, and let $a$, $b$, $b'$ and $L_\varepsilon$ be as in \eqref{scale}. Let $W$ be the number of roots of unity in $E$, and put $h_0=2\lceil x^{402}\rceil$.
+
+\begin{definition}\label{r6:R6:def:weights}
+\emph{Weights} for the data are integers $a_t$ and $b_t$, for $t\in T$, with
+\[
+a\le a_t\le a+\frac a{kx^{13}},\qquad b'\le b_t\le\Big(1+\frac1{x^2}\Big)b' .
+\]
+\end{definition}
+
+Weights exist for large $x$, because $a/(kx^{13})\ge1$ and $b'/x^2\ge1$. The integers $a_t$ are the weights of Theorem~A, and the integers $b_t$ fix the nodes at the elements of $\Phi$ attached to $T$.
+
+Under the identification of Section~\ref{sec:field}, an element $(e_1,e_2,h)\in\mathcal G$ with $e_1=0$ lies in $\Phi$. For $u_0\in A_0$ we divide $\Phi$ into three sets. The \emph{top} elements are the elements $(0,0,t)$ with $t\in T$. The \emph{thick} elements are the elements $(0,1,h)$ with $h\in T_2+u_0$, which are the elements thick with respect to $u_0$ for the set $T_2$ in the sense of Section~\ref{sec:step5}. The remaining elements of $\Phi$ are \emph{thin}. The top elements and the thick elements differ in the coordinate $e_2$, so the three sets are disjoint.
+
+Fix an embedding $\iota\colon E\to\mathbb C$. The nodes are the archimedean parameters of algebraic Hecke characters of $E$, and the infinity type of such a character is trivial on the roots of unity of $E$. The next lemma makes this condition compatible with a shift of all parameters by a common integer.
+
+\begin{lemma}\label{r6:R6:lem:cmroot}
+Let the data be as above, and let $\zeta\in E$ be a root of unity. Then $\prod_{\rho\in\Phi}\iota(\rho(\zeta))=1$.
+\end{lemma}
+
+\begin{proof}
+The field $E$ lies in $\mathbb Q(\zeta_N)$ with $N=N_1qd$, and $d$ divides $N$ exactly. The inertia group of $\mathbb Q(\zeta_N)/\mathbb Q$ at $d$ is the group of the classes $a\in(\mathbb Z/N)^\times$ with $a\equiv1\pmod{N_1q}$. Its image in $\mathrm{Gal}(E/\mathbb Q)=(\mathbb Z/N)^\times/U$ is the quotient of $(\mathbb Z/d)^\times$ by its squares, whose nontrivial element acts by $-1$ on $\sqrt{-d}$ and trivially on $\sqrt{-q}$ and on $H$. In the coordinates of Section~\ref{sec:field} the inertia group of $E$ at a prime $\mathfrak P$ above $d$ is therefore $\{0,\iota_d\}$ with $\iota_d=(1,0,0)$, and the ramification index of $d$ in $E$ is $2$.
+
+Let $r$ be the order of $\zeta$. If $d$ divided $r$, then $E$ would contain $\mathbb Q(\zeta_d)$, in which $d$ has ramification index $d-1$, and $d-1$ would divide $2$. This is impossible because $d\ge7$. So $d\nmid r$. The element $\iota_d$ lies in the inertia group at $\mathfrak P$, so $\iota_d(\zeta)\equiv\zeta\pmod{\mathfrak P}$. Both $\zeta$ and $\iota_d(\zeta)$ are $r$-th roots of unity. If they were different, $1-\eta\in\mathfrak P$ for an $r$-th root of unity $\eta\ne1$, and $1-\eta$ divides $r=\prod_{\eta'\ne1}(1-\eta')$, where $\eta'$ runs over the $r$-th roots of unity different from $1$. Then $r\in\mathfrak P$, which contradicts $d\nmid r$. Hence $\iota_d(\zeta)=\zeta$.
+
+Complex conjugation $\gamma_c$ corresponds to the class $a=-1$, so $\gamma_c=(1,1,h_c)$, where $h_c$ is the class of $-1$ in $H$. Since $E$ is a CM field, $\iota(\gamma_c(\zeta))=\overline{\iota(\zeta)}=\iota(\zeta)^{-1}$. Put $s_0=\gamma_c+\iota_d=(0,1,h_c)$. Then $s_0\in\Phi$, $s_0\ne0$ and $2s_0=0$, and $\iota(s_0(\zeta))=\iota(\gamma_c(\iota_d(\zeta)))=\iota(\zeta)^{-1}$. The set $\Phi$ is a subgroup of $\mathcal G$, and it is the disjoint union of the cosets $\{\rho,\rho+s_0\}$ for $\rho$ in a set $\Phi_0$ of representatives. For each $\rho$,
+\[
+\iota(\rho(\zeta))\,\iota\big((\rho+s_0)(\zeta)\big)=\iota\big(\rho(\zeta\,s_0(\zeta))\big)=\iota(\rho(1))=1,
+\]
+because $s_0(\zeta)=\zeta^{-1}$. The product over $\Phi$ is the product of these pairs.
+\end{proof}
+
+\begin{proposition}\label{r6:R6:prop:nodes}
+Let the data be as above, let $u_0\in A_0$, and let $b_t$, for $t\in T$, be integers. Then there are integers $b_1(\rho)$, for $\rho\in\Phi$, with the following properties.
+\begin{enumerate}
+\item[(i)] $b_1(0,0,t)=b_t+\lfloor b'/x\rfloor$ for every top element $(0,0,t)$.
+\item[(ii)] $\lceil b\rceil\le b_1(\rho)<\lceil b\rceil+W$ for every thick element $\rho$.
+\item[(iii)] $b_1(\rho)=\lceil b'/(xn)\rceil$ for every thin element $\rho$.
+\item[(iv)] For $1\le j\le m$ put $w_{u_0,j}(\rho)=b_1(\rho)+(j-\frac12)h_0$. Then each $w_{u_0,j}(\rho)$ is an integer, and $\prod_{\rho\in\Phi}\iota(\rho(\zeta))^{w_{u_0,j}(\rho)}=1$ for every root of unity $\zeta\in E$ and every $j$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The group of roots of unity of $E$ is cyclic of order $W$. Let $\zeta_W$ be a generator. For $\rho\in\mathcal G$ there is $\kappa(\rho)\in(\mathbb Z/W)^\times$ with $\rho(\zeta_W)=\zeta_W^{\kappa(\rho)}$, because $\rho(\zeta_W)$ is again a generator. For integers $c(\rho)$, $\rho\in\Phi$, the product $\prod_\rho\iota(\rho(\zeta))^{c(\rho)}$ equals $1$ for every root of unity $\zeta$ of $E$ exactly when it equals $1$ for $\zeta=\zeta_W$, that is, when $\sum_\rho\kappa(\rho)c(\rho)\equiv0\pmod W$. Lemma~\ref{r6:R6:lem:cmroot} with $\zeta=\zeta_W$ gives $\sum_{\rho\in\Phi}\kappa(\rho)\equiv0\pmod W$.
+
+The set $T_2$ is nonempty by (D4), so there is a thick element $\rho_\ast$. Define $b_1^0(\rho)$ by (i) and (iii) on the top and thin elements, and put $b_1^0(\rho)=\lceil b\rceil$ on the thick elements. The integer $h_0$ is even, so $(j-\frac12)h_0$ is an integer for every $j$. Put $R_0=\sum_\rho\kappa(\rho)\big(b_1^0(\rho)+\frac12h_0\big)$, a class modulo $W$. Since $\kappa(\rho_\ast)$ is a unit modulo $W$, there is an integer $0\le s<W$ with $\kappa(\rho_\ast)s\equiv-R_0\pmod W$. Put $b_1(\rho_\ast)=\lceil b\rceil+s$ and $b_1(\rho)=b_1^0(\rho)$ for $\rho\ne\rho_\ast$. Then (i) to (iii) hold, and for $1\le j\le m$
+\[
+\sum_\rho\kappa(\rho)\,w_{u_0,j}(\rho)=R_0+\kappa(\rho_\ast)s+(j-1)h_0\sum_\rho\kappa(\rho)\equiv0\pmod W,
+\]
+which is (iv).
+\end{proof}
+
+\begin{corollary}\label{r6:R6:cor:nodes}
+Let $c_h=402$. There is $x_0$ such that for every $x\ge x_0$, every choice of admissible data at the scale $x$, every $u_0\in A_0$ and all weights of Definition~\ref{r6:R6:def:weights}, the nodes $w_{u_0,j}$ of Proposition~\ref{r6:R6:prop:nodes} satisfy the bounds of Proposition~\ref{nodes}(i) at the thick elements and the bounds of Proposition~\ref{nodes}(ii) at the other elements of $\Phi$. In particular $1\le w_{u_0,j}(\rho)\le2b'$ when $\rho$ is not thick, and $b\le w_{u_0,j}(\rho)\le b+W+mh_0$ when $\rho$ is thick.
+\end{corollary}
+
+\begin{proof}
+The nodes have the form $b_1(\rho)+(j'+\frac12)h_0$ with $j'=j-1$ and $0\le j'<m$, and $h_0=2\lceil x^{c_h}\rceil$. By (D1$'$), $n=c\,2^e\le2x^{2+8\varepsilon}\le2x^{9/4}$, Proposition~\ref{ranks} gives $m\le2\sqrt{x\delta_1}\le2\sqrt x$, and $W\le32n^2$ by the remark after Proposition~\ref{nodes}. At a thick element, Proposition~\ref{r6:R6:prop:nodes}(ii) is the hypothesis of Proposition~\ref{nodes}(i). At a thin element, (iii) is the first hypothesis of Proposition~\ref{nodes}(ii). At a top element, (i) gives $b_1-\lfloor b'/x\rfloor=b_t$, and $b'\le b_t\le(1+x^{-2})b'\le\frac54b'$ is the second hypothesis of Proposition~\ref{nodes}(ii). The node $w_{u_0,j}(\rho)\ge\lceil b'/(xn)\rceil\ge1$ in all three cases.
+\end{proof}
+
+The archimedean parameters of the $m$ lifts at an element $\rho\in\Phi$ are the integers $b_1(\rho)+j'h_0$ and $b_1(\rho)+(j'+\frac12)h_0$ for $0\le j'<m$, and the nodes are the second family. Consecutive parameters differ by $\frac12h_0$, and the choice $c_h=402$ together with Lemma~\ref{r6:R6:lem:tr} gives $\frac12h_0\ge x^{402}\ge\frac12(t_r+3)$. This is the gap between the archimedean parameters that Hypothesis~\ref{r6:R6:thm:records} uses.
+
+\subsection{Chain records}\label{r6:R6:sec:records}
+
+Fix admissible data at the scale $x$, weights, an element $u_0\in A_0$ and the nodes $w_{u_0,j}$ of Proposition~\ref{r6:R6:prop:nodes}. We use the following quantities. Let $N_T=\lvert T\rvert$, $N_2=\lvert T_2\rvert$, $A=\sum_{t\in T}a_t$ and $f=2n$. Put
+\begin{gather*}
+B_0=2\,n\,m\,b\,x^{\varepsilon},\qquad N_c=\frac{N_2\,k\,b\,x^{2\varepsilon}}{n^2},\qquad X''=x\,n\,X',\\
+\operatorname{rd}_E=\lvert\operatorname{disc}E\rvert^{1/[E:\mathbb Q]},\qquad\Lambda_a=\log\big(a\operatorname{rd}_E\big),\qquad v=\tfrac12\operatorname{rd}_E,\qquad g=\log(g_0g_1),
+\end{gather*}
+with $X'$ as in \eqref{scale} and $g_0,g_1$ the primes of (D5). Then the number $\mathcal B$ of \eqref{calB} is
+\begin{equation}\label{r6:R6:calB}
+\mathcal B=N_T\,a\Big(1+\frac{m^2}k\Big)+m\,(B_0+N_c).
+\end{equation}
+Let $\lambda_1=\ell_{\chi_1}=L'(1,\chi_{-d})/L(1,\chi_{-d})$, which is real because $\chi_{-d}=(\frac{-d}{\cdot})$ is real, and put $\log\Omega=\gamma+\log(\pi/v)-\lambda_1$. Let $S$ be the sum over $t\in T$ and $1\le j\le m$ of the left side of \eqref{excessid} with $a=a_t$ and $w=w_{u_0,j}$.
+
+For a hermitian lattice $N$ over $\mathcal O_E$ let $\rk N$, $\mu(N)$ and $\mu_{\max}(N)$ denote its rank, its slope and its maximal slope, and let $\mu_{\min}(N)$ be its minimal slope. For real numbers $u\ge0$ and $H>0$ we read $u\log(1+H/u)$ as $0$ when $u=0$.
+
+\begin{definition}\label{r6:R6:def:record}
+Let $C_\ast\ge1$, $C_H\ge0$, $e_D\ge0$ and $e_L\ge0$ be real numbers. A \emph{chain record} for the data, the weights and $u_0$, with constants $C_\ast$, $C_H$ and exponents $e_D$, $e_L$, consists of
+\begin{enumerate}
+\item[(a)] a finite nonempty set $\mathcal W$ with $\lvert\mathcal W\rvert\le2^{k-3}$,
+\item[(b)] for every $u\in\mathcal W$ a prime $T_u$, hermitian $\mathcal O_E$-lattices $N_u$ with $\rk N_u\ge1$ and $M_u$, and a real number $h_u$,
+\item[(c)] a hermitian $\mathcal O_E$-lattice $R$ with dual lattice $R^\vee$,
+\item[(d)] real numbers $E_{u,j}$ for $u\in\mathcal W$ and $1\le j\le m$, and real numbers $\mathcal L$, $\Gamma$, $\mathcal I$, $\delta$, $\eta$ and $\epsilon$,
+\end{enumerate}
+such that the conditions (K1) to (K8) below hold. In them $u$ and $u'$ run over $\mathcal W$ and $j$ over $1\le j\le m$, and
+\[
+E_u=\sum_{j=1}^mE_{u,j},\qquad s=\frac{\sum_ud_u\big(\mu(N_u)-h_u\big)}{\sum_ud_u},\qquad u_F=\max_u\big(\mu_{\max}(N_u)-h_u\big)-s,\qquad d_u=\rk N_u .
+\]
+\begin{enumerate}
+\item[(K1)] $S-\Gamma\le C_\ast N_T\,m\,b\,x^{e_L\varepsilon}$ and $0\le\mathcal I\le C_\ast N_T\,m\,b\,x^{e_L\varepsilon}$.
+\item[(K2)] $\mu_{\max}(N_u)\le\mu_{\max}(M_u)+\Gamma+\mathcal L-E_u+C_\ast m B_0$ and $\mu(M_u)+\Gamma+\mathcal L-E_u-\mathrm{Lo}_u\le\mu(N_u)$, where
+\[
+\mathrm{Lo}_u=C_\ast\mathcal I+C_\ast N_T\,m\Big(\frac ak+b'\Big)\log T_u+C_\ast X''+1 .
+\]
+\item[(K3)] The numbers $\delta$, $\eta$ and $\epsilon$ satisfy
+\[
+0\le\delta\le\tfrac12,\qquad\eta\ge0,\qquad0\le\epsilon\le\tfrac14,\qquad(\eta+4\sqrt\epsilon)\,x^{C_H}\le6,
+\]
+and for every $H>0$ with $H\ge s-\mu_{\min}(R^\vee)$
+\[
+s-\log\lvert\mathcal W\rvert-\frac1{1-\delta}\Big(4u_F\log\Big(1+\frac H{u_F}\Big)+(\eta+4\sqrt\epsilon)H\Big)\le\mu(R^\vee).
+\]
+\item[(K4)] $\mu_{\min}(R^\vee)=-\mu_{\max}(R)$, $s+\mu_{\max}(R)\le x^{C_H}b$, and
+\begin{multline*}
+\mu(R^\vee)+h_u-\mathcal L\le\sum_{t\in T}\big(m\ph(a_t)-ma_t\log\Omega-a_t\log T_u\big)\\
++C_\ast N_T\,a\,\Lambda_a+C_\ast m\,(B_0+N_c)\,x^{e_D\varepsilon}.
+\end{multline*}
+\item[(K5)] $\lvert E_{u,j}-A\,g\rvert\le C_\ast B_0$.
+\item[(K6)] $\big\lvert(h_u+A\log T_u)-(h_{u'}+A\log T_{u'})\big\rvert\le C_\ast\big(N_T\,a\,\Lambda_a+mB_0\big)$.
+\item[(K7)] The auxiliary primes satisfy
+\begin{gather*}
+\log T_u\ge\sum_{j=1}^m\frac1f\sum_{\rho\in\Phi}\log\frac{w_{u_0,j}(\rho)\,v}{\pi}+mg-C_\ast\Big(\Lambda_a+\frac{m^2\Lambda_a}k\Big),\\
+\log T_u\le C_\ast m L_\varepsilon,\qquad\lvert\log T_u-\log T_{u'}\rvert\le C_\ast\log k .
+\end{gather*}
+\item[(K8)] $-C_\ast N_T\,a\,\Lambda_a\big(1+\frac mk\big)\le\mu(M_u)$, $\mu_{\max}(M_u)\le C_\ast N_T\,a\,\Lambda_a$, and $\mu(N_u)\le\mu_{\max}(N_u)$.
+\end{enumerate}
+\end{definition}
+
+In the application, $\mathcal W$ is a set of words that index the auxiliary primes $T_u$, $N_u$ is the rescaled lattice of images of the Hecke operators at $T_u$, $M_u$ is the corresponding base lattice, $R$ is the lattice of automorphic forms at the top of the chain, and $h_u$ bounds the height of the period map $B_u\colon N_u\to R^\vee$. The number $\Gamma$ is the total gain of the $m$ lifts at the inert primes, $\mathcal L$ is the sum of the local terms of the lifts, $E_{u,j}$ is the local term of the $j$-th lift at the twisted places, and $\mathcal I$ is the index loss at the inert primes.
+
+\begin{hypothesis}[chain records]\label{r6:R6:thm:records}
+There are absolute constants $e_D,e_L\ge0$ with the following property. For every primitive Dirichlet character $\psi_0$ there is $0<\varepsilon_1\le\frac1{52}$, and for every $0<\varepsilon<\varepsilon_1$ and every $J\ge2$ there are $C_\ast\ge1$, $C_H\ge0$ and $x_1$ such that the following holds. Let $x\ge x_1$, and let $Y_0\le Y$ be such that admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$ exist, for this $J$. Then there are admissible data at the scale $x$ for this window with this base, and weights for them, such that for every $u_0\in A_0$ and every choice of the nodes $w_{u_0,j}$ of Proposition~\ref{r6:R6:prop:nodes} there is a chain record with constants $C_\ast$, $C_H$ and exponents $e_D$, $e_L$. One can take $e_D=2$ and $e_L=0$.
+\end{hypothesis}
+
+Hypothesis~\ref{r6:R6:thm:records} collects in one statement the inequalities proved in Sections~\ref{sec:lifts} to~\ref{sec:twisted}. Condition (a) is the choice of the words in Lemma~\ref{r3:sizecond}. Conditions (K1) and (K2) are Theorems~\ref{r2:A1} and~\ref{r2:A2} with the divisibility of Theorem~\ref{r1:thm:R1main}. Condition (K3) is Theorem~\ref{r3:A3} with Theorems~\ref{w2:S}, \ref{w2:I} and~\ref{w2:B}. Condition (K4) is Theorem~\ref{r4:R4:A4} with Theorem~\ref{r5:thm:DIVinN}. Condition (K5) is Theorem~\ref{r5:thm:Ebound}. Conditions (K6) and (K7) are proved in Section~\ref{r4:sec:R4}, and (K8) is Theorem~\ref{r4:R4:A7} with $\mu(N_u)\le\mu_{\max}(N_u)$. Each of these results is proved here from hypotheses stated in its section, and Section~\ref{sec:frontier} lists those hypotheses. The conditions (K1) to (K8) are stated with the exponents and constants of the formal proof, and some of the cited results give an inequality of a slightly different shape. Theorem~\ref{r3:A3} gives (K3) without the term $\log\lvert\mathcal W\rvert$, which only strengthens it, and Theorem~\ref{r2:A2} gives the two halves of (K2), the upper half without the term $C_\ast mB_0$. \notgiven{We have not checked line by line that the constants and exponents of Sections~\ref{sec:lifts} to~\ref{sec:twisted} give (K1) to (K8) with absolute $e_D$ and $e_L$, so Hypothesis~\ref{r6:R6:thm:records} is not proved here even modulo the hypotheses of those sections.}
+
+The proof of Theorem~A below uses Hypothesis~\ref{r6:R6:thm:records} for one admissible datum at each scale. The conditions (K1) to (K8) depend on the window and the base through the field $E$, the ranks and the sets $T$ and $T_2$.
+
+\subsection{The seven hypotheses of the accounting}\label{r6:R6:sec:A1A7}
+
+We fix a chain record with constants $C_\ast$, $C_H$ and exponents $e_D$, $e_L$, and we write $y=x^{\varepsilon}=L_\varepsilon$. The first lemma bounds the logarithmic term of (K3).
+
+\begin{lemma}\label{r6:R6:lem:phi}
+Let $u\ge0$, $U\ge u$, $b>0$, $X>0$ and $0<H\le Xb$. Then $u\log(1+H/u)\le\log(1+X)\,(U+b)$.
+\end{lemma}
+
+\begin{proof}
+For $u=0$ the left side is $0$ and the right side is nonnegative. Let $u>0$. The inequality $\log z\le z-1$ for $z>0$, with $z=(1+H/u)/(1+X)$, gives
+\[
+u\log\Big(1+\frac Hu\Big)\le u\log(1+X)+\frac{u+H}{1+X}-u=u\log(1+X)+\frac H{1+X}-\frac{uX}{1+X}.
+\]
+The last term is nonpositive, $u\log(1+X)\le U\log(1+X)$, and
+\[
+\frac H{1+X}\le\frac{Xb}{1+X}=b\Big(1-\frac1{1+X}\Big)\le b\log(1+X),
+\]
+by the inequality $1-1/z\le\log z$ for $z=1+X$.
+\end{proof}
+
+The second lemma bounds the spread $u_F$ of the slopes of the lattices $N_u$. Put
+\begin{align*}
+K_F&=C_\ast N_T\,a\,\Lambda_a\Big(3+\frac mk\Big)+4C_\ast mB_0+C_\ast A\log k,\\
+e_2&=C_\ast^2N_T\,m\,b\,x^{e_L\varepsilon}+C_\ast^2N_T\,m^2\Big(\frac ak+b'\Big)L_\varepsilon+C_\ast X''+1,\\
+U&=K_F+e_2 .
+\end{align*}
+
+\begin{lemma}\label{r6:R6:lem:uF}
+For every $u\in\mathcal W$ we have $\mathrm{Lo}_u\le e_2$, and $0\le u_F\le U$.
+\end{lemma}
+
+\begin{proof}
+By (K1), $\mathcal I\le C_\ast N_T\,m\,b\,x^{e_L\varepsilon}$, and by (K7), $\log T_u\le C_\ast mL_\varepsilon$. The coefficient $C_\ast N_T\,m(a/k+b')$ is nonnegative, so $\mathrm{Lo}_u\le e_2$.
+
+By (K8), $\mu(N_u)-h_u\le\mu_{\max}(N_u)-h_u$ for every $u$, so the weighted mean $s$ is at most the maximum in the definition of $u_F$, and $u_F\ge0$.
+
+Let $u,u'\in\mathcal W$. The first inequality of (K2) for $u$ and the second for $u'$ give
+\begin{multline*}
+\big(\mu_{\max}(N_u)-h_u\big)-\big(\mu(N_{u'})-h_{u'}\big)\\
+\le\mu_{\max}(M_u)-\mu(M_{u'})+C_\ast mB_0+\mathrm{Lo}_{u'}+(E_{u'}-E_u)+(h_{u'}-h_u).
+\end{multline*}
+By (K8), $\mu_{\max}(M_u)-\mu(M_{u'})\le C_\ast N_T\,a\,\Lambda_a(2+m/k)$. By (K5), each $E_{u,j}$ lies within $C_\ast B_0$ of $Ag$, so $E_{u'}-E_u\le2C_\ast mB_0$. By (K6) and the third inequality of (K7),
+\[
+h_{u'}-h_u\le C_\ast\big(N_T\,a\,\Lambda_a+mB_0\big)+A\big(\log T_u-\log T_{u'}\big)\le C_\ast\big(N_T\,a\,\Lambda_a+mB_0\big)+C_\ast A\log k ,
+\]
+where we used $A\ge0$. Adding these bounds, and using $\mathrm{Lo}_{u'}\le e_2$,
+\[
+\big(\mu_{\max}(N_u)-h_u\big)-\big(\mu(N_{u'})-h_{u'}\big)\le K_F+e_2=U .
+\]
+The weighted mean over $u'$ with the weights $d_{u'}$ gives $\mu_{\max}(N_u)-h_u-s\le U$, and the maximum over $u$ gives $u_F\le U$.
+\end{proof}
+
+Define
+\begin{gather*}
+e_1=C_\ast N_T\,m\,b\,x^{e_L\varepsilon},\qquad e_3=\log\lvert\mathcal W\rvert+8\log\big(1+x^{C_H}\big)(U+b)+12\,b,\\
+e_4=C_\ast N_T\,a\,\Lambda_a+C_\ast m\,(B_0+N_c)\,x^{e_D\varepsilon},\qquad e_5=C_\ast mB_0,\\
+e_6=C_\ast\Lambda_a\Big(1+\frac{m^2}k\Big),\qquad e_7=C_\ast N_T\,a\,\Lambda_a\Big(1+\frac mk\Big),
+\end{gather*}
+and let $e_2$ be as above. All seven numbers are nonnegative, because $C_\ast\ge1$, $\log\lvert\mathcal W\rvert\ge0$ and $\Lambda_a\ge\log a\ge0$.
+
+\begin{proposition}\label{r6:R6:prop:A1A7}
+Let a chain record be given for admissible data at the scale $x$, weights and $u_0\in A_0$. Put $d_u=\rk N_u$, $\mu^N_u=\mu(N_u)$, $\mu^M_u=\mu(M_u)$, $\mu^C=\mu(R^\vee)$, $w_{j\rho}=w_{u_0,j}(\rho)$ for $\rho\in\Phi$, $v=\frac12\operatorname{rd}_E$, $\gamma$ Euler's constant, $\lambda_1=\ell_{\chi_1}$ and $g=\log(g_0g_1)$. Then the hypotheses \eqref{A1} to \eqref{A7} of Proposition~\ref{acct} hold for every $u\in\mathcal W$, with the index set $\mathcal W$ in place of $W$, with $S$, $\Gamma$, $\mathcal L$, $E_u$, $h_u$, $T_u$ and the numbers $e_1,\dots,e_7$ defined above.
+\end{proposition}
+
+\begin{proof}
+The weights $a_t\ge a>0$, the nodes are positive by Corollary~\ref{r6:R6:cor:nodes}, $v>0$, $d_u\ge1$ and $T_u\ge2$, so the data are of the kind that Proposition~\ref{acct} admits.
+
+\eqref{A1} is the first inequality of (K1). \eqref{A2} is the second inequality of (K2) with $\mathrm{Lo}_u\le e_2$ from Lemma~\ref{r6:R6:lem:uF}.
+
+For \eqref{A3}, put $H=x^{C_H}b$. By (K4), $s-\mu_{\min}(R^\vee)=s+\mu_{\max}(R)\le H$, and $H>0$, so (K3) applies with this $H$. Lemma~\ref{r6:R6:lem:phi} with $u=u_F$, $U$ from Lemma~\ref{r6:R6:lem:uF} and $X=x^{C_H}$ gives $4u_F\log(1+H/u_F)\le4\log(1+x^{C_H})(U+b)$. By (K3), $(\eta+4\sqrt\epsilon)H\le6b$ and $(1-\delta)^{-1}\le2$. Both terms in the bracket of (K3) are nonnegative, so (K3) gives
+\[
+s-\log\lvert\mathcal W\rvert-8\log\big(1+x^{C_H}\big)(U+b)-12b\le\mu(R^\vee),
+\]
+which is \eqref{A3} with $e_3$, because $s$ is the weighted mean of $\mu^N_u-h_u$.
+
+\eqref{A4} is the inequality of (K4) with $e_4$. For \eqref{A5}, summing (K5) over $j$ gives $E_u\le mAg+C_\ast mB_0=mAg+e_5$. \eqref{A6} is the first inequality of (K7) with $e_6$, and \eqref{A7} is the first inequality of (K8) with $e_7$.
+\end{proof}
+
+\subsection{The size of the errors}\label{r6:R6:sec:errors}
+
+\begin{lemma}\label{r6:R6:lem:sizes}
+Let $0<\varepsilon<\frac1{52}$, $J\ge2$ and $C_H\ge0$. There is $x_0$, depending on $\psi_0$, $\varepsilon$, $J$ and $C_H$, such that for every $x\ge x_0$, all admissible data at the scale $x$ with this $J$, all weights and every chain record with $\lvert\mathcal W\rvert\le2^{k-3}$ the following hold, with $y=x^{\varepsilon}$.
+\begin{enumerate}
+\item[(i)] $1\le b\le a$, $1\le m\le x$, $mb\le a$, $xm\le k\le x^5$ and $k\le a$.
+\item[(ii)] $kb'\le a$ and $X''\le a$.
+\item[(iii)] $0\le\Lambda_a\le2y$.
+\item[(iv)] $\log x\le y$, $\log k\le5y$ and $\log(1+x^{C_H})\le(1+C_H)\,y$.
+\item[(v)] $N_T\ge1$ and $0\le A\le2N_Ta$.
+\item[(vi)] $\log\lvert\mathcal W\rvert\le k$, and $\max(a,\,k,\,b,\,N_Ta,\,mB_0,\,mN_c)\le\mathcal B$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) We have $b=e^{y}\ge1$ and $a=xb\ge b$. Proposition~\ref{ranks} gives $2\le m\le2\sqrt{x\delta_1}\le x$, so $mb\le xb=a$, and $xm\le k\le2x^{9/2+10\varepsilon}\le x^5$ because $10\varepsilon<\frac15$. For large $x$, $x^5\le xe^{y}=a$.
+
+(ii) Since $b'=a/X'$, the inequality $kb'\le a$ is $k\le X'=\exp(x^{\varepsilon/3})$, which holds for large $x$ by (i). The inequality $X''\le a$ is $nX'\le b$, that is $n\le\exp(x^{\varepsilon}-x^{\varepsilon/3})$, which holds for large $x$ because $n\le2x^{2+8\varepsilon}$.
+
+(iii) The integer $\lvert\operatorname{disc}E\rvert$ is at least $1$, so $\Lambda_a\ge\log a\ge0$. The field $E$ lies in $\mathbb Q(\zeta_N)$ with $N=N_1qd$ and $N_1=\operatorname{lcm}(2^{e+2},M_\psi)$. By the conductor--discriminant formula, $\lvert\operatorname{disc}E\rvert$ is the product of the conductors of the $[E:\mathbb Q]$ Dirichlet characters of $E$, and each of them divides $N$. Hence $\operatorname{rd}_E\le N$ and
+\[
+\log\operatorname{rd}_E\le\log\big(2^{e+2}M_\psi\big)+\log q+\log d\le\log(8M_\psi n)+Y_0^{\varepsilon/5}\big(1+\log^2Y_0\big),
+\]
+by (D1$'$) and $2^e\le n$. Since $Y_0\le x$ and $n\le2x^{2+8\varepsilon}$, the right side is at most $x^{\varepsilon/5}(1+\log^2x)+3\log x+\log(16M_\psi)$. Then $\Lambda_a=\log x+y+\log\operatorname{rd}_E\le2y$ for large $x$.
+
+(iv) The first inequality holds for large $x$. The second is $\log k\le5\log x$, from $k\le x^5$. For the third, $\log(1+x^{C_H})\le\log2+C_H\log x\le(1+C_H)y$ because $y\ge1$.
+
+(v) Proposition~\ref{tops} gives $N_T\ge\frac12\delta_1n\ge1$, and $0<a_t\le a+a/(kx^{13})\le2a$.
+
+(vi) $\log\lvert\mathcal W\rvert\le(k-3)\log2\le k$. The first term of \eqref{r6:R6:calB} is at least $N_Ta\ge a$, and (i) gives $b\le a$ and $k\le a$. The second term of \eqref{r6:R6:calB} is $mB_0+mN_c$.
+\end{proof}
+
+\begin{proposition}\label{r6:R6:prop:errors}
+Let $\kappa=\max(2,e_D,e_L+1)$. Let $0<\varepsilon<\frac1{52}$, $J\ge2$, $C_\ast\ge1$ and $C_H\ge0$. There is $x_0$ such that for every $x\ge x_0$, all admissible data at the scale $x$ with this $J$, all weights and every chain record with constants $C_\ast$, $C_H$ and exponents $e_D$, $e_L$, the numbers $e_1,\dots,e_7$ of Section~\ref{r6:R6:sec:A1A7} satisfy
+\[
+e_1+e_2+e_3+e_4+e_5+Ae_6+e_7\le x^{(\kappa+1)\varepsilon}\,\mathcal B .
+\]
+\end{proposition}
+
+\begin{proof}
+Let $x_0$ be as in Lemma~\ref{r6:R6:lem:sizes}, enlarged so that $y=x^\varepsilon\ge260(1+C_H)C_\ast^2$ for $x\ge x_0$. We bound each term by a multiple of $\mathcal B$, using Lemma~\ref{r6:R6:lem:sizes}, $y\ge1$, $C_\ast\ge1$ and $y^\alpha\le y^\kappa$ for $0\le\alpha\le\kappa$.
+
+Since $mb\le a$, $e_1\le C_\ast y^{e_L}N_Ta\le C_\ast y^{e_L}\mathcal B$. In $e_2$, the first term is at most $C_\ast^2y^{e_L}\mathcal B$. Since $b'\le a/k$, the second term is at most $2C_\ast^2y\,N_Ta\,m^2/k\le2C_\ast^2y\,\mathcal B$. The third term is at most $C_\ast a\le C_\ast\mathcal B$, and $1\le\mathcal B$. Hence
+\[
+e_2\le5C_\ast^2y^{\max(1,e_L)}\mathcal B .
+\]
+Since $\Lambda_a\le2y$, $A\le2N_Ta$ and $m\le k$,
+\[
+e_4\le2C_\ast y\,N_Ta+C_\ast y^{e_D}m(B_0+N_c)\le3C_\ast y^{\max(1,e_D)}\mathcal B,\qquad e_5\le C_\ast\mathcal B,
+\]
+\[
+Ae_6\le2N_Ta\cdot C_\ast\cdot2y\Big(1+\frac{m^2}k\Big)\le4C_\ast y\,\mathcal B,\qquad e_7\le C_\ast N_Ta\cdot2y\cdot2\le4C_\ast y\,\mathcal B .
+\]
+For $e_3$, $\log k\le5y$ and $A\le2N_Ta$ give
+\[
+K_F\le8C_\ast y\,N_Ta+4C_\ast\mathcal B+10C_\ast y\,N_Ta\le22C_\ast y\,\mathcal B,
+\]
+so $U+b\le22C_\ast y\,\mathcal B+5C_\ast^2y^{\max(1,e_L)}\mathcal B+\mathcal B\le28C_\ast^2y^{\max(1,e_L)}\mathcal B$. With $\log(1+x^{C_H})\le(1+C_H)y$, $\log\lvert\mathcal W\rvert\le\mathcal B$ and $b\le\mathcal B$,
+\[
+e_3\le\mathcal B+8(1+C_H)y\cdot28C_\ast^2y^{\max(1,e_L)}\mathcal B+12\mathcal B\le237(1+C_H)C_\ast^2y^{\kappa}\mathcal B,
+\]
+because $1+\max(1,e_L)\le\kappa$. Adding the seven bounds,
+\[
+e_1+e_2+e_3+e_4+e_5+Ae_6+e_7\le\big(18C_\ast^2+237(1+C_H)C_\ast^2\big)y^\kappa\mathcal B\le260(1+C_H)C_\ast^2y^\kappa\mathcal B\le y^{\kappa+1}\mathcal B .\qedhere
+\]
+\end{proof}
+
+With the exponents $e_D=2$ and $e_L=0$ of Hypothesis~\ref{r6:R6:thm:records}, $\kappa=2$ and the bound is $x^{3\varepsilon}\mathcal B$.
+
+\subsection{Proof of Theorem A}\label{r6:R6:sec:thmA}
+
+We prove Theorem~A in the form stated in Section~\ref{sec:reduction}, which asks for one choice of admissible data at each scale of a window, for windows $[Y,Y^{3/2}]$ with $Y$ arbitrarily large.
+
+\begin{proof}
+Let $e_D$ and $e_L$ be the absolute constants of Hypothesis~\ref{r6:R6:thm:records}, and put $C=\max(2,e_D,e_L+1)+1$, which is $3$ for $e_D=2$ and $e_L=0$. Fix $\psi_0$, let $\varepsilon_1$ be as in Hypothesis~\ref{r6:R6:thm:records}, and fix $0<\varepsilon<\varepsilon_1$. Let $J\ge2$ be the number of Proposition~\ref{r6:R6:prop:dataexist}, and let $C_\ast$, $C_H$ and $x_1$ be the numbers of Hypothesis~\ref{r6:R6:thm:records} for $\varepsilon$ and this $J$. Let $x_0$ be the maximum of $x_1$ and of the numbers $x_0$ of Lemma~\ref{r6:R6:lem:tr}, Corollary~\ref{r6:R6:cor:nodes}, Lemma~\ref{r6:R6:lem:sizes} and Proposition~\ref{r6:R6:prop:errors} for these constants.
+
+Let $y$ be given. Proposition~\ref{r6:R6:prop:dataexist} gives $Y_0\le Y$ with $Y\ge\max(y,x_0)$ such that admissible data with base $Y_0$ exist for every $x\in[Y,Y^{3/2}]$. Fix such an $x$. Then $x\ge x_1$, and Hypothesis~\ref{r6:R6:thm:records} gives admissible data at the scale $x$, for the window $[Y,Y^{3/2}]$ with base $Y_0$, and weights $a_t,b_t$, such that for every $u_0\in A_0$ the nodes $w_{u_0,j}$ of Proposition~\ref{r6:R6:prop:nodes} admit a chain record with constants $C_\ast$, $C_H$ and exponents $e_D$, $e_L$.
+
+The weights satisfy $a\le a_t\le a+a/(kx^{13})$ by Definition~\ref{r6:R6:def:weights}, and Corollary~\ref{r6:R6:cor:nodes} gives (i).
+
+Fix $u_0\in A_0$ and a chain record for it. Proposition~\ref{r6:R6:prop:A1A7} shows that the hypotheses \eqref{A1} to \eqref{A7} of Proposition~\ref{acct} hold with $\lambda_1=\ell_{\chi_1}$, with $w_{j\rho}=w_{u_0,j}(\rho)$ for $\rho\in\Phi$, and with $S$ the sum over $t\in T$ and $1\le j\le m$ of the left side of \eqref{excessid} with $a=a_t$ and $w=w_{u_0,j}$. Proposition~\ref{acct} gives the conclusion \eqref{acctconc}. The number $\ell_{\chi_1}=L'(1,\chi_{-d})/L(1,\chi_{-d})$ is real, so Corollary~\ref{acctexcess} applies and gives
+\[
+\sum_{t\in T}\sum_{j=1}^m\operatorname{Re}\mathrm{De}(a_t,t,w_{u_0,j})\le e_1+e_2+e_3+e_4+e_5+Ae_6+e_7 .
+\]
+Proposition~\ref{r6:R6:prop:errors} bounds the right side by $x^{C\varepsilon}\mathcal B$, which is (ii).
+\end{proof}
+
+The constant $C$ does not depend on $\varepsilon$ or on $\psi_0$, which is the uniformity that the last step of the proof of Theorem~\ref{mainthm} uses. With $C=3$ that proof gives $\zeta(s)\ne0$ and $L(s,\chi^{(i)})\ne0$ for $\operatorname{Re}s>\frac12+7\varepsilon$, for every $0<\varepsilon<\varepsilon_1$, and so for $\operatorname{Re}s>\frac12$.
+
+The three primes of (D5) are congruent to $1$ modulo $15\,Q_Sqd$. The construction of the level structure of the lifts uses two primes congruent to $1$ modulo $\operatorname{lcm}(15,Q_Sqd)$ and a third prime, different from them, congruent to $1$ modulo $Q_Sqd$, all at most $(Q_Sqd)^{C_8}$ for a constant $C_8$. Since $\operatorname{lcm}(15,Q_Sqd)$ divides $15\,Q_Sqd$, the primes of (D5) have these properties with $C_8=2A_L(1+A_L)^2$, because $15\le Q_Sqd$ gives $(15\,Q_Sqd)^{A_L(1+A_L)^2}\le(Q_Sqd)^{2A_L(1+A_L)^2}$.

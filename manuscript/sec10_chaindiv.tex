@@ -1,0 +1,258 @@
+\section{Divisibility along the chain}\label{sec:chaindiv}
+
+Theorem~\ref{thm:valuation} bounds the pairings of one kernel with the products of minors at one Frobenius orbit. This section turns such bounds into divisibility of the composite of the lifts on integral forms. The argument is algebra on spaces of functions on lattices, and it uses three properties of the lifts. Each lift is a finite sum over classes of maps defined by kernels, with weights whose denominators are bounded. A bound for the pairings of a kernel implies that the kernel map, normalized by the power of $p$ of a Hecke operator, sends the integral structure at the source into a multiple of the integral structure at the target. A polynomial in the Hecke operators at an orbit commutes with the composite of the lifts up to an explicit power of $p$. We state these properties as part of a definition and prove the divisibility from them. The verification of the properties for the lifts of Section~\ref{sec:chain} is a separate step.
+% TODO(structure): write the verification of (D1)-(D3), the orbit bounds, and the one-lift relation (onelift)
+% for the true lifts (archive: ArchimedeanSignatureMatching, adm7, EntCondition/en_places_add, hk_point+countLoc, Cii).
+
+Throughout this section $p$ is a prime, $\mathcal O$ is a complete discrete valuation ring of characteristic zero with residue characteristic $p$, fraction field $\mathcal K$ and uniformizer $\pi$, and $\operatorname{ord}$ is the valuation with $\operatorname{ord}(p)=1$, so that $\operatorname{ord}(\pi)=1/e$ with $e$ the ramification index. For an $\mathcal O$-module $H$ and a real number $g$ we write $p^gH=\pi^{\lceil ge\rceil}H$. Then $a\,p^gH\subset p^{g+\operatorname{ord}(a)}H$ for $a\in\mathcal K^\times$, and $p^gH+p^gH\subset p^gH$, and $p^g\big(p^{g'}H\big)\subset p^{g+g'}H$, since $\lceil x\rceil+\lceil y\rceil\ge\lceil x+y\rceil$ and $e\operatorname{ord}(a)\in\mathbb Z$.
+
+\subsection{Chain data}\label{sec:chaindata}
+
+\begin{definition}\label{chaindatum}
+A \emph{chain datum} over $\mathcal O$ consists of an integer $m\ge1$, a finite set $\mathcal V$ whose elements are called orbits, an integer $r\ge1$, and the following objects for each level $0\le j\le m$.
+\begin{enumerate}
+\item[(a)] A set $\mathcal L_j$ of \emph{lattice tuples}, a finite set $C_j$ of components, a finite-dimensional $\mathcal K$-vector space $\mathcal X_j$, and for each $c\in C_j$ a group $\Gamma_{j,c}$ that acts on $\mathcal L_j$ and linearly on $\mathcal X_j$.
+\item[(b)] For each $L\in\mathcal L_j$ an $\mathcal O$-lattice $H_j(L)\subset\mathcal X_j$, with $H_j(\gamma L)=\gamma H_j(L)$ for $\gamma\in\Gamma_{j,c}$ and $c\in C_j$.
+\item[(c)] For each orbit $v$, each $0\le i\le r$ and each $L\in\mathcal L_j$ a finite family $E^j_{v,i}(L)$ of elements of $\mathcal L_j$, with $E^j_{v,0}(L)=(L)$ and $E^j_{v,i}(\gamma L)=\gamma E^j_{v,i}(L)$, and an integer $n^j_{v,i}$ with $n^j_{v,0}=0$.
+\end{enumerate}
+A \emph{form} of level $j$ is a function $F$ on $C_j\times\mathcal L_j$ with values in $\mathcal X_j$ such that $F(c,\gamma L)=\gamma F(c,L)$ for all $c$, $L$ and $\gamma\in\Gamma_{j,c}$. The forms of level $j$ form a $\mathcal K$-vector space $\mathcal F_j$, and the \emph{integral forms} $\mathrm{Int}_j$ are those with $F(c,L)\in H_j(L)$ for all $(c,L)$. The \emph{Hecke operator} $T^j_{v,i}$ on $\mathcal F_j$ is
+\[
+\big(T^j_{v,i}F\big)(c,L)=p^{\,n^j_{v,i}}\sum_{L''\in E^j_{v,i}(L)}F(c,L'') .
+\]
+The datum further contains linear maps $K_j\colon\mathcal F_j\to\mathcal F_{j+1}$ for $0\le j<m$, called the lifts, with the following property.
+\begin{enumerate}
+\item[(D1)] There are integers $d_j\ge0$ and $\mathcal K$-linear maps $\kappa_j(c,L;c',L')\colon\mathcal X_j\to\mathcal X_{j+1}$, for $(c,L)\in C_j\times\mathcal L_j$ and $(c',L')\in C_{j+1}\times\mathcal L_{j+1}$, such that for every $(c',L')$ there are a finite family $(c_x,L_x)$ in $C_j\times\mathcal L_j$ and elements $w_x\in\mathcal K^\times$ with $\operatorname{ord}(w_x)\le d_j$ and
+\[
+(K_jF)(c',L')=\sum_xw_x^{-1}\,\kappa_j(c_x,L_x;c',L')\big(F(c_x,L_x)\big)\qquad(F\in\mathcal F_j).
+\]
+\end{enumerate}
+We write $\mathcal K_j=K_{j-1}\circ\cdots\circ K_0\colon\mathcal F_0\to\mathcal F_j$, with $\mathcal K_0$ the identity.
+\end{definition}
+
+A Hecke operator maps forms to forms, because $E^j_{v,i}(\gamma L)=\gamma E^j_{v,i}(L)$ gives $(T^j_{v,i}F)(c,\gamma L)=p^{n}\sum_{L''\in E(L)}F(c,\gamma L'')=\gamma\,(T^j_{v,i}F)(c,L)$. For a family $i_0=(i_0(v))_{v\in\mathcal V}$ with $0\le i_0(v)\le r$ and an ordering $v_1,\dots,v_k$ of $\mathcal V$ we put $T^j_{i_0}=T^j_{v_1,i_0(v_1)}\cdots T^j_{v_k,i_0(v_k)}$. Expanding the product,
+\begin{equation}\label{Ti0}
+\big(T^j_{i_0}F\big)(c,L)=p^{\,n^j(i_0)}\sum_{L''\in E^j_{i_0}(L)}F(c,L''),\qquad n^j(i_0)=\sum_vn^j_{v,i_0(v)},
+\end{equation}
+where $E^j_{i_0}(L)$ is the finite family obtained by applying $E^j_{v_k,i_0(v_k)}$, then $E^j_{v_{k-1},i_0(v_{k-1})}$, and so on, to $L$. Both depend on the ordering, which we suppress from the notation.
+
+\begin{definition}\label{entrybound}
+Let $0\le j<m$, let $i_0$ be as above, and let $g\in\mathbb R$. The chain datum has the \emph{entry bound} $g$ at $(j,i_0)$ when, for every ordering of $\mathcal V$,
+\[
+p^{\,n^{j+1}(i_0)}\,\kappa_j(c,L;c',L'')\big(H_j(L)\big)\subset p^g\,H_{j+1}(L')
+\]
+for all $(c,L)\in C_j\times\mathcal L_j$, all $(c',L')\in C_{j+1}\times\mathcal L_{j+1}$ and all $L''$ in the family $E^{j+1}_{i_0}(L')$.
+\end{definition}
+
+In Definition~\ref{entrybound} the kernel map goes to the lattice tuple $L''$, and its image is measured in the lattice $H_{j+1}(L')$ of the tuple $L'$ from which $L''$ is reached by the Hecke edges. For $i_0=0$ the family $E^{j+1}_0(L')$ is $(L')$ and the condition reads $\kappa_j(c,L;c',L')(H_j(L))\subset p^gH_{j+1}(L')$.
+
+\begin{proposition}\label{formB}
+Let a chain datum be given, let $0\le j<m$, let $i_0$ be a family of edge types and let $g\in\mathbb R$. If the datum has the entry bound $g$ at $(j,i_0)$, then
+\[
+T^{j+1}_{i_0}K_j\big(\mathrm{Int}_j\big)\subset p^{\,g-d_j}\,\mathrm{Int}_{j+1}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $G\in\mathrm{Int}_j$. The function $T^{j+1}_{i_0}K_jG$ is a form, so it suffices to show that its value at every $(c',L')$ lies in $p^{g-d_j}H_{j+1}(L')$. By \eqref{Ti0} and (D1) the value is
+\[
+\sum_{L''\in E^{j+1}_{i_0}(L')}\ \sum_xw_x^{-1}\,p^{\,n^{j+1}(i_0)}\kappa_j(c_x,L_x;c',L'')\big(G(c_x,L_x)\big),
+\]
+where for each $L''$ the family $(c_x,L_x,w_x)$ is the one that (D1) attaches to $(c',L'')$. Since $G(c_x,L_x)\in H_j(L_x)$, the entry bound puts the term with index $x$, before the factor $w_x^{-1}$, in $p^gH_{j+1}(L')$. The factor $w_x^{-1}$ has valuation at least $-d_j$, so each term lies in $p^{g-d_j}H_{j+1}(L')$, and so does the sum.
+\end{proof}
+
+\subsection{Hecke operators and the composite of the lifts}\label{sec:heckecomp}
+
+\begin{definition}\label{heckecomm}
+A chain datum has \emph{Hecke commutation data} when it is equipped with the following objects.
+\begin{enumerate}
+\item[(D2)] Linear operators $y_v$ on $\mathcal F_0$ for $v\in\mathcal V$, which commute with each other and map $\mathrm{Int}_0$ into itself.
+\item[(D3)] For each orbit $v$ and each level $1\le j\le m$, an element $\rho_{v,j}\in\mathcal K^\times$, a unit $\epsilon_{v,j}\in\mathcal O^\times$, a real number $\alpha(v,j)\ge0$, and elements $c_{v,j,l}\in\mathcal O$ for $0\le l\le r$ with $\operatorname{ord}(c_{v,j,r})\ge\alpha(v,j)$, such that the operator
+\[
+Z_{v,j}=\sum_{l=0}^r(-1)^l\,c_{v,j,l}\,\epsilon_{v,j}^{-(r-l)}\,T^j_{v,r-l}
+\]
+on $\mathcal F_j$ satisfies $Z_{v,j}\,\mathcal K_j(F)=\rho_{v,j}\,\mathcal K_j(y_vF)$ for every $F\in\mathcal F_0$.
+\end{enumerate}
+We write $\mathrm{Pr}(v,j)=\operatorname{ord}(\rho_{v,j})$, the price of moving $y_v$ across $\mathcal K_j$.
+\end{definition}
+
+The term $l=r$ of $Z_{v,j}$ is $(-1)^rc_{v,j,r}$ times the identity, since $T^j_{v,0}$ is the identity. The improvement in Theorem~\ref{lowterm} below comes from the terms with $l<r$, which contain a Hecke operator of type at least one, and the identity term pays with the valuation $\alpha(v,j)$ of its coefficient.
+
+\begin{definition}\label{orbitbounds}
+Let a chain datum be given, and for each orbit $v$ and each level $1\le j\le m$ let $g^0(v,j)\le g^1(v,j)$ be real numbers and $\alpha(v,j)\ge0$. The datum has the \emph{orbit bounds} $(g^0,g^1,\alpha)$ when, for every $0\le j<m$ and every family $i_0$ of edge types, it has the entry bound $\sum_vb_v$ at $(j,i_0)$ for every choice of numbers $b_v$ with
+\[
+b_v\le\begin{cases}g^1(v,j+1)&i_0(v)\ge1,\\\max\big(g^0(v,j+1),\ g^1(v,j+1)-\alpha(v,j+1)\big)&i_0(v)=0.\end{cases}
+\]
+\end{definition}
+
+For the lifts of Section~\ref{sec:chain} at an inert prime, $g^0$ is the bound of Theorem~\ref{thm:valuation}(i), $g^1$ the bound $g^B$ of Theorem~\ref{thm:valuation}(ii) and (iii), and $\alpha$ the number $\sum_{s\in\mathcal T_{\mathrm{ev}}}\alpha_s$ of credits at the even tops, each written in the parameters of the orbit $v$ at level $j$.
+
+\begin{lemma}\label{ZLbound}
+Let a chain datum have Hecke commutation data with the numbers $\alpha(v,j)$ of (D3), and orbit bounds $(g^0,g^1,\alpha)$. Let $0\le j<m$ and let $V\subset\mathcal V$, ordered. Then
+\[
+\prod_{v\in V}Z_{v,j+1}\ K_j\big(\mathrm{Int}_j\big)\subset p^{\,g_V-d_j}\,\mathrm{Int}_{j+1},\qquad g_V=\sum_{v\in V}g^1(v,j+1)+\sum_{v\notin V}g^0(v,j+1).
+\]
+\end{lemma}
+
+\begin{proof}
+Expanding the product of the $Z_{v,j+1}$ in the given order writes it as a sum of terms $a\,T^{j+1}_{v_1,i_1}\cdots T^{j+1}_{v_k,i_k}$ over choices of $i_v=r-l_v\in\{0,\dots,r\}$ for $v\in V$, with $a=\prod_{v\in V}(-1)^{l_v}c_{v,j+1,l_v}\epsilon_{v,j+1}^{-(r-l_v)}$. Let $i_0(v)=i_v$ for $v\in V$ and $i_0(v)=0$ for $v\notin V$. Since $T^{j+1}_{v,0}$ is the identity, the product of Hecke operators in the term equals $T^{j+1}_{i_0}$ for an ordering of $\mathcal V$ that begins with $V$ in its given order. The coefficient satisfies $\operatorname{ord}(a)\ge\sum_{v\in V,\,i_0(v)=0}\alpha(v,j+1)$, because $\epsilon$ is a unit, every $c$ is integral, and $i_0(v)=0$ means $l_v=r$. Choose $b_v=g^1(v,j+1)$ for $v\in V$ with $i_0(v)\ge1$, $b_v=g^1(v,j+1)-\alpha(v,j+1)$ for $v\in V$ with $i_0(v)=0$, and $b_v=g^0(v,j+1)$ for $v\notin V$. These are admissible in Definition~\ref{orbitbounds}, so Proposition~\ref{formB} puts $T^{j+1}_{i_0}K_j(\mathrm{Int}_j)$ in $p^{\sum b_v-d_j}\mathrm{Int}_{j+1}$, and $\operatorname{ord}(a)+\sum_vb_v\ge g_V$.
+\end{proof}
+
+\begin{theorem}\label{lowterm}
+Let a chain datum have Hecke commutation data and orbit bounds $(g^0,g^1,\alpha)$, with the same numbers $\alpha(v,j)$. Let $B\subset\mathcal V$, and let $\mathrm{PR}(v,j)\ge\mathrm{Pr}(v,j)$ and $S(v)$ be real numbers for $v\in B$ and $1\le j\le m$ with
+\begin{equation}\label{Sdef}
+\sum_{j=1}^m\max\big(g^1(v,j)-\mathrm{PR}(v,j)-g^0(v,j),\,0\big)\le S(v)\qquad(v\in B).
+\end{equation}
+Let $B'\subset B$, put $y_{B'}=\prod_{v\in B'}y_v$, and let $F=y_{B'}^{\,m}F_0$ with $F_0\in p^{\sum_{v\in B\setminus B'}S(v)}\,\mathrm{Int}_0$. Then $\mathcal K_m(F)\in p^{\,T}\,\mathrm{Int}_m$ with
+\[
+T=\sum_{j=1}^m\Big(\sum_{v\in B}\max\big(g^1(v,j)-\mathrm{PR}(v,j),\,g^0(v,j)\big)+\sum_{v\notin B}g^0(v,j)\Big)-\sum_{j=0}^{m-1}d_j .
+\]
+The same holds for every $F$ in the $\mathcal O$-span of such forms, with $B'$ varying.
+\end{theorem}
+
+\begin{proof}
+For $0\le j<m$ let $B_j$ be the set of $v\in B'$ with $g^0(v,j+1)\le g^1(v,j+1)-\mathrm{Pr}(v,j+1)$, and put
+\[
+b_j=\sum_{v\in B_j}\big(g^1(v,j+1)-\mathrm{Pr}(v,j+1)\big)+\sum_{v\notin B_j}g^0(v,j+1)-d_j .
+\]
+We show by induction on $m'\le m$ that $\mathcal K_{m'}\big(y_{B'}^{\,m'}F_1\big)\in p^{\,b_0+\cdots+b_{m'-1}}\mathrm{Int}_{m'}$ for every $F_1\in\mathrm{Int}_0$. For $m'=0$ this is the hypothesis $F_1\in\mathrm{Int}_0$. Let $m'<m$ and write $C=B'\setminus B_{m'}$. Since the $y_v$ commute, $y_{B'}^{\,m'+1}F_1=y_{B_{m'}}W$ with $W=y_{B'}^{\,m'}(y_CF_1)$, and $y_CF_1\in\mathrm{Int}_0$ by (D2). Applying (D3) once for each $v\in B_{m'}$ gives
+\[
+\mathcal K_{m'+1}\big(y_{B_{m'}}W\big)=\Big(\prod_{v\in B_{m'}}\rho_{v,m'+1}\Big)^{-1}\prod_{v\in B_{m'}}Z_{v,m'+1}\ K_{m'}\big(\mathcal K_{m'}W\big).
+\]
+By the induction hypothesis applied to $y_CF_1$, $\mathcal K_{m'}W=\pi^{n}G'$ with $G'\in\mathrm{Int}_{m'}$ and $n=\lceil(b_0+\cdots+b_{m'-1})e\rceil$. Lemma~\ref{ZLbound} with $V=B_{m'}$ puts $\prod_{v\in B_{m'}}Z_{v,m'+1}K_{m'}(G')$ in $p^{g_V-d_{m'}}\mathrm{Int}_{m'+1}$. The factor $\prod\rho^{-1}$ has valuation $-\sum_{v\in B_{m'}}\mathrm{Pr}(v,m'+1)$, and $g_V-d_{m'}-\sum_{v\in B_{m'}}\mathrm{Pr}(v,m'+1)=b_{m'}$. This completes the induction.
+
+Now $F_0=\pi^{n_0}F_1$ with $F_1\in\mathrm{Int}_0$ and $n_0=\lceil S_0e\rceil$, $S_0=\sum_{v\in B\setminus B'}S(v)$. By linearity and the case $m'=m$, $\mathcal K_m(F)\in p^{\,S_0+b_0+\cdots+b_{m-1}}\mathrm{Int}_m$. It remains to show $T\le S_0+\sum_jb_j$. For each $j$ and each orbit $v$ compare the contribution of $v$ to $T$ and to $b_{j-1}$. If $v\notin B$, both are $g^0(v,j)$. If $v\in B_{j-1}$, the contribution to $T$ is $\max(g^1-\mathrm{PR},g^0)\le\max(g^1-\mathrm{Pr},g^0)=g^1-\mathrm{Pr}$, which is the contribution to $b_{j-1}$. If $v\in B'\setminus B_{j-1}$, then $g^1-\mathrm{Pr}<g^0$, so $\max(g^1-\mathrm{PR},g^0)=g^0$, which is the contribution to $b_{j-1}$. If $v\in B\setminus B'$, the difference is $\max(g^1-\mathrm{PR}-g^0,0)$, and the sum over $j$ of these differences is at most $S(v)$ by \eqref{Sdef}. Summing over $v$ and $j$ gives $T-\sum_jb_j\le S_0$. The last statement follows by linearity, since $p^T\mathrm{Int}_m$ is an $\mathcal O$-module.
+\end{proof}
+
+Theorem~\ref{lowterm} says that the bound per lift and per orbit multiplies along the chain, with the improved bound $g^1$ minus its price at the orbits where a factor $y_v$ is available, and that the composite of the $m$ lifts is divisible by the sum. The theorem uses one factor $y_v$ for each lift at which it pays, and leaves the others at level zero, where they preserve $\mathrm{Int}_0$. The next subsection proves the commutation relation (D3) from a relation for one lift.
+
+\subsection{From one lift to the chain}\label{sec:inversion}
+
+Fix an orbit $v$ and drop it from the notation. Let $q=p^{\nu'}$ for a positive rational number $\nu'$ with $q\in\mathcal K$, let $N_0<N_1<\dots<N_m$ be integers with $r\le N_0$, and put $\mathcal E^{(j)}_i=q^{-i(N_j-i)}T^j_{v,i}$ for $0\le i\le r$, the normalized Hecke operators. Let $t\ge0$ be an integer. For $1\le j\le m$ let $u_j\in\mathcal O^\times$ and $m_j\in\mathcal K$, and let $x_j$ be the family of the $t+1$ numbers $m_jq^{t},m_jq^{t-2},\dots,m_jq^{-t}$. Write $e_l$ and $h_l$ for the elementary and the complete symmetric polynomials of degree $l$.
+
+\begin{proposition}\label{inversion}
+Suppose that for $0\le j<m$, $0\le i\le r$ and $F\in\mathcal F_j$,
+\begin{equation}\label{onelift}
+\mathcal E^{(j+1)}_i\,K_j(F)=u_{j+1}^{\,i}\ K_j\Big(\sum_{l=0}^ie_l(x_{j+1})\,\mathcal E^{(j)}_{i-l}F\Big).
+\end{equation}
+For $1\le j\le m$ let $Y_j$ be the family of the $j(t+1)$ numbers $u_lu_{l+1}\cdots u_j\,a$ with $1\le l\le j$ and $a$ in $x_l$, and put $U_j=u_1\cdots u_j$. Then for every $F\in\mathcal F_0$
+\[
+\sum_{l=0}^r(-1)^l\,h_l(Y_j)\,q^{\,l(N_j-2r+l)}\ T^j_{v,r-l}\,\mathcal K_j(F)=U_j^{\,r}\,q^{\,r(N_j-N_0)}\ \mathcal K_j\big(T^0_{v,r}F\big).
+\]
+\end{proposition}
+
+\begin{proof}
+We work with polynomials in an indeterminate $X$ modulo $X^{r+1}$, with coefficients that are operators, and $X$ commutes with everything. Put $E_j(X)=\sum_{i=0}^r\mathcal E^{(j)}_iX^i$. Since $\sum_le_l(x)\,y^l=\prod_{a\in x}(1+ay)$, the relations \eqref{onelift} for $0\le i\le r$ say
+\[
+E_{j+1}(X)\,K_j=K_j\,P_{j+1}(X)\,E_j(u_{j+1}X),\qquad P_{j+1}(X)=\prod_{a\in x_{j+1}}\big(1+u_{j+1}aX\big),
+\]
+modulo $X^{r+1}$, where $P_{j+1}$ has scalar coefficients. We show by induction that $E_j(X)\mathcal K_j=\Pi_j(X)\,\mathcal K_jE_0(U_jX)$ with $\Pi_j(X)=\prod_{b\in Y_j}(1+bX)$. For $j=0$ both sides are $E_0(X)$. For the step,
+\[
+E_{j+1}(X)\mathcal K_{j+1}=K_jP_{j+1}(X)E_j(u_{j+1}X)\mathcal K_j=P_{j+1}(X)\,\Pi_j(u_{j+1}X)\,\mathcal K_{j+1}E_0(U_{j+1}X),
+\]
+and $P_{j+1}(X)\Pi_j(u_{j+1}X)=\Pi_{j+1}(X)$ by the definition of $Y_{j+1}$. The series $\Pi_j(X)$ has constant term $1$, and its inverse is $\sum_k(-1)^kh_k(Y_j)X^k$. So $\mathcal K_jE_0(U_jX)=\Pi_j(X)^{-1}E_j(X)\mathcal K_j$, and the coefficients of $X^r$ give
+\[
+U_j^{\,r}\,\mathcal K_j\,\mathcal E^{(0)}_r=\sum_{l=0}^r(-1)^lh_l(Y_j)\,\mathcal E^{(j)}_{r-l}\,\mathcal K_j .
+\]
+We multiply by $q^{r(N_j-r)}$. On the left this gives $q^{r(N_j-N_0)}T^0_{v,r}$ in place of $\mathcal E^{(0)}_r$, and on the right the factor of $T^j_{v,r-l}$ becomes $q^{r(N_j-r)-(r-l)(N_j-r+l)}=q^{\,l(N_j-2r+l)}$.
+\end{proof}
+
+When the operators $T^j_{v,i}$ have normalizing exponents $n^j_{v,i}$, Proposition~\ref{inversion} applied to the raw operators gives (D3) for $y_v=p^{A}T^{\mathrm{raw},0}_{v,r}$ after multiplication by powers of $p$. Proposition~\ref{r1:prop:D3} makes this conversion for the lifts of Section~\ref{sec:lifts}, with $c_{v,j,l}=p^{n^j_{v,r}-n^j_{v,r-l}}q^{\,l(N_j-2r+l)}h_l(Y_j)$, and Theorem~\ref{r1:thm:Cii} proves that these coefficients are integral with $\operatorname{ord}(c_{v,j,r})\ge\alpha(v,j)$. With all $n^j_{v,i}=0$ the coefficients $h_l(Y_j)\,q^{\,l(N_j-2r+l)}$ need not be integral.
+
+\subsection{The Hecke relation for one lift}\label{sec:onelift}
+
+This subsection proves the relation \eqref{onelift} for lifts whose kernels at an orbit have the form that a theta kernel has in the lattice model at a split place. Fix an orbit $v$. Let $Q_v$ be the unramified extension of $\mathbb Q_p$ of even degree $n'_v$, with ring of integers $W_v$ and residue field $k_v$ of $q_v=p^{n'_v}$ elements, and put $q=p^{n'_v/2}$, so that $q_v=q^2$. For a $W_v$-lattice $L$ in $Q_v^N$ let $\operatorname{len}(L)=-\operatorname{ord}\det b$ for any matrix $b$ whose columns form a basis of $L$. For lattices $L''\subset L$ in $Q_v^N$ we call $(L'',L)$ an \emph{edge of type $i$} when $pL\subset L''$ and $\dim_{k_v}L/L''=i$. Then $\operatorname{len}(L'')=\operatorname{len}(L)-i$, because $p$ is a uniformizer of $W_v$ and the elementary divisors of $L''$ in $L$ are $i$ copies of $p$ and $N-i$ units.
+
+For $x$ an $N'\times N$ matrix over $Q_v$ and lattices $L\subset Q_v^N$, $L'\subset Q_v^{N'}$ put $\mathbf 1_{L,L'}(x)=1$ if $xL\subset L'$ and $0$ otherwise.
+
+\begin{lemma}\label{countloc}
+Let $L\subset Q_v^N$ and $L'\subset Q_v^{N+g}$ be lattices, let $x$ be an $(N+g)\times N$ matrix over $Q_v$, and let $i\ge0$. Then
+\begin{multline*}
+\#\big\{L_1:(L_1,L')\text{ an edge of type }i,\ xL\subset L_1\big\}\\
+=\sum_{l=0}^{i}q_v^{\,(i-l)(g-l)}\binom gl_{q_v}\,\#\big\{A_1:(L,A_1)\text{ an edge of type }i-l,\ xA_1\subset L'\big\},
+\end{multline*}
+where $\binom gl_{q_v}$ is the Gaussian binomial coefficient. Equivalently, as functions of $x$,
+\[
+\sum_{(L_1,L')\text{ of type }i}\mathbf 1_{L,L_1}=\sum_{l=0}^iq_v^{\,(i-l)(g-l)}\binom gl_{q_v}\sum_{(L,A_1)\text{ of type }i-l}\mathbf 1_{A_1,L'} .
+\]
+\end{lemma}
+
+\begin{proof}
+If $xL\not\subset L'$, both sides vanish, because $L_1\subset L'$ and $A_1\supset L$. Suppose $xL\subset L'$, and let $\bar x\colon L/pL\to L'/pL'$ be the induced map of $k_v$-vector spaces, of rank $\rho$. A lattice $L_1$ with $pL'\subset L_1\subset L'$ corresponds to the subspace $L_1/pL'$ of $L'/pL'$, and $xL\subset L_1$ exactly when this subspace contains $\bar x(L/pL)$. So the left side counts the subspaces of codimension $i$ of a space of dimension $N+g$ that contain a given subspace of dimension $\rho$, and it equals $\binom{N+g-\rho}i_{q_v}$. A lattice $A_1$ with $L\subset A_1\subset p^{-1}L$ corresponds to the subspace $pA_1/pL$ of $L/pL$, and $xA_1\subset L'$ exactly when $x(pA_1)\subset pL'$, that is, when this subspace lies in the kernel of $\bar x$, of dimension $N-\rho$. So the count on the right with type $i-l$ is $\binom{N-\rho}{i-l}_{q_v}$. The identity is the $q$-Vandermonde formula
+\[
+\binom{a+b}i_{Q}=\sum_{l=0}^iQ^{(i-l)(b-l)}\binom bl_{Q}\binom a{i-l}_{Q}
+\]
+with $a=N-\rho$, $b=g$ and $Q=q_v$~\cite[(3.3.10)]{andrews}.
+\end{proof}
+% TODO(external): check the equation number of the q-Vandermonde identity in Andrews, The Theory of Partitions.
+
+\begin{lemma}\label{qbinom}
+For integers $0\le l\le g$ and $t=g-1$,
+\[
+e_l\big(q^{t},q^{t-2},\dots,q^{-t}\big)=q^{-l(g-l)}\binom gl_{q^2}.
+\]
+\end{lemma}
+
+\begin{proof}
+The Gaussian binomial theorem $\prod_{k=0}^{g-1}(1+Q^kz)=\sum_lQ^{l(l-1)/2}\binom gl_Qz^l$ with $Q=q^2$ and $z$ replaced by $q^{-t}z$ gives $\prod_{k=0}^{g-1}(1+q^{2k-t}z)=\sum_lq^{l(l-1)-lt}\binom gl_{q^2}z^l$. The left side is $\sum_le_l(q^t,\dots,q^{-t})z^l$, and $l(l-1)-l(g-1)=-l(g-l)$.
+\end{proof}
+
+\begin{lemma}\label{edgecount}
+Let a group $\Gamma$ act on a set $\mathcal L$ with finitely many orbits and finite stabilizers, and let $\mathcal P\subset\mathcal L\times\mathcal L$ be a $\Gamma$-stable set of pairs such that each $L\in\mathcal L$ occurs in finitely many pairs as first and as second entry. Let $R$ be a set of representatives of $\Gamma\backslash\mathcal L$, and let $\varphi$ be a function on $\mathcal P$ with values in a $\mathbb Q$-vector space with $\varphi(\gamma L_0,\gamma L_1)=\varphi(L_0,L_1)$. Then
+\[
+\sum_{L\in R}\frac1{\lvert\Gamma_L\rvert}\sum_{L_1:(L,L_1)\in\mathcal P}\varphi(L,L_1)=\sum_{L\in R}\frac1{\lvert\Gamma_L\rvert}\sum_{L_0:(L_0,L)\in\mathcal P}\varphi(L_0,L).
+\]
+\end{lemma}
+
+\begin{proof}
+For $L\in R$ the pairs $(L,L_1)\in\mathcal P$ fall into orbits of $\Gamma_L$, and the orbit of $(L,L_1)$ has $\lvert\Gamma_L\rvert/\lvert\Gamma_{(L,L_1)}\rvert$ elements, where $\Gamma_{(L,L_1)}$ is the stabilizer of the pair. So the left side equals $\sum\lvert\Gamma_{(L_0,L_1)}\rvert^{-1}\varphi(L_0,L_1)$, the sum over a set of representatives of $\Gamma\backslash\mathcal P$, since every $\Gamma$-orbit of pairs contains pairs with first entry in $R$, and these form one orbit of $\Gamma_L$. The same computation with the second entry gives the right side.
+\end{proof}
+
+\begin{definition}\label{splitkernel}
+A chain datum has \emph{split kernels} at the orbit $v$ when the following hold for every $0\le j<m$.
+\begin{enumerate}
+\item[(S1)] Every lattice tuple $L\in\mathcal L_j$ has a component $L_v$ that is a $W_v$-lattice in $Q_v^{N_j}$, with $N_{j+1}=N_j+g$ for a fixed $g\ge1$. The family $E^j_{v,i}(L)$ consists of the tuples obtained from $L$ by replacing $L_v$ by the lattices $L_1$ with $(L_1,L_v)$ an edge of type $i$. We write $T^{\mathrm{raw},j}_{v,i}=p^{-n^j_{v,i}}T^j_{v,i}$ for the operator of (c) with the exponent $n^j_{v,i}$ replaced by $0$. Replacing $L_v$ in this way commutes with the action of every $\Gamma_{j,c}$.
+\item[(S2)] For every $c$ the set $\Gamma_{j,c}\backslash\mathcal L_j$ is finite and the stabilizers are finite. There are a set $R_j$ of pairs $(c,L)$ that contains one representative of each orbit, an element $c_K\in\mathcal K^\times$, and maps $\kappa_j$ as in (D1), such that $(K_jF)(c',L')=c_K\sum_{(c,L)\in R_j}\lvert\Gamma_{j,c,L}\rvert^{-1}\kappa_j(c,L;c',L')(F(c,L))$, and $\kappa_j(c,\gamma L;c',L')\circ\gamma=\kappa_j(c,L;c',L')$ for $\gamma\in\Gamma_{j,c}$.
+\item[(S3)] There are $a,a'\in\mathcal O^\times$, an integer $\mu$, and for every pair $(c,L;c',L')$ a $\mathbb Z$-linear map $f\mapsto\Xi(c,L;c',L';f)$ from functions on $N_{j+1}\times N_j$ matrices over $Q_v$ with integer values to $\operatorname{Hom}_{\mathcal K}(\mathcal X_j,\mathcal X_{j+1})$, which does not change when $L_v$ or $L'_v$ is replaced by another lattice, such that
+\[
+\kappa_j(c,L;c',L')=p^{\mu(\operatorname{len}L_v-\operatorname{len}L'_v)}\,a^{\operatorname{len}L_v}\,a'^{\operatorname{len}L'_v}\,q^{-(N_j\operatorname{len}L'_v-N_{j+1}\operatorname{len}L_v)}\ \Xi\big(c,L;c',L';\mathbf 1_{L_v,L'_v}\big).
+\]
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{hkpoint}
+Suppose that a chain datum has split kernels at $v$, with the constants $a,a',\mu$ of (S3) for the lift $K_j$. Then \eqref{onelift} holds for $j$ with the raw operators $T^{\mathrm{raw},j}_{v,i}$ and $T^{\mathrm{raw},j+1}_{v,i}$ in place of $T^j_{v,i}$ and $T^{j+1}_{v,i}$ in the definition of $\mathcal E^{(j)}_i$, and with $u_{j+1}=(aa')^{-1}$, $m_{j+1}=a\,p^{\mu}$ and $t=g-1$.
+\end{proposition}
+
+\begin{proof}
+In this proof $T^j_{v,i}$ and $T^{j+1}_{v,i}$ denote the raw operators. Write $\sigma(L,L')$ for the scalar in (S3), so that $\kappa_j(L;L')=\sigma(L,L')\,\Xi(L;L';\mathbf 1_{L_v,L'_v})$, where we suppress the components. If $(L_1,L'_v)$ is an edge of type $i$ and $L'_1$ is $L'$ with $L'_v$ replaced by $L_1$, then $\operatorname{len}L_1=\operatorname{len}L'_v-i$ and
+\[
+\sigma(L,L'_1)=c_A(i)\,\sigma(L,L'),\qquad c_A(i)=p^{\mu i}a'^{-i}q^{N_ji}.
+\]
+If $(L_v,A_1)$ is an edge of type $k$ and $L^{A_1}$ is $L$ with $L_v$ replaced by $A_1$, then $\operatorname{len}A_1=\operatorname{len}L_v+k$ and
+\[
+\sigma(L^{A_1},L')=c_C(k)\,\sigma(L,L'),\qquad c_C(k)=p^{\mu k}a^kq^{N_{j+1}k}.
+\]
+By (S2), (S1) and the two relations,
+\[
+\big(T^{j+1}_{v,i}K_jF\big)(c',L')=c_K\sum_{(c,L)\in R_j}\frac{c_A(i)\,\sigma(L,L')}{\lvert\Gamma_{j,c,L}\rvert}\ \Xi\Big(L;L';\sum_{(L_1,L'_v)}\mathbf 1_{L_v,L_1}\Big)\big(F(c,L)\big),
+\]
+since $\Xi$ is additive and does not depend on the component at $v$. Lemma~\ref{countloc} replaces the inner sum by $\sum_lq_v^{(i-l)(g-l)}\binom gl_{q_v}\sum_{(L_v,A_1)}\mathbf 1_{A_1,L'_v}$, with $(L_v,A_1)$ of type $i-l$, and the second relation turns $\sigma(L,L')\Xi(L;L';\mathbf 1_{A_1,L'_v})$ into $c_C(i-l)^{-1}\kappa_j(L^{A_1};L')$. Lemma~\ref{edgecount}, applied for each component $c$ to the pairs $(L_0,L_1)$ that differ at $v$ by an edge of type $i-l$ and to $\varphi(L_0,L_1)=\kappa_j(c,L_1;c',L')(F(c,L_0))$, which is invariant by the covariance in (S2) and the equivariance of $F$, gives
+\[
+\sum_{(c,L)\in R_j}\frac1{\lvert\Gamma_{j,c,L}\rvert}\sum_{(L_v,A_1)}\kappa_j(L^{A_1};L')\big(F(c,L)\big)=\sum_{(c,L)\in R_j}\frac1{\lvert\Gamma_{j,c,L}\rvert}\,\kappa_j(c,L;c',L')\big((T^j_{v,i-l}F)(c,L)\big).
+\]
+Hence
+\[
+T^{j+1}_{v,i}K_jF=\sum_{l=0}^ic_A(i)\,q_v^{(i-l)(g-l)}\binom gl_{q_v}c_C(i-l)^{-1}\ K_j\big(T^j_{v,i-l}F\big).
+\]
+Multiply by $q^{-i(N_{j+1}-i)}$ and write $T^j_{v,i-l}=q^{(i-l)(N_j-i+l)}\mathcal E^{(j)}_{i-l}$. With $q_v=q^2$ and Lemma~\ref{qbinom}, the coefficient of $K_j(\mathcal E^{(j)}_{i-l}F)$ is
+\[
+(aa')^{-i}\,\big(ap^\mu\big)^l\,e_l\big(q^t,\dots,q^{-t}\big)\,q^{E},
+\]
+where
+\[
+E=-i(N_{j+1}-i)+N_ji+2(i-l)(g-l)-N_{j+1}(i-l)+l(g-l)+(i-l)(N_j-i+l).
+\]
+Put $i=l+d$ and $N_{j+1}=N_j+g$. Then $E=-(l+d)g+(l+d)^2+2d(g-l)-gd+l(g-l)-d^2=0$. Since $e_l$ is homogeneous of degree $l$, $(ap^\mu)^le_l(q^t,\dots,q^{-t})=e_l(x_{j+1})$ with $m_{j+1}=ap^\mu$, which is \eqref{onelift} with $u_{j+1}=(aa')^{-1}$.
+\end{proof}
+
+Proposition~\ref{hkpoint} and Proposition~\ref{inversion} together give the relation of Proposition~\ref{inversion} for the raw operators of chain data with split kernels at every orbit, with $u_j$ a unit and $\operatorname{ord}(m_j)=\mu_j$. Section~\ref{sec:lifts} verifies the hypotheses of this section for the lifts of Section~\ref{sec:chain} and converts the relation into (D3).

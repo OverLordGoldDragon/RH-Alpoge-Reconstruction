@@ -1,0 +1,85 @@
+\section{The arithmetic theorem and the proof of the Riemann hypothesis}\label{sec:reduction}
+
+This section collects the data of Section~\ref{sec:auxiliary} into one definition, states the arithmetic theorem that Part~II proves, and deduces the Riemann hypothesis and the generalized Riemann hypothesis for Dirichlet $L$-functions from it.
+
+\subsection{Admissible data}
+
+Fix a primitive Dirichlet character $\psi_0$ of conductor $M_\psi$ and order $o$, and fix $0<\varepsilon<\frac1{52}$. Put $N_0=8M_\psi$.
+
+\begin{definition}\label{def:admissible}
+Let $x\ge3$, and let $Y$ be a real number with $Y\le x\le Y^{3/2}$. \emph{Admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$} consist of the following objects.
+\begin{enumerate}
+\item[(D1)] Primes $q$ and $d$ that satisfy the conclusions of Theorems~\ref{stage1} and~\ref{stage2} with $N_0$, $K=\frac32$, $\varepsilon$, $\tau=\varepsilon$ and $z'=z\log^2Y$. An integer $e\ge0$ with $x^{2+8\varepsilon}\le c\,2^e\le2x^{2+8\varepsilon}$, where $c$ is the integer of Proposition~\ref{field}(iii). The field $E$, the groups $H$ and $A_0$ and the integer $n=\lvert H\rvert$ of Proposition~\ref{field} for $\psi_0$, $e$, $q$ and $d$, with the identification of $\mathrm{Gal}(E/\mathbb Q)$ with $\mathcal G=(\mathbb Z/2)^2\times H$ of Section~\ref{sec:field}.
+\item[(D2)] Integers $m$, $k$ and $t_r$ as in Proposition~\ref{ranks}(i).
+\item[(D3)] A set $T\subset H$ with the properties of Proposition~\ref{tops}, for the set $\mathcal P$ and the elements $h_p$ specified in Section~\ref{sec:gain}.
+\item[(D4)] A set $T_2\subset A_0$ of the form $\{s\,a_0:s\in T_2'\}$, where $a_0$ generates $A_0$ and $T_2'$ is a set given by Proposition~\ref{behrend} with $n_0=n/o$ and $L=L_w$, with $\lvert T_2\rvert\ge x^{-\varepsilon}n$.
+\item[(D5)] Two primes $g_0\ne g_1$ with $(kb)^8\le g_i\le2(kb)^8$, each of the form $g_i=\pi_i\bar\pi_i$ with $\pi_i\in\mathbb Z[\frac{1+\sqrt{-d}}2]$ and $\pi_i\equiv1$ modulo $Q_Sqd$, with $B_r(g_0)\cap B_r(g_1)=\emptyset$ in the notation of Lemma~\ref{disjoint}. Three distinct primes congruent to $1$ modulo $15\,Q_Sqd$ and at most $(15\,Q_Sqd)^{A_L(1+A_L)^2}$.
+\end{enumerate}
+\end{definition}
+
+
+\begin{proposition}\label{dataexist}
+There is $Y_0$ such that for every $Y\ge Y_0$ and every $x$ with $Y\le x\le Y^{3/2}$, admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ exist.
+\end{proposition}
+
+\begin{proof}
+Theorems~\ref{stage1} and~\ref{stage2} with $K=\frac32$ and $\tau=\varepsilon$ give the primes $q$ and $d$ for every large $Y$. For large $Y$ the primes $q$ and $d$ exceed $M_\psi$, and $q\equiv d\equiv3\pmod4$. The integer $c$ of Proposition~\ref{field}(iii) divides $o$ and does not depend on $e$ once $2^{e+2}$ is divisible by the power of $2$ in $M_\psi$, and the interval $[x^{2+8\varepsilon},2x^{2+8\varepsilon}]$ has ratio $2$, so it contains a number $c\,2^e$. Proposition~\ref{field} gives (D1). Propositions~\ref{ranks}, \ref{tops} and~\ref{behrend} give (D2), (D3) and (D4); for (D4) we use $n_0=n/o$, $L_w$ of order $\log x$, and the remark after Proposition~\ref{behrend}. Statement (C9) and Lemma~\ref{disjoint} give the primes $g_0$ and $g_1$, and Linnik's theorem with Lemma~\ref{three} for $M=15\,Q_Sqd$ gives the three primes of (D5).
+\end{proof}
+
+\subsection{The arithmetic theorem}
+
+For admissible data let $\Phi$, $f=2n$ and $p_t$ be as in Section~\ref{sec:excess}, let $G_\psi$ be the functions of Proposition~\ref{excess} with $\ell_\psi=L'(1,\chi_\psi)/L(1,\chi_\psi)$, and let $\mathrm{De}$ be the excess \eqref{De}. Let $b$, $a$, $X'$ and $b'$ be as in \eqref{scale}, and let $\mathcal B$ be the number \eqref{calB} with $N_T=\lvert T\rvert$ and $N_2=\lvert T_2\rvert$.
+
+Section~\ref{sec:proofA} refines Definition~\ref{def:admissible} by a base scale $Y_0\le Y$, at which the primes $q$ and $d$ are chosen, and by a condition (D6) on Tate--Shafarevich groups of $E$ (Definition~\ref{r6:R6:def:adm}). Theorem~A asserts the existence of such data at every scale of a window, for windows $[Y,Y^{3/2}]$ with $Y$ arbitrarily large.
+
+\begin{theoremA}
+There is an absolute constant $C\ge0$ with the following property. For every primitive Dirichlet character $\psi_0$ there are $0<\varepsilon_1\le\frac1{52}$, and for every $0<\varepsilon<\varepsilon_1$ a number $J\ge2$, such that for every $y$ there are real numbers $Y_0\le Y$ with $Y\ge y$ and the following property. For every $x$ with $Y\le x\le Y^{3/2}$ there are admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$, weights $a_t$ for $t\in T$ with $a\le a_t\le a+a/(kx^{13})$, and for every $u_0\in A_0$ and $1\le j\le m$ functions $w_{u_0,j}\colon\Phi\to(0,\infty)$, such that the following hold.
+\begin{enumerate}
+\item[(i)] For every $u_0\in A_0$, every $j$ and every $\rho\in\Phi$, the node $w_{u_0,j}(\rho)$ satisfies the bounds of Proposition~\ref{nodes}(i) when $\rho$ is thick with respect to $u_0$ for the set $T_2$, and the bounds of Proposition~\ref{nodes}(ii) otherwise.
+\item[(ii)] For every $u_0\in A_0$,
+\[
+\sum_{t\in T}\sum_{j=1}^m\operatorname{Re}\mathrm{De}(a_t,t,w_{u_0,j})\le x^{C\varepsilon}\,\mathcal B .
+\]
+\end{enumerate}
+One can take $C=3$.
+\end{theoremA}
+
+Part~II proves Theorem~A from the hypotheses that Section~\ref{sec:frontier} lists. For each $u_0\in A_0$ it constructs hermitian lattices and period maps whose slopes, heights and local terms satisfy the inequalities \eqref{A1} to \eqref{A7} of Proposition~\ref{acct}, with $\lambda_1=\ell_{\chi_1}$, with the sum $S$ of Corollary~\ref{acctexcess}, and with
+\[
+e_1+e_2+e_3+e_4+e_5+Ae_6+e_7\le x^{C\varepsilon}\,\mathcal B .
+\]
+Corollary~\ref{acctexcess} then gives (ii). Section~\ref{sec:proofA} gives the assembly.
+
+\subsection{The Riemann hypothesis}
+
+\begin{theorem}\label{mainthm}
+Assume Theorem~A. Then for every primitive Dirichlet character $\psi_0$ the function $L(s,\psi_0)$ does not vanish in the half-plane $\operatorname{Re}s>\frac12$. In particular $\zeta(s)\ne0$ for $\operatorname{Re}s>\frac12$.
+\end{theorem}
+
+\begin{proof}
+Fix $\psi_0$ of conductor $M_\psi$ and order $o$, let $\varepsilon_1$ and $C$ be as in Theorem~A, fix $0<\varepsilon<\varepsilon_1$, and let $J$ be the number of Theorem~A. Let $Y_0\le Y$ be numbers given by Theorem~A with $Y$ large, let $Y\le x\le Y^{3/2}$, and choose admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$, weights and nodes by Theorem~A.
+
+\emph{The characters.} The characters of $\mathcal G$ that are trivial on $\{0\}\times\{0\}\times A_0$ form the set $\Psi_0$, of order $4o$. By Proposition~\ref{field}(iv) and the identification of Section~\ref{sec:field}, the Dirichlet characters $\chi_\psi$ for $\psi\in\Psi_0$ are the primitive characters that induce $\psi_0^i(\frac{\cdot}{q})^a(\frac{\cdot}{d})^{a'}$ with $0\le i<o$ and $a,a'\in\{0,1\}$. The class $(1,0,0)$ acts trivially on $\sqrt{-q}$ and on $H$, and by $-1$ on $\sqrt{-d}$, so $\psi(1,0,0)=1$ exactly when $a'=0$, and $\psi$ is trivial on $\{0\}\times\{0\}\times H$ exactly when $i=0$. Let $K$ be the set of the $\psi\in\Psi_0$ with $a=a'=0$, so that $\chi_\psi$ runs over the primitive characters $\chi^{(i)}$ inducing $\psi_0^i$. Then $K$ contains the trivial character, $\psi(1,0,0)=1$ for $\psi\in K$, and the characters of $\Psi_0\setminus K$ are the characters with $(a,a')\ne(0,0)$.
+
+\emph{The functions $G_\psi$.} Let $S_0$ be the set of primes dividing $2qM_\psi$. For $p\in S_0$ the inertia group $I_p$ acts trivially on $\sqrt{-d}$, so $I_p\subset\Phi$, and $p$ splits in $\mathbb Q(\sqrt{-d})$, because $-d\equiv1\pmod8$, $-d\equiv1\pmod q$ and $-d\equiv1\pmod p$ for the odd primes $p\le Y^{\varepsilon/5}$, which include the prime factors of $M_\psi$ for large $Y$. So some Frobenius element $\sigma_p$ lies in $\Phi$. The inertia group at $d$ is $\{0,(1,0,0)\}$, and $E$ is unramified outside $2qdM_\psi$. Proposition~\ref{excess} therefore applies. For a prime $p$ and a character $\psi$, the average $\psi(p^i)$ of Proposition~\ref{excess} equals $\chi_\psi(p)^i$ when $\psi$ is trivial on $I_p$ and vanishes otherwise, and this is $\chi_\psi(p^i)$ because $\chi_\psi$ is primitive. Hence $G_\psi=G^\ast_{\chi_\psi}$ for nontrivial $\psi$ and $G_\psi=G$ for trivial $\psi$, and $\operatorname{Re}G_\psi=G_{\chi_\psi}$.
+
+\emph{The hypotheses of Theorem~\ref{step5}.} The set $T$ satisfies \eqref{equi} with $c=1/(3o+1)$ and $\nu=o\,x^{-1+\varepsilon}$ by Lemma~\ref{shares}. Theorem~A(i) and Proposition~\ref{nodes} give the bounds for the nodes, with $\eta'=W+mh_0$ and $b'X'=xb$, and the weights satisfy $\lvert a_t/b-x\rvert\le1$ by Proposition~\ref{nodes}(iii). Lemma~\ref{reg}(i) gives \eqref{L1}. Lemma~\ref{reg}(ii) gives \eqref{L2} with $M=\log(x+1)+C_d+\max_{\psi\in\Psi_0}\lvert\ell_\psi\rvert$. For $\psi\in K$ the number $\ell_\psi$ depends on $\psi_0$ alone, and for $\psi\in\Psi_0\setminus K$ Theorems~\ref{stage1}(ii) and~\ref{stage2}(ii) at the scale $Y_0$ with $K=J$ give $\lvert\ell_\psi\rvert\le401\,c_0J\log Y_0\le401\,c_0J\log x$, so $M\le C(\psi_0)\log x$ with a constant that depends on $\psi_0$ and $J$.
+
+\emph{The bound \eqref{L3}.} Let $\psi$ be a character of $\mathcal G$ and $N_\psi$ the conductor of $\chi_\psi$. It divides $N_1qd$ with $N_1\le2^{e+2}M_\psi\le8M_\psi n$, and $\log q\le Y_0^{\varepsilon/5}$, $\log d\le Y_0^{\varepsilon/5}\log^2Y_0$ with $Y_0\le x$, so $\log N_\psi\le\lambda:=A\,x^{\varepsilon/5}\log^2x$ for a constant $A$ and large $x$. If $\chi_\psi$ is real and $q$ or $d$ divides $N_\psi$, Corollary~\ref{realbox} with $M_1$ the odd part of $M_\psi$ shows that $L(\beta,\chi_\psi)\ne0$ for $1-\frac1{400}<\beta<1$. If $\chi_\psi$ is real and $N_\psi$ divides $N_1$, then $\chi_\psi$ is one of finitely many characters that depend on $M_\psi$ alone, because the real characters of $2$-power conductor have conductor at most $8$, and there is $c_\ast(M_\psi)>0$ such that none of these finitely many $L$-functions vanishes on $1-c_\ast<\beta<1$. Proposition~\ref{thinprop} with $c_\ast=\min(\frac1{400},c_\ast(M_\psi))$, and the remark after it for the trivial character, gives for $y\ge X'/3$, where $t_0=\log y\ge\frac12x^{\varepsilon/3}$,
+\[
+\frac{\lvert G_\psi(y)\rvert}{y}\le\frac2{c_\ast}e^{-c_\ast t_0}+C_1\lambda^4\Big(\frac{2\lambda}{c_1}e^{-c_1t_0/(2\lambda)}+\frac8{c_1^2}\Big(1+\frac{c_1\sqrt{t_0}}2\Big)e^{-c_1\sqrt{t_0}/2}\Big).
+\]
+Since $\frac13-\frac15>\frac18$ and $\frac16>\frac18$, the exponents $c_1t_0/(2\lambda)$ and $c_1\sqrt{t_0}/2$ exceed $2x^{\varepsilon/8}$ for large $x$, and the factors in front are powers of $x$. Hence \eqref{L3} holds with $\omega=\exp(-x^{\varepsilon/8})$, and Proposition~\ref{nodes}(iv) gives $2f(x+1)\omega\le1/x$.
+
+\emph{The conclusion at $x$.} By Theorem~A(ii) the hypothesis of Theorem~\ref{step5} on the excess holds with $\mathrm{Err}=x^{C\varepsilon}\mathcal B$. Proposition~\ref{ranks}(ii) gives the hypotheses of Proposition~\ref{sizes} with $N_T=\lvert T\rvert\ge\frac12\delta_1n$ and $N_2=\lvert T_2\rvert$. In the last hypothesis of Corollary~\ref{asm}, the term $\nu\sum_{\psi\in K}\lvert G_\psi(x)\rvert$ is at most $o\,x^{-1+\varepsilon}\cdot o\,B(\psi_0)x$, where $B(\psi_0)$ bounds $\lvert G^\ast_{\chi^{(i)}}(y)\rvert/y$ for the $o$ characters $\chi^{(i)}$, and $\lvert\Psi_0\rvert M\le4oC(\psi_0)\log x$. Both are smaller than $\frac3{26}x^{1/2}$ for large $x$. Corollary~\ref{asm} gives
+\[
+G(x)+\frac1{3o+1}\sum_{i=1}^{o-1}G_{\chi^{(i)}}(x)\le x^{1/2+(C+3)\varepsilon}+\sum_{\psi\in\Psi_0\setminus K}\lvert G_\psi(x)\rvert .
+\]
+Each $\psi\in\Psi_0\setminus K$ has $\chi_\psi=\xi(\frac{\cdot}{q})^a(\frac{\cdot}{d})^{a'}$ with $\xi$ primitive of conductor dividing $N_0$ and $(a,a')\ne(0,0)$, and $(\frac{\cdot}{q})$ and $(\frac{-q}{\cdot})$ induce the same primitive character because $q\equiv3\pmod4$. Theorems~\ref{stage1}(iii) and~\ref{stage2}(iii) at the scale $Y_0$ with $K=J$ give $\lvert G_\psi(x)\rvert\le\lvert G^\ast_{\chi_\psi}(x)\rvert\le x^{1/2+\varepsilon}$ for $Y_0\le x\le Y_0^J$, an interval that contains $[Y,Y^{3/2}]$. There are $3o$ such characters, so for large $x$
+\begin{equation}\label{finalbound}
+G(x)+\frac1{3o+1}\sum_{i=1}^{o-1}G_{\chi^{(i)}}(x)\le x^{1/2+(C+4)\varepsilon}\qquad(Y\le x\le Y^{3/2}).
+\end{equation}
+
+\emph{The zeros.} The bound \eqref{finalbound} holds on the windows $[Y,Y^{3/2}]$ for all large $Y$, the characters $\chi^{(i)}$ with $1\le i<o$ are nontrivial, and the weights $1/(3o+1)$ are positive. Corollary~\ref{corA} with $\lambda=\frac32$ and $\theta=\frac12+(C+4)\varepsilon$ gives $\zeta(s)\ne0$ and $L(s,\chi^{(i)})\ne0$ for $\operatorname{Re}s>\frac12+(C+4)\varepsilon$. The constant $C$ of Theorem~A does not depend on $\varepsilon$, and $\varepsilon$ is an arbitrary number in $(0,\varepsilon_1)$, so these functions do not vanish for $\operatorname{Re}s>\frac12$.
+When $o\ge2$ the character $\chi^{(1)}$ is $\psi_0$, and every choice of $\psi_0$ includes $\zeta$, so the theorem follows.
+\end{proof}

@@ -1,5 +1,17 @@
 # Status
 
+## 23 November 2026
+
+The current manuscript is [`manuscript/main.pdf`](manuscript/main.pdf), a 225-page working document. Reconciling the final dependency audit of 22 November with the manuscript clarified what the audit verdict below means. The audit closed the live Lean dependency graph at the level of dependency identification and mathematical packaging. Every live internal dependency had been located, assigned to a reconstructed component, or isolated behind an explicit boundary. The verdict `|R_internal| = 0` does **not** mean that every internal statement on that route has been written out with a complete conventional proof.
+
+The manuscript proves the Riemann hypothesis from the published theorems it cites and from a finite list of internal statements that it states precisely, as numbered hypotheses at their points of use, and does not yet prove. Section 19 of the manuscript collects these statements with their dependencies and gives the source-verification status of the cited published theorems. The manuscript therefore does **not yet** constitute a proof of the Riemann hypothesis independent of the Lean development.
+
+The open internal statements are the residual engines of the nondegeneracy of Hecke operators (Section 12), the normalization and odd-transfer statements for the theta lifts (Section 11), the automorphic inputs for Bessel Poincaré series (Section 14), the uniform covolume bound and a few norm and multiplicity statements in the height computation (Section 15), the bound for Tate–Shafarevich groups on windows and the congruence bound at the twisted places (Section 17), and the check that Sections 11 to 17 give the conditions on the chain used in the proof of Theorem A (Section 18). The bound for Tate–Shafarevich groups on windows implies a bound in the direction of Vandiver's conjecture that is stronger than the published bounds of Soulé (1999) and of de la Torre Durán (2026). The Lean development derives it from an automorphy statement for residually reducible Galois representations outside the hypotheses of the published automorphy lifting theorems for such representations. The manuscript does not claim this step.
+
+The sections below give the status of 22 November 2026. They are kept unchanged.
+
+## Status of 22 November 2026
+
 22 November 2026. This file is the current statement of the reconstruction state. It supersedes [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md) of 21 November 2026, which is kept as a historical record.
 
 The proof being reconstructed is Alpöge's formally verified proof. This repository does not claim an independent proof of RH by the reconstruction author.

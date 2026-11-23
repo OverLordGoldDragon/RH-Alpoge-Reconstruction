@@ -1,0 +1,618 @@
+\section{The lifts form a chain datum}\label{sec:lifts}
+
+This section defines the lattice tuples, the integral structures and the lifts of the chain at an inert prime, and verifies for them the axioms of a chain datum of Section~\ref{sec:chaindiv}. The verification uses three statements, (N1) on the normalization of the frame factor, (N2) on the passage from entries to lattices at the odd positions, and (N3) on the normalization of the base theta function. Theorem~\ref{r1:thm:R1main} assembles the verification, so that Theorem~\ref{lowterm} applies to the composite of the lifts.
+
+\subsection{The data at an inert prime}\label{r1:sec:R1data}
+
+\subsubsection{Orbits and positions}
+
+Let $E$, $K=\mathbb Q(\sqrt{-d})$, $E^+$ and the CM type $\Phi$ be as in Section~\ref{sec:chain}, and fix a prime $p\ge5$ that is inert in $K$ and unramified in $E$. Let $\mathbb C_p$, the isomorphism $\iota\colon\mathbb C\to\mathbb C_p$, the ring $W=W(\overline{\mathbb F}_p)$ with Frobenius $\sigma$, and $\mathcal K_0=W[1/p]$ be as in Section~\ref{sec:intmodel}. An \emph{orbit} is a place $v$ of $E^+$ above $p$ that splits in $E$. For every orbit $v$ we fix the place $w\mid v$ of $E$ for which $\iota|_K$ and the embedding $E\to E_w$ induce the same embedding of $K_p=\mathbb Q_{p^2}$, and we write $Q_v=E_w$, $W_v=\mathcal O_{E_w}$ and $n'_v=[Q_v:\mathbb Q_p]$. The field $Q_v$ contains $\mathbb Q_{p^2}$ and is unramified over $\mathbb Q_p$, so $n'_v=2\nu_v$ is even, $p$ is a uniformizer of $W_v$, and $W_v/pW_v$ has $p^{n'_v}$ elements. We fix an embedding $\rho_v\colon Q_v\to\mathcal K_0$ over $\iota|_{K}$ and write $\sigma$ also for the Frobenius of $Q_v$.
+
+The orbit $v$ has $n'_v$ \emph{positions} $s\in\mathbb Z/n'_v$. For an even position $s$ the embedding $x\mapsto\sigma^s(\rho_v(x))$ of $E$ into $\mathbb C_p$ is $\iota\circ\tau$ for a unique $\tau\in\Phi$, because its restriction to $K$ is $\sigma^s\circ\iota|_K=\iota|_K$. For an odd position $s$ the embedding $x\mapsto\sigma^s(\rho_v(\bar x))$ has restriction $\sigma^{s+1}\circ\iota|_K=\iota|_K$ to $K$, so it is $\iota\circ\tau$ for a unique $\tau\in\Phi$. We write $\tau_{v,s}$ for this element of $\Phi$. Thus
+\begin{equation}\label{r1:eq:pos}
+\iota\big(\tau_{v,s}(x)\big)=\begin{cases}\sigma^s\big(\rho_v(x)\big)&s\ \text{even},\\ \sigma^s\big(\rho_v(\bar x)\big)&s\ \text{odd},\end{cases}\qquad x\in E .
+\end{equation}
+The even positions of $v$ induce the place $w$ and the odd positions induce $\bar w$. Distinct pairs $(v,s)$ give distinct elements of $\Phi$. The elements of $\Phi$ that are not of the form $\tau_{v,s}$ induce places of $E$ above $p$ that are inert over $E^+$.
+
+\subsubsection{Ranks and weights}
+
+Fix integers $k_1\ge1$, $t\ge0$, $m\ge1$ and $1\le r$ with $2r\le k_1+1$, and put
+\[
+N_j=k_1+1+j(t+1)\qquad(0\le j\le m).
+\]
+For each orbit $v$ fix a set $\mathcal T_v$ of positions (the tops), integers $a_s,b_s$, an integer $c\ge0$, a dominant weight $\lambda^{(0)}_{v,s}\in\mathbb Z^{N_0}$ for each position, and integers $w_l(v,s)$ for $1\le l\le m$, subject to the following conditions.
+\begin{enumerate}
+\item[(W1)] For $s\in\mathcal T_v$, $\lambda^{(0)}_{v,s}(1)=a_s$, $\lambda^{(0)}_{v,s}(N_0)=-b_s$ and $\lvert\lambda^{(0)}_{v,s}(i)\rvert\le c$ for $1<i<N_0$. For $s\notin\mathcal T_v$, $\lvert\lambda^{(0)}_{v,s}(i)\rvert\le c$ for all $i$.
+\item[(W2)] $w_1(v,s)\ge\max\big(c,-\lambda^{(0)}_{v,s}(N_0)\big)$ and $w_l(v,s)\le w_{l+1}(v,s)$ for $1\le l<m$.
+\end{enumerate}
+The weight of level $j$ at $(v,s)$ is
+\[
+\lambda^{(j)}_{v,s}=\big(\lambda^{(0)}_{v,s}(1),\dots,\lambda^{(0)}_{v,s}(N_0),\ \underbrace{-w_1,\dots,-w_1}_{t+1},\ \dots,\ \underbrace{-w_j,\dots,-w_j}_{t+1}\big)\in\mathbb Z^{N_j},
+\]
+with $w_l=w_l(v,s)$. It is dominant by (W2). The \emph{model weight} at $(v,s)$ is $\lambda^{(j)}_{v,s}$ for even $s$ and its dual $\big(\lambda^{(j)}_{v,s}\big)^{\ast}=(-\lambda(N_j),\dots,-\lambda(1))$ for odd $s$. We write $\lambda^{\natural}=\lambda^{\natural,(j)}_{v,s}$ for the model weight, $\nu^{\natural}=\lambda^{\natural}-\lambda^{\natural}(N_j)\in\mathbb Z_{\ge0}^{N_j}$ for its normalization, and
+\begin{equation}\label{r1:eq:numbers}
+\alpha_s=\begin{cases}\lambda^{(0)}_{v,s}(1)-\lambda^{(0)}_{v,s}(2)&s\in\mathcal T_v,\\0&s\notin\mathcal T_v,\end{cases}\qquad
+\mu_v(j)=\sum_{s\ \mathrm{even}}w_j(v,s)-\sum_{s\ \mathrm{odd}}w_j(v,s).
+\end{equation}
+We also write $\nu^{(j)}_{v,s}=\lambda^{(j)}_{v,s}-\lambda^{(j)}_{v,s}(N_j)$ at every position; at even positions $\nu^{(j)}_{v,s}=\nu^{\natural,(j)}_{v,s}$. The numbers of the shape of Section~\ref{sec:valuation} at level $j\ge1$ are read from $\nu^{(j)}_{v,s}$ at all positions, as in Lemma~\ref{r1:lem:shape} below. The weights $\lambda^{(j)}_{v,s}$ are the weights $\lambda_\tau$ of the step kernel \eqref{stepkernel} at $\tau=\tau_{v,s}$.
+
+\subsubsection{Polynomial models and their minimal lattices}
+
+Let $\mathcal O$ be the ring of integers of a finite extension $\cK$ of $\mathcal K_0$ in $\mathbb C_p$ that contains an element $\varpi$ with $\varpi^{p^2-1}=p$, and let $\pi$ be a uniformizer of $\mathcal O$. For $n\ge1$ and $\nu\in\mathbb Z^n_{\ge0}$ nonincreasing, let $\cK[X]$ be the polynomial ring in the entries $X_{ab}$ of an $n\times n$ matrix. The group $\GL_n$ acts on $\cK[X]$ through rows, $(g\cdot F)(X)=F(g^{\mathsf T}X)$, and the column operations commute with this action.
+
+\begin{definition}\label{r1:def:models}
+(i) The \emph{polynomial model} $V_\nu\subset\cK[X]$ is the space of polynomials $F$ that are homogeneous of degree $\nu_b$ in the entries of column $b$ for every $b$, and are invariant under the substitutions $X_{\cdot,b}\mapsto X_{\cdot,b}+cX_{\cdot,l}$ for $l<b$ and $c\in\cK$.
+
+(ii) For $1\le h\le n$ and a set $S=\{s_1<\dots<s_h\}$ of rows, put $\Delta_S=\det(X_{s_i,k})_{1\le i,k\le h}$, the minor on the rows $S$ and the first $h$ columns. Let $h_1\ge h_2\ge\dots\ge h_{\nu_1}$ be the column heights of $\nu$, so that $h_c=\#\{i:\nu_i\ge c\}$. A \emph{canonical bideterminant} of shape $\nu$ is a product $\Delta_{S_1}\cdots\Delta_{S_{\nu_1}}$ with $\#S_c=h_c$.
+
+(iii) The \emph{minimal lattice} $\Wl_\nu\subset V_\nu$ is the $\mathcal O$-span of the canonical bideterminants of shape $\nu$.
+\end{definition}
+
+Each canonical bideterminant lies in $V_\nu$, because a minor on the first $h$ columns has degree one in each of these columns and is invariant under adding an earlier column to a later one among them. The space $V_\nu$ is the induced module $H^0(\nu)$ of $\GL_n$, and $\Wl_\nu$ is the Weyl module over $\mathcal O$, the span of the images of the highest weight vector $\Delta_{\{1\}}^{\nu_1-\nu_2}\cdots$ under the divided powers of the lowering operators. We use the following published form of this description.
+
+\begin{theorem}[Green; De Concini--Eisenbud--Procesi]\label{r1:thm:bidet}
+For every commutative ring $R$ the $R$-span of the canonical bideterminants of shape $\nu$ in $R[X]$ is a free $R$-module with basis the canonical bideterminants whose row sets form a standard tableau, it is stable under the row action of $\GL_n(R)$, and its formation commutes with base change in $R$.
+\end{theorem}
+
+\noindent Only the stability under $\GL_n(\mathcal O)$ is used below, and it has a one-line proof: for $g\in\GL_n(\mathcal O)$ the Cauchy--Binet formula gives $\Delta_S(g^{\mathsf T}X)=\sum_{\#T=\#S}\det\big((g^{\mathsf T})_{S,T}\big)\Delta_T(X)$, so the row action maps a canonical bideterminant to an $\mathcal O$-linear combination of canonical bideterminants of the same shape; the same computation applies to a rectangular matrix of indeterminates.
+
+\begin{definition}\label{r1:def:H}
+Let $(v,s)$ be a position, $j$ a level, and $\Lambda\subset Q_v^{N_j}$ a $W_v$-lattice. Choose $g\in\GL_{N_j}(Q_v)$ whose columns form a basis of $\Lambda$, and let $g_s=\sigma^s(\rho_v(g))\in\GL_{N_j}(\cK)$. Put
+\[
+H_{s}(\Lambda)=\det(g_s)^{-\lambda^\natural(N_j)}\ \big\{F(g_s^{-1}\,\cdot\,):\ F\in\Wl_{\nu^\natural}\big\}\subset V_{\nu^\natural},
+\]
+that is, $F\in H_s(\Lambda)$ exactly when $\det(g_s)^{\lambda^\natural(N_j)}F(g_s^{\mathsf T}X)$ lies in $\Wl_{\nu^\natural}$ (we write the row action as substitution of $g_s^{\mathsf T}X$ for $X$, so that $F(g_s^{-1}\cdot)$ means the inverse substitution). For a lattice tuple $L=(L_v)_v$ of level $j$ put
+\[
+\cX_j=\bigotimes_v\bigotimes_{s\in\mathbb Z/n'_v}V_{\nu^{\natural,(j)}_{v,s}},\qquad H_j(L)=\bigotimes_v\bigotimes_sH_s(L_v),
+\]
+the tensor product of $\mathcal O$-lattices inside the tensor product of $\cK$-spaces.
+\end{definition}
+
+The lattice $H_s(\Lambda)$ does not depend on the basis $g$, because two bases differ by an element of $\GL_{N_j}(W_v)$, whose image under $\sigma^s\circ\rho_v$ lies in $\GL_{N_j}(\mathcal O)$, and $\Wl_{\nu}$ is stable under $\GL_{N_j}(\mathcal O)$ by Theorem~\ref{r1:thm:bidet}, while the determinant of such an element is a unit.
+
+\begin{lemma}[Edges]\label{r1:lem:edge}
+Let $(\Lambda'',\Lambda)$ be an edge of type $i$ at the orbit $v$ in the sense of Section~\ref{sec:onelift}, that is $p\Lambda\subset\Lambda''\subset\Lambda$ and $\dim_{k_v}\Lambda/\Lambda''=i$. Then for every position $s$
+\[
+p^{\sum_{a\le i}\lambda^{\natural}(a)}\,H_s(\Lambda'')\subset H_s(\Lambda),
+\]
+where $\lambda^\natural=\lambda^{\natural,(j)}_{v,s}$.
+\end{lemma}
+
+\begin{proof}
+By the elementary divisor theorem there is a basis $g$ of $\Lambda$ such that $g\,d$ is a basis of $\Lambda''$, with $d=\operatorname{diag}(p,\dots,p,1,\dots,1)$ and $i$ entries equal to $p$. Put $h=\lambda^\natural(N_j)$ and $\nu=\nu^\natural$. Then $\det((gd)_s)=p^i\det(g_s)$ and
+\[
+H_s(\Lambda'')=p^{-ih}\det(g_s)^{-h}\,\big\{F(d^{-1}g_s^{-1}\,\cdot\,):F\in\Wl_\nu\big\}.
+\]
+For a canonical bideterminant $B=\prod_c\Delta_{S_c}$, the substitution of $d^{-1}X$ for $X$ divides the rows with index at most $i$ by $p$, so it multiplies $B$ by $p^{-\sum_c\#(S_c\cap\{1,\dots,i\})}$. Since $\#(S_c\cap\{1,\dots,i\})\le\min(h_c,i)$ and $\sum_c\min(h_c,i)=\sum_{a\le i}\nu(a)$, the polynomial $p^{\sum_{a\le i}\nu(a)}B(d^{-1}X)$ is a multiple of $B$ by an element of $\mathcal O$. Hence $p^{\sum_{a\le i}\nu(a)+ih}H_s(\Lambda'')\subset H_s(\Lambda)$, and $\sum_{a\le i}\nu(a)+ih=\sum_{a\le i}\lambda^\natural(a)$.
+\end{proof}
+
+\subsubsection{Components, global lattices, forms}
+
+\begin{definition}\label{r1:def:chain}
+The \emph{chain at $p$} consists of the following data for each level $0\le j\le m$.
+\begin{enumerate}
+\item[(a)] The set $\cL_j$ of \emph{lattice tuples} $L=(L_v)_v$, with $L_v$ a $W_v$-lattice in $Q_v^{N_j}$ for every orbit $v$.
+\item[(b)] A finite set $C_j$ of \emph{components}. Each $c\in C_j$ comes with frames $\varphi_{c,v}\in\GL_{N_j}(Q_v)$ for every orbit $v$ and with a map $L\mapsto N_j(c,L)$ from $\cL_j$ to self-dual $\mathcal O_E$-lattices in $E^{N_j}$ for the standard form $h_{N_j}$ of Section~\ref{sec:fock}, such that the completion of $N_j(c,L)$ at $w$ is $\varphi_{c,v}(L_v)$ under $\rho_v$, and such that the completions of $N_j(c,L)$ at all places other than the places $w,\bar w$ above orbits do not depend on $L$.
+\item[(c)] For each $c\in C_j$ a subgroup $\Gamma_{j,c}$ of the unitary group $U_{N_j}=U(h_{N_j})(E)$ that preserves the completions of $N_j(c,L)$ at all places other than the $w,\bar w$, together with a character $\chi_{j,c}\colon\Gamma_{j,c}\to\mathcal O^\times$. An element $\gamma\in\Gamma_{j,c}$ acts on $\cL_j$ by $(\gamma L)_v=\varphi_{c,v}^{-1}\rho_v(\gamma)\varphi_{c,v}L_v$, so that $N_j(c,\gamma L)=\gamma N_j(c,L)$, and on $\cX_j$ by
+\[
+\rho_{j,c}(\gamma)=\chi_{j,c}(\gamma)\bigotimes_{v,s}\det(\gamma_{v,s})^{-\lambda^\natural(N_j)}\,\big(F\mapsto F(\gamma_{v,s}^{-1}\,\cdot\,)\big),\qquad\gamma_{v,s}=\sigma^s\big(\rho_v(\varphi_{c,v}^{-1}\gamma\varphi_{c,v})\big).
+\]
+\end{enumerate}
+A \emph{form} of level $j$ is a function $F$ on $C_j\times\cL_j$ with values in $\cX_j$ such that $F(c,\gamma L)=\rho_{j,c}(\gamma)F(c,L)$ for $\gamma\in\Gamma_{j,c}$. The form is \emph{integral} when $F(c,L)\in H_j(L)$ for all $(c,L)$. We write $\cF_j$ and $\Int_j$ as in Definition~\ref{chaindatum}.
+\end{definition}
+
+In the normalization of Proposition~\ref{covariance}(iii) the character $\chi_{j,c}$ is trivial. A character with values in $\mathcal O^\times$ would change nothing below. Under $\iota$ and~\eqref{r1:eq:pos}, $\rho_{j,c}$ is the action of Section~\ref{sec:kernels} on the polynomial models of the weights $\lambda_\tau$, transported at the odd positions by the isomorphism between the model of a weight with the action $g\mapsto(g^{-1})^{\mathsf T}$ and the model of the dual weight with the action $g$; at an odd position $\iota\tau_{v,s}(\gamma)=\sigma^s\rho_v(\bar\gamma)$ and $\bar\gamma=(\gamma^{-1})^{\mathsf T}$ for a unitary matrix in an orthonormal basis.
+
+Since $\gamma_{v,s}$ maps a basis of $(L_v)_s$ to a basis of $((\gamma L)_v)_s$, the action $\rho_{j,c}(\gamma)$ maps $H_j(L)$ onto $H_j(\gamma L)$. This is property (b) of Definition~\ref{chaindatum}. The forms of level $j$ are the vector-valued automorphic forms of weight $(\lambda_\tau)_{\tau\in\Phi}$ on the definite unitary group of rank $N_j$ with the level structure fixed by the components, written in the coordinates of the orbits; under $\iota$ the polynomial model at $(v,s)$ is the polynomial model of the archimedean weight at $\tau_{v,s}$ by~\eqref{r1:eq:pos}.
+
+\begin{lemma}[Finiteness]\label{r1:lem:finite}
+For every $j$ and $c$, the set $\Gamma_{j,c}\backslash\cL_j$ is finite and every stabilizer $\Gamma_{j,c,L}$ is finite.
+\end{lemma}
+
+\begin{proof}
+The stabilizer of $L$ is a subgroup of the group of $\mathcal O_E$-linear automorphisms of $N_j(c,L)$ that preserve $h_{N_j}$. This group preserves the positive definite quadratic form $\Tr_{E/\mathbb Q}h_{N_j}(x,x)$ on the lattice $N_j(c,L)\cong\mathbb Z^{2fN_j}$, $2f=[E:\mathbb Q]$, so it is a discrete subgroup of a compact orthogonal group, hence finite. The orbits of $\Gamma_{j,c}$ on $\cL_j$ correspond to the classes in the genus of $N_j(c,L_0)$ for the level group, and the number of such classes is finite by the finiteness of class numbers of a reductive group over a number field~\cite[Theorem~5.1]{borel63}, applied to the unitary group of $h_{N_j}$ and the open compact subgroup that the components fix.
+\end{proof}
+
+\subsubsection{Hecke operators}
+
+\begin{definition}\label{r1:def:hecke}
+For an orbit $v$, a level $j$ and $0\le i\le N_j$, the \emph{raw Hecke operator} $T^{\mathrm{raw},(j)}_{v,i}$ on $\cF_j$ is
+\[
+\big(T^{\mathrm{raw},(j)}_{v,i}F\big)(c,L)=\sum_{L_1}F(c,L[v\leftarrow L_1]),
+\]
+the sum over the lattices $L_1$ with $(L_1,L_v)$ an edge of type $i$, where $L[v\leftarrow L_1]$ is $L$ with its component at $v$ replaced by $L_1$. For $j\ge1$ and $0\le i\le r$ put
+\begin{equation}\label{r1:eq:Nprime}
+N'_v(j,i)=\sum_{s\ \mathrm{even}}\sum_{a\le i}\lambda^{(0)}_{v,s}(a)+i\sum_{s\ \mathrm{odd}}w_j(v,s),
+\end{equation}
+and $T^{(j)}_{v,i}=p^{N'_v(j,i)}T^{\mathrm{raw},(j)}_{v,i}$. Put $A_v=\sum_s\sum_{a\le r}\lambda^{\natural,(0)}_{v,s}(a)$ and $y_v=p^{A_v}T^{\mathrm{raw},(0)}_{v,r}$.
+\end{definition}
+
+For $j\ge1$ and $i\le r$,
+\begin{equation}\label{r1:eq:Nprimeineq}
+N'_v(j,i)\ge\sum_s\sum_{a\le i}\lambda^{\natural,(j)}_{v,s}(a),
+\end{equation}
+with equality when $i\le t+1$. Indeed at an even position the first $i\le r\le k_1+1$ entries of $\lambda^{(j)}_{v,s}$ are those of $\lambda^{(0)}_{v,s}$, and at an odd position the first $i$ entries of the dual weight are $w_j,w_j,\dots$ followed, after $t+1$ entries, by $w_{j-1},\dots$, each at most $w_j$ by (W2).
+
+\begin{lemma}\label{r1:lem:heckeint}
+For every orbit $v$, level $j$ and $0\le i\le r$, the operator $T^{(j)}_{v,i}$ maps $\cF_j$ to $\cF_j$ and $\Int_j$ into $\Int_j$. The operators $y_v$ commute with each other and map $\Int_0$ into itself. Thus (D2) of Definition~\ref{heckecomm} holds for the operators $y_v$.
+\end{lemma}
+
+\begin{proof}
+The family of edges at $v$ is equivariant for $\Gamma_{j,c}$, so the operators map forms to forms, as after Definition~\ref{chaindatum}. If $F\in\Int_j$ and $(L_1,L_v)$ is an edge of type $i$, then $F(c,L[v\leftarrow L_1])\in H_j(L[v\leftarrow L_1])$, and Lemma~\ref{r1:lem:edge}, applied at each position of $v$ and tensored with the unchanged factors at the other orbits, gives $p^{\sum_s\sum_{a\le i}\lambda^{\natural,(j)}_{v,s}(a)}H_j(L[v\leftarrow L_1])\subset H_j(L)$. By~\eqref{r1:eq:Nprimeineq} the same holds with the exponent $N'_v(j,i)$ for $j\ge1$, and for $j=0$, $i=r$ the exponent is $A_v$, which is the statement for $y_v$. Operators at distinct orbits act on distinct components of the tuple, so they commute.
+\end{proof}
+
+\subsection{The lifts as class sums}\label{r1:sec:R1lift}
+
+\subsubsection{The kernel series of a pair of tuples}
+
+For $(c,L)\in C_j\times\cL_j$ and $(c',L')\in C_{j+1}\times\cL_{j+1}$ put $N=N_j(c,L)$ and $N'=N_{j+1}(c',L')$. Section~\ref{sec:kernels} attaches to $(N,N')$, to the level $c_{\mathrm{lev}}$, to the finite set $S$ of primes of $E$, and to a function $\Xi=\Xi_{(c,L),(c',L')}$ on $M^A_{c_{\mathrm{lev}}}(N,N')$ that is periodic under $M^A\cap M^B$, the kernel $\theta_{N,N'}[\Xi]$ of~\eqref{datumkernel}. The function $\Xi$ depends on the components $c,c'$ and on the frames at the bad primes, and not on $L_v$ or $L'_v$ (Section~\ref{r1:sec:R1split}). We use the coordinates of the Fock space $V=\prod_{\tau\in\Phi}M_{N_{j+1}\times N_j}(\mathbb C)$ in which the entry $(b,a)$ at $\tau_{v,s}$ is
+\begin{equation}\label{r1:eq:coords}
+z_{\tau_{v,s},b,a}=u\,\varepsilon^{-1}\,X_{v,s,a,b}\qquad\text{after the frames }\varphi_{c',v}\text{ and }\varphi_{c,v},
+\end{equation}
+with $u$ and $\varepsilon$ as in Proposition~\ref{goodmodel} and Proposition~\ref{ltiso}, and with the coordinates at the elements of $\Phi$ outside the orbits set to zero. Precisely, for even $s$ the matrix $(z_{\tau_{v,s},b,a})_{b,a}$ is $\sigma^s\rho_v(\varphi_{c',v})\,Z\,\sigma^s\rho_v(\varphi_{c,v})^{-1}$ with $Z=u\varepsilon^{-1}(X_{v,s,a,b})_{b,a}$, and for odd $s$ it is $\big(\sigma^s\rho_v(\varphi_{c,v})\,Z^{\mathsf T}\,\sigma^s\rho_v(\varphi_{c',v})^{-1}\big)^{\mathsf T}$, which is the transport of structure by the frames on the conjugate component.
+
+\begin{definition}\label{r1:def:kseries}
+The \emph{kernel series} of the pair is the power series
+\[
+\mathfrak K_j(c,L;c',L')=s_j(c,L;c',L')\cdot\iota\Big(\text{Taylor expansion at }0\text{ of }\chi_F(N,N')^{-1}\,\theta_{N,N'}[\Xi]\Big)\in\mathbb C_p[[X_{v,s,a,b}]]
+\]
+in the variables of~\eqref{r1:eq:coords}, where $\chi_F$ is the character factor of Section~\ref{sec:kernels} and $s_j$ is the scalar normalization of the step kernel~\eqref{stepkernel}, namely the frame factor $\mu(N,\mathrm{fr})/\mu(N',\mathrm{fr}')$ times the determinant twists of the jet operator and the factor $p^{\sum_v\mu_v(j+1)(\len L'_v-\len L_v)}$. Here $\len$ is the length of Section~\ref{sec:onelift}. The \emph{step map} $\kappa_j(c,L;c',L')\colon\cX_j\to\cX_{j+1}$ is
+\[
+\kappa_j(c,L;c',L')(G)=p^{\sum_v\mu_v(j+1)(\len L_v-\len L'_v)}\,\mathcal J_j\big(G,\mathfrak K_j(c,L;c',L')\big),
+\]
+where $\mathcal J_j$ is the jet operator of~\eqref{stepkernel} written in the variables $X_{v,s,a,b}$, that is, the pairing of the Taylor coefficients of the series (with the factorials of Section~\ref{sec:valuation}) against the polynomial obtained from $G$ by the substitution of Section~\ref{r1:sec:R1ent}.
+\end{definition}
+
+The two powers of $p$ in Definition~\ref{r1:def:kseries} cancel in $\kappa_j$. They are separated because the kernel series, and not the step map, is the object to which Theorem~\ref{kernellaw} and Proposition~\ref{r1:prop:S3} apply.
+
+\subsubsection{The lifts}
+
+\begin{definition}\label{r1:def:lift}
+Fix for each $j$ a set $R_j\subset C_j\times\cL_j$ that contains exactly one pair $(c,L)$ from each orbit of $\Gamma_{j,c}$ on $\{c\}\times\cL_j$, for every $c$. The \emph{lift} $K_j\colon\cF_j\to\cF_{j+1}$ is
+\[
+(K_jF)(c',L')=c_K\sum_{(c,L)\in R_j}\frac1{\lvert\Gamma_{j,c,L}\rvert}\,\kappa_j(c,L;c',L')\big(F(c,L)\big),
+\]
+with $c_K\in\mathcal O^\times$ the normalizing unit of the lift.
+\end{definition}
+
+The sum is finite by Lemma~\ref{r1:lem:finite}. The value $(K_jF)(c',L')$ does not depend on the choice of $R_j$, and $K_jF$ is a form, by the covariance of the step maps:
+
+\begin{lemma}[Covariance]\label{r1:lem:S2}
+For $\gamma\in\Gamma_{j,c}$ and $\gamma'\in\Gamma_{j+1,c'}$,
+\[
+\kappa_j(c,\gamma L;c',\gamma'L')\circ\rho_{j,c}(\gamma)=\rho_{j+1,c'}(\gamma')\circ\kappa_j(c,L;c',L').
+\]
+\end{lemma}
+
+\begin{proof}
+The two powers of $p$ in Definition~\ref{r1:def:kseries} cancel, so $\kappa_j(c,L;c',L')$ is the map defined by the step kernel~\eqref{stepkernel} of the pair $(N_j(c,L),N_{j+1}(c',L'))$ with its frames and data function, written in the coordinates~\eqref{r1:eq:coords}. Proposition~\ref{covariance}(iii) gives the identity for the step kernels of the moved data, with the moved data function $\Xi\circ\operatorname{Ad}(\gamma,\gamma')^{-1}$. The data function of $(c,\gamma L;c',\gamma'L')$ is this moved function, because the frames at the bad primes are moved by $\gamma$ and $\gamma'$ together with the lattices. The coordinates~\eqref{r1:eq:coords} for $(c,\gamma L)$ and $(c,L)$ use the same frames $\varphi_{c,v}$, and in these coordinates the substitution $D\mapsto hDg$ of the proof of Proposition~\ref{covariance}(iii) is the action $\rho_{j,c}(\gamma)$, $\rho_{j+1,c'}(\gamma')$ on the models, by the transport described after Definition~\ref{r1:def:chain}.
+\end{proof}
+
+Lemma~\ref{r1:lem:S2} with $\gamma'=1$ is the covariance $\kappa_j(c,\gamma L;c',L')\circ\gamma=\kappa_j(c,L;c',L')$ of (S2) in Definition~\ref{splitkernel}, where $\gamma$ acts on $\cX_j$ by $\rho_{j,c}(\gamma)$.
+
+\subsubsection{Denominators: the condition (D1)}
+
+\begin{definition}\label{r1:def:DGamma}
+For $n\ge1$ put
+\[
+M(n)=\prod_{\ell\ \mathrm{prime}}\ell^{\,\sum_{k\ge0}\lfloor n/(\ell^k(\ell-1))\rfloor},
+\]
+a finite product since the exponent vanishes for $\ell>n+1$. Put $D_\Gamma=M(2fN_m)$ with $2f=[E:\mathbb Q]$.
+\end{definition}
+
+\begin{theorem}[Minkowski]\label{r1:thm:mink}
+The order of every finite subgroup of $\GL_n(\mathbb Z)$ divides $M(n)$.
+\end{theorem}
+
+\begin{proposition}[(D1) for the true lifts]\label{r1:prop:D1}
+For every $j<m$ the lift $K_j$ satisfies (D1) of Definition~\ref{chaindatum} with $\kappa_j$ of Definition~\ref{r1:def:kseries}, with the family $(c_x,L_x)=R_j$, with $w_x=c_K^{-1}\lvert\Gamma_{j,c,L}\rvert$, and with
+\[
+d_j=\ord_p D_\Gamma=\sum_{k\ge0}\Big\lfloor\frac{2fN_m}{p^k(p-1)}\Big\rfloor .
+\]
+In particular $d_j=0$ when $p>2fN_m+1$.
+\end{proposition}
+
+\begin{proof}
+The formula of Definition~\ref{r1:def:lift} is the formula of (D1) with these choices. The group $\Gamma_{j,c,L}$ is finite by Lemma~\ref{r1:lem:finite}, and it acts faithfully on $N_j(c,L)$, a free $\mathbb Z$-module of rank $2fN_j\le2fN_m$. Theorem~\ref{r1:thm:mink} gives $\lvert\Gamma_{j,c,L}\rvert\mid M(2fN_j)$, and $M(2fN_j)\mid M(2fN_m)$ because the exponents are nondecreasing in $n$. Since $c_K$ is a unit, $\ord(w_x)=\ord_p\lvert\Gamma_{j,c,L}\rvert\le\ord_pD_\Gamma$.
+\end{proof}
+
+\begin{remark}
+In the formulation of Definition~\ref{r1:def:lift} all lifts are class sums of the same form, and the separate treatment is the bookkeeping that identifies the classes of the datum with the orbits of $\Gamma_{j,c}$ on $\cL_j$, with equal stabilizers.
+\end{remark}
+
+\subsection{The kernel as a finite Fourier transform}\label{r1:sec:R1fourier}
+
+This section proves that it coincides with the kernel~\eqref{datumkernel} of Section~\ref{sec:kernels}. We use the notation of Section~\ref{sec:kernels}: $\Lambda=\Lambda(N,N')$, $A=A_c(N,N')$, $B=B_c(N,N')$, the semicharacter $\alpha$, the operators $U_y$ and $e=e(N,N')$.
+
+\begin{lemma}\label{r1:lem:ABinLambda}
+$A\cap B\subset\Lambda$.
+\end{lemma}
+
+\begin{proof}
+Outside $S\cup\bar S$ the three lattices $M^A_c$, $M^B_c$, $M$ have the same localizations. At $P\in S$, $(M^A_c)_P\cap(M^B_c)_P=c^{-1}M_P\cap cM_P=cM_P\subset M_P$, and at $\bar P$ the intersection is $cM_{\bar P}\subset M_{\bar P}$. Hence $M^A_c\cap M^B_c\subset M$, and applying $\iota$ gives the claim.
+\end{proof}
+
+\begin{definition}\label{r1:def:fourier}
+Let $S_A$ represent $(\Lambda\cap A)/(\Lambda\cap A\cap B)$, $S_B$ represent $B/(B\cap\Lambda)$, and $S_X$ represent $A/(A\cap\Lambda)$. For a function $\Phi$ on $A$ that is periodic under $A\cap B$, put
+\[
+\widehat\Phi(y)=\frac1{\#S_A}\sum_{t\in S_A}\Phi(t)\,e^{2\pi iE_H(t,y)}\qquad(y\in B),
+\]
+\[
+\xi_S[\Phi]=\sum_{y\in S_B}\widehat\Phi(y)\,\alpha(y)\,U_ye,\qquad\xi_L[\Phi]=\sum_{x\in S_X}\alpha(x)\,U_x\big(\xi_S[\Phi(\cdot-x)]\big).
+\]
+\end{definition}
+
+\begin{proposition}\label{r1:prop:fourier}
+The summands in Definition~\ref{r1:def:fourier} do not depend on the representatives, and for every $\Phi$ on $A$ periodic under $A\cap B$,
+\[
+\xi_S[\Phi]=\sum_{t\in S_A}\Phi(t)\,\alpha(t)\,U_{-t}\,G,\qquad
+\xi_L[\Phi]=\sum_{x\in A/(A\cap B)}\Phi(x)\,\alpha(x)\,U_{-x}\,G,
+\]
+with $G=G_c(N,N')=[\Lambda\cap A:\Lambda\cap A\cap B]^{-1}\sum_{y\in B/(\Lambda\cap B)}\alpha(y)U_ye$. In particular, for $\Phi=\Xi\circ\iota^{-1}$ the function $\xi_L[\Phi]$ is the kernel $\theta_{N,N'}[\Xi]$ of~\eqref{datumkernel}.
+\end{proposition}
+
+\begin{proof}
+The operators satisfy $U_xU_y=e^{-\pi iE_H(x,y)}U_{x+y}$, hence $U_xU_y=e^{-2\pi iE_H(x,y)}U_yU_x$. Since $e\in\Theta(\Lambda)$, $\alpha(\lambda)U_\lambda e=e$ for $\lambda\in\Lambda$.
+
+\emph{The first identity.} Let $t\in\Lambda\cap A$. For $y\in B$,
+\[
+\alpha(-t)U_{-t}U_ye=e^{-2\pi iE_H(-t,y)}U_y\big(\alpha(-t)U_{-t}e\big)=e^{2\pi iE_H(t,y)}U_ye .
+\]
+Summing over $y\in S_B$ with the weights $\alpha(y)$ gives $\alpha(t)U_{-t}G=[\Lambda\cap A:\Lambda\cap A\cap B]^{-1}\sum_{y\in S_B}e^{2\pi iE_H(t,y)}\alpha(y)U_ye$, where $\alpha(-t)=\alpha(t)$ because $\alpha$ depends on $q(t)=q(-t)$. Multiplying by $\Phi(t)$ and summing over $t\in S_A$ gives $\xi_S[\Phi]$, since $\#S_A=[\Lambda\cap A:\Lambda\cap A\cap B]$. The summand $\Phi(t)\alpha(t)U_{-t}G$ depends on $t$ modulo $\Lambda\cap A\cap B$: for $m\in A\cap B$ the term changes by $\alpha(t+m)U_{-t-m}G=\alpha(t)U_{-t}G$, as shown in Section~\ref{sec:kernels} after~\eqref{kernelcx}, and $\Phi(t+m)=\Phi(t)$. The term $e^{2\pi iE_H(t,y)}\alpha(y)U_ye$ depends on $y$ only modulo $B\cap\Lambda$: for $\lambda\in B\cap\Lambda$, $\alpha(y+\lambda)U_{y+\lambda}e=e^{2\pi iE_H(y,\lambda)}\alpha(y)U_y\,\alpha(\lambda)U_\lambda e=\alpha(y)U_ye$, because $E_H(y,\lambda)\in\mathbb Z$ for $y,\lambda$ in the self-dual lattice $B$, and $e^{2\pi iE_H(t,\lambda)}=1$ because $t,\lambda\in\Lambda$.
+
+\emph{The second identity.} By the first identity,
+\[
+\xi_L[\Phi]=\sum_{x\in S_X}\sum_{t\in S_A}\Phi(t-x)\,\alpha(x)\alpha(t)\,U_xU_{-t}\,G .
+\]
+For $x\in A$ and $t\in\Lambda\cap A\subset A$, the semicharacter law on the admissible lattice $A$ gives $\alpha(t-x)=\alpha(t)\alpha(x)e^{\pi iE_H(t,-x)}$, and $U_xU_{-t}=e^{-\pi iE_H(x,-t)}U_{x-t}=e^{\pi iE_H(x,t)}U_{-(t-x)}$. Since $E_H(t,-x)=E_H(x,t)$, we get $\alpha(x)\alpha(t)U_xU_{-t}=\alpha(t-x)U_{-(t-x)}$. So $\xi_L[\Phi]=\sum_{x,t}\Phi(u)\alpha(u)U_{-u}G$ with $u=t-x$. The map $(x,t)\mapsto t-x$ from $S_X\times S_A$ to $A/(A\cap\Lambda\cap B)$ is a bijection, because $S_X$ represents $A/(A\cap\Lambda)$ and $S_A$ represents $(A\cap\Lambda)/(A\cap\Lambda\cap B)$. By Lemma~\ref{r1:lem:ABinLambda}, $A\cap\Lambda\cap B=A\cap B$, and the summand $\Phi(u)\alpha(u)U_{-u}G$ depends on $u$ modulo $A\cap B$. This gives the second identity, which is~\eqref{datumkernel} with~\eqref{kernelcx}.
+\end{proof}
+
+
+\subsection{The kernels at a split orbit}\label{r1:sec:R1split}
+
+Fix an orbit $v$ with place $w$ of $E$, a level $j<m$, and components $c\in C_j$, $c'\in C_{j+1}$. All pairs below have these components and differ only in their components at $v$.
+
+\subsubsection{Path independence for lattices that vary at one split place}
+
+\begin{lemma}\label{r1:lem:pathsplit}
+Let $(N_i,N_i')$ for $i=1,2,3$ be pairs of self-dual lattices of ranks $N_j,N_{j+1}$, and suppose that each of the three sequences $(N_i)$ and $(N_i')$ takes at most two values at every place of $E$ except $w$ and $\bar w$. Then $\mu(\Lambda(N_1,N_1'),\Lambda(N_2,N_2'),\Lambda(N_3,N_3'))=1$.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{tripleformula}(iv) it suffices to show $\sum_Qf>0$, and the proof of Lemma~\ref{pathind} reduces this to $\sum_{Q(\ell)}f>0$ for every prime $\ell$. For $\ell\ne p$ the sequences take at most two values at $\ell$, and the last two paragraphs of the proof of Lemma~\ref{pathind} use their hypothesis only at the prime $\ell$, so they give $\sum_{Q(\ell)}f>0$. Let $\ell=p$. The algebra $E\otimes\mathbb Q_p$ is the product of the completions at the places of $E^+$ above $p$, and the space $V_p$, the lattices $M_{i,p}$, the group $Q(p)$, the function $f_p$ and the biadditive form $b$ decompose as orthogonal products accordingly, because the pairing $\langle x,y\rangle=\tr(xy^\ast)$ pairs the component at a place of $E^+$ only with the same component. So $\sum_{Q(p)}f$ is the product of the sums over the components. At a place $v'\ne v$ above $p$ the lattices take at most two values, and the argument of Lemma~\ref{pathind} with the idempotent of Lemma~\ref{hypidem} applies. At $v$ the algebra $E\otimes_{E^+}E^+_v$ is $E_w\times E_{\bar w}$, and the idempotent $\epsilon=(1,0)$ satisfies $\epsilon^\ast=1-\epsilon$ and preserves every $\mathcal O_E$-lattice, in particular every $M_{i,p}$. The argument of the last paragraph of the proof of Lemma~\ref{pathind}, with this $\epsilon$ acting on the left, shows that the sum over the $v$-component is positive.
+\end{proof}
+
+\subsubsection{The Schr\"odinger model at the orbit}
+
+For a self-dual pair $(N,N')$ write $Y_v(N,N')=\operatorname{Hom}_{W_v}\big(\rho_v(N)_w,\rho_v(N')_w\big)\subset M_{N_{j+1}\times N_j}(Q_v)$ for the completion at $w$ of $\operatorname{Hom}(N,N')$ under $\rho_v$, and $\vol$ for the Haar measure on $M_{N_{j+1}\times N_j}(Q_v)$ that gives $M_{N_{j+1}\times N_j}(W_v)$ volume one.
+
+\begin{proposition}\label{r1:prop:schr}
+Let $(N_0,N_0')$ be a self-dual pair, and let $(N_i,N_i')$, $i\in I$ finite, be self-dual pairs that agree with $(N_0,N_0')$ at all places of $E$ except $w$ and $\bar w$. Let $c_i\in\mathbb C$ with $\sum_ic_i\mathbf 1_{Y_v(N_i,N_i')}=0$ as a function on $M_{N_{j+1}\times N_j}(Q_v)$. Then
+\[
+\sum_{i\in I}c_i\,\vol\big(Y_v(N_i,N_i')\big)^{1/2}\,\theta_{N_i,N_i'}=0,
+\]
+and the same holds with $\theta_{N_i,N_i'}$ replaced by $\chi_F(N_i,N_i')^{-1}\theta_{N_i,N_i'}[\Xi]$ for a data function $\Xi$ that does not depend on $i$.
+\end{proposition}
+
+\begin{proof}
+Put $M_i=\mathfrak a\operatorname{Hom}(N_i,N_i')$ and $\Lambda_i=\iota(M_i)$. The ideal $\mathfrak a=\mathfrak c\mathfrak b^{-1}$ is prime to $p$, because $\mathfrak c$ is supported on primes split in $K$ and $\mathfrak b$ divides the relative different of $E/K$, which is prime to $p$. So $(M_i)_w=Y_v(N_i,N_i')$ under $\rho_v$. The $w$-component and the $\bar w$-component of $\operatorname{Hom}_E(E^{N_j},E^{N_{j+1}})\otimes\mathbb Q_p$ are isotropic for $\langle\ ,\ \rangle$, by the idempotent $\epsilon$ of the proof of Lemma~\ref{r1:lem:pathsplit}, and they are in perfect duality. By self-duality, $(M_i)_{\bar w}$ is the annihilator of $(M_i)_w$.
+
+\emph{The model.} Choose $k\ge0$ with $p^k(M_0)_w\subset(M_i)_w\subset p^{-k}(M_0)_w$ for all $i\in I$. Let $\Lambda_X$, $\Lambda_Y$, $\Lambda_-$ be the lattices that agree with $\Lambda_0$ at all places except $w,\bar w$, and have components $(p^{-k}(M_0)_w,p^k(M_0)_{\bar w})$, $(p^{k}(M_0)_w,p^{-k}(M_0)_{\bar w})$, $(p^{k}(M_0)_w,p^{k}(M_0)_{\bar w})$ there. The computation of Lemma~\ref{latticeF1}(ii) applies to $\Lambda_X$ and $\Lambda_Y$ without change, because the components at $w$ and $\bar w$ are still annihilators of each other: both are admissible. Put $X=\Lambda_X/\Lambda_-$ and $Y=\Lambda_Y/\Lambda_-$. The pairing $(x,y)\mapsto e^{2\pi iE_H(x,y)}$ identifies $Y$ with the dual of $X$, and every $\Lambda_i$ satisfies $\Lambda_i\supset\Lambda_-$ and $\Lambda_i/\Lambda_-=X_i\oplus Y_i$ with $X_i=(\Lambda_i\cap\Lambda_X)/\Lambda_-$ and $Y_i=(\Lambda_i\cap\Lambda_Y)/\Lambda_-$ the annihilator of $X_i$. Let $G_0$ span the line $\Theta(\Lambda_Y)$ (W1), and for a function $f$ on $X$ put
+\[
+\mathcal S(f)=\sum_{x\in X}f(x)\,\alpha(\tilde x)\,U_{-\tilde x}\,G_0,
+\]
+with $\tilde x\in\Lambda_X$ any lift of $x$; the summand does not depend on the lift, by the computation in Section~\ref{sec:kernels} after~\eqref{kernelcx}, since $\Lambda_X\cap\Lambda_Y=\Lambda_-$ and $\alpha(\lambda)U_\lambda G_0=G_0$ for $\lambda\in\Lambda_-$. The vectors $\alpha(\tilde x)U_{-\tilde x}G_0$, $x\in X$, are linearly independent, by the argument at the start of the proof of Lemma~\ref{tripleformula}, because $\alpha(\lambda)U_\lambda$ for $\lambda\in\Lambda_Y$ multiplies them by the distinct characters $\lambda\mapsto e^{\pm2\pi iE_H(\lambda,\tilde x)}$ of $Y$. So $\mathcal S$ is injective. The semicharacter law on $\Lambda_X$ gives, as in the proof of Proposition~\ref{r1:prop:fourier}, $\alpha(\tilde a)U_{\tilde a}\,\mathcal S(f)=\mathcal S\big(f(\cdot+a)\big)$ for $a\in X$, and for $b\in Y$, $\alpha(\tilde b)U_{\tilde b}\,\mathcal S(f)=\mathcal S\big(e^{2\pi iE_H(\tilde b,\cdot)}f\big)$, where $\tilde b\in\Lambda_Y$ lifts $b$.
+
+\emph{The lines.} $\mathcal S(\mathbf 1_{X_i})$ is fixed by $\alpha(z)U_z$ for $z\in\Lambda_i$: for $z\in\Lambda_-$ this is the invariance of $G_0$ together with $E_H(\Lambda_-,\Lambda_X)\subset\mathbb Z$; for $z$ lifting an element of $X_i$ it is the translation invariance of $\mathbf 1_{X_i}$; for $z$ lifting an element of $Y_i$ the character $e^{2\pi iE_H(\tilde z,\cdot)}$ is trivial on $X_i$. Since $\mathcal S(\mathbf 1_{X_i})\ne0$ and $\Theta(\Lambda_i)$ is a line, $\theta_{N_i,N_i'}=k_i\,\mathcal S(\mathbf 1_{X_i})$ with $k_i\in\mathbb C^\times$.
+
+\emph{The intertwiners.} Let $i,l\in I$, and write $X_{il}=X_i\cap X_l$, $Y_{il}=Y_i\cap Y_l$. Representatives of $\Lambda_l/(\Lambda_i\cap\Lambda_l)$ are the sums $\tilde a+\tilde b$ with $a\in X_l/X_{il}$ and $b\in Y_l/Y_{il}$, and $\alpha(\tilde a+\tilde b)U_{\tilde a+\tilde b}=\alpha(\tilde a)U_{\tilde a}\,\alpha(\tilde b)U_{\tilde b}$ by the semicharacter law on $\Lambda_l$. The sum $\sum_{b\in Y_l/Y_{il}}e^{2\pi iE_H(\tilde b,x)}$ for $x\in X_i$ equals $[Y_l:Y_{il}]$ if $x\in X_l$ and $0$ otherwise, since $Y_{il}$ is the annihilator of $X_i+X_l$ and $X_l$ is the annihilator of $Y_l$. So the sum over $b$ maps $\mathcal S(\mathbf 1_{X_i})$ to $[Y_l:Y_{il}]\,\mathcal S(\mathbf 1_{X_{il}})$, and the sum over $a$ of the translates of $\mathbf 1_{X_{il}}$ is $\mathbf 1_{X_l}$. With $n=[\Lambda_l:\Lambda_i\cap\Lambda_l]=[X_l:X_{il}][Y_l:Y_{il}]$ and $[Y_l:Y_{il}]=[X_i+X_l:X_l]=[X_i:X_{il}]$,
+\[
+I_{\Lambda_i\to\Lambda_l}\mathcal S(\mathbf 1_{X_i})=\Big(\frac{[X_i:X_{il}]}{[X_l:X_{il}]}\Big)^{1/2}\mathcal S(\mathbf 1_{X_l})=\Big(\frac{\vol Y_v(N_i,N_i')}{\vol Y_v(N_l,N_l')}\Big)^{1/2}\mathcal S(\mathbf 1_{X_l}).
+\]
+By definition $\theta_{N,N'}=I_{(\mathrm{std},\mathrm{std})\to(N,N')}\theta_0$, and Lemma~\ref{r1:lem:pathsplit} applied to the triple $(\mathrm{std},(N_i,N_i'),(N_l,N_l'))$, which takes at most two values away from $w,\bar w$, gives $I_{\Lambda_i\to\Lambda_l}\theta_{N_i,N_i'}=\theta_{N_l,N_l'}$. Comparing, $k_l\vol(Y_v(N_l,N_l'))^{-1/2}=k_i\vol(Y_v(N_i,N_i'))^{-1/2}=:\kappa$. Hence $\vol(Y_v(N_i,N'_i))^{1/2}\theta_{N_i,N_i'}=\kappa\,\mathcal S(\mathbf 1_{X_i})$ for all $i$, and the first claim follows from the linearity of $\mathcal S$, since $\mathbf 1_{X_i}$ is the reduction of $\mathbf 1_{Y_v(N_i,N_i')}$.
+
+For the second claim, the lattices $A_c$, $B_c$ and $\Lambda$ of a pair agree at $w,\bar w$, and they agree among the pairs away from $w,\bar w$, because $S$ consists of primes not above $p$. By Proposition~\ref{r1:prop:fourier}, $\theta_{N_i,N_i'}[\Xi]$ is a finite combination of operators $\alpha(x)U_{-x}$ and $\alpha(y)U_y$ applied to $e(N_i,N_i')=\chi_F(N_i,N_i')\theta_{N_i,N_i'}$, with $x$ running over $A/(A\cap B)$ and $y$ over $B/(B\cap\Lambda)$, divided by $[\Lambda\cap A:\Lambda\cap A\cap B]$. These quotients only see the places of $S\cup\bar S$, so the representatives may be chosen in $\Lambda_-$ at $w,\bar w$, hence in every $\Lambda_i$, and the same representatives and the same index serve all $i$. So $\chi_F(N_i,N_i')^{-1}\theta_{N_i,N_i'}[\Xi]=T\theta_{N_i,N_i'}$ for one linear operator $T$, and the first claim applies.
+\end{proof}
+
+
+
+\begin{lemma}\label{r1:lem:vol}
+For $W_v$-lattices $\Lambda\subset Q_v^{N}$ and $\Lambda'\subset Q_v^{N'}$, $\vol\operatorname{Hom}(\Lambda,\Lambda')=q^{2(N\len\Lambda'-N'\len\Lambda)}$, where $q=p^{n'_v/2}$.
+\end{lemma}
+
+\begin{proof}
+If $g,g'$ are bases, $\operatorname{Hom}(\Lambda,\Lambda')=g'M_{N'\times N}(W_v)g^{-1}$, whose volume is $\lvert\det g'\rvert_v^{N}\lvert\det g\rvert_v^{-N'}$ with $\lvert p\rvert_v=p^{-n'_v}=q^{-2}$. Since $\len\Lambda=-\ord\det g$, $\lvert\det g\rvert_v=q^{2\len\Lambda}$.
+\end{proof}
+
+\subsubsection{The form (S1) to (S3) of the kernels}
+
+\begin{hypothesis}[normalization, (N1)]\label{r1:hyp:H1}
+For every orbit $v$ and level $j<m$ there are $a_v,a'_v\in\mathcal O^\times$ such that for all pairs $(c,L;c',L')$, $(c,L_2;c',L_2')$ that differ only at $v$,
+\[
+\frac{\phi(c,L;c',L')}{\phi(c,L_2;c',L_2')}=p^{\mu_v(j+1)\left(\len L_v-\len L_{2,v}-\len L'_v+\len L'_{2,v}\right)}\,u,\qquad u\in\mathcal O^\times,
+\]
+where $\phi$ is the frame factor $\mu(N,\mathrm{fr})/\mu(N',\mathrm{fr}')$ of~\eqref{stepkernel} times its determinant twists, and the unit $u$ is $a_v^{\len L_v-\len L_{2,v}}a_v'^{\,\len L'_v-\len L'_{2,v}}$ divided by the corresponding ratio of the factors $\chi_F$ of Lemma~\ref{r1:lem:chiunit}. Equivalently, the scalar $s_j$ of Definition~\ref{r1:def:kseries} satisfies $s_j(c,L;c',L')/s_j(c,L_2;c',L_2')=a_v^{\len L_v-\len L_{2,v}}a_v'^{\,\len L'_v-\len L'_{2,v}}$.
+\end{hypothesis}
+
+\begin{proposition}[the form (S3)]\label{r1:prop:S3}
+Assume (N1). For every orbit $v$, level $j<m$ and components $c,c'$, there is a $\mathbb Z$-linear map $f\mapsto\Xi_v(f)$ from integer-valued locally constant compactly supported functions on $M_{N_{j+1}\times N_j}(Q_v)$ to power series in the variables $X$, depending only on $c,c'$ and the components of the tuples away from $v$, such that
+\[
+\mathfrak K_j(c,L;c',L')=a_v^{\len L_v}\,a_v'^{\,\len L'_v}\,q^{-(N_j\len L'_v-N_{j+1}\len L_v)}\,\Xi_v\big(\mathbf 1_{L_v,L'_v}\big),
+\]
+where $\mathbf 1_{L_v,L'_v}(x)=1$ if $xL_v\subset L'_v$ and $0$ otherwise. Consequently the step maps satisfy (S3) of Definition~\ref{splitkernel} with $a=a_v$, $a'=a'_v$ and $\mu=\mu_v(j+1)$.
+\end{proposition}
+
+\begin{proof}
+Fix the components away from $v$ and a reference pair $(L_0,L_0')$. For lattice tuples $L,L'$ with these components away from $v$, the map $L_v\mapsto\varphi_{c,v}(L_v)$ identifies $\mathbf 1_{L_v,L'_v}$ with $\mathbf 1_{Y_v(N,N')}$ after the frames, because $Y_v(N,N')=\varphi_{c',v}\operatorname{Hom}(L_v,L'_v)\varphi_{c,v}^{-1}$. Put
+\[
+\widetilde{\mathfrak K}(L,L')=a_v^{-\len L_v}a_v'^{-\len L'_v}q^{N_j\len L'_v-N_{j+1}\len L_v}\,\mathfrak K_j(c,L;c',L').
+\]
+By (N1) and Lemma~\ref{r1:lem:vol}, $\widetilde{\mathfrak K}(L,L')$ is a constant independent of $(L_v,L'_v)$ times the Taylor series of $\vol(Y_v(N,N'))^{1/2}\chi_F^{-1}\theta_{N,N'}[\Xi]$ in the fixed coordinates~\eqref{r1:eq:coords}; the frames do not depend on $L_v$, so the coordinates are the same for all these pairs. Proposition~\ref{r1:prop:schr} says that every $\mathbb Z$-linear relation among the functions $\mathbf 1_{L_v,L'_v}$ is satisfied by the series $\widetilde{\mathfrak K}(L,L')$. Hence the assignment $\mathbf 1_{L_v,L'_v}\mapsto\widetilde{\mathfrak K}(L,L')$ extends to a $\mathbb Z$-linear map on the subgroup spanned by these indicators, and further to all integer-valued locally constant compactly supported functions because that subgroup is a direct summand of the free abelian group of such functions on each finite level. This is $\Xi_v$. For (S3), $\kappa_j=p^{\mu_v(j+1)(\len L_v-\len L'_v)}\mathcal J_j(\cdot,\mathfrak K_j)$, and $\mathcal J_j$ is linear in the series, so $\Xi(c,L;c',L';f)=\mathcal J_j(\cdot,\Xi_v(f))$ satisfies (S3).
+\end{proof}
+
+\begin{remark}
+Hypothesis~(N1) says that the frame factor and the determinant twists have $p$-adic valuation $\mu_v(j+1)(\len L_v-\len L'_v)$ up to units, and that the character $\chi$ of Section~\ref{sec:kernels} contributes units at a split place. The second part is proved in Lemma~\ref{r1:lem:chiunit}. The first part depends on the definition of the frame factor of~\eqref{stepkernel}, which Section~\ref{sec:kernels} describes in words.
+\end{remark}
+
+\begin{lemma}\label{r1:lem:chiunit}
+Let $\mathfrak P_w,\mathfrak P_{\bar w}$ be the primes of $\mathcal O_E$ at $w,\bar w$. The number $\iota\big(\chi(\mathfrak P_{\bar w}\mathfrak P_w^{-1})\big)$ is a unit of $\mathcal O_{\mathbb C_p}$. Consequently $\chi_F(N(L),N'(L'))/\chi_F(N(L_2),N'(L_2'))$ is a product of integer powers of units when the pairs differ only at $v$.
+\end{lemma}
+
+\begin{proof}
+Let $h$ be the class number of $E$ and $\beta$ a generator of $(\mathfrak P_{\bar w}\mathfrak P_w^{-1})^h$. The ideal $\mathfrak P_{\bar w}\mathfrak P_w^{-1}$ has norm one, so $\beta\bar\beta$ is a unit of $E^+$, and replacing $h$ by $2h$ and $\beta$ by $\beta^2/(\beta\bar\beta)$ we may assume $\beta\bar\beta=1$. Then $\chi(\mathfrak P_{\bar w}\mathfrak P_w^{-1})^{h}=\prod_{\tau\in\Phi}\tau(\beta)^{-1}$. By~\eqref{r1:eq:pos}, $\ord_p\iota\tau(\beta)$ is $-1$ times the exponent of $\mathfrak P_w$ in $\beta$ if $\tau$ is an even position of $v$, the exponent of $\mathfrak P_{\bar w}$ if $\tau$ is an odd position, and $0$ otherwise. The two exponents are $-h$ and $h$, and there are $\nu_v$ even and $\nu_v$ odd positions, so the total valuation is $\nu_vh-\nu_vh=0$. The ideal $\mathfrak d_N$ changes by a power of $\mathfrak P_{\bar w}\mathfrak P_w^{-1}$ when $L_v$ changes, because $N_{\bar w}$ is the dual of $N_w$.
+\end{proof}
+
+\begin{proposition}[(S1) and (S2)]\label{r1:prop:S1S2}
+For every orbit $v$ the chain of Definition~\ref{r1:def:chain}, with the lifts of Definition~\ref{r1:def:lift}, satisfies (S1) and (S2) of Definition~\ref{splitkernel}, with the following change in (S1): the normalizing exponents of the Hecke operators are $n^j_{v,i}=N'_v(j,i)$ of Definition~\ref{r1:def:hecke}, and not $0$.
+\end{proposition}
+
+\begin{proof}
+(S1) is Definition~\ref{r1:def:hecke} with $N_{j+1}=N_j+g$, $g=t+1$. Replacing $L_v$ by an edge commutes with the action of $\Gamma_{j,c}$ because $(\gamma L)_v$ is a $W_v$-linear image of $L_v$. (S2): the finiteness is Lemma~\ref{r1:lem:finite}, the class-sum formula is Definition~\ref{r1:def:lift}, and the covariance is Lemma~\ref{r1:lem:S2}.
+\end{proof}
+
+The change in (S1) does not affect Proposition~\ref{hkpoint}, whose proof uses the raw operators: its conclusion~\eqref{onelift} is a statement about $\mathcal E^{(j)}_i=q^{-i(N_j-i)}T^{\mathrm{raw},(j)}_{v,i}$. Section~\ref{r1:sec:R1hecke} converts the result into (D3) for the normalized operators.
+
+\subsection{Hecke commutation data}\label{r1:sec:R1hecke}
+
+Fix an orbit $v$ and drop it from the notation. By Proposition~\ref{r1:prop:S3} and Proposition~\ref{hkpoint}, the relation~\eqref{onelift} holds for every $j<m$ with
+\[
+u_{j+1}=(a_va'_v)^{-1}\in\mathcal O^\times,\qquad m_{j+1}=a_v\,p^{\mu_v(j+1)},\qquad t=g-1,\qquad q=p^{n'_v/2}.
+\]
+Proposition~\ref{inversion} then gives, for $F\in\cF_0$ and $1\le j\le m$,
+\begin{equation}\label{r1:eq:rawrel}
+\sum_{l=0}^r(-1)^lh_l(Y_j)\,q^{l(N_j-2r+l)}\,T^{\mathrm{raw},(j)}_{r-l}\,\mathcal K_j(F)=U_j^{\,r}\,q^{r(N_j-N_0)}\,\mathcal K_j\big(T^{\mathrm{raw},(0)}_rF\big),
+\end{equation}
+with $Y_j$ the family of the numbers $u_l\cdots u_j\,m_l\,q^{t-2i}$, $1\le l\le j$, $0\le i\le t$, and $U_j=u_1\cdots u_j$.
+
+\begin{proposition}\label{r1:prop:D3}
+Put, for $1\le j\le m$ and $0\le l\le r$,
+\[
+c_{j,l}=p^{N'(j,r)-N'(j,r-l)}\,q^{l(N_j-2r+l)}\,h_l(Y_j),\qquad\rho_j=U_j^{\,r}\,p^{N'(j,r)-A}\,q^{r(N_j-N_0)},
+\]
+with $N'=N'_v$ and $A=A_v$. Then the operator $Z_j=\sum_{l=0}^r(-1)^lc_{j,l}T^{(j)}_{r-l}$ satisfies $Z_j\mathcal K_j(F)=\rho_j\,\mathcal K_j(y_vF)$ for every $F\in\cF_0$. This is (D3) of Definition~\ref{heckecomm} with $\epsilon_{v,j}=1$, and the price is
+\[
+\mathrm{Pr}(v,j)=\ord\rho_j=N'_v(j,r)-A_v+\tfrac{n'_v}2\,r\,(N_j-N_0).
+\]
+\end{proposition}
+
+\begin{proof}
+Multiply~\eqref{r1:eq:rawrel} by $p^{N'(j,r)}$ and write $T^{\mathrm{raw},(j)}_{r-l}=p^{-N'(j,r-l)}T^{(j)}_{r-l}$ on the left and $T^{\mathrm{raw},(0)}_r=p^{-A}y_v$ on the right. The units $u_l$ have valuation zero, so $\ord U_j=0$.
+\end{proof}
+
+Written out, by~\eqref{r1:eq:Nprime} and $A_v=\sum_{s\ \mathrm{even}}\sum_{a\le r}\lambda^{(0)}_{v,s}(a)+\sum_{s\ \mathrm{odd}}\sum_{a\le r}\big(-\lambda^{(0)}_{v,s}(N_0+1-a)\big)$, which is Definition~\ref{r1:def:hecke} written out with the dual weight at odd positions,
+\[
+\mathrm{Pr}(v,j)=\sum_{s\ \mathrm{odd}}\Big(r\,w_j(v,s)+\sum_{a=N_0+1-r}^{N_0}\lambda^{(0)}_{v,s}(a)\Big)+\tfrac{n'_v}2\,r\,j(t+1),
+\]
+
+
+\begin{theorem}[integrality of the coefficients]\label{r1:thm:Cii}
+Assume (W1), (W2), $1\le r$, $2r\le k_1+1$, and $\ord(m_l)=\mu_v(l)$ for $1\le l\le m$. Then for $1\le j\le m$ and $0\le l\le r$,
+\[
+c_{j,l}\in\mathcal O,\qquad \ord(c_{j,r})\ge\alpha_{\mathrm{ev}}(v):=\sum_{s\in\mathcal T_v\ \mathrm{even}}\alpha_s .
+\]
+Hence the Hecke commutation data of Proposition~\ref{r1:prop:D3} satisfy the conditions of (D3) with $\alpha(v,j)=\alpha_{\mathrm{ev}}(v)$.
+\end{theorem}
+
+\begin{proof}
+Put $\lambda_s(a)=\lambda^{(0)}_{v,s}(a)$ and
+\[
+\mu^\flat_j=\sum_{s\ \mathrm{even}}w_1(v,s)-\sum_{s\ \mathrm{odd}}w_j(v,s)-\tfrac{n'_v}2\,t .
+\]
+\emph{Step 1, the elements of $Y_j$.} An element of $Y_j$ is $u\,m_l\,q^{t-2i}$ with $u$ a unit, $1\le l\le j$ and $0\le i\le t$. Its valuation is $\mu_v(l)+\frac{n'_v}2(t-2i)\ge\mu_v(l)-\frac{n'_v}2t$. By (W2), $w_l\ge w_1$ at even positions and $w_l\le w_j$ at odd positions, so $\mu_v(l)\ge\sum_{s\ \mathrm{even}}w_1-\sum_{s\ \mathrm{odd}}w_j$. Hence every element of $Y_j$ has valuation at least $\mu^\flat_j$, and $h_l(Y_j)$, a sum of products of $l$ elements of $Y_j$ with integer coefficients, has valuation at least $l\mu^\flat_j$.
+
+\emph{Step 2, the exponent.} So $\ord c_{j,l}\ge E(j,l)$ with
+\[
+E(j,l)=N'(j,r)-N'(j,r-l)+\tfrac{n'_v}2\,l\,(N_j-2r+l)+l\mu^\flat_j .
+\]
+By the definition~\eqref{r1:eq:Nprime}, $N'(j,r)-N'(j,r-l)=\sum_{s\ \mathrm{even}}\sum_{r-l<a\le r}\lambda_s(a)+l\sum_{s\ \mathrm{odd}}w_j$, and the terms $\pm l\sum_{\mathrm{odd}}w_j$ cancel:
+\[
+E(j,l)=\sum_{s\ \mathrm{even}}\Big(\sum_{r-l<a\le r}\lambda_s(a)+l\,w_1(v,s)\Big)+\tfrac{n'_v}2\,l\,(N_j-2r+l-t).
+\]
+\emph{Step 3, nonnegativity.} By dominance and (W2), $\lambda_s(a)\ge\lambda_s(N_0)\ge-w_1(v,s)$ for every $a$, so each bracket is a sum of $l$ terms $\lambda_s(a)+w_1\ge0$. For $j\ge1$, $N_j-2r+l-t=k_1+1-2r+(j-1)(t+1)+1+l\ge0$ since $2r\le k_1+1$. Hence $E(j,l)\ge0$.
+
+\emph{Step 4, the top coefficient.} For $l=r$ the bracket at an even position $s$ is $\sum_{a\le r}(\lambda_s(a)+w_1)$. Every term is nonnegative, so it is at least the sum of the terms with $a=1$ and $a=2$, which is $\lambda_s(1)+\lambda_s(2)+2w_1\ge\lambda_s(1)-\lambda_s(2)$, because $\lambda_s(2)\ge-w_1$. For $s\in\mathcal T_v$ this is $\alpha_s$, and for even $s\notin\mathcal T_v$ the bracket is $\ge0=\alpha_s$. (The case $r=1$ uses only the term $a=1$: $\lambda_s(1)+w_1\ge\lambda_s(1)-\lambda_s(2)$ since $-\lambda_s(2)\le w_1$.) The second summand of $E(j,r)$ is nonnegative. Hence $\ord c_{j,r}\ge\alpha_{\mathrm{ev}}(v)$.
+\end{proof}
+
+The hypothesis $\ord(m_l)=\mu_v(l)$ is the conclusion $m_{j+1}=a_vp^{\mu_v(j+1)}$ of Proposition~\ref{hkpoint} with Proposition~\ref{r1:prop:S3}, so it rests on (N1).
+
+\subsection{From entries to lattices}\label{r1:sec:R1ent}
+
+This section proves the passage from bounds for the pairings $\langle P_I,\Theta\rangle$ of Theorem~\ref{thm:valuation} to the inclusion of Definition~\ref{entrybound}, at the even positions, including the Hecke edges, and states the corresponding fact at the odd positions as hypothesis (N2).
+
+\subsubsection{The transfer at an even position}
+
+Fix $j<m$, an orbit $v$ and an even position $s$, and write $n=N_j$, $n'=N_{j+1}$, $\nu=\nu^{\natural,(j)}_{v,s}$ and $\nu'=\nu^{\natural,(j+1)}_{v,s}$. From the definition of the weights,
+\begin{equation}\label{r1:eq:nushift}
+\nu'(i)=\nu(i)+k\ (1\le i\le n),\qquad\nu'(i)=0\ (n<i\le n'),\qquad k=w_{j+1}(v,s)-w_j(v,s)\ge0,
+\end{equation}
+with $w_0=-\lambda^{(0)}_{v,s}(N_0)$ for $j=0$. In particular the column heights of $\nu'$ are those of $\nu$ followed by $k$ columns of height $n$. Let $D=(D_{ab})$ be an $n\times n'$ matrix of indeterminates (the kernel variables $X_{v,s,a,b}$) and $Y$ an $n'\times n'$ matrix of indeterminates (the variables of the model at level $j+1$). The transfer of a polynomial $G\in V_\nu$ is
+\[
+\mathcal T(G)=G\big((DY)_{[n]}\big)\cdot\det\big((DY)_{[n]}\big)^{k},
+\]
+where $(DY)_{[n]}$ is the $n\times n$ matrix of the first $n$ columns of $DY$. This is the substitution of the jet operator $\mathcal J_j$ at an even position. The pairing of $\mathcal T(G)$ with a power series $f$ in the entries of $D$ is
+\[
+\langle\mathcal T(G),f\rangle=\sum_\kappa\kappa!\,f_\kappa\cdot\big[D^\kappa\big]\mathcal T(G)\in\cK[Y],
+\]
+where $[D^\kappa]$ takes the coefficient of the monomial $D^\kappa$.
+
+\begin{lemma}[Cauchy--Binet transfer]\label{r1:lem:CB}
+For $G\in\Wl_\nu$, $\mathcal T(G)$ is an $\mathcal O$-linear combination of products $\prod_c\det D_{R_c,S_c}\cdot\prod_c\Delta_{S_c}(Y)$, where $c$ runs over the columns of $\nu'$, $R_c\subset\{1,\dots,n\}$ and $S_c\subset\{1,\dots,n'\}$ have $h'_c$ elements, $h'_c$ is the height of the column $c$ of $\nu'$, and $\Delta_{S}(Y)$ is the minor of $Y$ on the rows $S$ and the first $\#S$ columns.
+\end{lemma}
+
+\begin{proof}
+By linearity it suffices to treat $G=\prod_c\Delta_{R_c}(X)$, a canonical bideterminant of shape $\nu$. Then $\mathcal T(G)=\prod_c\det\big((DY)_{R_c,[h_c]}\big)\cdot\det((DY)_{[n],[n]})^k$, and $\det$ of the $n\times n$ block is a minor on all rows and the first $n$ columns. For a minor of a product, the Cauchy--Binet formula gives
+\[
+\det\big((DY)_{R,[h]}\big)=\sum_{\#S=h}\det D_{R,S}\,\det Y_{S,[h]}=\sum_{\#S=h}\det D_{R,S}\,\Delta_S(Y).
+\]
+Taking the product over the columns of $\nu$ and the $k$ extra columns of height $n$ (with $R=\{1,\dots,n\}$) gives the claim with integer coefficients.
+\end{proof}
+
+\begin{theorem}[entries to lattices, even positions]\label{r1:thm:ent-even}
+Let $L$ be a lattice tuple of level $j$ and $(L'',L')$ an edge of type $i_0\le r$ at $v$ for tuples of level $j+1$ (with $i_0=0$ meaning $L''=L'$). Use frames adapted to $L_v$ and $L''_v$ in~\eqref{r1:eq:coords}, so that $(L_v)_s$ and $(L''_v)_s$ correspond to the standard lattices. Let $f$ be a power series in the entries of $D$ and $g\in\mathbb R$, and suppose that for every choice of columns $S_c\subset\{1,\dots,n'\}$ with $\#S_c=h'_c$ and rows $R_c$,
+\begin{equation}\label{r1:eq:entcond}
+\ord\Big\langle\prod_c\det D_{R_c,S_c},\,f\Big\rangle+\sum_c\Big(\min(h'_c,i_0)-\#\big(S_c\cap\{1,\dots,i_0\}\big)\Big)\ge g .
+\end{equation}
+Then $p^{\sum_{a\le i_0}\lambda^{\natural,(j+1)}_{v,s}(a)}\,\langle\mathcal T(G),f\rangle\in p^g\,H_s(L'_v)$ for every $G\in H_s(L_v)$.
+\end{theorem}
+
+\begin{proof}
+In the adapted frames $H_s(L_v)=\Wl_\nu$, and $H_s(L''_v)=\Wl_{\nu'}$ up to the determinant twist, which is $1$ since the frame of $L''_v$ is the identity. By Lemma~\ref{r1:lem:CB} and linearity of the pairing,
+\[
+\langle\mathcal T(G),f\rangle=\sum\beta\cdot\Big\langle\prod_c\det D_{R_c,S_c},f\Big\rangle\cdot\prod_c\Delta_{S_c}(Y),\qquad\beta\in\mathcal O .
+\]
+Each $\prod_c\Delta_{S_c}(Y)$ is a canonical bideterminant of shape $\nu'$, an element of $\Wl_{\nu'}=H_s(L''_v)$. By the proof of Lemma~\ref{r1:lem:edge}, with $L''_v=d\,L'_v$-coordinates, $d=\operatorname{diag}(p,\dots,p,1,\dots,1)$ ($i_0$ entries $p$), the element $p^{\sum_{a\le i_0}\lambda^\natural(a)}\prod_c\Delta_{S_c}(Y)$ lies in $p^{\sum_c(\min(h'_c,i_0)-\#(S_c\cap[i_0]))}H_s(L'_v)$: indeed, that proof shows $p^{\sum_{a\le i_0}\lambda^\natural(a)}B\in p^{\sum_c\min(h'_c,i_0)-\sum_c\#(S_c\cap[i_0])}\,H_s(L'_v)$ for the bideterminant $B$ with row sets $S_c$, because the exact exponent of $p$ produced by $B(d^{-1}\cdot)$ is $-\sum_c\#(S_c\cap[i_0])$. Combining with~\eqref{r1:eq:entcond} gives the claim term by term.
+\end{proof}
+
+\begin{lemma}[the operators $P_I$]\label{r1:lem:shape}
+In the notation of Section~\ref{sec:valuation}, with $r_0=N_j$, $r_1=N_{j+1}$, the positions of $v$, the tops $\mathcal T_v$, and at each position $s$ the columns of $\nu^{(j+1)}_{v,s}$ with their heights (at odd positions this is $\lambda^{(j+1)}$ normalized, not the model weight), the numbers $\alpha_s$, $\mathrm{cap}_s$, $\lambda_s$ of Section~\ref{sec:valuation} are
+\[
+\alpha_s\ \text{of~\eqref{r1:eq:numbers}},\qquad\mathrm{cap}_s=\nu^\natural(2)\ (s\in\mathcal T_v),\ \nu^\natural(1)\ (s\notin\mathcal T_v),\qquad\lambda_s=\textstyle\sum_i\nu^\natural(i)-\alpha_s,
+\]
+with $\nu^\natural$ here standing for $\nu^{(j+1)}_{v,s}$. For $J=\{0,\dots,i_0-1\}$, the number $N_J$ of Theorem~\ref{thm:valuation}(iii) is at most the sum over all columns of the exponents $\min(h,i_0)-\#(I(\cdot)\cap J)$ at even positions and $\#(I(\cdot)\cap J)$ at odd positions, with equality in the terms of the height-one columns at the tops.
+\end{lemma}
+
+\begin{proof}
+The columns of height one are the last $\nu^{(j+1)}(1)-\nu^{(j+1)}(2)$ columns, and $\nu^{(j+1)}(1)-\nu^{(j+1)}(2)=\lambda^{(0)}_{v,s}(1)-\lambda^{(0)}_{v,s}(2)$, so their number is $\alpha_s$ at a top. The other statements are the definitions. For the comparison with $N_J$: at an even top a height-one column contributes $\min(1,i_0)-[I(0)\in J]=[I(0)\notin J]$ when $i_0\ge1$, which is its term in $N_J$; other columns at even positions contribute a nonnegative number that $N_J$ does not count; at odd positions both count $\#(I\cap J)$.
+\end{proof}
+
+The coefficients in the frame variables $y_{s,i,a}$ of the operator $P_I$ of Section~\ref{sec:valuation} are, by the Cauchy--Binet formula $\det\big(\sum_ay_{i,a}D_{a,I(i')}\big)=\sum_R\det y_{\cdot,R}\det D_{R,I}$, the products $\pm\prod_c\det D_{R_c,I_c}$ with arbitrary rows. So the hypotheses of Theorem~\ref{r1:thm:ent-even} for all $(R_c,S_c)$ are the bounds of Theorem~\ref{thm:valuation} for all coefficients of $\langle P_I,f\rangle$, with the exponents of Lemma~\ref{r1:lem:shape}.
+
+\begin{lemma}[change of frames, even positions]\label{r1:lem:frame-even}
+Let $g\in\GL_n(\cK)$ and $g'\in\GL_{n'}(\cK)$. For $G\in V_\nu$ put $(g\cdot G)(X)=G(g^{\mathsf T}X)$, and for a series $f$ in $D$ put $(g,g')\cdot f(D)=f(g^{\mathsf T}D(g')^{-\mathsf T})$. Then
+\[
+\big\langle\mathcal T(g\cdot G),\ (g,g')\cdot f\big\rangle(Y)=\det(g)^{-k}\,\langle\mathcal T(G),f\rangle\big((g')^{\mathsf T}Y\big),
+\]
+that is, the pairing is equivariant for the row actions on the source model, the kernel variables and the target model, up to the factor $\det(g)^{k}$.
+\end{lemma}
+
+\begin{proof}
+Substituting $D\mapsto g^{\mathsf T}D(g')^{-\mathsf T}$ and $Y\mapsto(g')^{\mathsf T}Y$ replaces $DY$ by $g^{\mathsf T}DY$, hence $(DY)_{[n]}$ by $g^{\mathsf T}(DY)_{[n]}$, so $\mathcal T(G)(g^{\mathsf T}D(g')^{-\mathsf T},(g')^{\mathsf T}Y)=\det(g)^k\,\mathcal T(g\cdot G)(D,Y)$. The pairing satisfies $\langle P(g^{\mathsf T}D(g')^{-\mathsf T}),f\rangle=\langle P,(g,g')^{-1}\cdot f\rangle$ for every polynomial $P$ in $D$, because $\langle P,f\rangle=(P(\partial)f)(0)$ and the chain rule. Applying this with $P=\mathcal T(G)(\cdot,(g')^{\mathsf T}Y)$ and replacing $f$ by $(g,g')\cdot f$ gives the claim.
+\end{proof}
+
+At an even position the frame change of~\eqref{r1:eq:coords} is the substitution of Lemma~\ref{r1:lem:frame-even} with $g=\sigma^s\rho_v(\varphi_{c,v}^{-1}\cdot\text{basis of }L_v)$ and $g'$ the same for $L'_v$. The determinant factors $\det(g)^{-\lambda^\natural(N_j)}$ and $\det(g')^{-\lambda^{\natural}(N_{j+1})}$ of Definition~\ref{r1:def:H} and the factor $\det(g)^k$ of Lemma~\ref{r1:lem:frame-even} combine, since $-\lambda^{\natural,(j)}(N_j)+k=w_{j+1}(v,s)=-\lambda^{\natural,(j+1)}(N_{j+1})$, to $\big(\det g/\det g'\big)^{w_{j+1}(v,s)}$, whose valuation is $w_{j+1}(v,s)(\len L'_v-\len L_v)$. These are the even-position terms of the factor $p^{\mu_v(j+1)(\len L_v-\len L'_v)}$ in $\kappa_j$, with the opposite sign, so they cancel.
+
+\subsubsection{The odd positions}
+
+At an odd position the model weight is the dual of $\lambda^{(j)}$ and the transfer of the jet operator uses the adjugate of $Y$ . We state the needed fact.
+
+\begin{hypothesis}[(N2)]\label{r1:hyp:H2}
+At every odd position $s$ of every orbit, the transfer of the jet operator $\mathcal J_j$ has the two properties proved above at even positions: (a) Theorem~\ref{r1:thm:ent-even}, with the exponent $\min(h'_c,i_0)-\#(S_c\cap[i_0])$ in~\eqref{r1:eq:entcond} replaced by $\#(S_c\cap[i_0])$ and with the columns of $\nu^{(j+1)}_{v,s}$; (b) Lemma~\ref{r1:lem:frame-even}, with the determinant factors combining to $\big(\det g/\det g'\big)^{-w_{j+1}(v,s)}$.
+\end{hypothesis}
+
+\begin{remark}
+The mechanism at odd positions is the same Cauchy--Binet transfer applied to the contragredient model, where minors of the adjugate are complementary minors times powers of the determinant (Jacobi's theorem); the bookkeeping of the determinant powers is what remains to be written. It holds for any power series $f$, so it does not involve the theta series.
+\end{remark}
+
+\begin{corollary}[entries to lattices]\label{r1:cor:ent}
+Assume (N2). Let $(c,L)\in C_j\times\cL_j$, let $(c',L')\in C_{j+1}\times\cL_{j+1}$, let $i_0=(i_0(v))_v$ with $0\le i_0(v)\le r$, and let $L''$ be reached from $L'$ by edges of types $i_0(v)$. Let $f$ be the kernel series of $(c,L;c',L'')$ in frames adapted to $L$ and $L''$, and suppose that every coefficient in the frame variables of $\langle\prod_vP_{I_v}^{(i_0(v))},f\rangle$ has valuation at least $g$, for all column choices $I_v$, where $P^{(i_0)}_{I}$ is $P_I$ of Section~\ref{sec:valuation} multiplied by $p$ to the exponents of Lemma~\ref{r1:lem:shape}. Then
+\[
+p^{\sum_vN'_v(j+1,i_0(v))}\,\kappa_j(c,L;c',L'')\big(H_j(L)\big)\subset p^{g}\,H_{j+1}(L').
+\]
+\end{corollary}
+
+\begin{proof}
+The jet operator $\mathcal J_j$ is the tensor product over the orbits and positions of the transfers, and the pairing of a product of polynomials in disjoint sets of variables with $f$ is computed factor by factor in the frame variables. By Lemma~\ref{r1:lem:frame-even} at even positions and (N2)(b) at odd positions, the change from the fixed frames~\eqref{r1:eq:coords} to frames adapted to $L$ and $L''$ maps $H_j(L)$ and $H_{j+1}(L'')$ to the standard lattices, and the determinant factors cancel the factor $p^{\sum_v\mu_v(j+1)(\len L_v-\len L''_v)}$ of $\kappa_j$, because $\mu_v(j+1)=\sum_{s\ \mathrm{even}}w_{j+1}-\sum_{s\ \mathrm{odd}}w_{j+1}$. In adapted frames, Theorem~\ref{r1:thm:ent-even} at even positions and (N2)(a) at odd positions, applied factor by factor, give the inclusion with the exponent $\sum_v\sum_s\sum_{a\le i_0(v)}\lambda^{\natural,(j+1)}_{v,s}(a)$ in place of $\sum_vN'_v(j+1,i_0(v))$, and~\eqref{r1:eq:Nprimeineq} allows the larger exponent.
+\end{proof}
+
+\subsection{Orbit bounds}\label{r1:sec:R1orbit}
+
+\subsubsection{Additivity over orbits}
+
+For a power series $U$ in the parameters $(x_{v,e},y_{v,e})$ of all orbits, write $U=\sum_\beta U_\beta\prod_vx_v^{\beta_v}y_v^{\beta'_v}$.
+
+\begin{lemma}[additivity]\label{r1:lem:add}
+Let $\vartheta_v$, one for each orbit, be power series in the parameters of $v$ with constant term $1$, and let $P_v$ be polynomials in the variables of $v$ with coefficients in a polynomial ring of frame variables. Suppose that for every $v$, every integral series $U_v$ in the parameters of $v$, and every coefficient $\gamma$ in the frame variables of $\langle P_v,\vartheta_vU_v\rangle$, $\ord\gamma\ge g_v$. Then for every integral series $U$ in all the parameters, every coefficient of $\langle\prod_vP_v,\prod_v\vartheta_v\cdot U\rangle$ has valuation at least $\sum_vg_v$.
+\end{lemma}
+
+\begin{proof}
+The pairing with the homogeneous polynomial $\prod_vP_v$ involves the coefficients of $\Theta=\prod_v\vartheta_v\cdot U$ in one degree $d$, and these involve only the coefficients $U_\beta$ with $\lvert\beta\rvert\le d$, because the parameters are series without constant term in the variables. So we may replace $U$ by a polynomial and, by linearity and the ultrametric inequality, by one monomial $U_\beta\prod_vx_v^{\beta_v}y_v^{\beta'_v}$ with $\lvert U_\beta\rvert\le1$. Then $\Theta=U_\beta\prod_v\big(\vartheta_vx_v^{\beta_v}y_v^{\beta'_v}\big)$ is a product of series in disjoint sets of variables, and so is $\prod_vP_v$. For such products, $\langle\prod_vP_v,\prod_v\Theta_v\rangle=\prod_v\langle P_v,\Theta_v\rangle$, because $\kappa!$ and the coefficients factor over the disjoint variable sets. Each factor has coefficients of valuation at least $g_v$ by hypothesis, with $U_v=x_v^{\beta_v}y_v^{\beta'_v}$, and the coefficients of a product of polynomials in disjoint frame variables are products of coefficients.
+\end{proof}
+
+
+
+\subsubsection{The kernel law for the true kernels}
+
+\begin{hypothesis}[(N3), the normalized kernel law]\label{r1:hyp:H3}
+For every $j<m$ and every pair $(c,L;c',L')$, in frames adapted to $L$ and $L'$ and in the hyperbolic coordinates of Corollary~\ref{kernelclass}, the kernel series satisfies
+\[
+\mathfrak K_j(c,L;c',L')=\exp\Big(-\sum_v\sum_e\beta(x_{v,e},y_{v,e})\Big)\cdot U
+\]
+with $U$ integral, that is, the constant $c$ of Theorem~\ref{kernellaw} for the normalized kernel series has $\lvert c\rvert\le1$.
+\end{hypothesis}
+
+\begin{lemma}[hyperbolic frames]\label{r1:lem:hyp}
+For lattices $L_v\subset Q_v^{N_j}$ and $L'_v\subset Q_v^{N_{j+1}}$, let $\omega_0,\dots,\omega_{\nu_v-1}$ be a basis of $W_v$ over $\mathbb Z_{p^2}$ and $\omega^\ast_r$ the dual basis for $\Tr_{Q_v/\mathbb Q_{p^2}}$. In frames adapted to $L_v,L'_v$ the elements $f_{r,a,b}=\omega_rE_{ba}$ of the $w$-component and the elements $f'_{r,a,b}$ of the $\bar w$-component dual to them form a hyperbolic basis of the completion at $v$ of the hermitian $\mathcal O_K$-lattice $\big(\mathfrak a\operatorname{Hom}(N,N'),\ \Tr_{E/K}\langle\ ,\ \rangle/N\mathfrak c\big)$, and the coordinates of Corollary~\ref{kernelclass} in this frame are the variables $X_{v,s,a,b}$ of~\eqref{r1:eq:coords}, with $\Lambda_{r,a,b}=\sum_{s\ \mathrm{even}}\sigma^s(\omega^\ast_r)X_{v,s,a,b}$ and $\Lambda'_{r,a,b}=\sum_{s\ \mathrm{odd}}\sigma^s(\omega_r)X_{v,s,a,b}$. The relation $\sum_{i<\nu_v}\sigma^{2i}(\omega_r\omega^\ast_{r'})=[r=r']$ of Theorem~\ref{thm:twosums} holds. The completion at a place of $E^+$ above $p$ inert in $E$ is unimodular and has an orthonormal basis.
+\end{lemma}
+
+\begin{proof}
+At $v$ the completion is $\operatorname{Hom}(L_v,L'_v)\oplus\operatorname{Hom}(L_v^\#,L_v'^\#)$, the two summands are isotropic (Lemma~\ref{r1:lem:pathsplit}) and in duality, and $N\mathfrak c$ and $\mathfrak a$ are units at $p$. In adapted frames the first summand is $M_{N_{j+1}\times N_j}(W_v)=\bigoplus_{r,a,b}\mathbb Z_{p^2}\,\omega_rE_{ba}$, and the dual basis of the second summand exists because the trace form of the unramified extension $Q_v/\mathbb Q_{p^2}$ is perfect on $W_v$. The relation for $\omega,\omega^\ast$ is the duality of the two bases, since $\Tr_{Q_v/\mathbb Q_{p^2}}=\sum_{i<\nu_v}\sigma^{2i}$. The coordinates: by~\eqref{r1:eq:pos} the coordinate of $\sum_{r}\omega_r E_{ba}\otimes u\varepsilon^{-1}\Lambda_{r,a,b}$ at $\tau_{v,s}$, $s$ even, is $u\varepsilon^{-1}\sum_r\sigma^s(\omega_r)\Lambda_{r,a,b}=u\varepsilon^{-1}\sum_{s'\ \mathrm{even}}\big(\sum_r\sigma^s(\omega_r)\sigma^{s'}(\omega^\ast_r)\big)X_{v,s',a,b}=u\varepsilon^{-1}X_{v,s,a,b}$, because the two matrices $(\sigma^{s}(\omega_r))$ and $(\sigma^{s'}(\omega_r^\ast))$ are inverse, as in the proof of Theorem~\ref{thm:twosums}. The odd positions are the same computation on the $\bar w$-component. At an inert place the lattice is unimodular because $N$ and $N'$ are self-dual and $\mathfrak a$ is a unit there, and a unimodular hermitian lattice over the unramified quadratic extension has an orthonormal basis~\cite[Section~7]{jacobowitz}.
+\end{proof}
+
+\subsubsection{The orbit bounds}
+
+\begin{theorem}[orbit bounds]\label{r1:thm:orbit}
+Assume (N1), (N2), (N3). For every $j<m$ the chain of Definitions~\ref{r1:def:chain} and~\ref{r1:def:lift} has the entry bound $\sum_vb_v$ at $(j,i_0)$, for every family $i_0$ and every choice of numbers $b_v$ with
+\[
+b_v\le\begin{cases}g^B_v(j+1)&i_0(v)\ge1,\\\max\big(g^A_v(j+1),\ g^B_v(j+1)-\alpha_{\mathrm{ev}}(v)\big)&i_0(v)=0,\end{cases}
+\]
+where $g^A_v(j+1)$ and $g^B_v(j+1)$ are the numbers~\eqref{gAdef} and~\eqref{gBdef} for the shape of Lemma~\ref{r1:lem:shape} at level $j+1$. That is, the chain has the orbit bounds $(g^0,g^1,\alpha)=(g^A,g^B,\alpha_{\mathrm{ev}})$ of Definition~\ref{orbitbounds}.
+\end{theorem}
+
+\begin{proof}
+Fix $(c,L)$, $(c',L')$, $i_0$ and $L''$ in the family $E^{j+1}_{i_0}(L')$, and let $f$ be the kernel series of $(c,L;c',L'')$ in frames adapted to $L$ and $L''$. By (N3) and Lemma~\ref{r1:lem:hyp}, $f=\prod_v\vartheta_v\cdot U$ with $\vartheta_v=\exp(-\sum_e\beta(x_{v,e},y_{v,e}))$ and $U$ integral. For each orbit $v$ and each integral series $U_v$ in the parameters of $v$, Proposition~\ref{prop:inclass} gives $(\vartheta_vU_v)(\varpi X)\in\mathcal C(h_{\upsilon})$, with the hypotheses on $\beta$ given by Theorem~\ref{betaprops} and those on $\omega,\omega^\ast$ by Lemma~\ref{r1:lem:hyp}. Theorem~\ref{thm:valuation} applies to $\vartheta_vU_v$ with the shape of Lemma~\ref{r1:lem:shape}:
+\begin{itemize}
+\item if $i_0(v)=0$ the operator $P^{(0)}_{I}$ is $P_I$, and parts (i) and (ii) bound every coefficient of $\langle P_I,\vartheta_vU_v\rangle$ below by $g^A_v$ and by $g^B_v-\alpha_{\mathrm{ev}}(v)$;
+\item if $i_0(v)\ge1$ the operator $P^{(i_0)}_I$ is $p^{e}P_I$ with $e\ge N_J$ by Lemma~\ref{r1:lem:shape}, and part (iii) gives the bound $g^B_v$.
+\end{itemize}
+So each $b_v$ in the statement is a lower bound for all coefficients of $\langle P^{(i_0(v))}_{I_v},\vartheta_vU_v\rangle$. Lemma~\ref{r1:lem:add} gives the bound $\sum_vb_v$ for $\langle\prod_vP^{(i_0(v))}_{I_v},f\rangle$, and Corollary~\ref{r1:cor:ent} gives
+\[
+p^{\sum_vN'_v(j+1,i_0(v))}\kappa_j(c,L;c',L'')\big(H_j(L)\big)\subset p^{\sum_vb_v}H_{j+1}(L').
+\]
+Since $n^{j+1}(i_0)=\sum_vN'_v(j+1,i_0(v))$ by Proposition~\ref{r1:prop:S1S2}, this is the entry bound of Definition~\ref{entrybound}. The ordering of the orbits plays no role, because the families $E^{j+1}_{i_0}(L')$ for different orderings coincide: edges at distinct orbits change distinct components.
+\end{proof}
+
+\subsection{The chain datum}\label{r1:sec:R1hyp}
+
+\begin{theorem}\label{r1:thm:R1main}
+Assume (N1), (N2), (N3). For a prime $p\ge5$ inert in $K$ and unramified in $E$, the data of Definitions~\ref{r1:def:chain}, \ref{r1:def:hecke} and~\ref{r1:def:lift}, with $\mathcal V$ the set of orbits and $\mathcal O$ as in Section~\ref{r1:sec:R1data}, form a chain datum (Definition~\ref{chaindatum}) with:
+\begin{enumerate}
+\item[(i)] the lattice tuples, the integral structures $H_j(L)$ of Definition~\ref{r1:def:H}, the Hecke families of Definition~\ref{r1:def:hecke} with $n^j_{v,i}=N'_v(j,i)$;
+\item[(ii)] property (D1) with $d_j=\ord_pD_\Gamma$ (Proposition~\ref{r1:prop:D1});
+\item[(iii)] Hecke commutation data (D2), (D3) with $y_v=p^{A_v}T^{\mathrm{raw},(0)}_{v,r}$, $\epsilon_{v,j}=1$, the coefficients $c_{v,j,l}$ and the elements $\rho_{v,j}$ of Proposition~\ref{r1:prop:D3}, and $\alpha(v,j)=\alpha_{\mathrm{ev}}(v)$ (Lemma~\ref{r1:lem:heckeint}, Theorem~\ref{r1:thm:Cii});
+\item[(iv)] orbit bounds $(g^A,g^B,\alpha_{\mathrm{ev}})$ (Theorem~\ref{r1:thm:orbit}).
+\end{enumerate}
+Consequently Theorem~\ref{lowterm} applies to the composite $\mathcal K_m=K_{m-1}\circ\dots\circ K_0$ of the true lifts, with $\mathrm{Pr}(v,j)$ of Proposition~\ref{r1:prop:D3}.
+\end{theorem}
+
+\begin{proof}
+Items (i) to (iv) are the cited statements. The only change to Section~\ref{sec:chaindiv} is the normalization in (S1), which affects Proposition~\ref{hkpoint} not at all and Proposition~\ref{inversion} only through the conversion in the proof of Proposition~\ref{r1:prop:D3}.
+\end{proof}
+
+\noindent\textbf{The three hypotheses.}
+\begin{itemize}
+\item (N1) Hypothesis~\ref{r1:hyp:H1}: the scalar normalization of the step kernel varies with the lattice at an orbit by units to the power of the lengths. The character factor $\chi_F$ satisfies this by Lemma~\ref{r1:lem:chiunit}; the frame factor and the determinant twists of~\eqref{stepkernel} must be shown to have valuation $\mu_v(j+1)(\len L_v-\len L'_v)$ plus units.
+\item (N2) Hypothesis~\ref{r1:hyp:H2}: the entry-to-lattice transfer at the odd positions.
+\item (N3) Hypothesis~\ref{r1:hyp:H3}: the normalized kernel law, i.e.\ $\lvert c\rvert\le1$ in Theorem~\ref{kernellaw} for the normalized kernel series; this fixes the normalization of $\theta_0$ and of the constant $c$.
+\end{itemize}
+
+\notgiven{Hypotheses (N1), (N2) and (N3) are not proved here.}

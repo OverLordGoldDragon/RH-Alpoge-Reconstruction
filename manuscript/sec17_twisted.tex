@@ -1,0 +1,346 @@
+\section{The twisted places}\label{sec:twisted}
+
+At the places where the local type of the lifts is twisted, the lattice of integral lifted forms differs from the lattice that the period pairing sees, and a congruence module measures the difference. This section defines the congruence defects $\eta_j(w)$, states the two bounds that control them, and proves the parts of those bounds that reduce to commutative algebra and Galois cohomology. Theorem~\ref{r5:thm:DIVinN} combines the two bounds. Its conclusion enters the heights of the period maps in \eqref{A4} and the frame parameters in \eqref{A3}. It does not enter \eqref{A5}, which Corollary~\ref{r5:cor:A5} proves without it.
+
+The first bound, Hypothesis~\ref{w4:thm:vwin}, bounds the lengths of Tate--Shafarevich groups of the host field on windows of scales. Subsection~\ref{tw:sec:vandiver} shows that it implies a bound in the direction of Vandiver's conjecture beyond the bounds published by Soul\'e~\cite{soule99} and by de~la~Torre~Dur\'an~\cite{delatorre}, and traces the argument for it to an automorphy statement for residually reducible Galois representations that is not a published theorem.
+
+\subsection{Congruence defects}\label{tw:sec:eta}
+
+For each finite place $w$ of $L$ the lifts have a local type $\mu_w$, which is either the standard type $\mu_0$ or a twisted type $\mu^{\rm tw}_w$, and $\mu_{\bar w}=\mu_w$. We call $w$ \emph{twisted} when $\mu_w\ne\mu_0$. At a twisted place the integral structure of the twisted lifts at level $j$ differs from the integral structure of the eigen-components that the period pairing sees, and the difference is measured by a congruence module.
+
+\begin{definition}\label{r5:def:eta}
+Let $w$ be a twisted place, $l=p_w$, and $1\le j\le m$. Let $\mathcal O$ be the ring of integers of the completion of $L$ at $w$, let $\Lambda$ be the $\mathcal O$-lattice spanned by the integral forms of level $j$ and local type $\mu^{\rm tw}_w$, and let $\mathbb T$ be the $\mathcal O$-algebra of Hecke operators acting on $\Lambda$. For a maximal ideal $\mathfrak m$ of $\mathbb T$ split $\Lambda_{\mathfrak m}\otimes\mathbb Q$ into the sum $V_{\rm good}\oplus V_{\rm bad}$ of the eigen-components whose eigensystems occur in the lifts of level $j$ and of the others. Put
+\[
+\eta_j(w)=\sum_{\mathfrak m}\frac{\operatorname{length}_{\mathcal O}\Big(\big(V_{\rm good}\cap(\Lambda_{\mathfrak m}+V_{\rm bad})\big)\big/\big(\Lambda_{\mathfrak m}\cap V_{\rm good}\big)\Big)}{\operatorname{length}_{\mathcal O}(\mathcal O/l)} ,
+\]
+the normalized length of the congruence module of $V_{\rm good}$ in $\Lambda$. For a non-twisted place put $\eta_j(w)=0$.
+\end{definition}
+
+The module $(V_{\rm good}\cap(\Lambda+V_{\rm bad}))/(\Lambda\cap V_{\rm good})$ is the projection of $\Lambda$ to $V_{\rm good}$ modulo the forms of $\Lambda$ that lie in $V_{\rm good}$. It vanishes when no good eigensystem is congruent to a bad one modulo $\mathfrak m$.
+
+\begin{definition}\label{r5:def:eta}
+Let $w$ be a twisted place, $l=p_w$, and $1\le j\le m$. Let $\mathcal O$ be the ring of integers of the completion of $L$ at $w$, let $\Lambda$ be the $\mathcal O$-lattice spanned by the integral forms of level $j$ and local type $\mu^{\rm tw}_w$, and let $\mathbb T$ be the $\mathcal O$-algebra of Hecke operators acting on $\Lambda$. For a maximal ideal $\mathfrak m$ of $\mathbb T$ split $\Lambda_{\mathfrak m}\otimes\mathbb Q$ into the sum $V_{\rm good}\oplus V_{\rm bad}$ of the eigen-components whose eigensystems occur in the lifts of level $j$ and of the others. Put
+\[
+\eta_j(w)=\sum_{\mathfrak m}\frac{\operatorname{length}_{\mathcal O}\Big(\big(V_{\rm good}\cap(\Lambda_{\mathfrak m}+V_{\rm bad})\big)\big/\big(\Lambda_{\mathfrak m}\cap V_{\rm good}\big)\Big)}{\operatorname{length}_{\mathcal O}(\mathcal O/l)} ,
+\]
+the normalized length of the congruence module of $V_{\rm good}$ in $\Lambda$. For a non-twisted place put $\eta_j(w)=0$.
+\end{definition}
+
+The module $(V_{\rm good}\cap(\Lambda+V_{\rm bad}))/(\Lambda\cap V_{\rm good})$ is the projection of $\Lambda$ to $V_{\rm good}$ modulo the forms of $\Lambda$ that lie in $V_{\rm good}$. It vanishes when no good eigensystem is congruent to a bad one modulo $\mathfrak m$. For $1\le j\le m$ we write $d^0_j$ for the rank of the space of lifted forms of level $j$ and standard type $\mu_0$, and $N_c=\lvert T_2\rvert\,k\,b\,x^{2\varepsilon}/n^2$, so that $\mathcal B=N_Ta(1+m^2/k)+m(B_0+N_c)$.
+
+\subsection{Tate--Shafarevich groups}\label{tw:sec:sha}
+
+Let $F$ be a number field, $\overline F$ an algebraic closure, $G_F=\Gal(\overline F/F)$ with the Krull topology, and $l$ a prime. Let $\chi\colon G_F\to\Zl^\times$ be the $l$-adic cyclotomic character, so that $\sigma(\zeta)=\zeta^{\chi(\sigma)}$ for every $l$-power root of unity $\zeta$. For an integer $e$ let $M_e$ be the discrete group $\Ql/\Zl$ on which $\sigma$ acts by multiplication by $\chi(\sigma)^{-e}$. For a finite place $v$ of $F$ fix a place of $\overline F$ above it, with decomposition group $D_v$ and inertia group $I_v$. Cohomology is continuous cohomology with discrete coefficients.
+
+\begin{definition}\label{w4:def:sha}
+$\Sha_l(F,e)$ is the subgroup of $H^1(G_F,M_e)$ of classes $c$ with $c|_{D_v}=0$ for every $v\mid l$ and $c|_{I_v}=0$ for every finite $v$. For a finite free $\Zl$-algebra $O$ put $M_{e,O}=O\otimes_{\Zl}M_e$, with $G_F$ acting on the second factor, and define $\Sha_l(F,e;O)\subset H^1(G_F,M_{e,O})$ by the same conditions. For a finite abelian $l$-group $X$ write $\lambda(X)=\log|X|=\len_{\Zl}(X)\log l$.
+\end{definition}
+
+The conditions do not depend on the chosen places above $v$, because restriction to conjugate subgroups differs by an automorphism of cohomology. There is no condition at archimedean places. For odd $l$ none is needed, because $H^1$ of a group of order $2$ with coefficients in an $l$-primary group vanishes.
+
+\begin{lemma}\label{w4:lem:unram}
+Let $v\nmid l$ be a finite place of $F$ and $e\ge1$. An element of $H^1(D_v,M_e)$ that vanishes on $I_v$ is zero.
+\end{lemma}
+
+\begin{proof}
+The group $I_v$ acts trivially on $M_e$, because $\chi$ is unramified at $v$. Inflation--restriction gives an exact sequence $0\to H^1(D_v/I_v,M_e)\to H^1(D_v,M_e)\to H^1(I_v,M_e)$, so a class that vanishes on $I_v$ comes from $H^1(D_v/I_v,M_e)$. The group $D_v/I_v$ is procyclic, topologically generated by a Frobenius element $\varphi$, and $M_e$ is a discrete torsion module, so $H^1(D_v/I_v,M_e)\cong M_e/(\varphi-1)M_e$. The element $\varphi$ acts on $M_e$ as multiplication by $a=Nv^{-e}$. Since $Nv>1$ and $e\ge1$, $a-1$ is a nonzero element of $\Ql$, say $a-1=l^ku$ with $u\in\Zl^\times$. Multiplication by $l^ku$ is surjective on the divisible group $\Ql/\Zl$, so $M_e/(\varphi-1)M_e=0$.
+\end{proof}
+
+\begin{lemma}\label{w4:lem:indepS}
+Let $e\ge1$ and let $S$ be a finite set of finite places of $F$ containing the places above $l$. Let $F_S\subset\overline F$ be the maximal extension of $F$ unramified outside $S$ and the archimedean places, and $G_{F,S}=\Gal(F_S/F)$. Inflation identifies $\Sha_l(F,e)$ with
+\[
+\ker\Bigl(H^1(G_{F,S},M_e)\longrightarrow\prod_{v\in S}H^1(D_v,M_e)\Bigr).
+\]
+In particular $\Sha_l(F,e)$ does not depend on $S$.
+\end{lemma}
+
+\begin{proof}
+The module $M_e$ is unramified outside $l$, so $H=\Gal(\overline F/F_S)$ acts trivially on it. Inflation--restriction gives $0\to H^1(G_{F,S},M_e)\to H^1(G_F,M_e)\to\Hom(H,M_e)$. The group $H$ is the closed normal subgroup of $G_F$ generated by the inertia groups at places outside $S$. A class $c\in H^1(G_F,M_e)$ that vanishes on every $I_v$ restricts to a homomorphism on $H$ that is trivial on these generators and is invariant under conjugation by $G_F$ (as an element of $\Hom(H,M_e)^{G_F}$), hence trivial on $H$. So $c$ is inflated from $G_{F,S}$. Conversely an inflated class vanishes on $I_v$ for $v\notin S$. At $v\notin S$ an unramified class is zero by Lemma~\ref{w4:lem:unram}. At $v\in S$ with $v\nmid l$, vanishing on $D_v$ implies vanishing on $I_v$, and vanishing on $I_v$ implies vanishing on $D_v$ by Lemma~\ref{w4:lem:unram}. At $v\mid l$ both definitions impose vanishing on $D_v$, which implies vanishing on $I_v$. This proves the identification, and it shows that the group does not depend on $S$.
+\end{proof}
+
+\begin{lemma}\label{w4:lem:coef}
+Let $O$ be a finite free $\Zl$-algebra which is a discrete valuation ring with ramification index $e(O)$ over $\Zl$. Then $\Sha_l(F,e;O)\cong O\otimes_{\Zl}\Sha_l(F,e)$ as $O$-modules, and if $\Sha_l(F,e)$ is finite,
+\[
+\len_O\Sha_l(F,e;O)=e(O)\,\len_{\Zl}\Sha_l(F,e),\qquad \len_O(O/lO)=e(O).
+\]
+\end{lemma}
+
+\begin{proof}
+Choose a $\Zl$-basis $o_1,\dots,o_r$ of $O$. Then $M_{e,O}=\bigoplus_i o_i\otimes M_e$ as $G_F$-modules, so $H^1(G_F,M_{e,O})=\bigoplus_iH^1(G_F,M_e)$, compatibly with restriction to every closed subgroup. Hence $\Sha_l(F,e;O)=\bigoplus_io_i\otimes\Sha_l(F,e)=O\otimes_{\Zl}\Sha_l(F,e)$, and the $O$-module structures agree because $O$ acts on the first tensor factor in both. The functor $X\mapsto O\otimes_{\Zl}X$ is exact, and it sends $\Z/l$ to $O/lO$, whose $O$-length is $e(O)$. By additivity of length along a composition series of $X$, $\len_O(O\otimes X)=e(O)\len_{\Zl}X$ for every $\Zl$-module $X$ of finite length.
+\end{proof}
+
+\begin{lemma}\label{w4:lem:pm}
+Let $l$ be odd, $E$ a CM field, $c\in\Gal(E/\Q)$ complex conjugation, $e\ge1$. The natural action of $c$ on $H^1(G_E,M_e)$ preserves $\Sha_l(E,e)$ and squares to the identity. If $\Sha_l(E,e)$ has finite length then $\len\Sha_l(E,e)=\len\Sha_l(E,e)^{c=(-1)^e}+\len\Sha_l(E,e)^{c=(-1)^{e+1}}$.
+\end{lemma}
+
+\begin{proof}
+The natural action of $\sigma\in G_\Q$ on $H^1(G_E,M_e)$ is $(\sigma\cdot f)(g)=\sigma f(\sigma^{-1}g\sigma)$ on cocycles. It factors through $\Gal(E/\Q)$, permutes the decomposition and inertia groups, and so preserves $\Sha_l(E,e)$. The action of $c$ is an involution. Since $2$ is a unit in $\Zl$, $x=\frac12(x+cx)+\frac12(x-cx)$ splits $\Sha_l(E,e)$ as the direct sum of the $c$-eigenspaces for $\pm1$, and length is additive.
+\end{proof}
+
+\begin{proposition}[Restriction to abelian fields]\label{w4:prop:res}
+Let $N\ge1$, let $E\subset\Q(\mu_N)$ be a subfield, let $l\nmid N$ be an odd prime and let $e\ge1$ with $(l-1)\nmid e$. Restriction $H^1(G_\Q,M_e)\to H^1(G_E,M_e)$ maps $\Sha_l(\Q,e)$ injectively into $\Sha_l(E,e)$, onto classes fixed by $\Gal(E/\Q)$. If $E$ is a CM field and $e$ is even, the image lies in $\Sha_l(E,e)^{c=(-1)^e}$. In particular $\len\Sha_l(\Q,e)\le\len\Sha_l(E,e)$.
+\end{proposition}
+
+\begin{proof}
+Restriction of a class that vanishes on $D_v$ (respectively $I_v$) vanishes on $D_w=D_v\cap G_E$ (respectively $I_w$) for every place $w$ of $E$ above $v$, so the image lies in $\Sha_l(E,e)$. The kernel of restriction is $H^1(\Gal(E/\Q),M_e^{G_E})$. Since $l\nmid N$, the fields $\Q(\mu_N)$ and $\Q(\mu_{l^\infty})$ are linearly disjoint over $\Q$, because a subfield of both is unramified at every prime. Hence $\chi(G_E)\supseteq\chi(G_{\Q(\mu_N)})=\Zl^\times$. An element $x\in M_e[l]$ fixed by $G_E$ satisfies $u^{-e}x=x$ for all $u\in\Zl^\times$, and since $(l-1)\nmid e$ there is $u$ with $u^{-e}\not\equiv1\pmod l$, so $x=0$. A nonzero $G_E$-fixed element of $M_e$ of order $l^k$ would give the nonzero fixed element $l^{k-1}x$ of $M_e[l]$. So $M_e^{G_E}=0$ and restriction is injective. A restricted class $f=c|_{G_E}$ satisfies $(\sigma\cdot f)(g)=\sigma c(\sigma^{-1}g\sigma)=c(g)$ modulo coboundaries, by the cocycle relation for $c$, so it is fixed by $\Gal(E/\Q)$. For $E$ CM and $e$ even, $c$ acts trivially on the image, and $1=(-1)^e$.
+\end{proof}
+
+\begin{proposition}[Class groups]\label{w4:prop:classgroup}
+Let $l$ be an odd prime, $e\ge1$ with $(l-1)\nmid e$, $F_l=\Q(\mu_l)$, $\Delta=\Gal(F_l/\Q)$, $\omega\colon\Delta\to\F_l^\times$ the Teichm\"uller character, and $A=\Cl(F_l)\otimes\Zl$. For a character $\theta$ of $\Delta$ let $A^{(\theta)}=\{a\in A:\delta a=\theta(\delta)a\text{ for all }\delta\}$. Then
+\[
+\dim_{\F_l}\Sha_l(\Q,e)[l]=\dim_{\F_l}\bigl(A/lA\bigr)^{(\omega^{-e})}.
+\]
+In particular $\Sha_l(\Q,e)=0$ if and only if $A^{(\omega^{-e})}=0$.
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1.} $H^0(G_\Q,M_e)=0$ and $H^0(D_l,M_e)=0$. The group $D_l$ maps onto $\Delta$ (the prime $l$ is totally ramified in $F_l$) and acts on $M_e[l]$ through $\omega^{-e}$, which is nontrivial because $(l-1)\nmid e$. So $M_e[l]^{D_l}=0$, and as in the proof of Proposition~\ref{w4:prop:res} this gives $M_e^{D_l}=0$, and a fortiori $M_e^{G_\Q}=0$.
+
+\emph{Step 2.} From $0\to M_e[l]\to M_e\xrightarrow{l}M_e\to0$ and Step 1, the map $H^1(G_\Q,M_e[l])\to H^1(G_\Q,M_e)[l]$ is an isomorphism. For $v\ne l$ the group $I_v$ acts trivially on $M_e$, so the kernel of $H^1(I_v,M_e[l])\to H^1(I_v,M_e)$ is $M_e/lM_e=0$. At $l$ the kernel of $H^1(D_l,M_e[l])\to H^1(D_l,M_e)$ is $H^0(D_l,M_e)/l=0$. Hence $\Sha_l(\Q,e)[l]$ is identified with the group $\mathcal S$ of $c\in H^1(G_\Q,\F_l(\omega^{-e}))$ that vanish on $I_v$ for $v\ne l$ and on $D_l$.
+
+\emph{Step 3.} Since $|\Delta|=l-1$ is prime to $l$, restriction gives an isomorphism $H^1(G_\Q,\F_l(\omega^{-e}))\cong H^1(G_{F_l},\F_l(\omega^{-e}))^\Delta=\Hom(G_{F_l},\F_l)^{\Delta}$, where $G_{F_l}$ acts trivially on the coefficients and $\Delta$-invariance of $f$ means $f(\tilde\delta g\tilde\delta^{-1})=\omega^{-e}(\delta)f(g)$. For $v\ne l$ the extension $F_l/\Q$ is unramified at $v$, so $I_v\subset G_{F_l}$, and $c$ vanishes on $I_v$ iff $f$ does. Restriction from $D_l$ to $D_l\cap G_{F_l}=D_\lambda$ is injective on $H^1(-,\F_l(\omega^{-e}))$ (index prime to $l$), so $c|_{D_l}=0$ iff $f|_{D_\lambda}=0$, where $\lambda=(1-\zeta_l)$ is the prime above $l$.
+
+\emph{Step 4.} The field $F_l$ is totally imaginary. By class field theory a homomorphism $G_{F_l}\to\F_l$ that vanishes on every inertia group factors through the Artin isomorphism $\Art\colon\Cl(F_l)\to\Gal(H/F_l)$ of the Hilbert class field $H$. Its restriction to $D_\lambda$ is determined by its value on $\Art([\lambda])$, which is $0$ because $\lambda$ is principal. The Artin map satisfies $\tilde\delta\Art(a)\tilde\delta^{-1}=\Art(\delta a)$. So $\mathcal S\cong\Hom_\Delta(A/lA,\F_l(\omega^{-e}))$, homomorphisms with $f(\delta a)=\omega^{-e}(\delta)f(a)$. Since $|\Delta|$ is prime to $l$, $A/lA=\bigoplus_\theta(A/lA)^{(\theta)}$, and such an $f$ vanishes on $(A/lA)^{(\theta)}$ for $\theta\ne\omega^{-e}$. Hence $\mathcal S\cong\Hom_{\F_l}((A/lA)^{(\omega^{-e})},\F_l)$. Finally $\Sha_l(\Q,e)$ is an $l$-primary torsion group, so it vanishes iff its $l$-torsion does, and $(A/lA)^{(\theta)}=A^{(\theta)}/lA^{(\theta)}$ vanishes iff $A^{(\theta)}$ does.
+\end{proof}
+
+For even $e$ the character $\omega^{-e}$ is even. Vandiver's conjecture for $l$ is the vanishing of $A^{(\theta)}$ for all even $\theta$. By Proposition~\ref{w4:prop:classgroup} it is equivalent to $\Sha_l(\mathbb Q,e)=0$ for all even $e$ with $2\le e\le l-3$, since the trivial character contributes $0$.
+
+For comparison we record the following published identification. Let $l$ be odd and $e\ge1$ with $(l-1)\nmid e$. By Lemma~\ref{w4:lem:indepS} with $S=\{l\}$ and Poitou--Tate duality~\cite[Theorems~8.6.7 and 8.6.8]{nsw}, $\Sha_l(\mathbb Q,e)$ is Pontryagin dual to $H^2(\mathbb Z[1/l],\Zl(1+e))$, and this group is $K_{2e}(\mathbb Z)\otimes\Zl$ by the theorem of Rost and Voevodsky on the Quillen--Lichtenbaum conjecture for $\mathbb Z$ (see the survey of Weibel~\cite{weibelK}). Nothing below depends on this identification.
+
+\subsection{The Selmer bound on windows}\label{tw:sec:vwin}
+
+\begin{definition}[Window pairs]\label{w4:def:winpair}
+Let $0<\varepsilon<\frac1{52}$ and $Y\ge2$. A \emph{window pair at scale $Y$} is a pair of primes $(q,d)$ with $q\equiv3\pmod8$, $\frac12Y^{\varepsilon/5}<\log q\le Y^{\varepsilon/5}$, $d\equiv7\pmod{16}$, $\frac12Y^{\varepsilon/5}\log^2Y<\log d\le Y^{\varepsilon/5}\log^2Y$, $q\mid d+1$, and $p\mid d+1$ for every odd prime $p\le Y^{\varepsilon/5}$.
+\end{definition}
+
+\begin{definition}[$\chi$-fields]\label{w4:def:chifield}
+Let $\psi_0$ be a primitive Dirichlet character of conductor $N_0$, $e\ge0$, and $q,d$ odd primes. Put $N=\operatorname{lcm}(2^{e+2},N_0,q,d)$. The field $E(\psi_0,e,q,d)$ is the subfield of $\Q(\mu_N)$ fixed by the automorphisms $\zeta\mapsto\zeta^a$ with $a\equiv\pm1\pmod{2^{e+2}}$, $\psi_0(a)=1$, $\left(\frac aq\right)=\left(\frac ad\right)=1$. For $q\equiv3\pmod4$ it is a CM field.
+\end{definition}
+
+\begin{hypothesis}[Selmer bound on windows]\label{w4:thm:vwin}
+For every primitive Dirichlet character $\psi_0$, every $0<\varepsilon<\frac1{52}$ and every function $e\colon[1,\infty)\to\mathbb N$ with $x^{2+8\varepsilon}\le2^{e(x)}\le2x^{2+8\varepsilon}$, there are $J\ge1$ and $X_0$ with the following property. For every $X\ge X_0$ and every window pair $(q,d)$ at scale $X^{1/J}$ there is $Y$ with $X^{1/J}\le Y\le X^{1/2}$ such that for every $x\in[Y,Y^2]$, with $t=\lfloor x^{401}\rfloor$ and $E=E(\psi_0,e(x),q,d)$, every $\Sha_l(E,e')$ with $0<e'<t$ is finite and
+\[
+\sum_{l}\ \sum_{1\le e'<t}\lambda\bigl(\Sha_l(E,e')\bigr)\le\exp\bigl(\tfrac12x^{\varepsilon}\bigr),
+\]
+the sum over all primes $l$ (including $l=2$).
+\end{hypothesis}
+
+Hypothesis~\ref{w4:thm:vwin} produces condition (D6) of the admissible data of Section~\ref{sec:proofA}, and it has the existential form in $Y$ that Theorem~A uses. Hypothesis~\ref{r6:R6:thm:selmer} is the form in which Section~\ref{sec:proofA} uses it. The two forms differ in the normalization of the exponent $e(x)$. Hypothesis~\ref{w4:thm:vwin} asks for $x^{2+8\varepsilon}\le2^{e(x)}\le2x^{2+8\varepsilon}$, and Hypothesis~\ref{r6:R6:thm:selmer} asks for $x^{2+8\varepsilon}\le c\,2^{e(x)}\le2x^{2+8\varepsilon}$ with the integer $c$ of Proposition~\ref{field}(iii). \notgiven{We have not checked that the two forms agree when $c>1$.}
+
+For a CM field $E$, $t\ge1$ and $B\ge0$ write
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item $(\mathrm P_2)(E,t,B)$: $\sum_{1\le e'<t}\len_{\mathbb Z_2}\Sha_2(E,e')\le B$, all finite;
+\item $(\mathrm P_\pm)(E,t,B)$: for odd $l$, the $c=\pm(-1)^{e'}$ parts are finite and $\sum_{l\ \mathrm{odd}}\log l\sum_{e'<t}\len\Sha_l(E,e')^{c=\pm(-1)^{e'}}\le B$.
+\end{itemize}
+
+\begin{theorem}[decomposition]\label{w4:thm:decomp}
+Hypothesis~\ref{w4:thm:vwin} follows from the following two statements, with the notation of Hypothesis~\ref{w4:thm:vwin}.
+\begin{enumerate}[leftmargin=*,label=(\Roman*)]
+\item \emph{(Plus part and $l=2$ on windows.)} For every $\psi_0$, $\varepsilon$ and every pair of functions $e(x),t(x)$ with $2\le e(x)$, $2^{e(x)}\le x^4$, $2\le t(x)\le x^{401}$ for $x\ge2$, there are $J,C,P,X_1>0$ such that for $X\ge X_1$ and primes $q\equiv3\ (8)$, $d\equiv7\ (16)$ prime to $N_0$, with $q,d>\max(P,2X^{401}+1)$ and $\log(qd)\le X^{\varepsilon/(4J)}$, there is $Y$ with $X^{1/J}\le Y\le X^{1/2}$ such that for all $x\in[Y,Y^2]$ and $E=E(\psi_0,e(x),q,d)$: $(\mathrm P_2)(E,t(x),e^{x^{4\varepsilon/5}})$ and $(\mathrm P_+)(E,t(x),(\cond(E)t(x))^C+Ce^{x^{4\varepsilon/5}})$.
+\item \emph{(Minus part.)} There is $C$ such that for all such $E$ of degree $n$ and conductor $f$, and $t\ge2$: $(\mathrm P_-)(E,t,\beta)$ with $\beta=3nt^2\log(tf)+C\sum_{l\mid o,\ l\ \mathrm{odd}}l\,n^2t^2\log^2(tlf)$, where $o$ is the order of $\psi_0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Fix $\psi_0$, $\varepsilon$ and $e(x)$ as in Hypothesis~\ref{w4:thm:vwin}, and put $t(x)=\lfloor x^{401}\rfloor$. For $x\ge2$, $2^{e(x)}\le2x^{2+8\varepsilon}\le x^4$ and $2^{e(x)}\ge x^2\ge4$, so (I) applies; let $J,C,P,X_1$ be its constants, and let $C_-$ be the constant of (II).
+
+\emph{Sizes.} Let $(q,d)$ be a window pair at scale $Y_0=X^{1/J}$ and $x\ge Y_0$. Then $\log q+\log d\le Y_0^{\varepsilon/5}(1+\log^2Y_0)\le x^{\varepsilon/4}$ once $Y_0$ is large. Also $q,d\ge\exp(\frac12Y_0^{\varepsilon/5})>\max(P,2X^{401}+1)$ and $\log(qd)\le X^{\varepsilon/(4J)}$ for $X$ large, so the hypotheses of (I) hold. The field $E$ lies in $\Q(\mu_N)$ with $N=\operatorname{lcm}(2^{e(x)+2},N_0,q,d)$, so $f=\cond(E)\le N$ and $n=[E:\Q]\le\varphi(N)\le N$. Since $2^{e(x)}\le2x^{3}$,
+\[
+\log(ft)\le(e(x)+2)\log2+\log N_0+x^{\varepsilon/4}+401\log x\le2x^{\varepsilon/4}
+\]
+for $x$ large in terms of $\varepsilon$ and $N_0$.
+
+\emph{Assembly.} Let $x\in[Y,Y^2]$ with $Y$ from (I). For odd $l$, Lemma~\ref{w4:lem:pm} splits each length into the two parts. Summing over $l$,
+\[
+\sum_l\sum_{e'<t}\lambda(\Sha_l(E,e'))\le e^{x^{4\varepsilon/5}}\log2+\beta+(ft)^C+Ce^{x^{4\varepsilon/5}}.
+\]
+Since $n\le f$, $\ell\le o$ for $\ell\mid o$, and $\log^2y\le y$ for $y\ge1$, each summand of $\beta$ is at most $o^2(ft)^3$, so $\beta\le(3+C_-o^3)(ft)^3\le(3+C_-o^3)e^{6x^{\varepsilon/4}}$; also $(ft)^C\le e^{2Cx^{\varepsilon/4}}$. Each of the four terms is at most $\frac14\exp(\frac12x^\varepsilon)$ once $x$ is large in terms of $\varepsilon$, $C$, $C_-$, $o$, because $\frac45\varepsilon<\varepsilon$ and $\frac14\varepsilon<\varepsilon$. Choose $X_0\ge X_1$ so large that $Y_0=X_0^{1/J}$ exceeds all thresholds above. Then for $X\ge X_0$ every $x\ge Y\ge X^{1/J}$ is large enough.
+\end{proof}
+
+\notgiven{Neither of the statements (I) and (II) is proved here.} The plus part of (I) splits, by the residual position of $l$ relative to the host, into five counts of the same type. The generic one is a bound for the groups $\Sha_l(\mathbb Q,e';\psi)$ attached to the Dirichlet characters $\psi$ of the host, and it follows from statement (CorGK) of Subsection~\ref{tw:sec:vandiver} for $K=\mathbb Q(\sqrt{-p_K})$. Its bound is $4c_5\varphi(\mathrm{index})\,|d_K|^5N^{18}e^7(\log p+\log p')$, a polynomial of degree $7$ in the twist. The other cases are the same mechanism for $\mathrm{GSp}_4$ and over a frame of the host field. The part of (I) at $l=2$ and at the bad primes uses Poitou--Tate duality, local duality, a surjection onto $H^2(G_{L,S},\mathbb Z_l(e+1))$ from a module that maps to $\mathbb Z_l\otimes H_{2e}(\mathrm{GL}_{4e+4}(\mathcal O_L),\mathbb Z)$ with kernel killed by $l^{c(2e)}$, torsion bounds of the type of Soul\'e and of Dwyer and Friedlander, and Borel's computation of ranks. The bound is available only on windows of scales, and the constant $J=2^{R+2}(2C_K\cdot401/\varepsilon)^R$ of the formal proof, with $R=R(\psi_0)$, depends on $\psi_0$ and $\varepsilon$. Statement (II) is of the type of the Main Conjecture for abelian fields (Mazur and Wiles, Wiles, Rubin) together with the theorem of Ferrero and Washington, which bound the minus parts by generalized Bernoulli numbers, whose logarithms are polynomial in $n$, $t$ and $\log f$. The formal proof derives (II) from Stickelberger's theorem and a Kolyvagin system of Gauss sums.
+
+\subsection{A consequence in the direction of Vandiver's conjecture}\label{tw:sec:vandiver}
+
+Consider the following statement.
+\begin{enumerate}
+\item[(V)] There are constants $C,A$ such that for every even $e\ge2$ and every finite set $L$ of primes $l\ge5$ with $(l-1)\nmid2e$, each $\Sha_l(\mathbb Q,e)$ is finite and $\sum_{l\in L}\lambda\bigl(\Sha_l(\mathbb Q,e)\bigr)\le C(e+1)^A$.
+\end{enumerate}
+The formal proof contains (V) as a theorem, derived from the statement that also gives the generic plus part of (I).
+
+\begin{corollary}[Vanishing of eigenspaces]\label{w4:cor:large}
+If (V) holds with constants $C,A$, then for every even $e\ge2$ and every prime $l\ge5$ with $(l-1)\nmid2e$ and $\log l>C(e+1)^A$, the $\omega^{-e}$ eigenspace of the $l$-class group of $\Q(\mu_l)$ vanishes.
+\end{corollary}
+
+\begin{proof}
+If it did not vanish, $\Sha_l(\Q,e)\ne0$ by Proposition~\ref{w4:prop:classgroup}, so $\lambda(\Sha_l(\Q,e))\ge\log l$, and (V) with $L=\{l\}$ gives $\log l\le C(e+1)^A$.
+\end{proof}
+
+The exclusion $(l-1)\mid2e$ removes nothing of substance. If $(l-1)\mid2e$ and $(l-1)\nmid e$, then $\omega^{-e}$ is the quadratic character of $\Delta$, whose field is $\mathbb Q(\sqrt l)$, and the corresponding eigenspace is the $l$-part of a class group whose order is smaller than $l$.
+
+\paragraph{Comparison with published results.} Kurihara~\cite{kurihara92} proved $A^{(\omega^{-2})}=0$ for every $l$, through $K_4(\mathbb Z)=0$, which is the case $e=2$ of Corollary~\ref{w4:cor:large} with no threshold. With $n=e+1$ odd, Soul\'e~\cite{soule99} proved $A^{(\omega^{-e})}=0$ once $\log l>n^{224n^4}$, a threshold of size $\exp(O(e^4\log e))$. De~la~Torre~Dur\'an~\cite{delatorre} improved the exponential factor for $F=\mathbb Q$ from $e^{O(n^4\log n)}$ to $e^{O(n^2\log n)}$, a threshold of size $\exp(O(e^2\log e))$. Corollary~\ref{w4:cor:large} has the threshold $C(e+1)^A$, one exponential smaller. In terms of $T(e)=\sum_l\lambda(\Sha_l(\mathbb Q,e))$, the published methods bound $\log T(e)$ by a constant times $e^2\log e$ at best, and (V) asserts $\log T(e)\le A\log(e+1)+\log C$. The methods of Soul\'e and of de~la~Torre~Dur\'an count cells of the Voronoi complex of $\mathrm{GL}_n(\mathbb Z)$, and the number of perfect forms grows like $e^{\Theta(n^2\log n)}$~\cite{vanwoerden}, so cell counting alone does not reach a polynomial bound. No finite computation can contradict (V), because its constants are existential. The computed groups $K_4(\mathbb Z)=0$ and $K_8(\mathbb Z)=0$ and the verification of Vandiver's conjecture for $l<2^{31}$ are consistent with every upper bound, and they give no information about (V).
+
+\begin{remark}[odd twists]\label{w4:rem:odd}
+For odd $e$ the analogous sum is classically polynomial. By the identification with $K_{2e}(\mathbb Z)\otimes\Zl$ in Subsection~\ref{tw:sec:sha} and the computation of $K_{4k-2}(\Z)$ from the Main Conjecture of Mazur and Wiles (Weibel's survey), $|\Sha_l(\Q,e)|$ is the $l$-part of the numerator of $B_{e+1}/(e+1)$ for $e=2k-1$ and $(l-1)\nmid e$. Hence $\sum_l\lambda(\Sha_l(\Q,e))\le\log|B_{e+1}|+o(e)=(1+o(1))\,e\log e$, using that the denominator of $B_{e+1}/(e+1)$ has logarithm $o(e)$. So the shape of (V) is the natural even analogue of a known odd statement. This supports plausibility and proves nothing.
+\end{remark}
+
+\paragraph{The chain of statements.} Let $K$ be an imaginary quadratic field. For a Dirichlet character $\psi$ write $\Sha_l(\mathbb Q,e;\psi)$ for the group of Definition~\ref{w4:def:sha} for the character $\psi^{-1}\chi^{-e}$ in place of $\chi^{-e}$, with coefficients in a finite extension $O$ of $\Zl$ that contains the values of $\psi$.
+
+\begin{proposition}[(V) from (CorGK)]\label{w4:prop:corToBound}
+Assume the following statement (CorGK) for $K=\Q(\sqrt{-3})$. There are $c_5,A$ such that for every even $N\ge2$, every subgroup $H\subset(\Z/N)^\times$, all distinct primes $p,p'\nmid30N\lvert d_K\rvert$, every finite set $L$ of primes such that for each $l\in L$ some character $\psi$ in the orbit of characters with kernel $H$ is in generic position in the sense of conditions (a) to (e) of the proof below, one has finiteness and
+\[
+\sum_{l\in L}\log l\sum_{\psi}\frac{\len\Sha_l(\Q,e;\psi)}{e(O)}\le2c_5\,\varphi([(\Z/N)^\times:H])\,\bigl(N(e+1)\bigr)^A\bigl(\log p+\log p'\bigr),
+\]
+where $\Sha_l(\Q,e;\psi)$ is the group of Definition~\ref{w4:def:sha} for the character $\psi^{-1}\chi^{-e}$. Then (V) holds with $C=36c_52^A$ and the same $A$.
+\end{proposition}
+
+\begin{proof}
+Take $N=2$, $H=(\Z/2)^\times$ (the trivial group), so the only character is $\psi=1$ and $\varphi(1)=1$, and take $p=7$, $p'=11$, which do not divide $30\cdot2\cdot3$. For $\psi=1$, $\Sha_l(\Q,e;1)=\Sha_l(\Q,e)$. The generic-position conditions for $K=\Q(\sqrt{-3})$, $\psi=1$, $l\ge5$, $e\ge2$ even and $(l-1)\nmid2e$ hold, as follows. (a) $l$ odd, $e\ge1$, $N=2$ even. (b) $l$ does not divide the order $1$ of $\psi$, $\psi^2=1$, and $\psi(-1)=1=(-1)^e$. (c) $K$ is imaginary quadratic with discriminant $-3$ and class number $1$, so $l\nmid3$; and $\gcd(3,2)=1$. (d) The last condition asks that $\ker(\chi\bmod l)\cap\ker\psi$ is not contained in $G_K$. Here $\ker\psi=G_\Q$, so it asks that $K\not\subset\Q(\mu_l)$, which holds because $3$ ramifies in $K$ and not in $\Q(\mu_l)$ for $l\ne3$. (e) $(l-1)\nmid2e$. The right side becomes $2c_5(2(e+1))^A(\log7+\log11)\le2c_5\,2^A(e+1)^A\cdot 18$. Lemma~\ref{w4:lem:coef} converts the left side into the left side of (V).
+\end{proof}
+
+\begin{proposition}[(CorGK) from (PropGK)]\label{w4:prop:prop2cor}
+Assume the following statement (PropGK). For a number field $K$ there are $c_5,A$ such that for $e,N,H$ and every prime $p\nmid30N\lvert d_K\rvert$ there is an integer $NN_p\ne0$ with $\log\lvert NN_p\rvert\le c_5\varphi(\mathrm{index}\,H)(N(e+1))^A\log p$, and for every prime $l\ne p$ and every coefficient ring at which some character of the orbit is in generic position, the lengths are finite and $\sum_\psi\len\Sha_l(\Q,e;\psi)/e(O)\le2v_l(NN_p)$. Then (CorGK) holds with the same $c_5,A$.
+\end{proposition}
+
+\begin{proof}
+Fix distinct admissible $p,p'$ and a finite set $L$ of primes in generic position. For $l\ne p$ use $NN_p$, and for $l=p$ use $NN_{p'}$. Then
+\[
+\sum_{l\in L}\log l\sum_\psi\frac{\len\Sha_l(\Q,e;\psi)}{e(O)}\le2\sum_l\log l\,\bigl(v_l(NN_p)+v_l(NN_{p'})\bigr)\le2\bigl(\log\lvert NN_p\rvert+\log\lvert NN_{p'}\rvert\bigr),
+\]
+because $\sum_lv_l(n)\log l\le\log|n|$ for a nonzero integer $n$. Insert the bounds for $\log|NN_p|$ and $\log|NN_{p'}|$.
+\end{proof}
+
+\begin{proposition}[(PropGK) from (Count) and (OneChar)]\label{w4:prop:onechar2prop}
+Let $K$ be an imaginary quadratic field, $p\ge7$ a prime with $p\nmid N\,d_K$, $w\mid p$ a place of $K$ and $\sigma$ a Frobenius element at $w$. Let $\mathcal O$ be a finite set of roots of unity $z$ stable under $\operatorname{Aut}(\mathbb C)$, and put $t(z)=Nw^{e}z+1+Nw^{-e}z^{-1}$, the trace of $\sigma$ on the Eisenstein triple $\Psi\oplus1\oplus\Psi^{-1}$ suitably normalized. Assume the following two statements.
+\begin{enumerate}[leftmargin=*,label=(\alph*)]
+\item \emph{(Count.)} There is $NN\in\Z\setminus\{0\}$ with $\log|NN|\le c\,|\mathcal O|\,(N(e+1))^A\log p$, such that for every prime $l\ne2,p$, every $\iota\colon\overline{\Q}_l\cong\mathbb C$ and every choice of finite sets $X_z$ of pairwise non-isomorphic admissible $\rho\colon G_K\to GL_3(\overline{\Q}_l)$ (level $N$, weight $e$), one has $\operatorname{tr}\rho(\sigma)\ne t(z)$ for $\rho\in X_z$ and $\lvert NN\rvert_l\le\prod_z\prod_{\rho\in X_z}\lvert\operatorname{tr}\rho(\sigma)-t(z)\rvert_l$.
+\item \emph{(OneChar.)} For each character $\psi$ in generic position, if no admissible $\rho$ has $\operatorname{tr}\rho(\sigma)=t$, then $\Sha_l(\Q,e;\psi)$ is finite and there is a finite set $X_\psi$ of pairwise non-isomorphic admissible $\rho$ with $\len\Sha_l(\Q,e;\psi)/e(O)\le2\sum_{\rho\in X_\psi}v_l(\operatorname{tr}\rho(\sigma)-t_\psi)$.
+\end{enumerate}
+Then the conclusion of (PropGK) holds at $p$ with $NN_p=NN$.
+\end{proposition}
+
+\begin{proof}
+The orbit of characters $\psi$ with kernel $H$ is in bijection with an $\operatorname{Aut}(\mathbb C)$-stable set $\mathcal O$ of roots of unity, $z_\psi=\psi(Nw)^{-1}$ under $\iota$, and $t_\psi=t(z_\psi)$; the number of elements is $\varphi(\mathrm{index}\,H)$. By~(a) no admissible $\rho$ has trace $t_\psi$, so~(b) applies to each $\psi$. Summing~(b) over $\psi$ and applying~(a) to the sets $X_\psi$,
+\[
+\sum_\psi\frac{\len\Sha_l(\Q,e;\psi)}{e(O)}\le2\sum_\psi\sum_{\rho\in X_\psi}v_l\bigl(\operatorname{tr}\rho(\sigma)-t_\psi\bigr)\le2v_l(NN).\qedhere
+\]
+\end{proof}
+
+The content of (Count) is classical in type. The admissible $\rho$ correspond to Frobenius eigenvalues at $w$ of algebraic automorphic forms on a definite unitary group in three variables of level $N$ and weight of height $e$, whose number is polynomial in $N(e+1)$. The number $NN$ is the product of the scaled differences, rational by Galois stability, and nonzero because purity gives $|\operatorname{tr}\rho(\sigma)|\le3$ while $|t(z)|\ge p^{e}-2>3$. \notgiven{Statement (Count) is not proved here.}
+
+\begin{proposition}[a consequence of the Selmer bound]\label{w4:prop:need}
+Assume Hypothesis~\ref{w4:thm:vwin} for one primitive character $\psi_0$ of conductor $N_0$, and assume that for every $\varepsilon\in(0,\frac1{52})$ and $J\ge1$ there are arbitrarily large $X$ for which a window pair $(q,d)$ at scale $X^{1/J}$ exists (Definition~\ref{w4:def:winpair}). Then for every $\varepsilon\in(0,\frac1{52})$ there are arbitrarily large real $x$ and primes $q_x,d_x$ such that for every finite set $L$ of odd primes $l\nmid N_0q_xd_x$,
+\[
+\sum_{l\in L}\ \sum_{\substack{1\le e<x^{401}\\(l-1)\nmid e}}\lambda\bigl(\Sha_l(\Q,e)\bigr)\le\exp\bigl(\tfrac12x^{\varepsilon}\bigr).
+\]
+Consequently the product $P(T)=\prod_{e<T}\prod_{l}\lvert\Sha_l(\Q,e)\rvert$ over odd $l\nmid N_0$ with $(l-1)\nmid e$, outside two primes that depend on $T$, satisfies $\log\log P(T)\le\frac12T^{\varepsilon/401}$ for arbitrarily large $T$, for every $\varepsilon>0$.
+\end{proposition}
+
+\begin{proof}
+Choose any function $e(x)$ with $x^{2+8\varepsilon}\le2^{e(x)}\le2x^{2+8\varepsilon}$. Let $J,X_0$ be given by Hypothesis~\ref{w4:thm:vwin}, take $X\ge X_0$ with a window pair $(q,d)$ at scale $X^{1/J}$, and take the $Y$ that Hypothesis~\ref{w4:thm:vwin} provides. Put $x=Y$, which tends to infinity with $X$. Let $N=\operatorname{lcm}(2^{e(x)+2},N_0,q,d)$ and let $E$ be the fixed field in $\Q(\mu_N)$ of the subgroup of Definition~\ref{w4:def:chifield}. Hypothesis~\ref{w4:thm:vwin} gives $\sum_{l\in L}\sum_{1\le e<t}\lambda(\Sha_l(E,e))\le\exp(\frac12x^\varepsilon)$ with $t=\lfloor x^{401}\rfloor$. For odd $l\nmid N_0qd$ we have $l\nmid N$, and Proposition~\ref{w4:prop:res} gives $\lambda(\Sha_l(\Q,e))\le\lambda(\Sha_l(E,e))$ whenever $(l-1)\nmid e$. The terms are nonnegative, so the inequality follows. For the consequence take $T=x^{401}$ and logarithms.
+\end{proof}
+
+By the identification with $K_{2e}(\mathbb Z)\otimes\mathbb Z_l$ and the comparison above, the published estimates give at best $\log\log P(T)\ll T^{2}\log T$, and nothing better along any sequence of $T$. Proposition~\ref{w4:prop:need} needs $\log\log P(T)\le T^{\delta}$ along a sequence of $T$, for every $\delta>0$. So the restriction to windows does not reduce what Hypothesis~\ref{w4:thm:vwin} requires to a published bound. The Selmer bound on windows implies a bound in the direction of Vandiver's conjecture that is stronger than the published bounds of Soul\'e and of de~la~Torre~Dur\'an. Alp\"oge's announcement~\cite{note} describes this bound as a weakening of Vandiver's conjecture.
+
+\paragraph{The statement (OneChar).} Fix $K$, $l\ge5$, $e$ and a character $\psi$ in generic position, put $\Psi=\chi^e\psi$, and consider the ordinary deformation problem for representations of $G_{\mathbb Q}$ into the group of unitary type in three variables with residual representation $\Psi\oplus1\oplus\Psi^{-1}$. The formal proof derives (OneChar) from four inputs.
+\begin{enumerate}[leftmargin=*,label=(G\arabic*)]
+\item \emph{Tangent injection.} A class of $\Sha_l(\mathbb Q,e;\psi)$ gives a tangent vector of weight $-1$ at the Eisenstein point of a graded model of the ordinary deformation ring, with an action of a torus (the argument of Ribet).
+\item \emph{An intersection inequality.} On a trigraded Rees algebra, under hypotheses (M1) to (M5), the cotangent module of weight $-1$ modulo the differentials of the Selmer equations has length at most $2\sum_\xi v(\xi(a))$, the sum over representatives of the torus orbits of the two-signed points $\xi$, with $a=\operatorname{tr}r(\sigma)-t$. This is commutative algebra with no arithmetic input.
+\item \emph{Finiteness and automorphy.} The ordinary deformation problem is finite over $O$ (hypothesis (M2)), and every ordinary point $r$ with values in a finite extension of $O$ that is irreducible on every open subgroup of the kernel of the similitude character restricts on $G_K$ to a representation $\rho$ such that $\rho\otimes\chi^{-1}$ is automorphic and conjugate self-dual.
+\item \emph{Rigidity.} At each two-signed point the tangent space of the Selmer locus is one-dimensional (hypothesis (M4)), which is the vanishing of the adjoint Bloch--Kato Selmer group. At the reducible fixed points $W\oplus1$ (hypothesis (M3)) the Bloch--Kato Selmer groups of the twist $W$ of a newform of weight $2e+1$ and of $W\otimes\theta$ vanish.
+\end{enumerate}
+\notgiven{None of (G1) to (G4) is proved here, and (OneChar) is not proved here.}
+
+The closest published theorem to (G3) is Theorem~1.1 of Allen, Newton and Thorne~\cite{ant20}. It allows any number of residual constituents, but its hypothesis~(4) requires each constituent to be conjugate self-dual, and its hypotheses (5) and (6c) require a place at which the seed is an unramified twist of the Steinberg representation. In the configuration of (G3), on $G_K$ the constituents $\Psi$ and $\Psi^{-1}$ are exchanged by conjugate duality, so they are not individually conjugate self-dual when $e\ne0$, and no Steinberg place is assumed. The earlier theorem of Thorne~\cite{thorne15} has stronger hypotheses. So (G3) is not a published theorem. In characteristic zero at irreducible points, (G4) has the shape of Theorem~A of Newton and Thorne~\cite{nt23}, which needs the image to be enormous and does not need residual irreducibility. Its enormity hypothesis has to be checked for the three-dimensional images that occur. At the reducible points, (G4) has the shape of Kato's theorem~\cite{kato04} in the range where the $L$-value at the edge of the critical strip does not vanish. The inequality of (OneChar) sums over automorphic points only, so the step that would fail first if (V) were false is the automorphy of every irreducible ordinary point, for every $l\ge5$ in generic position, in (G3). The construction of a three-dimensional automorphic seed on each relevant component, the connectedness of the irreducible locus along which automorphy propagates, the crossing at thick reducible primes, which needs a cohomological bound for a first-order thickening at a reducible point, and the finiteness (M2) are the parts of (G3) that a specialist in Hida theory and residually reducible patching would have to verify.
+
+\subsection{The congruence bound}\label{tw:sec:linkn}
+
+\begin{hypothesis}[congruence bound]\label{w4:thm:linkn}
+There are $C$ and $x_0$ such that for every admissible datum at scale $x\ge x_0$ for which every $\Sha_l(E,e)$ with $0<e<t_r$ is finite, and for every lift index $j$,
+\[
+\sum_{w\ \mathrm{twisted}}\ell_we_w\,\eta_j(w)\ \le\ d^0_j\Bigl(C\bigl(f\,m\,b\,L_\varepsilon^2+(\log x)^2N_c\bigr)+\sum_l\log l\sum_{1\le e<t_r}\len\Sha_l(E,e)\Bigr),
+\]
+provided the last sum converges.
+\end{hypothesis}
+
+The argument for Hypothesis~\ref{w4:thm:linkn} has three steps. A lattice defect is bounded by congruence numbers (step one), congruence numbers by Fitting lengths of a cocycle module (step two), and Fitting lengths by Selmer lengths plus local terms (step three).
+
+Let $O$ be a complete discrete valuation ring with fraction field $K$, $X$ a finite set, $V=\bigoplus_{x\in X}V_x$ a finite-dimensional $K$-vector space, and $\Lambda\subset V$ an $O$-lattice. Let $T\subset\prod_{x\in X}O$ be an $O$-subalgebra acting on $V$ by $t\cdot v=(t_xv_x)_x$ with $T\Lambda\subset\Lambda$. For $x\in X$ define the \emph{congruence ideal} $\mathfrak c_x=\{t_x: t\in T,\ t_y=0\text{ for all }y\ne x\}$ and $\delta_x=\min\{v(a):a\in\mathfrak c_x\}\in\mathbb N\cup\{\infty\}$. For $Z\subset X$ write $V_Z=\bigoplus_{x\in Z}V_x$ and $\pi_Z\colon V\to V_Z$ for the projection.
+
+\begin{proposition}\label{w4:prop:cong}
+For $Z\subset X$, put $M^{\rm up}=\pi_Z(\Lambda)$ and $M^{\rm low}=\Lambda\cap V_Z$. Then
+\begin{enumerate}[leftmargin=*,label=(\roman*)]
+\item $M^{\rm up}/M^{\rm low}\cong\Lambda/\bigl((\Lambda\cap V_Z)\oplus(\Lambda\cap V_{X\setminus Z})\bigr)$;
+\item $\len_O(M^{\rm up}/M^{\rm low})\le\sum_{x\in Z}\dim_KV_x\cdot\delta_x$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) The map $\Lambda\to M^{\rm up}/M^{\rm low}$, $v\mapsto\pi_Z(v)$, is surjective. Its kernel is the set of $v\in\Lambda$ with $\pi_Z(v)\in\Lambda$. For such $v$, $\pi_{X\setminus Z}(v)=v-\pi_Z(v)\in\Lambda$, so $v\in(\Lambda\cap V_Z)\oplus(\Lambda\cap V_{X\setminus Z})$, and the converse inclusion is clear.
+
+(ii) If some $\delta_x=\infty$ there is nothing to prove. Otherwise choose $a_x\in\mathfrak c_x$ with $v(a_x)=\delta_x$ and $t^{(x)}\in T$ with $t^{(x)}_x=a_x$ and $t^{(x)}_y=0$ for $y\ne x$. For $v\in\Lambda$, $t^{(x)}v=a_x\pi_x(v)$ lies in $\Lambda\cap V_x$. Hence
+\[
+\bigoplus_{x\in Z}a_x\pi_x(\Lambda)\ \subset\ \bigoplus_{x\in Z}(\Lambda\cap V_x)\ \subset\ M^{\rm low}\ \subset\ M^{\rm up}\ \subset\ \bigoplus_{x\in Z}\pi_x(\Lambda).
+\]
+Each $\pi_x(\Lambda)$ is a lattice in $V_x$, free of rank $\dim V_x$, so $\len(\pi_x(\Lambda)/a_x\pi_x(\Lambda))=\dim V_x\cdot\delta_x$. Therefore $\len(M^{\rm up}/M^{\rm low})\le\len\bigl(\bigoplus_{x\in Z}\pi_x(\Lambda)/\bigoplus_{x\in Z}a_x\pi_x(\Lambda)\bigr)=\sum_{x\in Z}\dim V_x\cdot\delta_x$.
+\end{proof}
+
+\notgiven{The identification of $\eta_j(w)$ of Definition~\ref{r5:def:eta} with $\len(M^{\rm up}/M^{\rm low})$ for the twisted part at $w$, with the normalization by $\len(O/l)$, is not written here.}
+
+\begin{lemma}\label{w4:lem:det}
+Let $Q\in M_n(O)$. Then $v(\det Q)=\len_O\operatorname{coker}Q$, and if $\det Q\ne0$, $\len_O\operatorname{coker}Q=\len_O\ker\bigl(Q\colon(K/O)^n\to(K/O)^n\bigr)$. More generally, if $P\colon O^m\to O^k$ is injective after $\otimes K$, then $\ker(P\otimes K/O)\cong\operatorname{coker}(P)_{\rm tors}$.
+\end{lemma}
+
+\begin{proof}
+By the elementary divisor theorem $Q=U\operatorname{diag}(\varpi^{a_1},\dots,\varpi^{a_n})U'$ with $U,U'$ invertible; both sides of the first two equalities equal $\sum a_i$ (with $\infty$ allowed). For the last statement, tensor $0\to O^m\to O^k\to\operatorname{coker}P\to0$ with $K/O$: since $O^k$ is flat, $\ker(P\otimes K/O)=\operatorname{Tor}_1^O(\operatorname{coker}P,K/O)$, which is the torsion submodule of $\operatorname{coker}P$.
+\end{proof}
+
+Let $R'$ be an $O$-algebra, not necessarily commutative, and $P\in M_{a\times b}(R')$. For an $O$-algebra map $\rho\colon R'\to M_d(O)$ write $\rho(P)\in M_{ad\times bd}(O)$ for the block matrix acting $O^{bd}=(O^d)^b\to(O^d)^a$. Then $\Hom_{R'}(\operatorname{coker}(R'^a\xrightarrow{\cdot P}R'^b),V)=\ker(\rho(P)\colon V^b\to V^a)$ for $V=K^d$ or $(K/O)^d$ with $R'$ acting through $\rho$, since an $R'$-linear map from $R'^b$ is given by the images $u_1,\dots,u_b$ of the basis, and it kills the image of $\cdot P$ exactly when $\sum_jP_{ij}u_j=0$ for all $i$.
+
+\begin{proposition}[Fitting inequality]\label{w4:prop:fitting}
+Let $T\subset\prod_{x\in X}O$ and $\mathfrak c_x$, $\delta_x$ be as above. Let $R'$ be an $O$-algebra with $O$-algebra maps $\rho_x\colon R'\to M_{d_x}(O)$ for $x\in X$, and $P\in M_{a\times b}(R')$ with $a\ge b$. Assume:
+\begin{enumerate}[leftmargin=*,label=(F\arabic*)]
+\item for every $Q\in M_b(R')$ the function $x\mapsto\det\rho_x(Q)$ lies in $T$;
+\item for every $x\ne x_0$, $\ker(\rho_x(P)\otimes K)\ne0$, that is, there is a nonzero $R'$-linear map $\operatorname{coker}P\to K^{d_x}$;
+\item in a suitable $O$-basis, $\rho_{x_0}$ is block upper triangular with diagonal blocks $\rho_1,\dots,\rho_g$, $\rho_k\colon R'\to M_{n_k}(O)$, and the map $R'\to\prod_kM_{n_k}(k_O)$, $r\mapsto(\bar\rho_k(r))_k$, is surjective, where $k_O$ is the residue field;
+\item $\lvert k_O\rvert>b\sum_kn_k$.
+\end{enumerate}
+Then
+\[
+\delta_{x_0}\ \le\ \sum_{k=1}^g\len_O\Hom_{R'}\bigl(\operatorname{coker}P,(K/O)^{n_k}\bigr)=\sum_{k=1}^g\len_O\ker\bigl(\rho_k(P)\ \text{on}\ ((K/O)^{n_k})^b\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+If some term on the right is infinite there is nothing to prove, so assume all are finite. Then each $\rho_k(P)\otimes K$ is injective: a nonzero $K$-kernel vector, scaled, gives an injection of $K/O$ into the kernel on $(K/O)^{bn_k}$, of infinite length. Let $W_k\subset O^{an_k}$ be the saturation of the image of $\rho_k(P)\colon O^{bn_k}\to O^{an_k}$, a direct summand of rank $bn_k$.
+
+\emph{Choice of $C$.} For $C\in M_{b\times a}(R')$ put $Q=CP\in M_b(R')$. Then $\rho_k(Q)=\rho_k(C)\rho_k(P)$. There is $C$ such that for every $k$ the map $\rho_k(C)\colon O^{an_k}\to O^{bn_k}$ restricts to an isomorphism $W_k\to O^{bn_k}$. By Nakayama it suffices that $\bar\rho_k(C)$ restricts to an isomorphism $\overline W_k\to k_O^{bn_k}$, where $\overline W_k=W_k/\varpi W_k\subset k_O^{an_k}$ has dimension $bn_k$ ($W_k$ is a direct summand). By (F3), as $C$ ranges over $M_{b\times a}(R')$ the tuple $(\bar\rho_k(C))_k$ ranges over all of $\prod_kM_{bn_k\times an_k}(k_O)$, choosing each entry of $C$ independently. Fix bases of the $\overline W_k$. The function $\Phi(Y_1,\dots,Y_g)=\prod_k\det(Y_k|_{\overline W_k})$ is a polynomial on $\prod_kM_{bn_k\times an_k}(k_O)$ of total degree $\sum_kbn_k$. It is not the zero polynomial, because for each $k$ a matrix $Y_k$ that maps $\overline W_k$ isomorphically onto $k_O^{bn_k}$ exists over $k_O$. A nonzero polynomial of degree $D$ over a field with more than $D$ elements has a non-zero value at a point with coordinates in that field (induction on the number of variables). By (F4) there is such a point, and by (F3) it is $(\bar\rho_k(C))_k$ for some $C$.
+
+\emph{The function.} Let $f(x)=\det\rho_x(Q)$. By (F1), $f\in T$. For $x\ne x_0$, $\ker\rho_x(Q)\otimes K\supseteq\ker\rho_x(P)\otimes K\ne0$ by (F2), so $f(x)=0$. Hence $f(x_0)\in\mathfrak c_{x_0}$ and $\delta_{x_0}\le v(f(x_0))$.
+
+\emph{The value at $x_0$.} After reordering the basis, $\rho_{x_0}(Q)$ is block upper triangular with diagonal blocks $\rho_k(Q)$, so $f(x_0)=\prod_k\det\rho_k(Q)$. For each $k$, $\rho_k(C)$ maps $\operatorname{im}\rho_k(P)\subset W_k$ into $O^{bn_k}$ with $O^{bn_k}/\rho_k(C)\operatorname{im}\rho_k(P)\cong W_k/\operatorname{im}\rho_k(P)=\operatorname{coker}(\rho_k(P))_{\rm tors}$. By Lemma~\ref{w4:lem:det}, $v(\det\rho_k(Q))=\len\operatorname{coker}\rho_k(Q)=\len\operatorname{coker}(\rho_k(P))_{\rm tors}=\len\ker(\rho_k(P)\otimes K/O)$. Summing over $k$ gives the claim.
+\end{proof}
+
+In the application $R'$ is the algebra generated by the Galois group acting on an integral model of the representation attached to an eigensystem, $P$ presents the universal cocycle module of the reducible representation $\rho_\pi\oplus\bigoplus_c\chi^{c}$ with its local relations, and (F2) is a nonzero map of Ribet type at every eigensystem outside the congruence class. The application of Proposition~\ref{w4:prop:fitting} also needs a descent along a map of Hecke algebras and the joint residual surjectivity (F3) for the blocks $\rho_\pi,\chi^1,\dots,\chi^{t_r}$. \notgiven{The descent, the verification of (F2) and of (F3) for the blocks that occur, and step three are not proved here.} Step three consists of the following statements.
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \emph{Block bounds.} For a rank one block with character $\chi^c$, the length of the space of homomorphisms from the cocycle module to $K/O$ is at most $\len\Sha_l(E,c-1)$ plus local defects at the places above $l$, at the auxiliary places and at the column places. For the block $\chi^1$ the Selmer term is $v_l(h_E)$.
+\item \emph{The defect at $l$.} A lifting theorem for crystalline classes along surjections of crystalline lattices with Hodge--Tate weights in $[-h,h]$, proved with Wach modules, whose loss is $O(h/(l-1)^{j+1}+g\ell_{\max}+\log_lh)$ with main term $hl/(l-1)^2$.
+\item \emph{The twist.} A ray class character of auxiliary conductor that removes the block $\rho_\pi$.
+\item \emph{Twisted theta series.} Rationality of twisted theta series, their $l$-integrality with bounded denominators, the action of Hecke operators on integral models, and a reciprocity law of Shimura type.
+\item \emph{The sums} over the eigensystems $\pi$, the places $w$ and the primes $l$, including the rows at $2$ and $3$.
+\end{enumerate}
+The published inputs of these statements include the Galois representations attached to regular algebraic polarized cuspidal automorphic representations of $\mathrm{GL}_n$ over CM fields with local--global compatibility at all places~\cite{blggt14}, the local Langlands correspondence for $\mathrm{GL}_n$, Poitou--Tate duality and the Euler characteristic formulas~\cite{nsw}, the theory of Bloch and Kato for $H^1_f$, Fontaine's period rings, Wach modules and Berger's description of Wach lattices, the Herr complex, Berger's theorem that de Rham representations are potentially semistable~\cite{berger02}, class field theory and the Chebotarev density theorem.
+
+\subsection{The bound for the congruence defects}\label{tw:sec:divinn}
+
+\begin{theorem}\label{r5:thm:DIVinN}
+Let $0<\varepsilon<\frac1{52}$, and suppose that the admissible data at the scale $x\ge x_0$ satisfy condition (D6) of Definition~\ref{r6:R6:def:adm}, that the conclusion of Hypothesis~\ref{w4:thm:linkn} holds at $x$, that $(\log x)^2\le x^\varepsilon$, and that $d^0_j=D_0$ for $1\le j\le m$. Then for every $1\le j\le m$
+\[
+\sum_{w\ \mathrm{twisted}}\ell_w\,e_w\,\eta_j(w)\le(C_N+1)\,D_0\,x^{\varepsilon}\,(B_0+N_c).
+\]
+\end{theorem}
+
+\begin{proof}
+Put $y=x^\varepsilon=L_\varepsilon\ge1$. Since $B_0=fmby$, the first term in the bracket of Hypothesis~\ref{w4:thm:linkn} is $fmby^2=yB_0$, and $(\log x)^2N_c\le yN_c$ by hypothesis. By (D6), $V\le\sqrt b\le b\le B_0\le y(B_0+N_c)$, where $b\le B_0$ because $fmy\ge1$. Hence the bracket is at most $C_Ny(B_0+N_c)+y(B_0+N_c)$.
+\end{proof}
+
+Theorem~\ref{r5:thm:DIVinN} enters the bound for the heights $h_u$ of the period maps $B_u$ in \eqref{A4} through the local terms $E_b$ of Hypothesis~\ref{r4:R4:HT}, and the bound for the spread of the slopes of the family $(N_u)$ in \eqref{A3}. The local terms $E_u$ of Definition~\ref{r5:def:Eterms} do not depend on $\eta_j(w)$. \notgiven{The equality $d^0_j=D_0$, which follows from the injectivity of the lifts on the forms of standard type, is not proved here.}

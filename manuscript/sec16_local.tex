@@ -1,0 +1,276 @@
+
+\section{The local terms and hypothesis~\texorpdfstring{\eqref{A5}}{(A5)}}\label{r5:sec:localterms}
+
+This section defines the numbers $E_u$ of Proposition~\ref{acct} and proves hypothesis \eqref{A5} with
+\[
+g=\log(g_0g_1),\qquad e_5=C_E\,m\,B_0,\qquad B_0=f\,m\,b\,L_\varepsilon=2\,n\,m\,b\,x^{\varepsilon},
+\]
+where $g_0,g_1$ are the two primes of (D5) and $C_E$ is a constant that depends on $\varepsilon$ alone. The number $E_u$ is a sum over the finite places of the field of the lattices, one term for each lift, and each term measures the failure of integrality of one lift at one place. Each lift loses the amount $A\log g_i$ at the places above the level prime $g_i$, so $E_u$ has the main term $mA\log(g_0g_1)$, and Proposition~\ref{acct} cancels it against the term $mg$ of \eqref{A6}. All other contributions to $E_u$ are bounded by a multiple of $mB_0$, which is the second term of $\mathcal B$ in \eqref{calB}.
+
+Section~\ref{sec:twisted} treats the places at which the local type of the lifts is twisted. There a second local quantity, the congruence defect $\eta_j(w)$ of the lattice of integral forms, is bounded by the lengths of Tate--Shafarevich groups of $E$ through a congruence-module estimate, and the lengths are bounded by $\sqrt b$. That bound enters the heights of the period maps in \eqref{A4} and the slope inequality \eqref{A3}. It does not enter \eqref{A5}.
+
+\subsection{Places and normalized lengths}\label{r5:sec:places}
+
+Let $L$ be the number field over which the hermitian lattices $N_u$, $M_u$ and $R$ of Part~II are defined. It is a Galois extension of $\mathbb Q$ that contains $E$, and in particular it contains $K=\mathbb Q(\sqrt{-d})$. For a finite place $w$ of $L$ write $p_w$ for its residue characteristic, $e_w$ and $f_w$ for its ramification index and residue degree over $\mathbb Q$, $v_w$ for the normalized valuation with $v_w(L^\times)=\mathbb Z$, and
+\[
+\ell_w=\frac{f_w\log p_w}{[L:\mathbb Q]},\qquad\sigma(w,y)=2\,\ell_w\,e_w\,y\qquad(y\in\mathbb R).
+\]
+The number $\sigma(w,y)$ is the change in the normalized slope of a hermitian lattice over $\mathcal O_L$ that is rescaled by $\varpi_w^{-y}$ at $w$ and its conjugate place, in the normalization of slopes that Part~II uses for $\mu^N_u$, $\mu^M_u$ and $\mu^C$.
+
+\begin{lemma}\label{r5:lem:prodformula}
+Let $p$ be a prime number.
+\begin{enumerate}
+\item[(i)] $\sum_{w\mid p}\ell_we_w=\log p$.
+\item[(ii)] For $y\in L^\times$, $\sum_{w\mid p}\ell_w\,v_w(y)=\dfrac{v_p\big(N_{L/\mathbb Q}(y)\big)\log p}{[L:\mathbb Q]}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) The places above $p$ satisfy $\sum_{w\mid p}e_wf_w=[L:\mathbb Q]$, so $\sum_{w\mid p}\ell_we_w=\log p\sum_{w\mid p}e_wf_w/[L:\mathbb Q]=\log p$.
+
+(ii) The fractional ideal $y\mathcal O_L$ factors as $\prod_w\mathfrak p_w^{v_w(y)}$, and the absolute norm of $\mathfrak p_w$ is $p_w^{f_w}$. Hence $\lvert N_{L/\mathbb Q}(y)\rvert=\prod_wp_w^{f_wv_w(y)}$, and the exponent of $p$ in this product is $v_p(N_{L/\mathbb Q}(y))=\sum_{w\mid p}f_wv_w(y)$. Multiplying by $\log p/[L:\mathbb Q]$ gives (ii).
+\end{proof}
+
+\begin{lemma}\label{r5:lem:halfnorm}
+Let $g$ be a prime number and $\pi\in\mathcal O_K$ with $\pi\bar\pi=g$. For every automorphism $\tau$ of $L$,
+\[
+\sum_{w\mid g}\ell_w\,v_w\big(\tau(\bar\pi)\big)=\frac12\log g .
+\]
+\end{lemma}
+
+\begin{proof}
+Since $L/\mathbb Q$ is Galois, $N_{L/\mathbb Q}(\tau(\bar\pi))=N_{L/\mathbb Q}(\bar\pi)$, and since $\bar\pi\in K$, transitivity of the norm gives $N_{L/\mathbb Q}(\bar\pi)=N_{K/\mathbb Q}(\bar\pi)^{[L:K]}=(\bar\pi\pi)^{[L:K]}=g^{[L:K]}$. Lemma~\ref{r5:lem:prodformula}(ii) with $p=g$ gives $[L:K]\log g/[L:\mathbb Q]=\frac12\log g$.
+\end{proof}
+
+\begin{lemma}\label{r5:lem:vallog}
+Let $n\ge1$ be an integer and $P$ a finite set of primes. Then $\sum_{p\in P}v_p(n)\log p\le\log n$.
+\end{lemma}
+
+\begin{proof}
+The integer $\prod_{p\in P}p^{v_p(n)}$ divides $n$, so it is at most $n$, and its logarithm is the sum on the left.
+\end{proof}
+
+\begin{lemma}\label{r5:lem:logsum}
+$\displaystyle\sum_{p}\frac{\log p}{p^2-1}<1$, the sum running over all primes.
+\end{lemma}
+
+\begin{proof}
+The terms with $p\le13$ are $0.2310$, $0.1374$, $0.0671$, $0.0405$, $0.0200$ and $0.0152$, each rounded up in the fourth decimal, with sum less than $0.512$. For $t\ge e^{1/2}$ the function $\log t/t^2$ is decreasing, and for an integer $n\ge17$ we have $n^2-1\ge\frac{255}{256}n^2$. Hence
+\[
+\sum_{p\ge17}\frac{\log p}{p^2-1}\le\frac{256}{255}\sum_{n\ge17}\frac{\log n}{n^2}\le\frac{256}{255}\int_{16}^\infty\frac{\log t}{t^2}\,dt=\frac{256}{255}\cdot\frac{\log16+1}{16}<0.237 .
+\]
+The total is less than $0.75$.
+\end{proof}
+
+\subsection{The local exponent data}\label{r5:sec:localdata}
+
+Fix admissible data at the scale $x$ (Definition~\ref{def:admissible}) and $u_0\in A_0$. Part~II attaches to them the following objects. Each item names the section in which the object is constructed.
+\begin{enumerate}
+\item[(L1)] The finite set $W$ of indices $u$ of Proposition~\ref{acct}, and for each $u\in W$ a prime $T_u\notin\{g_0,g_1,d\}$ with $T_u=\varpi_u\bar\varpi_u$ for some $\varpi_u\in\mathcal O_K$ (Section~\ref{sec:proofA}).
+\item[(L2)] The elements $\pi_0,\pi_1\in\mathcal O_K$ of (D5), with $\pi_i\bar\pi_i=g_i$.
+\item[(L3)] A positive integer $D_\Gamma$, a common multiple of the orders of the stabilizers in the class sums that define the lifts $K_1,\dots,K_m$ (Section~\ref{sec:lifts}, condition (D1)).
+\item[(L4)] For $1\le j\le m$ and each element $\rho$ of the CM type $\Phi$, the node $w_j(\rho)=w_{u_0,j}(\rho)>0$ of Theorem~A (Section~\ref{sec:proofA}). For $u\in W$, $1\le j\le m$ and $\rho\in\Phi$ a real number $n_{u,j}(\rho)$, the exponent of $\bar\pi_i$ in the $j$-th lift at $\rho$, which is the same for $i=0$ and $i=1$. Here $\Phi\subset\mathcal G=\mathrm{Gal}(E/\mathbb Q)$ as in Section~\ref{sec:excess}, and we write $\tau_\rho$ for an automorphism of $L$ whose restriction to $E$ is $\rho$. The valuations $v_w(\tau_\rho(y))$ for $y\in E$ below do not depend on the choice of $\tau_\rho$. A real number $\Delta_j\ge0$, the Fock degree of the polynomial model of the weight of level $j$, and a real number $\kappa_j\ge0$ (Section~\ref{sec:lifts}).
+\item[(L5)] Real numbers $\varepsilon^T_u\ge0$ and $\varepsilon^d_j$, and for each prime $p$ in a finite set $P^{\rm in}$ of primes $p\le X''$ with $X''=x\,n\,X'$ a real number $\varepsilon^{\rm in}_{j,p}$ (Sections~\ref{r2:sec:loss} and~\ref{sec:proofA}). The set $P^{\rm in}$ consists of the primes at which Section~\ref{sec:gain} and Section~\ref{r2:sec:loss} attach a gain or a loss to the lifts.
+\end{enumerate}
+For $u\in W$ let $S_u$ be the set of places $w\mid T_u$ of $L$ such that $v_w(\tau_\rho(\varpi_u))>0$ for every $\rho\in\Phi$.
+
+\begin{definition}\label{r5:def:Eterms}
+Let $u\in W$, $1\le j\le m$, and let $w$ be a finite place of $L$ with residue characteristic $p=p_w$. Define $E_{u,j}(w)$ by the first applicable line.
+\[
+E_{u,j}(w)=\begin{cases}
+\varepsilon^T_u&\text{if }p=T_u\text{ and }w\in S_u,\\
+0&\text{if }p=T_u\text{ and }w\notin S_u,\\
+v_p(D_\Gamma)-\dfrac{\Delta_j}2+\kappa_j+\dfrac1{e_w}\displaystyle\sum_{\rho\in\Phi}n_{u,j}(\rho)\,v_w\big(\tau_\rho(\bar\pi_i)\big)&\text{if }p=g_i,\ i\in\{0,1\},\\
+v_p(D_\Gamma)+\varepsilon^d_j&\text{if }p=d,\\
+v_p(D_\Gamma)+\varepsilon^{\rm in}_{j,p}&\text{if }p\in P^{\rm in},\\
+v_p(D_\Gamma)&\text{otherwise}.
+\end{cases}
+\]
+Put
+\[
+E_{u,j}=\sum_w\sigma\big(w,E_{u,j}(w)\big),\qquad E_u=\sum_{j=1}^mE_{u,j}.
+\]
+\end{definition}
+
+The sum over $w$ is finite, because $E_{u,j}(w)=0$ unless $p_w$ lies in the finite set $\{T_u,g_0,g_1,d\}\cup P^{\rm in}\cup\{p:p\mid D_\Gamma\}$. The same numbers $E_{u,j}(w)$ enter the lattice $N_u$ in hypothesis \eqref{A2} and the integrality of the period maps in \eqref{A3}. Section~\ref{r5:sec:R5interface} states the form in which those hypotheses use them.
+
+For the main term put $n_{u,j}=\sum_{\rho\in\Phi}n_{u,j}(\rho)$ and $A=\sum_{t\in T}a_t$. The bound for $E_u$ uses the following six inequalities, in which $C_g,C_T,C_\Gamma,C_d,C_{\rm in}\ge0$ are constants and $\delta_j\ge0$.
+\begin{enumerate}
+\item[(E1)] $\lvert n_{u,j}-\Delta_j-A\rvert\le\delta_j$.
+\item[(E2)] $(\delta_j+2\kappa_j)\log(g_0g_1)\le C_g\,B_0$.
+\item[(E3)] $2\,\varepsilon^T_u\log T_u\le C_T\,B_0$.
+\item[(E4)] $2\log D_\Gamma\le C_\Gamma\,B_0$.
+\item[(E5)] $2\log d\,\lvert\varepsilon^d_j\rvert\le C_d\,B_0$.
+\item[(E6)] $\sum_{p\in P^{\rm in}}2\log p\,\lvert\varepsilon^{\rm in}_{j,p}\rvert\le C_{\rm in}\,B_0$.
+\end{enumerate}
+Inequality (E1) is the degree identity of the lifts at the level primes. Subsection~\ref{r5:sec:Hsizes} derives (E2) to (E5) from size bounds for the data and proves (E6) for the part of $P^{\rm in}$ whose loss term has the closed form \eqref{r5:eq:EatC}.
+
+\subsection{The bound for the local terms}\label{r5:sec:EAbound}
+
+\begin{theorem}\label{r5:thm:Ebound}
+Let $u\in W$ and $1\le j\le m$, let the data (L1) to (L5) be given, and suppose that $g_0\ne g_1$ and that the inequalities (E1) to (E6) hold for $u$ and $j$. Then
+\[
+\big\lvert E_{u,j}-A\log(g_0g_1)\big\rvert\le C_E\,B_0,\qquad C_E=C_g+C_T+C_\Gamma+C_d+C_{\rm in}.
+\]
+\end{theorem}
+
+\begin{proof}
+We split the sum $E_{u,j}=\sum_w\sigma(w,E_{u,j}(w))$ into the places above $g_0$, above $g_1$, above $T_u$, and the remaining places. The four sets of places are disjoint because $T_u$, $g_0$ and $g_1$ are distinct primes.
+
+\emph{The places above $g_i$.} Fix $i$ and put $c_i=v_{g_i}(D_\Gamma)-\frac{\Delta_j}2+\kappa_j$. For $w\mid g_i$ the definition gives
+\[
+\sigma\big(w,E_{u,j}(w)\big)=2\ell_we_wc_i+2\ell_w\sum_{\rho\in\Phi}n_{u,j}(\rho)\,v_w\big(\tau_\rho(\bar\pi_i)\big).
+\]
+Summing over $w\mid g_i$, Lemma~\ref{r5:lem:prodformula}(i) turns the first term into $2c_i\log g_i$, and Lemma~\ref{r5:lem:halfnorm} turns the second into $\sum_\rho n_{u,j}(\rho)\log g_i=n_{u,j}\log g_i$. Hence
+\begin{align*}
+\sum_{w\mid g_i}\sigma\big(w,E_{u,j}(w)\big)&=\big(2v_{g_i}(D_\Gamma)-\Delta_j+2\kappa_j+n_{u,j}\big)\log g_i\\
+&=A\log g_i+\big(n_{u,j}-\Delta_j-A+2\kappa_j+2v_{g_i}(D_\Gamma)\big)\log g_i .
+\end{align*}
+By (E1) the absolute value of the bracket minus $2v_{g_i}(D_\Gamma)$ is at most $\delta_j+2\kappa_j$, so the sum over the places above $g_0$ and $g_1$ differs from $A\log(g_0g_1)$ by at most
+\[
+(\delta_j+2\kappa_j)\log(g_0g_1)+2v_{g_0}(D_\Gamma)\log g_0+2v_{g_1}(D_\Gamma)\log g_1 .
+\]
+
+\emph{The places above $T_u$.} Here $E_{u,j}(w)=\varepsilon^T_u\ge0$ for $w\in S_u$ and $E_{u,j}(w)=0$ otherwise. By Lemma~\ref{r5:lem:prodformula}(i),
+\[
+0\le\sum_{w\mid T_u}\sigma\big(w,E_{u,j}(w)\big)=2\varepsilon^T_u\sum_{w\in S_u}\ell_we_w\le2\varepsilon^T_u\log T_u .
+\]
+
+\emph{The remaining places.} Let $p\notin\{T_u,g_0,g_1\}$. For $w\mid p$ the definition gives $E_{u,j}(w)=v_p(D_\Gamma)+\lambda_p$, where $\lambda_d=\varepsilon^d_j$, $\lambda_p=\varepsilon^{\rm in}_{j,p}$ for $p\in P^{\rm in}\setminus\{d\}$, and $\lambda_p=0$ otherwise. The value does not depend on $w\mid p$, so Lemma~\ref{r5:lem:prodformula}(i) gives $\sum_{w\mid p}\sigma(w,E_{u,j}(w))=2(v_p(D_\Gamma)+\lambda_p)\log p$. Summing over these primes,
+\[
+\Big\lvert\sum_{p_w\notin\{T_u,g_0,g_1\}}\sigma\big(w,E_{u,j}(w)\big)\Big\rvert\le2\sum_{p\notin\{T_u,g_0,g_1\}}v_p(D_\Gamma)\log p+2\log d\,\lvert\varepsilon^d_j\rvert+\sum_{p\in P^{\rm in}}2\log p\,\lvert\varepsilon^{\rm in}_{j,p}\rvert .
+\]
+
+\emph{Conclusion.} The terms $2v_p(D_\Gamma)\log p$ occur above for $p=g_0$, $p=g_1$ and for the primes outside $\{T_u,g_0,g_1\}$, each prime once, so by Lemma~\ref{r5:lem:vallog} their total is at most $2\log D_\Gamma$. Adding the three estimates,
+\begin{multline*}
+\big\lvert E_{u,j}-A\log(g_0g_1)\big\rvert\le(\delta_j+2\kappa_j)\log(g_0g_1)+2\varepsilon^T_u\log T_u+2\log D_\Gamma\\
++2\log d\,\lvert\varepsilon^d_j\rvert+\sum_{p\in P^{\rm in}}2\log p\,\lvert\varepsilon^{\rm in}_{j,p}\rvert,
+\end{multline*}
+and (E2) to (E6) bound the five terms by $C_gB_0$, $C_TB_0$, $C_\Gamma B_0$, $C_dB_0$ and $C_{\rm in}B_0$.
+\end{proof}
+
+\begin{corollary}\label{r5:cor:A5}
+Suppose that the hypotheses of Theorem~\ref{r5:thm:Ebound} hold for every $u\in W$ and every $1\le j\le m$. Put $g=\log(g_0g_1)$ and $e_5=C_E\,m\,B_0$. Then for every $u\in W$
+\[
+mAg-e_5\le E_u\le mAg+e_5 ,
+\]
+so hypothesis \eqref{A5} of Proposition~\ref{acct} holds. Moreover $e_5\le C_E\,\mathcal B$, with $\mathcal B$ the number \eqref{calB}.
+\end{corollary}
+
+\begin{proof}
+Summing Theorem~\ref{r5:thm:Ebound} over $1\le j\le m$ gives $\lvert E_u-mA\log(g_0g_1)\rvert\le mC_EB_0=e_5$. The second term of \eqref{calB} is $m\cdot2nmbx^\varepsilon=mB_0$, and the other terms of \eqref{calB} are nonnegative, so $mB_0\le\mathcal B$.
+\end{proof}
+
+\begin{remark}\label{r5:rem:gcancel}
+The number $g$ of Proposition~\ref{acct} occurs in \eqref{A5} and in \eqref{A6}, and the proof of Proposition~\ref{acct} cancels the two occurrences. Corollary~\ref{r5:cor:A5} fixes $g=\log(g_0g_1)$. Hypothesis \eqref{A6} must be proved with the same number, that is, in the form
+\[
+\log T_u\ge\sum_{j=1}^m\frac1f\sum_{\rho\in\Phi}\log\frac{w_j(\rho)v}\pi+m\log(g_0g_1)-e_6 .
+\]
+This is consistent with the choice of $T_u$ as a prime of size about $(g_0g_1)^m$ times the product of the nodes, and with the congruence $\varpi_u\equiv1$ modulo $Q_Sqd\,(g_0g_1)^2$ of Section~\ref{sec:proofA}.
+\end{remark}
+
+\begin{remark}\label{r5:rem:Cuniform}
+The constant $C_E$ depends on $\varepsilon$ through $C_{\rm in}$ (Subsection~\ref{r5:sec:Hsizes}). Theorem~A asks for an absolute constant $C$ in $x^{C\varepsilon}\mathcal B$, and Corollary~\ref{r5:cor:A5} gives $e_5\le C_E\mathcal B\le x^{\varepsilon}\mathcal B$ for every $x$ with $x^\varepsilon\ge C_E$. The threshold $Y_1$ of Theorem~A may depend on $\varepsilon$, so this contributes $1$ to the absolute constant $C$.
+\end{remark}
+
+\subsection{The inequalities (E2) to (E6) from the sizes}\label{r5:sec:Hsizes}
+
+We use the scale \eqref{scale}, $L_\varepsilon=x^\varepsilon$, $b=e^{L_\varepsilon}$, $a=xb$, $X'=\exp(x^{\varepsilon/3})$, $b'=a/X'$, the ranks of Proposition~\ref{ranks}, and
+\[
+N_m=k+m(t_r+1),
+\]
+the dimension of the polynomial model of the weight at the last level of the chain.
+
+\begin{lemma}\label{r5:lem:primesizes}
+Let $0<\varepsilon<\frac1{52}$. There is $x_0$ such that for admissible data at a scale $x\ge x_0$
+\begin{enumerate}
+\item[(i)] $\log g_i\le9L_\varepsilon$ for $i=0,1$, so $\log(g_0g_1)\le18L_\varepsilon$;
+\item[(ii)] $\log d\le L_\varepsilon$;
+\item[(iii)] $t_r\le x^{401}$ and $N_m\le x^{402}$;
+\item[(iv)] $N_m^2\,X''\log a\le b$, where $X''=x\,n\,X'$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) By (D5), $g_i\le2(kb)^8$, so $\log g_i\le\log2+8\log k+8L_\varepsilon$. Proposition~\ref{ranks} gives $k\le2x^{9/2+10\varepsilon}\le2x^5$, so $\log g_i\le9+40\log x+8L_\varepsilon\le9L_\varepsilon$ once $x^\varepsilon\ge9+40\log x$.
+
+(ii) By (D1) the prime $d$ satisfies the conclusion of Theorem~\ref{stage2} with $K=\frac32$ and $z'=z\log^2Y$, $z=Y^{\varepsilon/5}$, so $\log d\le z'=Y^{\varepsilon/5}\log^2Y$. Since $Y\le x$, this is at most $x^{\varepsilon/5}\log^2x\le x^\varepsilon$ for large $x$.
+
+(iii) Since $\varepsilon<\frac1{52}$, Proposition~\ref{ranks} and (D1) give $f=2n\le4x^{2+8\varepsilon}\le4x^{2.2}$, $1\le m\le2\sqrt x$, $k\le2x^{9/2+10\varepsilon}\le2x^{4.7}$, $r=k+m-1\le3x^{4.7}$, and $L_\varepsilon^2=x^{2\varepsilon}\le x^{0.04}$. The definition of $n_W$ in Section~\ref{sec:data} and $m\ge1$ give
+\[
+n_W\le10\,r\big(f+f^2k^3L_\varepsilon^2\big)+8\le10\cdot3x^{4.7}\cdot2\cdot16x^{4.4}\cdot8x^{14.1}\cdot x^{0.04}+8\le x^{23.5}
+\]
+for large $x$. With $T_O=\lceil x^{377}\rceil\le2x^{377}$ and $t_r=8fr+4+T_On_W-r$ we get $t_r\le8fr+4+2x^{400.5}\le x^{401}$ for large $x$. Then $N_m=k+m(t_r+1)\le2x^{4.7}+2\sqrt x\,(x^{401}+1)\le x^{402}$ for large $x$.
+
+(iv) We have $n\le2x^{3}$, $\log a=\log x+L_\varepsilon\le2L_\varepsilon$, and by (iii)
+\[
+N_m^2X''\log a\le x^{804}\cdot x\cdot2x^3\cdot\exp(x^{\varepsilon/3})\cdot2x^\varepsilon\le\exp(x^\varepsilon)=b
+\]
+for large $x$, because $\log$ of the left side is $x^{\varepsilon/3}+O(\log x)$.
+\end{proof}
+
+\begin{lemma}\label{r5:lem:H2toH5}
+Let $0<\varepsilon<\frac1{52}$ and let $x_0$ be as in Lemma~\ref{r5:lem:primesizes}. Let $c_1,\dots,c_5\ge0$ be constants, and suppose that for admissible data at a scale $x\ge x_0$, for $u\in W$ and for $1\le j\le m$,
+\begin{gather}
+\delta_j\le c_1\,f\,b,\qquad\kappa_j\le c_2\,f\,m\,b,\label{r5:Z1}\\
+\varepsilon^T_u\le c_3\,f\,b,\qquad\log T_u\le c_4\,m\,L_\varepsilon,\label{r5:Z2}\\
+\log D_\Gamma\le c_5\,f\,N_m\log(fN_m),\qquad\lvert\varepsilon^d_j\rvert\le2\,f\,b.\label{r5:Z3}
+\end{gather}
+Then (E2) holds with $C_g=18(c_1+2c_2)$, (E3) with $C_T=2c_3c_4$, (E4) with $C_\Gamma=2c_5$, and (E5) with $C_d=4$, for $x\ge x_0$ enlarged if necessary.
+\end{lemma}
+
+\begin{proof}
+Recall $B_0=fmbL_\varepsilon$ and $m\ge2$.
+
+(E2) By Lemma~\ref{r5:lem:primesizes}(i), $(\delta_j+2\kappa_j)\log(g_0g_1)\le(c_1fb+2c_2fmb)\cdot18L_\varepsilon\le18(c_1+2c_2)B_0$.
+
+(E3) $2\varepsilon^T_u\log T_u\le2c_3fb\cdot c_4mL_\varepsilon=2c_3c_4B_0$.
+
+(E4) By Lemma~\ref{r5:lem:primesizes}(iii) and $f\le4x^3$, $\log(fN_m)\le\log(4x^{405})\le L_\varepsilon$ and $N_m\le x^{402}\le b$ for large $x$. Hence $2\log D_\Gamma\le2c_5fbL_\varepsilon\le2c_5B_0$.
+
+(E5) By Lemma~\ref{r5:lem:primesizes}(ii), $2\log d\,\lvert\varepsilon^d_j\rvert\le2L_\varepsilon\cdot2fb\le4B_0$.
+\end{proof}
+
+The loss term at a prime $p\in P^{\rm in}$ has one of two forms. At the primes at which the lifts gain by the class of the element of Section~\ref{sec:gain} that is trivial, it has the closed form
+\begin{equation}\label{r5:eq:EatC}
+\varepsilon^{\rm in}_{j,p}=c_{\rm dig}\,f\,N_m^2\,\log_pa+\frac1{p^2-1}\sum_{\rho\in\Phi}w_j(\rho)
+\end{equation}
+with an absolute constant $c_{\rm dig}$. At the other primes of $P^{\rm in}$ it is the orbit loss of Section~\ref{r2:sec:loss}, built from the solution of the linear programme of Section~\ref{sec:gain} along the Frobenius orbits. Write $P^{\rm in}=P^{\rm C}\sqcup P^{\rm I}$ accordingly.
+
+\begin{lemma}\label{r5:lem:H6C}
+Suppose that $0\le w_j(\rho)\le3b$ for every $\rho\in\Phi$, and that $x\ge x_0$ with $x_0$ as in Lemma~\ref{r5:lem:primesizes}. If $\varepsilon^{\rm in}_{j,p}$ has the form \eqref{r5:eq:EatC} for $p\in P^{\rm C}$, then
+\[
+\sum_{p\in P^{\rm C}}2\log p\,\lvert\varepsilon^{\rm in}_{j,p}\rvert\le(2c_{\rm dig}+6)\,f\,b\le(c_{\rm dig}+3)\,B_0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Both terms of \eqref{r5:eq:EatC} are nonnegative. Since $\log p\cdot\log_pa=\log a$ and $P^{\rm C}$ consists of primes $p\le X''$, the first terms contribute at most $2c_{\rm dig}fN_m^2\log a\cdot X''\le2c_{\rm dig}fb$ by Lemma~\ref{r5:lem:primesizes}(iv). Since $\sum_\rho w_j(\rho)\le3fb$, Lemma~\ref{r5:lem:logsum} bounds the second terms by $2\cdot3fb\sum_p\log p/(p^2-1)\le6fb$. Finally $fb\le\frac12fmbL_\varepsilon=\frac12B_0$.
+\end{proof}
+
+\begin{hypothesis}[inert orbit losses]\label{r5:prop:H6I}
+Let $0<\varepsilon<\frac1{52}$. There are $C'_{\rm in}$ and $x_0$ such that for admissible data at a scale $x\ge x_0$ and every $1\le j\le m$, $\sum_{p\in P^{\rm I}}2\log p\,\lvert\varepsilon^{\rm in}_{j,p}\rvert\le C'_{\rm in}B_0$.
+\end{hypothesis}
+
+The orbit losses $\varepsilon^{\rm in}_{j,p}$ for $p\in P^{\rm I}$ come from the construction of Section~\ref{r2:sec:loss}. \notgiven{Hypothesis~\ref{r5:prop:H6I} is not proved here.}
+
+With Lemma~\ref{r5:lem:H6C} and Hypothesis~\ref{r5:prop:H6I}, (E6) holds with $C_{\rm in}=c_{\rm dig}+3+C'_{\rm in}$.
+
+\begin{hypothesis}[exponents and sizes of the lifts]\label{r5:prop:H1}
+Let $0<\varepsilon<\frac1{52}$. There are constants $c_1,\dots,c_5$ and $x_0$ such that for admissible data at a scale $x\ge x_0$, the exponents and sizes of the lifts satisfy (E1) and \eqref{r5:Z1} to \eqref{r5:Z3} for every $u\in W$ and $1\le j\le m$, and $0\le w_j(\rho)\le3b$ for every $\rho\in\Phi$.
+\end{hypothesis}
+
+The degree identity (E1) is a computation with the highest weights of the lifts of Section~\ref{sec:lifts}, and \eqref{r5:Z1} to \eqref{r5:Z3} are size bounds for the data of Section~\ref{sec:proofA}. \notgiven{Hypothesis~\ref{r5:prop:H1} is not proved here.}
+
+\subsection{How hypotheses \texorpdfstring{\eqref{A2}}{(A2)} and \texorpdfstring{\eqref{A3}}{(A3)} use the local terms}\label{r5:sec:R5interface}
+
+The numbers $E_{u,j}(w)$ of Definition~\ref{r5:def:Eterms} are bounds for the denominators of the lifts. With the gain $\mathrm{gain}_j(w)$ and the local terms $F_j(w)$ of Sections~\ref{sec:lifts} and~\ref{r2:sec:loss}, the lattice $N_u$ of \eqref{A2} is the rescaling at each place $w$ with $p_w\ne T_u$ of a sublattice of the base lattice by the exponent
+\[
+s_u(w)=\sum_{j=1}^m\big(\mathrm{gain}_j(w)+F_j(w)-E_{u,j}(w)\big),
+\]
+so that $\mu^N_u$ differs from the slope of the sublattice by $\sum_w\sigma(w,s_u(w))$, which equals $\Gamma+\mathcal L-E_u$ up to the terms $\tau(w)$ of the loss and the rounding to integers. This is why $E_u$ enters \eqref{A2} with a minus sign. Hypothesis \eqref{A3} needs, at each place $w$ with $p_w\ne T_u$, that the period of a lifted form on the rescaled lattice is integral at $w$. The argument uses this in the following form. For $\varphi$ in the base lattice and $F$ an integral form of the local type $\mu_w$ of the lifts at $w$, the period $y\in L$ of the lift of $\varphi$ against $F$ is $0$ or satisfies
+\[
+v_w(y)\ge e_w\sum_{j=1}^m\big(F_j(w)-E_{u,j}(w)\big).
+\]
+The proof of this integrality belongs to Sections~\ref{r2:sec:loss} and~\ref{r3:sec}, and they use Definition~\ref{r5:def:Eterms} for $E_{u,j}(w)$.
+

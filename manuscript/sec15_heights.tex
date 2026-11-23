@@ -1,0 +1,871 @@
+
+
+\section{Heights, the CM period, and the slopes of the target and base lattices}\label{r4:sec:R4}
+
+This section proves hypotheses \eqref{A4}, \eqref{A6} and \eqref{A7} of Proposition~\ref{acct}. Subsection~\ref{r4:sec:R4conv} fixes the normalization of slopes and heights. Subsection~\ref{r4:sec:R4period} proves that the constant $\log\Omega$ of Proposition~\ref{acct} is the normalized arithmetic degree of the line of periods of a CM elliptic curve, which is the Chowla--Selberg formula in the form needed here. Subsection~\ref{r4:sec:R4height} bounds the height of the period map $B_u$ by the product of the norms of the $m$ lifts and of the final pairing. Subsection~\ref{r4:sec:R4target} states the bound for the slope of the target lattice $R^\vee$ that the base side gives. Subsection~\ref{r4:sec:R4A4} combines the two bounds into \eqref{A4}. Subsection~\ref{r4:sec:R4A6} proves \eqref{A6} from the Weyl dimension formula and the Siegel mass formula, and Subsection~\ref{r4:sec:R4A7} proves \eqref{A7} from the integral theory of Weyl modules. Subsection~\ref{r4:sec:R4sizes} compares the three errors with the quantity $\mathcal B$ of \eqref{calB}.
+
+Throughout, $x$, $\varepsilon$, $L_\varepsilon=x^\varepsilon$, $b=e^{L_\varepsilon}$, $a=xb$, $X'$ and $b'=a/X'$ are as in \eqref{scale}, and the field $E$, the CM type $\Phi$, the integer $f=2n=\lvert\Phi\rvert$, the number of lifts $m$, the ranks $k$, $t_r$ and $r=k+m-1$, the set of tops $T$ with $N_T=\lvert T\rvert$, the weights $a_t$ and the nodes $w_{j\rho}$ are those of Sections~\ref{sec:auxiliary} and~\ref{sec:reduction}. We write $\mathrm{rd}_E=\lvert d_E\rvert^{1/(2f)}$ for the root discriminant of $E$ and put
+\begin{equation}\label{r4:R4:v}
+v=\tfrac12\,\mathrm{rd}_E,\qquad \Lambda_a=\log(a\,\mathrm{rd}_E),\qquad g=\log(g_0g_1),
+\end{equation}
+where $g_0,g_1$ are the primes of (D5). The field $K=\mathbb Q(\sqrt{-d})$ is the imaginary quadratic subfield of $E$ fixed by $H$, with its embedding $\varphi_0$, and $\chi_d$ is the quadratic character of $K$. Since $d\equiv3\pmod4$ is prime, $\chi_d(n)=\big(\frac{-d}n\big)=\big(\frac nd\big)$, the discriminant of $K$ is $-d$, and $\chi_d$ is the character $\chi_1$ of Proposition~\ref{excess}. We put
+\[
+\lambda_1=\frac{L'(1,\chi_d)}{L(1,\chi_d)},
+\]
+which is real.
+
+\subsection{Slopes and heights}\label{r4:sec:R4conv}
+
+Let $F$ be a totally complex number field with complex conjugation, and let $n_F=[F:\mathbb Q]/2$ be the number of its archimedean places. A \emph{hermitian lattice} over $\mathcal O_F$ is a finitely generated projective $\mathcal O_F$-module $\Lambda$ with a positive definite hermitian form $h_v$ on $\Lambda\otimes_{\mathcal O_F,\sigma_v}\mathbb C$ for each archimedean place $v$, where $\sigma_v$ is one of the two embeddings of $F$ at $v$. For a basis $e_1,\dots,e_s$ of $\Lambda\otimes F$ contained in $\Lambda$ put
+\[
+\degh(\Lambda)=\log\#\big(\Lambda/(\mathcal O_Fe_1+\dots+\mathcal O_Fe_s)\big)-\sum_v\log\det\big(h_v(e_i,e_j)\big)_{i,j}.
+\]
+The product formula shows that $\degh(\Lambda)$ does not depend on the basis, and it is the arithmetic degree of Bost~\cite{bost}, since the two embeddings at $v$ give equal determinants. We use the normalized slope and height
+\begin{equation}\label{r4:R4:slope}
+\mu(\Lambda)=\frac{\degh(\Lambda)}{n_F\,\rk\Lambda},\qquad \mathrm{ht}(\phi)=\frac1{n_F}\sum_v\log\lVert\phi\rVert_v^2
+\end{equation}
+for a nonzero $F$-linear map $\phi$ between hermitian lattices, where $\lVert\phi\rVert_v$ is the operator norm at $v$. With $\mu_{\max}$ and $\mu_{\min}$ the largest and smallest slopes of the Harder--Narasimhan filtration, the slope inequality of Bost~\cite{bost} in this normalization reads $\mu(\Lambda_1)\le\mu_{\max}(\Lambda_2)+\mathrm{ht}(\phi)$ for an injective $\phi\colon\Lambda_1\to\Lambda_2$. The dual lattice $\Lambda^\vee=\operatorname{Hom}_{\mathcal O_F}(\Lambda,\mathcal O_F)$ has the dual forms, and $\degh(\Lambda^\vee)=-\degh(\Lambda)$, so that
+\begin{equation}\label{r4:R4:dual}
+\mu(\Lambda^\vee)=-\mu(\Lambda),\qquad \mu_{\min}(\Lambda^\vee)=-\mu_{\max}(\Lambda).
+\end{equation}
+For positive real numbers $\kappa_v$ we write $\langle\log\kappa\rangle=n_F^{-1}\sum_v\log\kappa_v$. Multiplying the forms $h_v$ by $\kappa_v$ changes $\mu$ by $-\langle\log\kappa\rangle$ and $\mathrm{ht}$ of a map into $\Lambda$ by $+\langle\log\kappa\rangle$.
+
+\begin{remark}\label{r4:R4:normrem}
+These are twice the slopes and heights of~\cite{bost}, and they coincide with the slope~\eqref{r3:mu} and the height~\eqref{r3:ht} of Section~\ref{r3:sec}: both vanish on the trivial lattice and both equal twice the normalized slope and height of Bost. Section~\ref{r2:sec:loss} uses only differences of slopes of lattices over one field. The doubling is the normalization of Proposition~\ref{acct}, where the sum $S$ over primes has the factor $2$ of \eqref{excessid}, and every hypothesis \eqref{A1} to \eqref{A7} is stated in it.
+\end{remark}
+
+We write $\ph(y)=y\log y-y$ for $y>0$ and $\ph(0)=0$.
+
+\subsection{The CM period}\label{r4:sec:R4period}
+
+For a lattice $\Lambda\subset\mathbb C$ let $g_2(\Lambda)=60\sum'_{\omega\in\Lambda}\omega^{-4}$, $g_3(\Lambda)=140\sum'_{\omega\in\Lambda}\omega^{-6}$, $\Delta(\Lambda)=g_2^3-27g_3^2$ and let $A(\Lambda)$ be the area of a fundamental parallelogram. Since $g_2(c\Lambda)=c^{-4}g_2(\Lambda)$, $g_3(c\Lambda)=c^{-6}g_3(\Lambda)$ and $A(c\Lambda)=\lvert c\rvert^2A(\Lambda)$, the number
+\[
+\mathcal A(\Lambda)=A(\Lambda)\,\lvert\Delta(\Lambda)\rvert^{1/6}
+\]
+depends on the homothety class of $\Lambda$ alone.
+
+\begin{lemma}\label{r4:R4:areaeta}
+Let $\Lambda=\mathbb Z\omega_1+\mathbb Z\omega_2$ with $\tau=\omega_2/\omega_1$ in the upper half plane, and let $\eta$ be the Dedekind eta function. Then $\mathcal A(\Lambda)=4\pi^2\operatorname{Im}(\tau)\lvert\eta(\tau)\rvert^4$.
+\end{lemma}
+
+\begin{proof}
+The product formula of Jacobi gives $\Delta(\mathbb Z+\mathbb Z\tau)=(2\pi)^{12}\eta(\tau)^{24}$, so $\Delta(\Lambda)=\omega_1^{-12}(2\pi)^{12}\eta(\tau)^{24}$ by homogeneity. Hence $\lvert\Delta(\Lambda)\rvert^{1/6}=4\pi^2\lvert\eta(\tau)\rvert^4\lvert\omega_1\rvert^{-2}$, and $A(\Lambda)=\lvert\omega_1\rvert^2\operatorname{Im}\tau$.
+\end{proof}
+
+\begin{proposition}\label{r4:R4:kronecker}
+Let $d>3$ be a prime with $d\equiv3\pmod4$, let $K=\mathbb Q(\sqrt{-d})$ with class number $h$, and for each ideal class $C$ of $K$ let $\Lambda_C\subset\mathbb C$ be the image under $\varphi_0$ of a fractional ideal in $C$. Then
+\[
+\frac1h\sum_C\log\frac{\mathcal A(\Lambda_C)}\pi=\gamma+\log\frac{2\pi}{\sqrt d}-\lambda_1 .
+\]
+\end{proposition}
+
+\begin{proof}
+For $\tau$ in the upper half plane and $\operatorname{Re}s>1$ put $Z(\tau,s)=\sum'_{(m,n)}(\operatorname{Im}\tau)^s\lvert m+n\tau\rvert^{-2s}$. Kronecker's first limit formula states that
+\begin{equation}\label{r4:R4:KLF}
+Z(\tau,s)=\frac\pi{s-1}+2\pi\Big(\gamma-\log2-\log\big(\sqrt{\operatorname{Im}\tau}\,\lvert\eta(\tau)\rvert^2\big)\Big)+O(s-1).
+\end{equation}
+Let $C$ be a class, let $\mathfrak b$ be a fractional ideal in $C^{-1}$ with an oriented basis $\mathfrak b=\mathbb Z\beta_1+\mathbb Z\beta_2$, and put $\tau_C=\beta_2/\beta_1$. The integral ideals of $C$ are the ideals $x\mathfrak b^{-1}$ with $x\in\mathfrak b\setminus\{0\}$, and $x$ and $x'$ give the same ideal exactly when $x'/x$ is one of the $w=2$ units. The covolume of $\mathfrak b$ is $N(\mathfrak b)\sqrt d/2$, so for $x=m\beta_1+n\beta_2$
+\[
+N(x\mathfrak b^{-1})=\frac{\lvert\beta_1\rvert^2\lvert m+n\tau_C\rvert^2}{N(\mathfrak b)}=\frac{\sqrt d}{2}\,\frac{\lvert m+n\tau_C\rvert^2}{\operatorname{Im}\tau_C}.
+\]
+Hence the partial zeta function of $C$ is $\zeta(s,C)=\frac1w\big(\frac{\sqrt d}2\big)^{-s}Z(\tau_C,s)$. Summing over $C$ and using $\big(\frac{\sqrt d}2\big)^{-s}=\frac2{\sqrt d}\big(1-(s-1)\log\frac{\sqrt d}2+O((s-1)^2)\big)$ we obtain
+\[
+\zeta_K(s)=\frac2{w\sqrt d}\Big(\frac{h\pi}{s-1}+2\pi\sum_C\big(\gamma-\log2-\log(\sqrt{\operatorname{Im}\tau_C}\lvert\eta(\tau_C)\rvert^2)\big)-h\pi\log\frac{\sqrt d}2\Big)+O(s-1).
+\]
+On the other hand $\zeta_K(s)=\zeta(s)L(s,\chi_d)=\frac{L(1,\chi_d)}{s-1}+\gamma L(1,\chi_d)+L'(1,\chi_d)+O(s-1)$. Comparing residues gives $L(1,\chi_d)=2\pi h/(w\sqrt d)$, which is Dirichlet's class number formula. Dividing the constant terms by this value gives
+\[
+\gamma+\lambda_1=\frac2h\sum_C\Big(\gamma-\log2-\log\big(\sqrt{\operatorname{Im}\tau_C}\lvert\eta(\tau_C)\rvert^2\big)\Big)-\log\frac{\sqrt d}2,
+\]
+that is,
+\[
+\frac1h\sum_C\log\big(\operatorname{Im}\tau_C\,\lvert\eta(\tau_C)\rvert^4\big)=\gamma-\log2-\tfrac12\log d-\lambda_1 .
+\]
+The lattice $\Lambda_{C^{-1}}$ is homothetic to $\mathbb Z+\mathbb Z\tau_C$, and $C\mapsto C^{-1}$ permutes the classes. Lemma~\ref{r4:R4:areaeta} gives $\log(\mathcal A(\Lambda_{C^{-1}})/\pi)=\log(4\pi)+\log(\operatorname{Im}\tau_C\lvert\eta(\tau_C)\rvert^4)$, and the average over $C$ is $\log(4\pi)+\gamma-\log2-\frac12\log d-\lambda_1=\gamma+\log(2\pi/\sqrt d)-\lambda_1$.
+\end{proof}
+
+Fix a nonzero ideal $\mathfrak c$ of $\mathcal O_K$ prime to $2d$ and a complex number $\delta$ with $\delta^{12}=\Delta(\varphi_0(\mathfrak c))$. The lattice $\Lambda_0=\delta\,\varphi_0(\mathfrak c)$ satisfies $\Delta(\Lambda_0)=1$. Its invariants $g_2(\Lambda_0)$ and $g_3(\Lambda_0)$ are algebraic, because $g_2(\Lambda_0)^3=j(\mathfrak c)/1728$ and $27g_3(\Lambda_0)^2=g_2(\Lambda_0)^3-1$ with $j(\mathfrak c)$ algebraic. Let $M\subset\mathbb C$ be a number field that contains $g_2(\Lambda_0)$, $g_3(\Lambda_0)$ and $\tau(E)$ for every $\tau\in\Phi$. For each embedding $s\colon M\to\mathbb C$ let $\Lambda_0^s$ be the lattice with $g_2(\Lambda_0^s)=s(g_2(\Lambda_0))$ and $g_3(\Lambda_0^s)=s(g_3(\Lambda_0))$. It exists and is unique by the uniformization theorem, since $s(g_2)^3-27s(g_3)^2=s(1)=1\ne0$.
+
+We identify $\Phi$ with the set of $K$-embeddings $\tau\colon E\to M$ that restrict to $\varphi_0$ on $K$. Let $\mathfrak d=\mathfrak d_{E/K}$ be the relative different, let $\mathfrak b$ be the ideal of $\mathcal O_E$ with $\mathfrak d=\mathfrak b\bar{\mathfrak b}$ of Lemma~\ref{hostideal}(ii), and put $\mathfrak A=\mathfrak b^{-1}$. Let $R_M\subset M^\Phi$ be the $\mathcal O_M$-module generated by the vectors $(\tau(\alpha))_{\tau\in\Phi}$ with $\alpha\in\mathfrak A$, and for $\tau\in\Phi$ let
+\[
+\ell_\tau=\{s\in M:\ s\,e_\tau\in R_M\},
+\]
+where $e_\tau$ is the coordinate vector of $\tau$. On $\ell_\tau$ we put the metrics $\lVert s\rVert_\rho^2=\pi\lvert\rho(s)\rvert^2/A(\Lambda_0^\rho)$ for the embeddings $\rho\colon M\to\mathbb C$.
+
+\begin{lemma}\label{r4:R4:coord}
+In this situation $\ell_\tau=\tau(\mathfrak A\mathfrak d)\mathcal O_M$, and $N_{M/\mathbb Q}(\ell_\tau)^{[E:\mathbb Q]}=N_{E/\mathbb Q}(\mathfrak b)^{[M:\mathbb Q]}$.
+\end{lemma}
+
+\begin{proof}
+The map $E\otimes_KM\to M^\Phi$, $\alpha\otimes c\mapsto(\tau(\alpha)c)_\tau$, is an isomorphism of $M$-algebras because $E/K$ is separable and $\lvert\Phi\rvert=[E:K]$, and it takes the trace $\operatorname{Tr}_{E\otimes M/M}$ to $y\mapsto\sum_\tau y_\tau$. Under it $R_M$ is the image of $\mathfrak A\otimes_{\mathcal O_K}\mathcal O_M$, where $\mathcal O_M$ is an $\mathcal O_K$-algebra through $\varphi_0$. The trace pairing $\mathfrak A\times\mathfrak A^*\to\mathcal O_K$, $(\alpha,\beta)\mapsto\operatorname{Tr}_{E/K}(\alpha\beta)$, with $\mathfrak A^*=\mathfrak A^{-1}\mathfrak d^{-1}$, is perfect, and $\mathfrak A$ is a projective $\mathcal O_K$-module, so the base change $\mathfrak A\otimes\mathcal O_M\times\mathfrak A^*\otimes\mathcal O_M\to\mathcal O_M$ of this pairing is perfect as well. In $M^\Phi$ the base-changed pairing is $\langle x,y\rangle=\sum_\tau x_\tau y_\tau$, and $R_M$ is the set of $x$ with $\langle x,y\rangle\in\mathcal O_M$ for all $y$ in the image $R_M^*$ of $\mathfrak A^*\otimes\mathcal O_M$. For $s\in M$ and $y\in R_M^*$ we have $\langle se_\tau,y\rangle=sy_\tau$, and the coordinates $y_\tau$ of $R_M^*$ generate $\tau(\mathfrak A^*)\mathcal O_M$. So $se_\tau\in R_M$ exactly when $s\,\tau(\mathfrak A^*)\mathcal O_M\subset\mathcal O_M$, that is, when $s\in\tau(\mathfrak A\mathfrak d)\mathcal O_M$. The norm of the extension to $M$ of an ideal $\mathfrak e$ of $\tau(E)$ is $N(\mathfrak e)^{[M:\tau(E)]}$, and $N_{E/\mathbb Q}(\mathfrak A\mathfrak d)=N_{E/\mathbb Q}(\bar{\mathfrak b})=N_{E/\mathbb Q}(\mathfrak b)$.
+\end{proof}
+
+\begin{definition}\label{r4:R4:Omega}
+For $\tau\in\Phi$ and $s\in\ell_\tau\setminus\{0\}$ put
+\[
+\log\Omega_{\tau}=\frac1{[M:\mathbb Q]}\Big(2\log[\ell_\tau:s\mathcal O_M]-\sum_{\rho\colon M\to\mathbb C}\log\lVert s\rVert_\rho^2\Big).
+\]
+\end{definition}
+
+The product formula $\sum_\rho\log\lvert\rho(s)\rvert^2=2\log\lvert N_{M/\mathbb Q}(s)\rvert$ shows that $\log\Omega_\tau$ does not depend on $s$. It is $2/[M:\mathbb Q]$ times the arithmetic degree of the hermitian line $\ell_\tau$, and Proposition~\ref{r4:R4:period} shows that it depends neither on $M$, nor on $\tau$, nor on $\mathfrak c$.
+
+\begin{proposition}\label{r4:R4:period}
+Let $d\equiv7\pmod{16}$ be a prime, $K=\mathbb Q(\sqrt{-d})$, let $E\supset K$ be a CM field with $[E:K]=f$ and with an ideal $\mathfrak b$ of $\mathcal O_E$ such that $\mathfrak d_{E/K}=\mathfrak b\bar{\mathfrak b}$, and let $\mathfrak c$, $\delta$, $M$ and $\tau\in\Phi$ be as above. Then
+\[
+\log\Omega_\tau=\gamma+\log\frac\pi v-\lambda_1,\qquad v=\tfrac12\mathrm{rd}_E .
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{r4:R4:coord}, $[\ell_\tau:s\mathcal O_M]=\lvert N_{M/\mathbb Q}(s)\rvert/N_{M/\mathbb Q}(\ell_\tau)$, and
+\[
+\frac2{[M:\mathbb Q]}\log N_{M/\mathbb Q}(\ell_\tau)=\frac2{[E:\mathbb Q]}\log N_{E/\mathbb Q}(\mathfrak b)=\frac1{2f}\log N_{E/\mathbb Q}(\mathfrak d_{E/K}).
+\]
+The discriminant of the tower $E/K/\mathbb Q$ is $\lvert d_E\rvert=d^{\,f}N_{E/\mathbb Q}(\mathfrak d_{E/K})$, so this number is $\log\mathrm{rd}_E-\frac12\log d$. With the product formula,
+\[
+\log\Omega_\tau=-\Big(\log\mathrm{rd}_E-\tfrac12\log d\Big)+\frac1{[M:\mathbb Q]}\sum_\rho\log\frac{A(\Lambda_0^\rho)}\pi .
+\]
+For each $\rho$ the lattice $\Lambda_0^\rho$ has $\Delta=1$ and $j(\Lambda_0^\rho)=\rho(j(\mathfrak c))$. By the theory of complex multiplication the numbers $j(\mathfrak a)$, for $\mathfrak a$ running over representatives of the $h$ ideal classes, are distinct and form one orbit under $\operatorname{Gal}(\bar{\mathbb Q}/\mathbb Q)$, so $j(\mathfrak c)$ has degree $h$ over $\mathbb Q$ and, as $\rho$ runs over the $[M:\mathbb Q]$ embeddings, $\rho(j(\mathfrak c))$ takes each value $j(\mathfrak a)$ exactly $[M:\mathbb Q]/h$ times. Two lattices with the same $j$-invariant are homothetic, so $\Lambda_0^\rho$ is homothetic to $\varphi_0(\mathfrak a)$ for the class of $\mathfrak a$ with $j(\mathfrak a)=\rho(j(\mathfrak c))$, and since $\Delta(\Lambda_0^\rho)=1$ we get $A(\Lambda_0^\rho)=\mathcal A(\varphi_0(\mathfrak a))$. Proposition~\ref{r4:R4:kronecker} gives
+\[
+\frac1{[M:\mathbb Q]}\sum_\rho\log\frac{A(\Lambda_0^\rho)}\pi=\frac1h\sum_C\log\frac{\mathcal A(\Lambda_C)}\pi=\gamma+\log\frac{2\pi}{\sqrt d}-\lambda_1 .
+\]
+Adding the two contributions gives $\gamma+\log(2\pi/\mathrm{rd}_E)-\lambda_1=\gamma+\log(\pi/v)-\lambda_1$.
+\end{proof}
+
+We write $\log\Omega=\gamma+\log(\pi/v)-\lambda_1$ for the common value. It is the constant of Proposition~\ref{acct} with this choice of $v$ and $\lambda_1=\ell_{\chi_1}$. The lattice $\Lambda_0$ is the period lattice of the CM curve of Section~\ref{sec:inert} in the model of discriminant one, and $\log\Omega_\tau$ compares the archimedean norm of its invariant differential with the integral structure that the model defines at the finite places. This is the comparison that the archimedean norms of the theta kernels need, because the kernel law of Section~\ref{sec:inert} expresses the kernels in the algebraic parameter of the model, while their archimedean norms are computed in the complex coordinate.
+
+\begin{lemma}\label{r4:R4:Omegasize}
+In the situation of Proposition~\ref{r4:R4:period}, suppose that $v\ge\pi$ and $\lvert\lambda_1\rvert\le L_\varepsilon-1$. Then $\lvert\log\Omega\rvert\le\Lambda_a$ for $x\ge1$.
+\end{lemma}
+
+\begin{proof}
+Since $v\ge\pi$, the number $\log(v/\pi)$ lies between $0$ and $\log\mathrm{rd}_E$, so $\lvert\gamma-\log(v/\pi)\rvert\le\max(\gamma,\log\mathrm{rd}_E)\le\gamma+\log\mathrm{rd}_E$. Hence $\lvert\log\Omega\rvert\le\gamma+\log\mathrm{rd}_E+L_\varepsilon-1\le\log x+L_\varepsilon+\log\mathrm{rd}_E=\Lambda_a$, because $\gamma<1$ and $\log x\ge0$.
+\end{proof}
+
+The hypothesis $\lvert\lambda_1\rvert\le L_\varepsilon-1$ holds for large $x$, because Theorem~\ref{stage2}(ii) gives $\lvert\lambda_1\rvert\le602c_0\log x$ and $L_\varepsilon=x^\varepsilon$.
+
+\subsection{The heights of the period maps}\label{r4:sec:R4height}
+
+Let $F$ be the totally complex field over which the lattices of the chain are defined (the field $\mathbb L$ of Section~\ref{sec:chain}), and let $v$ run over its archimedean places. For each index $u\in W$ the period map has the form of a chain. There are hermitian spaces $V_0,\dots,V_m$ over $F$ with frames $X_i$ at the archimedean places, the source $V_0$ of $N_u$, $F$-linear maps $K_j\colon V_{j-1}\to V_j$ for $1\le j\le m$ (the lifts), and an $F$-linear map $P_u\colon V_m\to R_F^{\vee}$ (the final pairing with forms on the base side) such that
+\begin{equation}\label{r4:R4:chain}
+B_u=P_u\circ K_m\circ\dots\circ K_1 .
+\end{equation}
+The target $R_F$ has a frame $X_R$ and real numbers $\kappa_v>0$ and $\lambda_j(p,v)>0$, indexed by the lifts $j$, by the base-type subspaces $p$ of $R_F$ and by the places $v$, such that the base-type inclusion multiplies the hermitian form on the base-type subspace $p$ by $\kappa_v\prod_j\lambda_j(p,v)$ at $v$. These scalars are part of the data of the base side in Subsection~\ref{r4:sec:R4target}.
+
+\begin{lemma}\label{r4:R4:composite}
+Let $\phi_1\colon U_0\to U_1,\dots,\phi_s\colon U_{s-1}\to U_s$ be linear maps between finite-dimensional complex hermitian spaces. Then $\lVert\phi_s\circ\dots\circ\phi_1\rVert\le\prod_i\lVert\phi_i\rVert$. Let $U$ be a complex vector space with two hermitian forms $h$ and $h'$ and an orthogonal decomposition $U=\bigoplus_pU^p$ for both, with $h=c_p\,h'$ on $U^p$ for real numbers $c_p>0$. Then for every linear map $\phi$ from a hermitian space into the dual space $U^\vee$, the operator norm of $\phi$ for the dual form $h^\vee$ is at most $(\min_pc_p)^{-1/2}$ times its operator norm for $h'^\vee$.
+\end{lemma}
+
+\begin{proof}
+The first statement is submultiplicativity of operator norms. For the second, a linear form $\xi=\sum_p\xi_p$ on $U$ has $h^\vee(\xi,\xi)=\sum_pc_p^{-1}h'^\vee(\xi_p,\xi_p)\le(\min_pc_p)^{-1}h'^\vee(\xi,\xi)$.
+\end{proof}
+
+\begin{proposition}\label{r4:R4:ht}
+Suppose that $B_u\ne0$, that for every archimedean place $v$ of $F$
+\[
+\log\lVert P_u\rVert_v^2\le h_P,\qquad \log\lVert K_j\rVert_v^2\le h_{K,j}(v)\quad(1\le j\le m),
+\]
+and that $\sum_j\log\lambda_j(p,v)\ge\ell_\lambda$ for all $p$ and $v$, where the operator norm of $P_u$ is taken with respect to the frame $X_m$ and the dual of the form $h'$ that equals $(\kappa_v\prod_j\lambda_j(p,v))^{-1}$ times the form of $X_R$ on the base-type subspace $p$, and the operator norm of $K_j$ with respect to $X_{j-1}$ and $X_j$. Then
+\[
+\mathrm{ht}(B_u)\le h_P+\sum_{j=1}^m\frac1{n_F}\sum_vh_{K,j}(v)-\ell_\lambda-\langle\log\kappa\rangle,
+\]
+where $\mathrm{ht}$ is computed with the frame $X_R$.
+\end{proposition}
+
+\begin{proof}
+At a place $v$, Lemma~\ref{r4:R4:composite} applied to \eqref{r4:R4:chain}, with $U=R_F\otimes_v\mathbb C$, its decomposition into base-type subspaces, $h$ the form of the frame $X_R$, and $c_p=\kappa_v\prod_j\lambda_j(p,v)$, gives
+\[
+\log\lVert B_u\rVert_v^2\le h_P+\sum_jh_{K,j}(v)-\log\kappa_v-\min_p\sum_j\log\lambda_j(p,v)\le h_P+\sum_jh_{K,j}(v)-\log\kappa_v-\ell_\lambda .
+\]
+Taking the mean over the $n_F$ places gives the statement.
+\end{proof}
+
+The three hypotheses of Proposition~\ref{r4:R4:ht} are the archimedean content of the period maps, and we now state them in the form in which they enter \eqref{A4}. For a lift $j$ and an embedding $\rho\in\Phi$ the kernel of $K_j$ at $\rho$ is a polynomial in the matrix coordinates, and its row weights form a vector $\nu_{j\rho}=(\nu_{j\rho1},\dots,\nu_{j\rho N})$ of nonnegative reals with $N=k+m(t_r+1)$. Let $h_{j\rho}$ be the logarithm of the normalizing constant of the frame on the $\rho$-component of $V_j$, so that $\sum_\rho h_{j\rho}$ is the quantity $\ell_\lambda$ contributed by the lift $j$ (the hook constants of the base side). Let $C_0\ge1$ be a constant.
+
+\begin{hypothesis}[kernel norms]\label{r4:R4:HK}
+For every lift $j$, $\frac1{n_F}\sum_vh_{K,j}(v)\le s_j$ with
+\[
+s_j=\sum_{\rho\in\Phi}\Big(\sum_{i=1}^N\ph(\nu_{j\rho i})-\Big(\sum_{i=1}^N\nu_{j\rho i}\Big)\log\Omega\Big)+C_0\big(fN^2\Lambda_a+fm^3N^2L_\varepsilon\big).
+\]
+\end{hypothesis}
+
+\begin{hypothesis}[final pairing]\label{r4:R4:HP}
+$h_P\le-\sum_{t\in T}a_t\log T_u+e_P$ with $e_P\le C_0\big(N_Tb'N+f(m\eta+S)N+fN^2\big)\Lambda_a$, where $\eta=W+mh_0$ is the spread of Section~\ref{sec:auxiliary} and $S\ge0$ bounds the small weights.
+\end{hypothesis}
+
+\begin{hypothesis}[frame constants]\label{r4:R4:HL}
+$\ell_\lambda\ge\sum_j\sum_\rho h_{j\rho}-e_\lambda$ with $e_\lambda\le C_0mfN^2\Lambda_a$.
+\end{hypothesis}
+
+\begin{remark}\label{r4:R4:HKmech}
+Hypothesis~\ref{r4:R4:HK} is the place where the factor $m$ in front of $\ph(a_t)$ in \eqref{A4} arises. Each lift is a finite sum over classes of local theta kernels, as in (D1). At an archimedean place the local kernel restricted to a $K$-type is a polynomial whose monomials of row degree $\nu$ have Fock norm $\prod_i\nu_i!$, and $\log\nu!=\ph(\nu)+O(\log(\nu+2))$. The coordinates in which the kernel law of Section~\ref{sec:inert} makes the kernel integral differ from the complex coordinates by the period of the CM curve, and Proposition~\ref{r4:R4:period} computes the mean over the embeddings of the logarithm of this period. The class sum costs the logarithm of the number of classes, which is $O(fm^2N^2(L_\varepsilon+\log T_u))$, and this is the second term of $s_j$. Hypothesis~\ref{r4:R4:HP} bounds the pairing with a form of level $T_u$, whose branching to the smaller group divides the norm by $T_u$ to the power of the degree, and the degree at a top $t$ is $a_t$. Subsection~\ref{r4:sec:R4open} lists the status of these three bounds in this section.
+\end{remark}
+
+\begin{definition}\label{r4:R4:hu}
+Put $e_P^{\max}=C_0(N_Tb'N+f(m\eta+S)N+fN^2)\Lambda_a$ and $e^{\max}_{\lambda,j}=C_0fN^2\Lambda_a$, and
+\[
+h^0_u=-\sum_{t\in T}a_t\log T_u+e_P^{\max}+\sum_{j=1}^m\Big(s_j-\sum_\rho h_{j\rho}+e^{\max}_{\lambda,j}\Big),\qquad h_u=h^0_u-\langle\log\kappa\rangle .
+\]
+\end{definition}
+
+\begin{corollary}\label{r4:R4:htcor}
+Under Hypotheses~\ref{r4:R4:HK}, \ref{r4:R4:HP} and~\ref{r4:R4:HL}, $\mathrm{ht}(B_u)\le h_u$ for every $u\in W$ with $B_u\ne0$.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{r4:R4:ht} with the three hypotheses gives $\mathrm{ht}(B_u)\le-\sum_ta_t\log T_u+e_P+\sum_js_j-\sum_{j,\rho}h_{j\rho}+e_\lambda-\langle\log\kappa\rangle$, and $e_P\le e_P^{\max}$, $e_\lambda\le\sum_je^{\max}_{\lambda,j}$.
+\end{proof}
+
+The number $h_u$ is the height of Proposition~\ref{acct}. It enters \eqref{A3} through Corollary~\ref{r4:R4:htcor} and \eqref{A4} through Theorem~\ref{r4:R4:A4} below.
+
+\subsection{The slope of the target lattice}\label{r4:sec:R4target}
+
+The target lattice is a lattice $R$ in an $F$-vector space $R_F$ of dimension $D$, defined place by place by the local types of the forms on the top group. Its dual $R^\vee$ is the target of the maps $B_u$. We put
+\[
+\mu^C=\mu(R^\vee)\quad\text{for the frame }X_R .
+\]
+The height $h_u$ of Definition~\ref{r4:R4:hu} bounds $\mathrm{ht}(B_u)$ for the same frame by Corollary~\ref{r4:R4:htcor}, so the slope inequality \eqref{A3} for the maps $B_u$ and the inequality \eqref{A4} use the same pair $(\mu^C,h_u)$. Inequality \eqref{A4} involves $\mu^C$ and $h_u$ through the sum $\mu^C+h_u=(\mu^C-\langle\log\kappa\rangle)+h^0_u$.
+
+The base side consists of lattices $M_j\subset W_j$ for $1\le j\le m$, where $W_j$ is a space of automorphic forms on a unitary group of signature $(p_j,q_j)$ at the places of $\Phi$, of weight $w_{j\rho}$ at $\rho$, and of linear maps $\theta_j$ from $R_F$ to $W_j$ that multiply the hermitian forms of the base-type subspaces by $\lambda_j(p,v)$. The local terms at the twisted places are the numbers
+\begin{equation}\label{r4:R4:calL}
+\mathcal L=\sum_{j=1}^m\sum_{y\in\mathrm{Tw}}2\,\ell_y\,e_y\,F_j(y),
+\end{equation}
+where $\mathrm{Tw}$ is the finite set of places where the local type of the forms is twisted, $\ell_y=\log N(y)/[F:\mathbb Q]$, $e_y$ is the ramification index and $F_j(y)\ge0$ is the local length of the lift $j$ at $y$. This is the quantity $\mathcal L$ of Proposition~\ref{acct}, and it is the same quantity in \eqref{A2}.
+
+\begin{hypothesis}[target slope]\label{r4:R4:HT}
+There are real numbers $\mu_0$, $P_{\mathrm{pass}}$ and $E_b$ with
+\begin{align*}
+\mu^C-\langle\log\kappa\rangle&\le\mu_0+P_{\mathrm{pass}},& P_{\mathrm{pass}}&\le1+C_0\lambda_0,\\
+\mu_0&\le\sum_{j=1}^m\sum_{\rho\in\Phi}(p_j-q_j)\,w_{j\rho}\log\Omega+\mathcal L+E_b,& E_b&\le C_0\,m\,x^{\varepsilon}(B_0+N_c),
+\end{align*}
+where $\lambda_0\le b$, $\lvert p_j-q_j-k\rvert\le m$, and $B_0=fmb\,x^\varepsilon$ and $N_c=N_2kb\,x^{2\varepsilon}/n^2$ are the two terms of $\mathcal B$ in \eqref{calB}.
+\end{hypothesis}
+
+\begin{remark}\label{r4:R4:HTmech}
+Hypothesis~\ref{r4:R4:HT} is the composite of three statements. The first, the passage, compares the slope of $R^\vee$ at the top level of the chain with the slope of the corresponding lattice at the level of the base side, at a cost $3\delta(\mu+H_0+28\lambda_0)+28\lambda_0$ with $\delta\le1/3$. The second bounds the slope of the dual of the base-side target, minus $\langle\log\kappa\rangle$, by $\sum_j\operatorname{lcv}(M_j)/D+\mathcal L+E$, where $\operatorname{lcv}(M_j)$ is the normalized logarithmic covolume of $M_j$ and $E$ collects the local indices at the twisted places. The third is the covolume bound $\sum_j\operatorname{lcv}(M_j)/D\le\sum_{j,\rho}(p_j-q_j)w_{j\rho}\log\Omega+E_{l3}$, which is the arithmetic degree of the automorphic line bundle of weight $w_j$ on the unitary Shimura variety of signature $(p_j,q_j)$, evaluated through CM points where Proposition~\ref{r4:R4:period} applies, with the flat part of degree $\frac12(p_j-q_j)\log\Omega$ per unit of weight. The local indices at the twisted places are bounded by the Galois-theoretic bounds of the twisted places, which is the input $E_b\le C_0mx^\varepsilon(B_0+N_c)$. Subsection~\ref{r4:sec:R4open} lists which of these statements are proved here.
+\end{remark}
+
+\subsection{Hypothesis (A4)}\label{r4:sec:R4A4}
+
+The weights of the kernels satisfy two relations, which express the degree of the kernel of the lift $j$ at the embedding $\rho$ in terms of the nodes and the tops.
+
+\begin{hypothesis}[weights of the kernels]\label{r4:R4:HW}
+For all $j$ and $\rho$,
+\begin{align*}
+\sum_{i=1}^N\nu_{j\rho i}&=\mathbf 1_T(\rho)\,a_\rho+k\,w_{j\rho}+\delta_{j\rho},\\
+\lvert\delta_{j\rho}\rvert&\le C_0\big(w_{j\rho}+k(N+S)+m(t_r+1)\eta+\mathbf 1_T(\rho)kb'\big),\\
+\sum_{i=1}^N\ph(\nu_{j\rho i})-h_{j\rho}&\le\mathbf 1_T(\rho)\ph(a_\rho)+\epsilon_{j\rho},\\
+\epsilon_{j\rho}&\le C_0\big(w_{j\rho}+S+N^2+m(t_r+1)\eta\big)\Lambda_a,
+\end{align*}
+where $\mathbf 1_T(\rho)=1$ if $\rho$ is a top and $0$ otherwise, and $a_\rho=a_t$ at the top $\rho=t$.
+\end{hypothesis}
+
+\begin{theorem}\label{r4:R4:A4}
+Let $x\ge3$, $0<\varepsilon<1$, $L_\varepsilon=x^\varepsilon$, $b=e^{L_\varepsilon}$, $a=xb$, and suppose that $\log x\le L_\varepsilon$, $1\le\mathrm{rd}_E$, $\log\mathrm{rd}_E\le L_\varepsilon$. Let $m,f,k,N\ge1$, $S,t_r,\eta,b',W''\ge0$ and $C_0\ge1$ satisfy
+\begin{gather}
+0\le w_{j\rho}\le2b,\quad \lvert\log\Omega\rvert\le\Lambda_a,\quad N^2\le b,\quad m^3N^2L_\varepsilon\le b,\quad m\eta NL_\varepsilon\le b,\quad kN\le b,\label{r4:R4:sz1}\\
+kS\le W'',\quad m(t_r+1)\eta\le W'',\quad NW''\le b,\quad b'N\le a,\quad mkb'\le a.\label{r4:R4:sz2}
+\end{gather}
+Assume Hypotheses~\ref{r4:R4:HK}, \ref{r4:R4:HP}, \ref{r4:R4:HL}, \ref{r4:R4:HT} and~\ref{r4:R4:HW}, and let $h_u$ be as in Definition~\ref{r4:R4:hu}. Put $e_4=(50C_0+10)\big(N_Ta\Lambda_a+m\,x^\varepsilon(B_0+N_c)\big)$. Then for every $u\in W$
+\[
+\mu^C+h_u-\mathcal L\le\sum_{t\in T}\big(m\ph(a_t)-ma_t\log\Omega-a_t\log T_u\big)+e_4 .
+\]
+\end{theorem}
+
+\begin{proof}
+Write $\sum_{j,\rho}$ for the sum over $1\le j\le m$ and $\rho\in\Phi$. Since $\mu^C+h_u=(\mu^C-\langle\log\kappa\rangle)+h^0_u$, Hypothesis~\ref{r4:R4:HT} and Definition~\ref{r4:R4:hu} give
+\[
+\mu^C+h_u-\mathcal L\le\sum_{j,\rho}(p_j-q_j)w_{j\rho}\log\Omega+E_b+P_{\mathrm{pass}}-\sum_ta_t\log T_u+e_P^{\max}+\sum_j s_j-\sum_{j,\rho}h_{j\rho}+\sum_je^{\max}_{\lambda,j}.
+\] Insert the definition of $s_j$ and the two relations of Hypothesis~\ref{r4:R4:HW}. For each $j$ and $\rho$,
+\begin{align*}
+&\sum_i\ph(\nu_{j\rho i})-h_{j\rho}-\Big(\sum_i\nu_{j\rho i}\Big)\log\Omega+(p_j-q_j)w_{j\rho}\log\Omega\\
+&\qquad\le\mathbf 1_T(\rho)\big(\ph(a_\rho)-a_\rho\log\Omega\big)+\epsilon_{j\rho}+(p_j-q_j-k)w_{j\rho}\log\Omega-\delta_{j\rho}\log\Omega .
+\end{align*}
+Summing over $j$ and $\rho$, the first term gives $m\sum_{t\in T}(\ph(a_t)-a_t\log\Omega)$, and the inequality to prove reduces to
+\[
+\Sigma_1+\Sigma_2\le e_4,\qquad \Sigma_1=\sum_{j,\rho}\big(\epsilon_{j\rho}+m\,w_{j\rho}\Lambda_a+\lvert\delta_{j\rho}\rvert\Lambda_a\big),
+\]
+where $\Sigma_2=E_b+P_{\mathrm{pass}}+e_P^{\max}+\sum_jC_0(fN^2\Lambda_a+fm^3N^2L_\varepsilon)+\sum_je^{\max}_{\lambda,j}$, and where we used $\lvert p_j-q_j-k\rvert\le m$ and $\lvert\log\Omega\rvert\le\Lambda_a$.
+
+The size conditions give $S\le kS\le W''\le b/N\le b$, $N^2\le b$, $m(t_r+1)\eta\le W''\le b$ and $k(N+S)\le kN+W''\le2b$. Hence $w_{j\rho}+S+N^2+m(t_r+1)\eta\le5b$ and $w_{j\rho}+k(N+S)+m(t_r+1)\eta\le5b$, so for each pair $(j,\rho)$
+\[
+\epsilon_{j\rho}+mw_{j\rho}\Lambda_a+\lvert\delta_{j\rho}\rvert\Lambda_a\le\big(10C_0+2m\big)b\,\Lambda_a+\mathbf 1_T(\rho)C_0kb'\Lambda_a .
+\]
+There are $m$ lifts and $f$ embeddings, and $mkb'\le a$, so $\Sigma_1\le(10C_0+2)m^2fb\Lambda_a+C_0N_Ta\Lambda_a$. Since $\log x\le L_\varepsilon$ and $\log\mathrm{rd}_E\le L_\varepsilon$ we have $\Lambda_a=\log x+L_\varepsilon+\log\mathrm{rd}_E\le3L_\varepsilon=3x^\varepsilon$, and $m^2fbx^\varepsilon=mB_0$. Therefore $\Sigma_1\le3(10C_0+2)mB_0+C_0N_Ta\Lambda_a$.
+
+For $\Sigma_2$: $E_b\le C_0mx^\varepsilon(B_0+N_c)$ and $P_{\mathrm{pass}}\le1+C_0b\le(1+C_0)B_0$ because $B_0\ge b\ge1$. Next $N_Tb'N\Lambda_a\le N_Ta\Lambda_a$; $fm\eta N\Lambda_a\le fb\Lambda_a$ because $m\eta N\le b/L_\varepsilon\le b$; $fSN\Lambda_a\le fb\Lambda_a$ because $SN\le W''N\le b$; and $fN^2\Lambda_a\le fb\Lambda_a$. So $e_P^{\max}\le C_0N_Ta\Lambda_a+3C_0fb\Lambda_a\le C_0N_Ta\Lambda_a+9C_0B_0$. Finally $mC_0(fN^2\Lambda_a+fm^3N^2L_\varepsilon)\le C_0(3mfbx^\varepsilon+mfb)\le4C_0B_0$ and $\sum_je^{\max}_{\lambda,j}=C_0mfN^2\Lambda_a\le3C_0B_0$. Collecting terms and using $B_0\le mx^\varepsilon B_0$,
+\[
+\Sigma_1+\Sigma_2\le2C_0N_Ta\Lambda_a+(48C_0+7)\,m\,x^\varepsilon(B_0+N_c)\le e_4 .\qedhere
+\]
+\end{proof}
+
+\begin{corollary}\label{r4:R4:A4cor}
+Under the hypotheses of Theorem~\ref{r4:R4:A4}, inequality \eqref{A4} of Proposition~\ref{acct} holds for every $u\in W$ with $\mu^C=\mu(R^\vee)$, the heights $h_u$ of Definition~\ref{r4:R4:hu}, the local terms $\mathcal L$ of \eqref{r4:R4:calL}, $\log\Omega=\gamma+\log(\pi/v)-\lambda_1$ with $v=\frac12\mathrm{rd}_E$ and $\lambda_1=\ell_{\chi_1}$, and
+\[
+e_4=(50C_0+10)\Big(N_Ta\Lambda_a+m\,x^\varepsilon(B_0+N_c)\Big).
+\]
+\end{corollary}
+
+\begin{proof}
+The right side of \eqref{A4} is $\sum_{t=1}^{N_T}(m\ph(a_t)-ma_t\log\Omega-a_t\log T_u)+e_4$, and Theorem~\ref{r4:R4:A4} is this inequality. Proposition~\ref{r4:R4:period} identifies $\log\Omega$.
+\end{proof}
+
+\subsection{Hypothesis (A6)}\label{r4:sec:R4A6}
+
+Hypothesis \eqref{A6} is a lower bound for the auxiliary prime $T_u$. The prime $T_u$ is chosen so that the rank of the lattice $N_u$, which grows like $T_u^{kf}$, matches the dimension budget of the target lattice. We first define the two numbers that are matched.
+
+For a strictly decreasing vector $y=(y_0,\dots,y_{s-1})$ of reals put
+\[
+\operatorname{vand}(y)=\prod_{0\le i<i'<s}(y_i-y_{i'}),\qquad \dim(y)=\frac{\operatorname{vand}(y)}{\prod_{i<s}i!} .
+\]
+For an integral dominant weight $y$ of $GL_s$, Weyl's dimension formula says that $\dim(y+\rho_s)$, with $\rho_s=(s-1,\dots,0)$, is the dimension of the irreducible representation of highest weight $y$. For $M\ge1$ let $\operatorname{mass}(M)$ be the mass of the standard unimodular hermitian lattice $\mathcal O_E^M$, that is, the sum of $1/\lvert\operatorname{Aut}\rvert$ over the classes in its genus.
+
+For a prime $g\ge3$ and integers $k\ge2$, $m\ge2$ even, with $r=k+m-1$ and $r_S=m/2-1$, let $I_\Pi(g)=\lvert GL_k(\mathbb F_g)\rvert/\lvert U_k(\mathbb F_g)\rvert$, where $U_k$ is the group of upper unitriangular matrices, and let $I_\Sigma(g)=\lvert GL_r(\mathbb F_g)\rvert/\lvert P(\mathbb F_g)\rvert$, where $P$ is the group of upper unitriangular $r\times r$ matrices whose entries in the column $r_S+k$ vanish in the rows $r_S,\dots,r_S+k-1$. These are the indices of the level structures at $g$ of the column groups and of the row group. Put $I_\Pi=(I_\Pi(g_0)I_\Pi(g_1))^f$ and $I_\Sigma=(I_\Sigma(g_0)I_\Sigma(g_1))^f$.
+
+\begin{lemma}\label{r4:R4:index}
+For a prime $g\ge3$, $\frac12g^{k(k+1)/2}\le I_\Pi(g)\le g^{k(k+1)/2}$ and $\frac12g^{e}\le I_\Sigma(g)\le g^{e}$ with $e=\frac12(r^2+3k+1+2r_S)$. Moreover $e-\frac12k(k+1)=\frac12m(2k+m-1)$, and
+\[
+\frac{I_\Sigma}{I_\Pi}\ge2^{-2f}(g_0g_1)^{fm(2k+m-1)/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+We have $\lvert GL_s(\mathbb F_g)\rvert=g^{s(s-1)/2}\prod_{i=1}^s(g^i-1)$ and $1\ge\prod_i(1-g^{-i})\ge1-\sum_{i\ge1}g^{-i}=1-\frac1{g-1}\ge\frac12$. The group $U_k$ has order $g^{k(k-1)/2}$, so $I_\Pi(g)=\prod_{i=1}^k(g^i-1)$ lies between $\frac12g^{k(k+1)/2}$ and $g^{k(k+1)/2}$. The group $P$ consists of the unitriangular matrices with $k$ entries above the diagonal fixed to zero, so $\lvert P\rvert=g^{r(r-1)/2-k}$ and $I_\Sigma(g)=g^k\prod_{i=1}^r(g^i-1)$ lies between $\frac12g^{r(r+1)/2+k}$ and $g^{r(r+1)/2+k}$. Since $r=k+1+2r_S$ we have $r(r+1)/2+k=\frac12(r^2+r+2k)=e$. Next $2e-k(k+1)=r^2+3k+1+2r_S-k^2-k=(k+m-1)^2-k^2+k+m-1=m(2k+m-1)$. Finally $I_\Sigma/I_\Pi\ge\prod_{g\in\{g_0,g_1\}}\big(\tfrac12g^e/g^{k(k+1)/2}\big)^f$.
+\end{proof}
+
+For each $\rho\in\Phi$ let the row parameter of the target group be
+\[
+\lambda^{\mathrm{row}}_\rho=(v_{\rho,0},\dots,v_{\rho,k-2},-b_{\rho,0},\dots,-b_{\rho,m-1})\in\mathbb R^r,
+\]
+and for each $u\in W$ let $\lambda^{\mathrm{col}}_{u,\rho}=(u_{\rho,0},\dots,u_{\rho,k-1})$ be the column parameter of the source group at level $T_u$. The data of Section~\ref{sec:auxiliary} and Proposition~\ref{nodes} give real numbers $\Delta\ge1$ and these parameters with the following properties, for every $\rho$ (we drop $\rho$ and $u$ from the notation).
+\begin{enumerate}
+\item[(P1)] $0\le v_i\le4k\Delta$ for $i\le k-2$, and $v_i-v_{i+1}=4\Delta$ for $i\le k-3$.
+\item[(P2)] $v_i<u_i$ and $u_{i+1}<v_i$ for $i\le k-2$, and $-b_0<u_{k-1}$.
+\item[(P3)] Either $\rho$ is a top, $u_0\le2a$ and $-a\le u_{k-1}$, or $\rho$ is not a top, $4k\Delta\le u_0-v_0\le8k\Delta$ and $u_{k-1}=v_{k-2}-\frac12$.
+\item[(P4)] $b_j<w_{j\rho}$ and $\lvert w_{j\rho}-b_j\rvert\le b_j/x$ for $j<m$, $w_{j\rho}<b_{j+1}$ and $b_{j+1}-b_j\ge1$ for $j<m-1$, $4k\Delta\le b_0/x$, and $w_{m-1,\rho}\le2b$.
+\end{enumerate}
+Here the nodes $w_{j\rho}$ are indexed by $0\le j<m$, and $w_{j\rho}$ is the node of the lift $j+1$ in the notation of \eqref{A6}.
+
+\begin{definition}\label{r4:R4:Xu}
+Put
+\[
+d^*_u=\operatorname{mass}(k)\,I_\Pi\prod_{\rho\in\Phi}\dim(\lambda^{\mathrm{col}}_{u,\rho}),\qquad \log X_u=\frac1{fk}\log\frac{D^*}{d^*_u},
+\]
+where $D^*$ is the dimension budget of the target lattice.
+\end{definition}
+
+\begin{hypothesis}[dimension budget]\label{r4:R4:HD}
+$D^*\ge\big(\tfrac23\big)^f\operatorname{mass}(r)\,I_\Sigma\prod_{\rho\in\Phi}\dim(\lambda^{\mathrm{row}}_\rho)$.
+\end{hypothesis}
+
+The number $d^*_u(T^k-1)^f$ is the dimension of the space of forms of level $T$ on the source group when the stabilizers of the classes are trivial, by the class number formula $\#\mathrm{Cl}=\operatorname{mass}(k)I_\Pi(T^k-1)^f$ and Weyl's dimension formula. The budget $D^*$ is the product of the volume of the target group, the index $I_\Sigma$ and the formal degrees of the discrete series with parameters $\lambda^{\mathrm{row}}_\rho$. For the Haar measure of the compact dual, Harish-Chandra's formula gives the formal degree $\dim(\lambda^{\mathrm{row}}_\rho)$ exactly, and the volume equals $\operatorname{mass}(r)$ when the hermitian space of the target is locally isomorphic at every finite place to the standard unimodular space. These two published inputs give Hypothesis~\ref{r4:R4:HD} with the factor $1$ in place of $(2/3)^f$.
+
+\begin{lemma}\label{r4:R4:vand}
+Let $k\ge2$, $m\ge1$, $\Delta\ge1$, $x\ge1$, $a\ge1$, and let $v,u,b,w$ satisfy (P1) to (P4) with $b\le a$. Then $\operatorname{vand}(u)>0$, $\operatorname{vand}(\lambda^{\mathrm{row}})>0$ and
+\[
+\log\operatorname{vand}(\lambda^{\mathrm{row}})-\log\operatorname{vand}(u)\ge(k-1)\sum_{j<m}\log b_j-2k\log(8a)-k(1+\log k).
+\]
+\end{lemma}
+
+\begin{proof}
+The entries of $\lambda^{\mathrm{row}}$ are strictly decreasing by (P1), (P4) and $v_{k-2}\ge0>-b_0$, and those of $u$ are strictly decreasing by (P2), so both Vandermonde products are positive. The differences of entries of $\lambda^{\mathrm{row}}$ are $v_i-v_{i'}$, $v_i+b_j$ and $b_{j'}-b_j$ for $i<i'$ and $j<j'$, and $b_{j'}-b_j\ge1$ and $v_i+b_j\ge b_j$. Hence
+\[
+\operatorname{vand}(\lambda^{\mathrm{row}})\ge\operatorname{vand}(v)\prod_{j<m}b_j^{\,k-1},\qquad v=(v_0,\dots,v_{k-2}).
+\]
+For $1\le i<i'\le k-2$, (P2) gives $u_i-u_{i'}<v_{i-1}-v_{i'}=(i'-i+1)4\Delta$, while $v_{i-1}-v_{i'-1}=(i'-i)4\Delta$. The pairs $(i-1,i'-1)$ run over the pairs $0\le p<q\le k-3$, and the remaining factors $v_p-v_{k-2}$ of $\operatorname{vand}(v)$ are at least $4\Delta\ge1$. Therefore
+\[
+\prod_{1\le i<i'\le k-2}(u_i-u_{i'})\le\operatorname{vand}(v)\prod_{d=1}^{k-3}\Big(\frac{d+1}d\Big)^{k-2-d}\le\operatorname{vand}(v)\,e^{k(1+\log k)},
+\]
+since $\sum_{d\le k}(k-2-d)\log(1+1/d)\le k\sum_{d\le k}1/d\le k(1+\log k)$. The other factors of $\operatorname{vand}(u)$ are $u_0-u_{i'}$ for $1\le i'\le k-1$ and $u_i-u_{k-1}$ for $1\le i\le k-2$, at most $2k$ factors. Each lies in $(0,8a]$. In the top case all $u_i$ lie in $[-a,2a]$. In the other case $u_0\le v_0+8k\Delta\le12k\Delta\le3b_0/x\le6b\le6a$ by (P3) and (P4), and $u_{k-1}\ge-\frac12$, so all $u_i$ lie in $[-\frac12,6a]$. Hence $\operatorname{vand}(u)\le\operatorname{vand}(v)e^{k(1+\log k)}(8a)^{2k}$, and taking logarithms gives the statement.
+\end{proof}
+
+\begin{proposition}\label{r4:R4:weyl}
+Let $0<\varepsilon<1$ and $C_1\ge0$. There is a constant $C_6$, depending on $\varepsilon$ and $C_1$ alone, with the following property. Let $x\ge1$, $L_\varepsilon=x^\varepsilon$, $b=e^{L_\varepsilon}$, $a=xb$, let $f\ge1$, $m\ge2$ even with $m\le x$, $2\le k\le x^{C_1}$, let $\pi\le v$ with $\log v\le L_\varepsilon$, and let $g_0,g_1\ge3$ be primes. Suppose that the parameters of every $\rho\in\Phi$ satisfy (P1) to (P4), that
+\[
+\frac{\operatorname{mass}(M)}{\operatorname{mass}(M-1)}=\frac{\big((M-1)!\,(v/\pi)^M\big)^f}{(2v)^{f/2}}\,\mathbf L(M),\qquad\lvert\log\mathbf L(M)\rvert\le f\log\zeta(M)\qquad(k<M\le r),
+\]
+and that $D^*$ satisfies Hypothesis~\ref{r4:R4:HD}. Then for every $u$
+\[
+\log X_u\ge\sum_{j<m}\frac1f\sum_{\rho\in\Phi}\log\frac{w_{j\rho}\,v}\pi+m\log(g_0g_1)-C_6\Big(L_\varepsilon+\frac{m^2L_\varepsilon}k\Big).
+\]
+\end{proposition}
+
+\begin{proof}
+By Hypothesis~\ref{r4:R4:HD} and the definition of $d^*_u$,
+\[
+\log\frac{D^*}{d^*_u}\ge f\log\tfrac23+\log\frac{\operatorname{mass}(r)}{\operatorname{mass}(k)}+\log\frac{I_\Sigma}{I_\Pi}+\sum_\rho\big(\log\dim(\lambda^{\mathrm{row}}_\rho)-\log\dim(\lambda^{\mathrm{col}}_{u,\rho})\big).
+\]
+We treat the four terms in turn. The mass ratio telescopes over $M=k+1,\dots,r$, and there are $r-k=m-1$ such $M$:
+\[
+\log\frac{\operatorname{mass}(r)}{\operatorname{mass}(k)}=\sum_{M=k+1}^r\Big(f\log(M-1)!+fM\log\frac v\pi-\frac f2\log(2v)+\log\mathbf L(M)\Big).
+\]
+Since $\log(v/\pi)\ge0$, $\sum_MfM\log(v/\pi)\ge f(m-1)k\log(v/\pi)$, and $\log\mathbf L(M)\ge-f\log\zeta(2)\ge-f$. For the dimensions, $\log\dim(\lambda^{\mathrm{row}})-\log\dim(\lambda^{\mathrm{col}})=\log\operatorname{vand}(\lambda^{\mathrm{row}})-\log\operatorname{vand}(\lambda^{\mathrm{col}})-\sum_{M=k}^{r-1}\log M!$, and summed over the $f$ embeddings the factorials cancel the terms $f\log(M-1)!$ of the mass ratio exactly. Lemma~\ref{r4:R4:index} bounds the index term below by $-2f\log2+fmk\,g$, with $g=\log(g_0g_1)\ge0$, because $m(2k+m-1)/2\ge mk$. Lemma~\ref{r4:R4:vand} bounds the Vandermonde terms. Dividing by $fk$ we obtain
+\[
+\log X_u\ge\frac{k-1}{k}\cdot\frac1f\sum_\rho\sum_{j<m}\log b_{\rho,j}+(m-1)\log\frac v\pi+mg-\mathcal E,
+\]
+with
+\[
+\mathcal E=2\log(8a)+1+\log k+\frac{(m-1)\log(2v)}{2k}+\frac{m-1}k+\frac{\log(3/2)+2\log2}k .
+\]
+By (P4), $w_{j\rho}\le b_{\rho,j}(1+1/x)$, so $\log b_{\rho,j}\ge\log w_{j\rho}-1/x$, and $1\le b_{\rho,j}\le w_{j\rho}\le2b$, so $\frac1k\sum_{j<m}\log b_{\rho,j}\le\frac mk(L_\varepsilon+1)$. Hence
+\[
+\frac{k-1}k\cdot\frac1f\sum_{\rho,j}\log b_{\rho,j}\ge\sum_{j<m}\frac1f\sum_\rho\log w_{j\rho}-\frac mx-\frac mk(L_\varepsilon+1),
+\]
+and $(m-1)\log(v/\pi)\ge m\log(v/\pi)-L_\varepsilon$. It remains to bound $\mathcal E+\frac mx+\frac mk(L_\varepsilon+1)+L_\varepsilon$ by $C_6(L_\varepsilon+m^2L_\varepsilon/k)$. We have $\log(8a)=\log8+\log x+L_\varepsilon$, $\log x\le L_\varepsilon/(e\varepsilon)$ for $x\ge1$, $\log k\le C_1\log x$, $\log(2v)\le1+L_\varepsilon$ and $m/x\le1$. Since $L_\varepsilon\ge1$ and $m\le m^2$, each term is at most a constant depending on $\varepsilon$ and $C_1$ times $L_\varepsilon+m^2L_\varepsilon/k$.
+\end{proof}
+
+\begin{theorem}\label{r4:R4:A6}
+Assume the hypotheses of Proposition~\ref{r4:R4:weyl}, let $\Gamma\ge1$ with $\log\Gamma\le fk$, and suppose that for every $u\in W$ the prime $T_u$ satisfies $T_u\ge X_u\Gamma^{-2/(fk)}$. Then \eqref{A6} holds for every $u\in W$ with $g=\log(g_0g_1)$, with $v=\frac12\mathrm{rd}_E$, with the nodes $w_{j\rho}$ of the lifts, and with
+\[
+e_6=C_6\Big(L_\varepsilon+\frac{m^2L_\varepsilon}k\Big)+2 .
+\]
+\end{theorem}
+
+\begin{proof}
+$\log T_u\ge\log X_u-\frac2{fk}\log\Gamma\ge\log X_u-2$, and Proposition~\ref{r4:R4:weyl} bounds $\log X_u$ below by the right side of \eqref{A6} plus $e_6-2$.
+\end{proof}
+
+\begin{remark}\label{r4:R4:Tu}
+The prime $T_u$ is the auxiliary prime of the index $u$. It must also satisfy $T_u\le(1+\frac1{fk})X_u\Gamma^{-2/(fk)}$, so that the rank of $N_u$ matches $D^*\Gamma^{-2}$ up to a bounded factor, as the frame condition of \eqref{A3} requires, and it must split in $K$ as $T_u=\pi\bar\pi$ with $\pi\equiv1$ modulo $Q_Sqd(g_0g_1)^2$. The existence of such a prime in the interval $[X_u\Gamma^{-2/(fk)},(1+\frac1{fk})X_u\Gamma^{-2/(fk)}]$ is a statement on primes in a ray class of $K$ in a short interval, and the choice belongs to the construction of the data. The upper bound $\log T_u\le C\,mL_\varepsilon$ follows from the same comparison of dimensions and is used in Subsection~\ref{r4:sec:R4A7}. Here $\Gamma=\exp(C_\Gamma m^5fL_\varepsilon)$ is the factor of the frame condition, and $\log\Gamma\le fk$ is the size condition $C_\Gamma m^5L_\varepsilon\le k$.
+\end{remark}
+
+\subsection{Hypothesis (A7)}\label{r4:sec:R4A7}
+
+The base lattice $M_u$ is the lattice of forms of level zero of the chain for the index $u$. We first recall the integral theory of polynomial representations that describes it.
+
+Let $s\ge1$ and let $\mathbb Z[x]=\mathbb Z[x_{ab}:1\le a,b\le s]$ with $GL_s$ acting on the rows. On $\mathbb Q[x]$ the Fock form
+\[
+\{p,q\}=\sum_\alpha p_\alpha q_\alpha\,\alpha!,\qquad\alpha!=\prod_{a,b}\alpha_{ab}!,
+\]
+where $p=\sum_\alpha p_\alpha x^\alpha$, is positive definite, and over $\mathbb C$ its hermitian version is invariant under the unitary group acting on rows. For a partition $\nu=(\nu_1\ge\dots\ge\nu_s\ge0)$ let $hw_\nu=\prod_{i=1}^s\Delta_i^{\nu_i-\nu_{i+1}}$, with $\Delta_i$ the leading principal $i\times i$ minor and $\nu_{s+1}=0$. The \emph{Weyl module} $V(\nu)_{\mathbb Z}$ is the $\mathbb Z$-span of the images of $hw_\nu$ under the divided powers of the row operators $x_{b\cdot}\partial/\partial x_{a\cdot}$, and the \emph{dual Weyl module} $\nabla(\nu)_{\mathbb Z}$ is the set of $p\in\mathbb Z[x]$ of column weight $\nu$ that are invariant under the column substitutions $x_{\cdot j}\mapsto x_{\cdot j}+t\,x_{\cdot l}$ for $l<j$. Both are lattices in the same $\mathbb Q$-space, the irreducible representation of highest weight $\nu$, which is spanned over $\mathbb Q$ by $hw_\nu$ and its translates.
+
+\begin{definition}\label{r4:R4:std}
+For a partition $\nu$ with $s$ parts let $\mu_{\mathrm{std}}(\nu)=-\frac1{r_\nu}\log\det\big(\{e_i,e_{i'}\}/\{hw_\nu,hw_\nu\}\big)$, where $e_1,\dots,e_{r_\nu}$ is a $\mathbb Z$-basis of $V(\nu)_{\mathbb Z}$, and put $c_\nu=\{hw_\nu,hw_\nu\}/\prod_i\nu_i!$.
+\end{definition}
+
+\begin{lemma}\label{r4:R4:hook}
+$\{hw_\nu,hw_\nu\}=\prod_{i=1}^s(\nu_i+s-i)!\big/\prod_{i<i'}(\nu_i-\nu_{i'}+i'-i)$, and $1\le c_\nu\le(\nu_1+s)^{s(s-1)/2}$.
+\end{lemma}
+
+\begin{proof}
+The first formula is the Capelli identity applied to the highest weight vector, which computes $hw_\nu(\partial)hw_\nu$ (see the published input listed in Subsection~\ref{r4:sec:R4open}). Then $c_\nu=\prod_i\frac{(\nu_i+s-i)!}{\nu_i!}\big/\prod_{i<i'}(\nu_i-\nu_{i'}+i'-i)$. Since $\nu_{i'}\ge0$, $\prod_{i'>i}(\nu_i-\nu_{i'}+i'-i)\le\prod_{i'>i}(\nu_i+i'-i)=(\nu_i+s-i)!/\nu_i!$, which gives $c_\nu\ge1$. Since each factor of the denominator is at least $1$ and $(\nu_i+s-i)!/\nu_i!\le(\nu_i+s)^{s-i}\le(\nu_1+s)^{s-i}$, we get $c_\nu\le(\nu_1+s)^{\sum_i(s-i)}=(\nu_1+s)^{s(s-1)/2}$.
+\end{proof}
+
+\begin{proposition}\label{r4:R4:stdslope}
+$\mu_{\mathrm{std}}(\nu)\ge-\big(\lvert\nu\rvert\log s+\log c_\nu\big)$, where $\lvert\nu\rvert=\sum_i\nu_i$.
+\end{proposition}
+
+\begin{proof}
+Let $G$ and $G'$ be the Gram matrices of $\{\cdot,\cdot\}/\{hw_\nu,hw_\nu\}$ on $\mathbb Z$-bases of $V(\nu)_{\mathbb Z}$ and of $\nabla(\nu)_{\mathbb Z}$. Under the form $\{\cdot,\cdot\}/\{hw_\nu,hw_\nu\}$ the lattices $V(\nu)_{\mathbb Z}$ and $\nabla(\nu)_{\mathbb Z}$ are dual to each other, so $\det G\cdot\det G'=1$; this is the duality of Weyl modules and induced modules under the contravariant form normalized at the highest weight vector, listed in Subsection~\ref{r4:sec:R4open}. It suffices to prove $\det G'\ge A^{r_\nu}$ with $A=\prod_i\nu_i!/(s^{\lvert\nu\rvert}\{hw_\nu,hw_\nu\})$, because then $\mu_{\mathrm{std}}(\nu)=-\frac1{r_\nu}\log\det G=\frac1{r_\nu}\log\det G'\ge\log A=-(\lvert\nu\rvert\log s+\log c_\nu)$.
+
+Let $f_1,\dots,f_{r_\nu}$ be a $\mathbb Z$-basis of $\nabla(\nu)_{\mathbb Z}$ and let $F$ be the integral matrix of their coefficients in the monomial basis. The unnormalized Gram matrix is $F\,\mathrm{diag}(\alpha!)\,F^{\mathsf T}$, and the Cauchy--Binet formula gives
+\[
+\det\big(F\,\mathrm{diag}(\alpha!)F^{\mathsf T}\big)=\sum_{\lvert S\rvert=r_\nu}\det(F_S)^2\prod_{\alpha\in S}\alpha!,
+\]
+where $S$ runs over the sets of $r_\nu$ monomials and $F_S$ is the corresponding square minor. Every monomial $x^\alpha$ that occurs has column weight $\nu$, that is $\sum_a\alpha_{aj}=\nu_j$ for each column $j$, and the multinomial bound $\nu_j!\le s^{\nu_j}\prod_a\alpha_{aj}!$ gives $\alpha!\ge\prod_j\nu_j!/s^{\lvert\nu\rvert}$. Since $F$ has rank $r_\nu$, some $\det F_S$ is a nonzero integer, and therefore $\det(F\mathrm{diag}(\alpha!)F^{\mathsf T})\ge(\prod_j\nu_j!/s^{\lvert\nu\rvert})^{r_\nu}$. Dividing by $\{hw_\nu,hw_\nu\}^{r_\nu}$ gives $\det G'\ge A^{r_\nu}$.
+\end{proof}
+
+We now describe $M_u$. For each class $c$ of the genus of level zero and each $\tau\in\Phi$ there is a hermitian lattice $Q_{c,\tau}$ of rank $k$ over the field $F$, obtained from the class representative $L_c$ by the embedding $\tau$, with $L_c\subset L_c^\#$ of index $T_u^{2f}$. The lattice $M_u$ is the direct sum over the classes $c$ of the tensor products over $\tau\in\Phi$ of the Schur functors of highest weight $\lambda^{\mathrm{col}}_{u,\tau}-\rho_k$ applied to $Q_{c,\tau}$, with the integral structure of the Weyl modules at the finite places and with the Fock metrics, normalized by the norm of the highest weight vector, in orthonormal frames at the archimedean places. We write $\lambda_\tau=(\lambda_{\tau,0}\ge\dots\ge\lambda_{\tau,k-1})$ for this highest weight, $\lvert\lambda_\tau\rvert=\sum_i\lambda_{\tau,i}$, and $\nu_\tau=\lambda_\tau-\lambda_{\tau,k-1}(1,\dots,1)$, which is a partition.
+
+\begin{lemma}\label{r4:R4:schur}
+Let $Q$ be a hermitian lattice of rank $s$ over $\mathcal O_F$, let $\lambda$ be a dominant weight of $GL_s$ with $\nu=\lambda-\lambda_{s-1}(1,\dots,1)$, and let $\mathbb S_\lambda Q$ be the lattice of the Schur functor of $\lambda$ with the integral structure given at each finite place by the Weyl module $V(\nu)_{\mathbb Z}$ twisted by $\det^{\lambda_{s-1}}$ and with the Fock metrics normalized at the highest weight vector in orthonormal frames. Then
+\[
+\mu(\mathbb S_\lambda Q)=\lvert\lambda\rvert\,\mu(Q)+\mu_{\mathrm{std}}(\nu).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $r_\lambda$ be the dimension of the representation of highest weight $\lambda$. For $g\in GL_s$ the determinant of $\mathbb S_\lambda(g)$ is $\det(g)^{\lvert\lambda\rvert r_\lambda/s}$, because both sides are characters of $GL_s$ that agree on scalar matrices. Every hermitian lattice of rank $s$ is the translate $g\cdot\mathcal O_F^s$ of the standard lattice with the standard metric by an element $g=(g_w,g_v)$ of $GL_s$ of the adeles of $F$, with $g_w$ in $GL_s(\mathcal O_{F_w})$ for almost all finite places $w$. Translating by $g$ changes $\degh$ of a lattice of rank $s'$ by $-\sum_w\log\lvert\det g_w\rvert_w-\sum_v\log\lvert\det g_v\rvert_v^2$, with the normalized absolute values, when the determinant is taken on the lattice of rank $s'$. The integral structures of $\mathbb S_\lambda$ are $GL_s(\mathcal O_{F_w})$-stable and the normalized Fock metrics are invariant under the unitary group, so $\mathbb S_\lambda(g\cdot\mathcal O_F^s)=\mathbb S_\lambda(g)\cdot\mathbb S_\lambda(\mathcal O_F^s)$, and the determinant formula gives
+\[
+\degh(\mathbb S_\lambda Q)-\degh(\mathbb S_\lambda\mathcal O_F^s)=\frac{\lvert\lambda\rvert r_\lambda}{s}\big(\degh(Q)-\degh(\mathcal O_F^s)\big)=\frac{\lvert\lambda\rvert r_\lambda}{s}\degh(Q).
+\]
+The twist by $\det^{\lambda_{s-1}}$ does not change the standard lattice, which has degree zero, so $\degh(\mathbb S_\lambda\mathcal O_F^s)=\degh(V(\nu)_{\mathbb Z}\otimes\mathcal O_F)=n_Fr_\lambda\,\mu_{\mathrm{std}}(\nu)$. Dividing by $n_Fr_\lambda$ gives the formula, since $\mu(Q)=\degh(Q)/(n_Fs)$.
+\end{proof}
+
+\begin{proposition}\label{r4:R4:Mslope}
+$\mu(M_u)=-\sum_{\tau\in\Phi}\frac{\lvert\lambda_\tau\rvert}k\log T_u+\sum_{\tau\in\Phi}\mu_{\mathrm{std}}(\nu_\tau)$, and therefore
+\[
+\mu(M_u)\ge-\sum_{\tau\in\Phi}\frac{\lvert\lambda_\tau\rvert}k\log T_u-\sum_{\tau\in\Phi}\Big(\lvert\nu_\tau\rvert\log k+\frac{k^2}2\log\big(\lambda_{\tau,0}-\lambda_{\tau,k-1}+k\big)\Big).
+\]
+\end{proposition}
+
+\begin{proof}
+The hermitian form $h$ of $L_c$ takes values in $\mathcal O_E$ on $L_c$, and $L_c^\#=\{y:h(L_c,y)\subset\mathcal O_E\}$ is isometric to the dual lattice $L_c^\vee$. Hence $\degh(L_c^\#)=-\degh(L_c)$ and $\degh(L_c^\#)-\degh(L_c)=\log[L_c^\#:L_c]=2f\log T_u$, so $\degh(L_c)=-f\log T_u$ and $\mu(L_c)=-f\log T_u/(fk)=-\log T_u/k$. The normalized slope does not change under the base change to $F$ by $\tau$, so $\mu(Q_{c,\tau})=-\log T_u/k$, and Lemma~\ref{r4:R4:schur} gives $\mu(\mathbb S_{\lambda_\tau}Q_{c,\tau})=-\frac{\lvert\lambda_\tau\rvert}k\log T_u+\mu_{\mathrm{std}}(\nu_\tau)$. The slope of a tensor product of hermitian lattices is the sum of the slopes, and a direct sum of lattices of equal slope has that slope, which gives the formula for $\mu(M_u)$. Proposition~\ref{r4:R4:stdslope} and Lemma~\ref{r4:R4:hook} with $s=k$ give the inequality.
+\end{proof}
+
+\begin{theorem}\label{r4:R4:A7}
+Let $C_n\ge1$ and suppose that the weights of level zero satisfy, for every $u$ and $\tau$, $\lambda_{\tau,i}\in\mathbb Z$, and
+\begin{enumerate}
+\item[(W1)] if $\tau$ is a top, $xb\le\lambda_{\tau,0}\le2xb$, $b'\le-\lambda_{\tau,k-1}<2b'$, and $0\le\lambda_{\tau,i}\le S$ for $0<i<k-1$;
+\item[(W2)] if $\tau$ is not a top, $0\le\lambda_{\tau,i}\le C_nS$ for all $i$,
+\end{enumerate}
+with $1\le S\le b'$. Suppose also that $\log T_u\le C_TmL_\varepsilon$, $\log k\le5\log x$, $fk(b'+S)\le N_Ta$ and $fk^2\le N_Ta$, and that $\log x\le L_\varepsilon$ and $\log\mathrm{rd}_E\le L_\varepsilon$. Then \eqref{A7} holds for every $u\in W$ with
+\[
+e_7=C_7\,N_Ta\Lambda_a\Big(1+\frac mk\Big),
+\]
+where $C_7$ depends on $C_n$ and $C_T$ alone.
+\end{theorem}
+
+\begin{proof}
+By (W1) and (W2), $\lvert\lambda_\tau\rvert\le2a+kS$ at a top and $\lvert\lambda_\tau\rvert\le kC_nS$ elsewhere, where we drop the negative entry $\lambda_{\tau,k-1}$ at a top. Further $\lvert\nu_\tau\rvert=\lambda_{\tau,0}+\sum_{0<i<k-1}\lambda_{\tau,i}-(k-1)\lambda_{\tau,k-1}\le2a+kS+2kb'$ at a top and $\lvert\nu_\tau\rvert\le kC_nS$ elsewhere. Proposition~\ref{r4:R4:Mslope} gives
+\begin{multline*}
+-\mu(M_u)\le N_T\frac{2a}k\log T_u+f(1+C_n)S\log T_u+\big(2aN_T+fk(3+C_n)(S+b')\big)\log k\\
++\sum_\tau\frac{k^2}2\log\big(\lambda_{\tau,0}-\lambda_{\tau,k-1}+k\big).
+\end{multline*}
+We bound each term by a multiple of $N_Ta\Lambda_a(1+m/k)$. First $N_T\frac{2a}k\log T_u\le2C_TN_Ta\Lambda_a\frac mk$. Next $fS\log T_u\le fSC_TmL_\varepsilon\le C_TfkS\Lambda_a\le C_TN_Ta\Lambda_a$ because $m\le k$. Next $\log k\le5\log x\le5\Lambda_a$ and $fk(S+b')\le N_Ta$, so the third term is at most $5(5+C_n)N_Ta\Lambda_a$. Finally $\lambda_{\tau,0}-\lambda_{\tau,k-1}+k\le(C_n+5)a$ at every $\tau$, so the last term is at most $\frac12fk^2\big(\log(C_n+5)+\Lambda_a\big)\le\big(1+\log(C_n+5)\big)N_Ta\Lambda_a$, because $fk^2\le N_Ta$ and $\Lambda_a\ge1$. So $\mu(M_u)\ge-C_7N_Ta\Lambda_a(1+m/k)$ with $C_7=2C_T+C_T(1+C_n)+5(5+C_n)+1+\log(C_n+5)$.
+\end{proof}
+
+\begin{remark}\label{r4:R4:Mmax}
+The same description of $M_u$ bounds $\mu_{\max}(M_u)$ above by $C\,N_Ta\Lambda_a$, through the duality of Proposition~\ref{r4:R4:stdslope} and the bound $c_\nu\le(\nu_1+s)^{s(s-1)/2}$. That bound enters \eqref{A2} and is not needed for \eqref{A7}.
+\end{remark}
+
+\subsection{The sizes of the errors}\label{r4:sec:R4sizes}
+
+\begin{proposition}\label{r4:R4:sizes}
+Let $\varepsilon\in(0,\frac1{52})$ and suppose that the size conditions \eqref{sz1} and \eqref{sz2} of Proposition~\ref{sizes} hold, that $A=\sum_ta_t\le2N_Ta$, and that $\log x\le L_\varepsilon$ and $\log\mathrm{rd}_E\le L_\varepsilon$. Then
+\[
+e_4+Ae_6+e_7\le C_8\,x^{\varepsilon}\,\mathcal B,
+\]
+with $C_8$ depending on $C_0$, $C_6$ and $C_7$ alone, where $\mathcal B=N_Ta(1+m^2/k)+m(B_0+N_c)$ is the number \eqref{calB}.
+\end{proposition}
+
+\begin{proof}
+Since $\Lambda_a\le3x^\varepsilon$, $e_4\le(50C_0+10)\cdot3x^\varepsilon\big(N_Ta+m(B_0+N_c)\big)\le3(50C_0+10)x^\varepsilon\mathcal B$. Next $Ae_6\le2N_Ta\big(C_6x^\varepsilon(1+m^2/k)+2\big)\le2(C_6+2)x^\varepsilon N_Ta(1+m^2/k)$. Finally $e_7\le3C_7x^\varepsilon N_Ta(1+m/k)\le3C_7x^\varepsilon N_Ta(1+m^2/k)$.
+\end{proof}
+
+The constant $C_8$ depends on $\varepsilon$ through $C_6$, which contains the factor $1/(e\varepsilon)$ of the bound $\log x\le L_\varepsilon/(e\varepsilon)$. For $x\ge x_0(\varepsilon)$ this factor is absorbed in $x^{\varepsilon}$, so the three errors are at most $x^{2\varepsilon}\mathcal B$ with an absolute implied constant once $x$ is large in terms of $\varepsilon$.
+
+\subsection{Inputs of this section}\label{r4:sec:R4open}
+
+This section proves, from the hypotheses named in them, the mean period formula (Proposition~\ref{r4:R4:period}), the height bound (Proposition~\ref{r4:R4:ht} and Corollary~\ref{r4:R4:htcor}), the deduction of \eqref{A4} (Theorem~\ref{r4:R4:A4}), the deduction of \eqref{A6} (Proposition~\ref{r4:R4:weyl} and Theorem~\ref{r4:R4:A6}), the deduction of \eqref{A7} (Theorem~\ref{r4:R4:A7}), and the comparison with $\mathcal B$ (Proposition~\ref{r4:R4:sizes}). Subsections~\ref{w3:sec:HK} to~\ref{w3:sec:HT} reduce Hypotheses~\ref{r4:R4:HK}, \ref{r4:R4:HP}, \ref{r4:R4:HL} and~\ref{r4:R4:HT} to the statements stated there. \notgiven{Hypotheses~\ref{r4:R4:HK}, \ref{r4:R4:HP}, \ref{r4:R4:HL}, \ref{r4:R4:HT}, \ref{r4:R4:HW} and~\ref{r4:R4:HD} are not proved here.} The published theorems used are Kronecker's first limit formula, the product formula of Jacobi for $\Delta$, Dirichlet's class number formula, the main theorem of complex multiplication for the conjugates of $j(\mathfrak c)$, the discriminant formula for a tower of fields, Siegel's mass formula for unimodular hermitian lattices, Harish-Chandra's formula for formal degrees, Weyl's dimension formula, the Capelli identity, and the duality of Weyl modules and dual Weyl modules under the contravariant form.
+
+\subsection{The archimedean hypotheses: conventions}\label{w3:sec:conv}
+
+We use the conventions of Subsection~\ref{r4:sec:R4conv}. $F$ is a totally complex field with $n_F$ archimedean places, $\degh$ is the arithmetic degree, $\mu=\degh/(n_F\rk)$ is twice the slope of Bost, and $\mathrm{ht}(\phi)=n_F^{-1}\sum_v\log\lVert\phi\rVert_v^2$. For positive reals $\kappa_v$ we write $\langle\log\kappa\rangle=n_F^{-1}\sum_v\log\kappa_v$. We write $\ph(y)=y\log y-y$ for $y>0$ and $\ph(0)=0$. For a hermitian lattice $\Lambda$ of rank $D$ we put $\lcv(\Lambda)=-\degh(\Lambda)/n_F$, so that $\mu(\Lambda^\vee)=\lcv(\Lambda)/D$.
+
+For a finite set $\kappa$ we write $\mathbb C^\kappa$ with the standard norm $\lvert u\rvert^2=\sum_x\lvert u_x\rvert^2$, Lebesgue measure $du$, and for $e\in\mathbb N^\kappa$ we put $u^e=\prod_xu_x^{e_x}$, $e!=\prod_xe_x!$ and $\lvert e\rvert=\sum_xe_x$.
+
+\subsection{The archimedean norm of each lift}\label{w3:sec:HK}
+
+\subsubsection{Three elementary estimates}
+
+\begin{lemma}\label{w3:W3:shift}
+Let $y\ge0$, $0<\epsilon<1$ and $s\ge0$. Then $s^y\exp(-(1-\epsilon)s^2/2)\le(1-\epsilon)^{-y/2}\exp(\ph(y)/2)$. For $n\ge0$ one has $(1-\frac1{n+1})^{-n/2}\le e^{1/2}$.
+\end{lemma}
+
+\begin{proof}
+For $y=0$ both sides are at most $1$. For $y>0$ the function $g(s)=y\log s-(1-\epsilon)s^2/2$ has its maximum at $s^2=y/(1-\epsilon)$, where $g=\frac y2\log y-\frac y2-\frac y2\log(1-\epsilon)=\frac12\ph(y)-\frac y2\log(1-\epsilon)$. For the second statement, $(1-\frac1{n+1})^{-n/2}=(1+\frac1n)^{n/2}\le e^{1/2}$ for $n\ge1$, and the case $n=0$ is trivial.
+\end{proof}
+
+\begin{lemma}\label{w3:W3:gauss}
+Let $\iota$ be a finite set of cardinality $q$, let $\nu_1,\dots,\nu_r\ge0$ with $\lvert\nu\rvert=\sum_i\nu_i$, and let $s_1,\dots,s_r$ be nonnegative measurable functions on $\mathbb C^\iota$ with $\sum_is_i(u)^2=\lvert u\rvert^2$. Then
+\[
+\pi^{-q}\int_{\mathbb C^\iota}\prod_is_i(u)^{\nu_i}\,e^{-\lvert u\rvert^2/2}\,du\le e^{1/2}\,(2\lvert\nu\rvert+2)^{q}\,\exp\Big(\frac12\sum_i\ph(\nu_i)\Big).
+\]
+\end{lemma}
+
+\begin{proof}
+Put $\epsilon=1/(\lvert\nu\rvert+1)$. Write $e^{-\lvert u\rvert^2/2}=\prod_ie^{-(1-\epsilon)s_i^2/2}\cdot e^{-\epsilon\lvert u\rvert^2/2}$. Lemma~\ref{w3:W3:shift} applied to each factor $s_i^{\nu_i}e^{-(1-\epsilon)s_i^2/2}$ bounds the integrand by $(1-\epsilon)^{-\lvert\nu\rvert/2}e^{\frac12\sum\ph(\nu_i)}e^{-\epsilon\lvert u\rvert^2/2}$. The Gaussian integral is $\pi^{-q}\int e^{-\epsilon\lvert u\rvert^2/2}du=(2/\epsilon)^q=(2\lvert\nu\rvert+2)^q$, and $(1-\epsilon)^{-\lvert\nu\rvert/2}\le e^{1/2}$ by the second part of Lemma~\ref{w3:W3:shift}.
+\end{proof}
+
+\begin{lemma}[coefficients in the Fock space]\label{w3:W3:jet}
+Let $G$ be an entire function on $\mathbb C^\kappa$ with Taylor expansion $G(u)=\sum_ec_eu^e$ and $\lvert G(u)\rvert\le Se^{\lvert u\rvert^2/2}$. Then for every $e\in\mathbb N^\kappa$ the function $G(u)\bar u^{\,e}e^{-\lvert u\rvert^2}$ is integrable and
+\[
+\int_{\mathbb C^\kappa}G(u)\,\bar u^{\,e}\,e^{-\lvert u\rvert^2}\,du=\pi^{\lvert\kappa\rvert}\,e!\,c_e .
+\]
+\end{lemma}
+
+\begin{proof}
+Integrability follows from $\lvert G(u)\bar u^{e}\rvert e^{-\lvert u\rvert^2}\le S\lvert u\rvert^{\lvert e\rvert}e^{-\lvert u\rvert^2/2}$. On the polydisc $P_R=\{\lvert u_x\rvert\le R\}$ the Taylor series converges uniformly, so $\int_{P_R}G\bar u^ee^{-\lvert u\rvert^2}=\sum_{e'}c_{e'}\int_{P_R}u^{e'}\bar u^{e}e^{-\lvert u\rvert^2}$. In polar coordinates in each variable the integral vanishes unless $e'=e$, and for $e'=e$ it equals $\prod_x2\pi\int_0^Rr^{2e_x+1}e^{-r^2}dr$. Letting $R\to\infty$ and using dominated convergence on the left gives $\pi^{\lvert\kappa\rvert}e!c_e$.
+\end{proof}
+
+\subsubsection{The block bound}
+
+Let $\Phi$ be a finite set of places (the embeddings $\tau$), let $\iota$ be a finite set with $q=\lvert\iota\rvert$, and put $\kappa=\Phi\times\iota$. Fix $n_\tau\in\mathbb N$ and weights $\nu_\tau=(\nu_{\tau1},\dots,\nu_{\tau r})$ with $\sum_i\nu_{\tau i}=n_\tau$.
+
+\begin{proposition}[block bound]\label{w3:W3:block}
+Let $W$ be a Banach space and $R(u)=\sum_eu^eR_e$ a $W$-valued polynomial on $\mathbb C^\kappa$ whose monomials satisfy $\sum_{x\in\iota}e(\tau,x)=n_\tau$ for every $\tau$. Suppose there are nonnegative functions $s_{\tau i}$ on $\mathbb C^\iota$ with $\sum_is_{\tau i}(w)^2=\lvert w\rvert^2$ and
+\[
+\lVert R(\bar u)\rVert\le\prod_\tau\prod_is_{\tau i}(u_\tau)^{\nu_{\tau i}}\qquad(u=(u_\tau)_\tau\in\mathbb C^\kappa).
+\]
+Let $G=\sum c_eu^e$ be entire on $\mathbb C^\kappa$ with $\lvert G(u)\rvert\le Se^{\lvert u\rvert^2/2}$, and let $\lambda_\tau\in\mathbb C$ with $\lvert\lambda_\tau\rvert^2=\Omega_\tau^{-1}$, $\Omega_\tau>0$. Then the vector $J=\sum_ec_e\,e!\,\prod_{(\tau,x)}\lambda_\tau^{e(\tau,x)}R_e$ satisfies
+\[
+\lVert J\rVert^2\le S^2\prod_\tau\Omega_\tau^{-n_\tau}\,e\,(2n_\tau+2)^{2q}\exp\Big(\sum_i\ph(\nu_{\tau i})\Big).
+\]
+\end{proposition}
+
+\begin{proof}
+By homogeneity, $\prod_{(\tau,x)}\lambda_\tau^{e(\tau,x)}=\prod_\tau\lambda_\tau^{n_\tau}$ for every $e$ in the support of $R$. Lemma~\ref{w3:W3:jet} gives $c_ee!=\pi^{-\lvert\kappa\rvert}\int G(u)\bar u^ee^{-\lvert u\rvert^2}du$, hence $J=\prod_\tau\lambda_\tau^{n_\tau}\cdot\pi^{-\lvert\kappa\rvert}\int G(u)R(\bar u)e^{-\lvert u\rvert^2}du$, the sum being finite. Therefore
+\[
+\lVert J\rVert\le\prod_\tau\Omega_\tau^{-n_\tau/2}\,S\,\prod_\tau\Big(\pi^{-q}\int_{\mathbb C^\iota}\prod_is_{\tau i}(u_\tau)^{\nu_{\tau i}}e^{-\lvert u_\tau\rvert^2/2}du_\tau\Big),
+\]
+and Lemma~\ref{w3:W3:gauss} bounds each factor. Squaring gives the statement.
+\end{proof}
+
+In the application $R$ is the $K$-type projection of the matrix coefficient, $R_e$ are the operators that send a highest weight vector of row degree $e$ to its image, and $s_{\tau i}(w)$ are the singular values of the matrix $w\in M_{a\times b}(\mathbb C)$. The hypothesis $\lVert R(\bar u)\rVert\le\prod s^{\nu}$ is the statement that the polynomial representation of $U(a)\times U(b)$ on monomials of degree $\nu_\tau$ in the singular values is contracting, which holds for the standard Fock-space realization because the operator norm of a matrix power representation is the product of the singular values to the power of the weight (Cartan decomposition $w=k_1\,\mathrm{diag}(s)\,k_2$ with unitary $k_1,k_2$, and the highest weight vector of weight $\nu$ is multiplied by $\prod s_i^{\nu_i}$). Proposition~\ref{w3:W3:block} applies with $s$ the singular values and $n_\tau=\lvert\nu_\tau\rvert$.
+
+\subsubsection{Class sums}
+
+\begin{lemma}\label{w3:W3:schur}
+Let $\mathcal C$ and $\mathcal C'$ be finite sets partitioned into blocks $\mathcal C=\bigsqcup_{a\in A}\mathcal C_a$ and $\mathcal C'=\bigsqcup_{b\in A'}\mathcal C'_b$ with $\lvert\mathcal C_a\rvert\le h$ and $\lvert\mathcal C'_b\rvert\le h'$. Let $0<\gamma_L\le1$ and $0<\gamma'_{L'}\le1$, let $\epsilon_{LL'}$ be complex numbers of modulus one, and let $T_{LL'}\colon W\to W'$ be bounded operators with $\lVert T_{LL'}\rVert^2\le t$ which vanish unless $L$ and $L'$ lie in blocks $a$, $b$ with $(a,b)$ in a set $E\subset A\times A'$. Define $\Theta(G)_{L'}=\sum_L\gamma_L\epsilon_{LL'}T_{LL'}G_L$. Then
+\[
+\sum_{L'}\gamma'_{L'}\lVert\Theta(G)_{L'}\rVert^2\le\lvert A\rvert\,\lvert A'\rvert\,h\,h'\,t\sum_L\gamma_L\lVert G_L\rVert^2 .
+\]
+\end{lemma}
+
+\begin{proof}
+By Cauchy--Schwarz, $\lVert\Theta(G)_{L'}\rVert^2\le\big(\sum_{L}\gamma_L\big)\big(\sum_L\gamma_L\lVert T_{LL'}G_L\rVert^2\big)\le\lvert A\rvert h\cdot t\sum_L\gamma_L\lVert G_L\rVert^2$, using $\gamma_L\le1$. Summing over $L'$ with $\gamma'_{L'}\le1$ multiplies by $\lvert\mathcal C'\rvert\le\lvert A'\rvert h'$.
+\end{proof}
+
+For the coupled last two steps the same argument applied twice, with an intermediate block set $Y$ of cardinality bounded by the coset count, gives the factor $\lvert Y\rvert^2$ times the two single-step factors. We do not repeat it.
+
+\subsubsection{The theta kernel}
+
+The local step kernel of the lift $j$ at an archimedean place is a theta function on the abelian variety $E^{n}$, $n=fN_{j-1}N_j$, where $E$ is the CM elliptic curve of the host and $f=\lvert\Phi\rvert$. We need its sup norm.
+
+\begin{lemma}[sup norm of a theta function]\label{w3:W3:supL2}
+Let $\Lambda\subset\mathbb C^n$ be a lattice of covolume $V$ for the standard volume, and let $F$ be holomorphic on $\mathbb C^n$ with $\lvert F(z+\ell)\rvert^2e^{-\lvert z+\ell\rvert^2}=\lvert F(z)\rvert^2e^{-\lvert z\rvert^2}$ for $\ell\in\Lambda$. Put $\lVert F\rVert^2=V^{-1}\int_{\mathbb C^n/\Lambda}\lvert F\rvert^2e^{-\lvert z\rvert^2}dz$. Let $\rho>0$ and let $N_\Lambda(\rho)$ be the largest number of translates $\ell+P$ of a fixed fundamental parallelotope $P$ that meet a ball of radius $\rho$. Then
+\[
+\sup_z\lvert F(z)\rvert^2e^{-\lvert z\rvert^2}\le\frac{n!\,e^{\rho^2}}{\rho^{2n}\pi^n}\,N_\Lambda(\rho)\,V\,\lVert F\rVert^2 .
+\]
+\end{lemma}
+
+\begin{proof}
+Fix $z$ and put $g(w)=F(z+w)e^{-\langle w,z\rangle-\lvert z\rvert^2/2}$, which is holomorphic in $w$, with $\lvert g(w)\rvert^2=\lvert F(z+w)\rvert^2e^{-\lvert z+w\rvert^2}e^{\lvert w\rvert^2}$. The sub-mean value property of $\lvert g\rvert^2$ on the ball $B_\rho$ of volume $\pi^n\rho^{2n}/n!$ gives
+\[
+\lvert F(z)\rvert^2e^{-\lvert z\rvert^2}=\lvert g(0)\rvert^2\le\frac{n!}{\pi^n\rho^{2n}}\int_{B_\rho}\lvert g\rvert^2\le\frac{n!\,e^{\rho^2}}{\pi^n\rho^{2n}}\int_{B_\rho(z)}\lvert F\rvert^2e^{-\lvert\zeta\rvert^2}d\zeta .
+\]
+The ball $B_\rho(z)$ is covered by at most $N_\Lambda(\rho)$ translates of $P$, and on each translate the integral of the periodic function $\lvert F\rvert^2e^{-\lvert\zeta\rvert^2}$ equals $V\lVert F\rVert^2$.
+\end{proof}
+
+For $\Lambda=\mathfrak a^n$ with $\mathfrak a\subset\mathbb C$ a lattice of area $A$ whose reduced basis has lengths $\ell_1\le\ell_2$, a fundamental parallelotope is the product of $n$ reduced parallelograms of diameter at most $\ell_1+\ell_2$, and with $\rho=1$ one has $N_\Lambda(1)\le\big((1+2(1+\ell_1+\ell_2)/\ell_1)(1+2(1+\ell_1+\ell_2)\ell_1/A)\big)^n$. For the CM lattice of the host, after the normalization of Section~8 of the manuscript, $\ell_1\ge c$ and $\ell_2\le C\,v$ with $v=\frac12\mathrm{rd}_E$, so that the logarithm of the constant of Lemma~\ref{w3:W3:supL2} is at most $n\log(C'nv)$. Below we use only the bound $c_5\,n\,\Lambda_a$ for this logarithm.
+
+\begin{hypothesis}[normalized kernel]\label{w3:W3:K3}
+For each lift $j$ and each embedding $s$ of the coefficient field $M$ of the kernels, the local kernel of $K_j$ at $s$ is of the form $\Theta_j=\sum_{L,L'}\gamma_L\epsilon_{LL'}J_{LL'}$ as in Lemma~\ref{w3:W3:schur}, where each $J_{LL'}$ is the vector $J$ of Proposition~\ref{w3:W3:block} built from a theta function $G_{LL'}$ which is a combination $\sum_kr_kG_0(z+y_k)$ of translates of one normalized theta function $G_0$ on $E^{fN_{j-1}N_j}$, with $\sum_k\lvert r_k^{s}\rvert\le\exp(\mathrm{MN}_{j,s})$, and with $\lVert G_0\rVert^2=\lVert\theta_0^{s}\rVert^{2fN_{j-1}N_j}$, where $\theta_0$ is the genus-one theta function of the base vector and $\lVert\cdot\rVert$ is the norm of Lemma~\ref{w3:W3:supL2}. Moreover $\mathrm{MN}_{j,s}\le C_2fm^2N^2(\log(g_0g_1)+\log T_u)$ and $\lvert c_{D,\tau}r_\tau\rvert^2=\Omega_{\tau,s}^{-1}$ with $\Omega_{\tau,s}$ the conjugate periods of Proposition~\ref{r4:R4:period}.
+\end{hypothesis}
+
+The tensor power identity in Hypothesis~\ref{w3:W3:K3} is the statement that a theta function for the product polarization on $E^n$ whose space is one-dimensional is the product of the genus-one theta functions in each coordinate, and its norm is the $n$-th power. The coefficient bound is a count of the translates $y_k$ needed to refine the coset indicators of the level structure, of size at most $(g_0g_1T_u)^{C_2fm^2N^2}$. Both depend on the normalization of $\theta_0$ and of the constant $c$ of Theorem~\ref{kernellaw}, which is Hypothesis~\ref{r1:hyp:H3}. \notgiven{Hypothesis~\ref{w3:W3:K3} is not proved here.}
+
+\begin{hypothesis}[theta-null mean]\label{w3:W3:K4}
+There is an absolute constant $C_{\theta}$ such that for every admissible host and every number field $M$ containing the data,
+\[
+\frac1{[M:\mathbb Q]}\sum_{s\colon M\to\mathbb C}\log\lVert\theta_0^{s}\rVert^2\le C_\theta\big(\log v+\lvert\lambda_1\rvert\big),\qquad\lambda_1=L'/L(1,\chi_{-d}).
+\]
+\end{hypothesis}
+
+A sharper bound, mean $\le\frac12(\log\sqrt d-\gamma+\lambda_1)$, follows from two inputs: the expression of $\lVert\theta[t]\rVert^2$ at an unkilled $2$-torsion characteristic through $\lvert\eta(\tau)\rvert^2(\mathrm{Im}\,\tau)^{1/2}$ and a Weber function value (Jacobi's product formula), and the formula of Chowla and Selberg~\cite{chowlaselberg} for the mean of $\log(\lvert\eta\rvert^4\mathrm{Im}\,\tau)$ over the Galois orbit. The Weber function values are algebraic integers whose conjugates are bounded by an absolute constant times a power of $2$ (Weber, \emph{Lehrbuch der Algebra} III, \S\S125--127; Yui and Zagier, Math.\ Comp.\ 66 (1997)), so their contribution to the mean is $O(1)$. \notgiven{We do not write out the identity for $\lVert\theta[t]\rVert^2$ here, so Hypothesis~\ref{w3:W3:K4} is not proved here.}
+
+\begin{hypothesis}[class and index counts]\label{w3:W3:K5}
+With $U=fm^2N^2\log(g_0g_1T_u)$ there is an absolute $C_c$ with: the number of classes in each block of the class decomposition at level $i$ is at most $e^{C_cU}$, the number of blocks is at most $e^{C_cU}$, and the coset count of the coupled step is at most $e^{C_cU}$.
+\end{hypothesis}
+
+Classes are orbits of an arithmetic group on decorated lattices of a fixed genus with level structure at $g_0g_1T_u$. Their number is at most the class number of the genus times the index of the principal congruence subgroup, and both are bounded by $N(\mathfrak n)^{C\,\mathrm{rank}^2}$ with $N(\mathfrak n)\le(g_0g_1T_u)^{Cf}$. \notgiven{The count is not written out here, so Hypothesis~\ref{w3:W3:K5} is not proved here.}
+
+\subsubsection{The kernel norm theorem}
+
+Put $n_j=fN_{j-1}N_j$, $\nu_{j\tau}$ the row weights of the kernel of the lift $j$ at $\tau$, and for an embedding $s$
+\[
+\mathcal S_j(s)=\sum_{\tau}\Big(\sum_i\ph(\nu_{j\tau i})-\lvert\nu_{j\tau}\rvert\log\Omega_{\tau,s}\Big)+n_j\log\lVert\theta_0^s\rVert^2+n_j\log c_\Lambda+2\,\mathrm{MN}_{j,s}+\sum_\tau\big(1+2N_{j-1}N_j\log(2\lvert\nu_{j\tau}\rvert+2)\big),
+\]
+where $c_\Lambda$ is the constant of Lemma~\ref{w3:W3:supL2} per coordinate.
+
+\begin{proposition}[one embedding]\label{w3:W3:onesigma}
+Under Hypotheses~\ref{w3:W3:K3} and~\ref{w3:W3:K5}, for every lift $j$ and every embedding $s$,
+\[
+\log\lVert K_j\rVert_s^2\le\mathcal S_j(s)+4C_cU .
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{w3:W3:supL2} and the triangle inequality, $\lvert G_{LL'}(z)\rvert\le S\,e^{\lvert z\rvert^2/2}$ with $S^2=c_\Lambda^{n_j}\lVert\theta_0^s\rVert^{2n_j}e^{2\mathrm{MN}_{j,s}}$, after the change of variable $z\mapsto r\,z$ that makes the kernel exponent $\lvert z\rvert^2/2$. Proposition~\ref{w3:W3:block} with $\Omega_\tau=\Omega_{\tau,s}$ and $q=N_{j-1}N_j$ gives $\lVert J_{LL'}\rVert^2\le\exp(\mathcal S_j(s))$, the term $\sum_\tau1$ coming from the factors $e$. Lemma~\ref{w3:W3:schur} multiplies by $\lvert A\rvert\lvert A'\rvert hh'\le e^{4C_cU}$ by Hypothesis~\ref{w3:W3:K5}. The frames of the chain are the class decompositions (the isometry $\sum_L\gamma_L\lVert\Phi(x)_L\rVert^2=\lVert x\rVert_{X}^2$ of the chain record), so the operator norm of $K_j$ in the frames equals the norm of $\Theta_j$ on the weighted sums.
+\end{proof}
+
+\begin{theorem}[Hypothesis~\ref*{r4:R4:HK}]\label{w3:W3:HK}
+Assume Hypotheses~\ref{w3:W3:K3}, \ref{w3:W3:K4}, \ref{w3:W3:K5}, Proposition~\ref{r4:R4:period}, and the size conditions $\log T_u\le C_TmL_\varepsilon$, $\log(g_0g_1)\le C_8L_\varepsilon$, $\log(8+32n_jv)\le c_5\Lambda_a$, $\log(2\lvert\nu_{j\tau}\rvert+2)\le c_6\Lambda_a$, $N_{j-1}N_j\le N^2$, $L_\varepsilon\le\Lambda_a$, $1\le\Lambda_a$, $m,N\ge1$. Then Hypothesis~\ref{r4:R4:HK} holds with
+\[
+C_0=C_\theta'+c_5+2c_6+1+2C_2(C_T+C_8)+2C_c(1+C_T+C_8)+2C_8,
+\]
+where $C_\theta'$ is the constant with $C_\theta(\log v+\lvert\lambda_1\rvert)\le C'_\theta L_\varepsilon$ under $\log\mathrm{rd}_E\le L_\varepsilon$ and $\lvert\lambda_1\rvert\le L_\varepsilon$.
+\end{theorem}
+
+\begin{proof}
+Average Proposition~\ref{w3:W3:onesigma} over the embeddings $s$, which is the mean over archimedean places of $F$ since each place of $F$ has the same number of embeddings of $M$ above it. Proposition~\ref{r4:R4:period} gives $\mathrm{mean}_s\log\Omega_{\tau,s}=\log\Omega$ for every $\tau$, so the first term becomes $\sum_\rho(\sum_i\ph(\nu_{j\rho i})-\lvert\nu_{j\rho}\rvert\log\Omega)$, which is the main term of $s_j$. The remaining terms are bounded as follows. Hypothesis~\ref{w3:W3:K4} gives $n_j\,\mathrm{mean}\log\lVert\theta_0\rVert^2\le C'_\theta fN^2L_\varepsilon$. Next $n_j\log c_\Lambda\le c_5fN^2\Lambda_a$, $2\,\mathrm{MN}\le2C_2fm^2N^2(C_8+C_T)L_\varepsilon$ because $\log T_u\le C_TmL_\varepsilon$ and $\log(g_0g_1)\le C_8L_\varepsilon$, $\sum_\tau(1+2N_{j-1}N_j\log(2\lvert\nu\rvert+2))\le f(1+2c_6N^2\Lambda_a)$, and $4C_cU\le4C_cfm^2N^2(C_8+C_T)mL_\varepsilon$. Each error term is at most the corresponding multiple of $fN^2\Lambda_a$ or of $fm^3N^2L_\varepsilon$, and adding the coefficients gives $C_0$.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{w3:W3:HK} has the shape $C_0(fN^2\Lambda_a+fm^3N^2L_\varepsilon)$ of Hypothesis~\ref{r4:R4:HK}. It does not use the archimedean decay of the kernel beyond the Gaussian bound. The factor $m$ in front of $\ph(a_t)$ in \eqref{A4} arises because each of the $m$ lifts contributes $\sum_\rho\sum_i\ph(\nu_{j\rho i})$, and Hypothesis~\ref{r4:R4:HW} then extracts $\ph(a_\rho)$ at the tops for each $j$.
+\end{remark}
+
+\subsection{The final pairing}\label{w3:sec:HP}
+
+\subsubsection{The branching map}
+
+Let $N=n+1$, let $\lambda$ be a dominant weight of $GL_N$ and $\sigma$ a dominant weight of $GL_n$ which interlace, $\lambda_{i+1}\le\sigma_i\le\lambda_i$, with the same determinant shift. Realize $V_\lambda$ in polynomials on $M_N(\mathbb C)$ with the Fock form $\langle f,g\rangle=\sum_ef_e\bar g_e\,e!$, which is $U(N)$-invariant. Put $n_{\mathrm{Br}}=\lvert\lambda\rvert-\lvert\sigma\rvert$. By the Gelfand--Tsetlin branching rule, $V_\lambda$ restricted to $GL_n\times GL_1$ contains $V_\sigma\otimes\chi^{n_{\mathrm{Br}}}$ exactly once, where $\chi$ is the identity character of $GL_1$. Let $\mathrm{br}\colon V_\lambda\to V_\sigma$ be the $GL_n$-equivariant map normalized by $\mathrm{br}(\xi_{\mathrm{Br}})=c_{\mathrm{Br}}\kappa_{\mathrm{Br}}\,\mathrm{hw}_\sigma$, where $\xi_{\mathrm{Br}}$ is the product of leading minors of degree $\lambda$ that defines the branching map (\notgiven{its explicit form is not written out here}), $c_{\mathrm{Br}}$ is the integer of Lemma~\ref{w3:W3:cbr}, and $\kappa_{\mathrm{Br}}=\lVert\xi_{\mathrm{Br}}\rVert^2/\lVert\mathrm{hw}_\lambda\rVert^2$.
+
+Let $G'$ be a positive definite hermitian $n\times n$ matrix, $g>0$, and give $V_\lambda$ the invariant form for the Gram matrix $\mathrm{diag}(G',g)$ and $V_\sigma$ the one for $G'$. Let $t\in\mathbb C$ with $\bar tgt=T>0$ and put $\mathrm{br}_t=t^{-n_{\mathrm{Br}}}\mathrm{br}$.
+
+\begin{proposition}[scaled coisometry]\label{w3:W3:br}
+For all $y\in V_\sigma$ and $x\in V_\lambda$ one has $\lVert\mathrm{br}_t\,x\rVert^2\le T^{-n_{\mathrm{Br}}}c_{\mathrm{Br}}^2\kappa_{\mathrm{Br}}\lVert x\rVert^2$, with equality on the $\sigma$-isotypic component. In particular the operator norm of $\mathrm{br}_t$ is $T^{-n_{\mathrm{Br}}/2}\lvert c_{\mathrm{Br}}\rvert\kappa_{\mathrm{Br}}^{1/2}$.
+\end{proposition}
+
+\begin{proof}
+First let $G'=1$ and $g=1$. The $\sigma$-isotypic component $V^\sigma\subset V_\lambda$ is irreducible, and the other components are orthogonal to it by invariance of the form under the compact group $U(n)\times U(1)$. So $\mathrm{br}$ vanishes on $(V^\sigma)^\perp$, and on $V^\sigma$ it is a $U(n)$-equivariant map between irreducible unitary representations, hence a scalar multiple $\beta$ of an isometry by Schur's lemma. The inclusion $\mathrm{tr}\colon V_\sigma\to V_\lambda$ normalized by $\mathrm{tr}(\mathrm{hw}_\sigma)=c_{\mathrm{Br}}\xi_{\mathrm{Br}}$ is adjoint to $\mathrm{br}$ up to the same scalar. Evaluating at $\xi_{\mathrm{Br}}$, which lies in $V^\sigma$ and is a highest weight vector for $U(n)$ there, gives $\lvert\beta\rvert^2\lVert\xi_{\mathrm{Br}}\rVert^2=c_{\mathrm{Br}}^2\kappa_{\mathrm{Br}}^2\lVert\mathrm{hw}_\sigma\rVert^2$. With the extremal normalization $\lVert\mathrm{hw}_\sigma\rVert=\lVert\mathrm{hw}_\lambda\rVert$ of the Fock model this is $\lvert\beta\rvert^2=c_{\mathrm{Br}}^2\kappa_{\mathrm{Br}}$.
+
+For general $G'$ and $g$, write $\mathrm{diag}(G',g)=h^*h$ with $h=\mathrm{diag}(h',g^{1/2})$. The invariant form for $\mathrm{diag}(G',g)$ is the pull back of the standard form by the action of $h$, and $\mathrm{br}$ is $GL_n$-equivariant, so the computation reduces to $G'=1$ except for the $GL_1$-factor. On $V^\sigma$ the element $\mathrm{diag}(1,u)$ acts by $u^{n_{\mathrm{Br}}}$. Hence the form for $(G',g)$ on $V^\sigma$ is $g^{n_{\mathrm{Br}}}$ times the form for $(G',1)$, and replacing $\mathrm{br}$ by $t^{-n_{\mathrm{Br}}}\mathrm{br}$ multiplies squared norms by $\lvert t\rvert^{-2n_{\mathrm{Br}}}$. Since $\lvert t\rvert^2g=T$, the squared norm ratio on $V^\sigma$ is $T^{-n_{\mathrm{Br}}}c_{\mathrm{Br}}^2\kappa_{\mathrm{Br}}$.
+\end{proof}
+
+\begin{lemma}\label{w3:W3:cbr}
+Let $\mathrm{sp}(\lambda)=\lambda_1-\lambda_N+N$ and $d_1=\sum_{i<N}\min(\lambda_i-\lambda_{i+1},d_0)$ with $d_0=\sum_i(\sigma_i-\lambda_{i+1})$. If $\mathrm{sp}(\lambda)\le A$ then $0<\lvert c_{\mathrm{Br}}\rvert\le A^{n\,d_1}$.
+\end{lemma}
+
+\begin{proof}
+By definition $c_{\mathrm{Br}}=\prod_{i<N}\prod_{v\in r_i\setminus\{\sigma_i\}}\prod_{j<N}\big((v-i)-(\sigma_j-j)\big)$ with $r_i=[\lambda_{i+1},\min(\lambda_i,\lambda_{i+1}+d_0)]$. The number of $v$ is $\lvert r_i\rvert-1\le\min(\lambda_i-\lambda_{i+1},d_0)$, so there are at most $n\,d_1$ factors. Each factor is an integer of absolute value at most $\lambda_1-\lambda_N+n-1\le A$. No factor vanishes, because a factor vanishes only if $v-i=\sigma_j-j$, which interlacing excludes for $v\ne\sigma_i$.
+\end{proof}
+
+\begin{hypothesis}[Fock norm of $\xi_{\mathrm{Br}}$]\label{w3:W3:xi}
+$\lVert\xi_{\mathrm{Br}}\rVert^2\le\prod_{i<j\le N}(\lambda_i-\lambda_j+j-i)\,\lVert\mathrm{hw}_\lambda\rVert^2$. Consequently $\kappa_{\mathrm{Br}}\le\mathrm{sp}(\lambda)^{N(N-1)/2}$.
+\end{hypothesis}
+
+The second sentence follows from the first because each factor of the Weyl product is at most $\mathrm{sp}(\lambda)$. The first is a comparison of Fock norms of two products of minors with the same total degree. The Fock norm of a product of leading minors is a ratio of factorials of shifted weights by the Capelli identity, which should give it. \notgiven{Hypothesis~\ref{w3:W3:xi} is not proved here.}
+
+\subsubsection{Hypothesis~\ref{r4:R4:HP}}
+
+\begin{theorem}[Hypothesis~\ref*{r4:R4:HP}]\label{w3:W3:HP}
+Assume that the final pairing $P_u$ is, at each archimedean place, the composite of $\mathrm{br}_t$ (with $\bar tgt=T_u$) on each embedding $\tau$ with an evaluation of operator norm squared at most $e^{\mathrm{ev}}$, $\mathrm{ev}\le C_{\mathrm{ev}}fN^2\Lambda_a$, and assume Hypothesis~\ref{w3:W3:xi} and the weight relations
+\[
+n_\tau=\lambda_{1,\tau}-D_{0,\tau},\quad\lambda_{1,t}=a_t-\tfrac{N-k}2\ (t\in T),\quad\lambda_{1,\tau}\ge S-\tfrac{N-1}2\ (\tau\notin T),
+\]
+\[
+D_{0,\tau}\le S+m\eta+\mathbf 1_T(\tau)b_{T,\tau},\quad D_{1,\tau}\le3D_{0,\tau}+S+\eta,\quad b_{T,t}\le2b',\quad\mathrm{sp}\le2a,\quad\log T_u\le C_TmL_\varepsilon,
+\]
+together with $mL_\varepsilon\le N\Lambda_a$ and $\log2a\le2\Lambda_a$. Then $h_P\le-\sum_{t\in T}a_t\log T_u+e_P$ with $e_P\le C_0(N_Tb'N+f(m\eta+S)N+fN^2)\Lambda_a$ for $C_0=2(16+C_T+C_{\mathrm{ev}})$.
+\end{theorem}
+
+\begin{proof}
+Proposition~\ref{w3:W3:br}, Lemma~\ref{w3:W3:cbr} and Hypothesis~\ref{w3:W3:xi} give
+\[
+h_P\le-\sum_\tau n_\tau\log T_u+\sum_\tau\big(2(N-1)D_{1,\tau}+\tfrac{N(N-1)}2\big)\log2a+\mathrm{ev}.
+\]
+At a top, $-n_t\log T_u=-a_t\log T_u+(\frac{N-k}2+D_{0,t})\log T_u$. Away from the tops $-n_\tau\log T_u\le(\frac{N-1}2+D_{0,\tau})\log T_u$ since $S\ge0$. Summing, the coefficient of $\log T_u$ besides $-\sum_ta_t$ is at most $f\frac N2+f(S+m\eta)+2N_Tb'$, and $\log T_u\le C_TmL_\varepsilon\le C_TN\Lambda_a$. The $c$- and $\kappa$-terms are at most $(2N(4S+4m\eta+6\mathbf 1_Tb')f+fN^2)\cdot2\Lambda_a$ after inserting $D_1\le3D_0+S+\eta$. Collecting coefficients gives the bound with the stated $C_0$, with room to spare.
+\end{proof}
+
+The assumption that $P_u$ factors through $\mathrm{br}_t$ is part of the construction of the final pairing, which is not written in this paper.
+
+\subsection{The frame constants}\label{w3:sec:HL}
+
+The scalars $\lambda_j(p,v)$ are defined by the frame condition of the record. The map $\theta_j\colon R_F\to W_j$ multiplies the hermitian form on the base-type subspace $p$ by $\lambda_j(p,v)$ at $v$. Equivalently $\lambda_j(p,v)$ is the eigenvalue of $\theta_j^*\theta_j$ on $p$, where the adjoint is taken for the Petersson forms. Hypothesis~\ref{r4:R4:HL} asks for $\sum_j\log\lambda_j(p,v)\ge\sum_{j,\rho}h_{j\rho}-C_0mfN^2\Lambda_a$, where $h_{j\rho}$ is the logarithm of the hook constant of the frame on the $\rho$-component.
+
+\begin{proposition}[structure of Hypothesis~\ref{r4:R4:HL}]\label{w3:W3:HLprop}
+Suppose that for each $j$, each base-type $p$ with $W_{j,p}\ne0$ and each $v$,
+\begin{enumerate}
+\item[(i)] $\theta_j\theta_j^*$ acts on $W_{j,p}$ by a scalar $a_j\,z_j$ with $z_j=L^S(\frac{1+t_0}2,c\,\chi\mu_{t,j+1}^{-1})$ a partial $L$-value and $a_j$ a product of local zeta integrals (the Rallis inner product formula);
+\item[(ii)] $\log(a_jz_j)\ge\sum_\rho\log\mathrm{hook}_{j\rho}-C_{\mathrm{sz}}fN^2L_p$, where $\log\mathrm{hook}_{j\rho}$ is the archimedean formal degree term written as a hook product, and $L_p$ is the size of the local and $L$-value corrections.
+\end{enumerate}
+Then Hypothesis~\ref{r4:R4:HL} holds with $e_\lambda\le C_{\mathrm{sz}}mfN^2\Lambda_a$ once $L_p\le\Lambda_a$.
+\end{proposition}
+
+\begin{proof}
+If $W_{j,p}=0$ the scalar is $1$ by convention and the inequality is trivial. Otherwise pick $x\ne0$ in $W_{j,p}$. Then $\lambda_j(p,v)\lVert x\rVert^2=\langle\theta_j^*\theta_jx',x'\rangle$ for the preimage $x'$, and (i) identifies this eigenvalue with $a_jz_j$. Summing (ii) over $j$ gives the statement with $h_{j\rho}=\log\mathrm{hook}_{j\rho}$.
+\end{proof}
+
+Item (i) is the Rallis inner product formula in the convergent range, which follows from the Siegel--Weil formula and the doubling method. Item (ii) combines Harish-Chandra's formula for the formal degree of a holomorphic discrete series, written as a hook product, with lower bounds for the partial $L$-value at $s=\frac{1+t_0}2$ in the range of absolute convergence ($\log z_j\ge-\sum_{\mathfrak p}\log(1-N\mathfrak p^{-\sigma})^{-1}$). \notgiven{Items (i) and (ii) for the theta lifts of the chain, and the identification of $\theta_j$ with the period map of Theorem~\ref{w2:B}, are not proved here.}
+
+\subsection{The slope of the target lattice}\label{w3:sec:HT}
+
+Recall from R4 that Hypothesis~\ref{r4:R4:HT} has three parts. The passage compares two levels of the chain, the base-side bound compares $\mu(R^\vee)$ with the covolumes of the base lattices, and the covolume bound evaluates those covolumes.
+
+\subsubsection{The base-side bound}
+
+Let $R\subset F^D$ and $M_1,\dots,M_m\subset F^D$ be lattices with hermitian forms $X_E$ on $R$ and $X_{W_j}$ on $M_j$. Suppose there are invertible matrices $\iota_t$ and $\theta_{j,t}$ indexed by local types $t$, lattices $A_t$ and $T_{j,t}$, and forms $X_{Q,t}$, $X_{T,j,t}$, such that:
+\begin{enumerate}
+\item[(a)] at every finite place $y$, $R_y=\iota_{\mu(y)}A_{\mu(y),y}$;
+\item[(b)] at every archimedean $v$ and for the base type $t_0$, $\det(\iota_{t_0}^*X_E\iota_{t_0})/\det X_{Q,t_0}=\kappa_v^D\prod_j\det(\theta_{j,t_0}^*X_{W_j}\theta_{j,t_0})/\det X_{T,j,t_0}$;
+\item[(c)] at a twisted type $t$ the same identity holds at the distinguished place $v_0$ with $\kappa_{v_0}\rho_t$ in place of $\kappa_{v_0}$, $\rho_t$ the archimedean value of an element of $F$ which is a unit at all finite places.
+\end{enumerate}
+
+\begin{proposition}[base side]\label{w3:W3:base}
+Under (a)--(c),
+\[
+\lcv(R)\le D\langle\log\kappa\rangle+\sum_j\lcv(M_j)+\sum_y\ell_y\Big(v_y(G_{\mu(y),y})+\sum_j\big(i_y(M_j)+i_{\bar y}(M_j)+j_y(T_j)\big)\Big),
+\]
+where $\ell_y=\log Ny/[F:\mathbb Q]$, $G_{t,y}$ is the Gram determinant of a local basis of $A_{t,y}$ for $X_{Q,t}$, $i_y(M_j)$ is the length of $M_{j,y}$ relative to $\theta_{j,\mu(y)}T_{j,\mu(y),y}$, and $j_y$ is the local discriminant exponent of $T_j$ for the hermitian form. Consequently $\mu(R^\vee)-\langle\log\kappa\rangle\le\sum_j\lcv(M_j)/D+\frac1D\sum_y\ell_y(\cdots)$.
+\end{proposition}
+
+\begin{proof}
+Choose a basis of $F^D$ and compute $\degh$ of each lattice as $\log$ of the index of the lattice relative to the standard lattice minus the archimedean log-determinants. The archimedean part of $\lcv(R)-\sum_j\lcv(M_j)$ is $\frac1{n_F}\sum_v\big(\log\det(\iota^*X_E\iota)-\sum_j\log\det(\theta_j^*X_{W_j}\theta_j)\big)$ plus the archimedean contributions of $X_{Q}$ and $X_{T,j}$, and (b), (c) turn it into $D\langle\log\kappa\rangle$ plus $\frac1{n_F}\sum_v(\log\det X_Q-\sum_j\log\det X_{T,j})+\log\lvert\rho\rvert$-terms. The product formula applied to $\det\iota_t$, $\det\theta_{j,t}$ and $\rho_t$ (a unit at every finite place) converts the archimedean $\log\lvert\det\rvert$-terms into finite valuations of the same determinants, and (a) together with the definitions of $G_{t,y}$, $i_y$ and $j_y$ identifies the resulting finite part with the sum over $y$. At untwisted places all local terms vanish by the hypotheses of the record. The second statement uses $\mu(R^\vee)=\lcv(R)/D$.
+\end{proof}
+
+The determinant identity (b) follows from the frame condition (the base-type subspaces are orthogonal, $\iota$ multiplies the form on $p$ by $\kappa_v\prod_j\lambda_j(p,v)$, $\theta_j$ multiplies it by $\lambda_j(p,v)$, and $\dim W_{j,p}=\dim E_p$), since the determinant of a map that is a scalar $c_p$ on orthogonal pieces of dimension $d_p$ is $\prod_pc_p^{d_p}$. The local terms on the right are bounded by Theorem~\ref{r5:thm:DIVinN} and enter $\mathcal L+E_b$.
+
+\subsubsection{The passage}
+
+\begin{lemma}[averaging]\label{w3:W3:avg}
+Let $r_s>0$, $d_s\in\mathbb R$ and $n_s>0$ for $s$ in a finite set, with $d_s\le Hr_s$ for all $s$, and with $(1-\delta)\bar n\le n_s\le(1+\delta)\bar n$ for some $\bar n>0$ and $0\le\delta\le\frac13$. Put $\mu_0=\sum d_s/\sum r_s$ and $\mu_1=\sum n_sd_s/\sum n_sr_s$. Then $\mu_1\ge\mu_0-3\delta(H-\mu_0)$.
+\end{lemma}
+
+\begin{proof}
+Write $d_s=\mu_0r_s+e_s$ with $\sum e_s=0$ and $e_s\le(H-\mu_0)r_s$. Then $\sum\lvert e_s\rvert=2\sum e_s^+\le2(H-\mu_0)\sum r_s$, and $\mu_1-\mu_0=\sum(n_s-\bar n)e_s/\sum n_sr_s\ge-\delta\bar n\sum\lvert e_s\rvert/((1-\delta)\bar n\sum r_s)\ge-\frac{2\delta}{1-\delta}(H-\mu_0)\ge-3\delta(H-\mu_0)$.
+\end{proof}
+
+\begin{lemma}[projectors]\label{w3:W3:proj}
+Let a finite group $G$ act on $F^D$ preserving a lattice $R$ and the forms at every archimedean place, let $P\le G$ and $\psi\colon P\to F^\times$ a character with values in $\mathcal O_F^\times$, and let $e=\lvert P\rvert^{-1}\sum_{p}\psi(p)^{-1}p$. Then $e$ is an orthogonal projector, $\lvert P\rvert\,eR\subset R\cap eF^D\subset eR$, and every saturated sublattice $Y\subset eF^D$ satisfies $\lvert\mu(Y\cap eR)-\mu(Y\cap R)\rvert\le2\log\lvert P\rvert$.
+\end{lemma}
+
+\begin{proof}
+$e^2=e$ because $\psi$ is a character, and $e^*=e$ because each $p$ is unitary and $\psi(p)^{-1}=\overline{\psi(p)}$. If $x\in R$ then $\lvert P\rvert ex=\sum\psi(p)^{-1}px\in R$. If $x\in R\cap eF^D$ then $x=ex\in eR$. Hence $Y\cap R$ has index at most $\lvert P\rvert^{\rk Y}$ in $Y\cap eR$ (the quotient is killed by $\lvert P\rvert$), and the slopes differ by at most $2\log\lvert P\rvert$ in our normalization.
+\end{proof}
+
+\begin{hypothesis}[near-constant multiplicities]\label{w3:W3:mult}
+At the base level the lattice $R^{(0)}$ decomposes up to index $\lvert G\rvert^{\rk}$ as $\bigoplus_sR_s$ over the irreducible constituents $\tau_s$, and at the sharp level $R^{(1)}$ decomposes as $\bigoplus_sR_s^{\oplus n_s}$ with $n_s$ the multiplicity of $\psi_1$ in $\tau_s|_{P_1}$. These multiplicities satisfy $(1-\delta)\bar n\le n_s\le(1+\delta)\bar n$ with $\bar n=\prod_{P\in\mathcal P_g}\lvert k_P\rvert^k$ and $\delta=8fr/\min(g_0,g_1)$.
+\end{hypothesis}
+
+The near-constancy follows from Frobenius reciprocity and a character sum count $q^k(1-1/q)\le n\le q^k(1+(2r-1)/q)$. \notgiven{Two of the counts behind Hypothesis~\ref{w3:W3:mult}, the formula for the multiplicity of $\psi_1$ in a parabolically induced constituent and the goodness of the cuspidal products that occur, are not proved here.}
+
+\begin{proposition}[passage]\label{w3:W3:passage}
+Under Hypothesis~\ref{w3:W3:mult}, with $\lambda_0=\log\lvert G\rvert$ and $H_0\ge\mu_{\max}$ at the base level,
+\[
+\mu^{(1)}(R^\vee)\le\mu^{(0)}(R^\vee)+3\delta\big(\mu^{(0)}(R^\vee)+H_0+28\lambda_0\big)+28\lambda_0 .
+\]
+\end{proposition}
+
+\begin{proof}
+Apply Lemma~\ref{w3:W3:proj} at each level to replace $R^{(i)}$ by the lattice cut out by the projector, at a cost of $O(\lambda_0)$ in slope and in maximal slope. Apply Lemma~\ref{w3:W3:avg} to $r_s=\rk R_s$, $d_s=\degh(R_s)/n_F$ and the multiplicities $n_s$, with $H=H_0+O(\lambda_0)$, to get $\mu^{(1)}(R)\ge\mu^{(0)}(R)-3\delta(H-\mu^{(0)}(R))-O(\lambda_0)$. Dualizing with $\mu(R^\vee)=-\mu(R)$ gives the statement. \notgiven{The constant in the $O(\lambda_0)$ terms is not computed here.}
+\end{proof}
+
+With $\delta\le\frac13$, $\lambda_0\le b$ and $\mu^{(0)}+H_0$ bounded by the record, this gives $P_{\mathrm{pass}}\le1+C_0\lambda_0$ of Hypothesis~\ref{r4:R4:HT}.
+
+\subsubsection{The covolume bound}
+
+\begin{hypothesis}[covolume bound]\label{w3:W3:L3}
+There is an absolute constant $C$ such that for every admissible datum and every level $1\le j\le m$ of the chain,
+\[
+\frac{\lcv(M_j)}D\le\sum_{\rho\in\Phi}(p_j-q_j)\,w_{j\rho}\log\Omega+C\,U_j,
+\]
+where $U_j$ is bounded by the terms $C_0mx^\varepsilon(B_0+N_c)$ of Hypothesis~\ref{r4:R4:HT}.
+\end{hypothesis}
+
+The proof of Hypothesis~\ref{w3:W3:L3} in the formal proof has the following structure. The covolume of $M_j$ is bounded by minus the slope of its good part (truncation and removal of a bad locus, with a loss $12e^{-x^{\varepsilon z/7}}(\cdots)\le1$), which is bounded below by the slope of the type lattice and then by a core slope. The core slope is bounded below by $-\mathrm{main}_j-C\,U_j$ in two cases. At the top level ($q=0$) the forms live on a definite unitary group, and evaluation at CM points reduces the slope to the degree of the eigenlattices, whose flat part Proposition~\ref{r4:R4:period} computes. At deeper levels the lattice is compared with sections of the automorphic line bundle of weight $w_j$ on a deep cover of the unitary Shimura variety of signature $(p_j,q_j)$. There the inputs are the lower bound of Hypothesis~\ref{w3:W3:unif} for the mean slope of sections on the cover, the flat degree $\frac12(p-q)\,\mathrm{Re}\log\Omega$ per unit weight of the flat twist, and the descent from the cover to the level of the chain. \notgiven{This argument is not written out here, and Hypothesis~\ref{w3:W3:L3} is not proved here.}
+
+\subsubsection{Uniformity in the level}\label{w3:sec:unif}
+
+The mean slope bound on the covers must hold with a constant independent of the level of the cover, and the level grows with $x$. A uniform arithmetic Hilbert--Samuel theorem for the family of covers would give such a bound. No such theorem is published, and the argument does not use one.
+
+\begin{hypothesis}[uniform mean slope on deep covers]\label{w3:W3:unif}
+Let $Y$ be a deep cover of a unitary Shimura variety of signature $(p,q)$ attached to the host, of level with at most fifteen prime factors, and let $u$ be a strictly antidominant weight. Then the mean slope of the lattice of integral sections of weight $u$ satisfies
+\[
+\mu(Y;u)\ge\mathrm{vol}\cdot h_{\mathrm{Fl}}(u)-C\big(\Lambda_B\lVert u\rVert_1+\mathrm{spread}(u)\big),\qquad\Lambda_B=\log(B\,\mathrm{rd}_E)+\lvert\lambda_1\rvert,
+\]
+with an absolute constant $C$.
+\end{hypothesis}
+
+The argument for Hypothesis~\ref{w3:W3:unif} uses a tower of models indexed by a prime cutoff $B$. For each $B$ one constructs a normal projective integral model $\mathcal Y_B$ of the toroidal compactification, smooth with good reduction away from the primes $\le B$ and a fixed bad set, with hermitian Hodge line bundles of every weight. On each model the arithmetic self-intersection $P_B(u)$ of the Hodge bundle of weight $u$ is a polynomial in $u$, and the arithmetic Hilbert--Samuel theorem of Gillet--Soul\'e, Zhang and Moriwaki, applied to the single model $\mathcal Y_B$, identifies the leading growth of the lattice of sections with $P_B(u)$. Zhang's inequality for successive minima forces $P_B$ to vanish on the Weyl walls up to $O(\log B/B)$, and an antisymmetry under the simple reflections puts it in the form $\mathrm{vol}\cdot(h_{\mathrm{Fl}}(u)-\alpha\,\mathrm{Sh}(u)-\beta\,\mathrm{Tot}(u))$ up to $O(\log B/B)$. An exact identity at the good primes relates $P_B$ and $P_{B'}$ prime by prime. The constants of the asymptotic steps depend on the model, hence on the level, but the exact identity allows $B\to\infty$, and in the limit these constants disappear. What remains is a point-height constant (a slope bound of Bost's type and the formula of Chowla and Selberg for $\mathbb Q(\sqrt{-d})$), the constant $4$ of a bound for cusp weights, the constant $4$ of the first Chern class, the constant $2$ of the tail over the primes above $B$, and the constant $60$ of a bound of Mertens type, none of which depends on the level. The published inputs are the arithmetic Hilbert--Samuel theorem for each fixed model, Zhang's theorem on successive minima, Hirzebruch--Mumford proportionality, and the existence of toroidal compactifications with their integral models. \notgiven{The construction of the tower, the exact identity at the good primes, and the limit $B\to\infty$ are not written out here, and Hypothesis~\ref{w3:W3:unif} is not proved here.} The uniformity in the level rests on the exactness of the identity at the good primes.
+
+\subsubsection{Assembly of Hypothesis~\ref{r4:R4:HT}}
+
+\begin{theorem}\label{w3:W3:HT}
+Assume Proposition~\ref{w3:W3:passage}, Proposition~\ref{w3:W3:base}, Hypothesis~\ref{w3:W3:L3} for each $j$, and the bounds of Theorems~\ref{r5:thm:Ebound} and~\ref{r5:thm:DIVinN} for the local terms. Then Hypothesis~\ref{r4:R4:HT} holds with $\mu_0=\mu^{(0)}(R^\vee)$, $P_{\mathrm{pass}}=\mu^{(1)}-\mu^{(0)}$ and $E_b=E_{l3}+LG+\sum_j(E_{1,j}+E_{2,j})+E_3$.
+\end{theorem}
+
+\begin{proof}
+Proposition~\ref{w3:W3:passage} bounds $P_{\mathrm{pass}}$. Proposition~\ref{w3:W3:base} bounds $\mu_0-\langle\log\kappa\rangle$ by $\sum_j\lcv(M_j)/D$ plus the local terms, which Theorem~\ref{r5:thm:DIVinN} and Theorem~\ref{r5:thm:Ebound} bound by $\mathcal L+LG+\sum_j(E_{1,j}+E_{2,j})+E_3$. Hypothesis~\ref{w3:W3:L3} bounds $\sum_j\lcv(M_j)/D$ by $\sum_{j,\rho}(p_j-q_j)w_{j\rho}\log\Omega+E_{l3}$ with $E_{l3}=C\sum_jU_j$.
+\end{proof}
+

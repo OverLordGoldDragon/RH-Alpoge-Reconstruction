@@ -1,0 +1,437 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN BODY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The slope inequality for the family of period maps}\label{r3:sec}
+
+Hypothesis \eqref{A3} of Proposition~\ref{acct} asks that the rank-weighted mean of $\mu(N_u)-h_u$ over the indices $u\in W$ exceed the slope of the dual $R^\vee$ of the lattice of automorphic forms by at most $e_3$. For one injective map Bost's slope inequality bounds $\mu(N_u)-h_u$ by the maximal slope of $R^\vee$. The family needs more, because $\mu_{\max}(R^\vee)$ can exceed the mean slope $\mu(R^\vee)$ by far, and because the images of the maps $B_u$ overlap. The argument of this section replaces the maximal slope by the mean slope. It cuts each source lattice along its Harder--Narasimhan filtration, moves each piece into one step of the filtration of $R^\vee$ by the slope inequality, and bounds the rank of that step from below by a count of dimensions at one complex place, where the matrices of the maps form a nearly tight frame. Section~\ref{r3:sec:slopes} collects the slope theory, Section~\ref{r3:sec:frame} proves the frame theorem, Section~\ref{r3:sec:gram} derives the frame conditions from Hilbert--Schmidt bounds for Gram operators, Section~\ref{r3:sec:A3} proves \eqref{A3} with an explicit $e_3$ and bounds $e_3$, and Section~\ref{r3:sec:S} states the near-orthogonality theorem for Bessel Poincar\'e series that the construction has to provide.
+
+\subsection{Hermitian lattices and slopes}\label{r3:sec:slopes}
+
+Let $K$ be a totally complex number field of degree $n_K$, let $d_K$ be its discriminant, and let $\Sigma_K$ be its set of complex places, so that $\lvert\Sigma_K\rvert=n_K/2$. For each $v\in\Sigma_K$ fix one of the two embeddings $\sigma_v\colon K\to\mathbb C$ in the class $v$.
+
+A \emph{hermitian lattice} $\bar L$ over $\OK$ consists of a finite-dimensional $K$-vector space $V$, a finitely generated $\OK$-submodule $L\subset V$ that spans $V$, and for each $v\in\Sigma_K$ a hermitian norm $\lVert\cdot\rVert_v$ on $V_v=V\otimes_{K,\sigma_v}\mathbb C$. We write $L$ for $\bar L$ when the norms are fixed, and $\rk L=\dim_KV$. A nonzero finitely generated $\OK$-submodule $N\subset L$ is a hermitian lattice in $KN$ with the restricted norms. It is \emph{saturated} when $N=L\cap KN$. For a saturated proper submodule $N\subset L$ the quotient $L/N$ is a hermitian lattice in $V/KN$, with the quotient norms $\lVert x+KN\rVert_v=\min\{\lVert y\rVert_v:y\in x+(KN)_v\}$.
+
+The real vector space $V_{\mathbb R}=\bigoplus_{v\in\Sigma_K}V_v$, with the euclidean structure whose square norm is $\sum_v\lVert x_v\rVert_v^2$, has dimension $n_K\rk L$, and the map $\rho\colon V\to V_{\mathbb R}$, $x\mapsto(\sigma_v(x))_v$, sends $L$ onto a lattice of full rank. Put $\deg_{\mathbb Z}L=-\log\covol\rho(L)$ and define the \emph{slope}
+\begin{equation}\label{r3:mu}
+\mu(L)=\frac{2\deg_{\mathbb Z}L}{n_K\rk L}-\log2+\frac{\log\lvert d_K\rvert}{n_K}.
+\end{equation}
+Since $\covol\rho(\OK)=2^{-n_K/2}\lvert d_K\rvert^{1/2}$ for the norms $\lvert\sigma_v(\cdot)
+vert$, the slope of $\OK$ is $0$. Dividing every norm by $c>0$ raises $\mu$ by $2\log c$. So $\mu$ is twice the normalized Arakelov slope $\widehat\mu$ of Bost~\cite{bost}, and it is measured in units of $\log\lVert\cdot\rVert^2$. All slopes in Part~II are slopes in the sense of \eqref{r3:mu}.
+
+The \emph{maximal slope} $\mu_{\max}(L)$ is the supremum of $\mu(N)$ over the nonzero submodules $N\subset L$, and the \emph{minimal slope} $\mu_{\min}(L)$ is the infimum of $\mu(L/N)$ over the saturated proper submodules $N\subset L$, with $N=0$ allowed. For a $K$-linear map $\varphi\colon V\to V'$ between spaces with hermitian norms at the places of $\Sigma_K$, the \emph{height} of $\varphi\ne0$ is
+\begin{equation}\label{r3:ht}
+\hgt(\varphi)=\frac2{n_K}\sum_{v\in\Sigma_K}\log\lVert\varphi_v\rVert_{\mathrm{op}}^2 ,
+\end{equation}
+with $\varphi_v=\varphi\otimes_{\sigma_v}\mathbb C$. It is twice the height $\frac1{n_K}\sum_\sigma\log\lVert\varphi_\sigma\rVert$ over all embeddings $\sigma$. The \emph{dual} of $\bar L$ is the lattice $L^\vee=\{f\in V^*:f(L)\subset\OK\}$ in $V^*=\operatorname{Hom}_K(V,K)$, with the dual norms $\lVert f\rVert_v=\max_{x\ne0}\lvert f_v(x)\rvert/\lVert x\rVert_v$.
+
+We use the following classical facts.
+
+\begin{proposition}[Harder--Narasimhan filtration]\label{r3:HN}
+Let $\bar L$ be a hermitian lattice over $\OK$ of rank $\ell\ge1$. There are real numbers $x_1\ge x_2\ge\dots\ge x_\ell$, the slopes of $\bar L$, and for each real $\theta$ a saturated submodule $L_{\ge\theta}\subset L$, with the following properties.
+\begin{enumerate}
+\item[(HN1)] For every $\theta$ the number of $j$ with $x_j\ge\theta$ equals $\rk L_{\ge\theta}$.
+\item[(HN2)] $x_1+\dots+x_\ell=\ell\,\mu(L)$.
+\item[(HN3)] $\mu_{\min}(L)\le x_j\le\mu_{\max}(L)$ for every $j$.
+\item[(HN4)] If $N\subset L$ is a nonzero submodule with $\mu_{\min}(N)\ge\theta$, then $N\subset L_{\ge\theta}$.
+\item[(HN5)] If $L_{\ge\theta}\ne0$, then $\mu_{\min}(L_{\ge\theta})\ge\theta$.
+\end{enumerate}
+Moreover $\mu(L^\vee)=-\mu(L)$ and $\mu_{\min}(L^\vee)=-\mu_{\max}(L)$.
+\end{proposition}
+
+These statements are the Harder--Narasimhan theory of Stuhler~\cite{r3stuhler} and Grayson~\cite{r3grayson} over $\mathbb Z$, extended to rings of integers in Bost's Bourbaki talk~\cite{bost} and by Gaudron~\cite{r3gaudron}, together with the behaviour of the Arakelov degree under duality~\cite{r3gaudron,r3bostkunnemann}. If $0=L_0\subsetneq L_1\subsetneq\dots\subsetneq L_s=L$ is the Harder--Narasimhan filtration, with semistable quotients of slopes $\nu_1>\dots>\nu_s$, then $x_1,\dots,x_\ell$ is the list of the $\nu_i$, each repeated $\rk(L_i/L_{i-1})$ times, and $L_{\ge\theta}=L_i$ for the largest $i$ with $\nu_i\ge\theta$, or $0$ when $\nu_1<\theta$. Statement (HN2) is the additivity of $\deg_{\mathbb Z}$ in exact sequences with quotient norms. The slope \eqref{r3:mu} is an affine function of $\widehat\mu$ with positive coefficient, and every statement of Proposition~\ref{r3:HN} is invariant under such a change.
+
+The slope inequality we need bounds the minimal slope of an image. We give its proof, because the normalizations \eqref{r3:mu} and \eqref{r3:ht} enter the error terms of Part~II.
+
+\begin{lemma}\label{r3:covol}
+Let $\bar A$ be a hermitian lattice over $\OK$ in $V$ of rank $a$, let $V'$ have hermitian norms at the places of $\Sigma_K$, and let $\psi\colon V\to V'$ be an injective $K$-linear map. Give $\psi(A)$ the norms of $V'$ restricted to $\psi(V)$. Then
+\[
+\mu(\psi(A))\ge\mu(A)-\hgt(\psi).
+\]
+\end{lemma}
+
+\begin{proof}
+The map $\psi_{\mathbb R}=\bigoplus_v\psi_v$ sends $\rho(A)$ onto $\rho(\psi(A))\subset\psi(V)_{\mathbb R}$. In orthonormal bases of $V_v$ and $\psi(V)_v$ the complex linear map $\psi_v$ has a matrix $M_v$ of size $a$, and as a real linear map of $\mathbb C^a=\mathbb R^{2a}$ it has determinant $\lvert\det M_v\rvert^2\le\lVert\psi_v\rVert_{\mathrm{op}}^{2a}$. Hence
+\[
+\covol\rho(\psi(A))=\prod_v\lvert\det M_v\rvert^2\,\covol\rho(A)\le\prod_v\lVert\psi_v\rVert_{\mathrm{op}}^{2a}\,\covol\rho(A),
+\]
+so $\deg_{\mathbb Z}\psi(A)\ge\deg_{\mathbb Z}A-a\sum_v\log\lVert\psi_v\rVert_{\mathrm{op}}^2$. Dividing by $n_Ka/2$ gives the lemma, because the two lattices have the same rank.
+\end{proof}
+
+\begin{proposition}[slope inequality]\label{r3:SI}
+Let $\bar A$ be a hermitian lattice over $\OK$ in $V$, let $V'$ have hermitian norms at the places of $\Sigma_K$, and let $\varphi\colon V\to V'$ be a $K$-linear map with $\varphi(A)\ne0$. Give $\varphi(A)$ the norms of $V'$ restricted to $K\varphi(A)$. Then
+\[
+\mu_{\min}(\varphi(A))\ge\mu_{\min}(A)-\hgt(\varphi).
+\]
+\end{proposition}
+
+\begin{proof}
+Let $M\subset\varphi(A)$ be a saturated proper submodule and $Q=\varphi(A)/M$ with the quotient norms. Let $\pi\colon K\varphi(A)\to K\varphi(A)/KM$ be the projection and $\psi=\pi\circ\varphi$ on $V$. Then $A_0=A\cap\ker\psi$ is a saturated proper submodule of $A$, and $\psi$ induces an injective map $\bar\psi\colon V/KA_0\to K\varphi(A)/KM$ that sends $A/A_0$ onto $Q$. For a class $\xi\in(V/KA_0)_v$ and any representative $y$ of $\xi$,
+\[
+\lVert\bar\psi_v\xi\rVert_v=\lVert\pi_v\varphi_vy\rVert_v\le\lVert\varphi_vy\rVert_v\le\lVert\varphi_v\rVert_{\mathrm{op}}\lVert y\rVert_v ,
+\]
+and the minimum over $y$ gives $\lVert\bar\psi_v\rVert_{\mathrm{op}}\le\lVert\varphi_v\rVert_{\mathrm{op}}$, so $\hgt(\bar\psi)\le\hgt(\varphi)$. Lemma~\ref{r3:covol} applied to $A/A_0$ and $\bar\psi$ gives $\mu(Q)\ge\mu(A/A_0)-\hgt(\varphi)$. A quotient of $A$ by a saturated submodule followed by a quotient by a saturated submodule is a quotient of $A$ by a saturated submodule, with the same quotient norms, so $\mu(A/A_0)\ge\mu_{\min}(A)$. Taking the infimum over $M$ proves the proposition.
+\end{proof}
+
+\subsection{The frame theorem}\label{r3:sec:frame}
+
+For a complex matrix $X$ write $X^*$ for its conjugate transpose and $\lVert X\rVert_\HS^2=\tr(X^*X)$ for its squared Hilbert--Schmidt norm. For a $K$-linear map $\varphi$ between spaces with fixed bases and a place $v\in\Sigma_K$, write $[\varphi]_v$ for the matrix of $\varphi$ with $\sigma_v$ applied to its entries.
+
+\begin{lemma}[frame lemma]\label{r3:LA}
+Let $I$ be a finite set, let $\widetilde D\ge0$ and $d_i\ge0$ for $i\in I$ be integers with $\Delta=\sum_id_i>0$, let $A_i$ be complex $\widetilde D\times d_i$ matrices and $\gamma_i>0$, and put $Q=\sum_i\gamma_iA_iA_i^*$. Let $e,\eta,\varepsilon$ be real numbers with $0\le e\le\frac14$ and $\eta\ge0$ such that
+\[
+\sum_i\lVert\gamma_iA_i^*A_i-1\rVert_\HS^2\le e\Delta,\qquad\tr(Q^2)\le(1+\eta)\frac{(\tr Q)^2}{\widetilde D}.
+\]
+Let $U_i\subset\mathbb C^{d_i}$ be subspaces with $\sum_i(d_i-\dim U_i)\le\varepsilon \Delta$, and let $\mathcal W$ be the orthogonal complement of $\sum_iA_i(U_i)$ in $\mathbb C^{\widetilde D}$. Then $\dim\mathcal W\le(\eta+4\varepsilon+4\sqrt e)\,\widetilde D$.
+\end{lemma}
+
+\begin{proof}
+Put $E_i=\gamma_iA_i^*A_i-1$, $k_i=d_i-\dim U_i$, $w=\dim\mathcal W$ and $t=\tr Q$. The hypothesis on $\sum k_i$ and $\Delta>0$ give $\varepsilon\ge0$. If $\widetilde D=0$ then $w=0$, so assume $\widetilde D\ge1$.
+
+For orthonormal vectors $f_1,\dots,f_m$ in $\mathbb C^{d_i}$ we have $\langle f_l,E_if_l\rangle=\gamma_i\lVert A_if_l\rVert^2-1$, so the Cauchy--Schwarz inequality gives
+\begin{equation}\label{r3:basic}
+\Big\lvert\gamma_i\sum_{l=1}^m\lVert A_if_l\rVert^2-m\Big\rvert\le\sum_l\lVert E_if_l\rVert\le\sqrt m\Big(\sum_l\lVert E_if_l\rVert^2\Big)^{1/2}\le\sqrt m\,\lVert E_i\rVert_\HS .
+\end{equation}
+In the same way $\lvert\sum_l\langle g_l,Tg_l\rangle\rvert\le\sqrt m\,\lVert T\rVert_\HS$ for every matrix $T$ of size $\widetilde D$ and orthonormal $g_1,\dots,g_m$ in $\mathbb C^{\widetilde D}$.
+
+By cyclicity of the trace $t=\sum_i\gamma_i\lVert A_i\rVert_\HS^2$. Inequality \eqref{r3:basic} for an orthonormal basis of $\mathbb C^{d_i}$, summed over $i$, and the Cauchy--Schwarz inequality give
+\[
+t\ge\sum_i\big(d_i-\sqrt{d_i}\,\lVert E_i\rVert_\HS\big)\ge \Delta-\sqrt \Delta\Big(\sum_i\lVert E_i\rVert_\HS^2\Big)^{1/2}\ge \Delta\,(1-\sqrt e).
+\]
+Since $\sqrt e\le\frac12$, we get $\Delta\le2t$, and in particular $t>0$.
+
+Put $\lambda=t/\widetilde D$. Since $Q$ is self-adjoint,
+\[
+\lVert Q-\lambda\rVert_\HS^2=\tr(Q^2)-2\lambda t+\lambda^2\widetilde D=\tr(Q^2)-\frac{t^2}{\widetilde D}\le\frac{\eta\,t^2}{\widetilde D}.
+\]
+Let $g_1,\dots,g_w$ be an orthonormal basis of $\mathcal W$ and $T_{\mathcal W}=\sum_l\langle g_l,Qg_l\rangle$. The estimate after \eqref{r3:basic} with $T=Q-\lambda$ gives
+\[
+T_{\mathcal W}\ge\lambda w-\sqrt w\,\lVert Q-\lambda\rVert_\HS\ge\frac{t\,w}{\widetilde D}-\sqrt{\frac{w\,\eta}{\widetilde D}}\;t .
+\]
+For $g\in\mathcal W$ and $y\in U_i$ we have $\langle A_i^*g,y\rangle=\langle g,A_iy\rangle=0$, so $A_i^*g$ lies in $U_i^\perp$. Let $f_1,\dots,f_{k_i}$ be an orthonormal basis of $U_i^\perp$. Bessel's inequality for the orthonormal vectors $g_l$ gives
+\[
+\sum_l\lVert A_i^*g_l\rVert^2=\sum_{m}\sum_l\lvert\langle g_l,A_if_m\rangle\rvert^2\le\sum_m\lVert A_if_m\rVert^2,
+\]
+and \eqref{r3:basic} gives $\gamma_i\sum_m\lVert A_if_m\rVert^2\le k_i+\sqrt{k_i}\,\lVert E_i\rVert_\HS$. Since $\langle g,Qg\rangle=\sum_i\gamma_i\lVert A_i^*g\rVert^2$, summing over $i$ and applying the Cauchy--Schwarz inequality,
+\[
+T_{\mathcal W}\le\sum_ik_i+\Big(\sum_ik_i\Big)^{1/2}\Big(\sum_i\lVert E_i\rVert_\HS^2\Big)^{1/2}\le\big(\varepsilon+\sqrt{\varepsilon e}\big)\Delta\le2t\big(\varepsilon+\sqrt{\varepsilon e}\big).
+\]
+Comparing the two bounds for $T_{\mathcal W}$ and multiplying by $\widetilde D/t$ gives $w-\sqrt{w\eta\widetilde D}\le2\widetilde D(\varepsilon+\sqrt{\varepsilon e})$. The inequality $\sqrt{w\eta\widetilde D}\le\frac12(w+\eta\widetilde D)$ between geometric and arithmetic means turns this into $w\le\big(\eta+4\varepsilon+4\sqrt{\varepsilon e}\big)\widetilde D$. If $\varepsilon\le1$ then $\sqrt{\varepsilon e}\le\sqrt e$, which proves the lemma. If $\varepsilon>1$ the bound of the lemma exceeds $\widetilde D\ge w$.
+\end{proof}
+
+\begin{lemma}[rank at one place]\label{r3:place}
+Let $I$ be a finite set. For $i\in I$ let $V_i$ be a $K$-vector space of dimension $d_i$ with a basis, let $W$ be a $K$-vector space of dimension $D$ with a basis, and let $B_i\colon V_i\to W$ be $K$-linear maps. Fix $v\in\Sigma_K$, invertible complex matrices $Y_i$ of size $d_i$ and $Y'$ of size $D$, an integer $D_1\ge0$, and put $\widetilde D=D+D_1$. Let $A_i$ be complex $\widetilde D\times d_i$ matrices whose first $D$ rows form the matrix $Y'^{-1}[B_i]_vY_i$, and let $\gamma_i>0$, $e$, $\eta$ and $\delta$ be real numbers with $0\le e\le\frac14$, $\eta\ge0$, $0\le\delta<1$ such that $\Delta=\sum_id_i>0$, $(1-\delta)\widetilde D\le D$, and, with $Q=\sum_i\gamma_iA_iA_i^*$,
+\[
+\sum_i\lVert\gamma_iA_i^*A_i-1\rVert_\HS^2\le e\Delta,\qquad\tr(Q^2)\le(1+\eta)\frac{(\tr Q)^2}{\widetilde D}.
+\] Let $\varepsilon$ be real and let $N_i'\subset V_i$ be finitely generated $\OK$-submodules with $\sum_i(d_i-\rk N_i')\le\varepsilon \Delta$, and put $M=\sum_iB_i(N_i')\subset W$. Then
+\[
+D-\rk M\le\frac{\eta+4\varepsilon+4\sqrt e}{1-\delta}\,D .
+\]
+\end{lemma}
+
+\begin{proof}
+For $x\in V_i$ let $c_i(x)=Y_i^{-1}[x]_v\in\mathbb C^{d_i}$, and for $y\in W$ let $c'(y)=Y'^{-1}[y]_v\in\mathbb C^D$, where $[x]_v$ is the coordinate vector of $x$ with $\sigma_v$ applied. Then $c'(B_ix)=Y'^{-1}[B_i]_vY_i\,c_i(x)$. Let $U_i$ be the complex span of $c_i(N_i')$ and $T$ the complex span of $c'(M)$. A $K$-subspace $U$ of a $K$-vector space and its image under $\sigma_v$ satisfy $\dim_{\mathbb C}(U\otimes_{K,\sigma_v}\mathbb C)=\dim_KU$, so $\dim U_i=\rk N_i'$ and $\dim T=\rk M$. Let $P\colon\mathbb C^{\widetilde D}\to\mathbb C^D$ be the projection to the first $D$ coordinates. Then $PA_i(U_i)$ is spanned by the vectors $c'(B_ix)$ with $x\in N_i'$, which lie in $T$. Put $S=\sum_iA_i(U_i)$. Then $S\subset P^{-1}(T)$, which has dimension $\rk M+D_1$, so $\dim S^\perp\ge\widetilde D-\rk M-D_1=D-\rk M$. Lemma~\ref{r3:LA} bounds $\dim S^\perp$ by $(\eta+4\varepsilon+4\sqrt e)\widetilde D$, and $\widetilde D\le(1-\delta)^{-1}D$.
+\end{proof}
+
+\begin{lemma}[reverse Markov inequality]\label{r3:markov}
+Let $y_1,\dots,y_m$, $s$, $u$, $\tau$ be real numbers with $u\ge0$, $\tau\ge0$, $\sum_jy_j\ge ms$ and $y_j\le s+u$ for every $j$. Let $F$ be the number of $j$ with $y_j<s-\tau$. Then $F(u+\tau)\le mu$, and $F=0$ when $u=0$.
+\end{lemma}
+
+\begin{proof}
+Bounding the $F$ small terms by $s-\tau$ and the others by $s+u$ gives $ms\le\sum_jy_j\le F(s-\tau)+(m-F)(s+u)=m(s+u)-F(u+\tau)$. If $u=0$ and $F\ge1$, then every $y_j\le s$ and one $y_j<s$, so $\sum_jy_j<ms$.
+\end{proof}
+
+\begin{lemma}[layer cake]\label{r3:cake}
+Let $z_1,\dots,z_m$ be real numbers with $m\ge1$, and let $s$ and $H\ge0$ be real numbers with $z_k\ge s-H$ for every $k$. Let $w$ be an integrable function on $[0,H]$ such that the number of $k$ with $z_k<s-\tau$ is at most $w(\tau)\,m$ for every $\tau\in[0,H]$. Then
+\[
+\frac1m\sum_kz_k\ge s-\int_0^H\min\big(1,w(\tau)\big)\,d\tau .
+\]
+\end{lemma}
+
+\begin{proof}
+If $s-z_k\ge0$ then $s-z_k\le H$ and $s-z_k=\int_0^H\mathbf 1[z_k<s-\tau]\,d\tau$. If $s-z_k<0$ the integral is nonnegative. Summing $s-z_k\le\int_0^H\mathbf 1[z_k<s-\tau]\,d\tau$ over $k$ and bounding the number of $k$ with $z_k<s-\tau$ by $m\min(1,w(\tau))$ proves the lemma.
+\end{proof}
+
+For $u>0$ and $H\ge0$ put $\Lambda(u,H)=u\log(1+H/u)$, and put $\Lambda(0,H)=0$. Then $\Lambda(u,H)=\int_0^Hu/(u+\tau)\,d\tau$. The function $\Lambda$ is nondecreasing in each variable, because $\partial_u\Lambda=\log(1+H/u)-H/(u+H)\ge0$.
+
+\begin{theorem}[frame theorem]\label{r3:frame}
+Let $K$ be a totally complex number field, let $I$ be a nonempty finite set, and for $i\in I$ let $\bar N_i$ be a hermitian lattice over $\OK$ of rank $d_i$ in a $K$-vector space $V_i$ with a basis. Let $\bar C$ be a hermitian lattice over $\OK$ of rank $D$ in a $K$-vector space $W$ with a basis, and put $\Delta=\sum_id_i$, with $\Delta>0$. Let $B_i\colon V_i\to W$ be $K$-linear maps with $B_i(N_i)\subset C$, and let $h_i$ be real numbers with $\hgt(B_i)\le h_i$ whenever $B_i\ne0$, where $\hgt$ is computed with the norms of $\bar N_i$ and $\bar C$. Fix $v\in\Sigma_K$, invertible complex matrices $Y_i$ of size $d_i$ and $Y'$ of size $D$, an integer $D_1\ge0$, and complex $(D+D_1)\times d_i$ matrices $A_i$ whose first $D$ rows form $Y'^{-1}[B_i]_vY_i$. Let $\gamma_i>0$ and $Q=\sum_i\gamma_iA_iA_i^*$. Let $s$, $u$, $H$, $e$, $\eta$, $\delta$ be real numbers with $u\ge0$, $H\ge0$, $0\le e\le\frac14$, $\eta\ge0$ and $0\le\delta<1$ such that
+\begin{enumerate}
+\item[(i)] $s\Delta\le\sum_id_i\big(\mu(N_i)-h_i\big)$,
+\item[(ii)] $\mu_{\max}(N_i)-h_i\le s+u$ for every $i$,
+\item[(iii)] $s-\mu_{\min}(C)\le H$,
+\item[(iv)] $(1-\delta)(D+D_1)\le D$,
+\item[(v)] $\sum_i\lVert\gamma_iA_i^*A_i-1\rVert_\HS^2\le e\,\Delta$,
+\item[(vi)] $\tr(Q^2)\le(1+\eta)(\tr Q)^2/(D+D_1)$.
+\end{enumerate}
+Then
+\[
+\mu(C)\ge s-\frac{4\Lambda(u,H)+(\eta+4\sqrt e)\,H}{1-\delta}.
+\]
+\end{theorem}
+
+\begin{proof}
+\emph{The target is nonzero.} If $D=0$ then $D_1=0$ by (iv), every $A_i$ is zero, and (v) reads $\Delta\le e\Delta$, which contradicts $\Delta>0$ and $e\le\frac14$. So $D\ge1$.
+
+\emph{The pieces of the sources.} For $\tau\ge0$ and $i\in I$ let $N_i^\tau=(N_i)_{\ge s-\tau+h_i}$ be the Harder--Narasimhan step of Proposition~\ref{r3:HN}. Let $x_{i1},\dots,x_{id_i}$ be the slopes of $N_i$ and $y_{ij}=x_{ij}-h_i$. By (HN2) and (i), $\sum_{i,j}y_{ij}=\sum_id_i(\mu(N_i)-h_i)\ge \Delta s$. By (HN3) and (ii), $y_{ij}\le s+u$. Lemma~\ref{r3:markov} applied to the $\Delta$ numbers $y_{ij}$ bounds the number of pairs with $y_{ij}<s-\tau$ by $\varepsilon(\tau)\Delta$, where $\varepsilon(\tau)=u/(u+\tau)$ when $u>0$ and $\varepsilon(\tau)=0$ when $u=0$. By (HN1) the number of $j$ with $x_{ij}<s-\tau+h_i$ is $d_i-\rk N_i^\tau$. So
+\[
+\sum_i\big(d_i-\rk N_i^\tau\big)\le\varepsilon(\tau)\,\Delta .
+\]
+
+\emph{The images lie in one step of the target.} Put $C_\tau=C_{\ge s-\tau}$. Fix $i$ with $B_i(N_i^\tau)\ne0$. Then $N_i^\tau\ne0$, so (HN5) gives $\mu_{\min}(N_i^\tau)\ge s-\tau+h_i$, and $B_i\ne0$, so $\hgt(B_i)\le h_i$. Proposition~\ref{r3:SI} gives
+\[
+\mu_{\min}\big(B_i(N_i^\tau)\big)\ge\mu_{\min}(N_i^\tau)-\hgt(B_i)\ge s-\tau .
+\]
+Since $B_i(N_i^\tau)\subset C$, (HN4) gives $B_i(N_i^\tau)\subset C_\tau$. Hence $M_\tau=\sum_iB_i(N_i^\tau)$ lies in $C_\tau$, and $\rk C_\tau\ge\rk M_\tau$.
+
+\emph{The step of the target has small corank.} Lemma~\ref{r3:place} with $N_i'=N_i^\tau$ and $\varepsilon=\varepsilon(\tau)$ gives
+\[
+D-\rk C_\tau\le D-\rk M_\tau\le w(\tau)\,D,\qquad w(\tau)=\frac{\eta+4\varepsilon(\tau)+4\sqrt e}{1-\delta}.
+\]
+
+\emph{Integration.} Let $z_1,\dots,z_D$ be the slopes of $C$. By (HN1) the number of $k$ with $z_k<s-\tau$ is $D-\rk C_\tau\le w(\tau)D$. By (HN3) and (iii), $z_k\ge\mu_{\min}(C)\ge s-H$. By (HN2), $\mu(C)$ is the mean of the $z_k$. Lemma~\ref{r3:cake} gives
+\[
+\mu(C)\ge s-\int_0^Hw(\tau)\,d\tau=s-\frac{4\Lambda(u,H)+(\eta+4\sqrt e)H}{1-\delta}.\qedhere
+\]
+\end{proof}
+
+\begin{remark}\label{r3:rem:frame}
+The proof bounds the corank of every step $C_{\ge s-\tau}$ with $0\le\tau\le H$, so it controls the lower half of the Harder--Narasimhan polygon of $C$, and the mean slope is one consequence. The hermitian structure at $v$ in which conditions (v) and (vi) are stated is arbitrary, because $Y_i$ and $Y'$ are arbitrary invertible matrices. The norms of the lattices at all places of $\Sigma_K$ enter through the slopes and the heights in Proposition~\ref{r3:SI}, and the place $v$ enters through the dimension count of Lemma~\ref{r3:place}. For a single map, $I=\{i\}$, the theorem is weaker than Proposition~\ref{r3:SI}, and the gain lies in the passage from $\mu_{\max}(C)$ to $\mu(C)$ for a redundant family. The term $\Lambda(u,H)$ is the integral of the share $u/(u+\tau)$ of Lemma~\ref{r3:markov} over the levels $s-\tau$ at which $C$ can have slopes.
+\end{remark}
+
+\subsection{Gram families and the frame conditions}\label{r3:sec:gram}
+
+In the application the matrices $A_i$ come from maps $P_i$ defined on larger spaces, compressed by isometries, and the hypotheses are Hilbert--Schmidt bounds for the Gram operators of the $P_i$. This subsection derives conditions (v) and (vi) of Theorem~\ref{r3:frame} from such bounds.
+
+\begin{lemma}\label{r3:compress}
+Let $X$ be a complex $a\times b$ matrix, and let $V$ and $V'$ be complex $a\times c$ and $b\times c'$ matrices with $V^*V=1$ and $V'^*V'=1$. Then $\lVert V^*XV'\rVert_\HS\le\lVert X\rVert_\HS$. If moreover $a=b$, $V=V'$ and $\lVert X-1\rVert_\HS^2\le\epsilon a$ with $\epsilon\ge0$, then
+\begin{gather*}
+\tr X-\tr(V^*XV)=(a-c)+\tr\big((X-1)(1-VV^*)\big),\\
+\big\lvert\tr\big((X-1)(1-VV^*)\big)\big\rvert\le\sqrt{(a-c)\,\epsilon\,a}.
+\end{gather*}
+\end{lemma}
+
+\begin{proof}
+The matrix $VV^*$ is an orthogonal projection, so $\lVert V^*Y\rVert_\HS^2=\tr(Y^*VV^*Y)\le\tr(Y^*Y)$ for every $Y$ with $a$ rows, and the same argument on the right gives the first statement. For the second, $\tr(V^*XV)=\tr(XVV^*)$, so $\tr X-\tr(V^*XV)=\tr(X(1-VV^*))=\tr(1-VV^*)+\tr((X-1)(1-VV^*))$, and $\tr(1-VV^*)=a-\tr(V^*V)=a-c$. The projection $1-VV^*$ has $\lVert1-VV^*\rVert_\HS^2=a-c$, and the Cauchy--Schwarz inequality for the Hilbert--Schmidt inner product gives the bound.
+\end{proof}
+
+\begin{proposition}[from Gram bounds to the frame conditions]\label{r3:gram}
+Let $I$ be a nonempty finite set, let $\widetilde D\ge0$ be an integer, and for $i\in I$ let $d_i^S\ge d_i\ge0$ be integers, $P_i$ a complex $\widetilde D\times d^S_i$ matrix, $V_i$ a complex $d^S_i\times d_i$ matrix with $V_i^*V_i=1$, and $\gamma_i>0$. Put
+\[
+K_{ij}=\sqrt{\gamma_i\gamma_j}\,P_i^*P_j,\qquad \Delta^S=\sum_id^S_i,\qquad \Delta=\sum_id_i,\qquad A_i=P_iV_i,\qquad Q=\sum_i\gamma_iA_iA_i^* .
+\]
+Let $D^*>0$, $\sigma$, $\eta_0$, $\eta_1$, $e_0$ and $\delta'$ be real numbers with
+\[
+0<\sigma\le\tfrac1{20},\quad-1\le\eta_0\le\tfrac\sigma2,\quad\eta_1\le\tfrac\sigma2,\quad0\le e_0,\quad\sqrt{e_0}\le\tfrac\sigma2,\quad0\le\delta'\le\tfrac14,
+\]
+and suppose that
+\begin{enumerate}
+\item[(G1)] $\lVert K_{ij}\rVert_\HS^2\le(1+\eta_0)\,d^S_id^S_j/D^*$ for $i\ne j$,
+\item[(G2)] $\lVert K_{ii}-1\rVert_\HS^2\le e_0\,d^S_i$ for every $i$,
+\item[(G3)] $\widetilde D\le(1+\eta_1)D^*$,
+\item[(G4)] $D^*\le\sigma \Delta^S$,
+\item[(G5)] $\sum_i(d^S_i-d_i)\le\delta'\Delta^S$.
+\end{enumerate}
+Then $\Delta\ge(1-\delta')\Delta^S>0$, $\widetilde D\ge1$, and
+\[
+\sum_i\lVert\gamma_iA_i^*A_i-1\rVert_\HS^2\le2e_0\Delta,\qquad\tr(Q^2)\le\big(1+5\sigma+3\sqrt{\delta'}\big)\frac{(\tr Q)^2}{\widetilde D}.
+\]
+\end{proposition}
+
+\begin{proof}
+Put $a=\sqrt{e_0}$ and $t=\sqrt{\delta'}$, so that $0\le a\le\frac1{40}$ and $0\le t\le\frac12$. By (G4), $\Delta^S\ge D^*/\sigma>0$, and (G5) gives $\Delta\ge(1-\delta')\Delta^S\ge\frac34\Delta^S$.
+
+\emph{Condition (v).} We have $\gamma_iA_i^*A_i=V_i^*K_{ii}V_i$ and $V_i^*K_{ii}V_i-1=V_i^*(K_{ii}-1)V_i$. Lemma~\ref{r3:compress} and (G2) give $\sum_i\lVert\gamma_iA_i^*A_i-1\rVert_\HS^2\le e_0\Delta^S\le2e_0\Delta$.
+
+\emph{Traces of the uncompressed family.} Put $Q^S=\sum_i\gamma_iP_iP_i^*$. Then $\tr Q^S=\sum_i\tr K_{ii}$ and
+\[
+\tr\big((Q^S)^2\big)=\sum_{i,j}\gamma_i\gamma_j\tr\big(P_iP_i^*P_jP_j^*\big)=\sum_{i,j}\lVert K_{ij}\rVert_\HS^2 .
+\]
+The estimate \eqref{r3:basic} for an orthonormal basis gives $\tr K_{ii}\ge d^S_i-\sqrt{d^S_i}\lVert K_{ii}-1\rVert_\HS\ge(1-a)d^S_i$, so $\tr Q^S\ge(1-a)\Delta^S$. The triangle inequality gives $\lVert K_{ii}\rVert_\HS\le\sqrt{d^S_i}+\sqrt{e_0d^S_i}=(1+a)\sqrt{d^S_i}$. With (G1) and $1+\eta_0\ge0$,
+\[
+\tr\big((Q^S)^2\big)\le(1+\eta_0)\frac{(\Delta^S)^2}{D^*}+(1+a)^2\Delta^S\le\frac{(\Delta^S)^2}{D^*}\Big((1+\eta_0)+(1+a)^2\sigma\Big),
+\]
+where the last step uses $\Delta^S\le\sigma(\Delta^S)^2/D^*$, which is (G4).
+
+\emph{Compression.} The Gram operators of the compressed family are $\sqrt{\gamma_i\gamma_j}A_i^*A_j=V_i^*K_{ij}V_j$, so Lemma~\ref{r3:compress} gives $\tr(Q^2)=\sum_{i,j}\lVert V_i^*K_{ij}V_j\rVert_\HS^2\le\tr((Q^S)^2)$. The second part of Lemma~\ref{r3:compress} with $X=K_{ii}$ and $\epsilon=e_0$, the Cauchy--Schwarz inequality and (G5) give
+\begin{align*}
+\tr Q^S-\tr Q&\le\sum_i\Big((d^S_i-d_i)+\sqrt{d^S_i-d_i}\,a\sqrt{d^S_i}\Big)\\
+&\le\delta'\Delta^S+a\Big(\sum_i(d^S_i-d_i)\Big)^{1/2}(\Delta^S)^{1/2}\le(t^2+at)\Delta^S .
+\end{align*}
+So $\tr Q\ge(1-a-t^2-ta)\Delta^S$, and the coefficient is positive because $a\le\frac1{40}$ and $t\le\frac12$. In particular $\tr Q>0$, so $\widetilde D\ge1$.
+
+\emph{Condition (vi).} Since $\widetilde D\ge1$, (G3) gives $1+\eta_1>0$. By (G3) and the two bounds above,
+\[
+\widetilde D\,\tr(Q^2)\le(1+\eta_1)\big((1+\eta_0)+(1+a)^2\sigma\big)(\Delta^S)^2 .
+\]
+The right side is nondecreasing in $\eta_0$, $\eta_1$ and $a$ on the given ranges, so it is at most $(1+\frac\sigma2)^2\big(1+(1+\frac\sigma2)\sigma\big)(\Delta^S)^2$. For $0<\sigma\le\frac14$,
+\[
+(1+5\sigma)\big(1-\tfrac\sigma2\big)^2-\big(1+\tfrac\sigma2\big)^2\big(1+\sigma+\tfrac{\sigma^2}2\big)=\sigma\Big(2-\tfrac{13}2\sigma+\tfrac12\sigma^2-\tfrac18\sigma^3\Big)\ge\sigma\Big(2-\tfrac{13}8-\tfrac1{512}\Big)>0,
+\]
+and $(1-\frac\sigma2)^2\le(1-a)^2$. Hence $\widetilde D\tr(Q^2)\le(1+5\sigma)(1-a)^2(\Delta^S)^2$. Put $P=1+5\sigma$, $B=1-a$ and $c=t(t+a)$. The function $3B-2(P+3t)(t+a)$ decreases in $\sigma$, $a$ and $t$, and at $\sigma=\frac1{20}$, $a=\frac1{40}$, $t=\frac12$ it equals $\frac3{80}$. So $2(P+3t)(t+a)\le3B$, and
+\[
+(P+3t)(B-c)^2\ge(P+3t)(B^2-2Bc)=PB^2+tB\big(3B-2(P+3t)(t+a)\big)\ge PB^2 .
+\]
+Since $B-c=1-a-t^2-ta>0$ and $(B-c)\Delta^S\le\tr Q$,
+\[
+\widetilde D\,\tr(Q^2)\le PB^2(\Delta^S)^2\le(P+3t)(B-c)^2(\Delta^S)^2\le\big(1+5\sigma+3\sqrt{\delta'}\big)(\tr Q)^2 .\qedhere
+\]
+\end{proof}
+
+The ranks $d_i$ in the application are the ranks of the parts of the spaces $C_u$ of Section~\ref{r3:sec:A3} that are ramified at the auxiliary prime $T_u$, and the following lemma gives (G5).
+
+\begin{lemma}\label{r3:ramshare}
+Let $f\ge1$ be an integer and let $T\ge2$ and $d^S\ge0$ be real numbers. If $d=d^S\big(1-\frac1{T-1}\big)^f$, then $d^S-d\le\frac{2f}T\,d^S$.
+\end{lemma}
+
+\begin{proof}
+Bernoulli's inequality $(1-y)^f\ge1-fy$ for $0\le y\le1$, with $y=1/(T-1)$, gives $d^S-d\le\frac f{T-1}d^S\le\frac{2f}Td^S$.
+\end{proof}
+
+\subsection{The period maps and hypothesis~\eqref{A3}}\label{r3:sec:A3}
+
+We now state the setting of hypothesis~\eqref{A3} of Proposition~\ref{acct}. For each $u_0\in A_0$ the construction of Part~II gives the following objects. The field $K$ is a totally complex Galois number field that contains the field $E$. The index set $W$ is a finite nonempty set of words $u$, and each word has an auxiliary prime $T_u$. There is one hermitian lattice $R$ over $\OK$ of rank $D_{\mathrm{rows}}\ge1$ in a $K$-vector space $Y$, the lattice of automorphic forms, and $\mu^C=\mu(R^\vee)$. For each $u$ there are a hermitian lattice $N_u$ of rank $d_u\ge1$ in a $K$-vector space $V_u$, the period map $B_u\colon V_u\to Y^*$, and a real number $h_u$. The numbers $\mu^N_u=\mu(N_u)$ and the weights $d_u$ are those of \eqref{A3}.
+
+The archimedean structure of the period maps at one complex place is the following.
+
+\begin{definition}\label{r3:bessel}
+Let $v\in\Sigma_K$. A \emph{Bessel realization} of the family $(B_u)_{u\in W}$ at $v$ consists of
+\begin{enumerate}
+\item a complex Hilbert space $\mathcal H$ of finite dimension $D_{\mathrm{all}}$ and a conjugate-linear isometric embedding $\mathbf s\colon Y_v\to\mathcal H$, where $Y_v=Y\otimes_{K,\sigma_v}\mathbb C$ has the norm of $R$ at $v$;
+\item for each $u\in W$ a complex Hilbert space $\mathcal C_u$ of dimension $d^S_u$, a linear map $\mathcal P_u\colon\mathcal C_u\to\mathcal H$, a number $c_u>0$, an inner product on $V_{u,v}=V_u\otimes_{K,\sigma_v}\mathbb C$ and a linear isometric embedding $\iota_u\colon V_{u,v}\to\mathcal C_u$;
+\item a unitary operator $\mathcal V$ of $Y_v$, and for each $u$ a unitary operator $\mathcal U_u$ of $V_{u,v}$ and a complex number $a_u\ne0$,
+\end{enumerate}
+such that for every $u$, every $\varphi\in V_{u,v}$ and every $F\in Y_v$
+\begin{equation}\label{r3:besselid}
+\big(B_{u,v}\varphi\big)(F)=a_u\,\big\langle\mathbf s(\mathcal VF),\mathcal P_u\,\iota_u\,\mathcal U_u\varphi\big\rangle_{\mathcal H}\,.
+\end{equation}
+Here $B_{u,v}\varphi\in Y^*\otimes_{K,\sigma_v}\mathbb C$ is read as a linear form on $Y_v$, and the inner product of $\mathcal H$ is conjugate-linear in the first variable, so both sides of \eqref{r3:besselid} are linear in $\varphi$ and in $F$. The \emph{Gram operators} of the realization are $K_{uu'}=(c_uc_{u'})^{-1/2}\mathcal P_u^*\mathcal P_{u'}\colon\mathcal C_{u'}\to\mathcal C_u$.
+\end{definition}
+
+In the construction $\mathcal H$ is a space of automorphic forms on a unitary group, $\mathcal C_u$ is the space of column forms of the word $u$, $\iota_u$ is the inclusion of the forms that are ramified at $T_u$, $\mathcal P_u$ is the map to Bessel Poincar\'e series and $c_u$ is its normalizing volume, and \eqref{r3:besselid} identifies the period map with a Bessel period. Section~\ref{r3:sec:S} states what the construction has to prove about these objects.
+
+\begin{lemma}[matrices of the period maps at $v$]\label{r3:block}
+Let $(B_u)$ have a Bessel realization at $v$ with $D_{\mathrm{all}}\ge D_{\mathrm{rows}}$, and fix $K$-bases of $Y^*$ and of each $V_u$. Put $D_1=D_{\mathrm{all}}-D_{\mathrm{rows}}$. There are invertible complex matrices $Y'$ of size $D_{\mathrm{rows}}$ and $Y_u$ of size $d_u$, complex $D_{\mathrm{all}}\times d^S_u$ matrices $P_u$ and complex $d^S_u\times d_u$ matrices $V_u$ with $V_u^*V_u=1$, such that for every $u$ the first $D_{\mathrm{rows}}$ rows of $P_uV_u$ form the matrix $Y'^{-1}[B_u]_vY_u$, and such that for all $u,u'$ the matrix $(c_uc_{u'})^{-1/2}P_u^*P_{u'}$ is the matrix of $K_{uu'}$ in orthonormal bases of $\mathcal C_{u'}$ and $\mathcal C_u$. In particular $\lVert(c_uc_{u'})^{-1/2}P_u^*P_{u'}\rVert_\HS=\lVert K_{uu'}\rVert_\HS$ and $\lVert c_u^{-1}P_u^*P_u-1\rVert_\HS=\lVert K_{uu}-1\rVert_\HS$.
+\end{lemma}
+
+\begin{proof}
+Let $(\epsilon_k)_{k\le D_{\mathrm{rows}}}$ be an orthonormal basis of $Y_v$. The vectors $\mathbf s(\mathcal V\epsilon_k)$ are orthonormal in $\mathcal H$, because $\mathbf s$ is a conjugate-linear isometry and $\mathcal V$ is unitary. Extend them to an orthonormal basis $(f_a)_{a\le D_{\mathrm{all}}}$ of $\mathcal H$ with $f_k=\mathbf s(\mathcal V\epsilon_k)$ for $k\le D_{\mathrm{rows}}$. Fix orthonormal bases $(c_{u,l})_l$ of $\mathcal C_u$ and $(o_{u,j})_{j\le d_u}$ of $V_{u,v}$, and put
+\[
+(P_u)_{a,l}=\langle f_a,\mathcal P_uc_{u,l}\rangle,\qquad(V_u)_{l,j}=\langle c_{u,l},\iota_u\mathcal U_uo_{u,j}\rangle .
+\]
+Since $\iota_u\mathcal U_u$ is an isometry, $V_u^*V_u=1$, and $(P_uV_u)_{a,j}=\langle f_a,\mathcal P_u\iota_u\mathcal U_uo_{u,j}\rangle$. The matrix $P_u^*P_{u'}$ has entries $\langle\mathcal P_uc_{u,l},\mathcal P_{u'}c_{u',l'}\rangle$ by Parseval's identity in $\mathcal H$, which is the matrix of $\mathcal P_u^*\mathcal P_{u'}$ in the chosen bases.
+
+For $k\le D_{\mathrm{rows}}$, \eqref{r3:besselid} gives
+\[
+(P_uV_u)_{k,j}=\big\langle\mathbf s(\mathcal V\epsilon_k),\mathcal P_u\iota_u\mathcal U_uo_{u,j}\big\rangle=a_u^{-1}\big(B_{u,v}o_{u,j}\big)(\epsilon_k).
+\]
+Let $(b_l)$ be the fixed basis of $V_u$ and $(b'_m)$ the fixed basis of $Y^*$. Let $\beta_u$ be the matrix with $o_{u,j}=\sum_l(\beta_u)_{lj}\,b_l\otimes1$, and let $\beta'$ be the matrix with entries $\beta'_{km}=(b'_m\otimes1)(\epsilon_k)$. Since $B_{u,v}(b_l\otimes1)=\sum_m([B_u]_v)_{ml}\,b'_m\otimes1$, we get $\big((B_{u,v}o_{u,j})(\epsilon_k)\big)_{k,j}=\beta'[B_u]_v\beta_u$. The matrix $\beta_u$ is invertible because $(o_{u,j})$ is a basis of $V_{u,v}$, and $\beta'$ is invertible because it is the matrix of the perfect pairing between $Y^*_v$ and $Y_v$ in the bases $(b'_m\otimes1)$ and $(\epsilon_k)$. So $Y'=\beta'^{-1}$ and $Y_u=a_u^{-1}\beta_u$ have the required property.
+\end{proof}
+
+The next theorem is hypothesis~\eqref{A3} of Proposition~\ref{acct}, with $\mu^N_u=\mu(N_u)$, $\mu^C=\mu(R^\vee)$, the weights $d_u=\rk N_u$ and the error $e_3$ of \eqref{r3:e3}. Its hypotheses (a) to (f) are the outputs of the construction that it uses.
+
+\begin{theorem}[hypothesis~\eqref{A3}]\label{r3:A3}
+Let $K$ be a totally complex number field, $W$ a finite nonempty set, $\bar R$ a hermitian lattice over $\OK$ of rank $D_{\mathrm{rows}}\ge1$ in a $K$-vector space $Y$, and for $u\in W$ let $\bar N_u$ be a hermitian lattice over $\OK$ of rank $d_u\ge1$ in a $K$-vector space $V_u$, $B_u\colon V_u\to Y^*$ a $K$-linear map and $h_u$ a real number. Put
+\[
+s=\frac{\sum_ud_u\big(\mu(N_u)-h_u\big)}{\sum_ud_u},\qquad u_F=\max_{u\in W}\big(\mu_{\max}(N_u)-h_u\big)-s .
+\]
+Let $D^*>0$, $H>0$, $\sigma$, $\eta_0$, $\eta_1$, $e_0$, $\delta'$, $\delta$ be real numbers with
+\[
+0<\sigma\le\tfrac1{20},\quad-1\le\eta_0\le\tfrac\sigma2,\quad\eta_1\le\tfrac\sigma2,\quad0\le e_0\le\tfrac18,\quad\sqrt{e_0}\le\tfrac\sigma2,\quad0\le\delta'\le\tfrac14,\quad0\le\delta<1,
+\]
+and suppose the following.
+\begin{enumerate}
+\item[(a)] $B_u(N_u)\subset R^\vee$ for every $u$.
+\item[(b)] $\hgt(B_u)\le h_u$ for every $u$ with $B_u\ne0$, the height being computed with the norms of $\bar N_u$ and $\bar R^\vee$.
+\item[(c)] $s+\mu_{\max}(R)\le H$.
+\item[(d)] The family $(B_u)$ has a Bessel realization at a place $v\in\Sigma_K$ with $D_{\mathrm{all}}\ge D_{\mathrm{rows}}$ and $(1-\delta)D_{\mathrm{all}}\le D_{\mathrm{rows}}$.
+\item[(e)] The Gram operators of the realization satisfy $\lVert K_{uu'}\rVert_\HS^2\le(1+\eta_0)d^S_ud^S_{u'}/D^*$ for $u\ne u'$, $\lVert K_{uu}-1\rVert_\HS^2\le e_0d^S_u$ for every $u$, and $D_{\mathrm{all}}\le(1+\eta_1)D^*$.
+\item[(f)] $D^*\le\sigma\sum_ud^S_u$ and $\sum_u(d^S_u-d_u)\le\delta'\sum_ud^S_u$.
+\end{enumerate}
+Then the number
+\begin{equation}\label{r3:e3}
+e_3=\frac{4\Lambda(u_F,H)+\big(5\sigma+3\sqrt{\delta'}+4\sqrt{2e_0}\big)H}{1-\delta}
+\end{equation}
+is nonnegative, and
+\[
+\frac{\sum_ud_u\big(\mu(N_u)-h_u\big)}{\sum_ud_u}-e_3\le\mu(R^\vee).
+\]
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{r3:block} gives invertible matrices $Y'$, $Y_u$ and matrices $P_u$, $V_u$ with $V_u^*V_u=1$ such that the first $D_{\mathrm{rows}}$ rows of $A_u=P_uV_u$ form $Y'^{-1}[B_u]_vY_u$, and such that the matrices $\sqrt{\gamma_u\gamma_{u'}}P_u^*P_{u'}$ with $\gamma_u=c_u^{-1}$ have the Hilbert--Schmidt norms of the Gram operators. Proposition~\ref{r3:gram} with $\widetilde D=D_{\mathrm{all}}$ applies by (e) and (f), and it gives conditions (v) and (vi) of Theorem~\ref{r3:frame} with $e=2e_0\le\frac14$ and $\eta=5\sigma+3\sqrt{\delta'}$.
+
+We apply Theorem~\ref{r3:frame} with $I=W$, the lattices $N_u$, the target $C=R^\vee$ of rank $D=D_{\mathrm{rows}}$, $D_1=D_{\mathrm{all}}-D_{\mathrm{rows}}$, and the numbers $s$, $u=u_F$ and $H$. The inclusions $B_u(N_u)\subset C$ and the height bounds are (a) and (b). Condition (i) holds with equality by the definition of $s$. Condition (ii) holds by the definition of $u_F$, and $u_F\ge0$ because $\mu(N_u)\le\mu_{\max}(N_u)$ makes $s$ at most the maximum of $\mu_{\max}(N_u)-h_u$. Condition (iii) is (c), because $\mu_{\min}(R^\vee)=-\mu_{\max}(R)$ by Proposition~\ref{r3:HN}. Condition (iv) is (d). The conclusion of Theorem~\ref{r3:frame} is the inequality of the theorem, with $\eta+4\sqrt e=5\sigma+3\sqrt{\delta'}+4\sqrt{2e_0}$.
+\end{proof}
+
+\begin{remark}\label{r3:rem:log}
+Condition (K3) of Section~\ref{sec:proofA} uses the weaker conclusion $s-\log\lvert W\rvert-e_3\le\mu(R^\vee)$, obtained from Theorem~\ref{r3:A3} by subtracting $\log\lvert W\rvert\ge0$. The term $\log\lvert W\rvert$ is slack and plays no role in the argument. Either form serves as \eqref{A3}, with $e_3$ of \eqref{r3:e3} or with $e_3+\log\lvert W\rvert$.
+\end{remark}
+
+The size of $e_3$ is controlled by the spread $u_F$, which the next lemma bounds by the two-sided form of hypothesis \eqref{A2} and the spreads of the base slopes, the local terms and the heights.
+
+\begin{lemma}\label{r3:uF}
+Let $K$ be a totally complex number field and $W$ a finite nonempty set, and for $u\in W$ let $\bar N_u$ and $\bar M_u$ be hermitian lattices over $\OK$, with $d_u=\rk N_u\ge1$, and let $h_u$, $E_u$, $\beta_u^+$, $\beta_u^-$ be real numbers. Let $\Gamma$ and $\mathcal L$ be real numbers, put $s=\sum_ud_u(\mu(N_u)-h_u)/\sum_ud_u$ and $u_F=\max_u(\mu_{\max}(N_u)-h_u)-s$, and suppose that for every $u$
+\[
+\mu_{\max}(N_u)\le\mu_{\max}(M_u)+\Gamma+\mathcal L-E_u+\beta^+_u,\qquad\mu(N_u)\ge\mu(M_u)+\Gamma+\mathcal L-E_u-\beta^-_u .
+\]
+Then
+\[
+u_F\le\max_{u,u'\in W}\Big(\big(\mu_{\max}(M_u)-\mu(M_{u'})\big)+\lvert E_u-E_{u'}\rvert+\lvert h_u-h_{u'}\rvert\Big)+\max_u\beta^+_u+\frac{\sum_ud_u\beta^-_u}{\sum_ud_u}.
+\]
+\end{lemma}
+
+\begin{proof}
+For $u,u'\in W$ the two inequalities give
+\[
+\big(\mu_{\max}(N_u)-h_u\big)-\big(\mu(N_{u'})-h_{u'}\big)\le\big(\mu_{\max}(M_u)-\mu(M_{u'})\big)+(E_{u'}-E_u)+(h_{u'}-h_u)+\beta^+_u+\beta^-_{u'} .
+\]
+Fix $u$, multiply by $d_{u'}$, sum over $u'$ and divide by $\sum_{u'}d_{u'}$. The left side becomes $\mu_{\max}(N_u)-h_u-s$, and the right side is at most the bound of the lemma. Taking the maximum over $u$ proves the lemma.
+\end{proof}
+
+\begin{corollary}[size of $e_3$]\label{r3:size}
+Let $x\ge1$, $C_H\ge0$, $b>0$, $u_F\ge0$, $U\ge\max(u_F,b)$, $0\le\delta\le\frac12$, $\delta'\ge0$ and $e_0\ge0$ be real numbers with $(3\sqrt{\delta'}+4\sqrt{2e_0})\,x^{C_H}\le1$, and put $\sigma=x^{-C_H}$, $H=x^{C_H}b$ and
+\[
+e_3=\frac{4\Lambda(u_F,H)+\big(5\sigma+3\sqrt{\delta'}+4\sqrt{2e_0}\big)H}{1-\delta}.
+\]
+Then $e_3\le8\,U\log\big(1+x^{C_H}\big)+12\,b$.
+\end{corollary}
+
+\begin{proof}
+We have $(5\sigma+3\sqrt{\delta'}+4\sqrt{2e_0})H=5b+(3\sqrt{\delta'}+4\sqrt{2e_0})x^{C_H}b\le6b$. Since $\Lambda$ is nondecreasing in its first variable and $U\ge b$, $\Lambda(u_F,H)\le U\log(1+H/U)\le U\log(1+x^{C_H})$. The factor $(1-\delta)^{-1}$ is at most $2$.
+\end{proof}
+
+\begin{lemma}[the size conditions of Theorem~\ref{r3:A3}]\label{r3:sizecond}
+Let $x\ge1$, $C_H>0$, $\varepsilon>0$, $C_0\ge1$, $\Gamma_0>0$, $b\ge3$ and an integer $f\ge1$ be given, put $\sigma=x^{-C_H}$ and $\omega=\exp(-x^{\varepsilon/8})$, and assume
+\[
+x^{C_H}\ge20,\qquad11\,\omega\,x^{C_H}\le1,\qquad4f\le b\,\omega^2 .
+\]
+Let $W$ be a finite set with $\lvert W\rvert\ge C_0\Gamma_0^2x^{C_H}$, let $D^*>0$, and for $u\in W$ let $d^S_u\ge D^*/(C_0\Gamma_0^2)$ and $T_u\ge b$ be real numbers and $d_u=d^S_u(1-\frac1{T_u-1})^f$. Let $\eta_0,\eta_1,e_0$ be real numbers with $\eta_0\ge-1$, $e_0\ge0$ and $\eta_0,\eta_1,\sqrt{e_0}\le\omega$, and put $\delta'=2f/b$. Then
+\begin{gather*}
+D^*\le\sigma\sum_ud^S_u,\qquad\sum_u(d^S_u-d_u)\le\delta'\sum_ud^S_u,\qquad0<\sigma\le\tfrac1{20},\qquad\eta_0,\eta_1,\sqrt{e_0}\le\tfrac\sigma2,\\
+e_0\le\tfrac18,\qquad0\le\delta'\le\tfrac14,\qquad\big(3\sqrt{\delta'}+4\sqrt{2e_0}\big)x^{C_H}\le1 .
+\end{gather*}
+\end{lemma}
+
+\begin{proof}
+Summing $d^S_u\ge D^*/(C_0\Gamma_0^2)$ over $W$ gives $\sum_ud^S_u\ge\lvert W\rvert D^*/(C_0\Gamma_0^2)\ge x^{C_H}D^*=D^*/\sigma$. Lemma~\ref{r3:ramshare} and $T_u\ge b$ give $d^S_u-d_u\le(2f/b)d^S_u$, and summing over $u$ gives the second inequality. Now $\sqrt{\delta'}\le\sqrt{\omega^2/2}\le\omega$, $\sigma\le\frac1{20}$, and $\omega\le\frac{\sigma}{11}\le\frac\sigma2$, so $\eta_0,\eta_1,\sqrt{e_0}\le\frac\sigma2$ and $e_0\le\omega^2\le\frac18$, $\delta'\le\omega^2/2\le\frac14$. Finally $(3\sqrt{\delta'}+4\sqrt{2e_0})x^{C_H}\le(3+4\sqrt2)\,\omega\,x^{C_H}\le1$.
+\end{proof}
+
+The integrality (a) comes from the divisibility of the composite of the lifts and from the definition of $N_u$ as a rescaled sublattice. The following lemma isolates the step from local divisibility to (a).
+
+\begin{lemma}[integrality from local divisibility]\label{r3:int}
+Let $K$ be a number field, $R$ a lattice in a $K$-vector space $Y$, $V$ a $K$-vector space and $B\colon V\to Y^*$ a $K$-linear map. For each finite place $w$ of $K$ let $\Lambda_w$ be an $\mathcal O_{K,w}$-submodule of $V\otimes_KK_w$, and suppose that $\operatorname{ord}_w\big(B(x)(y)\big)\ge0$ for every $x\in\Lambda_w$ and $y\in R$, where $B$ is extended $K_w$-linearly. Let $N\subset V$ be a lattice with $N\subset\Lambda_w$ for every $w$. Then $B(N)\subset R^\vee$. In particular, if $N^0_w\subset V\otimes K_w$ and integers $s(w)\ge0$ satisfy $\operatorname{ord}_w(B(x)(y))\ge s(w)$ for $x\in N^0_w$ and $y\in R$, and $N\otimes\mathcal O_{K,w}\subset\varpi_w^{-s(w)}N^0_w$ for every $w$, then $B(N)\subset R^\vee$.
+\end{lemma}
+
+\begin{proof}
+For $x\in N$ and $y\in R$ the number $B(x)(y)\in K$ has $\operatorname{ord}_w\ge0$ at every finite place $w$, so it lies in $\OK$. Hence $B(x)\in R^\vee$. For the second statement put $\Lambda_w=\varpi_w^{-s(w)}N^0_w$, so that $\operatorname{ord}_w(B(\varpi_w^{-s(w)}x)(y))\ge-s(w)+s(w)=0$ for $x\in N^0_w$.
+\end{proof}
+
+\subsection{The automorphic inputs of Theorem~\ref{r3:A3}}\label{r3:sec:S}
+
+Theorem~\ref{r3:A3} uses three properties of the construction that are not consequences of slope theory. The first is the Bessel realization (d), that is, the identity \eqref{r3:besselid} of the period map with a Bessel period of a Poincar\'e series, together with the bound $(1-\delta)D_{\mathrm{all}}\le D_{\mathrm{rows}}$ with $0\le\delta\le\exp(-x^{\varepsilon_z/7})$, where $\varepsilon_z$ is $\varepsilon$ divided by a fixed integer $J\ge1$. The second is the near orthogonality (e). The third is the pair of counting conditions in (f) and Lemma~\ref{r3:sizecond}.
+
+We record the objects of the second. Let $G$ be the unitary group of the hermitian space of the top step over $E$, let $\mathcal H$ be the space of automorphic forms on $G$ whose component at the archimedean places is the fixed discrete series and whose component at the finite places is fixed by the level idempotent of the construction, with the Petersson inner product, and let $D^*$ be the product of the formal degree of the discrete series, the volume of the automorphic quotient and the value at $1$ of the level idempotent. For each word $u$ the Bessel datum consists of a flag of isotropic vectors $e_1,\dots,e_r$ and a vector $z_u$ orthogonal to them with $\langle z_u,z_u\rangle=-T_u$. The seed of $u$ is built from the Bessel function $W_u$ of the discrete series for this datum and a character of a level subgroup, $\mathcal P_u\colon\mathcal C_u\to\mathcal H$ sends a column vector $T$ to the Poincar\'e series $x\mapsto\sum_{\gamma\in S_u(F)\backslash G(F)}\mathrm{Ph}_{u,T}(\gamma x)$ of the seed, where $S_u$ is the stabilizer of the datum, and $c_u=\mathrm{vol}_N(u)\mathrm{vol}_H(u)/\dim\Pi_u$ with $\dim\Pi_u$ the product over the archimedean places of the dimensions of the $K_\infty$-types of $u$. Put $\Gamma_0=\exp(C_\Gamma m^5fx^\varepsilon)$.
+
+Section~\ref{sec:bessel} proves Theorem~\ref{w2:S} (near orthogonality), Theorem~\ref{w2:I} (the share of irreducible rows) and Theorem~\ref{w2:B} (the Bessel identity) from the statements listed there.

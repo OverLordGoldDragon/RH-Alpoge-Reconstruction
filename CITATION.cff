@@ -6,17 +6,17 @@ message: >-
   itself (see "references").
 type: software
 title: >-
-  An End-to-End Reconstruction of the Alpöge–Claude Route to the Riemann
-  Hypothesis
+  The Alpöge Proof of the Riemann Hypothesis
 abstract: >-
-  A reconstruction, in conventional mathematical language, of the Lean proof
-  archive released by Levent Alpöge on November 20, 2026. The architecture and
-  major mechanisms of the argument are reconstructed end to end. A final
-  dependency audit of November 22, 2026 finds no unresolved internal
-  residual on the live proof route, and the source-fidelity check of the
-  external theorem boundary is under way. On November 21, 2026, the Lean
-  and Mathlib communities certified that both the statement and the proof in
-  the archive are correct.
+  A reconstruction in conventional mathematics of the proof of the Riemann
+  hypothesis that Levent Alpöge announced on November 20, 2026, found in
+  collaboration with Claude and released as a Lean development, which the
+  Lean and Mathlib communities certified on November 21, 2026. The
+  reconstruction is not yet complete. The current manuscript of November 23,
+  2026 states precisely the internal statements whose conventional proofs
+  still have to be written and the published inputs whose exact forms still
+  require verification.
+version: "2026-11-23"
 authors:
   - family-names: Adriazola
     given-names: Jimmie

@@ -1,0 +1,102 @@
+\section{The accounting and the excess identity}\label{sec:accounting}
+
+Part~II attaches to a chain of $m$ theta lifts a family of hermitian lattices, and it proves seven inequalities between their slopes, the heights of certain period maps and some local terms. This section proves that these seven inequalities, written as inequalities between real numbers, bound a sum $S$ over primes by an explicit main term. It then proves that $S$ minus this main term is a combination of the functions $G$ and $G_\psi$ of Section~\ref{sec:functions}. The two results together reduce the arithmetic of Part~II to an upper bound for that combination.
+
+\subsection{The accounting}\label{sec:acct}
+
+For $y>0$ put $\ph(y)=y\log y-y$.
+
+\begin{proposition}\label{acct}
+Let $m,f,N_T\ge1$ be integers, let $a_1,\dots,a_{N_T}$ and $w_{j\rho}$ for $1\le j\le m$ and $1\le\rho\le f$ be positive real numbers, and put $A=\sum_ta_t$. Let $v>0$ and let $\gamma,\lambda_1,g$ be real numbers, and put $\log\Omega=\gamma+\log(\pi/v)-\lambda_1$. Let $W$ be a finite nonempty set, and for $u\in W$ let $d_u,T_u>0$ and $\mu^N_u,\mu^M_u,h_u,E_u$ be real numbers. Let $\mu^C,\mathcal L,\Gamma,S$ be real numbers and $e_1,\dots,e_7\ge0$. Suppose that for every $u\in W$
+\begin{align}
+S&\le\Gamma+e_1,\label{A1}\\
+\mu^M_u+\Gamma+\mathcal L-E_u-e_2&\le\mu^N_u,\label{A2}\\
+\frac{\sum_{u'}d_{u'}(\mu^N_{u'}-h_{u'})}{\sum_{u'}d_{u'}}-e_3&\le\mu^C,\label{A3}\\
+\mu^C+h_u-\mathcal L&\le\sum_{t=1}^{N_T}\big(m\ph(a_t)-ma_t\log\Omega-a_t\log T_u\big)+e_4,\label{A4}\\
+E_u&\le mAg+e_5,\label{A5}\\
+\log T_u&\ge\sum_{j=1}^m\frac1f\sum_{\rho=1}^f\log\frac{w_{j\rho}v}{\pi}+mg-e_6,\label{A6}\\
+\mu^M_u&\ge-e_7.\label{A7}
+\end{align}
+Then
+\begin{equation}\label{acctconc}
+S\le\sum_{j=1}^m\sum_{t=1}^{N_T}a_t\Big(\log a_t-1-\gamma+\lambda_1-\frac1f\sum_{\rho=1}^f\log w_{j\rho}\Big)+e_1+e_2+e_3+e_4+e_5+Ae_6+e_7 .
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Write $\langle X\rangle=\sum_ud_uX_u/\sum_ud_u$ for the weighted mean over $W$. By \eqref{A2} and \eqref{A7}, $\Gamma\le\mu^N_u-\mathcal L+E_u+e_2+e_7$ for every $u$. The weighted mean of this inequality and \eqref{A3} give
+\[
+\Gamma\le\langle\mu^N-h\rangle+\langle h+E\rangle-\mathcal L+e_2+e_7\le\mu^C-\mathcal L+\langle h+E\rangle+e_2+e_3+e_7 .
+\]
+Let $R_u$ denote the right side of \eqref{A4}. The weighted mean of \eqref{A4} is $\mu^C-\mathcal L\le\langle R-h\rangle$, so the heights cancel and
+\[
+\Gamma\le\langle R+E\rangle+e_2+e_3+e_7 .
+\]
+By \eqref{A5} and \eqref{A6}, and since $A\ge0$,
+\begin{align*}
+R_u+E_u&\le m\sum_t\big(a_t\log a_t-a_t-a_t\log\Omega\big)-A\log T_u+mAg+e_4+e_5\\
+&\le\sum_{j=1}^m\sum_ta_t\Big(\log a_t-1-\log\Omega-\frac1f\sum_\rho\log\frac{w_{j\rho}v}{\pi}\Big)+e_4+e_5+Ae_6 .
+\end{align*}
+The terms $mAg$ cancel, and $-\log\Omega-\log(v/\pi)=-\gamma+\lambda_1$, so the double sum equals the double sum in \eqref{acctconc}. Inequality \eqref{A1} completes the proof.
+\end{proof}
+
+In Part~II the index $u$ runs over a set of auxiliary primes $T_u$, the number $\mu^N_u$ is the slope of a hermitian lattice $N_u$ of rank $d_u$, $\mu^M_u$ is the slope of a base lattice, $\mu^C$ is the slope of the dual $R^\vee$ of a lattice $R$ of automorphic forms, and $h_u$ is the height of a period map $B_u\colon N_u\to R^\vee$. The number $\Gamma$ is the total gain in divisibility of the $m$ lifts at the finite places, and $\mathcal L$ and $E_u$ are sums of local terms. Inequality \eqref{A3} is the slope inequality for the maps $B_u$, and \eqref{A4} bounds the archimedean size of $B_u$ together with the slope of $R^\vee$. The factor $m$ in front of $\ph(a_t)$ in \eqref{A4}, a quantity close to $\log\Gamma(a_t)$, appears because each of the $m$ lifts contributes one copy of $\ph(a_t)$ to the height of $B_u$. In Part~II the number $v$ is $\frac12\mathrm{rd}_E$, where $\mathrm{rd}_E=\lvert d_E\rvert^{1/[E:\mathbb Q]}$ is the root discriminant of the CM field $E$, so that $\log\Omega=\gamma+\log(2\pi/\mathrm{rd}_E)-\lambda_1$. Proposition~\ref{r4:R4:period} identifies this number with twice the normalized arithmetic degree of the line of periods of a CM elliptic curve, written in coordinates over $E$. The formula of Chowla and Selberg~\cite{chowlaselberg} with Dirichlet's class number formula gives $\gamma+\log(2\pi/\sqrt d)-\lambda_1$ for the period of the curve itself, and the two numbers differ by $\log(\mathrm{rd}_E/\sqrt d)$, which comes from the different of $E/\mathbb Q(\sqrt{-d})$.
+
+\begin{remark}\label{rem:stepanov}
+Proposition~\ref{acct} has the structure of Stepanov's proof of the Riemann hypothesis for curves over finite fields~\cite{stepanov}, in the form of Bombieri~\cite{bombieri}. There an auxiliary function vanishes to order $M$ at every rational point, the count of zeros against poles bounds the number $N$ of points by $N-1\le\ell+nq/M$, and the two error terms balance at $M=\sqrt q$. Over a number field the count of zeros against poles becomes a slope inequality of Bost's type~\cite{bost} for a family of maps, which is \eqref{A3}, and the order of vanishing becomes the number $m$ of lifts in \eqref{A4}. Inequality \eqref{A3} bounds the mean slope of a target lattice by the slopes of the sources of a redundant family of maps, and Theorem~\ref{r3:frame} derives it from Bost's inequality for one map, the Harder--Narasimhan filtration and a count of frames at one complex place. Section~\ref{sec:point} shows that the error terms balance at $m=\sqrt x$.
+\end{remark}
+
+\subsection{The excess identity}\label{sec:excess}
+
+Proposition~\ref{excess} below identifies the main term of \eqref{acctconc} with the main term of a sum over primes indexed by a finite abelian group. Let $H$ be a finite abelian group and $\mathcal G=(\mathbb Z/2)^2\times H$, with elements $g=(e_1,e_2,h)$. Put
+\[
+\Phi=\{g\in\mathcal G:e_1=0\},\qquad f=\lvert\Phi\rvert=2\lvert H\rvert,\qquad p_t(e_1,e_2,h)=(e_1+1,\,e_2+1,\,h+t)\quad(t\in H),
+\]
+so that $p_t$ maps $\mathcal G\setminus\Phi$ bijectively onto $\Phi$. For each character $\psi$ of $\mathcal G$ let $G_\psi\colon(0,\infty)\to\mathbb C$ be a function. For $a>0$, $t\in H$ and a function $w\colon\Phi\to(0,\infty)$ define the excess
+\begin{equation}\label{De}
+\mathrm{De}(a,t,w)=\frac1f\sum_{g\notin\Phi}\ \sum_\psi\overline{\psi(g)}\;w(p_tg)\;G_\psi\Big(\frac a{w(p_tg)}\Big),
+\end{equation}
+where $\psi$ runs over the $2f$ characters of $\mathcal G$.
+
+\begin{proposition}\label{excess}
+Let $H$, $\mathcal G$, $\Phi$, $f$ and $p_t$ be as above. For every prime $p$ let $I_p$ be a subgroup of $\mathcal G$ and $\sigma_p$ an element of $\mathcal G$. Let $d$ be a prime and $S_0$ a finite set of primes with $d\notin S_0$, and suppose that $I_p=\{0\}$ for $p\notin S_0\cup\{d\}$, that $I_p\subset\Phi$ and $\sigma_p\in\Phi$ for $p\in S_0$, and that $I_d=\{0,(1,0,0)\}$. For a character $\psi$ of $\mathcal G$ and a prime power $p^i$ with $i\ge1$ put
+\[
+\psi(p^i)=\frac1{\lvert I_p\rvert}\sum_{h\in I_p}\psi(i\sigma_p+h),
+\]
+and put $\psi(n)=0$ for the integers $n\ge1$ that are not of this form. For every nontrivial $\psi$ let $\ell_\psi$ be a complex number, put $G_\psi(y)=\sum_{n\le y}\Lambda(n)\psi(n)(y/n-1)+\ell_\psi y$ for $y>0$, and let $G_\psi$ be the function $G$ of \eqref{G}, extended by the same formula to $0<y<1$, when $\psi$ is trivial. Let $\chi_1(e_1,e_2,h)=(-1)^{e_1}$, and for $i\ge1$ let $g_i$ be the element of the coset $i\sigma_d+I_d$ that does not lie in $\Phi$. Then for every $a>0$, every $t\in H$ and every function $w\colon\Phi\to(0,\infty)$,
+\begin{multline}\label{excessid}
+2\sum_{\substack{p\notin S_0\cup\{d\}\\ \sigma_p\notin\Phi}}\log p\sum_{i\ \mathrm{odd}}\max\Big(\frac a{p^i}-w(p_t(i\sigma_p)),0\Big)+\log d\sum_{i\ge1}\max\Big(\frac a{d^i}-w(p_tg_i),0\Big)\\
+=a\Big(\log a-1-\gamma+\ell_{\chi_1}-\frac1f\sum_{\rho\in\Phi}\log w(\rho)\Big)+\mathrm{De}(a,t,w).
+\end{multline}
+\end{proposition}
+
+\begin{proof}
+For $g\notin\Phi$ write $w_g=w(p_tg)$ and $y_g=a/w_g$, and put
+\[
+A_g=\sum_{n\ge1}\Lambda(n)\,c_g(n)\max\Big(\frac an-w_g,0\Big),\qquad c_g(n)=\frac1{\lvert\mathcal G\rvert}\sum_\psi\overline{\psi(g)}\,\psi(n).
+\]
+We first show that the left side of \eqref{excessid} equals $2\sum_{g\notin\Phi}A_g$. By the orthogonality of characters, $c_g(p^i)=\lvert I_p\rvert^{-1}$ when $g\in i\sigma_p+I_p$, and $c_g(p^i)=0$ otherwise. For $p\in S_0$ the coset $i\sigma_p+I_p$ lies in $\Phi$, so these primes do not contribute. For $p\notin S_0\cup\{d\}$ the coset is the point $i\sigma_p$, which lies outside $\Phi$ exactly when $\sigma_p\notin\Phi$ and $i$ is odd, because $\Phi$ has index two. For $p=d$ the coset $i\sigma_d+I_d$ has two elements, one of which is $g_i\notin\Phi$, and $c_{g_i}(d^i)=\frac12$.
+
+Since $\lvert\mathcal G\rvert=2f$ and the terms with $n>y_g$ vanish,
+\[
+2A_g=\frac1f\sum_\psi\overline{\psi(g)}\;w_g\sum_{n\le y_g}\Lambda(n)\psi(n)\Big(\frac{y_g}n-1\Big).
+\]
+For nontrivial $\psi$ the inner sum equals $G_\psi(y_g)-\ell_\psi y_g$, and for the trivial character it equals $G(y_g)+y_g\log y_g-(1+\gamma)y_g$ by \eqref{G}. With $w_gy_g=a$ we obtain
+\[
+2A_g=\frac1f\sum_\psi\overline{\psi(g)}\,w_g\,G_\psi(y_g)+\frac af\Big(\log\frac a{w_g}-1-\gamma\Big)-\frac af\sum_{\psi\ne1}\overline{\psi(g)}\,\ell_\psi .
+\]
+The complement of $\Phi$ has $f$ elements and $p_t$ maps it bijectively onto $\Phi$, so the first term sums over $g\notin\Phi$ to $\mathrm{De}(a,t,w)$, and the second sums to $a(\log a-1-\gamma)-\frac af\sum_{\rho\in\Phi}\log w(\rho)$. The complement of $\Phi$ is a coset of $\Phi$, so $\sum_{g\notin\Phi}\overline{\psi(g)}$ vanishes when $\psi$ is nontrivial on $\Phi$, and it equals $-f$ for $\psi=\chi_1$, the nontrivial character that is trivial on $\Phi$. The third term therefore sums to $a\,\ell_{\chi_1}$.
+\end{proof}
+
+In the application, $\mathcal G$ is the Galois group of a CM field $E$ that is abelian over $\mathbb Q$, the set $\Phi$ is a CM type, $I_p$ is the inertia group and $\sigma_p$ a Frobenius element at $p$, and $\ell_\psi=L'(1,\chi_\psi)/L(1,\chi_\psi)$ for the primitive Dirichlet character $\chi_\psi$ attached to $\psi$ by class field theory. With this choice $G_\psi$ is the function $G^\ast_{\chi_\psi}$ of \eqref{Gstar} below, whose real part is the function $G_{\chi_\psi}$ of \eqref{Gchi}. The primes $p$ with $\sigma_p\notin\Phi$ are the primes whose Frobenius element does not lie in the CM type, and for $H$ trivial and $\mathcal G$ the Galois group of $\mathbb Q(\sqrt{-d})$ over $\mathbb Q$ they are the primes inert in $\mathbb Q(\sqrt{-d})$. Each such prime contributes $\log p\cdot\max(a/p^i-w,0)$ for its odd powers, which has the size $a\log p\cdot p/(p^2-1)$ when $w$ is small. Section~\ref{sec:gain} shows that a theta lift gains exactly this power of $p$ in divisibility at an inert prime.
+
+\begin{corollary}\label{acctexcess}
+Let the notation be as in Proposition~\ref{excess}, and suppose that $\ell_{\chi_1}$ is real. Let $T\subset H$ have $N_T$ elements, let $a_t>0$ for $t\in T$, let $m\ge1$, and let $w_1,\dots,w_m\colon\Phi\to(0,\infty)$. Let $S$ be the sum over $t\in T$ and $1\le j\le m$ of the left side of \eqref{excessid} with $a=a_t$ and $w=w_j$. Suppose that $S$ satisfies the conclusion \eqref{acctconc} of Proposition~\ref{acct} with these $a_t$, with $w_{j\rho}=w_j(\rho)$ for $\rho\in\Phi$, and with $\lambda_1=\ell_{\chi_1}$. Then
+\[
+\sum_{t\in T}\sum_{j=1}^m\operatorname{Re}\mathrm{De}(a_t,t,w_j)\le e_1+e_2+e_3+e_4+e_5+Ae_6+e_7 .
+\]
+\end{corollary}
+
+\begin{proof}
+The left side of \eqref{excessid} is real, and so is the main term on its right side. Taking real parts in \eqref{excessid} and summing over $t$ and $j$ expresses $S$ as the main term of \eqref{acctconc} plus $\sum_{t,j}\operatorname{Re}\mathrm{De}(a_t,t,w_j)$.
+\end{proof}
