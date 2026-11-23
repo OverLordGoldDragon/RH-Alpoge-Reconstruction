@@ -1,0 +1,164 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\OEr}{\mathcal O_E}
+\newcommand{\Ok}{\mathcal O}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Bx}{\mathcal B}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The two rebasing steps of D2\\ From a weak reading to a full reading}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+After the leaf pass the head D2 kept its two rebasing steps. The first, \lean{PenChart.exists_readsStd_alt} ($51$ theorems), turns a weak reading into one whose penultimate index set is matched with the local orbits at the twist primes. The second, \lean{Fam.readsOfStd_alt} ($43$ theorems), moves the penultimate chart points so that the rational cosets equal the chosen local coset representatives exactly. This pass reads both and reconstructs them in ordinary mathematics. The first is a matching of two finite enumerations, the rational charts and the local orbits on the box quotients, using the orbit form of the local data lemma and part (i) of the completion dictionary. The second is transport of structure along elements supported at the twist primes, with one new ingredient, the periodicity of the penultimate finite sums, which shows that the vanishing of the dead coupling term (\lean{CplDead.xiCpl1_eq_zero_of_frames}) survives the move. D2 is closed. Counted without repetition, the tuple-construction block R4-D goes from $327$ to $233$ theorems and the residual in the heads from about $980$ to about $890$. Nothing was built or run in Lean, and no existing project file was edited.
+\end{abstract}
+
+\section{What the two steps say}
+
+A reading $J$ of the family at the twist parameter $t$ consists of local data $E_i$ at the twist primes $P_1,\dots,P_r$, an adelic twist datum $A$ with rational index sets $\mathrm{Ch}_{0,j}$, and maps $\iota_j\colon\prod_i\mathrm{Ch}_{i,j}\to\mathrm{Ch}_{0,j}$ and $\pi_{i,j}\colon\mathrm{Ch}_{0,j}\to\mathrm{Ch}_{i,j}$ between the local and the rational index sets. Let $m$ be the number of steps, so that $m-1$ is the penultimate step. Three reading conditions are relevant here.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \lean{ReadsLow} requires $\pi\circ\iota=\mathrm{id}$, injectivity of $\iota$ and the vanishing of the finite datum at rational indices outside the image of $\iota$ (\lean{dead}), at every step except the penultimate one.
+\item \lean{ReadsStd} adds the penultimate step. At each twist prime, the local coset representative $\mathrm{cos}(\pi_i\beta)$ and the coset of the rational chart point of $\beta$ lie in one orbit of the last local level (\lean{orb}). The coordinates at the G-places are the family's base vector $y_0$ modulo integers (\lean{cosG}). The coupling term vanishes off the image (\lean{live}).
+\item \lean{Reads} requires the two cosets to be equal (\lean{cos}), and the penultimate chart matrix to be $k_{\mathrm{std}}$ times an element supported at the twist primes whose local components lie in the last local level (\lean{pen}).
+\end{itemize}
+The steps are \lean{T.true_geometry_commutation_identity_alt} (\lean{ReadsLow} gives \lean{ReadsStd}) and \lean{T.true_geometry_commutation_property_alt} (\lean{ReadsStd} gives \lean{Reads}).
+
+Notation. At a twist prime $P$ with local field $k$, uniformizer $\varpi$ and depth $M$, write $\Bx_P=\varpi^{-M}\Ok^{X}/\varpi^{M}\Ok^{X}$ for the box quotient at the penultimate step and $J_P$ for the last local level, which acts on $\Bx_P$. The local index set $\mathrm{Ch}_{P}$ at the penultimate step enumerates the $J_P$-orbits on $\Bx_P$ through the coset data $\mathrm{cos}$: distinct indices give distinct orbits (\lean{cos_inj}) and every orbit is reached (\lean{cos_all}). This is the structure \lean{QExt} of the D1 to D3 report.
+
+\section{From a weak reading to a standard one}
+
+\begin{lemma}[orbit matching]\label{lem:orb}
+Let $J$ satisfy \lean{ReadsLow}.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item For every local index $y\in\mathrm{Ch}_P$ there is a rational vector $z$ with $q^{M}z$ integral at $P$ whose class in $\Bx_P$ lies in the orbit of $\mathrm{cos}(y)$. Any rational chart point whose coset at $P$ contains a translate of $z$ by the rational level at $P$ lies in that orbit (\lean{OrbAt}).
+\item Given such vectors $z_P$ at all twist primes, there is a good rational chart point $\beta$ at the penultimate step whose coset at every twist prime contains a translate of $z_P$ by the rational level at $P$.
+\item Two good chart points whose cosets are related by the rational levels at every twist prime are equal.
+\item If two local indices $y,y'$ are in orbit with the same rational chart point, then $y=y'$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Lemma~9(c) of the D1 to D3 report gives a rational representative in each class of $\Bx_P$, because $\OEr/P^{2M}\cong\Ok/\varpi^{2M}$ (\lean{exists_vec}). The rational level at $P$ acts on rational vectors through its local image in $J_P$ by Proposition~3(i) of that report, so a translate of $z$ by it stays in the local orbit. (b) The penultimate rational index set of the twist datum consists of one chart point for each tuple of classes of the rational levels at the twist primes, subject to the integrality bound $q^{M}z_P\in\mathrm{std}_P$ (\lean{exists_chart}). (c) This is the injectivity of that enumeration (\lean{chart_ext}). (d) Two local indices in orbit with one rational coset lie in one $J_P$-orbit, so they are equal by \lean{cos_inj} (\lean{orbAt_unique}).
+\end{proof}
+
+\begin{proposition}[standard reading]\label{prop:std}
+If $J$ satisfies \lean{ReadsLow}, there is a reading $J'$ with the same twist datum and local data that satisfies \lean{ReadsStd}.
+\end{proposition}
+
+\begin{proof}
+At steps other than the penultimate one keep $\iota$ and $\pi$. At the penultimate step, define $\iota(y)$ for a tuple $y=(y_P)$ of local indices as the chart point of Lemma~\ref{lem:orb}(b) for the vectors $z_P$ of Lemma~\ref{lem:orb}(a), and define $\pi_P(\beta)$ as the unique local index in orbit with $\beta$, which exists by (a) and \lean{cos_all} and is unique by (d). Then $\pi\circ\iota=\mathrm{id}$ by (d), $\iota$ is injective by (c), and \lean{orb} holds by construction. The G-place condition \lean{cosG} holds because the penultimate chart points have standard chart matrices and their coupling cosets at the type primes differ from the base vector by integral vectors (\lean{couplingCoset_sub_basePoint_integral_typePrime}). For \lean{live}, let $\gamma$ be a penultimate rational index with $\xi_{m-2}(\alpha,\gamma;z)\ne0$ for some $\alpha$ and $z$. Then $\gamma$ is good (\lean{good_of_xi}), and at each twist prime its coset lies in $\Bx_P$, hence in the orbit of some $\mathrm{cos}(y_P)$. By Lemma~\ref{lem:orb}(c) applied to $\gamma$ and $\iota(y)$ (whose cosets are related by the rational levels, \lean{lev_of_orbAt}), $\gamma=\iota(y)$. So the datum vanishes off the image of $\iota$ (\lean{exists_readsStd_alt}).
+\end{proof}
+
+\section{From a standard reading to a full one}
+
+\begin{lemma}[rational carriers]\label{lem:carry}
+Let $c\in\Bx_P$ and let $y_0$ be a rational vector whose class lies in the $J_P$-orbit of $c$. There is $r\in\GL_N(\OEr_{,P})$ whose local image lies in $J_P$, such that the class of every rational $y$ with $q^{-M}(r^{-1}y-y_0)$ integral at $P$ is $c$.
+\end{lemma}
+
+\begin{proof}
+Let $g\in J_P$ with $g\cdot[y_0]=c$. The set of $g'\in J_P$ with $g'\cdot[y_0]=c$ is the coset $g\,\mathrm{Stab}_{J_P}([y_0])$, which is open, since the stabilizer of a class modulo $\varpi^{M}$ contains the principal congruence subgroup of level $\varpi^{2M}$. By Lemma~5 of the D1 to D3 report it contains the image of a rational $r$, which is integral and invertible at $P$ because $J_P\subset\GL(\Ok)$. If $r^{-1}y\equiv y_0$ modulo $q^{M}\mathrm{std}_P$, then $[y]=r\cdot[y_0]=c$ (\lean{exists_rat_of_sameOrb}).
+\end{proof}
+
+\begin{lemma}[periodicity of the coupling term]\label{lem:per}
+The penultimate coupling term
+\[
+\Xi^{\mathrm{cpl}}(p_0,p,Y)(x)=\varphi_T(x)\prod_{P}\Psi_P\big(h_P;\ \mathrm{fr}_{p_0,P}\,x\,\mathrm{fr}_{p,P}^{-1},\ \mathrm{fr}_{p,P}^{-1}y_Y\big)
+\]
+(\lean{XiCpl1}) has the following property. Let $p,p'$ be chart points with the same decoration and $Y,Y'$ coset sets whose transported representatives differ by vectors in $q^{M_P}\mathrm{std}_P$ at every bad prime $P$ (with $M_P=0$ at the G-places). If $\Xi^{\mathrm{cpl}}(p_0,p,Y)$ vanishes identically, so does $\Xi^{\mathrm{cpl}}(p_0,p',Y')$.
+\end{lemma}
+
+\begin{proof}
+For each $x$ choose $x'$ with $\varphi_T(x')=\varphi_T(x)$ and $\mathrm{fr}_{p_0,P}x'\mathrm{fr}_{p,P}^{-1}\equiv\mathrm{fr}_{p_0,P}x\,\mathrm{fr}_{p',P}^{-1}$ modulo $q^{B}$-integral matrices at every bad prime. This is possible because the frames of $p$ and $p'$ have the same decoration, so they differ by elements that are integral at the bad primes, and $\varphi_T$ depends only on the level-prime conditions, which are disjoint from the bad primes; one corrects $x$ prime by prime by the Chinese remainder theorem (\lean{exists_transport}). The rational penultimate finite sum $\Psi_P$ is periodic in both arguments for these congruences (\lean{psiInvX}, \lean{psiInv}); this is the rational form of the support and periodicity of $\Psi$ in Proposition~3(iv) of the D1 to D3 report. Hence $\Xi^{\mathrm{cpl}}(p_0,p',Y')(x)=\Xi^{\mathrm{cpl}}(p_0,p,Y)(x')=0$ (\lean{xiCpl1_eq_zero_of_frames}).
+\end{proof}
+
+\begin{proposition}[full reading]\label{prop:full}
+If $J$ satisfies \lean{ReadsStd}, there is a reading $J'$ with the same local data that satisfies \lean{Reads}.
+\end{proposition}
+
+\begin{proof}
+For each penultimate index $\beta$ apply Lemma~\ref{lem:carry} at every twist prime with $c=\mathrm{cos}(\pi_P\beta)$ and $y_0$ the representative of the chart point of $\beta$ (they are in one orbit by \lean{orb}). The rational carriers $r_P$ give a chart point $q_\beta$ with the decoration of $\beta$ and an adelic element $\kappa_\beta$ supported at the places under the twist set, such that $k_b(\beta)\kappa_\beta$ is a point of $q_\beta$ and the frame of $q_\beta$ at each $P$ carries $\mathrm{cos}(\pi_P\beta)$ exactly (\lean{exists_chPt_moves_of_readsStd}, \lean{exists_GLint_carry}). Move the twist datum along the $\kappa_\beta$ by the transport of structure of Lemma~7 of the leaf report (\lean{AdForm.Rebase.exists_moved}). The move changes neither the characters, nor the first representatives $b_0$, nor the decorations and cosets of the chart points, so all fields of \lean{ReadsStd} transfer. The field \lean{cos} now holds with equality (\lean{cos_pi_eq_mk_pr_repY}). The field \lean{pen} holds because $\kappa_\beta$ is supported at the twist primes and its local components are the images of the $r_P$, which lie in the last local level (\lean{pen_moved_of_readsStd_at_last}). The G-place condition holds because the move is integral at the G-places (\lean{pr_repY_sub_mem_integers}). The condition \lean{live} transfers by Lemma~\ref{lem:per}, since decorations are unchanged and the moved representatives differ from the old ones by $q^{M}$-integral vectors (\lean{dead_moved}). This is \lean{readsOfStd_alt}.
+\end{proof}
+
+With Propositions~\ref{prop:std} and~\ref{prop:full} and Proposition~10 of the D1 to D3 report, a full reading exists for every true family and every twist parameter.
+
+\section{Counts}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{6.3cm}r r}
+\toprule
+declaration & closure & new\\
+\midrule
+\lean{T.true_geometry_commutation_identity_alt} (\lean{exists_readsStd_alt}) & 91 & 51\\
+\lean{T.true_geometry_commutation_property_alt} (\lean{readsOfStd_alt}) & 70 & 43\\
+\midrule
+D2 total & & 94\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The other theorems in these closures were already closed by the completion dictionary and the leaf pass.
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{1.0cm}>{\rr}p{5.6cm}r r>{\rr}p{3.6cm}}
+\toprule
+head & declaration & before & now & note\\
+\midrule
+D1 & \lean{dat_exists} children & 0 & 0 & closed\\
+D2 & \lean{exists_good} and the two rebasing steps & 94 & 0 & \textbf{closed}\\
+D3 & volume uniformity & 0 & 0 & closed\\
+D5 & \lean{AdForm.twS_ramL} & 84 & 84 & diamond operators on ramified columns\\
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & 76 & 76 & \\
+D8 & \lean{T.true_geometry_row_column_entry_alt} & 46 & 46 & \\
+D9 & \lean{T.true_geometry_twist_value_alt} & 28 & 28 & \\
+\midrule
+R4-D & distinct & 327 & 233 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent With the bundle witness ($195$) and R4-E ($459$) the residual in the heads is about $195+233+459\approx890$ theorems, against about $980$ before this pass. The $102$ shared theorems of E1b and the $243$ of K-a to K-c are counted separately, as before.
+
+\section{Next}
+D5 is the next head. Its remainder ($84$ theorems) is the theory of the diamond operators at the level primes on ramified column forms: twist-ramified forms are those whose diamond-translate sums vanish (\lean{ram_iff_scalar_ram}, \lean{diaSum_iff}, $54$ theorems), Hecke combinations supported at the level primes that are invariant under the standard-pair stabilizers come from column forms (\lean{twTransAct}, $17$), and the assembly \lean{twS}. It rests on Proposition~2 of the leaf report for the level groups at the level primes.
+
+\appendix
+\section{Scripts and limits}
+\Lpath{scripts/d2r_final.py} closes the two steps and recomputes the heads; it reads \Lpath{lvl_final.pkl} of the leaf pass. Read in full were \lean{exists_readsStd_alt}, \lean{readsOfStd_alt}, \lean{xiCpl1_eq_zero_of_frames} with the definition \lean{XiCpl1}, and the structures \lean{ReadsLow}, \lean{ReadsStd}, \lean{Reads}. Read at the statement were \lean{exists_vec}, \lean{exists_chart}, \lean{chart_ext}, \lean{good_of_xi}, \lean{lev_of_orbAt}, \lean{exists_rat_of_sameOrb}, \lean{exists_chPt_moves_of_readsStd}, \lean{pen_moved_of_readsStd_at_last}, \lean{dead_moved} and \lean{exists_transport}. The enumeration of penultimate chart points by classes of the rational levels in Lemma~\ref{lem:orb}(b,c) is taken from the statements of \lean{exists_chart} and \lean{chart_ext}. Nothing was built or run in Lean.
+
+\end{document}

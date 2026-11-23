@@ -1,0 +1,300 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\Ok}{\mathcal O}
+\newcommand{\OEr}{\mathcal O_E}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Af}{\mathbb A_{f}}
+\newcommand{\Fq}{\mathbb F}
+\newcommand{\rT}{\rho}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The D-block, final pass\\ D7, D8, D9 and the local operator identity behind D5}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This pass finishes the tuple-construction block R4-D. The heads D1 to D6 were closed in earlier passes. The three heads left, D7 ($76$ open theorems), D8 ($46$) and D9 ($27$), are pairwise disjoint, and each reduces to one compact mechanism. D7 is the Weil-equivariance of the Heisenberg combinations that create the step vectors at the twist places, together with the fact that a Heisenberg combination supported at a finite set of split places is determined by its value on one nonzero vacuum. D8 is the comparison at step zero between the reading's construction of adelic forms and the member's standard construction, which share their level group, character and representatives up to level elements with trivial character. D9 is the completion dictionary at a single twist place applied to the global level group of a step. All three are closed at the human-proof boundary. The local fact \lean{ramBijective_holds} used by D5 is reconstructed here as well: the local operator $\langle\epsilon\rangle F^{*}$ is invertible on ramified forms because $F^{*}F=q^{n}-\mathrm{tr}$ by orthogonality of characters on $\Fq^{n}$, and $\mathrm{tr}$ vanishes on ramified forms. Twenty-seven declarations shared by D5 and D8 with the class-data block are owned and reconstructed on the E side and are reused, not recounted. The D-block contributes no live internal residual to the route. Nothing was built or run in Lean, and no existing project file was edited.
+\end{abstract}
+
+\tableofcontents
+
+\section{Scope, method and answers}
+
+\paragraph{Scope.} D1, D2, D3, D5 and D6 were closed in the reports \Lpath{Final_Kernel_Law}, \Lpath{Final_D123}, \Lpath{Final_Level_Leaves}, \Lpath{Final_D2_Rebasing} and \Lpath{Final_D5}. This pass treats D7, D8, D9 and \lean{ramBijective_holds}. The class-data block E1 to E5 is closed by a separate agent; statements in earlier reports that E1 to E5 remain are stale and are not repeated here.
+
+\paragraph{Method.} The graph, index and counting conventions are those of the earlier passes. Each head is the closure of its top declarations inside the block-exclusive set of \lean{colSide_alt}; open theorems are those not already closed by the earlier passes (\Lpath{scripts/d789_tree.py}). The overlap with the class-data block was computed on the union of all exclusive sets, including the joint-exclusive set (\Lpath{scripts/e_overlap.py}). The live route of \lean{ramBijective_holds} was traced from \lean{riemannHypothesis} (\Lpath{scripts/rambij_trace.py}).
+
+\paragraph{Answers.}
+\begin{enumerate}[label=\Alph*.,leftmargin=*,itemsep=2pt]
+\item \textbf{D7, D8 and D9 are closed at the human-proof boundary: YES.}
+\item \textbf{\lean{ramBijective_holds}: CLOSED INTERNALLY} (Proposition~\ref{prop:F}). It is live by two routes, through D5 and through \lean{RamUnit.ramUnitary_holds} inside \lean{Fam.lawsLinks_of_geo_rows_cols_alt}; the second route keeps it outside every exclusive set, and no earlier report reconstructs it. Its owner is the shared local operator theory of lattice pairs (\lean{PairOp.pairOperatorStatement}); the part used on the D-side is the operator identities, reconstructed here.
+\item Human propositions: Propositions~\ref{prop:D7}, \ref{prop:D8}, \ref{prop:D9} and~\ref{prop:F}, with Lemmas~\ref{lem:vac} and~\ref{lem:orth}.
+\item Residual table: Section~\ref{sec:table}.
+\item Unique residual count in the D-block after this pass: $0$.
+\item \textbf{The D-block contributes a live internal residual to the RH route: NO.}
+\end{enumerate}
+
+\section{D7: the joint twist identity}\label{sec:D7}
+
+\subsection{The head}
+D7 is \lean{QVecJoin.step_mid} and \lean{QVecJoin.step_top}, the middle and top instances of one statement (\lean{QVec.gen}, read in full). Let $S$ be the finite set of twist places $v_1,\dots,v_r$ of the reading, with split points $q_i$, local fields $k_i$ and local extension data $E_i$. Let $V,W$ be the hermitian spaces of two consecutive steps with self-dual lattices $\Lambda_V,\Lambda_W$, let $b_V,b_W$ be the base points, which lie in the compact part of the finite adelic group and move $\Lambda_V,\Lambda_W$ to the family's lattices at $S$, and let $\omega$ be a Weil datum, a representation of $G_V(\mathbb A)\times G_W(\mathbb A)$ on the theta functions such that
+\begin{equation}\label{eq:weil}
+\omega(g,h)\,\mathrm{heis}(u)\,\omega(g,h)^{-1}=\mathrm{heis}\big((g,h)\cdot u\big)
+\end{equation}
+for every Heisenberg element $u$ (\lean{IsWeilDatumO}). A \emph{vacuum at} $S$ is a theta function fixed, up to the standard signs, by the Heisenberg elements of the lattice $\Lambda_V\otimes\Lambda_W$ at the places of $S$ (\lean{FinPl.Vac}). A \emph{combination at} $S$ is a finite linear combination of Heisenberg elements supported at $S$ (\lean{FinPl.CombAt}).
+
+\begin{proposition}[joint twist identity]\label{prop:D7}
+Let $d$ be a combination at $S$ and $\mathrm{vac}\ne0$ a theta function such that $\mathrm{comb}(d)\,\mathrm{vac}$ is the step vector, the theta function of the datum whose value at a rational matrix $z$ is $\prod_i\mathrm{loc}_{i}(z\bmod v_i)$, with $\mathrm{loc}_i$ the reduction-modulo-$v_i$ parahoric indicator twisted by the residue character $\xi_{v_i}$ (\lean{IsStepVecOf}). Let $e_i$ be the local combination of $E_i$ at $q_i$ that sends the lattice vacuum to the local parahoric test function $\Phi_i$ of the twist chain in the frames moved by $(b_V,b_W)$ (\lean{QExt.eL_at}, \lean{eLT_at}). Then for every vacuum $g$ at $S$
+\[
+\omega(b_V,b_W)\,\mathrm{comb}(d)\,g=\mathrm{comb}\big(e_1*\cdots*e_r\big)\,\omega(b_V,b_W)\,g .
+\]
+\end{proposition}
+
+\subsection{Two lemmas}
+
+\begin{lemma}[a combination is fixed by one vacuum]\label{lem:vac}
+Let $c_1,c_2$ be combinations at $S$, and $f_0\ne0$ a vacuum at $S$ with $\mathrm{comb}(c_1)f_0=\mathrm{comb}(c_2)f_0$. Then $\mathrm{comb}(c_1)f=\mathrm{comb}(c_2)f$ for every vacuum $f$ at $S$.
+\end{lemma}
+
+\begin{proof}
+Put $c=c_1-c_2$ and let $\Gamma$ be the lattice $\Lambda_V\otimes\Lambda_W$ at $S$, which is its own annihilator for the symplectic pairing $\psi(\langle\cdot,\cdot\rangle)$ at $S$ because both lattices are self-dual (\lean{latO_ann_at}). For a vacuum $f$ and a Heisenberg element $x$ supported at $S$, the vector $\mathrm{heis}(x)f$ is an eigenvector of every $\mathrm{heis}(\gamma)$, $\gamma\in\Gamma$, with eigenvalue $a(\gamma)\psi(\langle\gamma,x\rangle)$, where $a(\gamma)$ is the sign of the vacuum. Two elements $x,y$ in different $\Gamma$-cosets give different characters of $\Gamma$, since $\Gamma$ is its own annihilator. Grouping the support of $c$ by $\Gamma$-cosets, $\mathrm{comb}(c)f=\sum_{\text{cosets}}\big(\sum_{x}c(x)\,a_x\big)\mathrm{heis}(x_0)f$, a sum of eigenvectors for distinct characters, and each coefficient is independent of $f$. Eigenvectors for distinct characters are linearly independent, and $\mathrm{heis}(x_0)f\ne0$ when $f\ne0$. So $\mathrm{comb}(c)f_0=0$ forces every coefficient to vanish, and then $\mathrm{comb}(c)f=0$ for every vacuum $f$ (\lean{comb_eq_on_vacua}, \lean{latO_signs}).
+\end{proof}
+
+\begin{lemma}[local test functions at a twist place]\label{lem:parphi}
+At a twist place $v$ with completion $(\iota,\varpi)$ and tame $\delta$ matched to $\xi_v$ by $\delta(\iota a)=\xi_v(a\bmod v)^{-1}$ on units, the local parahoric test function evaluated at the image of an integral adelic matrix $N$ equals the reduction-modulo-$v$ indicator of $N$ (lower-left block zero and upper-left block invertible) times $\xi_v$ of the inverse determinant of the upper-left block.
+\end{lemma}
+
+\begin{proof}
+This is Lemma~4 and Proposition~3(ii) of the D1 to D3 report at a single place: membership in the parahoric is a condition on entries modulo $\varpi$, transported by the isomorphism $\OEr/v\cong\Ok/\varpi$, and the value $\delta(\det D)$ is $\xi_v(\det D\bmod v)^{-1}$ by tameness (\lean{parahoricTestFunction_integralAdelic_reduction}).
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:D7}}
+\emph{Step 1, the step vector as a datum.} By hypothesis $\mathrm{comb}(d)\,\mathrm{vac}=T_m(\mathrm{datum}_{\prod\mathrm{loc}_i})$, where $T_m$ is the place model of the idempotent of $S$ and the datum is the product of the local reductions; the vacuum itself is $T_m$ of the indicator of the integral frame matrices, which are the matrices of $\Gamma$ (\lean{integralFrameMatrix_iff_mem_splitHalfHomLattice}).
+
+\emph{Step 2, one place at a time.} At $v_i$, the Weil action of $(b_V,b_W)$ turns the place model for the standard frames into a place model for the moved frames (\lean{isLocalModel_creation_weilAction_moved_frames}); in that model the local factor $\mathrm{loc}_i$ read through the moved frames is $\Phi_i$ by Lemma~\ref{lem:parphi} and \lean{lat_of_movedTo}, and $\Phi_i$ is $\mathrm{comb}(e_i)$ applied to the local vacuum. So $\omega(b)\,T_m(\mathrm{datum}_{\mathrm{loc}_i\cdot W})=\mathrm{comb}(e_i)\,\omega(b)\,T_m(\mathrm{datum}_W)$ for every datum $W$ that does not depend on the component at $v_i$ (\lean{Puts}, \lean{QVec.puts}, \lean{QVec.model}, \lean{isSchwartzBruhatHalf_splitPlace_product}). Iterating over the distinct places, and using that combinations at distinct places commute and compose by convolution (\lean{listConvolution_distinctPlaces_supported_and_composition}), gives
+\[
+\omega(b)\,\mathrm{comb}(d)\,\mathrm{vac}=\mathrm{comb}(e_1*\cdots*e_r)\,\omega(b)\,\mathrm{vac}.
+\]
+
+\emph{Step 3, conjugation.} By \eqref{eq:weil}, $\omega(b)^{-1}\mathrm{comb}(e)\,\omega(b)=\mathrm{comb}(b^{-1}\cdot e)$ (\lean{om_comb}), and $b^{-1}\cdot e$ is again a combination at $S$ because $b$ is in the compact part. So $\mathrm{comb}(d)\,\mathrm{vac}=\mathrm{comb}(b^{-1}\cdot e)\,\mathrm{vac}$.
+
+\emph{Step 4, all vacua.} By Lemma~\ref{lem:vac}, $\mathrm{comb}(d)g=\mathrm{comb}(b^{-1}\cdot e)g$ for every vacuum $g$ at $S$, and conjugating back by \eqref{eq:weil} gives the claim. The top step is the same argument with the top space and $\mathrm{eLT}$ in place of $W$ and $e_i$ (\lean{step_top}). \qed
+
+\section{D8: step zero}\label{sec:D8}
+
+\subsection{The head}
+D8 is \lean{T.true_geometry_row_column_entry_alt} (\lean{Fam.zero_forms_alt}). At step zero the reading's twist datum $A$ and the member's standard chart \lean{chart0} both attach adelic forms to column forms, by the same recipe: an adelic form is determined by a level group $U$, a character $\chi$ of $U$, class representatives $y_c$ and the values $\phi(c)$, through the law $\rT(\gamma\,y_c\,g\,\kappa)=\chi(\kappa)\,(\text{transport at infinity})\,\phi(c)$ (\lean{rdS}).
+
+\begin{proposition}[step zero]\label{prop:D8}
+Let $A$ be a twist datum with \lean{TwDat.Is} whose step-zero base points are standard, $k_0(\beta)=k_{\mathrm{std}}$. Then:
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item the step-zero level group of $A$ at $\beta$ equals the step-zero level group of the member chart, and both equal the column level group $U_{\mathrm{col},0}$;
+\item the two level characters agree on it;
+\item each representative of $A$ is the member's representative times an element of the level group on which the character is trivial;
+\item a member form $\phi_0$ is ramified if and only if its transport $\mathrm{col}_0(\phi_0)$ is twist-ramified, and every twist-ramified step-zero column form is such a transport;
+\item for every member form $\phi_0$, $\rT^{A}(\mathrm{col}_0(\phi_0))=\rT^{\mathrm{chart0}}(\phi_0)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) For either construction, an element $x$ lies in the level group exactly when, for a chart point $q$ of which $y_c\,x\,k_{\mathrm{std}}$ is a point, $q$ is reached from the representative by a stabilizer element of trivial type (\lean{reads.lev}, \lean{Chart0.lev0}); and this is the orbit-stabilizer description of the column level group (\lean{stepZeroColumnLevel_eq_orbitStabilizer}). For the member chart every unitary point is a point of some chart point (\lean{exists_isPtOf_of_mem}), which gives the member side (\lean{right_lev}). For the reading, the twist primes may move the point off the standard charts, and one corrects this by an element $h$ lying in both groups: by density of $E$ in the completions and openness of the levels at the twist primes, $y_c\,x\,h\,k_{\mathrm{std}}$ is a point of a chart point (\lean{stepZero_approximation_twistPrimes}). Since $h$ lies in both groups, $x$ lies in one exactly when it lies in the other (\lean{left_lev}, \lean{lev_zero_std}).
+
+(ii) Both characters are the column level character at the standard base point. At the G-places they depend on the element through its type, and the type is constant on elements congruent at the type primes (\lean{stepZeroColumnLevelType_eq_of_congruent_typePrimes}, \lean{chi_zero_std}).
+
+(iii) Both representatives are points of the same standard chart point; two points of one decorated chart point with the same decoration differ by a stabilizer element of trivial type and trivial character (\lean{exists_lift_one}, \lean{rep_zero_std}).
+
+(iv) At step zero the dilations of the forms package are the member's diamond operators carried through the transport, so the vanishing of the dilation sums is the vanishing of the norm $\sum_s\langle s\rangle$ (\lean{mram_iff_ramT}); surjectivity of the transport onto the twist-ramified forms is the inverse of the same identification (\lean{zero_forms_alt}).
+
+(v) Two adelic forms built by \eqref{eq:law-zero} from equal level groups, equal characters, and representatives that differ by elements of trivial character, with the same class values, are equal: each is determined by its values at the representatives, and those agree because $\rT(y\kappa)=\chi(\kappa)\rT(y)=\rT(y)$ (\lean{adFun_of_same}, \lean{rdS_congr}, \lean{rd_zero_std}).
+\end{proof}
+
+Here \eqref{eq:law-zero} refers to the law
+\begin{equation}\label{eq:law-zero}
+\rT(\gamma\,x\,g\,\kappa)=\chi(\kappa)\,\rT_{g}(x)\qquad(\gamma\ \text{rational},\ g\ \text{at infinity},\ \kappa\in U).
+\end{equation}
+
+\paragraph{Shared with the class-data block.} Three theorems of D8's closure lie in the joint-exclusive set and are shared with the class-data block: \lean{PtStab.hasRes_of_sub}, \lean{PtStab.val_sub_lt_of_hasRes} and \lean{TopPtModel.adAt_of_prV}. They are owned and reconstructed on the E side and are used above through \lean{isPtOf_mul_stab} (a point moved by a stabilizer of the decorated lattice stays a point). They are not counted here.
+
+\section{D9: the global level at one twist place}\label{sec:D9}
+
+\begin{proposition}[level at a twist place]\label{prop:D9}
+Let $P$ be a twist prime of the reading with split point $q$, completion $(\iota,\varpi)$, local twist chain with levels $(J_{j,d},\lambda_{j,d})$, and residue character $\xi_P$ matched to $\delta$ as in Lemma~\ref{lem:parphi}. Let $b_j$ be the base point of step $j<m$, and for $x\in\GL(\Ok)$ let $\mathrm{gl}(x)$ be the adelic element equal to $x$ at $P$ in the frame of $q$ and $1$ elsewhere. Then
+\[
+b_j^{-1}\,\mathrm{gl}(x)\,b_j\in U^{\mathrm{glob}}_j\iff x\in J_{j,d},
+\]
+and for such $x$ the global level character of $b_j^{-1}\mathrm{gl}(x)b_j$ is $\lambda_{j,d}(x)$. Here $U^{\mathrm{glob}}_j$ is the level group of the step's level datum at the twist data (\lean{levS}, \lean{datYt}).
+\end{proposition}
+
+\begin{proof}
+\emph{Integrality.} The frame of $q$ moved by $b_j$ is a basis of the step's lattice at $P$ (\lean{IsSDFrame}, \lean{MovedTo}), so $b_j^{-1}\mathrm{gl}(x)b_j$ lies in the compact group and stabilizes the lattice exactly when $x\in\GL(\Ok)$; its reduction at every prime not above the place of $P$ is $1$, because the element is supported at $P$ (\lean{splitStab_conj_iff}, \lean{reduction_eq_one_off_splitPlace}).
+
+\emph{The level at one place.} The global level datum at the twist data is defined by reduction conditions at the twist primes and the level primes $P_g$; none of the latter lies above the place of $P$ (\lean{true_pack_twist_place_property_alt}). For an element whose reductions away from $P$ are $1$, membership is therefore the single condition that its reduction modulo $P$ is block triangular, and its character is $\xi_P$ of the determinant of the upper diagonal block, inverted (\lean{mem_twistPlaceLevel_single_place_character}).
+
+\emph{Comparison.} The reduction modulo $P$ of $b_j^{-1}\mathrm{gl}(x)b_j$ is congruent to $x$ entrywise under $\OEr/P\cong\Ok/\varpi$ (\lean{reduction_conjugated_eq_movedFrame_matrix}); every element of $\Ok$ is congruent to the image of an element of $\OEr$, and an element of $\OEr$ whose image has positive valuation lies in $P$ (\lean{completion_smallIntegers_in_prime_dense}). So the reduction is block triangular exactly when the lower-left block of $x$ is $\equiv0\bmod\varpi$, which is membership in the parahoric (\lean{blockTri_iff_mem_lev}). Finally $\lambda_{j,d}(x)=\delta(\det D)$ for the upper-left block $D$, which equals $\xi_P(\det D\bmod P)^{-1}$ by the matching (\lean{lam_eq_inv_xi}). This is \lean{level_at_place_alt_alt}.
+\end{proof}
+
+D9 is one mechanism: Proposition~3(i) of the D1 to D3 report (the completion dictionary for levels and characters), applied to the global level datum at a single twist place.
+
+\section{\texorpdfstring{\lean{ramBijective_holds}}{ramBijective\_holds}}\label{sec:F}
+
+\subsection{Statement and live route}
+Let $k$ be a local field with residue field $\Fq$ of order $q$, $n\ge1$, $\chi$ a nontrivial character of $\Fq$ (the residue character of a conductor-one character of $k$), and $\pi$ a representation of $\GL_n(k)$. On forms on pairs (Section~2 of the D5 report) the archive defines
+\[
+(F\Phi)(P_1)=\sum_{P:\ \mathrm{lat}P=\ker P_1}\chi\big(\langle P_1,P\rangle\big)\Phi(P),\qquad
+(F^{*}\Phi)(P)=\sum_{P_1:\ \ker P_1=\mathrm{lat}P}\chi\big(-\langle P_1,P\rangle\big)\Phi(P_1),
+\]
+where $\langle P_1,P\rangle=f_P(\varpi\,v_{P_1})$ for a vector $v_{P_1}$ with $f_{P_1}(v_{P_1})=1$ (\lean{FF}, \lean{FFStar}, \lean{cross}). \lean{ramBijective_holds} says that $\mathrm{sOp}(\epsilon)$, the vector-level form of $\langle\epsilon\rangle F^{*}$, is a finite combination of translations, maps the vectors ramified at $P$ bijectively onto themselves, and has an explicit inverse that is again a finite combination of translations (\lean{RamBijective}).
+
+It is live by two routes. One is D5 (\lean{twS}, \lean{sOp_keeps}, \lean{comb_foldr}). The other is \lean{RamUnit.ramUnitary_holds}, used directly in \lean{Fam.lawsLinks_of_geo_rows_cols_alt} on the live path through \lean{true_geometry_family_column_data_alt} (a $26$-step path from \lean{riemannHypothesis} that avoids the three block roots). The second route is why it lies in no exclusive set. No earlier report reconstructs it. Its forward closure has $207$ theorems, most of them in \lean{PairOp.pairOperatorStatement}, which proves the operator identities used here and the adjoint identities used by \lean{ramUnitary_holds}.
+
+\subsection{The identity}
+
+\begin{lemma}[orthogonality]\label{lem:orth}
+Let $L$ be a lattice and $\bar L=L/\varpi L\cong\Fq^{n}$. Pairs with lattice $L$ correspond to nonzero $f\in\bar L^{*}$, pairs with kernel $L$ correspond to nonzero $x\in\bar L$ (the pair $L+\Ok\varpi^{-1}x$ with the functional sending $\varpi^{-1}x$ to $1$), and under these correspondences $\langle P_1,P\rangle=f(x)$. Consequently
+\[
+F^{*}F=q^{n}-\mathrm{tr},\qquad FF^{*}=q^{n}-\mathrm{tr}',
+\]
+where $(\mathrm{tr}\,\Phi)(P)=\sum_{P':\ \mathrm{lat}P'=\mathrm{lat}P}\Phi(P')$ and $(\mathrm{tr}'\Phi)(P)=\sum_{P':\ \ker P'=\ker P}\Phi(P')$.
+\end{lemma}
+
+\begin{proof}
+The correspondences are the definitions of \lean{ofDual} and \lean{up} (\lean{sum_withLat}, \lean{sum_withKer}, \lean{cross_up_ofDual}). Fix $P_1$ with kernel $L$, corresponding to $x_1\ne0$. Then
+\[
+(FF^{*}\Phi)(P_1)=\sum_{f\ne0}\chi(f(x_1))\sum_{x\ne0}\chi(-f(x))\,\Phi(P_x)=\sum_{x\ne0}\Big(\sum_{f\ne0}\chi\big(f(x_1-x)\big)\Big)\Phi(P_x).
+\]
+The inner sum over all $f\in\bar L^{*}$ is $q^{n}$ if $x=x_1$ and $0$ otherwise, by orthogonality of the characters $f\mapsto\chi(f(y))$ of the finite group $\bar L^{*}$ ($\chi$ is nontrivial); removing $f=0$ subtracts $1$. So $(FF^{*}\Phi)(P_1)=q^{n}\Phi(P_1)-\sum_{x\ne0}\Phi(P_x)$, which is $q^{n}-\mathrm{tr}'$ (\lean{FF_FFStar}). The other identity is the same computation with the roles of $x$ and $f$ exchanged (\lean{FFStar_FF}).
+\end{proof}
+
+\begin{proposition}[invertibility on ramified forms]\label{prop:F}
+On ramified forms (those with $\sum_{s\in\Fq^\times}\Phi(sP)=0$ for all $P$) one has $F^{*}F=FF^{*}=q^{n}$, the operators $F$, $F^{*}$ and $\langle s\rangle$ preserve ramified forms and equivariant forms, and $\langle\epsilon\rangle F^{*}$ is a bijection of the ramified equivariant forms with inverse $q^{-n}F\langle\epsilon\rangle^{-1}$. Consequently $\mathrm{sOp}(\epsilon)$ is a bijection of the vectors ramified at $P$, and both it and its inverse are finite combinations of translations $\pi(g)$.
+\end{proposition}
+
+\begin{proof}
+\emph{Traces vanish.} The pairs with lattice $L$ are the nonzero $f\in\bar L^{*}$, a disjoint union of $\Fq^\times$-orbits $\{sf\}$, and $\langle s\rangle$ scales the functional. So $\mathrm{tr}\,\Phi(P)$ is a sum of orbit sums $\sum_s\Phi(sP')$, each zero for ramified $\Phi$; likewise for $\mathrm{tr}'$ (\lean{vanishing}, \lean{tr_eq_zero}). Lemma~\ref{lem:orth} then gives $F^{*}F=FF^{*}=q^{n}$ on ramified forms (\lean{FFStar_FF_ram}, \lean{FF_FFStar_ram}).
+
+\emph{Stability.} Scaling both pairs by $s$ multiplies $f_P$ by $s$ and $v_{P_1}$ by $s^{-1}$, so $\langle sP_1,sP\rangle=\langle P_1,P\rangle$ (\lean{cross_dia}); hence $F$ and $F^{*}$ commute with every $\langle s\rangle$ (\lean{FF_dia}, \lean{FFStar_dia}), and therefore with $\sum_s\langle s\rangle$, so they preserve its kernel (\lean{mem_ram}). The $\langle s\rangle$ commute with each other and preserve the kernel too. All these operators are defined intrinsically from the lattice and the functional, so they commute with the action of $\GL_n(k)$ on pairs and preserve equivariant forms (\lean{FFStar_mem_EqForm}, \lean{dia_mem_EqForm}).
+
+\emph{Bijection on forms.} For ramified $\Phi$, $\langle\epsilon\rangle F^{*}\big(q^{-n}F\langle\epsilon\rangle^{-1}\Phi\big)=q^{-n}\langle\epsilon\rangle F^{*}F\langle\epsilon\rangle^{-1}\Phi=\Phi$, because $\langle\epsilon\rangle^{-1}\Phi$ is ramified; and if $\langle\epsilon\rangle F^{*}\Phi=\langle\epsilon\rangle F^{*}\Phi'$ for ramified $\Phi,\Phi'$, applying $F\langle\epsilon\rangle^{-1}$ gives $q^{n}\Phi=q^{n}\Phi'$ (\lean{diaFFStar_inv}, \lean{diaFFStar_inj}).
+
+\emph{Vectors.} By Lemma~1 of the D5 report, evaluation at $P$ is a bijection from ramified equivariant forms with continuous automorphic values to the vectors ramified at $P$, with inverse $\phi_0\mapsto(gP\mapsto\pi(g)\phi_0)$ (\lean{formAt_eq}). Under it $\mathrm{sOp}(\epsilon)$ corresponds to $\langle\epsilon\rangle F^{*}$, and the continuity and automorphy of the values are preserved because every operator here is a finite sum of translates (\lean{isRam_diaFFStar}, \lean{isRam_FFdia}). Finally, every pair $P_1$ in the sum defining $F^{*}\Phi(\epsilon P)$ is $g_{P_1}P$ for some $g_{P_1}$, by transitivity, so $\mathrm{sOp}(\epsilon)\phi_0=\sum_{P_1}\chi(-\langle P_1,\epsilon P\rangle)\pi(g_{P_1})\phi_0$, a finite combination of translations; the inverse is $\sum_{Q}q^{-n}\chi(\langle P,Q\rangle)\pi(g_{\epsilon^{-1}Q})$ over the pairs $Q$ with lattice $\ker P$ (\lean{ramBijective_at}, \lean{ramBijective_holds}).
+\end{proof}
+
+\paragraph{Why bijectivity holds.} The local operator is a weighted sum over the $q^{n}-1$ index-$q$ overlattices of the kernel; composing it with the companion sum over sublattices reproduces $q^{n}$ times the identity minus a full sum over all functionals on one lattice, by orthogonality of characters of $\Fq^{n}$. On ramified forms the full sum is a sum of diamond-orbit sums and vanishes, so the composite is $q^{n}$ times the identity.
+
+\section{Residual table}\label{sec:table}
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{2.2cm}>{\rr}p{3.4cm}>{\rr}p{3.2cm}>{\rr}p{2.4cm}>{\rr}p{2.4cm}}
+\toprule
+head/item & mathematical content & mechanism & external boundary & verdict\\
+\midrule
+\endhead
+D1 & row-pair rational datum, uniform constants & completion dictionary; factorization over places & none & closed (D1 to D3, leaf passes)\\
+D2 & existence of a full reading & dictionary; local data; orbit matching; rebasing & none & closed (D1 to D3, D2 passes)\\
+D3 & volume of level times weight is constant & restricted-product index formula; levels at level primes and G-places & none & closed (D1 to D3, leaf passes)\\
+D5 & level-prime operators on ramified column forms & $\Gamma_1(p)$ forms on lattice pairs; diamond operators & none & closed (D5 pass)\\
+D6 & step kernels keep level-ramified forms & kernel equivariance law & Weil 1964 (already on the boundary) & closed (kernel-law pass)\\
+D7 & joint twist identity at the middle and top steps & Weil equivariance of Heisenberg combinations; a combination is fixed by one vacuum & none & \textbf{closed} (Prop.~\ref{prop:D7})\\
+D8 & step-zero comparison of reading and member forms & equal levels, characters, representatives; uniqueness of the adelic form & none & \textbf{closed} (Prop.~\ref{prop:D8})\\
+D9 & global level at one twist place & completion dictionary for levels and characters & none & \textbf{closed} (Prop.~\ref{prop:D9})\\
+\lean{ramBijective_holds} & $\langle\epsilon\rangle F^{*}$ bijective on ramified vectors & $F^{*}F=q^{n}-\mathrm{tr}$; $\mathrm{tr}=0$ on ramified forms & none (orthogonality of characters of $\Fq^{n}$) & \textbf{CLOSED INTERNALLY} (Prop.~\ref{prop:F})\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\section{Counts}
+
+\paragraph{Per head.} Each head is its closure inside the \lean{colSide_alt}-exclusive set; ``open'' means not closed by an earlier pass.
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{1.0cm}>{\rr}p{6.0cm}r r r}
+\toprule
+head & top declarations & closure & open before & open now\\
+\midrule
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & 83 & 76 & 0\\
+D8 & \lean{T.true_geometry_row_column_entry_alt} & 46 & 46 & 0\\
+D9 & \lean{T.true_geometry_twist_value_alt} & 43 & 27 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Shared declarations.} The open parts of D7, D8 and D9 are pairwise disjoint, so the unique union of their open theorems is $76+46+27=149$, now $0$. On the union of all exclusive sets, D5 and D8 share $27$ declarations ($24$ theorems and $3$ definitions) with the class-data block, all in the joint-exclusive set: $24$ under D5 (chart representatives of unitary double cosets, continuity and local triviality of the level characters, scalar forms on charts) and $3$ under D8 (the point-stabilizer lemmas). They are owned by the E-agent, reused here, and not counted. The list is \Lpath{D_E_Shared_Declarations.tsv}. D7 and D9 share nothing with the class-data block. \lean{ramBijective_holds} and its $207$-theorem closure lie in no exclusive set and were never in a head count; they are now reconstructed (Proposition~\ref{prop:F}) for the operator identities used on the D-side.
+
+\paragraph{The D-block as a whole.} Counted without repetition, the tuple-construction block R4-D (D1 to D9, each head the union of the closures of its ledger children, D6 included) had $1{,}777$ theorems after the final internal cleanup and has $0$ open theorems now.
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{3.4cm}r r r r r}
+\toprule
+stage & D1--D3 & D5 & D6 & D7--D9 & R4-D unique\\
+\midrule
+after kernel law & 1{,}448 & 181 & 0 & 172 & 1{,}681\\
+after D1--D3 & 284 & 181 & 0 & 150 & 517\\
+after leaves & 94 & 84 & 0 & 150 & 327\\
+after D2 rebasing & 0 & 84 & 0 & 150 & 233\\
+after D5 & 0 & 0 & 0 & 149 & 149\\
+\textbf{after this pass} & 0 & 0 & 0 & 0 & \textbf{0}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent (The column D7--D9 counts distinct open theorems of the three heads; the $1{,}681$ excludes D6, which the kernel-law pass closed.)
+
+\paragraph{Unique residual count.} The D-block contributes $0$ live internal residual theorems. In this lane's own ledger, the items outside the D-block and outside the class-data block are the bundle-witness heads W1 to W3 ($195$ distinct theorems) and the three kernel-law support leaves K-a to K-c ($243$, not in any head); this pass did not examine them, and their current status should be taken from whichever agent owns them.
+
+\section{Final consequence}
+
+\begin{quote}
+\emph{Does the D-block still contribute any live internal residual to the RH route?}
+
+\textbf{NO.}
+\end{quote}
+
+\noindent Every head of the tuple-construction block is closed at the human-proof boundary: D1 to D3 by the completion dictionary at split primes and the three assembly arguments, D5 by the $\Gamma_1(p)$ theory of forms on lattice pairs with Proposition~\ref{prop:F}, D6 by the kernel-equivariance law, D7 by Weil equivariance of Heisenberg combinations, D8 by the step-zero comparison and D9 by the dictionary for levels at one twist place. The only external theorem on the D-side is Weil's constant for fixed-point-free unitaries, which enters through D6 and is already on the boundary list.
+
+\appendix
+\section{Scripts and limits}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \Lpath{scripts/d789_tree.py}: the closures of D7, D8 and D9, their open parts, overlaps and trees.
+\item \Lpath{scripts/e_overlap.py}: overlap of D5, D7, D8 and D9 with the closure of the class-data heads on the union of all exclusive sets.
+\item \Lpath{scripts/rambij_trace.py}: forward closure of \lean{ramBijective_holds} and a live path from \lean{riemannHypothesis} avoiding the three block roots.
+\end{itemize}
+Read in full: \lean{QVec.gen}, \lean{step_mid}, \lean{step_top}, \lean{comb_eq_on_vacua} (its final part), \lean{rd_zero_std} with \lean{rdS_congr} and \lean{adFun_of_same}, \lean{right_lev}, \lean{left_lev}, \lean{ramBijective_at} with \lean{diaFFStar_inv} and \lean{diaFFStar_inj}, \lean{FF_FFStar}, \lean{FFStar_FF_ram}, \lean{FF_FFStar_ram}, and the definitions \lean{OperatorIdentities}, \lean{FF}, \lean{FFStar}, \lean{dia}, \lean{Nm}, \lean{Mram}, \lean{tr}, \lean{cross}, \lean{Puts}. Read at the statement: the remaining children named in the proofs. Nothing was built or run in Lean.
+
+\end{document}

@@ -1,0 +1,477 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\PC}[1]{\textsf{PC-#1}}
+\newcommand{\sC}{\textbf{Closed}}
+\newcommand{\sE}{\textbf{Closed modulo named external theorems}}
+\newcommand{\sR}{\textbf{Residual child remains}}
+\newcommand{\sM}{\textbf{Mechanism reconstructed; internal leaves remain}}
+\newcommand{\Ad}{\operatorname{Ad}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Th}{\operatorname{Th}}
+\newcommand{\OEr}{\mathcal O_E}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The kernel law of PC4.13 and the record witness\\ One equivariance law for the step kernels, and what it closes}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The final internal cleanup left about $2{,}700$ exclusive theorems in sixteen heads and suggested that three of them, the kernel laws of the base tuple under \lean{bwit_exists_alt} (X1), \lean{kernel_keeps_ramT} (D6) and \lean{kernel_identity_tuple} (E1), are one theta-equivariance law. Reading the three declarations and everything below them shows that X1 and D6 are two packagings of one law, the equivariance of the step kernels of the tower under the global unitary groups $U_a(E)\times U_b(E)$, and that E1 is a different statement, the identification of the adelic Weil theta kernel at the split places with the classical theta series with finite data. The common law is stated here as Proposition~\ref{prop:A} and proved in ordinary mathematics. Its proof is transport of structure on the Fock data, a covariance law for the base theta vector whose constant is Weil's constant of a fixed-point-free unitary (a Cayley determinant times a Gauss sum, made exact by the evenness of the ranks), the chain rule for jets, and three character laws (the norm-one character on determinant ideals, the product formula for the Hecke characters of the frames, and a weight identity). The law closes X1's kernel core and all of D6. It does not close E1, whose mechanism is reconstructed separately (Proposition~\ref{prop:E}) with five internal leaves left. The residual count inside the sixteen heads drops by about $345$ theorems, from about $2{,}660$ to about $2{,}320$, and fifteen heads remain. The pass also brings into view $451$ theorems shared by the three blocks that no head counted, all inside the support of the law, of which about $243$ are statement-level leaves. The answer to the final question is \textbf{NO}. Nothing was built or run in Lean, and no existing file was edited.
+\end{abstract}
+
+\tableofcontents
+
+\section{Sources, method and the answer in brief}
+
+\subsection{Copies}
+The archive \Lpath{lean.tar.gz} was copied as its fourteen parts and reassembled in the workspace. Its SHA-256 is \texttt{9631b4f0\ldots 3f49c7fc}, the value recorded in \Lpath{Claude_Kernel_Replay/Kernel_Replay_Report.md}. It unpacks to $175{,}187$ files ending in \texttt{.lean}. The supporting reports copied and checked readable were \Lpath{Final_Internal_Cleanup} (report, status ledger, \Lpath{Residual_Heads.tsv}, \Lpath{Liveness_Witness_Paths.md}, scripts), \Lpath{Final_Six_Wave_6} and \Lpath{Final_Six_Wave_4} with their dependency maps, \Lpath{Orphan_Interface_Pass} (report, tables, dependency map), \Lpath{Post_Closure_Synthesis} (report and residuals), \Lpath{Orphan_Dependency_Audit.md}, \Lpath{Core_Report_7_Kernel_Law.tex} and the kernel replay report. Nothing in the project folder was edited.
+
+\subsection{Method}
+The declaration index and the exact-edge graph of the cleanup pass were rebuilt with its own scripts. The index has $1{,}066{,}087$ declarations, the same number as in the cleanup ledger, and the three block-exclusive sets were reproduced to within one theorem ($652$, $2{,}815$ and $478$ against $653$, $2{,}816$ and $479$). Four small scripts were added (\Lpath{scripts/kl_*.py} in this folder). They compute, for each head, the part of its exclusive closure that lies under the components of the common law, and they compute the \emph{joint} exclusive set, the theorems that only the union of the three blocks reaches. The joint set matters here. The cleanup counted material exclusive to one block, so theorems shared by two of the three blocks were counted under no head. The base-vector law of Section~\ref{sec:A1} is such material.
+
+Every declaration whose mechanism is used below was read in the source, in full where the text says so and at the statement where the text says so. Lean names are not taken as evidence of content.
+
+\subsection{Answer in brief}
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \textbf{X1 and D6 are one law.} The head of X1 is \lean{TC.RcHyp.chTh_ok_chi}, whose mathematical step is \lean{ThEquivP} for every step kernel of the base tuple (\lean{Cd.CarC.thEquivP_ambOf_tiesD}). The head of D6 rests on \lean{KerDia.Eqv.ent_smul}, the same equivariance for the kernel entries of the decorated-point chain, plus the invariance of the entries under the diamond operators at the level primes. Both reduce to Proposition~\ref{prop:A}.
+\item \textbf{E1 is not an instance.} \lean{KerTup.kernel_identity_tuple} identifies, at every tuple, the value at $0$ of the Weil-moved adelic theta function of a Schwartz--Bruhat datum at the split places with the jets of the classical theta series with finite datum $\Xi$ (\lean{KJInf.CoreG.thetaKernel_eq_jet_thC}). Its mechanism is the Heisenberg intertwining of the Weil datum, a finite Fourier expansion at the split places, and the Heisenberg intertwining of the Fock reading map. The unitary covariance enters E1 only through a pinned hypothesis (the moved vacuum \lean{VacT}, field \lean{PinX.mv}) produced outside the head.
+\item \textbf{The common law} (Proposition~\ref{prop:A}) has three layers: covariance of the base vector, covariance of the induced and datum kernels, covariance of the step kernels after jets and normalizations. Its proof uses no adelic Weil representation and no local splitting. The one place where the Weil representation appears is the constant in the base-vector covariance, which is Weil's constant of a fixed-point-free unitary on a theta space and which the archive evaluates by a Cayley determinant and a quadratic Gauss sum.
+\item \textbf{Counts.} X1 drops from $313$ to $64$ exclusive theorems (its column-reading part and a five-theorem normal-form leaf), D6 drops from $96$ to $0$, E1 is unchanged. The residual inside the sixteen heads drops by about $345$ theorems (about $13\%$). Fifteen heads remain. The large heads D1, D2, D3, D5 and E1 to E5 are untouched.
+\end{enumerate}
+
+\section{The three occurrences as written}\label{sec:occ}
+
+\subsection{X1: the kernel laws of the base tuple}
+\lean{GlobalTheory.Mem.Col2.TC.RcHyp.hyps_of_isTw} (\Lpath{Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EvaluationDatumOkBaseTuple.lean}:172, read in full) proves, for a column system $I$ with $I.\mathrm{Ok}$ and the twisted condition $I.\mathrm{IsTw}$, for every index $a$, word $u$, and every function $\chi$ on $\OEr$-ideals that agrees with the column character $I.\chi$ on norm-one ideals, four statements: every column step datum $\mathrm{chF}$ is admissible, the evaluation datum of the base tuple is admissible, the index matrices are in matrix normal form, and the chain kernel is equivariant (\lean{KerEquivC}). The fourth comes from \lean{KerRat.kerEquivC} applied to \lean{chTh_ok_chi} (line 115, read in full), which proves that the chain of step distributions $\mathrm{chTh}(A)$ built from the ambient datum $A = I.J.\mathrm{amb}\,\chi$ is admissible ($\mathrm{ChTh.Ok}$). Its one substantive step is
+\[
+\texttt{ThEquivP}\bigl(\mathrm{stepT}_i\bigr)\quad\text{for every } i<m,
+\]
+obtained from \lean{Cd.CarC.thEquivP_ambOf_tiesD} (\Lpath{Formalism/LocalToGlobal/KernelLattices/KernelLocalFactors/RkEqcar.lean}:29, read in full). The other steps are the lattice hypotheses $\mathrm{LaHyp}$ of the ambient datum, smoothness of the base vector, rationality of the jets in the right degree (\lean{jetsRat_chi}, read in full), and the admissibility bookkeeping \lean{chTh_ok_ambD} and \lean{stepC_ok_deg} (read in full).
+
+\subsection{D6: the step kernels keep the level-ramified forms}
+\lean{GlobalTheory.KRamT.kernel_keeps_ramT} (\Lpath{Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ChainStepKernelPreservesLevelRamifiedForms.lean}:132, read in full) says: if a column form $\varphi$ at step $i$ is level-ramified, so is its image $K_i\varphi$ under the chain kernel. Here $\mathrm{RamT}_i(\varphi)$ means that $\varphi$ lies in the space $F_i$ of forms invariant under the class stabilisers, and that for every ramified level place $v$ and every class $c$
+\[
+\sum_{s\in(\mathcal O/\mathfrak p_v)^\times}\mathrm{dil}^T_{i,v,s}(c)\,\varphi\bigl(\mathrm{dil}_{i,v,s}(c)\bigr)=0,
+\]
+the vanishing of the trivial-isotypic part for the diamond action at $v$. The chain kernel is $K_i\varphi(c')=\sum_c w_i(c)\,K^{\mathrm{map}}_i(c,c')\,\varphi(c)$ with entries $K^{\mathrm{map}}_i(c,c')=\mathrm{ent}(\mathrm{rep}\,c,\mathrm{rep}\,c')$. The proof uses two facts about the entries: the equivariance \lean{kernelEntry_rationalEquivariance_transports}, which is \lean{KerDia.Eqv.ent_smul} (\Lpath{KernelEntryRationalEquivarianceTransports.lean}:11, read in full), and the diamond invariance \lean{ent_dia} (from \lean{DiaTheta.th_dia} and \lean{KerDia.RhoDia.rho_dia}, read in full).
+
+\subsection{E1: the theta-kernel identity at every tuple}
+\lean{GlobalTheory.KerTup.kernel_identity_tuple} (\Lpath{ThetaKernelIdentityAtEveryTuple.lean}:78, read in full) proves, at every tuple, step $i$, pair of characters $(\alpha,\gamma)$, pair of classes $(c,c')$ and polynomial $P$,
+\[
+\begin{aligned}
+&\mathrm{vol}(U_i(\alpha))\cdot\vartheta_{\mathrm{kom}_i}\bigl(h_i(c),h_{i+1}(c')\bigr)\bigl(\text{pure tensor of }\mathrm{comb}(dd_i(\alpha,\gamma),\mathrm{vac}_i)\text{ at }P\bigr)\\
+&\qquad= c_K(i)\cdot A^{(2)}_i(c,c')\bigl(P\text{ rescaled}\bigr),
+\end{aligned}
+\]
+where the left side is the value at $0$ of the Weil datum $\mathrm{kom}_i$ applied at the finite adelic pair $(h_i(c),h_{i+1}(c'))$ to the theta function of a Schwartz--Bruhat datum, and the right side $A^{(2)}_i(c,c')=\rho\rho'\cdot\mathrm{jet}\bigl(\mathrm{th}(\mathrm{rep}\,c,\mathrm{rep}\,c')\bigr)$ is the classical chain kernel. Its core is \lean{KJInf.CoreG.thetaKernel_eq_jet_thC} ($169$ of its $204$ exclusive theorems) through \lean{AdForm.DatumRead.reads_datum_eq_thC} (read in full).
+
+\subsection{What differs and what is common}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{2.6cm}>{\rr}p{4.1cm}>{\rr}p{4.1cm}>{\rr}p{4.1cm}}
+\toprule
+& X1 & D6 & E1\\
+\midrule
+kernel & step distribution $\mathrm{thDistC}$, a map $V_\lambda\to V_{\lambda'}$ of polynomial models & chain entry $\mathrm{ent}$, a map of functions on frames & value at $0$ of an adelic theta function\\
+group & $U_a(E)\times U_b(E)$, global unitary & stabiliser of the step, unitary moves with frame corrections; diamond units & $U(S)(\mathbb A_f)\times U(T)(\mathbb A_f)$ through a Weil datum\\
+datum & coset indicator of $x$ at level $c$ & $\xi$-data $\mathrm{xiAt}$ with step characters & Schwartz--Bruhat function at split places\\
+identity & $\mathrm{th}(\gamma\cdot)=\rho'(\gamma')\circ\mathrm{th}\circ\rho(\gamma)^{-1}$ & $\mathrm{ent}(g\cdot)\circ\mathrm{tr}(g)=\mathrm{tr}(g')\circ\mathrm{ent}$ & adelic kernel $=$ jet of classical kernel\\
+mechanism & Proposition~\ref{prop:A} & Proposition~\ref{prop:A} and diamond invariance & Proposition~\ref{prop:E}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent What is common to X1 and D6 is one statement: the theta kernel of a pair of self-dual hermitian lattices, after the jet operator and the two normalizations (the character factor $\chi_F$ and the frame factor $\mu$), intertwines the action of the global unitary groups on the lattices with their action on the polynomial models. In X1 the datum is a coset indicator and the step character is trivial. In D6 the datum is the $\xi$-datum of the chain and the step character is the product of the local values $\mathrm{LevAt}$, which the archive matches by \lean{KerDia.Eqv.xiAt_law}. E1 shares the theta functions and their base vector, but its identity compares two models of the kernel rather than two points of one model.
+
+\section{Setting and notation}\label{sec:set}
+
+The definitions are those of \Lpath{Formalism/LocalToGlobal/KernelLattices/ThDistC.lean} and \Lpath{ColumnData.lean}, which were read in full.
+
+\paragraph{Fields.} $E$ is a CM field with maximal totally real subfield $F$ and complex conjugation $x\mapsto\bar x$. $\Phi$ is a CM type, the index set \texttt{Tau}. $K$ is a number field containing the images of the embeddings $\tau\in\Phi$, with a fixed $\sigma_0\colon K\to\mathbb C$, and the embeddings satisfy $\tau(\bar x)=\overline{\tau(x)}$ (\lean{Cd.CarC.ambOf_conj}).
+
+\paragraph{Hermitian lattices.} $E^n$ carries the standard hermitian form $h_n(x,y)=\sum_i x_i\bar y_i$, and $U_n=U(h_n)(E)$. An $\OEr$-lattice $N\subset E^n$ is self-dual if $N^\vee=N$ for $h_n$. The ranks $a,b$ are even. $W=\Hom_E(E^a,E^b)$. For lattices $N\subset E^a$, $N'\subset E^b$ and the finite set $S$ of split primes of the step, $\Hom_S(N,N')\subset W$ is the hom-lattice (\lean{homAt}), and $c\Hom_S$, $c^{-1}\Hom_S$ are its multiples.
+
+\paragraph{Fock data.} $V=\prod_{\tau\in\Phi}M_{b\times a}(\mathbb C)$, with $\iota\colon W\to V$, $\iota(x)=\delta\,(\tau(x))_\tau$. The positive hermitian form is $H(z,w)=s\sum_\tau\tr(z_\tau w_\tau^*)$ and the semicharacter is $\alpha(v)=(-1)^{q(v)}$ with $q(v)$ the nearest integer to $\tfrac{\sqrt d}{2}H(v,v)$ (\lean{alV}). For $x\in V$ and $G$ a function on $V$,
+\[
+(U_xG)(z)=G(z+x)\,\exp\bigl(-\pi H(z,x)-\tfrac{\pi}{2}H(x,x)\bigr).
+\]
+For a lattice $\Lambda\subset V$, $\Th(\Lambda)$ is the space of entire $G$ with $\alpha(x)U_xG=G$ for $x\in\Lambda$. For commensurable $\Lambda_1,\Lambda_2$ the averaging intertwiner is
+\[
+I_{\Lambda_1\to\Lambda_2}G=[\Lambda_2:\Lambda_1\cap\Lambda_2]^{-1/2}\sum_{q\in\Lambda_2/(\Lambda_1\cap\Lambda_2)}\alpha(q)\,U_qG
+\]
+(\lean{Iop}). For a pair of self-dual lattices $(N,N')$ the period lattice is $\Lambda(N,N')=\iota(\mathfrak a\Hom(N,N'))$ (\lean{LamC}), and $A_c(N,N')$, $B_c(N,N')$ are the half lattices of level $c$ at the primes of $S$ (\lean{AC}, \lean{BC}).
+
+\paragraph{Base vector.} Let $\vartheta$ be the theta function of the CM elliptic lattice $\Lambda_0$ and $\theta_0=\vartheta^{\otimes}$ its tensor power on $V$ (\lean{thZero}, a theta function for $\Lambda(\mathrm{std},\mathrm{std})$). For self-dual $L\subset E^a$, $L'\subset E^b$,
+\[
+\theta_{L,L'}=I_{(L,\mathrm{std})\to(L,L')}\,I_{(\mathrm{std},\mathrm{std})\to(L,\mathrm{std})}\,\theta_0,\qquad
+e(L,L')=\chi(\mathfrak d_L)^{b/2}\chi(\mathfrak d_{L'})^{-a/2}\,\theta_{L,L'},
+\]
+where $I_{(L_1,L_1')\to(L_2,L_2')}$ abbreviates $I_{\Lambda(L_1,L_1')\to\Lambda(L_2,L_2')}$, $\mathfrak d_L=\mathrm{detId}(\mathrm{std},L)$ is the ideal generated by the determinants of the matrices carrying $\mathrm{std}$ into $L$, and $\chi$ is a function on fractional ideals, multiplicative on norm-one ideals, with $\chi(u\OEr)=\prod_\tau\tau(u)^{-1}$ for $u\in E^1$ (\lean{IsChi}). This is \lean{Base.eNat}, \lean{Base.thMoved}, \lean{Base.chiFac}.
+
+\paragraph{Kernels.} For $x\in c'^{-1}\Hom_S(N,N')$ with $c\mid c'$, the induced kernel $\theta_{N,N'}[c,x]=\mathrm{thInd}(N,N',c,x)$ is $\mathrm{vol}(N,N')^{-1/2}$ times the finite Heisenberg induction of $e(N,N')$ from $\Lambda(N,N')$ along $B_c$ and $\Lambda\cap A_c$, evaluated at $\iota(s)$ for a lift $s$ of $x$ (\lean{Amb.thInd}, \lean{xiInd}). Its only inputs are $(H,\alpha,\Lambda,A_c,B_c,e)$, their relative indices and coset representatives, and the point $\iota(s)$. For a function $\Xi$ on $W$ supported in $c_A^{-1}\Hom_S$ and periodic under $c_B\Hom_S$, the datum kernel is
+\[
+\theta_{N,N'}[\Xi]=\sum_{x\in c_A^{-1}\Hom_S/c_B\Hom_S}\Xi(x)\,\theta_{N,N'}[c_B,x]
+\]
+(\lean{thC}, by \lean{latSum_thInd_eq_thC}).
+
+\paragraph{Polynomial models and jets.} For a family $\lambda=(\lambda_\tau)$ of dominant weights of $\mathrm{GL}_a$, $V_\lambda\subset K[X_{\tau,i,j}]$ is the tensor product over $\tau$ of the polynomial models of highest weight $\lambda_\tau$ (\lean{DIV.VV}), with $\rho_\lambda(\gamma)$ the block action of the transposes $\tau(\gamma)^{T}$ twisted by $\prod_\tau\tau(\det\gamma)^{-\mathrm{detShift}(\lambda_\tau)}$ (\lean{rhoVr} composed with \lean{ufGL}). For a family $J$ of Taylor coefficients and exponents $n=(n_\tau)$, the jet operator $j_{\lambda,\lambda',n}(J)\colon V_\lambda\to V_{\lambda'}$ substitutes $X=YD$ in $P\cdot\prod_\tau\det(X_\tau)^{n_\tau}$, replaces each monomial $D^m$ by $J(m)$, and projects to $V_{\lambda'}$ (\lean{jetOp}). The jets of the kernel are $J_{N,N',c,x}(m)=\sigma_0^{-1}\bigl(\chi_F(N,N')^{-1}\,c_D^m\,\partial^m\theta_{N,N'}[c,x](0)\bigr)$ (\lean{Amb.jetK}), where $\chi_F$ is the character factor of $e$.
+
+\paragraph{Step distributions.} With frames $\mathrm{fr}$ at the bad primes and the frame factor $\mu(N,\mathrm{fr})=\prod_{v}m_U(v)^{\mathrm{ord}_v\det N}\prod_{P\in S_B}m_I(P)(\det\mathrm{fr}_P)$ (\lean{muInvDet}),
+\[
+\mathrm{th}(N,\mathrm{fr},N',\mathrm{fr}',c,x)=\frac{\mu(N,\mathrm{fr})}{\mu(N',\mathrm{fr}')}\;j_{\lambda,\lambda',n}\bigl(J_{N,N',c,x}\bigr)\quad\text{if }c\mid D\text{ and }x\in D^{-1}\Hom_S(N,N'),
+\]
+and $0$ otherwise (\lean{thDistC}). The step kernel of step $i$ is this with $(a,b)=(N_i,N_{i+1})$, $\lambda=\lambda_{\mathrm{true}}(u,i)$, $\lambda'=\lambda_{\mathrm{true}}(u,i+1)$, $n=\nu_{\mathrm{last}}$, and the local characters $m_U,m_I$ of step $i$ (\lean{stepT}).
+
+\section{A. The common kernel proposition}\label{sec:A}
+
+For $\gamma\in U_a$ and $\gamma'\in U_b$ let $R=R_{\gamma,\gamma'}\colon V\to V$, $(Rz)_\tau=\tau(\gamma')\,z_\tau\,\tau(\gamma)^{-1}$. Then $R^{-1}$ is the archive's \lean{Amb.pullV}, $(R^{-1}z)_\tau=\tau(\gamma')^*z_\tau\tau(\gamma)$. Write $\Ad(\gamma,\gamma')x=\gamma'x\gamma^{-1}$ on $W$.
+
+\begin{proposition}[the kernel law]\label{prop:A}
+Let $E,F,\Phi,K,\sigma_0$ be as in Section~\ref{sec:set}, with $a,b$ even. Let $\Lambda_0$ be the CM elliptic lattice of the base datum and $\chi$ a function on fractional $\OEr$-ideals that is multiplicative on norm-one ideals and satisfies $\chi(u\OEr)=\prod_\tau\tau(u)^{-1}$ for $u\in E^1$. Let $N\subset E^a$, $N'\subset E^b$ be self-dual, $\gamma\in U_a$, $\gamma'\in U_b$.
+\begin{enumerate}[label=(\roman*),itemsep=2pt]
+\item (base vector) $e(\gamma N,\gamma'N')=e(N,N')\circ R^{-1}$.
+\item (kernels) For every level $c$ and every $x$ in range, $\theta_{\gamma N,\gamma'N'}[c,\Ad(\gamma,\gamma')x]=\theta_{N,N'}[c,x]\circ R^{-1}$. For every datum $\Xi$ of level $(c_A,c_B)$, $\theta_{\gamma N,\gamma'N'}[\Xi\circ\Ad(\gamma,\gamma')^{-1}]=\theta_{N,N'}[\Xi]\circ R^{-1}$.
+\item (step kernels) Suppose the local characters of the frame factor satisfy the product law
+\[
+\mu(\gamma N,\gamma\,\mathrm{fr})=\prod_\tau\tau(\det\gamma)^{-e_\tau}\,\mu(N,\mathrm{fr})\qquad(\text{for all self-dual }N\text{, frames fr, }\gamma\in U_a),
+\]
+and the same at rank $b$, for integers $e_\tau$ with $n_\tau+\tfrac b2-e_\tau=\mathrm{detShift}(\lambda_\tau)$ and $e_\tau-\tfrac a2=-\mathrm{detShift}(\lambda'_\tau)$, and suppose the jets $J_{N,N',c,x}$ are $K$-rational in the degrees that $j_{\lambda,\lambda',n}$ reads. Then for every admissible $(N,\mathrm{fr},N',\mathrm{fr}',c,x)$
+\[
+\mathrm{th}\bigl(\gamma N,\gamma\,\mathrm{fr},\gamma'N',\gamma'\mathrm{fr}',c,\Ad(\gamma,\gamma')x\bigr)=\rho_{\lambda'}(\gamma')\circ\mathrm{th}(N,\mathrm{fr},N',\mathrm{fr}',c,x)\circ\rho_\lambda(\gamma)^{-1}.
+\]
+\item (decorated form) Let a step act on decorated points $p$ by unitary moves $g\mapsto\gamma_g$ with frame corrections $\kappa_g$ and a character $\mathrm{chr}$, and let the data $\Xi_{p,p'}$ satisfy
+\[
+\Xi_{gp,g'p'}\bigl(\Ad(\gamma_g,\gamma_{g'})x\bigr)\prod_{P}s_S(\det\kappa_g(P))\,s_T(\det\kappa_{g'}(P))=\frac{\mathrm{chr}(g')}{\mathrm{chr}(g)}\,\Xi_{p,p'}(x).
+\]
+Then the entries $\mathrm{ent}(p,p')=\rho(p)\rho'(p')\cdot\bigl(\text{jet operator of }\theta_{N(p),N(p')}[\Xi_{p,p'}]\bigr)$ satisfy $\mathrm{ent}(gp,g'p')\circ\mathrm{tr}(g)=\mathrm{tr}(g')\circ\mathrm{ent}(p,p')$ on the forms whose sharp twist is polynomial.
+\end{enumerate}
+\end{proposition}
+
+\noindent Part (iii) is the archive's \lean{thEquivP_ofD} as instantiated by \lean{thEquivP_stepT_ofD} and \lean{Cd.CarC.thEquivP_ambOf_tiesD}. Part (iv) is \lean{KerDia.Eqv.ent_smul} through \lean{th_move} and \lean{scal_theta}. Part (i) is the first clause of \lean{Base.EqP} (\lean{eq22}), and part (ii) is \lean{Amb.ThIndEq} and \lean{Amb.ThCEq}.
+
+\section{B. Proof}\label{sec:B}
+
+\subsection{Transport of structure}
+
+\begin{lemma}[transport]\label{lem:T}
+With $R=R_{\gamma,\gamma'}$:
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $H(Rz,Rw)=H(z,w)$ and $\alpha\circ R=\alpha$;
+\item $R\,\iota(x)=\iota(\Ad(\gamma,\gamma')x)$, $R\,\Lambda(N,N')=\Lambda(\gamma N,\gamma'N')$, and $R$ carries $A_c(N,N')$, $B_c(N,N')$ to $A_c(\gamma N,\gamma'N')$, $B_c(\gamma N,\gamma'N')$;
+\item $U_{Rx}(G\circ R^{-1})=(U_xG)\circ R^{-1}$, hence $G\in\Th(\Lambda)$ if and only if $G\circ R^{-1}\in\Th(R\Lambda)$, and $I_{R\Lambda_1\to R\Lambda_2}(G\circ R^{-1})=(I_{\Lambda_1\to\Lambda_2}G)\circ R^{-1}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Since $\tau(\bar x)=\overline{\tau(x)}$, the matrix $\tau(\gamma)$ satisfies $\tau(\gamma)^*\tau(\gamma)=\tau(\gamma^*\gamma)=1$, and the same for $\gamma'$. Then $\tr\bigl(\tau(\gamma')z\tau(\gamma)^{-1}(\tau(\gamma')w\tau(\gamma)^{-1})^*\bigr)=\tr(zw^*)$ for each $\tau$. The semicharacter depends on $v$ only through $H(v,v)$.
+(b) $\tau$ is a ring homomorphism, so $\tau(\gamma'x\gamma^{-1})=\tau(\gamma')\tau(x)\tau(\gamma)^{-1}$. The $\OEr$-linear map $x\mapsto\gamma'x\gamma^{-1}$ carries $\Hom(N,N')$ onto $\Hom(\gamma N,\gamma'N')$ and, being an isomorphism of $\OEr$-modules, it carries the localizations at the primes of $S$ and the level-$c$ conditions that define $A_c$ and $B_c$ onto the same conditions for $(\gamma N,\gamma' N')$.
+(c) $(U_{Rx}(G\circ R^{-1}))(z)=G(R^{-1}z+x)\exp(-\pi H(z,Rx)-\frac\pi2H(Rx,Rx))$ and $H(z,Rx)=H(R^{-1}z,x)$ by (a). The second statement follows from the first and $\alpha(Rx)=\alpha(x)$. For the third, $R$ induces a bijection $\Lambda_2/(\Lambda_1\cap\Lambda_2)\to R\Lambda_2/(R\Lambda_1\cap R\Lambda_2)$ and preserves the index.
+\end{proof}
+
+\noindent This is \lean{TI.isIsom_RV}, \lean{TI.alV_RV}, \lean{TI.imgLat_laV}, \lean{TI.RV_embH} and the condition \lean{PullIop}. The archive states (c) for $R^{-1}=\mathrm{pull}_{\gamma,\gamma'}$, $\mathrm{pull}_{\gamma,\gamma'}G(z)=G\bigl((\tau(\gamma')^*z_\tau\tau(\gamma))_\tau\bigr)$.
+
+\subsection{Proof of (i): the base vector}\label{sec:A1}
+
+The proof follows \lean{Cd.PairingIndexBounds.Eq.reduction_of}, \lean{e3a} and \lean{e3b} (\Lpath{ColumnData/ColumnDataEquations/ReductionOf.lean}, read in full) and the constant lemmas \lean{J1at_of_ne}, \lean{J1at_mul}, \lean{split_host}, \lean{gaussRow_of} (\Lpath{JNoEig.lean}, \Lpath{JArith.lean}, \Lpath{JNormOne.lean}, read at the top). Four facts about theta spaces are used.
+
+\begin{enumerate}[label=(F\arabic*),leftmargin=*,itemsep=2pt]
+\item \emph{Lines.} For every admissible pair $(L,L')$ (even ranks, self-dual), $\Lambda(L,L')$ is self-dual for $\operatorname{Im}H$, $\alpha$ is a semicharacter on it, and $\Th(\Lambda(L,L'))$ is a line; for $(\mathrm{std},\mathrm{std})$ it is spanned by $\theta_0$. This is the Frobenius--Appell--Humbert count for theta functions of a self-dual lattice (the finite Heisenberg group of a self-dual lattice is trivial), with the integrality of $q$ on $\Lambda(L,L')$ (\lean{QIntAll}, \lean{hermitian_form_integral_values}) and the standard data \lean{SO.stdOK}.
+\item \emph{Path independence on the moves used.} For self-dual $L,L_1\subset E^a$ and $L',L''\subset E^b$,
+\[
+I_{(L_1,L')\to(L_1,L'')}I_{(L,L')\to(L_1,L')}=I_{(L,L'')\to(L_1,L'')}I_{(L,L')\to(L,L'')}\quad\text{on }\Th(\Lambda(L,L')),
+\]
+and the two triangle laws $I_{(L,\mathrm{std})\to(L_1,\mathrm{std})}I_{(\mathrm{std},\mathrm{std})\to(L,\mathrm{std})}=I_{(\mathrm{std},\mathrm{std})\to(L_1,\mathrm{std})}$ and its mirror in the second slot (\lean{SqP}, \lean{Tr0L}, \lean{Tr0R}). Weil's triple formula gives $I_{2\to3}I_{1\to2}=\mu\,I_{1\to3}$ with $\mu$ a normalized quadratic Gauss sum over $\Lambda_3\times\Lambda_2$ modulo $\Lambda_1$ (\lean{tripleFormula}). For these triples the archive exhibits split data, an $\OEr$-endomorphism $\epsilon$ preserving both lattices with $\epsilon^2-\epsilon$, $\epsilon^*\epsilon$ and $(1-\epsilon)^*(1-\epsilon)$ divisible by a chosen $n$ on both (\lean{SplitPair}), for which the quadratic function in the triple sum is identically $1$ on the coset space, so the normalized sum is $1$ (\lean{mu_one_of_split}, \lean{muOneL_of}, \lean{sqSplit_of}).
+\item \emph{Transport.} Lemma~\ref{lem:T}(c).
+\item \emph{Constants.} For $\gamma\in U_a$,
+\[
+\theta_0\circ R_{\gamma,1}^{-1}=\Bigl(\prod_\tau\tau(\overline{\det\gamma})\Bigr)^{b/2}I_{(\mathrm{std},\mathrm{std})\to(\gamma\,\mathrm{std},\mathrm{std})}\,\theta_0,
+\]
+and for $\gamma'\in U_b$ the same with $\bigl(\prod_\tau\tau(\det\gamma')\bigr)^{a/2}$ and $I_{(\mathrm{std},\mathrm{std})\to(\mathrm{std},\gamma'\mathrm{std})}$ (\lean{J1}, \lean{J2}).
+\end{enumerate}
+
+\begin{lemma}[Weil's constant, made exact]\label{lem:W}
+(F4) holds.
+\end{lemma}
+
+\begin{proof}
+\emph{Reduction to a fixed-point-free unitary.} Every $\gamma\in U_a$ is a product $\gamma_1\gamma_2$ of unitaries with $\det(1-\gamma_i)\neq0$. (Take $u\in E^1$ with $u\neq1$ and $u$ not an eigenvalue of $\gamma$, which exists because $E^1$ is infinite and $\gamma$ has finitely many eigenvalues, and put $\gamma_1=u\cdot1$, $\gamma_2=u^{-1}\gamma$. The archive uses a Cayley parametrization by a skew element, \lean{split_host}.) The constant in (F4) is multiplicative in $\gamma$. Indeed, if $\theta_0\circ R_{\gamma_i,1}^{-1}=c_i\,I_{\mathrm{std}\to\gamma_i\mathrm{std}}\theta_0$, then by (F3) $\theta_0\circ R_{\gamma_1\gamma_2,1}^{-1}=c_2\,(I_{\mathrm{std}\to\gamma_2\mathrm{std}}\theta_0)\circ R_{\gamma_1,1}^{-1}=c_2\,I_{\gamma_1\mathrm{std}\to\gamma_1\gamma_2\mathrm{std}}(c_1I_{\mathrm{std}\to\gamma_1\mathrm{std}}\theta_0)$, and the triangle law (F2) turns the composite into $c_1c_2\,I_{\mathrm{std}\to\gamma_1\gamma_2\mathrm{std}}\theta_0$ (\lean{J1at_mul}). The right side of (F4) is multiplicative too, so it suffices to treat $\delta=R_{\gamma,1}$ with $1-\gamma$ invertible.
+
+\emph{Weil's formula.} Let $\Lambda=\Lambda(\mathrm{std},\mathrm{std})$ and $A=1-\delta^{-1}$, invertible because $\gamma$ has no eigenvalue $1$. For a theta function $\theta$ of the self-dual lattice $\Lambda$ (a line by (F1)),
+\[
+\theta\circ\delta^{-1}=\frac{\lvert\det A\rvert}{\det A}\,g\;I_{\Lambda\to\delta\Lambda}\,\theta,\qquad g=\lvert M\rvert^{-1/2}\sum_{x\in M}\phi(x),
+\]
+where $M=\Lambda/A(\Lambda\cap\delta\Lambda)$ and $\phi$ is the quadratic function $x\mapsto\alpha(x)\exp(-\pi i\,\operatorname{Im}H(\mathrm{cay}(x),x))$ attached to the Cayley transform (\lean{UnitaryConstant}, with \lean{UnitaryIndex}, \lean{PhiQuadratic}). This is Weil's formula for the action of an element without fixed vectors on the Schr\"odinger model of the finite Heisenberg group (Weil, Acta Math.\ 111 (1964), with the Gauss sum as the Weil index); the archive proves it in \lean{UnitaryConstant_proof}, which lies outside the three blocks.
+
+\emph{Rows.} $V=\prod_\tau M_{b\times a}(\mathbb C)$ is the orthogonal sum of $b$ copies of $V_1=\prod_\tau M_{1\times a}(\mathbb C)$ by rows, and $H$, $\alpha$, $\Lambda$, $\delta$ and $A$ split accordingly (\lean{form_row}, \lean{al_row}, \lean{lat_row}, \lean{map_row}). Hence $\det A=(\det A_1)^b$ and $g=g_1^b$, and the constant is $c=\bigl(\tfrac{\lvert a_1\rvert}{a_1}g_1\bigr)^b$ with $a_1=\det A_1$.
+
+\emph{The Cayley determinant.} For a unitary $\delta_1$ on $V_1$, $\overline{\det(1-\delta_1^{-1})}=\det(1-\delta_1)=\det(-\delta_1)\det(1-\delta_1^{-1})$, so $\bar a_1=(-1)^{\dim V_1}\det(\delta_1)\,a_1$ (\lean{DetCayley}). Here $\dim_{\mathbb C}V_1=a\lvert\Phi\rvert$ is even, and $\delta_1$ is right multiplication by $\tau(\gamma)^*$ on the $\tau$-th row, so $\det\delta_1=\prod_\tau\overline{\tau(\det\gamma)}=\prod_\tau\tau(\overline{\det\gamma})$. Therefore $(\lvert a_1\rvert/a_1)^2=\bar a_1/a_1=\prod_\tau\tau(\overline{\det\gamma})$.
+
+\emph{The Gauss sum.} $g_1^2=1$ (\lean{GaussRow}). Since $\phi$ is a nondegenerate quadratic function on the finite group $M_1$, $\lvert g_1\rvert=1$ (\lean{GaussEighth}, \lean{UnitaryGauss}). For every $m>0$ there are $\lambda,s\in\OEr$ with $\bar s=s$ and $\bar\lambda\lambda=-1+ms$ (\lean{negOneNorm}; the archive writes $\lambda=(\alpha+\beta\sqrt{-q})(\gamma+\delta\sqrt{-d})$ with $(\alpha^2+q\beta^2)(\gamma^2+d\delta^2)\equiv-1\bmod m$). Take $m=4\lvert M_1\rvert$. Multiplication by $\lambda$ preserves $\Lambda$, commutes with $\delta_1$, permutes $M_1$, and multiplies the quadratic form by $\bar\lambda\lambda\equiv-1$ modulo $4\lvert M_1\rvert$, so $\phi(\lambda x)=\overline{\phi(x)}$ (\lean{alpha_mult}). Summing over $M_1$ gives $g_1=\bar g_1$, so $g_1=\pm1$ (\lean{gauss_sq}).
+
+\emph{Conclusion.} $\bigl(\tfrac{\lvert a_1\rvert}{a_1}g_1\bigr)^2=\prod_\tau\tau(\overline{\det\gamma})$. Since $b$ is even, $c=\bigl((\tfrac{\lvert a_1\rvert}{a_1}g_1)^2\bigr)^{b/2}=\bigl(\prod_\tau\tau(\overline{\det\gamma})\bigr)^{b/2}$, and the sign of $g_1$ drops out. The second-slot constant is the same computation with columns (\lean{J2at_of_ne}).
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:A}(i)]
+Write $R=R_{\gamma,1}R_{1,\gamma'}$ (the two factors commute). For the second slot, by (F3), (F2) and Lemma~\ref{lem:W},
+\[
+\theta_{L,L'}\circ R_{1,\gamma'}^{-1}=\Bigl(\prod_\tau\tau(\det\gamma')\Bigr)^{a/2}\theta_{L,\gamma'L'}
+\]
+(\lean{e3b}). Here the square law (F2) moves the change of the second slot past the change of the first, (F3) transports the intertwiners, Lemma~\ref{lem:W} gives the constant on $\theta_0$, and the triangle law recombines. For the first slot, in the same way,
+\[
+\theta_{L,X}\circ R_{\gamma,1}^{-1}=\Bigl(\prod_\tau\tau(\overline{\det\gamma})\Bigr)^{b/2}\theta_{\gamma L,X}
+\]
+(\lean{e3a}). For the character factor, $\mathfrak d_{\gamma L}=(\det\gamma)\,\mathfrak d_L$ (\lean{DetSmul}), $\det\gamma\in E^1$, and $\chi$ is multiplicative on norm-one ideals with $\chi((\det\gamma))=\prod_\tau\tau(\det\gamma)^{-1}$, so
+\[
+\chi(\mathfrak d_{\gamma L})^{b/2}\chi(\mathfrak d_{\gamma'L'})^{-a/2}=\Bigl(\prod_\tau\tau(\det\gamma)\Bigr)^{-b/2}\Bigl(\prod_\tau\tau(\det\gamma')\Bigr)^{a/2}\chi(\mathfrak d_L)^{b/2}\chi(\mathfrak d_{L'})^{-a/2}
+\]
+(\lean{character_factor_unitary_action}). Since $\lvert\tau(\det\gamma)\rvert=1$, $\tau(\overline{\det\gamma})=\tau(\det\gamma)^{-1}$. Multiplying, $e(L,L')\circ R^{-1}=e(\gamma L,\gamma'L')$.
+\end{proof}
+
+\begin{remark}
+The character factor $\chi(\mathfrak d_L)^{b/2}\chi(\mathfrak d_{L'})^{-a/2}$ in $e$ is exactly the normalization that cancels Weil's constant. Without it the base vector would be covariant only up to the character $(\det\gamma)^{-b/2}(\det\gamma')^{a/2}$, which is the archimedean value of the splitting character of the unitary dual pair at a rational point. This is where the Weil representation sits inside the law, and it is the only place.
+\end{remark}
+
+\subsection{Proof of (ii): the kernels}
+
+\begin{proof}
+By Lemma~\ref{lem:T}, $R$ carries the whole input $(H,\alpha,\Lambda(N,N'),A_c,B_c)$ of the induction for $(N,N')$ to the input for $(\gamma N,\gamma'N')$, carries coset representatives to coset representatives and preserves all relative indices and the volume factor. By (i) it carries $e(N,N')$ to $e(\gamma N,\gamma'N')$. If $s$ is a lift of $x$, then $\Ad(\gamma,\gamma')s$ is a lift of $\Ad(\gamma,\gamma')x$ and $R\iota(s)=\iota(\Ad(\gamma,\gamma')s)$. The induction is a finite combination of operators $U_q$ with coefficients $\alpha(q)$ and indices, so by Lemma~\ref{lem:T}(c) it commutes with $R$:
+\[
+\theta_{\gamma N,\gamma'N'}[c,\Ad(\gamma,\gamma')x](Rz)=\theta_{N,N'}[c,x](z).
+\]
+This is \lean{theta_coset_indicator_natural} (\Lpath{RkThindEq.lean}:68, read in full; it uses \lean{opU_map}, \lean{inter_map}, \lean{semiChar_map}, \lean{fixedBy_map}, which are the statement that the Heisenberg sums commute with isometries). A second proof, \lean{IndEq.thIndEq_of_vacEq} (\Lpath{GmapToAddSubgroup.lean}:256, read in full), runs the same transport through an explicit index formula. For the datum kernel, $\theta[\Xi]$ is the finite sum over $x\in c_A^{-1}\Hom_S/c_B\Hom_S$ of $\Xi(x)\theta[c_B,x]$, and $x\mapsto\Ad(\gamma,\gamma')x$ is a bijection between the coset spaces of $(N,N')$ and of $(\gamma N,\gamma'N')$, so the second statement follows by changing the summation variable (\lean{thCEq_of_ind}, read in full).
+\end{proof}
+
+\subsection{Jets}
+
+\begin{lemma}[chain rule for jets]\label{lem:J}
+Let $g=(g_\tau)$, $h=(h_\tau)$ be invertible matrices, $L(z)_\tau=h_\tau z_\tau g_\tau$, and $G$ smooth. Let $J_G(m)=\kappa\,c_D^m\partial^mG(0)$ and $J_{G\circ L}(m)=\kappa'c_D^m\partial^m(G\circ L)(0)$ with $\kappa'=r\kappa$. Then for every $P\in V_\lambda$ with $g\cdot P\in V_\lambda$,
+\[
+j_{\lambda,\lambda',n}(J_{G\circ L})(P)=r\prod_\tau\det(g_\tau)^{n_\tau}\cdot h\cdot\bigl(j_{\lambda,\lambda',n}(J_G)(g\cdot P)\bigr),
+\]
+where $g\cdot$ and $h\cdot$ are the block actions on polynomials.
+\end{lemma}
+
+\begin{proof}
+The Taylor coefficients of $G\circ L$ at $0$ are those of $G$ after the linear substitution $D\mapsto hDg$ in the monomials $D^m$ (chain rule for a linear map). In the definition of $j$ the coefficients are paired with the monomials of $P(YD)\prod\det(X)^{n}$ at $X=YD$. Moving the substitution onto the polynomial side replaces $P(Y\cdot hDg)$ by the block action of $h$ on the variables $Y$ and of $g$ on $P$, and the factor $\prod_\tau\det(X_\tau)^{n_\tau}$ contributes $\prod_\tau\det(g_\tau)^{n_\tau}$; this is the form in which the archive states and proves the identity. Both sides are $K$-rational on the degrees read by $j$ (\lean{jet_local_rationality}), so equality after $\sigma_0$ gives equality in $K$.
+\end{proof}
+
+\noindent This is \lean{TE.jetMap_pullD} with \lean{TE.jetMap_pull} (\Lpath{AtZeroCompProdX.lean}:200) and, in the decorated form, \lean{KerDia.Eqv.opOf_move} and \lean{opOf_equiv} (read in full).
+
+\subsection{Character laws}
+
+\begin{lemma}[characters]\label{lem:C}
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item ($\chi$-law) \[\chi_F(\gamma N,\gamma'N')=\Bigl(\prod_\tau\tau(\det\gamma)\Bigr)^{-b/2}\Bigl(\prod_\tau\tau(\det\gamma')\Bigr)^{a/2}\chi_F(N,N').\]
+\item (product law) If $m_U$ and $m_I$ are the unramified and ramified local components of a Hecke character $\mu$ of $E$ of infinity type $e=(e_\tau)$, trivial on $E^\times$, then $\mu(\gamma N,\gamma\,\mathrm{fr})=\prod_\tau\tau(\det\gamma)^{-e_\tau}\mu(N,\mathrm{fr})$ for $\gamma\in U_a$.
+\item (weights) For the step weights of the tower, $n_\tau+\tfrac b2-e_\tau=\mathrm{detShift}(\lambda_\tau)$ and $e_\tau-\tfrac a2=-\mathrm{detShift}(\lambda'_\tau)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) is the computation at the end of the proof of (i). (b) Put $u=\det\gamma\in E^1$. The frame of $\gamma N$ at a prime $P$ is $\gamma$ times the frame of $N$, so $\mathrm{ord}_P\det(\gamma N)=\mathrm{ord}_P(u)+\mathrm{ord}_P\det N$ off $S_B$ and $\det(\gamma\,\mathrm{fr}_P)=u\det\mathrm{fr}_P$ on $S_B$. Hence the ratio $\mu(\gamma N,\gamma\mathrm{fr})/\mu(N,\mathrm{fr})$ is $\prod_{v\nmid\infty}\mu_v(u)$, the inert and ramified places contributing $1$ because $u$ is a unit there and $\mu$ is unramified there. Since $\mu$ is trivial on $E^\times$, $\prod_{v\nmid\infty}\mu_v(u)=\mu_\infty(u)^{-1}=\prod_\tau\tau(u)^{-e_\tau}$ (\lean{hecke_character_product_formula}, \lean{hecke_character_infinity_type}). The archive writes $u=y/\bar y$ by Hilbert's Theorem~90 to control the valuations (\lean{hilbert_ninety_norm_one}). This is \lean{muProdLaw_of} through \lean{md_prod} (\Lpath{LocalProductMeasures.lean}:456--556, read at the top; $165$ exclusive theorems, the local bookkeeping of the frames at the good, bad, split and inert places). (c) is the arithmetic of the true weights (\lean{wtLaw_step}, \lean{chain_degree_eq}, read in full).
+\end{proof}
+
+\subsection{Proof of (iii) and (iv)}
+
+\begin{proof}[Proof of (iii)]
+Fix the data and write $\gamma\cdot$ for the moved data. Both sides vanish unless $(N,N',c,x)$ is in range, and the range is preserved by $\Ad(\gamma,\gamma')$ by Lemma~\ref{lem:T}(b). On the range, by (ii) the kernel of the moved data is $\theta_{N,N'}[c,x]\circ R^{-1}$, and by Lemma~\ref{lem:C}(a) its jet normalization $\chi_F(\gamma N,\gamma'N')^{-1}$ is $\chi_F(N,N')^{-1}$ times $\bigl(\prod\tau\det\gamma\bigr)^{b/2}\bigl(\prod\tau\det\gamma'\bigr)^{-a/2}$. Lemma~\ref{lem:J} with $g=\tau(\gamma)$, $h=\tau(\gamma')^{-1}$ turns the jet operator of the moved kernel into $h\cdot j(J)(g\cdot P)$ times $r\prod\det(g)^{n}$. By Lemma~\ref{lem:C}(b) the frame factor of the moved data is the frame factor of the data times $\prod\tau(\det\gamma)^{-e}\prod\tau(\det\gamma')^{e}$. The block actions $g\cdot$ and $h\cdot$ are $\rho_\lambda(\gamma)^{-1}$ and $\rho_{\lambda'}(\gamma')$ up to their determinant twists $\prod\tau(\det\gamma)^{\mathrm{detShift}(\lambda)}$ and $\prod\tau(\det\gamma')^{-\mathrm{detShift}(\lambda')}$. Lemma~\ref{lem:C}(c) says that the exponents of $\det\gamma$ (namely $n+\tfrac b2-e-\mathrm{detShift}(\lambda)$) and of $\det\gamma'$ (namely $e-\tfrac a2+\mathrm{detShift}(\lambda')$) are both $0$, so every scalar cancels. This is \lean{thEquivP_ofD} (\Lpath{ThEquivPAmbOfTiesD.lean}:64, read in full), whose last lines are exactly this cancellation (\lean{scal_a}, \lean{scal_b}).
+\end{proof}
+
+\begin{proof}[Proof of (iv)]
+The entry is $\rho(p)\rho'(p')$ times the jet operator of $\theta[\Xi_{p,p'}]$ applied to the sharp twist of the form. By (ii) for datum kernels, the kernel of the moved points is the kernel of the points composed with $R^{-1}$, with datum $\Xi_{gp,g'p'}\circ\Ad$. The hypothesis on $\Xi$ (the archive's \lean{xiAt_law}, proved case by case for the entry, the coupling and the top data in \lean{MatLaw.xiEntry_law}, \lean{CoupledLaw.xiCpl1_law}, \lean{xiOver_law}) converts this datum into $\mathrm{chr}(g')/\mathrm{chr}(g)$ times $\Xi_{p,p'}$ up to the frame corrections $\kappa$, whose determinants are absorbed by the laws \lean{MuDetLaw} and \lean{UnitInv} of the frame factor. Lemma~\ref{lem:C} and the product law then give \lean{th_move} (\Lpath{PolOfFnOfOne.lean}:476, read in full) through \lean{scal_theta} (read in full), and Lemma~\ref{lem:J} in the form \lean{opOf_equiv} gives \lean{ent_smul}.
+\end{proof}
+
+\subsection{Which mechanism}
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{3.4cm}>{\rr}p{2.2cm}>{\rr}p{9.6cm}}
+\toprule
+candidate mechanism & used? & where and how\\
+\midrule
+\endhead
+Weil representation & once & Only through Weil's constant of a fixed-point-free unitary on a theta space (Lemma~\ref{lem:W}), evaluated exactly. No adelic Weil representation and no metaplectic cover enter X1 or D6.\\
+covariance of the theta kernel & yes & Proposition~\ref{prop:A}(i), (ii): the base vector and every kernel built from it are covariant under $R_{\gamma,\gamma'}$.\\
+change of variables & yes & $z\mapsto R^{-1}z$ on $V$ (Lemma~\ref{lem:T}) and $x\mapsto\Ad(\gamma,\gamma')x$ on the finite coset spaces (proof of (ii)).\\
+character matching & yes & $\chi$ on norm-one determinant ideals, the product formula for the Hecke characters of the frames, the weight identity (Lemma~\ref{lem:C}); in D6 also the $\xi$-data law.\\
+local splitting data & no for X1, D6 & Not used. The rational point $\gamma$ is global; the splitting characters appear only as the constant in Lemma~\ref{lem:W}, which the factor $\chi_F$ cancels. Local splitting is used in E1 (Section~\ref{sec:E}).\\
+Haar measures & no & Only relative indices and the factor $\mathrm{vol}^{-1/2}$, which $R$ preserves.\\
+finite-level identity & yes & The Gauss sum $g_1^2=1$ from $-1$ being a norm modulo $4\lvert M_1\rvert$, and the triple sum $\mu=1$ on split triples.\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent Published theorem needed: Weil, \emph{Sur certains groupes d'op\'erateurs unitaires}, Acta Math.\ 111 (1964), for the formulas behind \lean{UnitaryConstant} (the action of a fixed-point-free isometry on theta functions of a self-dual lattice) and \lean{tripleFormula} (the triple constant of three commensurable self-dual lattices). The archive proves both internally, outside the three blocks, and Wave~6 already lists the same two facts on the external boundary (Group C (i), (ii) of F4, with Mumford, \emph{Tata Lectures on Theta III}). No new external row is needed.
+
+\section{Proposition E: the kernel identity of E1}\label{sec:E}
+
+\begin{proposition}[kernel identity]\label{prop:E}
+Let $(S,T)$ be the hermitian spaces of a step, of ranks $a$ and $b$, $\psi$ the standard character of $\mathbb A_F$, $\omega$ a Weil datum for the pair of characters $(\mu,\mu)$ (\lean{IsWeilDatumO}: $\omega(g,h)$ preserves theta functions, intertwines the Heisenberg action, $\omega(g,h)\rho(w)\omega(g,h)^{-1}=\rho(\mathrm{act}(g,h)w)$, is invariant at $0$ under rational points, unitary, and split at the split places by $\mu$), $f_0$ the vacuum of the integral lattice pair, $\epsilon$ the split idempotent of the places $S$, $\Phi$ a Schwartz--Bruhat function on the $\epsilon$-half of level $c$ and $w=\theta_\Phi$ its theta function (\lean{IsThetaAt}). Let $(g,h)$ be finite adelic and move the integral lattices to $(N,N')$, let $\Xi$ be the finite datum with $\Phi\circ\mathrm{act}(g,h)^{-1}=\Xi\circ\mathrm{toHom}$ on the $\epsilon$-half, and suppose the Fock reading of the moved vacuum is $\mathrm{xiN}(\omega(g,h)f_0)=\kappa E$. Then for every polynomial $P$
+\[
+\vartheta_\omega(g,h)\bigl(\text{pure tensor of }w\text{ at }P\bigr)=\kappa\cdot\mathrm{jet}_P\bigl(\theta_{N,N'}[\Xi;E]\bigr).
+\]
+\end{proposition}
+
+\paragraph{Mechanism.} Read from \lean{thetaKernel_eq_jet_thC} (\Lpath{ThetaKernelSplitPlacesEqJetClassicalTheta.lean}:46) and \lean{reads_datum_eq_thC} (\Lpath{DatumReadingSplitPlacesEqClassicalTheta.lean}:24), both in full.
+\begin{enumerate}[label=(E\arabic*),leftmargin=*,itemsep=2pt]
+\item \emph{Move.} By the Heisenberg intertwining of $\omega$, $\omega(g,h)\theta_\Phi$ is the theta function of $\Phi\circ\mathrm{act}(g,h)^{-1}$ for the moved vacuum $\omega(g,h)f_0$ (\lean{SplitMove.isThetaAt_move}).
+\item \emph{Finite Fourier expansion.} The moved datum, $\epsilon$-supported, of level $c$ and $\Lambda$-periodic, is a finite combination $\sum_pK(p)\,\psi(\langle t+x_p,y_p\rangle)\,\mathbf 1_{\Lambda,\epsilon}(t+x_p)$ over representatives $p=(x_p,y_p)$ of the two half lattices, with $K(p)=\lvert S_A\rvert^{-1}\sum_{s\in S_A}\Xi(s-x_p)\,\mathrm{brk}(y_p,s)^{-1}$ (\lean{finite_fourier_expansion_half_split_places}, statement read).
+\item \emph{Place model.} The place model carries translations and modulations to Heisenberg operators and the half indicator to the vacuum, so $\theta_{\Phi'}=\sum_pK(p)\,\rho(x_p)\rho(y_p)f_0'$ (\lean{thetaFourierSum_eq_sum_heisenberg_translates}).
+\item \emph{Half components on the vacuum.} On the conjugate half, $\rho(y)f_0'=\alpha(\iota y)\,\rho(\mathrm{finRat}\,y)f_0'$, and on the half, $\rho(x)\rho(\mathrm{finRat}\,y)f_0'=\alpha(\iota x)\,\rho(\mathrm{finRat}\,x)\rho(\mathrm{finRat}\,y)f_0'$ (\lean{heisenbergOperator_conjugateHalf_vacuum_eq_semicharacter}, \lean{heisenbergOperator_halfComponent_on_vacuumTranslates}, statements read).
+\item \emph{Reading.} The Fock reading intertwines finite rational Heisenberg translates with the Fock operators, $\mathrm{xiN}(\rho(v)f)=U_{\iota\gamma}\,\mathrm{xiN}(f)$ when $v$ is the finite part of the rational $\gamma$ (\lean{gaussianReading_finiteRationalHeisenbergTranslate}, owned outside the blocks; it is the invariance of the theta distribution under the rational Heisenberg group). Summing, the reading of $\theta_{\Phi'}$ is the coset sum $\sum K(p)\alpha\alpha\,U_{\iota x_p}U_{\iota y_p}\mathrm{xiN}(f_0')$, which is $\theta_{N,N'}[\Xi;\mathrm{xiN}f_0']$ by the coset formula of the datum kernel (\lean{ThetaCosetSum.xiL_eq_kernel}).
+\item \emph{Jets.} The Fock pure-tensor value at $0$ equals the jet of the reading (the hypothesis on holomorphic $f$ in \lean{kernel_identity_tuple}).
+\end{enumerate}
+
+\paragraph{Where the kernel law enters E1.} Only through pinned inputs. The moved-vacuum law \lean{VacT} (field \lean{PinX.mv}, produced by \lean{MovedVac.vac_moved}, which is owned outside the three blocks) says that the reading of $\omega(g,h)f_0$ is $c_0\mu(x)^{-1}\mu(y)\,\theta_{N,N'}$, the adelic counterpart of Proposition~\ref{prop:A}(i), and \lean{chr_moves_eq_rho_base} matches $\mu(x)^{-1}\mu(y)$ with $\rho\rho'\chi_F$, the adelic counterpart of Lemma~\ref{lem:C}. The theorems that E1 owns are (E2), (E4), the datum transport and the characters, none of which is an instance of Proposition~\ref{prop:A}.
+
+\paragraph{Status.} \sM. The leaves are listed in Section~\ref{sec:D}.
+
+\section{C. Application table}\label{sec:C}
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{2.3cm}>{\rr}p{3.3cm}>{\rr}p{2.1cm}>{\rr}p{5.0cm}>{\rr}p{2.4cm}}
+\toprule
+occurrence & exact Lean head & common law sufficient? & extra input & verdict\\
+\midrule
+\endhead
+X1, kernel laws of the base tuple under \lean{bwit_exists_alt} & \lean{GlobalTheory.Mem.Col2.TC.RcHyp.hyps_of_isTw}, \lean{chTh_ok_chi}, through \lean{Cd.CarC.thEquivP_ambOf_tiesD} & yes, for the equivariance conjunct & (a) $\chi$ agrees with the column character on norm-one ideals, used to transfer the rationality of jets (\lean{jetsRat_chi}); this needs that $\mathfrak d_N$ is a norm-one ideal for self-dual $N$, which holds because $\mathfrak d_N\bar{\mathfrak d}_N$ is the discriminant ideal of $N$ relative to $\mathrm{std}$ and both are self-dual (\lean{normOne_detIdeal_transportedLattice}); (b) the tuple ties \lean{LawTies}, \lean{MuqTie}, given, which make the frame characters those of one Hecke character; (c) the admissibility bookkeeping, index additivity from the coset decomposition (\lean{stepC_ok_deg}, \lean{jetAddDeg_of}, read in full). Not part of the law: the conjunct \lean{idxMatNF_of_isTw} (twisted normal form implies matrix normal form, $5$ theorems) & \sC{} for the equivariance and admissibility ($249$ theorems); the normal-form leaf stays with the column reading\\
+D6 & \lean{GlobalTheory.KRamT.kernel_keeps_ramT} & yes, in the decorated form (iv) & (a) diamond invariance: a residue unit $s$ at a level prime moves the decoration but not the lattice, the frames or the $\xi$-datum, so $\theta$ and $\rho\rho'$ are unchanged (\lean{th_dia}, \lean{rho_dia}, read in full); (b) the kernel keeps the weight spaces because the sharp twist of a weight vector is a polynomial (\lean{sharp_mem_range}, \lean{exp_nonneg}, \lean{kmap_mem_valC}, read in full); (c) the averaging argument: $K_i$ commutes with each $\mathrm{dil}_{v,s}$ and with the stabilisers (Proposition~\ref{prop:A}(iv) with $g=1$), hence preserves the stabiliser-invariants and the kernel of $\sum_s\mathrm{dil}_{v,s}$ & \sC{} ($96$ theorems)\\
+E1 & \lean{GlobalTheory.KerTup.kernel_identity_tuple} & no & it is the model comparison of Proposition~\ref{prop:E}: the Weil-datum axioms (external, Kudla splitting, already on the boundary through R4-D(iv)), the moved vacuum (pinned), the finite Fourier expansion and half-component identities at the split places, the datum transport \lean{movedDatum_eq_finiteDatum_representativePair}, the characters \lean{chr_moves_eq_rho_base}, and the level-pair law \lean{lev_law} & \sR{} (mechanism reconstructed)\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent\textbf{Normalizations.} At X1 the frame factor uses $m_U=\mathrm{mUof}_i$ and $m_I=\mathrm{muAtT}_i$. The law is proved for the frame characters $\mathrm{muAtT}$, and the tie \lean{MuqTie} identifies them with the characters $\mathrm{muAt}$ that the chain uses (\lean{stepC_eq_stepT}, read in full). This is the one normalization the law needs at X1 that is not automatic.
+
+\section{D. Updated residual list}\label{sec:D}
+
+\subsection{The sixteen heads after the law}
+
+Sizes are exclusive theorems inside the head's block, recomputed on the rebuilt graph. The column \emph{ledger} repeats \Lpath{Residual_Heads.tsv}. Small differences come from the resolution of short names.
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{1.2cm}>{\rr}p{5.6cm}r r r>{\rr}p{3.3cm}}
+\toprule
+head & declaration & ledger & recount & after law & effect\\
+\midrule
+\endhead
+X1 & \lean{SelC.square_integrable_columns_of_witnesses} & 313 & 313 & 64 & core closed; column reading and the normal-form leaf remain\\
+X7 & \lean{WPt.exists_pinned_spectral_data_compatible}, \lean{exists_kernel_spectral_data_at_witnesses} & 95 & 95 & 95 & untouched\\
+X2 leaf & \lean{T.reFace_zero_part_conventions_chosen_again} & 30 & 36 & 36 & untouched\\
+D1 & \lean{dat_exists} children (row-pair rational datum) & 741 & 735 & 735 & untouched\\
+D2 & \lean{exists_good}, commutation statements & 571 & 147 & 147 & untouched\\
+D3 & volume uniformity & 516 & 515 & 515 & untouched\\
+D5 & \lean{AdForm.twS_ramL} & 182 & 181 & 181 & untouched\\
+D6 & \lean{KRamT.kernel_keeps_ramT} & 97 & 96 & 0 & \textbf{disappears}\\
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & 88 & 83 & 83 & untouched\\
+D8 & \lean{T.true_geometry_row_column_entry_alt} & 61 & 46 & 46 & untouched\\
+D9 & \lean{T.true_geometry_twist_value_alt} & 51 & 43 & 43 & untouched\\
+E1 & \lean{KerTup.kernel_identity_tuple}, \lean{LevLaw.lev_law}, \lean{clsKL_real} & 314 & 307 & 307 & mechanism reconstructed (Prop.~\ref{prop:E}); count unchanged; split below as E1a to E1c\\
+E2 & \lean{AdForm.exists_clsT_of_pinTop} & 85 & 85 & 85 & untouched\\
+E3 & \lean{AdForm.JetScales.exists_jetS} & 35 & 35 & 35 & untouched\\
+E4 & \lean{AdForm.realOf_is} & 29 & 29 & 29 & untouched\\
+E5 & \lean{AdForm.exists_readsG_of_level} & 27 & 27 & 27 & untouched\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent The D2 recount resolves \lean{exists_good} to one declaration and gives a smaller closure than the ledger's $571$, which counted the whole leaf set of \lean{exists_quadratic_extension_readsLow}. I keep the ledger number in the totals. Deduplicated block totals: bundle witness $444\to195$; R4-D $1{,}537\to1{,}441$ on the recount ($1{,}743\to1{,}647$ on the ledger); R4-E $459\to459$ ($479$ on the ledger). On the ledger the total goes from about $2{,}660$ to about $2{,}320$, a drop of $345$ theorems, about $13\%$.
+
+\subsection{The smallest exact internal residual list}
+
+\begin{longtable}{>{\rr}p{0.8cm}>{\rr}p{5.5cm}>{\rr}p{6.0cm}r}
+\toprule
+ID & declarations & content & size\\
+\midrule
+\endhead
+\multicolumn{4}{l}{\emph{Bundle witness (\PC{6} record core)}}\\
+W1 & \lean{SelC.colRecC} glue, \lean{chKerC_congr}, \lean{jetK_chi}, \lean{exists_eNu}, \lean{isSelfDualLattice_normOne_ideal_rankOne}, \lean{StepZero.majAt_eq_classSum}, \lean{exists_read_fam}, \lean{DecoFin} and \lean{EvRowSurjective} leaves; \lean{idxMatNF_of_isTw} with \lean{twNF_imp_matNF} & column reading at the base tuple: the column record, kernel congruences and jets at $\chi$, the rank-one norm-one lattice, the step-zero class sum; the matrix normal form of the index matrices & 64\\
+W2 & \lean{WPt.exists_pinned_spectral_data_compatible} (with \lean{oTied_of_ksExact}), \lean{exists_kernel_spectral_data_at_witnesses} & pinned and kernel spectral data compatible with the record & 95\\
+W3 & \lean{T.reFace_zero_part_conventions_chosen_again} & face conventions of the twisted arguments & 30\\
+\multicolumn{4}{l}{\emph{PC4.13 tuple construction (R4-D)}}\\
+D1 & \lean{true_geometry_row_pair_property_alt}, \lean{row_pair_relation_alt_alt}, \lean{twist_quadratic_value_alt} & row-pair rational-datum identity with constants uniform in $t$ & 741\\
+D2 & \lean{exists_good}, \lean{true_geometry_commutation_identity_alt}, \lean{commutation_property_alt} & local split-place existence and two commutation statements & 571\\
+D3 & \lean{chain_step_value_alt}, \lean{chain_step_identity_alt}, \lean{exists_volume_constant_of_true_geometry} & volume of level times weight independent of the character and of $t$ & 516\\
+D5 & \lean{AdForm.twS_ramL} & level-prime operators kill ramified columns & 182\\
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & joint twist identity at the middle and top steps & 88\\
+D8 & \lean{true_geometry_row_column_entry_alt} & chart-zero column bound & 61\\
+D9 & \lean{true_geometry_twist_value_alt} & quadratic twist level & 51\\
+\multicolumn{4}{l}{\emph{PC4.13 class data (R4-E)}}\\
+E1a & \lean{finite_fourier_expansion_half_split_places} (\lean{DatumFour.four_expand}), \lean{heisenbergOperator_halfComponent_on_vacuumTranslates} (\lean{HalfHeis.heisO_halfA_eq}), \lean{heisenbergOperator_conjugateHalf_vacuum_eq_semicharacter} (\lean{ConjHalfHeis.heisO_conjHalf_eq}), \lean{periodLatticeHalves_reps_finite_index}, \lean{stdChar_symplectic_halfPeriodLattice_eq_one} & (E2) and (E4) of Proposition~\ref{prop:E}: finite Fourier analysis on the level-$c$ half coset group and the action of half-lattice Heisenberg elements on the vacuum; with the assembly read in full and $22$ theorems of jet and parity glue & 191\\
+E1b & \lean{T.movedDatum_eq_finiteDatum_representativePair} (\lean{TwResid.tw_resid_datum}), \lean{TwDat.chr_moves_eq_rho_base} & the moved Schwartz--Bruhat datum equals the $\xi$-datum at the representative pair (rational approximation of the finite adelic moves); determinant-root characters against $\rho\rho'\chi_F$ & 13 (+102)\\
+E1c & \lean{LevLaw.lev_law}, \lean{clsKL_real} & chart level-pair action on the finite datum; determinant powers of live-chart kernel vectors & 103\\
+E2--E5 & as in the ledger & last-period class data; jet scale; real data by branching; readings by Schur & 176\\
+\multicolumn{4}{l}{\emph{Support of the kernel law, shared by the three blocks (newly counted)}}\\
+K-a & \lean{IntegralLatticeDensity.rational_integrality_link}, \lean{hermitian_form_integral_values}, \lean{arithmetic_hermitian_form} & $q=\tfrac{\sqrt d}{2}H$ is integral on $\Lambda(L,L')$ for admissible pairs (Riemann form of the CM elliptic lattice times the trace form on $\Hom(L,L')$) & 105\\
+K-b & \lean{IntegralLatticeDensity.SO.stdOK} & standard data: $\Lambda(\mathrm{std},\mathrm{std})$ self-dual, $\alpha$ a semicharacter, $\theta_0$ spans its theta space & 41\\
+K-c & the explicit split data inside \lean{sqSplit_of}, \lean{muOneL_of}, \lean{muOneR_of} (row projections, row swaps, \lean{exists_n}, \lean{good_of_lat}) & the move triangles and squares of (F2) are split, so Weil's triple constant is $1$ & 97\\
+\bottomrule
+\end{longtable}
+
+\noindent The heads W1 to E5 total about $2{,}320$ theorems on the ledger. The $102$ theorems of the datum transport in E1b and the three support leaves K-a to K-c ($243$ theorems) were not in any head before this pass, because each is shared by two of the three blocks; the datum transport is shared by R4-D (\lean{colSide_alt}) and R4-E. They are the joint-exclusive part of the base-vector law that this pass read only at the statement level. Their mechanisms are classical. The other $208$ joint-exclusive theorems inside the law (Weil constants, the reduction to paths, the $\chi$-law and transport wrappers) are closed by Section~\ref{sec:B}.
+
+\subsection{External boundary}
+No new row. The law uses Weil (1964) for the fixed-point-free and triple constants, which Wave~6 already lists (F4, Group C). E1 uses Kudla's splitting through the Weil datum, already on the boundary as R4-D(iv).
+
+\section{E. Final verdict}
+
+\begin{quote}
+\emph{Did reconstructing the kernel-equivariance law materially collapse the remaining PC4.13 / bundle-witness residual block?}
+
+\textbf{NO.}
+\end{quote}
+
+\noindent The law is real and it is reconstructed. It closes the kernel core of X1 ($249$ theorems) and all of D6 ($96$ theorems), and it settles in ordinary mathematics the base-vector covariance that the three blocks share and that no head had counted. It does not close E1, which is a different statement, and it does not reach the large heads D1, D2, D3 and D5 or the class data E2 to E5. The residual drops by about $13\%$ and the number of heads by one. The PC4.13 block remains dominated by the tuple-construction identities D1 to D3 ($1{,}828$ theorems on the ledger).
+
+\paragraph{Recommendation for the next cleanup pass.} The heads are now cleanly separated by mechanism. D1, D2 and D3 are the row-pair, split-place and volume identities of the tuple family, one package. E1a and E1b are the adelic-classical comparison and should be taken with \lean{MovedVac.vac_moved} and \lean{gaussianReading_finiteRationalHeisenbergTranslate}, which are their natural companions and are owned outside. K-a to K-c are short classical leaves and can be closed in one sitting.
+
+\appendix
+\section{Scripts and limits}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \Lpath{scripts/kl_sub.py}: exclusive sub-closures of heads and their overlaps.
+\item \Lpath{scripts/kl_classify.py}: the components K1 to K8 of the law and the part of each head's closure (block-exclusive plus joint-exclusive) that each owns.
+\item \Lpath{scripts/kl_heads.py}: the sixteen heads before and after, and the deduplicated block totals.
+\item \Lpath{scripts/kl_joint.py}: the split of the joint-exclusive part of the law into the sub-packages of Section~\ref{sec:A1}.
+\item \Lpath{scripts/kl_where.py}: closure sizes and exclusivity of single declarations.
+\end{itemize}
+They run on the index and graph produced by the cleanup scripts (\Lpath{index_decls.py}, \Lpath{build_graph.py}) with the private-declaration list of the cleanup report. The graph is the exact-edge graph of the cleanup pass; typeclass resolution is not followed, and dot-notation edges are not used for exclusivity. Counts are therefore indicative to within a few theorems, as in the ledger. Every mechanism stated above was read in the source text at the level indicated. Nothing was built or run in Lean.
+
+\end{document}

@@ -1,0 +1,637 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm}
+\IfFileExists{newtxtext.sty}{\usepackage{newtxtext,newtxmath}}{\usepackage{lmodern}\usepackage{amssymb}}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+\newcommand{\mP}{\textsf{[P]}}
+\newcommand{\mPt}{\textsf{[P top]}}
+\newcommand{\mS}{\textsf{[S]}}
+\newcommand{\mN}{\textsf{[N]}}
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\title{Final six-agent closure wave, Agent 2\\ The global tower and covolume package (PC-2)}
+\author{Agent 2 of the final six-agent closure wave\\ Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026 (revised the same day)}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+I am Agent 2 of the final six-agent wave, assigned PC-2 of the Post-Closure Synthesis, the global tower and covolume package. The one named open constant of the package, the Bergman or sup-norm constant behind $\log\beta\le4000z^3$, is now closed. The bound comes from a sub-mean-value inequality on a holomorphic chart ball, a Schwarz-lemma argument that puts a near-maximum point of a cusp form in the thick part, a lattice-point count of the returns of the chart ball, an unfolding inequality, and a mass bound that rests on the Tamagawa number of the special unitary group. The arithmetic $\log\mathrm{supConst}\le250f^2r^2L$ is elementary and I checked it numerically. The Tamagawa statement is a new item for the external boundary. The top of \lean{exists_good_tower} is an assembly whose content sits in seven named children. Nine D4 axiom producers are wrappers of three to seventeen lines, and I name the theorem each one delegates to. The top of the covolume bound \lean{topCovolG_alt_alt} is reconstructed, including its final inequality \lean{lcv_le} and the constant $20000$ of \lean{span_thFam}. No gap, circularity or failed constant was found. At Jimmie Adriazola's request, the revision stops the theorem-by-theorem descent and restates the rest of PC-2 as six propositions in ordinary mathematics. Each proposition has its hypotheses, its mechanism, its named external inputs and its downstream use. A cross-check against Slijepčević's outline of the proof confirms five of the six propositions and adds hypotheses and printed sources. It also shows that the nefness of automorphic line bundles on special fibres at primes above the cutoff rests on a weighted degree inequality in positive characteristic that neither account proves. A last pass proves that inequality in full from the Hodge and conjugate filtrations of the de Rham bundle along a curve, and a further pass constructs those filtrations at the points of semi-abelian reduction from the formal group and the biextension of the polarisation, with a human proof that the Frobenius map is injective on every fibre. PC-2 is then closed modulo named external theorems at the level of a human proof. Nothing was built or run.
+\end{abstract}
+
+\tableofcontents
+
+\section{Scope, method and marks}
+
+I read \Lpath{Post_Closure_Synthesis.tex}, \Lpath{Post_Closure_Internal_Residuals.md} (PC-2 in full), \Lpath{Post_Closure_Verification_Boundary.md}, and Sections 6, 8 and the final report of \Lpath{Final_Closure_Wave_1}. The Lean source under \Lpath{src/lean/src} was read as text through a declaration index of 1\,060\,822 lines that I rebuilt in this session. Nothing was built or run, and no existing file was edited.
+
+Marks are as in Wave 1. \mP{} means I read the proof body in full. \mPt{} means I read the statement and the top of the proof, enough to name every child. \mS{} means statement only. \mN{} means I checked a constant or inequality numerically in an independent script (\texttt{check.py}, Section~\ref{sec:numerics}). A \lean{...Statement.lean} file whose proof is \lean{first | exact @X} was resolved to the file that defines \lean{X} before reading. Paths are under \Lpath{src/lean/src/Development/}, with $\mathrm{GP}=$\Lpath{AutomorphicSpectrum/Proofs/GeometryProofs/}, $\mathrm{DvP}=$\Lpath{AutomorphicSpectrum/Proofs/DivisibilityProofs/}, $\mathrm{AV}=$\Lpath{AbelianVarietyTheory/Proofs/DivisorProofs/}, $\mathrm{TPS}=$\Lpath{AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/}, $\mathrm{FC}=$\Lpath{WeilBound/CoreStatements/FlagImmersions/}.
+
+One caution on method. The archive reuses short declaration names many times (there are more than twenty theorems named \lean{exists_cover}). I resolved every name below through its namespace or through the redirect of its statement file, and I corrected one early misresolution of this kind before writing.
+
+\section{The Bergman constant is closed}\label{sec:bergman}
+
+\subsection{What must be proved}
+
+The open item of PC-2 was the estimate $\log\mathrm{supConst}\le250f^2r^2L$ of \lean{SupConstSize.supConst_size} together with the statement \lean{SupModel.comp_bound} that this constant really bounds a cusp form by its Petersson norm. Here $f=[E^+:\mathbb Q]$ for the CM field $E$, $r$ is the rank of the hermitian space, and $L$ is a size parameter with $\log(fr)\le L$, $\log M\le30L$, $\log d_E\le4fL$, $\log d\le4L$ and $\log w\le2L$, where $M$ is the level, $d$ the discriminant of the imaginary quadratic host, $d_E=\lvert\mathrm{disc}\,E\rvert$ and $w$ bounds the spread of the weight. The constants are defined in \Lpath{AbelianVarietyTheory/Definitions/Divisors/UnifOfSpaceEq.lean} \mP{} by
+\begin{gather*}
+n=f\,\tfrac{r(r-1)}2,\qquad \rho=\frac1{200r^3(w+f)},\qquad
+\varepsilon=\min\Bigl(1,\frac{\pi}{2M\sqrt d\,(fw+2)\log2}\Bigr),\\
+\mathrm{multBd}(\varepsilon)=\Bigl(1+\frac{2(2fr)^2d_E}{\varepsilon}\Bigr)^{2fr^2},\qquad
+\mathrm{locConst}=\frac{8\,n!}{(\pi\rho^2)^n}\,\mathrm{multBd}(\varepsilon),\\
+\mathrm{massLev}=2\,h_E\,M^{2f}\,M^{2fr^2}\,\mathrm{rd}_E^{\,f(r^2-1)/2},\qquad
+\mathrm{supConst}=\mathrm{locConst}\cdot\mathrm{massLev},
+\end{gather*}
+with $h_E$ the class number and $\mathrm{rd}_E=d_E^{1/(2f)}$ the root discriminant. The number $n$ is the complex dimension of the flag chart.
+
+\begin{theorem}[\lean{GlobalTheory.supPet_principal}, \Lpath{AV/WeightedFrameSumPositive.lean}]
+Let $P$ be a holomorphic cusp form of weight $\lambda$ on the unitary Shimura data of a core, with trivial character on the arithmetic group and weight spread at most $w$. Then
+\[
+\sup\lvert P\rvert^2\le\mathrm{supConst}\cdot\lVert P\rVert_{\mathrm{Pet}}^2,
+\]
+where the supremum is of the invariant norm $\lvert P(y)\rvert\,\mathrm{nfac}_\lambda(y)$ over all components and the Petersson norm is taken for the probability Haar measure on the adelic quotient.
+\end{theorem}
+
+The proof has five ingredients, which I reconstruct in turn.
+
+\subsection{Sub-mean value on a chart ball}
+
+\mP{} \lean{GlobalTheory.SubmeanChart.submean_chart} (\Lpath{AV/SubMeanValueFlagChartInvariantMeasure.lean}, 182 lines). Let $x$ be an orthonormal frame and $z\mapsto\mathrm{cpt}(x,z)$ the unipotent chart of $\mathbb C^n$ at $x$. For $P$ holomorphic on the domain,
+\[
+\mathrm{pnorm}(x)^2\le\frac{2\,n!}{(\pi\rho^2)^n}\int_{\lVert z\rVert<\rho}\mathrm{pnorm}(\mathrm{cpt}(x,z))^2\,d\mu_F(z).
+\]
+The function $\varphi(z)=P(\mathrm{cpt}(x,z))$ is holomorphic on the ball, so $\lvert\varphi(0)\rvert^2$ is at most its average over the ball (\lean{enorm_pow_le_inv_measure_mul_lintegral_ball}, \Lpath{AbelianVarietyTheory/Proofs/CovolumeBounds/EnormPowLeInvMeasureMulLintegralBall.lean}, proved internally from circle averages and rotation invariance of Haar measure). The ball of radius $\rho$ in $\mathbb C^n$ has volume $\pi^n\rho^{2n}/n!$ (\lean{volume_ball_euclideanSpace_complex}). At $z=0$ the weight factor is $\mathrm{nfac}(x)=1$ (\lean{nfac_of_orth}). On the ball, \mP{} \lean{chart_near_one} (\Lpath{AV/NormFactorAndDensityNearOneInFlagChart.lean}) gives $\mathrm{nfac}^2\ge e^{-1/20}$ and density of $\mu_F$ at least $e^{-1/10}$. The chart perturbs the leading minors of the Gram matrix by $\lvert\log\lvert d_i\rvert\rvert\le t=9r^2\rho$ (\lean{dmin_rmul_near_one}), so
+\[
+-2\log\mathrm{nfac}\le r\,t\,w=\frac{9r^3w}{200r^3(w+f)}\le\frac9{200}\le\frac1{20},\qquad
+\log\mathrm{dens}\ge-2tfr\ge-\frac{18}{200}\ge-\frac1{10}.
+\]
+Since $e^{1/20}e^{1/10}=e^{3/20}\le2$, the factor $2$ follows. \mN{}
+
+\subsection{A near-maximum point lies in the thick part}
+
+\mP{} \lean{maxBound_holds} (\Lpath{ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/FundamentalDomains/MaxBoundPf.lean}, 257 lines). Let $z_0$ satisfy $\mathrm{pnorm}\le2\,\mathrm{pnorm}(z_0)$ everywhere and $\mathrm{pnorm}(z_0)>0$. Then every nonzero lattice vector $v$ has majorant at least $\varepsilon$ at some place. Suppose not. Then $v$ is isotropic (\lean{herm_eq_zero}), and the one-parameter unipotent flow $\zeta\mapsto\mathrm{flow}_v(\zeta)z_0$ stays in the domain for $\operatorname{Im}\zeta>-T$ with $T=1/(k_0\varepsilon)$. The hypothesis that the arithmetic group contains the translation by $M$ along $v$ with trivial character makes $G(\zeta)=P(\mathrm{flow}_v(\zeta)z_0)$ periodic of period $M$, and cuspidality makes $G\to0$ as $\operatorname{Im}\zeta\to\infty$ (\lean{tendsto_zero}). On the line $\operatorname{Im}\zeta=-t$ with $t=1/(2k_0\varepsilon)$, the weight factor changes by at most $2^{w/2}$ (\lean{m3bNorm_holds}), so $\lvert G\rvert\le2\cdot2^{w/2}\mathrm{pnorm}(z_0)/\mathrm{nfac}(z_0)$. The Schwarz lemma on the $q$-disc (\mP{} \lean{periodic_schwarz}, \Lpath{.../FundamentalDomains/PeriodicSchwarzLemma.lean}, via Mathlib's cusp function) gives $\lvert G(0)\rvert\le e^{-2\pi t/M}\sup_{\operatorname{Im}\zeta=-t}\lvert G\rvert$. The choice of $\varepsilon$ gives $2\pi t/M=\pi/(Mk_0\varepsilon)\ge(fw+2)\log2$, so
+\[
+1\le e^{-2\pi t/M}\cdot2\cdot2^{w/2}\le2^{\,w/2-fw-1}<1,
+\]
+a contradiction because $f\ge1$ and $w>0$. \mN{} This is the classical argument that a cusp form attains its maximum on a fixed compact region, made explicit.
+
+\subsection{Returns of the chart ball}
+
+\mP{} \lean{GlobalTheory.chart_mult_le} (\Lpath{AV/CardGroupElementsChartReturnLe.lean}, 213 lines). Let $x$ be orthonormal with no lattice vector of majorant below $\varepsilon$, and let $r^2\rho\le1/100$. The number of $\gamma$ in the arithmetic group with $\gamma\,\mathrm{cpt}(x,z)=\mathrm{cpt}(x,z')\,b$ for some $\lVert z\rVert,\lVert z'\rVert\le\rho$ and $b$ in the Borel subgroup is at most $\mathrm{multBd}(\varepsilon)$. The proof takes a basis $w_1,\dots,w_r$ of the lattice of majorant at most $B_d=(2fr)^4d_E^2/(4\varepsilon)$ (\lean{exists_short_basis_at}, \mS). A chart point changes majorants by at most a factor $2$ in each direction (\lean{majorant_chart_point_centre_factor_two}, \mS), so such a $\gamma$ sends each $w_i$ to a lattice vector of majorant at most $4B_d$ (\mP{} \lean{maj_le_four}). Since $\gamma$ is determined by the images of a basis, the count is at most $N^r$, where $N$ is the number of lattice vectors of majorant at most $4B_d$. A packing argument in $\mathbb R^{2fr}$ gives $N\le(1+2\sqrt{4B_d/\varepsilon})^{2fr}$ (\lean{encard_selfDualLattice_bounded_majorant_le}, \mS), and $\sqrt{4B_d/\varepsilon}=(2fr)^2d_E/\varepsilon$, so $N^r=\mathrm{multBd}(\varepsilon)$.
+
+\subsection{Unfolding and the mass}
+
+The unfolding inequality \lean{lintegral_chart_le_mul_fundSet} (\Lpath{AV/LintegralInvariantChartSetLeMulFundamentalSet.lean}, 69 lines, \mS) says that for a function invariant under the arithmetic group and the Borel subgroup, its integral over a chart set is at most the return multiplicity times its integral over a fundamental set. This is the standard inequality $\int_A\Phi\le m\int_{\mathcal F}\Phi$ when $A$ meets at most $m$ translates of $\mathcal F$.
+
+\mP{} \lean{massBound_of_tamagawa} (\Lpath{AV/MassBoundOfTamagawaUnitary.lean}, 89 lines). The sum of the $\mu_F$-volumes of the fundamental sets over the components is at most $\mathrm{massLev}$. The volume of each fundamental set is the covolume of the principal congruence subgroup of level $M$ in the real special unitary group divided by a fixed constant $C_c$ (\lean{covolume_realSpecialUnitary_eq_flagDomain_mass}). The components are grouped by the determinant class in the norm-one torus. Within a class, strong approximation (\lean{unitary_frames_strong_approximation}) bounds the sum of covolumes by $K=M^{2fr^2}\mathrm{rd}_E^{f(r^2-1)/2}P_0$, where $P_0=(\sqrt r\prod_{i=2}^r\zeta(i))^f\le C_c$ (\lean{volumeConstant_le}). The class count is at most $h_EM^{2f}$ by \mP{} \lean{torusBound} (\Lpath{AV/NormOneTorusClassNumberBoundProof.lean}), which lifts every norm-one class through the class group and the units mod $M$. The covolume input is the published statement \lean{GlobalTheory.Published.TamagawaSpecialUnitary} (\Lpath{AbelianVarietyTheory/PublishedTheorems/Divisors_2/TamagawaSpecialUnitary.lean}). It states that the genus sum of covolumes times $\lvert d_{E^+}\rvert^{-(r^2-1)/2}$, a lattice index and the Euler product of local factors equals $1$. This is the Tamagawa number $\tau(\mathrm{SU})=1$ (Weil's conjecture for simply connected groups, proved by Kottwitz in 1988) in the form of Prasad's volume formula (Prasad 1989). It is not on the present boundary list. I add it in Section~\ref{sec:boundary}.
+
+\subsection{Assembly and size}
+
+\mP{} \lean{GlobalTheory.supLoc_component} (\Lpath{AV/CuspFormSupNormLePeterssonIntegralComponent.lean}, 194 lines) puts these together on one component. Choose $z_0$ with $\mathrm{pnorm}(z_0)>\frac12\sup\mathrm{pnorm}$, which exists because a cusp form is bounded. Orthonormalise to $x=z_0b$ (\lean{ModeHalfC.orthonormalize}), which keeps $\mathrm{pnorm}$. Then
+\[
+\mathrm{pnorm}(y)^2\le4\,\mathrm{pnorm}(x)^2\le4\cdot\frac{2\,n!}{(\pi\rho^2)^n}\int_{B_\rho}\mathrm{pnorm}^2\,d\mu_F\le\mathrm{locConst}\int_{\mathcal F}\mathrm{pnorm}^2\,d\mu_F.
+\]
+\mP{} \lean{SupModel.comp_bound} only rewrites $\varepsilon$, and \mP{} \lean{supPet_principal} sums over components with the adelic identity \lean{adelicProbability_eq_normalised_fundamentalSets} (\mS) and the mass bound. So \lean{SupModel.comp_bound} is closed.
+
+\mP{} \lean{supConst_size} (\Lpath{AV/SupremumConstantLogBound.lean}, 361 lines) is elementary. With $\log B\le2\log2+35L$ for $B=3fwM\sqrt d\ge1/\varepsilon$,
+\begin{align*}
+\log\frac{8\,n!}{(\pi\rho^2)^n}&\le3\log2+\frac{fr^2}2(12L+16\log2)\le3\log2+14fr^2L,\\
+\log\mathrm{multBd}&\le2fr^2\bigl(\log16+2\log(fr)+\log d_E+\log B\bigr)\le86fr^2L+8f^2r^2L,\\
+\log\mathrm{massLev}&\le80fr^2L,
+\end{align*}
+the last from \lean{log_size_bounds_class_number_volume} and the class number bound $h_E\le\sqrt{d_E}(1+\log\sqrt{d_E})^{2f}$ (\lean{log_classNumber_le_log_abs_discr_div}, \mP; its input \lean{classNumber_le_of_finrank_eq_two_mul} is a Minkowski bound with an ideal count). The total is at most $3\log2+188f^2r^2L\le250f^2r^2L$. \mN{} In 200\,000 random parameter sets satisfying the hypotheses, with $h_E$ at its bound, the largest ratio of $\log\mathrm{supConst}$ to $250f^2r^2L$ was $0.612$. Then \mP{} \lean{supConst_size_rows} sets $L=\frac{25}2L_b$ and uses $250\cdot\frac{25}2=3125\le4000$ and $f^2r^2L_b\le(frL_b)^3$ to get $\log\beta\le4000(frL_b)^3$.
+
+\begin{remark}
+The archive's Bergman bound is not a Bergman-kernel asymptotic. It is a sup-norm against Petersson-norm inequality proved from scratch. Its only external input is the Tamagawa statement. The small internal leaves left under it are listed in Section~\ref{sec:final}.
+\end{remark}
+
+\section{\texttt{exists\_good\_tower}}\label{sec:tower}
+
+\mP{} \lean{TopTower.exists_good_tower} (\Lpath{GP/ExistsGoodRootTower.lean}, 146 lines, with \lean{comp_data} and \lean{level_data}). In ordinary terms the theorem reads as follows. Let $Y$ be the integral model over $\mathcal O_F$ of the unitary Shimura variety of signature $(p,q)$ with $p,q\ge1$, global (\lean{Top.IsGlobal}) and with split components. Then there is a tower of root models indexed by a cutoff $B$ with the following properties. Its components are the generic points of $Y$. At each component the weights are $\nu(\tau,i)=-i$. Its bad set is the set of prime factors of $2\lvert d_E\rvert\operatorname{lcm}(M,A)$. At cutoff $B$ its set of primes is $S_B=\{p\le B\}\cup\mathrm{bad}$. At each component the analytic system has local holomorphic lifts with injective differential, and the root model at cutoff $B$ has $R_p=4$ at every $p\in S_B$.
+
+The construction is pure assembly. It has four steps.
+\begin{enumerate}[nosep]
+\item The generic points form a finite nonempty set (\mP{} \lean{Comps.finite_nonempty_maximal}, \Lpath{GP/GenericPointsFiniteNonempty.lean}). A Noetherian space has finitely many maximal points under specialisation, and a nonempty quasi-sober space has one. Nonemptiness of the model comes from \lean{N1c} of \lean{Top.Given} (existence of a point of the moduli problem), pulled back to $\mathcal O_F$.
+\item At each generic point $x$, \lean{comp_data} produces a reference root origin. The residue field map is a component generic point (\mP{} \lean{isCptGen_of_maximal}, \Lpath{GP/IsCptGenResidueFieldGeneric.lean}, local rings are domains). Then come the reference geometry (\lean{exists_refGeo}, \mPt), the holomorphic inverse (\lean{reference_geometry_holomorphic_inverse}, 10 lines over \lean{hodge_cpt_flag_xdeg}), an effective weight section with strictly decreasing weights (\lean{ExRefEff.exists_eff}, 51 lines, \mPt), and the scaled root model (\lean{RefRoot.refRoot}, 65 lines, \mPt).
+\item For each $B$ and each component, \lean{level_data} moves the root origin to $S_B$ (\lean{ChangeGeo.exists_cover} in \Lpath{GP/RootOriginGoodPrimesFinite.lean}, \mPt) and descends coordinates to the field (\lean{root_model_on_cover}, \Lpath{GP/RootOriginCoordsOverField.lean}, 186 lines, \mPt).
+\item The record \lean{GoodOrigin} is filled with these data. Its fields \lean{omVB}, \lean{smooth}, \lean{flat}, \lean{ref_deg}, \lean{ref_top} and \lean{ample} are the outputs of steps 2 and 3, and \lean{two_mem} holds because $2\mid2\lvert d_E\rvert\operatorname{lcm}(M,A)$.
+\end{enumerate}
+The hypotheses are \lean{Top.Given}, \lean{Out.WeilSt}, \lean{Flat.FlatLineGenerator} and \lean{Flat.FlatLineGeneratorComponent}. \lean{Top.Given} is a conjunction of named statements (\lean{PartI}, \lean{N1ab}, \lean{N1c}, toroidal level and Hecke compatibility, \lean{KeyFormula}, \lean{SemiAbelianHomExtension}, \lean{NumericalSegre}, \lean{ResKStatement}, \lean{SAStatement}, \lean{FarguesHodgeTate}, \lean{GagaSections}, \lean{SlopeBoundSt}, \lean{PB.Inputs}, \lean{Prov.HS}, \lean{Prov.An}, Zhang's height bounds, \lean{AntisymPerturbation}). It is built by \lean{Link.given_of_use} and \lean{Link.given_of_moriwaki} from the inputs of V12 and of Layer 3 of the boundary. \lean{Out.WeilSt} (the Weil pairing on polarised abelian schemes, Mumford) is a field of \lean{lawsFieldsSeparately}. So the existence is not vacuous at the level of its hypotheses.
+
+The tower compatibility data are consistent. The bad set contains $2$ and every prime dividing $d_E$ (checked in the body), so the side conditions $p\ne2$ and $p\nmid d_E$ that Wave 1 needed for \lean{Prop6} at $p\notin S_B$ are supplied, as \mP{} \lean{m2_of_good_tower} confirms by deriving both from $p\notin S_B$.
+
+The content of \lean{exists_good_tower} is now the following set of named children, read at statement or top level. \lean{exists_refGeo} delegates to \lean{exists_coords_for_component} (= \lean{Ar.exists_eigBase}), \lean{coords_with_constants_map} (= \lean{Ar.exists_flagStep}), \lean{generic_coords_descend_subfield} (= \lean{Ar.exists_sat_model}), \lean{snc_model_reindexed_coords} (= \lean{SncRefine.isSncModel_refine}), \lean{complex_coords_reindexed} (= \lean{CoordsDown.coordsAt_down}), \lean{embeds_generic_of_char_zero} (= \lean{EmbedsOfTie.embedsGeneric_of_coordTie}) and \lean{component_generic_char_zero} (= \lean{CharZeroModel.charZero_function_field}), under \lean{ResKStatement} (resolution, V12). \lean{exists_eff} uses \lean{reference_geometry_multihomog_form}, \lean{nef_polarization}, \lean{lattice_tensor_power_degree}, \lean{hodge_cpt_birational_arith_var}, \lean{global_reference_gap_positive}. \lean{refRoot} uses \lean{same_orbit_of_proportional_coords}, \lean{lie_model_push_along_map}, \lean{holomorphic_inverse_chart_value}, \lean{holomorphic_atlas_coord_compat}, \lean{ample_of_single_coord_block}, \lean{algebraic_constants_in_range}. \lean{ChangeGeo.exists_cover} uses \lean{exists_finite_extension_primes}, \lean{coords_after_finite_extension}, \lean{generic_point_factors_open}, the three \lean{hodge_comp_comparison_*}, \lean{hodge_cpt_label_bases}, \lean{hodge_cpt_projective_model}, \lean{smoothGenericFibre_of_dominates}. \lean{root_model_on_cover} uses \lean{exists_analytic_log_resolution}, the \lean{log_resolution_*} lemmas, the five \lean{hodge_comp_descent_*}, \lean{positive_homogeneous_potential}, \lean{flat_on_log_resolution_corr} and the reindexing lemmas. The mechanism is the standard one. Resolve the boundary, choose coordinates adapted to the Hodge filtration on a log resolution, descend them to a finite extension of $F$, and put Mumford-good singular metrics with plurisubharmonic potentials on the root lines. These are construction lemmas whose risk is to existence, not to any constant.
+
+\section{The D4 axiom producers}\label{sec:d4}
+
+Every D4 producer named by the synthesis is a wrapper. I read all of them \mP{} and record the theorem that carries the content.
+
+\begin{longtable}{>{\rr}p{4.0cm}>{\rr}p{2.2cm}>{\rr}p{7.6cm}}
+\toprule
+producer & file, lines & delegates to\\
+\midrule
+\lean{i5_and_i6_of_isGlobal_of_goodOrigin} & \Lpath{DvP/GoodTowerI5}, 3 & \lean{RootFieldNumerics.global_model_tower_fifth_condition} (\Lpath{FC/GlobalModelTowerFifthCondition.lean}, 9)\\
+\lean{tower_A1_of_real_tower} & \Lpath{DvP/RealTowerA1}, 5 & \lean{real_tower_mean_slope_condition} (\Lpath{FC/RealTowerMeanSlopeCondition.lean})\\
+\lean{or_m1nef} & \Lpath{DvP/GoodTowerM1Nef}, 7 & \lean{root_lines_weight_bound_of_free} $=$ \lean{HT.rootModel_nefAt_of_hodgeCpt}, under \lean{FarguesHodgeTate}\\
+\lean{m2_of_good_tower} & \Lpath{DvP/GoodTowerM2}, 17 & \lean{hodge_cpt_global_nef_bound} $=$ \lean{Conj.hodge_cpt_global_nefness}; the body derives $p>2$ and $p\nmid d_E$ from $p\notin S_B$\\
+\lean{rootModel_nefFib_zero_one_of_nonneg} & \Lpath{DvP/RootModelNefFibres}, 4 & \lean{root_model_nef_fibres_base} (\Lpath{FC/RootModelNefFibresBase.lean})\\
+\lean{rt_nefgen} & \Lpath{DvP/RealTowerNefGeneral}, 3 & \lean{tower_nef_generic_dominant} (\Lpath{FC/TowerNefGenericDominant.lean}, 85), under \lean{PB.NefPol}\\
+\lean{effDiff_of_goodOrigin} & \Lpath{DvP/GoodTowerRealConditions}, 3 & \lean{global_model_tower_bounds} (\Lpath{FC/GlobalModelTowerBounds.lean}, 8)\\
+\lean{propA_of_goodOrigin} & \Lpath{DvP/GoodTowerGlobalExtra}, 8 & \lean{real_tower_convergence_I2} and \lean{TowerPropA.propA_of_origin}, under \lean{TwistAut} (closed in Wave 1) and \lean{CmpPair}\\
+\lean{full_intersection_tower_I8_relation} & \Lpath{DvP/FullIntersectionTowerI8Identity}, 3 & \lean{SquareStatements.good_tower_antisymmetry}, under \lean{CmpSt}\\
+\lean{rootTower_proportional_of_unif} & \Lpath{DvP/RealTowerProportional}, 56 & \mS\\
+\lean{tower_T1_limit_of_inputs} & \Lpath{DvP/TowerT1Limit}, 50 & \mS\\
+\lean{tower_I1_of_reference_linked} & \Lpath{DvP/RealTowerI1}, 56 & \mS\\
+\lean{real_tower_convergence_I2} & \Lpath{DvP/RealTowerConvI2}, 43 & \mS\\
+\lean{global_model_real_tower_smooth}, \lean{volEq_of_isFullIntersectionSystem} & \Lpath{WeilBound/...} & \mS\\
+\lean{Cmp.PairTop.cmpPair} & \Lpath{GP/CmpPairOfInputs}, 65 & \mS\\
+\bottomrule
+\end{longtable}
+
+The synthesis counted the wrappers as residuals. After this pass the D4 residual is the set of theorems in the right-hand column of the table, together with \lean{cmpPair} and \lean{comparison_of_inputs_avoidance}. The mechanism of each is nefness of the Hodge root lines on the special fibre at a Hodge--Tate-free prime, genericity of nefness for dominant weights, and the convergence of the real tower as the cutoff grows. Their constants are killed by the limit $B\to\infty$, as the synthesis recorded.
+
+\section{D5, lattice-point transfer}\label{sec:d5}
+
+\begin{itemize}[nosep]
+\item \mP{} \lean{exists_small_basis} (\Lpath{AV/SobolevPointwiseBoundWords.lean}, 8 lines). Rescaling any basis of a finite-dimensional normed space gives a basis of norm-one vectors. Closed.
+\item \mP{} \lean{Plug.countVol_le_of_le_shift_pow} (\Lpath{GP/CountVolumePowerComparison.lean}, 20 lines). If $m(\tau)\le m'(\tau+k_0)^d$ eventually, then $\mathrm{countVol}(D,nd)\le\mathrm{countVol}(D,n)$, where $\mathrm{countVol}(D,n)=\limsup_k D!\log\#m(8k)/(n(8k)^{D+1})$. The shift costs $(1+j/k)^{D+1}\to1$. Closed modulo the two elementary limit lemmas \lean{term_le_shift} and \lean{tendsto_shift_ratio}.
+\item \mP{} \lean{topGrowth} (\Lpath{GP/UniformNormDegreeBound.lean}, 34 lines). The growth rate of sections of strictly antidominant weight $u$ on a component equals $\mathrm{vol}\cdot\mathrm{flagDeg}(u)$. It is proved as two inequalities, \lean{growthOn_le_vol_mul_flagDeg} (= \lean{Plug.growth_le_vol_deg}) and \lean{uniform_norm_height_count}, under the nef Riemann--Roch input \lean{Pub.NefRR} (V12). The Weyl dimension identity \lean{flagDeg_eq_weyl} gives positivity. The top is closed.
+\item \mP{} \lean{descent_small} (13 lines) and \mP{} \lean{exists_geoRead} (8 lines) are assemblies over \lean{comp_laws_tower_bound}, \lean{Plug.vs_arch}, \lean{Plug.vs_fin}, \lean{genFrame_exists} and \lean{RdEx.core}. \lean{modelSmall_mul_mem} (5 lines) delegates to \lean{SmallProd.modelSmall_mul}.
+\item \lean{htLow} (29 lines), \lean{strict_weight_growth_bound} (= \lean{Plug.Mult.vs_mult}) and \lean{weight_threshold_limit_coefficients} (= \lean{Small.tower_seq}) were located and not read.
+\end{itemize}
+
+\section{D3, base settings}\label{sec:d3}
+
+The D3 items were located and their redirects resolved, but not read. They are \lean{full_intersection_generic_bound} (= \lean{Ar.exists_componentData_origin}), \lean{cusp_weight_regularisations_tied} and \lean{corrected_weight_regularization} (both in \lean{CompanionTheory.Relay}), \lean{testPoly_eq_slX} (\Lpath{GP/GoodOriginIntersectionTower.lean}, 86 lines), \lean{intersection_final_estimate} (= \lean{ModelDimension.abelian_cm_stokes_identity}), \lean{cusp_weight_integrable_on_fundamental_set} (= \lean{Cusp.fund_set_mean_cuspW}), \lean{intersection_degree_lower}, and \lean{rootFlatOnHodge} (\Lpath{FC/GlobalModelTowerFinalCondition.lean}, a 4-line wrapper) with the records \lean{RF.*} and the constant $C'=4$. D3 is unchanged from the synthesis.
+
+\section{The covolume bound \texttt{topCovolG\_alt\_alt}}\label{sec:covol}
+
+\subsection{The statement and its final inequality}
+
+\mP{} \lean{topCovolG_alt_alt} (\Lpath{TPS/TopCovolG.lean}, 61 lines). Under the hypotheses \lean{VolumeEstimateHypotheses}, \lean{HypothesesX}, \lean{PublishedHodgeBundleTheorems}, \lean{HypothesesH}, \lean{GrothendieckDeformation}, \lean{HSCore.Quoted} and \lean{DeepStR}, it proves \lean{CovolumeBoundOfX}. This statement says that for every family there is $C_0\ge0$ such that, at every point far enough along the family and every $C\ge C_0$, the lattice of each row satisfies \lean{L3}. That is,
+\[
+\frac{\mathrm{lcv}(X_W(i),M(i))}{D}\le\mathrm{mainT}(i)+C\cdot\mathrm{unitE}.
+\]
+
+\mP{} \lean{covolX_of_lift_bounds_and_coreLe} (\Lpath{TPS/CovolXOfSteps.lean}, 25 lines) and \mP{} \lean{lcv_le} (\Lpath{AV/CovolumeFromGramAndBounds.lean}) carry out the deduction. The recursion \lean{RecAt} bounds the log-covolume by $-\mathrm{slope}^2$ of the good sublattice. The lemma \lean{CutNum.slope_good_ge} bounds that slope below by the core slope minus a truncation loss and a bad-set loss. The loss is at most $12e^{-x^{e_z/7}}(x^A+x^B+C_1+C_2+1)\,\mathrm{unitE}$, where $A$ is the exponent of the $\lambda$-bound, $B$ that of the size bound, $C_1$ the core constant and $C_2$ the low constant. For $x$ beyond the threshold of \lean{exists_loss_le} this is at most $\mathrm{unitE}$, which gives the constant $C_1+C_2+1$. The deduction is exact up to this explicit loss, and the loss is killed by the family threshold.
+
+\subsection{The twenty-four producers}
+
+Each producer resolves to a theorem of 1 to 92 lines in $\mathrm{TPS}$. The table lists the redirect and the length of the body. None was read below its top in this pass, except as noted.
+
+\begin{longtable}{>{\rr}p{5.0cm}>{\rr}p{6.6cm}>{\rr}p{2.5cm}}
+\toprule
+producer & body & lines\\
+\midrule
+gram (\lean{covering_gram_of_prints}) & \lean{covering_gram_matrix_of_local_traces_alt} & 4\\
+size (\lean{cov_size_bound}) & \lean{SizeRows.size_alt_bis} & 1\\
+meas & \lean{MeasRd.covering_measure_reduction_alt} & 10\\
+anchor & \lean{anchor_holds_alt} & 6\\
+deep existence & \lean{DeepExist.exists_deep_covering_level_alt} & 9\\
+deep goodness & \lean{DeepGoodAll.deepGood_alt_alt} & 22\\
+flat degree & \lean{FlatDegProof.flatDeg_alt_alt} & 5\\
+cover degree & \lean{DegProof.covering_degree_eq_alt} & 31, \mP\\
+share & \lean{ShareRowsNef.share_alt_alt} & 37\\
+height lower bound & \lean{height_lower_bound_general_alt} & 2\\
+height sums & \lean{ShortRoad.hilbertSamuel_of_component_estimates_alt} & 89\\
+uniform lower bound & \lean{FromComp.u_low_of_cover_hyps} & 9\\
+$\sum c$ & \lean{sumC_of_deepGood_alt} & 4\\
+low bound of the lift & \lean{LowCover.low_of_cover_hypotheses} & 17\\
+low defect & \lean{DefLow.covering_low_defect_alt} & 30\\
+ring & \lean{RingStep.ring_of_covering_descent_alt} & 41\\
+maps & \lean{DescentMaps.covering_descent_maps_compatible_alt} & 92\\
+rank & \lean{covering_rank_of_descent_steps_alt} & 11\\
+minimal generator & \lean{CovGminTop.covering_gmin_of_gram_deep_size} & 24\\
+flatness & \lean{FlatSplit.flat_alt_alt} & 10\\
+recursion & \lean{liftRecursive_of_gram} & 3\\
+truncation & \lean{covering_cut_of_local_traces_alt} & 4\\
+bad set & \lean{covering_bad_locus_of_descent_steps_alt} & 20\\
+$\lambda$-bound & \lean{LamAll.covering_lambda_all_places_alt} & 17\\
+core and rationality & \lean{CoreSlope.coreLe_of_gram_meas_rat_alt}, \lean{covering_rational_of_local_traces_alt} & 9, 4\\
+\bottomrule
+\end{longtable}
+
+\mP{} \lean{covering_degree_eq_alt} (\Lpath{TPS/CoveringDegreeMultiplicative.lean}). The degree of the covering is the component image degree, pinned between two values by Hirzebruch--Mumford proportionality on the toroidal compactification (\lean{proportionality_principle_compactification}, \lean{compactification_top_chern_eq_volume}, published field \lean{q7}) and by birationality of the weight map under the gap condition (\lean{birOn_wtOf_of_consecutive_gap_bound}, using Nadel vanishing \lean{q15} and principalisation \lean{q16}). The inline inequality $(d+3)^2+2N\le(d+3)(C+4N+d+3)$ holds for all natural $d,C,N$. The degree is positive because the volume and the Vandermonde factor of a strictly antidominant weight are positive.
+
+\subsection{The theta spanning constant}
+
+\mP{} \lean{CovGmin.span_thFam} (\Lpath{AV/PolynomialCoefficientEmbeddingNormLeOfL1Bound.lean}, lines 399 to 470) takes $C=20000$. Cusp forms are spanned by theta lifts of harmonic polynomials of norm at most $\exp(20000(frL_b)^2\kappa)$, where $\kappa=\mathrm{sizeK}$. The span comes from \lean{cusp_sub_span_short} and the short harmonic family \lean{Harm.exists_short_harmL_family} (\mS, 99 lines). The constant comes from \mP{} \lean{exponent_le}. With $o\le391(FRL_b)^2$, $L\le50L_b$ and $D_F\le2FRK$,
+\[
+\frac o2+140RLD_F\le195.5(FRL_b)^2+14000(FRL_b)^2K\le20000(FRL_b)^2K.
+\]
+\mN
+
+\subsection{The other covolume leaves}
+
+The following were located with their lengths and remain residuals at statement level: \lean{exists_cusp_regular_level_determinant} (46 lines), \lean{adelicProb_mul_volFund} (70), \lean{valuation_multiplicity_of_consecutive_run_alt} (50), \lean{rk_le_alt_alt} (117), \lean{fibreAt_defCase} (107), \lean{levRing_descent} (85), \lean{deg_eq_of_local_two_curves} (25), \lean{freeOrbit_projector_eigen} (82), \lean{SumSlope.le_slope_sq_of_sum} (58), \lean{hirzebruch_proportionality_toroidal} below its published top, and \lean{FlatLine.DefinitePoint.main}.
+
+\section{Signs}\label{sec:signs}
+
+\begin{itemize}[nosep]
+\item Relative different and discriminant. In \Lpath{AbelianVarietyTheory/Definitions/Foundations/ExistsFlatSecRankZero.lean}, $\mathrm{different}_\ell(E)=v_\ell(d_E)/[E:\mathbb Q]$ is the average $\ell$-adic valuation of the different, and the flag defect is $q\,(\mathrm{different}_\ell(E)-[\ell=d])$. At the prime $d$ of the host field with $\mathrm{different}_d=\frac12$ the defect is $-q/2$ (\lean{flDefect_vp_d}), the valuation of $\sqrt{-d}$ subtracted from the conjugate different. The place-wise form $q(\mathrm{ord}\,\mathfrak d^{\mathrm{conj}}-v(d))$ of \lean{flDefect_vw} agrees with it through \lean{flDefect_vw_eq}. The signs are consistent.
+\item Degree. The covering degree is positive (Section~\ref{sec:covol}), and the Vandermonde factor is positive for strictly antidominant weights.
+\item Discriminant in the Bergman constant. Only $\log d_E\ge0$ and $\mathrm{rd}_E\ge1$ enter, with the hypothesis $\log d_E\le4fL$. The class number enters with a positive exponent and is bounded above.
+\item Prop6 and the cutoff direction were checked by Wave 1 and are not reopened.
+\item CM periods. The CM-period term enters PC-2 through \lean{logOm_bound} (Chowla--Selberg), which Wave 1 placed on the boundary. It does not appear in any body read in this pass.
+\end{itemize}
+
+\section{Numerical checks}\label{sec:numerics}
+
+The script \texttt{check.py} (kept in the working space of this session) checks $e^{3/20}\le2$, $80000\le2^{16}\pi$, $9/200\le1/20$, $18/200\le1/10$, $16\log2\le16L$ and $6\log2\le6L$ for $L\ge1$, $3\log2\le248$, $3125\le4000$, $14195.5\le20000$, and the full bound $\log\mathrm{supConst}\le250f^2r^2L$ from the definitions on 200\,000 random parameter sets (largest ratio $0.612$). All passed.
+
+\section{External boundary}\label{sec:boundary}
+
+\begin{itemize}[nosep]
+\item \textbf{New.} \lean{GlobalTheory.Published.TamagawaSpecialUnitary}. The Tamagawa number of the special unitary group of a hermitian space over a CM field is $1$, in the form of Prasad's volume formula (Kottwitz, Ann.\ of Math.\ 127, 1988; Prasad, Publ.\ Math.\ IH\'ES 69, 1989). It is the only external input of the Bergman constant. Check the local factors \lean{locFactor} and the index of the Lie lattice against Prasad's formula.
+\item Already listed and used here. \lean{PublishedHodgeBundleTheorems} (V7, with \lean{q7} Hirzebruch--Mumford proportionality, \lean{q15} Nadel vanishing and \lean{q16} principalisation), \lean{HSCore.Quoted}, \lean{GrothendieckDeformation}, \lean{SiegelToroidalIntegral}, \lean{ToroidalForFanKS}, \lean{SemiAbelianLieSeminegative} (V7), \lean{ResKStatement} (resolution, V12), \lean{Pub.NefRR} (V12), \lean{FarguesHodgeTate} (V12), and the Layer-3 conjuncts of \lean{Top.Given}.
+\item Not inputs of PC-2 on the paths read. The Bergman-kernel asymptotics, which are not used. Moriwaki bigness, which enters only through \lean{given_of_moriwaki}, one of two producers of \lean{Top.Given}. Arithmetic Hilbert--Samuel, whose explicit inequality \lean{HSAt} is internal. Kawamata--Viehweg, a field of \lean{HSCore.Quoted} that I did not meet in a body read here.
+\end{itemize}
+
+\section{PC-2 as human-level propositions}\label{sec:props}
+
+This section was added on 22 November 2026 at Jimmie Adriazola's request, after the theorem-by-theorem pass of Sections~\ref{sec:bergman} to~\ref{sec:signs}. That descent is stopped here. The remaining PC-2 material is restated as the propositions that the RH proof actually uses. Each proposition gets its statement with hypotheses, its mechanism, its named external inputs, its downstream use, what this pass reconstructed directly, and the formal layers that remain unread. The meanings of \lean{DeepStR}, the tower axioms and \lean{L3} are taken from Focused Wave 1 (Sections 2, 4 to 6, 9) and from Final 3 (Sections 2 and 3), which read them as text. The one new reading is the definition of \lean{HodgeCpt} (\Lpath{AutomorphicSpectrum/Definitions/GlobalGeometry/IsHodgeLine.lean}, 33 to 69), which fixes the meaning of $R_p=4$.
+
+\paragraph{Standing setting.} $E$ is an abelian CM field with $f=[E^+:\mathbb Q]$, containing $K=\mathbb Q(\sqrt{-d})$ with $d$ prime. $W$ is a hermitian $E$-space of signature $(p,q)$ at every place of a CM type $\Psi$, with $N=p+q$ and $p,q\ge1$. $X$ is the unitary Shimura variety of level $l$ (level $M$, auxiliary level $A$), and $Y$ is its normal projective integral model over $\mathcal O_F$ for a number field $F$ of coefficients, obtained from a toroidal compactification. $\omega_\tau$ is the $\tau$-eigenpart of the Hodge bundle, and the flag bundle $\mathrm{Fl}\to Y$ splits every $\omega_\tau$ into line bundles with Chern roots $x_{\tau,1},\dots,x_{\tau,N}$. A weight is an integer vector $u=(u_{\tau,i})$, and $\lambda(u)=-\sum u_{\tau,i}x_{\tau,i}$. Put $\mathrm{bad}=\{\ell\text{ prime}:\ell\mid2d_E\operatorname{lcm}(M,A)\}$ and $S_B=\{\ell\le B\}\cup\mathrm{bad}$.
+
+\subsection*{Proposition 2.A (existence of the cutoff tower)}
+
+\emph{Statement.} Under the standing setting there are a finite set $\mathcal C$ of components (the generic points of $Y$) and, for every integer $B\ge1$ and every $c\in\mathcal C$, a normal projective arithmetic variety $M(B,c)$ over a finite extension of $F$ with a dominant map to the component $c$ of $Y$, a semi-abelian scheme with $\mathcal O_E$-action on it, and hermitian line bundles $\overline L_{\tau,i}$ realising the Chern roots, with the following properties.
+\begin{enumerate}[label=(\roman*),nosep]
+\item The generic fibre of $M(B,c)$ is smooth, and $M(B,c)$ is independent of $B$ at primes outside $S_B$.
+\item For every $\ell\in S_B$ the full $\ell^{R_\ell}$-torsion with $R_\ell=4$ is rational over $M(B,c)$, and the lattices $\mathrm{Lie}_\tau$ patched at $\ell$ by the Hodge--Tate lattices of this torsion are vector bundles of the expected rank on the fibre at $\ell$ (the condition \lean{OmVB}).
+\item The metrics are Mumford-good, with plurisubharmonic local potentials along the boundary, and every point has a holomorphic local frame with injective differential.
+\item A reference model with $B$-independent data has flag degree $1$, is ample, and its retraction is bijective.
+\end{enumerate}
+
+\emph{Mechanism.} Take the toroidal compactification and its integral model. Resolve the boundary to simple normal crossings. Choose an $\mathcal O_E$-eigenbasis of the Lie algebra of the semi-abelian scheme at the generic point of each component (\lean{Ar.exists_eigBase}), which splits $\omega$ into its $\tau$-eigenparts. Pass to the flag bundle and take the Chern roots as line bundles. Extend scalars to a finite extension that trivialises the $\ell^4$-torsion for $\ell\in S_B$, and normalise. At $\ell\in S_B$ replace $\mathrm{Lie}_\tau$ by the Hodge--Tate lattice of the $\ell^4$-torsion. Put Mumford's good metrics on the roots.
+
+\emph{External inputs.} Toroidal compactifications and integral models (\lean{PartI}, \lean{N1ab}, \lean{N1c}; Faltings--Chai, Lan), Moret-Bailly's key formula (\lean{KeyFormula}), resolution and principalisation in characteristic zero (\lean{ResKStatement}, Hironaka, V12), the Weil pairing (\lean{WeilSt}), GAGA for sections, Mumford's good metrics (Invent.\ Math.\ 42, 1977), and Fargues's integral Hodge--Tate sequence for (ii) (V12).
+
+\emph{Downstream.} The record \lean{GoodTowerExistsX} of \lean{DeepStR}. All tower axioms of Proposition 2.B are statements about this tower.
+
+\emph{Reconstructed here.} The assembly \lean{exists_good_tower}, \lean{comp_data}, \lean{level_data}, finiteness and nonemptiness of components, the component generic point, the bad set and $S_B$, $2\in\mathrm{bad}$, and the meaning of $R_\ell=4$ and \lean{OmVB}.
+
+\emph{Unread formal layers.} The bodies behind \lean{Ar.exists_eigBase}, \lean{exists_flagStep}, \lean{exists_sat_model}, \lean{isSncModel_refine}, \lean{coordsAt_down}, \lean{embedsGeneric_of_coordTie}, \lean{charZero_function_field}, the children of \lean{exists_eff}, \lean{refRoot}, \lean{ChangeGeo.exists_cover} and \lean{root_model_on_cover}. They implement coordinates, reindexing and descent of the construction above.
+
+\emph{Bespoke content.} None of its own. Clause (ii) is the Hodge--Tate patch whose local mechanism is PC-1 (Raynaud and Fargues), which is counted there and not here.
+
+\subsection*{Proposition 2.B (the qualitative tower axioms, D4)}
+
+\emph{Statement.} For the tower of Proposition 2.A with $E/\mathbb Q$ abelian, $3q+1\le N$ and $\lvert S_B\rvert\le4fN^2$, with $d=\dim\mathrm{Fl}+1$, $\mathrm{PP}_{B,c}(F)$ the arithmetic intersection number of a polynomial $F$ in the Chern roots on $M(B,c)$, and $\mathrm{fl}(u)$ the flag degree:
+\begin{enumerate}[label=(\roman*),nosep]
+\item (\lean{Proportional}, \lean{VolEq}) $\mathrm{geo}_c(F)=\mathrm{vol}_c\deg_{\mathrm{Fl}}(F)$ with $\mathrm{vol}_c>0$, and all $\mathrm{vol}_c$ are equal.
+\item (\lean{A1}, \lean{M1}, \lean{M2}, \lean{ANef}, \lean{I7}) Dominant weights are nef on the fibres at primes in $S_B$, above an explicit threshold at the other primes, and semipositive at infinity.
+\item (\lean{T1}, \lean{I1}, \lean{I2}, \lean{I5}, \lean{I6}) For each $c$ the tower slope $\mathrm{PP}_{B,c}(\lambda(u)^d)/(d\,\mathrm{vol}_c\,\mathrm{fl}(u))$ is the limit of slopes of the nef perturbations $u-s\nu$ as $s\to0^+$. Monomials have $\lvert\mathrm{PP}_{B,c}\rvert\le C_T\log B$, and the essential minimum is $O_T(\log B)$, with constants that may depend on the tower.
+\item (\lean{I8}, \lean{PropA}) $\sum_c\mathrm{PP}_{B,c}$ is antisymmetric under the simple reflections of the Weyl group in a precise sense, and invariant under a transitive group of CM types.
+\end{enumerate}
+
+\emph{Mechanism.} (i) is Hirzebruch--Mumford proportionality on the flag bundle of a toroidal compactification, and equal volumes come from the transitive Hecke and Galois action on components. (ii) at $\ell\in S_B$ uses Fargues's Hodge--Tate lattices (\lean{or_m1nef} calls \lean{rootModel_nefAt_of_hodgeCpt} under \lean{FarguesHodgeTate}). At the other primes it is a characteristic-$p$ weighted degree inequality for eigenflags of the Lie algebra over curves, valid above the threshold $4fM\le(p-2)g$ (Slijepčević, Lemma 8.7; Section~\ref{sec:slij}). This replaces the attribution to Faltings--Chai and Lan in the first version of this section, which is wrong for general dominant weights in characteristic $p$. (iii) is continuity of arithmetic intersection numbers for nef hermitian bundles (Gillet--Soulé, Burgos--Kramer--Kühn, Zhang). (iv) is the action of simple reflections on the flag bundle together with the Galois action on CM types.
+
+\emph{External inputs.} \lean{PB.Proportional}, \lean{PB.Antisymmetry}, \lean{PB.NefPol}, \lean{PB.Inputs}, \lean{Prov.HS}, \lean{Prov.An}, \lean{FarguesHodgeTate}, \lean{CmpPair}, \lean{CmpSt}, all in V7, V12 and Layer 3.
+
+\emph{Downstream.} Steps 1 to 6 of the tower volume theorem (Focused Wave 1, Section 4). Every tower-dependent constant in (iii) is killed by the limit $B\to\infty$ of Step 4, which is legitimate because \lean{Prop6} is exact (PC-1). So only existence and qualitative truth matter.
+
+\emph{Reconstructed here.} The nine wrapper producers (Section~\ref{sec:d4}) and the derivation of $\ell>2$ and $\ell\nmid d_E$ off $S_B$ in \lean{m2_of_good_tower}.
+
+\emph{Unread formal layers.} The delegated bodies listed in the table of Section~\ref{sec:d4}.
+
+\emph{Bespoke content.} One item, the characteristic-$p$ weighted degree inequality behind \lean{M2} (by role \lean{Conj.hodge_cpt_global_nefness}, unread), identified by the comparison of Section~\ref{sec:slij}. The other clauses are theorems of published type applied to the tower.
+
+\subsection*{Proposition 2.C (base settings and the surviving constants, D3)}
+
+\emph{Statement.} There are absolute constants $C_h$, $C_u=4$ and $C'=4$ such that, for every tower of Proposition 2.A over an abelian CM field with $3q+1\le N$ and $\lvert S_B\rvert\le4fN^2\le B$, every component $c$ and every index $1\le j<N$, with $\Lambda_B=\log(B\,\mathrm{rd}_E)+\lvert\operatorname{Re}\frac{L'}L(1,\chi_d)\rvert$ and $j'=\min(j,N-j)$:
+\begin{enumerate}[label=(\roman*),nosep]
+\item (\lean{SlopeLower}) $\mathrm{PP}_{B,c}(\mathrm{test}_j)\ge-(C_h+\tfrac{C_u}2)\,f\,j'\,\Lambda_B\,(\dim+1)\,\mathrm{vol}_c\deg(\mathrm{test}_j)$.
+\item (\lean{PropF}) $\mathrm{PP}_{B,c}(p_{\tau,1}Q)=h_{B,c,\tau}\,\mathrm{vol}_c\deg Q$ with $\lvert h_{B,c,\tau}\rvert\le C'N\Lambda_B$.
+\end{enumerate}
+
+\emph{Mechanism.} For (i), Zhang's lower bound for the essential minimum is applied to the Hodge metric corrected near the cusps. Interior and boundary points are abelian varieties with $\mathcal O_E$-action, whose heights split into eigenspace degrees of the Lie algebra. The difference between conjugate eigenspaces is $(p'-q')\operatorname{Re}\log\Omega_K$ (Chowla--Selberg for $K$), and the remainder is controlled by a Bost-type slope bound (V11). The cusp correction has mean at most $C_uf j'\Lambda_B$, from a pointwise bound on Siegel sets of the fundamental domain. For (ii), the first Chern class of the partial flag sum has an archimedean and bad-prime record $\lvert h^{\mathrm{rec}}\rvert\le N(\tfrac32\log\mathrm{rd}_E+\tfrac12\lvert L'/L\rvert)$ from the flat degree, good primes contribute $\lvert e_\ell\rvert\le N/(\ell-1)$, and $\sum_{\ell\le B}\frac{\log\ell}{\ell-1}\le3\log B+1$ (Wave 1).
+
+\emph{External inputs.} Zhang's successive minima (\lean{ZhangLowerX}, Layer 3), Chowla--Selberg through \lean{logOm_bound}, \lean{SlopeBoundSt} (V11), regularised integrals near the cusps (\lean{Prov.An}; Burgos--Kramer--Kühn type), and reduction theory on Siegel sets.
+
+\emph{Downstream.} Steps 5 and 6 of the tower volume theorem, giving the absolute constant $2C_1+17$ of \lean{DeepStR}. \lean{DeepStR} needs absolute constants, not these values, so the risk is uniformity in $E$, the level and $u$, not the size of $4$.
+
+\emph{Reconstructed here and in Waves 1 and Focused 1.} The tops \lean{slope_lower_of_base_settings}, \lean{propFTop}, \lean{top_mean_cusp_weight}, \lean{htU_of_given}, \lean{deltaTerm_one} and \lean{sum_log_div_pred_SB}, and the uniformity analysis showing that every surviving constant multiplies $\Lambda_B\lVert u\rVert_1$ or $j'\,\mathrm{spread}(u)$.
+
+\emph{Unread formal layers.} \lean{full_intersection_generic_bound}, the two cusp regularisations, \lean{testPoly_eq_slX}, \lean{intersection_final_estimate}, \lean{cusp_weight_integrable_on_fundamental_set}, \lean{intersection_degree_lower}, \lean{rootFlatOnHodge} with \lean{RF.*}.
+
+\emph{Bespoke content.} An assembly of published ingredients with explicit constants. The one structural point, that level primes enter only as bad primes and cost $O(N\log B)$, is already reconstructed.
+
+\subsection*{Proposition 2.D (lattice-point transfer from the tower to components, D5)}
+
+\emph{Statement.} For every component $Z$ of a good deep cover, every weight $u$ with gap $g$ and every $B\ge B(u,g)=4fN^2(1+\max\lvert u_{\tau,i}\rvert/g)$, with $\kappa Z$ the tower component under $Z$,
+\[
+\mathrm{sl}^{\mathrm{vol}}_Z(u)\ \ge\ \mathrm{sl}^T_{\kappa Z}(u)-2\,\mathrm{cost}_2(B)\,\lVert u\rVert_1,\qquad\mathrm{cost}_2(B)\le60\bigl(\log B+\log\mathrm{rd}_E\bigr),
+\]
+where $\mathrm{sl}^{\mathrm{vol}}_Z$ is the exponential growth rate of integral cusp forms of small sup norm on $Z$, normalised by the top degree.
+
+\emph{Mechanism.} The number of small sections of a nef hermitian bundle is at least the exponential of its arithmetic degree (arithmetic Hilbert--Samuel for nef bundles), so model-small sections grow like $\mathrm{vol}\,\mathrm{fl}(u)(\mathrm{sl}^T+t)$. A fixed family $f_1,\dots,f_\delta$ of small sections and a trace map that is injective on the products $sf_i$ send each model-small $s$ to $\delta$ cusp forms on $Z$. Clearing the denominators $\ell^{\mathrm{ex}_2(\ell)\lVert u\rVert_1}$ at $\ell\in S_B$ costs the factor $e^{2(\tau+k_0)\mathrm{cost}_2(B)\lVert u\rVert_1}$. Then $\#\{\text{model-small}\}\le\#\{\text{small on }Z\}^\delta$, and \lean{countVol_le_of_le_shift_pow} turns this into the slope inequality. Growth equals volume times flag degree (\lean{topGrowth}), which fixes the normalisation.
+
+\emph{External inputs.} Arithmetic Hilbert--Samuel and its nef form (\lean{HSUse}, \lean{Prov.HS}), Riemann--Roch for nef bundles (\lean{Pub.NefRR}, V12), and Fargues's $\tfrac1{\ell-1}$ inside $\mathrm{ex}_2$.
+
+\emph{Downstream.} \lean{top_meanAll}, which converts the tower bound into \lean{DeepStR}.
+
+\emph{Reconstructed here and in Focused 1.} The four-step argument, \lean{clear_integral}, the cost lemma with $60$, \lean{exists_small_basis}, \lean{countVol_le_of_le_shift_pow}, and the tops of \lean{topGrowth}, \lean{descent_small}, \lean{exists_geoRead}.
+
+\emph{Unread formal layers.} \lean{growth_le_vol_deg}, \lean{uniform_norm_height_count}, \lean{comp_laws_tower_bound}, \lean{Plug.vs_arch}, \lean{Plug.vs_fin}, \lean{genFrame_exists}, \lean{RdEx.core}, \lean{SmallProd.modelSmall_mul}, \lean{htLow}, \lean{Plug.Mult.vs_mult}, \lean{Small.tower_seq}.
+
+\emph{Bespoke content.} The transfer is an explicit counting argument, and it is fully described at the level above.
+
+\subsection*{Proposition 2.E (sup-norm against Petersson norm)}
+
+\emph{Statement.} The theorem of Section~\ref{sec:bergman}, $\sup\lvert P\rvert^2\le\mathrm{supConst}\cdot\lVert P\rVert^2_{\mathrm{Pet}}$ with $\log\mathrm{supConst}\le250f^2r^2L$, hence $\log\beta\le4000(frL_b)^3$.
+
+\emph{Status.} Closed modulo \lean{TamagawaSpecialUnitary} (Kottwitz, Prasad). Its statement-level leaves are standard (Minkowski short basis, packing count, unfolding, strong approximation, Minkowski's class number bound).
+
+\subsection*{Proposition 2.F (the covolume bound \texttt{L3})}
+
+\emph{Statement.} Fix a family in \lean{FamHyp}. At level $i$ let $M_i$ be the lattice of integral cusp forms of weight $\lambda_i$ and fixed type on the unitary Shimura variety of $W_{i+1}$, cut by a good idempotent, with Petersson norms at every embedding and rank $D$. There is $C_0$ such that, far enough along the family, for every $C\ge C_0$,
+\[
+\frac{\mathrm{lcv}(M_i)}{D}\le\mathrm{mainT}_i+C\,\mathrm{unitE},\qquad\Bigl\lvert\mathrm{mainT}_i-\sum_{\tau\in\Psi}(p-q)\,a_\tau\log\Omega\Bigr\rvert\le C\,\mathrm{unitE},
+\]
+with $a_\tau$ the anchor coordinate of $\lambda_{i,\tau}$ and $\Omega$ the CM period of $K$. Equivalently, the slope of $M_i$ is bounded below by minus the anchor-weighted period, up to $C$ error units.
+
+\emph{Mechanism.} It is a chain of five slope inequalities.
+\begin{enumerate}[label=(\roman*),nosep]
+\item Assembly (\lean{RecAt}, \lean{CutAt}, \lean{BadAt}, \lean{LamAt}, \lean{CoreAt}, \lean{lcv_le}). The good idempotent of a finite group algebra has bounded denominator and is self-adjoint, so cutting costs at most $12e^{-x^{\epsilon/7}}Q\,\mathrm{unitE}$, which tends to zero. \emph{Closed here.}
+\item Top level ($q=0$). $X_m$ is a finite set of CM points. The lattice of algebraic modular forms is a Schur functor of the Lie lattice twisted by a line, and its slope is bounded fibre by fibre (\lean{defBound}). The eigenlattice step \lean{eigLat_slope} was closed in Wave 1.
+\item Deeper levels, Hilbert--Samuel lower bound (\lean{UAt}). On a cover $Y$ of deep level, write the weight $u_M$ as a $T$-th power on a flag bundle of relative dimension $d_F$. Then $\widehat{\deg}_Z\ge\binom{T-1}{d_F}\delta_Z\bigl(Th_Z-3(d_F+1)\lvert h_Z\rvert-A\log(2+\lvert h_Z\rvert)-R\bigr)$ (\lean{HSAt}), ranks are within $(1-z)^{-1}$ of $\binom{T-1}{d_F}\delta_Z$ (\lean{ShareAt}), component degrees are within $(1-\rho)^{-1}$ of each other (\lean{DegAt}, by Hirzebruch--Mumford proportionality and birationality of the weight map, Section~\ref{sec:covol}), and the mean height is bounded below (\lean{HeightAt}, from \lean{DeepStR}).
+\item Flat twist (\lean{FlatAt}). Multiplying by a constant-norm section of $\det\omega_\tau\otimes(\det\omega_{\bar\tau})^{-1}$ shifts the slope by its arithmetic degree $\tfrac{p-q}2\operatorname{Re}\log\Omega+q(2\log\sqrt d-\log\mathrm{rd}_E)$, computed at a CM point by Chowla--Selberg. This gives the main term.
+\item Descent of weight and level (\lean{MapsAt}, \lean{RkAt}, \lean{GminAt}, \lean{RingAt}). Multiplication by sections of the $c_0$-th power of the Hodge line gives jointly injective maps of bounded height with almost equal ranks. The target is spanned by theta lifts of harmonic polynomials of norm at most $\exp(20000(frL_b)^2\kappa)$ (\lean{span_thFam}, constant checked here). Then the level is descended by traces. The slope inequality for injective maps of bounded height closes the chain.
+\end{enumerate}
+The deep cover exists by the ray class field statement \lean{p8}.
+
+\emph{External inputs.} The fields of \lean{PublishedHodgeBundleTheorems} (\lean{q2} canonical extension in rank one, \lean{q4} prismatic Dieudonn\'e theory with Hodge filtration, \lean{q6}, \lean{q8}, \lean{q9} arithmetic Hilbert--Samuel with explicit errors, \lean{q10}, \lean{q11} Chow forms and cycle heights, \lean{q7}, \lean{q15}, \lean{q16}, \lean{p8} ray class fields), \lean{HSCore.Quoted}, \lean{GrothendieckDeformation}, \lean{SiegelToroidalIntegral}, \lean{ToroidalForFanKS}, \lean{SemiAbelianLieSeminegative} (all V7), Chowla--Selberg with the Kronecker limit formula, and \lean{TamagawaSpecialUnitary} through Proposition 2.E.
+
+\emph{Downstream.} \lean{L3} $\to$ \lean{LinkDIV}.
+
+\emph{Reconstructed here and in Final 3.} The statement, the assembly (i), the structure of (ii) to (v), \lean{covering_degree_eq_alt}, \lean{span_thFam} with $20000$, and the sign of the flag defect (Section~\ref{sec:signs}).
+
+\emph{Unread formal layers.} The bodies of the twenty-four producers (Section~\ref{sec:covol}), the AR-03 leaves listed there, \lean{exists_short_harmL_family}, and the three statements behind \lean{hilbertSamuel_of_component_estimates_alt} (\lean{twisted_bundle_degree_lower_bound}, \lean{twisted_flat_bundle_ranks}, \lean{covering_domain_lattice_regularity}).
+
+\emph{Bespoke content.} None that is not already described. The explicit-error Hilbert--Samuel inequality \lean{HSAt} is stronger in form than the usual asymptotic statement, but it is derived from the published field \lean{q9}. Whether \lean{q9} matches the literature is a question for the verification boundary (V7), not for the internal reconstruction.
+
+\subsection*{Is any bespoke mechanism of PC-2 unresolved?}
+
+One. The first version of this subsection answered no. The comparison with Slijepčević in Section~\ref{sec:slij} shows that clause 2.B(ii) at primes outside $S_B$ rests on a weighted degree inequality in characteristic $p$, which is neither a theorem that can be named nor reconstructed here. Every other proposition is either reconstructed (2.E, the assembly of 2.F, the tops of 2.A and 2.D) or an application of named published arithmetic geometry whose mechanism is stated in ordinary terms (2.A, 2.C, 2.D, the other clauses of 2.B, the five chains of 2.F). The one genuinely new mechanism near PC-2 is the exact local identity \lean{Prop6} with the cutoff limit. It belongs to PC-1 and to the reconstructed engine of \lean{DeepStR}, and the Hodge--Tate patch in clause (ii) of 2.A is its local input.
+
+Three points deserve a referee's attention, although none of them is an unresolved mechanism.
+\begin{enumerate}[nosep]
+\item \lean{HSAt} with its explicit error terms, which rests on \lean{q9}.
+\item The uniformity of $C_h$ and $C_u$ in the level. Focused Wave 1 traced both to quantities that depend on $f$, $N$, $\mathrm{rd}_E$ and $\Lambda_B$ alone, and their bodies are unread.
+\item The construction of 2.A at primes in $S_B$, whose vector-bundle condition \lean{OmVB} is the integral Hodge--Tate input of PC-1.
+\end{enumerate}
+
+\section{Comparison with Slijepčević}\label{sec:slij}
+
+This section was added on 22 November 2026 as an independent cross-check. The comparison is with S.~Slijepčević, \emph{Outline of Alpöge's proof of the generalised Riemann hypothesis}, hexagon:2611.00812v1 (21 November 2026), Sections 6 to 8, 11 and Appendix A. I did not reopen the Lean tree. The paper's results relevant to PC-2 are Definition 6.16 (row conditions, (COV)), Proposition 6.18 (definite-side family structure, step 6), Proposition 6.20 (tied families), Theorem 8.1 ((COV) at compatibly ruled points), Definitions 8.2 to 8.4 (CM host, global models, root towers with properties (V1) to (V6), master-datum cores and deep models), Proposition 8.5 (mean volume slopes of deep models), Proposition 8.6 (the tower theorem) and Lemma 8.7 (a weighted degree inequality in characteristic $p$). The paper says it has read statements and the top level of proofs, and it lists what it does not understand.
+
+Each paragraph answers five questions in order. (1) Does he state the same proposition? (2) Do the hypotheses and conclusion agree? (3) Does he add a mechanism, citation or dependency? (4) Does he leave the proposition in outline or say he does not understand it? (5) Does our reconstruction go materially further?
+
+\paragraph{2.A, existence of the tower.} (1) Yes, as Proposition 8.6(1). (2) His hypotheses agree with ours and add detail. The CM host is a prime $d\equiv7\pmod{16}$, $\mathcal O_E/\mathcal O_{E^+}$ is unramified (Definition 8.2), the level is odd with $A=1$ at a global model, and the components split. The unramified hypothesis is the hypothesis \lean{Unr} of \lean{MassBound} and \lean{TorusBound} in Proposition 2.E, which confirms that the two packages share a setting. His conclusion says ``a normalisation condition at finitely many primes, which we do not reproduce''. Our clause (ii) decodes it as rational $\ell^4$-torsion and Hodge--Tate-patched Lie lattices that are vector bundles (\lean{R}, \lean{OmVB}). (3) He adds citations: Bierstone--Milman [12] and W{\l}odarczyk [135] next to Hironaka, quotients by finite flat subgroups with Zarhin's trick [137], Mumford's uniformisation of split degenerations [94], and Ash--Mumford--Rapoport--Tai [3] with Lan [75] for the log Kodaira--Spencer isomorphism. He does not mention \lean{exists_eigBase}. (4) He gives it in outline. (5) Yes. We read the assembly, decoded the normalisation at $S_B$, and identified the bad set.
+
+\paragraph{2.B, the qualitative tower axioms (D4).} (1) Yes, as (V1) to (V3) of Definition 8.3 with Proposition 8.6(2). (2) The hypotheses agree. His Proposition 8.6(2) states two hypotheses that our 2.B and 2.C left implicit, $E/\mathbb Q$ abelian and $3q+1\le p+q$, together with $\lvert\mathrm{Bad}\rvert\le4\lvert\Phi\rvert(p+q)^2$. They are the hypotheses of the tower theorem recorded by Focused Wave 1, and they now appear in the statements of 2.B and 2.C. (3) \textbf{He adds a dependency that corrects our 2.B.} Nefness at primes outside $S_B$ (axiom \lean{M2}) is not a published positivity theorem. It is his Lemma 8.7, a weighted degree inequality for eigenflags of the Lie algebra of a semi-abelian scheme over a curve in characteristic $p>2$, valid when $\lvert w_\tau(i)\rvert\le M$, the gap at $j$ is at least $g$, and $4\lvert T\rvert M\le(p-2)g$. Our first statement of 2.B attributed (ii) to Faltings--Chai and Lan. That attribution is wrong for general dominant weights in characteristic $p$, where nefness needs a $p$-dependent condition. The threshold agrees with the cutoff. For $p\ge B+1$ with $B+1>B(u,g)=4fN^2(1+M/g)$ and $N\ge2$, one has $p-2>4fM/g$, which is the hypothesis of Lemma 8.7 with $\lvert T\rvert=f$. So the primes outside $S_B$ are exactly in the range where Lemma 8.7 applies. By its role this is the producer \lean{Conj.hodge_cpt_global_nefness} of \lean{m2_of_good_tower}, which is unread. (4) He gives Lemma 8.7 in outline (``degree formulas for lattices on curves, the unramifiedness of the split characters and a statement on the existence of curves with given function field''). Section 11 lists it as ``known or new'', possibly a known semipositivity statement for Hodge bundles in characteristic $p$. (5) We go further on the wrappers and on the exactness that kills the tower constants (\lean{Prop6}), but not on Lemma 8.7.
+
+\paragraph{2.C, base settings (D3).} (1) Yes, as (V5) and (V6), with $\mathrm{Lg}(B,r,L)=\log(Br)+\lvert L\rvert$, $r=\mathrm{rd}_E$ and $L=\operatorname{Re}L'/L(1,\chi_{-d})$. (2) The hypotheses ($B\ge128$, $\lvert\mathrm{Bad}\rvert\le B$, the gap hypothesis) and the conclusion agree with ours. He gives no values for the constants. (3) He cites Zhang [138] for successive minima, Gillet--Soulé [44], Moriwaki [91] and Yuan [136]. (4) Section 11 says he does not see the mechanism of (V4) to (V6), their dependence on $\mathrm{rd}_E$ and $L'/L$, or where Zhang's inequality enters. (5) Yes. Zhang enters in \lean{SlopeLower} through the cusp-corrected metric (2.C(i)), the dependence on $\mathrm{rd}_E$ and $L'/L$ comes from Chowla--Selberg and the flat-degree record, and the surviving constants are $C_u=4$ and $C'=4$ together with $C_h$ (Focused Wave 1).
+
+\paragraph{2.D, transfer to components (D5).} (1) Yes, as Proposition 8.5 at the level of the mean over components. He does not state the per-component inequality with $\mathrm{cost}_2(B)\le60(\log B+\log\mathrm{rd}_E)$. (2) The hypotheses agree, including a level with at most $15$ prime factors and $B(u,g)=4\lvert\Phi\rvert(p+q)^2(1+\max\lvert u\rvert/g)$. One discrepancy is in his printed error term $\mathrm{ar}(D)=\log r_E+\operatorname{Re}L'/L(1,\chi_{-d})$, which has no absolute value. His (V5), (V6) and the archive's \lean{DeepStR} use $\lvert\operatorname{Re}L'/L\rvert$. Without the absolute value the bound is stronger when $\operatorname{Re}L'/L<0$, so our form, with the absolute value, is the one supported. (3) He gives the mechanism as nef Riemann--Roch and a birational pull-back and push-forward formula. This matches \lean{le_countVol_of_nef} and \lean{BirationalPullbackPushforwardFormula} in Step 1 of our transfer. (4) Section 11 says the transport is known to him only through its inputs. (5) Yes. The four-step counting argument, the injective trace map, the cost lemma and the shift lemma are reconstructed.
+
+\paragraph{2.E, sup-norm against Petersson norm.} (1) No. The paper does not state the sup-norm against Petersson-norm bound, the constant $4000$, or a Tamagawa input. Its volume slopes in Definition 8.4(Vs) measure archimedean norms against ``the $n$-th power of the Bergman reference'', which is a different use of a Bergman kernel. (2) Not applicable. (3) For source fidelity, his Appendix A.7 cites Shimura's mass formula for definite hermitian lattices [113] (\emph{Euler products and Eisenstein series}, 1997) in Proposition 6.18, and Kneser [70] with Platonov--Rapinchuk [100] for strong approximation in special unitary groups. Shimura [113] is a second source to compare against the Prasad-form statement \lean{TamagawaSpecialUnitary}, and Kneser and Platonov--Rapinchuk are the sources for \lean{unitary_frames_strong_approximation}. I did not check either match. Appendix A.6 also cites Ohsawa--Takegoshi [98] for $L^2$ extension in Section 8, which is the natural source for a section bounded by the Bergman kernel in the height inputs of 2.F. (4) Not applicable. (5) Yes, entirely ours.
+
+\paragraph{2.F, the covolume bound.} (1) Yes, as Theorem 8.1 with (COV) of Definition 6.16, $\frac{2}{D[K_S:\mathbb Q]}\log\operatorname{covol}(M_j,X_W(j))\le l_{3m}(j)+C\,l_{3u}$ for all $C\ge C_0$, eventually on the family. (2) The shape agrees with ours ($\mathrm{mainT}+C\,\mathrm{unitE}$). Two differences need recording. First, his normalisation has the factor $2/[K_S:\mathbb Q]$, and the archive's \lean{lcv} is taken as given in Final 3. The two must agree as normalisations of the hermitian covolume, but I did not reconcile them. Second, he states (COV) at \emph{compatibly ruled} points, and he says he does not know whether these are ruled points, which are the points the tied families use. Our 2.F quantifies over the points of \lean{CovolumeBoundOfX}, namely the points satisfying \lean{RowsTAlt} (\lean{PointConditions'} with \lean{RecTied}), which corresponds to his compatible point conditions. Whether the consumer of \lean{L3} needs the other kind of point is a wiring question for PC-6 and the synthesis agent, not a PC-2 question. The archive type-checks, so its consumer accepts the form that is proved. (3) He names the inputs (resolution, arithmetic bigness, Hodge--Tate with Zarhin, toroidal charts and the Siegel toroidal integral, seminegativity of Lie [37], [90], Grothendieck--Messing [83], nef Riemann--Roch, Green's characters [46]) and adds prismatic Dieudonné theory (Anschütz--Le Bras [4]), Kawamata--Viehweg [67], [129] and Ohsawa--Takegoshi [98]. These give printed sources for the fields \lean{q4}, \lean{q15} and \lean{SemiAbelianLieSeminegative}, and for \lean{GrothendieckDeformation}. They also give printed sources for the arithmetic Hilbert--Samuel field \lean{q9} (Gillet--Soulé [43], Zhang [138], Moriwaki's book [92]). He does not state the explicit-error form \lean{HSAt}. (4) He gives it in outline. Section 11 says the twenty lattice estimates are ``known to us only through their inputs''. (5) Yes. We have the main term as the anchor-weighted period, the five chains, the assembly \lean{lcv_le}, the covering degree, and $20000$.
+
+\paragraph{Uniformity in level and field.} His Proposition 8.5 has an absolute constant $C$, a level with at most $15$ prime factors, and dependence on the field through $\mathrm{rd}_E$ and $L'/L(1,\chi_{-d})$. This agrees with our 2.C and 2.D. He does not explain the uniformity, and our account from Focused Wave 1 does.
+
+\paragraph{Outcome.} The comparison confirms the statements of 2.A, 2.C, 2.D and 2.F, adds two explicit hypotheses to 2.B and 2.C, supplies printed sources for several V7 fields, and records the absolute-value discrepancy in his $\mathrm{ar}(D)$. It changes one status. The nefness clause 2.B(ii) at primes outside $S_B$ rests on a characteristic-$p$ weighted degree inequality (his Lemma 8.7, by role our \lean{Conj.hodge_cpt_global_nefness}). That inequality is not a published theorem that either of us can name, and neither reconstruction has its proof. It is the one bespoke mechanism left in PC-2. It is small, and its plausible mechanism is a degree comparison on curves in characteristic $p$ through the Verschiebung on the Hodge filtration, of the kind behind the partial Hasse invariants of Goldring and Koskivirta (Invent.\ Math.\ 217, 2019). That connection is a candidate for the source check, not a verified source.
+
+\section{The characteristic-\texorpdfstring{$p$}{p} eigenflag inequality}\label{sec:l87}
+
+This section was added on 22 November 2026 at Jimmie Adriazola's request. It reopens only the residual of Section~\ref{sec:slij}, the inequality of Slijepčević's Lemma 8.7. Nothing else in PC-2 is reopened.
+
+\subsection{Where it is in the archive}
+
+The route from the nefness axiom \lean{M2} is a chain of statement redirects. Each step below was read \mP{} unless marked.
+\begin{enumerate}[nosep]
+\item \lean{m2_of_good_tower} calls \lean{Conj.hodge_cpt_global_nefness} (\Lpath{GP/HodgeCptGlobalNefBound.lean}, 6 lines). That theorem gets an unramified root-line model at $p$ (\lean{root_lines_unramified_primes}, \mS) and applies \lean{rootLineDeRhamModel_holds}.
+\item \lean{rootLineDeRhamModel_holds} is \lean{Conj.m2Model_holds}, which is \lean{m2Model_of_m2Curve} (\Lpath{GP/M2ModelOfCurveBound.lean}, line 166, \mPt) applied to \lean{CurveSemiAbelianConjecture}. Despite its name, \lean{CurveSemiAbelianConjecture} is a proposition that the archive proves, by \lean{m2Curve_holds} (\Lpath{GP/M2CurveEstablished.lean}, line 60). \textbf{It is Lemma 8.7.}
+\item \lean{m2Curve_holds} combines \lean{lieLat_conjData} (\Lpath{GP/CurveLieEigenDegree.lean}, line 114, \mPt), which produces a de Rham datum \lean{ConjData} for the Lie lattice along the curve, with \lean{LmuDeg.lmuNum_nonneg_of_conjData} (\Lpath{AlgebraProofs/EigenFlagSlopeBound.lean}, line 46).
+\item \lean{lmuNum_nonneg_of_conjData} uses \lean{FrobEst.frob_estimate} (\Lpath{AlgebraProofs/LieSubDegreeBoundByDual.lean}), \lean{ConjEq.subDeg_eig_conj} (\Lpath{AlgebraProofs/ConjugateEigenSubDegreeEq.lean}, read with \lean{eq_zero_of_scale}), \lean{degree_eq_sum_eigen} (\mS), \lean{SubdegMax.subDeg_max} (\mS), and \lean{Chain.lmuNum_nonneg} with \lean{abel_bound} (\Lpath{MetricProofs/LmuNumNonneg.lean}).
+\end{enumerate}
+The definitions are \lean{GapCond} and \lean{lmuNum} (\Lpath{Definitions/CommutativeAlgebra/GapCondExample.lean}), \lean{NefThreshold} (\Lpath{Definitions/DivisibilityTowers/CompactGapsGE.lean}, line 68), and \lean{ConjData} (\Lpath{Definitions/CommutativeAlgebra/IsSplitGaussChars.lean}, line 101).
+
+\subsection{The statement}
+
+\paragraph{Setting.} Let $k$ be a field of characteristic $p>2$, let $K\supset k$ be the function field of a curve, and let $C$ be the set of places of $K$ that are trivial on $k$. A vector bundle on $C$ is a $K$-vector space with a lattice at every place, almost all standard, and $\deg$ is its degree. For a $K$-subspace $W$ of a bundle $\mathcal V$, $\deg W$ is the degree of the saturation $W\cap\mathcal V$. Let $G\to X_0$ be a semi-abelian scheme with $\mathcal O_E$-action and a symmetric cubical polarisation whose powers induce bijections on global functions. Let $z:\operatorname{Spec}K\to X_0$ extend to $C$, with semi-abelian fibres at the centres of the places to which the polarisation descends. Let $\mathcal L$ be the Lie lattice of $G$ along $C$, of rank $d$, with $\mathcal O_E$-action $r$. Let $T$ be a finite set with $\lvert T\rvert=f$, and let $\chi:T\sqcup\bar T\to\operatorname{Hom}(\mathcal O_E,k)$ be split, which means $\mathcal O_E\otimes k\cong k^{T\sqcup\bar T}$, with $\chi(\bar\tau)(a)=\chi(\tau)(\bar a)$. Write $\mathcal L_s$ for the $\chi(s)$-eigenbundle.
+
+\begin{proposition}[Lemma 8.7; \lean{CurveSemiAbelianConjecture}, proved by \lean{m2Curve_holds}]\label{prop:l87}
+Let $j,q\ge1$. For each $\tau\in T$ let $0=W_{\tau,0}\subseteq\dots\subseteq W_{\tau,j}=\mathcal L_\tau$ and $0=L_{\tau,0}\subseteq\dots\subseteq L_{\tau,q}=\mathcal L_{\bar\tau}$ be flags of $K$-subspaces, and let $w_\tau(1)\ge\dots\ge w_\tau(j+q)$ be real weights. Suppose there are $M,g$ with
+\[
+\lvert w_\tau(i)\rvert\le M,\qquad w_\tau(j)-w_\tau(j+1)\ge g\qquad(\text{all }\tau,i),\qquad 4fM\le(p-2)g .
+\]
+Then
+\[
+\Sigma:=\sum_{\tau\in T}\Bigl(\sum_{i=0}^{j-1}w_\tau(i+1)\bigl(\deg W_{\tau,i+1}-\deg W_{\tau,i}\bigr)+\sum_{m=0}^{q-1}w_\tau(j+m+1)\bigl(\deg L_{\tau,q-m-1}-\deg L_{\tau,q-m}\bigr)\Bigr)\le0 .
+\]
+\end{proposition}
+
+\paragraph{Use.} \lean{m2Model_of_m2Curve} applies the proposition to a curve in the special fibre at a prime $p>2$, $p\notin S_B$, $p\nmid d_E$, of a root model. The weight is $\mu$ with $M=\lVert\mu\rVert_\infty$, $g=\min_\tau(\mu_\tau(j)-\mu_\tau(j+1))$ and $f=\lvert\Psi\rvert$, so \lean{NefThreshold} ($4f\lVert\mu\rVert\le(p-2)\,\mathrm{gap}_j(\mu_\tau)$ for all $\tau$) gives \lean{GapCond} (\lean{nef_threshold_gap_condition}). The degree of the automorphic line bundle of weight $\mu$ on the curve equals $-\Sigma$ for the flags cut out by the root lines (\lean{curve_lattice_degree_formula}, \lean{curve_degree_unique}). So $-\Sigma\ge0$ is nefness, \lean{NefAt}. The other inputs are the existence of a curve with given function field and the splitting of the characters when $p\nmid d_E$. These were read at statement level.
+
+\subsection{The proof}
+
+The proof uses one input, a de Rham datum along the curve (\lean{ConjData}).
+\begin{itemize}[nosep]
+\item[(D)] There is a vector bundle $\mathcal H$ of rank $2d$ with an $\mathcal O_E$-action and two exact sequences of bundles,
+\[
+\text{(Hodge)}\quad0\to\mathcal L^\vee\to\mathcal H\to\mathcal L\to0,\qquad\text{(conjugate)}\quad0\to F^*\mathcal L\to\mathcal H\to F^*\mathcal L^\vee\to0 .
+\]
+$\mathcal O_E$ acts on $\mathcal L^\vee$ by $a\mapsto r(\bar a)^{T}$, and on the Frobenius pullbacks $F^*$ through the $p$-th powers of the matrix entries. The archive's inclusion $F^*\mathcal L\to\mathcal H$ is $u\mapsto(\mathrm{hw}\,u,\ \mathrm{am}^{T}u)$, with $\mathrm{hw}$ the Hasse--Witt matrix of the formal group.
+\end{itemize}
+
+\noindent\emph{Step 1 (Frobenius estimate, \lean{frob_estimate}).} Put $e=\deg\mathcal L^\vee$ and $\mu=\max_{W\subseteq\mathcal L}\deg W$, attained at $W_0$. Then $\mu\ge\deg0=0$. The Frobenius pullback $F^*W_0\subseteq F^*\mathcal L$ has degree $p\mu$. Its image $X\subseteq\mathcal H$ under the injective map of (conjugate) has $\deg X\ge p\mu$. By (Hodge),
+\[
+\deg X\le\deg(X\cap\mathcal L^\vee)+\deg(\operatorname{im}(X\to\mathcal L))\le\deg(X\cap\mathcal L^\vee)+\mu .
+\]
+For $Y\subseteq\mathcal L^\vee$ with annihilator $Y^\perp\subseteq\mathcal L$, duality gives $\deg Y=e+\deg Y^\perp\le e+\mu$. Hence $p\mu\le e+2\mu$, that is,
+\[
+(p-2)\,\mu\le e,\qquad e\ge0,\qquad(p-2)\deg W\le e\ \text{ for every }W\subseteq\mathcal L .
+\]
+
+\noindent\emph{Step 2 (balance of conjugate eigenbundles, \lean{subDeg_eig_conj}).} Because $\chi$ is split, $\mathcal L$, $\mathcal L^\vee$ and $\mathcal H$ split into eigenbundles indexed by $S=T\sqcup\bar T$, and $(\mathcal L^\vee)_s=(\mathcal L_{\bar s})^\vee$. Put $h(s)=\deg\mathcal H_s$. (Hodge) gives $h(s)=\deg\mathcal L_s-\deg\mathcal L_{\bar s}$. Frobenius sends the character $\chi_s$ to $\chi_s^p=\chi_u$ for some $u\in S$, so (conjugate) gives $h(u)=p(\deg\mathcal L_s-\deg\mathcal L_{\bar s})=p\,h(s)$. Take $s$ with $\lvert h(s)\rvert$ maximal. Then $p\lvert h(s)\rvert=\lvert h(u)\rvert\le\lvert h(s)\rvert$, so $h\equiv0$ (\lean{eq_zero_of_scale}). Thus $a_\tau:=\deg\mathcal L_\tau=\deg\mathcal L_{\bar\tau}$, and
+\[
+e=-\deg\mathcal L=-\sum_{s\in S}\deg\mathcal L_s=-2\sum_{\tau}a_\tau .
+\]
+
+\noindent\emph{Step 3 (summation by parts, \lean{abel_bound}, \lean{Chain.lmuNum_nonneg}).} For non-increasing $\nu_1\ge\dots\ge\nu_n$ and $v_0,\dots,v_n\le\mu$,
+\[
+\sum_{i=0}^{n-1}\nu_{i+1}(v_{i+1}-v_i)=\nu_nv_n-\nu_1v_0+\sum_{i=1}^{n-1}(\nu_i-\nu_{i+1})v_i\le\nu_nv_n-\nu_1v_0+\mu(\nu_1-\nu_n).
+\]
+Apply this to the $W$-flag ($v_0=0$, $v_j=a_\tau$) and to the reversed $L$-flag ($v_0=a_\tau$, $v_q=0$). With $\gamma_\tau=w_\tau(j)-w_\tau(j+1)\ge g$ and $a_\tau\le\mu$, the bracket $\Sigma_\tau$ of the proposition satisfies
+\[
+\Sigma_\tau\le\gamma_\tau(a_\tau-\mu)+\mu\bigl(w_\tau(1)-w_\tau(j+q)\bigr)\le g\,a_\tau+2M\mu .
+\]
+Summing over $\tau$ and using Step 2,
+\[
+\Sigma\le g\sum_\tau a_\tau+2fM\mu=-\frac{g\,e}2+2fM\mu .
+\]
+Finally Step 1 and the hypothesis give $4fM\mu\le(p-2)g\mu\le g\,e$, so $\Sigma\le0$. \qed
+
+\paragraph{Where the constants come from.} The factor $p$ is the degree of a Frobenius pullback. The $-2$ comes from the two places where $\mu$ bounds a piece of $F^*W_0$ inside $\mathcal H$, once in the quotient $\mathcal L$ and once through the annihilator in $\mathcal L^\vee$. The $4fM$ is a product of three things. The first is $f=\lvert T\rvert$ CM places. The second is the total weight range $w_\tau(1)-w_\tau(j+q)\le2M$, which multiplies $\mu$ at each place. The third is the factor $2$ in $e=-2\sum a_\tau$, which comes from the equal degrees of the $\tau$- and $\bar\tau$-eigenbundles. The cutoff $B(u,g)=4fN^2(1+\lVert u\rVert/g)$ puts every prime $p>B$ in the range $p-2>4fM/g$. \mN{} Step 3 was tested on 173\,357 random admissible data, with largest $\Sigma=-0.0197$. With $g$ reduced to between $0.3$ and $0.6$ times the threshold value, the same data gives $\Sigma$ up to $5.18$, so the threshold is used.
+
+\paragraph{Mechanism.} The mechanism is a Frobenius-pullback degree comparison through the conjugate filtration of the de Rham bundle, followed by a Frobenius-twisted balance of eigenbundle degrees and summation by parts. It does not use partial Hasse invariants. It uses a Harder--Narasimhan quantity only through the maximal subbundle degree $\mu$. The Hasse--Witt matrix enters as the map $F^*\mathcal L\to\mathcal H$.
+
+\paragraph{Literature.} I could not identify a published statement of Proposition~\ref{prop:l87} or of the bound $(p-2)\mu_{\max}\le\deg\mathcal L^\vee$. I do not cite Goldring--Koskivirta, whose results concern sections of automorphic bundles through partial Hasse invariants, because I have not found this inequality there. The input (D) does match published theorems on the abelian locus. For an abelian scheme $A$ over a smooth base in characteristic $p$, $H^1_{\mathrm{dR}}(A)$ has the Hodge filtration with quotient $R^1f_*\mathcal O=\operatorname{Lie}A^\vee$, and the conjugate filtration $0\to F^*R^1f_*\mathcal O\to H^1_{\mathrm{dR}}\to F^*f_*\Omega^1\to0$ (Katz, \emph{Nilpotent connections and the monodromy theorem}, Publ.\ Math.\ IH\'ES 39, 1970; Oda, \emph{The first de Rham cohomology group and Dieudonn\'e modules}, Ann.\ Sci.\ \'ENS 2, 1969). A principal polarisation identifies $\operatorname{Lie}A^\vee$ with $\operatorname{Lie}A$. This is (D) with $\mathcal H=H^1_{\mathrm{dR}}$.
+
+\subsection{What remains}
+
+The archive does not quote these theorems. It builds (D) uniformly along the whole curve, including the places of semi-abelian, non-abelian reduction, from formal group germs, as follows.
+\begin{itemize}[nosep]
+\item \lean{curve_family_formal_germ} is \lean{PositivityTheory.HtPt.Cf.family_ex}, in the layer \Lpath{WeilBound/CoreStatements/HodgeTatePoints/} of 299 files.
+\item \lean{Conj.Fam.family_conj} (\Lpath{AlgebraProofs/FamilyGivesConjugateLieData.lean}, 509 lines) assembles (Hodge) and (conjugate) from the local formal data.
+\item \lean{GermLie.germ_lie} gives the Lie basis.
+\end{itemize}
+The one non-formal point is that the conjugate map $F^*\mathcal L\to\mathcal H$ is injective on every fibre, the hypothesis \lean{ConjInj}. It is \lean{HtPt.Cf.fib_inj}, from \lean{Cocp.tanpf_inj} (\Lpath{CocpMain.lean}, line 85) and \lean{Ce.geompf_tan} (\Lpath{IsPullbackWhisker.lean}, line 1293). A tangent vector $w$ with $\mathrm{hw}\,w^{(p)}=0$ and $\mathrm{am}^Tw^{(p)}=0$ would give a $p$-jet along which the translate of the polarisation is trivial, and this contradicts the condition that the powers of the polarisation are bijective on the fibre. These were read at statement level.
+
+\begin{proposition}[the residual, (D) along a complete curve]\label{prop:D}
+Let $G\to C$ be the semi-abelian scheme of the setting above, over a complete curve in characteristic $p>2$, with abelian generic fibre, semi-abelian fibres at all places, and a polarisation whose powers are bijective on functions on every fibre. Then the Lie bundle $\mathcal L$ extends to the datum (D). There is a rank-$2d$ bundle $\mathcal H$ with $\mathcal O_E$-equivariant Hodge and conjugate exact sequences of vector bundles over all of $C$, in which the conjugate inclusion $F^*\mathcal L\to\mathcal H$ is injective on every fibre.
+\end{proposition}
+
+On the open set where $G$ is abelian, Proposition~\ref{prop:D} is Katz and Oda. At the finitely many places of non-abelian reduction it is the local statement for the formal group of a semi-abelian scheme over a discrete valuation ring of characteristic $p$. The archive proves that statement through the 299-file \Lpath{HodgeTatePoints} layer. I have not matched it to a published theorem. The expected source type is the canonical extension of de Rham cohomology to semi-abelian degenerations (Faltings--Chai, Chapter VI, for the Hodge filtration) together with a conjugate filtration of the log de Rham complex in characteristic $p$, but I did not find a published statement that gives both at a degenerate place in this form.
+
+\section{The de Rham datum at points of semi-abelian reduction}\label{sec:sab}
+
+This section was added on 22 November 2026 at Jimmie Adriazola's request. It reopens only the input (D) of Section~\ref{sec:l87} at the places of non-abelian semi-abelian reduction. Lemma 8.7 and its combinatorics are not revisited.
+
+\subsection{What \texorpdfstring{$\mathcal H$}{H} is in the archive}
+
+$\mathcal H$ is a formal-group construction specific to the archive. It is not de Rham cohomology of the semi-abelian scheme, not logarithmic de Rham cohomology, and not built from a 1-motive. At each point the archive takes a \lean{GermAt} (\Lpath{Definitions/GlobalGeometry/ToFirst.lean}). This is a formal group law $\hat G$ of dimension $d$ with $\mathcal O_E$-action, together with the formal germ of the symmetric biextension $\Lambda(L)$ of the cubical polarisation $L$. That germ consists of two partial cocycles $\mathrm{ph}_1,\mathrm{ph}_2$, the symmetry $\mathrm{sy}$ and the adjoint data $\mathrm{ad}$, as in the structure \lean{FB} in \Lpath{CocycleRightZeroThd.lean}. The fibre of $\mathcal H$ is $\operatorname{Lie}\oplus\operatorname{Lie}^\vee$ in formal coordinates. The lattice at a place $i$ is the image of the standard lattice under the gauge change $\mathrm{transH}(\varphi_i,\psi_i,\lambda_i):(x,\xi)\mapsto(\Phi_ix,\ \Psi_i^{T}(\xi+\Lambda_i^{T}x))$. Here $\varphi_i,\psi_i$ are the comparison of the generic and local formal coordinates and $\lambda_i$ is the change of biextension trivialisation. The data are as follows.
+\begin{itemize}[nosep]
+\item Hodge: $\operatorname{Lie}^\vee=\{(0,\xi)\}\hookrightarrow\mathcal H\to\operatorname{Lie}$, the first projection.
+\item Conjugate inclusion: $\alpha(v)=(\mathrm{hw}\,v,\ \mathrm{am}^{T}v)$. Here $\mathrm{hw}$ is the coefficient matrix of the degree-$p$ part of $[p]_{\hat G}$ (the Hasse--Witt matrix), and $\mathrm{am}$ is the $(x^p,y)$-coefficient matrix of the cocycle $\mathrm{pow1}(x,y)=\prod_{n<p}\mathrm{ph}_1(nx,x,y)$, which compares $\Lambda_{px}$ with $\Lambda_x^{\otimes p}$.
+\item Quotient map: $\beta=\mathrm{hw}^{T}\circ\mathrm{snd}-(\mathrm{am}-\mathrm{hw}^{T}S)\circ\mathrm{fst}$, with $S$ the bilinear part of $\mathrm{sy}$.
+\item Pairing: $\langle y,y'\rangle=y'_2\cdot y_1-y_2\cdot y'_1+y_1\cdot Sy'_1$, which is perfect over every ring.
+\end{itemize}
+The definitions are in \Lpath{GermComp1ZeroPointLeft.lean}. Because the construction uses formal germs at every point, it does not distinguish abelian from semi-abelian fibres, and its rank is $2d$ everywhere.
+
+\subsection{How the exact sequences are assembled}
+
+\lean{Conj.Fam.family_conj} assembles them from the following.
+\begin{enumerate}[nosep]
+\item[(a)] The Hodge sequence is exact because $\mathrm{transH}$ is block triangular (\lean{hodge_family}).
+\item[(b)] $\beta$ is the adjoint of $\alpha$ for $\langle\ ,\ \rangle$ by definition, and $\operatorname{im}\alpha$ is isotropic, so $\beta\circ\alpha=0$ (\lean{alpha_beta_adjoint_exact} = \lean{Isotropy.beta_comp_alpha}, \mS).
+\item[(c)] $\alpha$ and $\beta$ are natural under the gauge changes, through the Frobenius twist $\Phi^{(p)}$ (\lean{alpha_beta_isomorphism_transport}, \mS).
+\item[(d)] $\alpha$ is injective on the fibre at every place (\lean{ConjInj}).
+\end{enumerate}
+Given (b) to (d), exactness of the conjugate sequence as bundles is linear algebra. On each fibre $\alpha$ is injective with isotropic image of rank $d$, and $\ker\beta=(\operatorname{im}\alpha)^\perp$ has rank $2d-d=d$ and contains $\operatorname{im}\alpha$, so the two are equal and $\beta$ is onto. Nakayama's lemma lifts this from fibres to the lattices over the valuation rings. Item (b) is the coordinate form of the isotropy of the image of Frobenius for the polarisation pairing, $\langle Fa,Fb\rangle=\langle a,VFb\rangle^{\sigma}=p\langle a,b\rangle^{\sigma}=0$. Item (c) is the naturality of Frobenius under coordinate change. Both were read at statement level. Item (d) is the one non-formal step.
+
+\subsection{The statement proved by \texttt{tanpf\_inj}}
+
+\lean{PositivityTheory.HtPt.Cocp.tanpf_inj} (\Lpath{HodgeTatePoints/CocpMain.lean}, line 85) states the following. Let $k$ be algebraically closed of characteristic $p$, let $x$ be a $k$-point with a formal germ $g$, and assume \lean{TanPF}. Then $\alpha_g$ is injective. It is \lean{Ce.tanpf_inj_of} applied to \lean{Cocp.cocycle_p}, and its hypothesis comes from \lean{Ce.geompf_tan} (\Lpath{IsPullbackWhisker.lean}, line 1293), which derives \lean{TanPF} from \lean{GeomPF}. The definitions are these.
+\begin{itemize}[nosep]
+\item \lean{GeomPF}: the fibre $G_x$ is an extension $0\to T\to G_x\xrightarrow{q}B\to0$ of an abelian variety by a torus, with $L\cong q^*M$ and $K(M)$ trivial. This is principality of $M$, \lean{KTriv}.
+\item \lean{TanPF}: for every order-$p$ jet $y:\operatorname{Spec}k[\varepsilon]/(\varepsilon^{p+1})\to G_x$ with $y(0)=1$ and $[p]y=1$, if $t_{y_1}^*L\otimes L^{-1}$ is trivial for the first-order truncation $y_1$, then $y_1=1$.
+\end{itemize}
+
+\subsection{Human proof of fibrewise injectivity}
+
+Let $v\in\ker\alpha$ and write $v=w^{(p)}$, which is possible because $k$ is perfect. Let $y$ be the order-$p$ jet $\varepsilon w$ in the formal coordinates.
+
+\noindent\emph{Step 1, $[p]y=1$.} In characteristic $p$, $[p]=V\circ F$ (SGA~3, Exp.~VII$_A$). Since $F(y)_i=y_i^p\equiv\varepsilon^pw_i^p$ and $V(Y)=\operatorname{Lie}(V)\,Y+O(Y^2)$, we get $[p]y\equiv\varepsilon^p\,\mathrm{hw}\,w^{(p)}\pmod{\varepsilon^{p+1}}$. So $\mathrm{hw}\,v=0$ gives $[p]y=1$, and $\mathrm{hw}$ is the matrix of $\operatorname{Lie}(V)$.
+
+\noindent\emph{Step 2, $t_w^*L\cong L$ to first order} (\lean{cocycle_p}). Let $\Lambda_y=t_y^*L\otimes L^{-1}\otimes L(y)^{-1}$ on $G_x\otimes k[\varepsilon]/(\varepsilon^{p+1})$. The biextension structure gives a canonical isomorphism $\Lambda_y^{\otimes p}\cong\Lambda_{[p]y}=\Lambda_1\cong\mathcal O$, hence a global section $\sigma$ of $\Lambda_y^{\otimes p}$. In the germ frame, $\sigma=\mathrm{pow1}(y,z)=\mathrm{g}(y^{(p)},z)$ (\lean{pow_one_series_p_formula}: the cocycle factors through Frobenius in $x$, with $\mathrm{bil}(\mathrm{g})_{1,1}=\mathrm{am}$). So $\sigma\equiv1+\varepsilon^pf(z)$ with $f(z)=\sum_iv_i\,\partial_{x_i}\mathrm{g}(0,z)$. The second partial law of the biextension gives the following. This mechanism is my reconstruction, and the archive states its conclusion as \lean{alpha_kernel_derivative_vanishes}.
+\[
+f(z+z')-f(z)-f(z')=\partial_a\mathrm{ph}_2(0,z,z')\cdot\mathrm{hw}\,v ,
+\]
+because the $\Lambda_x^{\otimes p}$ factor has zero $x$-derivative in characteristic $p$. By Step 1 this vanishes, so $f$ is a homomorphism $\hat G\to\hat{\mathbb G}_a$. Its differential $df$ is therefore invariant, and it vanishes at the origin because its linear term is $\mathrm{am}^{T}v=0$. So $df=0$. Globally, $\omega=\sigma^{-1}\nabla_{\mathrm{can}}\sigma$, with $\nabla_{\mathrm{can}}$ the canonical connection on a $p$-th tensor power, is a section of $\Omega^1_{G_x}\otimes(\varepsilon^p)$. It vanishes near the identity, so it vanishes on the integral scheme $G_x$. By the Cartier isomorphism (on a smooth variety over a perfect field, $\ker d=\mathcal O^p$), $\sigma$ is locally the $p$-th power of a unit $t\equiv1\pmod\varepsilon$. If $c_{ab}$ are transition units of $\Lambda_y$, then $(c_{ab}t_b/t_a)^p=1$. A unit $u=1+\varepsilon a+\cdots$ with $u^p=1+\varepsilon^pa^p+\cdots=1$ has $a=0$ on the reduced $G_x$. So $c_{ab}\equiv t_a/t_b\pmod{\varepsilon^2}$, and $\Lambda_{y_1}$ is trivial. The archive implements this with \lean{formal_germ_jet_lift} (a $p$-th root in the normal function field) and \lean{Qam.core_firstOrder}, both read at statement level. The argument above is a self-contained replacement.
+
+\noindent\emph{Step 3, \lean{GeomPF} implies \lean{TanPF}} (\lean{geompf_tan}). Write $L=q^*M$. Then $t_w^*L\otimes L^{-1}=q^*N$ with $N=t_{q_*w}^*M\otimes M^{-1}$. The torsor $q$ gives $q_*\mathcal O_{G_x}=\bigoplus_{\chi\in X(T)}L_\chi$. A trivialising section of $q^*N$ over $k[\varepsilon]/(\varepsilon^2)$ reduces to a unit of $G_x$, which is $c\,\chi_0$ by Rosenlicht with $L_{\chi_0}\cong\mathcal O_B$, so its $\chi_0$-component trivialises $N$. Hence $\operatorname{Lie}(\varphi_M)(q_*w)=0$, so $q_*w\in\operatorname{Lie}K(M)=0$ and $w\in\operatorname{Lie}T$. On the torus, $V_T:T^{(p)}\to T$ is an isomorphism ($[p]=F$ on $\mathbb G_m$). By functoriality $\operatorname{Lie}(V_{G})|_{\operatorname{Lie}T^{(p)}}=\operatorname{Lie}(V_T)$, so Step 1's $\mathrm{hw}\,w^{(p)}=0$ forces $w^{(p)}=0$.
+
+\noindent\emph{Conclusion.} Steps 1 and 2 make $y$ a jet of the kind in \lean{TanPF}, and Step 3 gives $y_1=1$. So $w=0$ and $v=0$. \qed
+
+The hypothesis \lean{GeomPF} at the centres of the places (\lean{FibPF}) is supplied upstream by \lean{global_model_power_free} in \lean{hodge_cpt_global_nefness}. That supply is outside this reopening.
+
+\subsection{Published sources}
+
+Katz (1970) and Oda (1969) do not apply here as stated. They concern $H^1_{\mathrm{dR}}$ of abelian schemes, and the archive neither uses nor needs $H^1_{\mathrm{dR}}$ at any point. The proof above uses only standard facts, which are the following.
+\begin{itemize}[nosep]
+\item $[p]=V\circ F$ for commutative group schemes in characteristic $p$, and $V$ is an isomorphism on tori (SGA~3, Exp.~VII$_A$).
+\item $\Lambda(L)$ is a symmetric biextension for a cubical $L$ (Grothendieck, SGA~7, Exp.~VII; Mumford, \emph{Bi-extensions of formal groups}, 1969).
+\item The Cartier isomorphism, in the form $\ker(d:\mathcal O\to\Omega^1)=\mathcal O^p$ on smooth varieties over a perfect field.
+\item Rosenlicht's theorem on units of connected algebraic groups.
+\item $\ker\operatorname{Lie}(\varphi_M)=\operatorname{Lie}K(M)$.
+\end{itemize}
+I did not find a published theorem stating the full datum (D) along a curve through semi-abelian degenerations, and none is needed for the argument above.
+
+\section{Final report}\label{sec:final}
+
+This version replaces the four earlier versions written on 22 November 2026. Section~\ref{sec:l87} proved Lemma 8.7 from the de Rham datum (D). Section~\ref{sec:sab} reconstructs (D) at the points of semi-abelian reduction.
+
+\subsection*{Verdict}
+
+For the semi-abelian input: \textbf{CLOSED: semi-abelian conjugate-filtration input reconstructed.} For the package: PC-2 is \textbf{CLOSED MODULO NAMED EXTERNAL THEOREMS} at the human-proof boundary. Clause (ii) of Proposition 2.A depends on PC-1, the formal layers F2-A to F2-F remain unread, and the hypothesis \lean{GeomPF} at the centres of the places is supplied by \lean{global_model_power_free}, which was not reopened.
+
+\subsection*{1. What closed}
+\begin{itemize}[nosep]
+\item Propositions 2.A to 2.F at the human-proof level, as in the previous versions.
+\item Lemma 8.7, from (D) (Section~\ref{sec:l87}).
+\item (D) at every point. $\mathcal H$ is the archive's formal-biextension module, the Hodge sequence is block triangular, and the conjugate sequence is exact by isotropy, perfectness of the pairing and Nakayama's lemma. Fibrewise injectivity of $F^*\mathcal L\to\mathcal H$ at semi-abelian points has a self-contained human proof by Frobenius and Verschiebung, the biextension, the Cartier isomorphism, Rosenlicht's theorem and the triviality of $K(M)$ (Section~\ref{sec:sab}).
+\end{itemize}
+
+\subsection*{2. Smallest exact remaining internal residual list}
+
+There is no internal mathematical residual at the human-proof level. The following points were read at statement level and have stated mechanisms.
+\begin{itemize}[nosep]
+\item The coordinate identities \lean{Isotropy.beta_comp_alpha} (isotropy of the Frobenius image) and \lean{alpha_beta_isomorphism_transport} (naturality of Frobenius under gauge change).
+\item The archive's implementation of Step 2 through \lean{formal_germ_jet_lift} and \lean{Qam.core_firstOrder}, which the human argument replaces.
+\item The formal layers F2-A to F2-F of Section~\ref{sec:props}.
+\end{itemize}
+
+\subsection*{3. External verification boundary}
+
+This reopening uses SGA~3 Exp.~VII$_A$ ($[p]=VF$, $V$ an isomorphism on tori), SGA~7 Exp.~VII and Mumford (1969) (biextensions), the Cartier isomorphism, and Rosenlicht's theorem. All are classical. Katz and Oda are not needed, because the archive's $\mathcal H$ is not $H^1_{\mathrm{dR}}$. The other boundary items of PC-2 are as before, including the new item \lean{TamagawaSpecialUnitary}.
+
+\subsection*{4. Risk audit}
+\begin{itemize}[nosep]
+\item Gap. None found.
+\item Points for a referee. The two coordinate identities above. The derivation of additivity of $f$ from the second partial law, which is my reconstruction of the conclusion of \lean{alpha_kernel_derivative_vanishes}. The supply of \lean{GeomPF} at all centres by \lean{global_model_power_free}.
+\item Identification. $\mathcal H$ is never identified with de Rham cohomology. The nefness argument needs only the two exact sequences and fibrewise injectivity, so it does not need that identification.
+\end{itemize}
+
+\subsection*{5. Single earliest blocker}
+
+None at the human-proof level.
+
+\subsection*{6. Final blocking question}
+
+At the human-proof level, PC-2 no longer blocks the statement ``The entire RH proof has been reconstructed in ordinary mathematics modulo named external theorems'', apart from its dependence on PC-1 in clause (ii) of Proposition 2.A. At the level of the formal archive, the layers listed above remain unread.
+
+\section*{Files read in this session}
+
+For Section~\ref{sec:sab} I read the definitions in \Lpath{GermComp1ZeroPointLeft.lean}, \Lpath{ToFirst.lean} and the structure \lean{FB}, \Lpath{HodgeTatePoints/CocpMain.lean}, \Lpath{IsPullbackWhisker.lean} (lines 482 to 560), and the statements of \lean{pow_one_series_p_formula}, \lean{alpha_kernel_derivative_vanishes}, \lean{pderiv_zero_of_jet_pth_power_diff}, \lean{formal_germ_jet_lift}, \lean{alpha_beta_adjoint_exact} and \lean{alpha_beta_isomorphism_transport}. For Section~\ref{sec:l87} I read \Lpath{GP/HodgeCptGlobalNefBound.lean}, \Lpath{GP/M2CurveEstablished.lean}, \Lpath{AlgebraProofs/EigenFlagSlopeBound.lean} (lines 46 to 78), \Lpath{AlgebraProofs/LieSubDegreeBoundByDual.lean}, \Lpath{AlgebraProofs/ConjugateEigenSubDegreeEq.lean} (lines 15 to 31 and 105 to 128), \Lpath{MetricProofs/LmuNumNonneg.lean}, the definitions \lean{GapCond}, \lean{lmuNum}, \lean{NefThreshold}, \lean{ConjData} and \lean{Family}, and the statements of the other children named there. For the comparison of Section~\ref{sec:slij} I read Sections 6.4, 6.5, 8, 11 and Appendix A of hexagon:2611.00812v1, as text extracted from the PDF in the project folder. In the revision I also read \Lpath{AutomorphicSpectrum/Definitions/GlobalGeometry/IsHodgeLine.lean} (lines 33 to 69), \Lpath{.../SplitComps.lean} (lines 14 to 20), Sections 2, 4 to 6 and 9 of \Lpath{Focused_Final_Wave_1.tex}, and Sections 2 and 3 of \Lpath{Final_3_GlobalCovolumePeriods.tex}.
+
+
+Whole: \Lpath{GP/ExistsGoodRootTower.lean}, \Lpath{AV/SupremumConstantLogBound.lean}, \Lpath{AbelianVarietyTheory/Definitions/Divisors/UnifOfSpaceEq.lean}, \Lpath{AV/WeightedFrameSumPositive.lean}, \Lpath{AV/CuspFormSupNormLePeterssonIntegralComponent.lean}, \Lpath{AV/NormFactorAndDensityNearOneInFlagChart.lean} (main theorem), \Lpath{AV/SubMeanValueFlagChartInvariantMeasure.lean} (main theorem), \Lpath{AV/CardGroupElementsChartReturnLe.lean} (lines 128 to 213), \Lpath{.../FundamentalDomains/MaxBoundPf.lean}, \Lpath{.../FundamentalDomains/CuspidalExponentialDecay.lean}, \Lpath{AV/MassBoundOfTamagawaUnitary.lean}, \Lpath{AV/NormOneTorusClassNumberBoundProof.lean}, \Lpath{AbelianVarietyTheory/Statements/PlaceShiftStatements/DefiniteBound.lean}, \Lpath{AbelianVarietyTheory/Proofs/FoundationProofs/LogClassNumberLeLogAbsDiscrDiv.lean}, \Lpath{AbelianVarietyTheory/PublishedTheorems/Divisors_2/TamagawaSpecialUnitary.lean}, \Lpath{GP/GenericPointsFiniteNonempty.lean} (lines 60 to 95), \Lpath{GP/IsCptGenResidueFieldGeneric.lean}, \Lpath{GP/ExistsReferenceGeometrySameGeneric.lean} (lines 172 to 207), the nine D4 wrapper files, \Lpath{GP/CountVolumePowerComparison.lean} (main theorem), \Lpath{GP/UniformNormDegreeBound.lean} (main theorem), \Lpath{GP/UniformNormAllTowerBound.lean}, \Lpath{GP/TowerOriginComponentBound.lean} (main theorem), \Lpath{TPS/TopCovolG.lean}, \Lpath{TPS/CovolXOfSteps.lean}, \Lpath{TPS/LiftLambdaBound.lean}, \Lpath{TPS/CoveringDegreeMultiplicative.lean} (main theorem), \Lpath{AV/PolynomialCoefficientEmbeddingNormLeOfL1Bound.lean} (lines 260 to 470). In part: \Lpath{AV/CovolumeFromGramAndBounds.lean}, \Lpath{AbelianVarietyTheory/Definitions/Divisors/CovolXOfCovol.lean}, \Lpath{AbelianVarietyTheory/Definitions/Foundations/ExistsFlatSecRankZero.lean} (lines 165 to 200), \Lpath{AbelianVarietyTheory/Proofs/CovolumeBounds/EnormPowLeInvMeasureMulLintegralBall.lean} (lines 167 to 200), and the statement lines of every redirect named above. Reports: the three files of \Lpath{Post_Closure_Synthesis/} and \Lpath{Final_Closure_Wave_1/}.
+
+\end{document}

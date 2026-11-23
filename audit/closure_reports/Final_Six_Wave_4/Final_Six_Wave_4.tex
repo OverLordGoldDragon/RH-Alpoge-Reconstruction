@@ -1,0 +1,414 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm,amssymb}
+\IfFileExists{newtxtext.sty}{\usepackage{newtxtext,newtxmath}}{\usepackage{lmodern}}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Sch}{\mathcal S}
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+\title{Final Six Wave 4\\ PC-4, finite-place harmonic analysis of the seesaw}
+\author{Agent 4. Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026 (revised the same day with Sections~\ref{sec:pkg} and \ref{sec:sin})}
+\begin{document}
+\maketitle
+
+\noindent I am \textbf{Agent 4} of the six-agent closure wave. My assignment is PC-4 of \Lpath{Post_Closure_Synthesis/Post_Closure_Internal_Residuals.md}, starting at \lean{GlobalTheory.TriStep.tri}. This is a reconstruction from proof text. Nothing in \Lpath{src/lean} was built or run, and no existing file was edited. Paths are relative to \Lpath{src/lean/src}, with the abbreviations of Final Closure Wave 4: \Lpath{DLP/} for \Lpath{Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/}, \Lpath{TO/} for \Lpath{.../Proofs/TwistedOperators/}, \Lpath{TPS/} for \Lpath{Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/}, \Lpath{LF/} for \Lpath{Development/AbelianVarietyTheory/Definitions/LatticeFrames/}.
+
+\paragraph{Method.} Besides reading proof bodies, I built a name index of the archive (1{,}057{,}364 declarations in 175{,}187 files) and computed the reference closure of the PC-4 roots. The closure follows every project declaration named in the body of a theorem, resolves the \texttt{first | exact @Y} redirections, and skips tactic names. It recurses through theorems and lemmas, and records definitions without recursing into them. Line counts are of the declaration blocks. The closure is an over-approximation in one respect (a name in a discarded \texttt{first} alternative is counted) and an under-approximation in another (a lemma reached only through a definition body is missed). The thirteen roots are \lean{ValFin.valX}, \lean{SeeSawLastValue.valLast}, \lean{SeeSaw.pins_finiteIntegrals}, \lean{Fam.colSide_alt}, \lean{AdForm.clsPinD_of_famCol_of_trueW}, \lean{StepVacForm.main_alt_alt}, \lean{FamChars.weilOK_of_rank_one_gram}, \lean{RowLevel.main_alt_alt}, \lean{MiTop.linkComm_of_laws_alt}, \lean{Core.Mi.colDict_rd_eq_colForm}, \lean{ConjRowRep.exists_contRep}, \lean{MiTop.exists_isShift_of_center_alt}, \lean{SeeSaw.ratio_total_unitRatio_of_parts}, all in namespace \lean{GlobalTheory}.
+
+\section{Immediate finding}\label{sec:flag}
+
+There is no gap and no new mechanism. There is one size reclassification, which I report first because it changes the global picture.
+
+PC-4 was recorded as a medium package of about 3{,}000 named lines, with namespaces of at most 53{,}166 lines. The reference closure of its thirteen roots has $22{,}356$ theorems in $348{,}013$ lines. After stopping at sixteen statements of published type (Section~\ref{sec:ext}) it still has $20{,}641$ theorems in $313{,}555$ lines, in about $5{,}000$ files. The median theorem is $9$ lines; $169$ bodies exceed $100$ lines and $1{,}005$ exceed $50$. The closure is self-contained. It contains no root of PC-1, PC-2, PC-3, PC-5, PC-6 or PC-7 (\lean{testFacts}, \lean{exists_good_tower}, \lean{secCrit_all}, \lean{expCrit_D'}, \lean{local_theory_of_admitted}, \lean{count_terms_gramClass_over_sublattice}, \lean{fun0Fit_of_leaves}, \lean{dual_marking}, \lean{topCovolG_alt_alt}, \lean{DeepStR} were searched).
+
+The mass sits where Wave~4 recorded a ``small hidden dependency''. \lean{Fam.colSide_alt} (\Lpath{TPS/ColSide.lean:35}) has a closure of $15{,}760$ theorems. Its largest child \lean{T.true_geometry_family_final_alt} (the twist-place laws through \lean{QColLaws.laws_resc_alt}) has $8{,}610$. So R-3 of the post-closure list is not small, and PC-4 is major in size. Its mechanism is known throughout. Table~\ref{tab:roots} gives the closure of each root and of the main spine theorems.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{rrl}
+\toprule
+theorems & lines & root or spine theorem (namespace \lean{GlobalTheory})\\
+\midrule
+15{,}760 & 236{,}276 & \lean{Fam.colSide_alt} (producer of the laws, R-3)\\
+8{,}921 & 126{,}977 & \lean{SeeSaw.pins_finiteIntegrals} (R-2 laws)\\
+8{,}610 & 125{,}913 & \lean{T.true_geometry_family_final_alt} (twist-place laws)\\
+6{,}546 & 94{,}141 & \lean{QLawPf.qLaw_of_pin}\\
+6{,}304 & 90{,}262 & \lean{QVal.valQ}\\
+6{,}227 & 94{,}722 & \lean{AdForm.clsPinD_of_famCol_of_trueW} (R-4)\\
+5{,}905 & 85{,}331 & \lean{ValOneAt.valOne_all}\\
+5{,}576 & 79{,}037 & \lean{TriStep.tri}\\
+4{,}314 & 59{,}985 & \lean{ValFin.valX} (laws as hypotheses)\\
+3{,}369 & 47{,}204 & \lean{FinPl.flatLaws_all}\\
+2{,}123 & 29{,}083 & \lean{SeeSawLastValue.valLast}\\
+2{,}084 & 29{,}731 & \lean{StepVacForm.main_alt_alt} (R-5)\\
+1{,}538 & 21{,}794 & \lean{SeeSaw.biAct_all}\\
+633 & 10{,}702 & \lean{PosOne.comb_eq_sum_cells}\\
+531 & 7{,}694 & \lean{ConjRowRep.exists_contRep} (R-5)\\
+460 & 7{,}003 & \lean{FamChars.weilOK_of_rank_one_gram} (R-5)\\
+427 & 7{,}431 & \lean{PosOne.symDbl_existsUnique}\\
+384 & 5{,}412 & \lean{LocOm.omLoc}\\
+356 & 4{,}623 & \lean{RowLevel.main_alt_alt} (R-5)\\
+160 & 1{,}912 & \lean{Core.Mi.colDict_rd_eq_colForm} (R-5)\\
+159 & 2{,}303 & \lean{MiTop.exists_isShift_of_center_alt} (R-5)\\
+127 & 1{,}748 & \lean{QuotInt.quotInt_unique_exists}\\
+53 & 641 & \lean{RootEx.Exchange.exchange_isPos}\\
+40 & 582 & \lean{MiTop.linkComm_of_laws_alt} (R-5)\\
+19 & 224 & \lean{RootEx.ExchangeSupport.exchange_support}\\
+10 & 141 & \lean{SeeSaw.ratio_total_unitRatio_of_parts}\\
+\bottomrule
+\end{tabular}
+\caption{Reference closures after the sixteen published cuts of Section~\ref{sec:ext}. Closures overlap.}\label{tab:roots}
+\end{table}
+
+\section{Verdict}\label{sec:verdict}
+
+\textbf{RESIDUAL CHILD REMAINS.}
+
+The earliest blocker of the post-closure list, \lean{TriStep.tri}, is reconstructed (Section~\ref{sec:tri}), and so are the split-place identity \lean{valOne_all}, the double integral \lean{symDbl_existsUnique}, the Weil local-model formula \lean{omLoc} and the root exchange (\lean{exchange_isPos}, \lean{exchange_support}), which is now closed internally (Section~\ref{sec:split}). Below them the package does not reduce to a short list of named theorems. The finite-place flat laws, the global seesaw bi-action and the tuple construction under \lean{colSide_alt} remain internal, of known mechanism and of large size (Section~\ref{sec:resid}).
+
+\section{The trilinear form at a split place}\label{sec:tri}
+
+\subsection{Statement}
+
+\lean{GlobalTheory.TriStep.tri} (\Lpath{DLP/SplitPlaceDoubleStepTrilinearFormProperties.lean:88}, read in full). Fix a double step $S$ (a Bessel level $B$, a Fourier--Jacobi level $J$, a Bessel level $B'$, with Weil data $\omega_1$ on $B.V\times J.W$ and $\omega_2$ on $J.W\times B'.V$), a split place $q$ with completion $k$, and local frames identifying the three unitary groups at $q$ with
+\[
+G_0=\GL_{n_0+c+3}(k),\qquad G_1=\GL_{n_1+c+2}(k),\qquad G_2=\GL_{n_2+c+1}(k),\qquad c+2=2(\sigma+1).
+\]
+Let $T_1,T_2$ be Schr\"odinger models of $\omega_1,\omega_2$ at $q$ (\lean{Place.IsModel}, \Lpath{LF/ExistsUnitarySupportedAtPlaceOfMulEqIdem.lean:61}), that is, linear maps $\Sch(M_{Y\times Y'}(k))\to$ theta functions that intertwine translation by $x$ with the Heisenberg operator of $\mathrm{up}(x)$ and multiplication by $\psi(\langle \mathrm{up}(t),y\rangle)$ with the Heisenberg operator of $y$. Let $\varphi$ be a continuous automorphic function on $U(B.A)$ and $c_1,c_2$ finite Heisenberg combinations away from $q$. Then there are a complex representation $(A,\tau)$ of $\GL_{n_2+c+1}(k)$ and a trilinear form
+\[
+T:\Sch(M_{n_1\times n_0}(k))\times \Sch(M_{n_2\times n_1}(k))\times A\to\mathbb C
+\]
+with the following properties.
+\begin{enumerate}[label=(\roman*),leftmargin=*,itemsep=2pt]
+\item $\tau$ is smooth, $A$ consists of functions on $U(B'.V)(\mathbb A)$, $\tau(y)f=f(\,\cdot\,\iota_2(y))$, and every continuous automorphic $f$ of the prescribed $J$-type lies in $A$.
+\item $T$ satisfies \lean{TriPos} (\Lpath{LF/ToOneSucc.lean:69}). Writing $\omega_\mu(g,h)\Phi(x)=\mu(\det g)\mu(\det h)^{-1}\lvert\det g\rvert^{b/2}\lvert\det h\rvert^{-a/2}\Phi(h^{-1}xg)$ on $\Sch(M_{b\times a}(k))$ (\lean{SplitWeil.om}), this means
+\begin{align*}
+T(\Xi_1,\Xi_2,\tau(u)f)&=\psi(\mathrm{ss}(u))\,T(\Xi_1,\Xi_2,f),\qquad u\in N_{\sigma+1},\\
+T(\Xi_1,\omega_{\mu_2}(1,g)\Xi_2,\tau(\mathrm{diag}(g,1))f)&=\lvert\det g\rvert^{\frac{c+2}{2}-(\sigma+1)}\,T(\Xi_1,\Xi_2,f),\qquad g\in\GL_{n_2}(k),\\
+T(\omega_{\mu_1}(1,g)\Xi_1,\omega_{\mu_2}(g,1)\Xi_2,f)&=T(\Xi_1,\Xi_2,f),\qquad g\in\GL_{n_1}(k),
+\end{align*}
+where $N_p\subset\GL_{n+c}$ is the unipotent group of entries $(r,s)$ with $\mathrm{lev}_p(r)<\mathrm{lev}_p(s)$, $\mathrm{lev}_p$ puts the $n$ block at level $p$ and the $i$-th of the last $c$ indices at level $i+1$, and $\mathrm{ss}(u)$ is the sum of the superdiagonal of the last block (\lean{RootEx.simpleSum}).
+\item The value $S.\mathrm{val}(T_1\Phi_1,T_2\Phi_2,\varphi,f)$ of the global double-step period is the tensor value of $(\Psi,\Phi_0)\mapsto T(\Psi,\mathrm{opEFJ}(\Phi_0,\Phi_2),f)$ at the flat column map of $\Phi_1$.
+\item For $\Xi_1,\Xi_2$ that are single-place Heisenberg combinations $d_1,d_2$ of the vacua, $T(\Xi_1,\Xi_2,f)=S.\mathrm{val}(c_1*d_1,\ c_2*d_2,\ T_1O_1,T_2O_2,\varphi,f)$.
+\end{enumerate}
+
+\subsection{Construction}
+
+The space is \lean{TriStep.space} (\Lpath{DLP/MemTranslate.lean:24}), the functions $f$ all of whose right $\iota_2(G_2)$-translates are continuous and automorphic and which are fixed by an open subgroup. The representation is right translation, smooth by construction (\lean{TriStep.smooth}). The form is
+\[
+T(\Xi_1,\Xi_2,f)=\mathrm{Per}_{B'}\Bigl(\mathrm{biLift}\bigl(\varphi,\ \mathrm{biComb}(c_1,c_2,\Lambda(\Xi_1\otimes\Xi_2))\bigr),\ f\Bigr)
+\]
+(\lean{TriStep.valK}), where $\Lambda$ is the bimodel obtained by contracting the two reduced Schr\"odinger models. The reduced models $U_1,U_2$ come from the flat maps (\lean{T.flatMap_besselToFourierJacobi_localModel}, \lean{T.flatMap_fourierJacobiToBessel_localModel}), and $\Lambda$ with $\mathrm{contr}(U_1\Psi_1,U_2\Psi_2)=\Lambda(\mathrm{contr}_k(\Psi_1,\Psi_2))$ comes from \lean{T.lineContraction_splitPlace_localModel}.
+
+\subsection{Proof, step by step}
+
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+\item \emph{Each $\Lambda\Xi$ is a bi-theta function.} \lean{isBiTheta_of_prod} (read) reduces to product tensors $\Xi_1\otimes\Xi_2$ because $\Sch(X\times Y)$ is spanned by products for totally disconnected $X,Y$ (\lean{LocFlat.CFac.Span.span_prodSB_eq_top}; Bernstein--Zelevinsky, \emph{Russian Math. Surveys} 31 (1976), \S1.22). A product tensor is $\mathrm{contr}_k(\mathrm{colTens}(\varphi_0,\Xi_1),\mathrm{rowTens}(\varphi_0',\Xi_2))$ for a normalized pair $\varphi_0,\varphi_0'$ with $\int\varphi_0\varphi_0'=1$ (\lean{ContractionLocal.exists_normPair}, \lean{contr_tens}), and a contraction of two theta functions is a bi-theta function (\lean{T.besselThetaContraction_extendByZero_vacuum_smooth}). The isBiTheta property is closed under sums, scalars and Heisenberg combinations (\lean{isBiTheta_add'}, \lean{isBiTheta_zero'}, read; \lean{T.isJointlySmoothBiTheta_twoVarCombination}).
+\item \emph{Bilinearity.} \lean{TriStep.valK_bilin} (\Lpath{DLP/DoubleThetaLiftValueBilinear.lean:104}, read in full). The Bessel period is $\mathrm{Per}_B(\varphi,f)=\int_{\mathcal F_A}\int_{\mathcal N}\varphi(h)f(n\,\mathrm{emb}(h))\overline{\psi_B(n)}\,dn\,dh$. By \lean{per_int} (read) the integrand is continuous and bounded by $C_\varphi K$, where $C_\varphi$ bounds the automorphic $\varphi$ and $K$ bounds $f$ on a compact fundamental set of the Bessel group (\lean{T.besselGroup_quotient_fundamentalDomain_cocompact}); the domains have finite measure, so both integrals converge and dominated convergence gives continuity in $h$. Additivity in $\varphi$ is \lean{per_add_left}, additivity of the theta lift is \lean{SeeSmallPf.biLift_sum}, and additivity in $f$ is \lean{per_add_bound}.
+\item \emph{Typed automorphic functions are smooth vectors.} \lean{TriStep.mem_space_of_typed} (\Lpath{DLP/MemSpaceOfTypedAutomorphic.lean:33}, read). If $f\neq0$ is an eigenfunction of the compact open $J_2$ with character $\lambda$, then $\phi(g)=f(x\iota_2(g))/f(x)$ is continuous with $\phi=\lambda$ on $J_2$. Choose an open normal subgroup $K\subset J_2\cap\phi^{-1}(B(1,1/2))$ (\lean{SmGL.exists_open_normalised_subgroup_subset}). For $u\in K$ every $u^{2^m}\in K$, so $\lvert\lambda(u)^{2^m}-1\rvert<1/2$ for all $m$, which forces $\lambda(u)=1$ (\lean{eq_one_of_pow_two_pow}). Hence $K$ fixes $f$.
+\item \emph{$N$-equivariance.} \lean{TriStep.valK_nEquiv} (read). Translation by $u\in N_{\sigma+1}$ at $q$ lies in the flag group of $B'$ (\lean{LocGrp.mem_flagN_of_mem_N}), the period is $\psi_{B'}$-equivariant there (\lean{per_flagN}), and $\psi_{B'}$ at $q$ is $\psi(\mathrm{ss}(u))$ (\lean{LocBesChar.psiBes_isLoc}).
+\item \emph{Tensor value.} \lean{TriStep.val_eq_tensorVal} (read). The contraction of the flat column map of $\Phi_1$ with the flat row map of $\Phi_2$ is a finite sum $\sum_i\Psi_i\otimes\mathrm{op}(\Phi_{0,i})$ (\lean{LocFlat.ContrSum.contr_flat_eq_sum}). Substituting it in $\Lambda$ and using linearity identifies $S.\mathrm{val}$ with the tensor value.
+\item \emph{The remaining two invariances and the combination formula} are \lean{TriStep.valK_gl}$_2$, \lean{TriStep.valK_glMid} and \lean{TriStep.valK_comb}. They transport the $\GL$ actions through the models and the contraction. Their bodies were not read to the end and are listed in R4-A.
+\end{enumerate}
+
+\emph{Exponent check.} The exponent in (ii) is $\frac{(Q.c+1)+1}{2}-(\sigma+1)$ with $Q.c+2=2(\sigma+1)$, so it vanishes, and the $\GL_{n_2}$ law is an invariance. I checked this and the modulus formula below by a short computation.
+
+\section{The split-place double step}\label{sec:split}
+
+\subsection{\lean{valOne_all}}
+
+\lean{GlobalTheory.ValOneAt.valOne_all} (\Lpath{DLP/SplitPlaceDoubleStepLocalIteratedIntegralProof.lean:56}, read in full). With $T$ from Section~\ref{sec:tri}, the double-step integrand at $(g\,a,\ h_1x,\ h_2y)$ with $a\in G_0$, $x\in G_1$, $y\in G_2$ equals $T(\omega_{\mu_1}(a,x)\Phi_1,\ \omega_{\mu_2}(x,y)\Phi_2,\ \tau(y)F)$, because local elements commute with elements trivial at $q$ (\lean{T.splitPlace_local_group_closedEmbedding_integral}), the Weil action at $q$ is the linear model (\lean{T.local_model_weil_operator_trivialAtPlace_isModel}), and the line characters of the two steps cancel (\lean{T.doubleStep_local_weil_action_line_characters_cancel}). The double integral over $R\backslash G_1$ and $R'\backslash G_2$ then exists and is unique (\lean{T.symmetricPositions_doubleIntegral_existsUnique}), commutes with the finite combination $e_0$ (\lean{T.symmetricDoubleIntegral_finite_combination}), and equals the cell sum
+\[
+\sum_{\gamma\in A_1}\sum_{\beta\in A_2}\mathrm{vol}_J(\gamma,\beta)\ S.\mathrm{val}\bigl(c_1*d_1(\gamma),\ c_2*d_2(\gamma,\beta),\ T_1O_1,T_2O_2,\varphi,\ \mathrm{trc}(e_2(\beta))f\bigr)
+\]
+(\lean{T.symmetricDoubleIntegrals_positionOne_eq_cellSum}, then item (iv) of Section~\ref{sec:tri}). This is the local identity behind \lean{QLaw}.
+
+\subsection{Quotient integrals}
+
+\lean{IsQuotInt}$(f,z)$ (\Lpath{Development/AbelianVarietyTheory/Definitions/Foundations/SimpleSum.lean}) means $f(h)=\int_{\GL_n}\int_{N_p}F(\mathrm{diag}(g,1)\,u\,h)\,du\,dg$ for some $F\in\Sch(\GL_{n+c}(k))$ and $z=\int F$. \lean{QuotInt.quotInt_unique_exists} (\Lpath{TO/QuotientIntegralParabolicUnfolding.lean:259}, statement and first steps read) says that $z$ is determined by $f$ for every $1\le p\le c$, and exists when $f$ is locally constant, compactly supported modulo $R_p=\mathrm{diag}(\GL_n,1)N_p$ and satisfies
+\[
+f(\mathrm{diag}(x,1)\,u\,h)=\lvert\det x\rvert^{\,c+1-2p}f(h).
+\]
+I checked this against the mathematics. Conjugation by $\mathrm{diag}(g,1)$ scales the $n\times c$ block of $N_p$ (columns of level $p+1,\dots,c$) by $\lvert\det g\rvert^{c-p}$ and the $c\times n$ block (rows of level $1,\dots,p-1$) by $\lvert\det g\rvert^{-(p-1)}$, so the modulus of $R_p$ is $\lvert\det\rvert^{c+1-2p}$, which is the factor in the statement; I verified the count for $c\le29$. Uniqueness for a non-unimodular $R_p$ is correct because the integrals use a left Haar measure $dg\,du$ of $R_p$. If $\beta\ge0$ is a Bruhat function with $\int_{R}\beta(rx)\,d_rr=1$, then
+\[
+\int_GF=\int_G\beta(x)\int_RF(r^{-1}x)\,d_rr\,dx=\int_G\beta(x)\int_RF(rx)\,d_lr\,dx,
+\]
+so $\int F$ depends only on $f$ (Bourbaki, \emph{Int\'egration} VII \S2; Bernstein--Zelevinsky 1976, \S1.21). Existence is the surjectivity of $F\mapsto f$ onto the semi-invariant functions, from the same sources.
+
+\subsection{\lean{symDbl_existsUnique}}
+
+\lean{GlobalTheory.PosOne.symDbl_existsUnique} (\Lpath{DLP/SymmetricPositionsDoubleIntegralExistsUnique.lean:121}, read in full). The inner integral sits at the symmetric position $\rho$ on $\GL_{n_2+c}$ with $c+1=2\rho$, where $R_\rho$ is unimodular. The proof (a) takes the bilinear form $b$ at the middle vertex (\lean{T.exists_bilinear_position_middle_vertex}); (b) moves it one position up by root exchange, $B=\mathrm{exUp}\,b$ (\lean{bilPos_exUp_exists}, read); (c) builds the Fourier--Jacobi functional
+\[
+\mathrm{fj}(\varphi,v,\Phi_0)=\int_{k^{n_1}}\Phi_0(\beta)\,B\bigl(\varphi,\sigma(\mathrm{colE}(\beta))v\bigr)\,d\beta
+=\int_{k^{n_1}}\widehat{\Phi_0}(u)\,b\bigl(\varphi,\sigma(\mathrm{rowE}(u))v\bigr)\,du
+\]
+(\lean{exists_fj_of_exUp}, read; the second form is Fubini with $B=\mathrm{exUp}\,b$ and the Fourier relation of \lean{exchange_support}); (d) identifies the inner integral with $\mathrm{fj}$ through the Heisenberg self-average (\lean{T.schwartzBruhat_self_average_heisenberg}) and the outer one through \lean{T.fourierJacobi_target_bilinear_form_integral} and \lean{T.exists_linear_isQuotInt_tInt_alt}; (e) gets uniqueness by applying \lean{quotInt_unique_exists} twice.
+
+\subsection{Root exchange, now closed}
+
+\lean{GlobalTheory.RootEx.Exchange.exchange_isPos} (\Lpath{TO/IntegrableOfMemSB.lean:218}) and \lean{GlobalTheory.RootEx.ExchangeSupport.exchange_support} (\Lpath{TO/RootExchangeSupportAndFourierRelation.lean:203}), bodies read in full with their algebraic lemmas. Let $\sigma$ be a smooth representation of $\GL_{n+c}(k)$, $1\le p<c$, $\mathrm{rowE}_p(u)$ the lower unipotent with row $u$ in position $p$ and $\mathrm{colE}_{p+1}(\beta)$ the upper unipotent with column $\beta$ in position $p+1$.
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \emph{Support.} If $\ell$ is $(\psi,N_p)$-equivariant then $\ell(\sigma(\mathrm{rowE}u)\sigma(\mathrm{colE}\beta)v)=\psi(u\cdot\beta)\,\ell(\sigma(\mathrm{rowE}u)v)$, by the commutator identity \lean{conj_col}. Smoothness of $v$ gives $\mathrm{colE}(\beta)v=v$ for $\beta$ near $0$, so $u\mapsto\ell(\sigma(\mathrm{rowE}u)v)$ vanishes unless $\psi(u\cdot\beta)=1$ for all small $\beta$, a compact set of $u$; it is locally constant by smoothness. Hence it lies in $\Sch(k^n)$ (\lean{mem_SB_of}). The column statement is the same with $\psi(-u\cdot\beta)$ (\lean{conj_row}).
+\item \emph{Equivariance.} $\mathrm{exUp}\,\ell(v)=\int\ell(\sigma(\mathrm{rowE}_pu)v)\,du$ is $(\psi,N_{p+1})$-equivariant because each $g\in N_{p+1}$ satisfies $\mathrm{rowE}(u)g=h\,\mathrm{rowE}(u+w)$ with $h\in N_p$ and $\mathrm{ss}(h)=\mathrm{ss}(g)$ (\lean{rowE_mul_mem}), and $du$ is translation invariant (\lean{isNEquiv_integral}). The column integral goes back.
+\item \emph{Twist.} For a bilinear $b$ with $b(\pi(g)\varphi,\sigma(\mathrm{diag}(g,1))v)=\lvert\det g\rvert^{e}b(\varphi,v)$, the identity $\mathrm{rowE}(u)\mathrm{diag}(g,1)=\mathrm{diag}(g,1)\mathrm{rowE}(g^{\mathsf T}u)$ and the change of variables $d(mu)=\lvert\det m\rvert du$ give exponent $e-1$ for $\mathrm{exUp}\,b$ and $e+1$ for $\mathrm{exDown}\,b$ (\lean{integral_embX}). With $e=\frac{c+1}{2}-p$ this is the passage from position $p$ to $p+1$.
+\end{enumerate}
+This is the root exchange of Ginzburg, Rallis and Soudry (\emph{The descent map from automorphic representations of $\GL(n)$ to classical groups}, 2011, Ch.~7). It is internally closed, so V19 is no longer needed as a stopping point for it.
+
+\subsection{The local Weil formula}
+
+\lean{GlobalTheory.LocOm.omLoc} (\Lpath{DLP/WeilDatumLocalModelFormula.lean:17}, read in full) proves \lean{OmLoc}. If $\omega$ is a global Weil datum with splitting characters $\chi_S,\chi_T$, whose components at $q$ are $\mu_S,\mu_T$, and $T_m$ is a Schr\"odinger model at $q$, then for $(g,h)$ supported at $q$ with local matrices $(g_k,h_k)$
+\[
+\omega(g,h)\,T_m\Phi=T_m\Bigl((\mu_S\mu_T^{-1})(\det g_k)\ \omega_{\mu_S^{-1}}(g_k,h_k)\Phi\Bigr).
+\]
+The proof conjugates the model by $(g,h)$, which gives a second model $T_2$ (\lean{T.conj_splitLocalModel_by_supported_pair}); two models agree once they agree on one nonzero vector (\lean{T.localSchrodingerModel_uniq_transport_exists}, Stone--von Neumann); the vacuum $1_{M(\mathcal O)}$ supplies that vector when $(g_k,h_k)$ preserve integral matrices (\lean{T.weil_vacuum_local_model_integral_matrix_pair}); a central scalar (\lean{T.exists_scalar_preservesIntegralMatricesSubst}) and the multiplicativity of the law reduce the general pair to that case. The statement is the linear model of the Weil representation of $\GL_m\times\GL_n$ at a split place (Kudla, \emph{Notes on the local theta correspondence}, 1996, \S\S2--3; Harris--Kudla--Sweet, \emph{J. AMS} 9 (1996), \S1). I move it to the boundary as W1 and count its internal subtree ($384$ theorems) as Layer~3.
+
+\section{External verification boundary}\label{sec:ext}
+
+Each item below is a statement of published type whose Lean statement I read. The reconstruction stops there. The archive proves each one internally; those proofs are Layer~3 and are outside the residual list. Items W1 to W12 are the sixteen cut declarations used in Table~\ref{tab:roots}.
+
+\begin{longtable}{>{\raggedright}p{0.05\textwidth}>{\raggedright}p{0.42\textwidth}>{\raggedright\arraybackslash}p{0.46\textwidth}}
+\toprule
+& Declaration & Published statement\\
+\midrule
+W1 & \lean{LocOm.omLoc} & Linear model of the Weil representation of $\GL_m\times\GL_n$ at a split place (Kudla 1996, \S\S2--3; HKS 1996, \S1)\\
+W2 & \lean{T.exists_weilDatum_powers_unramifiedEtaTilde}, \lean{WeilExist.exists_isWeilDatumO} & Existence of the global Weil representation of $U(S)\times U(T)$ split by Hecke characters $\chi$ with $\chi|_{\mathbb A_F^\times}=\eta_{E/F}^{\,m}$ (Weil, \emph{Acta Math.} 111 (1964); Kudla, \emph{Israel J. Math.} 87 (1994); HKS 1996)\\
+W3 & \lean{T.weilDatum_unique_on_thetaFunctions}, \lean{WeilUniq.weilDatum_unique} & Uniqueness on theta functions, Stone--von Neumann (Weil 1964, \S\S1--10)\\
+W4 & \lean{T.weilDatum_fixes_vacuum_nonSplitPlace_unramified} & At an unramified nonsplit place the characteristic function of a self-dual lattice is fixed by its stabilizer (Howe; Moeglin--Vign\'eras--Waldspurger, LNM 1291, Ch.~2, II.8)\\
+W5 & \lean{T.weilDatum_realPlaces_fockVacuum_character} & The Gaussian (Fock) vacuum at a real place transforms by a character of the maximal compact (Kashiwara--Vergne 1978; Kudla 1996, \S4)\\
+W6 & \lean{T.thetaDistribution_automorphy_source_group}, \lean{T.thetaDistribution_invariant_rationalTarget} & The theta distribution $\Phi\mapsto\sum_{x}\Phi(x)$ is invariant under the rational points of both members (Weil 1964, Poisson summation)\\
+W7 & \lean{MultFinite.schurMult} (with hypothesis \lean{Published.CuspRapidDecay}) & Finite multiplicity and Schur's lemma for $L^2$ of a cocompact quotient (Gelfand--Graev--Piatetski-Shapiro, \emph{Representation theory and automorphic functions}, Ch.~1)\\
+W8 & \lean{DefiniteQuotient.exists_compact}, \lean{Mem.AnisoQuotient.exists_compact} & Compactness of $U(V)(F)\backslash U(V)(\mathbb A)$ for $V$ anisotropic or definite at every real place (Borel--Harish-Chandra, \emph{Ann. of Math.} 75 (1962); Godement's criterion)\\
+W9 & \lean{Mem.VolFin.finVol} & Finite volume of the adelic quotient (Borel--Harish-Chandra 1962)\\
+W10 & \lean{QNorm.hasseNormSt} & Hasse norm theorem for a quadratic extension (Neukirch, \emph{Algebraic number theory}, VI.4.5)\\
+W11 & \lean{IdeleNormChar.existsUnique_isEta} & Existence and uniqueness of the quadratic character $\eta_{E/F}$ of $\mathbb A_F^\times/F^\times N(\mathbb A_E^\times)$ (global class field theory)\\
+W12 & \lean{SplitCharTrivial.eq_one_of_rat_of_split}, \lean{T.exists_split_place_half_heisenberg_invariant_form} & A character of $U(V)(\mathbb A)$ trivial on $U(V)(F)$ and on all split components is trivial (strong approximation for $SU(V)$, Kneser 1966, with $\det$); existence of a Heisenberg-invariant functional on theta functions (Schr\"odinger model, Weil 1964)\\
+W13 & \lean{QuotInt.quotInt_unique_exists} & Quotient integrals of semi-invariant functions (Bourbaki, \emph{Int\'egration} VII \S2; Bernstein--Zelevinsky 1976, \S1.21). Checked above. Subtree $127$ theorems\\
+W14 & \lean{LocFlat.CFac.Span.span_prodSB_eq_top} & $\Sch(X\times Y)=\Sch(X)\otimes\Sch(Y)$ for totally disconnected $X,Y$ (Bernstein--Zelevinsky 1976, \S1.22)\\
+W15 & the \lean{Formalism.GradedWeylDivisibility} entries (\lean{Formalism.L2.Col.dualWeyl_eq_weyl}) & Standard monomial bases, already V10\\
+W16 & \lean{T.exists_unramifiedHeckeChar_halfExponent_restrict_quadratic} & An everywhere unramified Hecke character $\chi$ of $E$ with $\chi_\tau(z)=z/\lvert z\rvert$ and $\chi|_{\mathbb A_F^\times}=\eta_{E/F}$. Not a cut (see risk audit); listed for the fidelity campaign\\
+\bottomrule
+\end{longtable}
+
+\noindent Root exchange (V19) is closed internally and drops off as a stopping point. Kudla's seesaw (V19, second half) is not used as a citation; the seesaw identities are proved internally and are the residual R4-C.
+
+\section{Smallest exact remaining internal residual list}\label{sec:resid}
+
+Five groups. The earliest declaration of each is in bold. Sizes are reference closures after the cuts; the groups overlap.
+
+\begin{longtable}{>{\raggedright}p{0.07\textwidth}>{\raggedright}p{0.37\textwidth}>{\raggedright}p{0.3\textwidth}>{\raggedright\arraybackslash}p{0.18\textwidth}}
+\toprule
+ID & Declarations & Content and downstream use & Size, mechanism\\
+\midrule
+R4-A & \textbf{\lean{FlatBFLoc.flatBF_of_laws}} (\Lpath{DLP/FlatMapBesselToFourierJacobiLocalModel.lean:21}), \lean{LocMod.flatFB_holds}, \lean{ContrLocProof.contrLoc}, \lean{LocFlat.contrFactor} (158), \lean{TriStep.valK_gl}$_2$, \lean{valK_glMid} (125), \lean{valK_comb}; \lean{T.exists_bilinear_position_middle_vertex}, \lean{T.fourierJacobi_target_bilinear_form_integral}, \lean{T.exists_linear_isQuotInt_tInt_alt}, \lean{T.schwartzBruhat_self_average_heisenberg}, \lean{PosOne.comb_eq_sum_cells} (190; closure 633), \lean{T.symmetricDoubleIntegral_finite_combination}, \lean{T.doubleStep_local_weil_action_line_characters_cancel}, \lean{CellQuotInt.isQuotInt_cells} (208), \lean{QuotIntFJ.quotIntFJ_unique} (192) & Local split-place calculus. Flat maps and contraction in the linear model, the middle-vertex form, the cell sum at position one. Feeds \lean{tri} and \lean{valOne_all} $\to$ \lean{QLaw} & Medium ($1{,}619$ theorems, $24{,}325$ lines in the closure of \lean{valOne_all} outside R4-B, R4-C and W1). Mechanism known. Pure local analysis over $k$\\
+R4-B & \textbf{\lean{FinPl.flatLaws_all}} (\Lpath{DLP/FlatMapsSatisfyFlatLawsFinitePlaces.lean:139}), \lean{FinPl.Vertex.vertexGlued} (367), \lean{FinPl.VertexExactCount.vertexExact} (241), \lean{Unf.Flat.flatLaw}, the off-level laws of R-2 & Support and vacuum laws of the flat maps at every finite place (unramified, ramified, split, glued). Feeds \lean{pins_finiteIntegrals}, \lean{tri} & Major in size ($3{,}369$ theorems, $47{,}204$ lines). Mechanism known (lattice models, double cosets)\\
+R4-C & \textbf{\lean{SeeSaw.biAct_all}} (\Lpath{DLP/SeeSawWeilBiActionCommutes.lean:17}), \lean{SeeSawLastValue.contAut_biLift}, \lean{SeeSmallPf.biLift_sum}, \lean{DStepCell.cell_collapse} children, \lean{SeeSawLastValue.valLast} & Global seesaw. The two Weil actions commute, theta lifts are continuous automorphic, the unfolded double integral collapses to the twist places & Medium to major ($1{,}538$ theorems for \lean{biAct_all}; $2{,}123$ for \lean{valLast}). Mechanism known (Kudla seesaw, Weil 1964)\\
+R4-D & \textbf{\lean{T.true_geometry_family_final_alt}} and the other eleven \lean{T.true_geometry_*} producers of \lean{Fam.colSide_alt}; \lean{Mem.Col2.ChExM.exists_charts}, \lean{Mem.Col2.TC.chart_twm}, \lean{Mem.Col2.MemChart.exists_charts}; \lean{Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SqG.eqP_car}; \lean{T.chainKernel_preserves_ramifiedForms_liveCharts} & Construction of the tuple family. Twist places, quadratic extensions, kernel and volume data, charts of the decorated lattices, and the twist-place laws for rescaled tuples. Feeds \lean{hcol} $\to$ \lean{QLaw}, \lean{QLast}, \lean{QFin}, \lean{CVEq} & Major ($15{,}760$ theorems, $236{,}276$ lines). Mechanism known. Archive-specific, no published stopping point\\
+R4-E & \textbf{\lean{AdForm.clsPinD_of_famCol_of_trueW}} with \lean{AdForm.realOf_is}, \lean{pureTensorO_zero_eq_jetP}, \lean{thetaKernel_splitPlaces_eq_jet_classicalTheta}; \lean{StepVacForm.main_alt_alt}, \lean{FamChars.weilOK_of_rank_one_gram}, \lean{RowLevel.main_alt_alt}, \lean{MiTop.linkComm_of_laws_alt}; \lean{Core.Mi.colDict_rd_eq_colForm}, \lean{ConjRowRep.exists_contRep}, \lean{MiTop.exists_isShift_of_center_alt} & Class data, unit and Weil producers, bottom and anchor (R-4, R-5). Feeds \lean{KerX}, \lean{PerX}, \lean{RdX} & Major for \lean{clsPinD} ($6{,}227$ theorems; it reaches the branching and standard-monomial layer); small for \lean{linkComm} ($40$), \lean{isShift} ($159$), \lean{colDict} ($160$). Mechanism known\\
+\bottomrule
+\end{longtable}
+
+\noindent \lean{nuQ_weil} and \lean{wfr_on} are fields of the record \lean{Formalism.L2.SG.HidaSetting.HidaSetting} (\Lpath{Formalism/LocalToGlobal/SiegelLatticeTheory/HaarTransversals/HidaSetting.lean:179}), and \lean{SBes.cpt} is a field of the structure \lean{GlobalTheory.Core.Mi.SBes} (\Lpath{LF/ThetaIdentityOfMapsAll.lean:105}). No theorem in the PC-4 closure uses \lean{nuQ_weil} or \lean{wfr_on}. The bottom producer \lean{colDict_rd_eq_colForm} takes the two records as arguments, so their fields are supplied where the records are built, outside PC-4. \lean{inHH_closed} is \lean{Formalism.L2.SG.PoincareInHH.Cut.inHH_closed} and is not in the PC-4 closure. These four items leave the PC-4 list; the producer of the \lean{HidaSetting} record is a question for the synthesis agent.
+
+\section{Risk audit}\label{sec:risk}
+
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+\item \emph{Gap, circularity, vacuous hypothesis.} None found. The closure from the roots contains no root of another package, and \lean{colSide_alt} does not reach \lean{valX}.
+\item \emph{Normalization.} The two Weil actions use $\omega_\mu$ with $\lvert\det g\rvert^{b/2}\lvert\det h\rvert^{-a/2}$, the Haar measure $\nu$ is self-dual for $\psi$ of conductor $\mathcal O$ with $\nu(\mathcal O)=1$ (\lean{SplitWeil.selfDual_measure}), and the $\GL$ measures give the maximal compact measure $1$. The exponent in \lean{TriPos} vanishes at the symmetric position, and root exchange shifts it by exactly $1$ per position.
+\item \emph{Quotient integrals at non-unimodular positions.} The uniqueness clause of \lean{quotInt_unique_exists} holds for every $p$ because it uses a left Haar measure of $R_p$ (Section~\ref{sec:split}). This was the one statement in the layer that could have been false as written; it is correct.
+\item \emph{Hecke character existence (W16).} The statement asks for $\chi$ trivial on $\widehat{\mathcal O}_E^\times$ with $\chi|_{\mathbb A_F^\times}=\eta_{E/F}$. That forces $E/F$ unramified at every finite place. The host record has the field \texttt{$\mathfrak b$\_spec} (\Lpath{Formalism/LocalRingCardinality/DataHost.lean}), relative different $=\mathfrak b\bar{\mathfrak b}$ with $\mathfrak b+\bar{\mathfrak b}=1$, which excludes finite ramification, so the statement is consistent with the record. Whether such a host exists is the nonvacuity question of PC-6.
+\item \emph{Size.} The main risk is the volume of R4-B, R4-D and R4-E, which no reader has gone through.
+\end{itemize}
+
+\section{PC-4 as a proposition package}\label{sec:pkg}
+
+This section replaces the declaration-by-declaration descent below \lean{TriStep.tri} with fourteen propositions. Together they carry the argument from the local models at the finite places, through the seesaw, to \lean{ValFin.valX}. Each proposition records its hypotheses, its conclusion, its mechanism, the named external inputs, the normalizations that matter, its downstream use, what I reconstructed, and which formal layer is unread. Tags: \textbf{[rec]} reconstructed from the proof body; \textbf{[asm]} assembly read, leaves unread; \textbf{[stmt]} statement read, body unread; \textbf{[ext]} published statement on the boundary.
+
+\subsection{Setting and normalizations}
+
+$E/F$ is the CM extension of the host, $\mathbb A=\mathbb A_F$, and $\eta=\eta_{E/F}$. A chain of hermitian spaces $V_0,V_1,\dots$ is fixed. For consecutive members $S,T$ the Weil datum $\omega_{S,T}$ acts on the theta functions on $W=\mathrm{Hom}(S,T)\otimes\mathbb A$ through $U(S)(\mathbb A)\times U(T)(\mathbb A)$, split by Hecke characters $\chi_S,\chi_T$ with $\chi|_{\mathbb A^\times}=\eta^{\,\mathrm{rank}}$. A double step at index $j$ with $j+2(\sigma+1)+2=m$ is a Bessel level $B$, a Fourier--Jacobi level $J$ and a Bessel level $B'$, with flat maps $\mathrm{flatBF}$, $\mathrm{flatFB}$ and a contraction $\mathrm{ctr}$. The finite places split into level places $P_G$, twist places $Q$ (split in $E$) and the rest, and $P_G\cap Q=\varnothing$.
+
+The normalizations that enter a constant are these.
+\begin{enumerate}[label=(N\arabic*),leftmargin=*,itemsep=2pt]
+\item At a split place $q$ with completion $k$, $\psi_k$ has conductor $\mathcal O_k$ and $\nu$ is the additive Haar measure with $\nu(\mathcal O_k)=1$. It is self-dual for $\psi_k$ (\lean{SplitWeil.selfDual_measure}).
+\item The Haar measures $G_1,G_2$ on $\GL_{n+c}(k)$ give $\GL_{n+c}(\mathcal O_k)$ mass $1$. The Haar pair at $Q$ is normalized by $\mathrm{vol}(K_Q)=1$ (\lean{IsNormAt}).
+\item The linear model is $\omega_\mu(g,h)\Phi(x)=\mu(\det g)\mu(\det h)^{-1}\lvert\det g\rvert^{b/2}\lvert\det h\rvert^{-a/2}\Phi(h^{-1}xg)$ on $\Sch(M_{b\times a}(k))$.
+\item The quotient integral over $R_p\backslash\GL_{n+c}$ uses the left Haar measure $dg\,du$ of $R_p=\mathrm{diag}(\GL_n,1)N_p$. Its modulus is $\lvert\det\rvert^{c+1-2p}$.
+\item The trilinear exponent is $\frac{c+1}{2}-p$. It vanishes at the symmetric position $c+1=2p$, and root exchange lowers it by $1$ per position.
+\item The double-step constant is $c_V(j)=\kappa(j,\sigma)\,\mathrm{sc}_j\mathrm{sc}_{j+1}\,c_Q(j)\,c_G(j)\,c_T(j)$ with $\kappa=\mathrm{vr}_{j+1}\mathrm{vr}_{j+2}$, $\mathrm{vr}=\mu_f(K)/\rho(K\cap R)$, and $c_Q(j)=\prod_{q\in Q}(\mathrm{idx}_q(j+1)\,\mathrm{idx}_q(j+2))^{-1}$, the product of the split-place weights $\mathrm{vol}_J$. At the last step $\kappa$ is absent.
+\end{enumerate}
+
+\subsection{Global inputs}
+
+\paragraph{Proposition PC4.1 (global Weil data).} \textbf{[ext]} W2 to W6.
+\emph{Hypotheses.} $\psi$ the standard additive character, $S,T$ hermitian spaces, $\chi_S,\chi_T$ Hecke characters with $\chi_S|_{\mathbb A^\times}=\eta^{\mathrm{rk}S}$, $\chi_T|_{\mathbb A^\times}=\eta^{\mathrm{rk}T}$. \emph{Conclusion.} A Weil datum $\omega$ exists and is unique on theta functions. At an unramified nonsplit place it fixes the characteristic function of a self-dual lattice. At a real place the Fock vacuum transforms by a character of the maximal compact. The theta distribution $\Phi\mapsto\Phi(0)$ composed with $\omega$ is invariant under $U(S)(F)$ and $U(T)(F)$. \emph{Mechanism.} Stone--von Neumann, Kudla's splitting, Poisson summation. \emph{Downstream.} Every proposition below. \emph{Unread.} The archive's own proofs (Layer 3).
+
+\paragraph{Proposition PC4.2 (seesaw bi-action).} \textbf{[stmt]} \lean{SeeSaw.biAct_all}, \lean{SeeSawLastValue.contAut_biLift}.
+\emph{Hypotheses.} Weil data $\omega_a$ on $(A,S)$ and $\omega_b$ on $(S,A')$, and a bi-theta function $C(u,v)$ on $\mathrm{Hom}(A,S)\times\mathrm{Hom}(S,A')$. \emph{Conclusion.} $\omega_a(p)$ acting in $u$ and $\omega_b(q)$ acting in $v$ preserve the bi-theta class, commute, and the joint action is continuous in $(p,q,u,v)$. For $\varphi$ continuous automorphic on $U(A)$, the double theta lift
+\[
+\mathrm{biLift}(\varphi,C)(h_2)=\int_{\mathcal F_A}\int_{\mathcal F_S}\varphi(h)\,\omega_b(h_1,h_2)\,\omega_a(h,h_1)\,C\ (0,0)\,dh_1\,dh
+\]
+is continuous and automorphic on $U(A')$. \emph{Mechanism.} The two actions act in separate variables, so they commute; each preserves bi-theta functions by its Heisenberg compatibility; automorphy follows from PC4.1 (invariance of the theta distribution) and compactness of the quotients (W8). This is the seesaw $U(A)\times U(S)\supset\cdots\subset U(S)\times U(A')$ in the sense of Kudla, used as a commutation of two Weil actions and not cited. \emph{External.} W2, W6, W8. \emph{Downstream.} \lean{TriStep.valK} is a Bessel period of $\mathrm{biLift}$ (PC4.7); \lean{valX} integrates the same handed function (PC4.14). \emph{Unread.} $1{,}538$ theorems under \lean{biAct_all}.
+
+\subsection{Local models at the finite places}
+
+\paragraph{Proposition PC4.3 (linear model at a split place).} \textbf{[rec]} \lean{LocOm.omLoc}; \textbf{[ext]} W1.
+\emph{Hypotheses.} $q$ split, $\omega$ a Weil datum with splitting characters whose components at $q$ are $\mu_S,\mu_T$, frames identifying $U(S)(F_q)\cong\GL_{Y'}(k)$ and $U(T)(F_q)\cong\GL_Y(k)$, and $T_m:\Sch(M_{Y\times Y'}(k))\to$ theta functions a Schr\"odinger model (translations and modulations go to Heisenberg operators). \emph{Conclusion.} For $(g,h)$ supported at $q$ with local matrices $(g_k,h_k)$,
+\[
+\omega(g,h)\,T_m\Phi=T_m\bigl((\mu_S\mu_T^{-1})(\det g_k)\,\omega_{\mu_S^{-1}}(g_k,h_k)\Phi\bigr).
+\]
+\emph{Mechanism.} Conjugating $T_m$ by $(g,h)$ gives a second model; two models agreeing on one nonzero vector agree (Stone--von Neumann); the vacuum $1_{M(\mathcal O_k)}$ is that vector for pairs preserving integral matrices; a central scalar and multiplicativity reduce the general pair to that case. \emph{Normalization.} (N3). \emph{Downstream.} PC4.4, PC4.7, PC4.11. \emph{Unread.} The archive proof of the conjugated model and of the vacuum identity (Layer 3, $384$ theorems).
+
+\paragraph{Proposition PC4.4 (flat maps and contraction in the linear model).} \textbf{[stmt]} \lean{FlatBFLoc.flatBF_of_laws}, \lean{LocMod.flatFB_holds}, \lean{ContrLocProof.contrLoc}.
+\emph{Hypotheses.} At a split place, frames of $B.V$, $B.V_0$, $B.A$ and $J.W$, $J.W_0$ adapted to the hyperbolic decompositions with scale $s\neq0$ (\lean{IsCoreFrame}, \lean{IsBesFrame}, \lean{IsJacFrame}), and a model $T_m$ of $(B.V,J.W)$. \emph{Conclusion.} There is a model $T_0$ of $(B.V_0,J.W_0)$ with
+\[
+\mathrm{flatBF}(T_m\Phi)=T_0\bigl(\mathrm{flCol}_{\rho+1}\Phi\bigr),
+\]
+where $\mathrm{flCol}$ is the partial Fourier transform in the extra columns against $\psi_k$ and $\nu$; the same with $\mathrm{flatFB}$ and $\mathrm{flRow}$; and for models $T_1,T_2$ of the core spaces there is a bimodel $\Lambda$ with $\mathrm{ctr}(T_1\Psi_1,T_2\Psi_2)=\Lambda(\mathrm{contr}_k(\Psi_1,\Psi_2))$. \emph{Mechanism.} By PC4.5 both sides satisfy the Heisenberg laws of the smaller space, so by Stone--von Neumann they agree up to a scalar, fixed on a vacuum. The three propositions take exactly PC4.5 and PC4.3 as hypotheses (\lean{FlatLaw}, \lean{FlatLaws}, \lean{OmLoc}), which is consistent with this mechanism; I inferred it from the statement and its hypotheses. \emph{Normalization.} (N1); the scale $s$ and $\xi$, $h_z$ enter the frames and cancel in PC4.7. \emph{Downstream.} PC4.7 (construction of $\Lambda$, $U_1$, $U_2$). \emph{Unread.} The three bodies and \lean{LocFlat.contrFactor}.
+
+\paragraph{Proposition PC4.5 (flat laws).} \textbf{[stmt]} \lean{Unf.Flat.flatLaw}, \lean{FinPl.flatLaws_all}.
+\emph{Hypotheses.} A double step and a set $P$ of places. \emph{Conclusion.} The flat integrals converge and send theta functions to theta functions (\lean{FlatLaw}). On $P$ they satisfy the Heisenberg laws \lean{HeisLaws} (dual, isotropic and core translations go to characters or to Heisenberg operators of the smaller space) and the flag equivariance
+\[
+\mathrm{flatBF}\bigl(\omega(1,n\,h)f\bigr)=\overline{\psi_{\mathrm{flag}}(n)}\ \mathrm{op}_A(n,h)\,\mathrm{flatBF}(f)
+\]
+(\lean{IsFlatBF}, \lean{IsFlatFB}). \emph{Mechanism.} A flat map is a Fourier--Jacobi or Bessel coefficient, an integral of Heisenberg translates over a unipotent group against a character. The laws are the Heisenberg commutation relation $[x,y]=\psi(\langle x,y\rangle)$ and a change of variables; convergence is Schwartz decay. \emph{Downstream.} PC4.4, PC4.6. \emph{Unread.} $1{,}156$ theorems under \lean{flatLaw}, $3{,}369$ under \lean{flatLaws_all}, including the glued-place vertex computations \lean{FinPl.Vertex.vertexGlued} and \lean{vertexExact}.
+
+\paragraph{Proposition PC4.6 (laws at the non-twist places).} \textbf{[stmt]} \lean{SeeSaw.pins_finiteIntegrals} producing \lean{OffLaw}, \lean{VacLaw}, \lean{GSupp}, \lean{GValue}, \lean{TLaw}.
+\emph{Conclusion.} Off $P_G\cup Q$, vacua $\Phi_1,\Phi_2$ are fixed by the lattice stabilizers and the handed function is supported in $R\,K$ (\lean{OffLaw}); flat maps and contractions preserve vacua away from the ramified set (\lean{VacLaw}); at $P_G$ the support lies in $R\,J_G$ and the contraction of combinations is $c_G(j)\,\mathrm{biComb}(d_G,d_G)$ of the contraction (\lean{GSupp}, \lean{GValue}); at the ramified places the operator $\mathrm{op}_j$ gives $c_T(j)$ (\lean{TLaw}). The level-place scalars satisfy $\omega_j(1,k)\Phi_1=a^{-1}\Phi_1$ and $\omega_{j+1}(k,1)\Phi_2=a\Phi_2$. \emph{Mechanism.} Lattice models at unramified places (W4), double cosets of compact open subgroups, explicit local values. \emph{Normalization.} $c_G$ is common to all tuples (\lean{gValue_common}); $c_T(j)=\mathrm{mono}(r_j,e_j)(\chi_W)$ is a value of a local character. \emph{Downstream.} PC4.14 steps 3 and 5. \emph{Unread.} The producers listed as R-2 (assemblies read in Wave 4).
+
+\subsection{The split place}
+
+\paragraph{Proposition PC4.7 (trilinear form).} \textbf{[rec]} \lean{TriStep.tri}; Section~\ref{sec:tri}.
+\emph{Hypotheses.} A double step, a twist step $Q$ at a split place with $c+2=2(\sigma+1)$, Schr\"odinger models $T_1,T_2$, $\varphi$ continuous automorphic, Heisenberg combinations $c_1,c_2$ away from $q$. \emph{Conclusion.} A smooth representation $(A,\tau)$ of $\GL_{n_2+c+1}(k)$ containing every typed continuous automorphic $f$, and a trilinear form $T$ on $\Sch(M_{n_1\times n_0})\times\Sch(M_{n_2\times n_1})\times A$ with \lean{TriPos} (the three laws of Section~\ref{sec:tri}, exponent $0$ by (N5)), the tensor-value identity with $S.\mathrm{val}$, and $T(\Xi_1,\Xi_2,f)=S.\mathrm{val}(c_1*d_1,c_2*d_2,T_1O_1,T_2O_2,\varphi,f)$ on single-place combinations. \emph{Mechanism.} $T$ is a Bessel period of the double theta lift of the bimodel $\Lambda$ of PC4.4 (PC4.2). \emph{Reconstructed.} The construction, bilinearity, smoothness of typed vectors, $N$-equivariance, the tensor value. \emph{Unread.} \lean{valK_gl}$_2$, \lean{valK_glMid}, \lean{valK_comb} (transport of the $\GL$ actions through PC4.3 and PC4.4).
+
+\paragraph{Proposition PC4.8 (quotient integrals).} \textbf{[rec]} as mathematics; \textbf{[ext]} W13.
+\emph{Statement.} For $1\le p\le c$ and Haar measures on $\GL_n(k)$ and $\GL_{n+c}(k)$, the value $z=\int F$ is determined by $f(h)=\int\!\int F(\mathrm{diag}(g,1)uh)\,du\,dg$, and $z$ exists when $f$ is locally constant, compactly supported modulo $R_p$ and $f(\mathrm{diag}(x,1)uh)=\lvert\det x\rvert^{c+1-2p}f(h)$. \emph{Mechanism.} A Bruhat function $\beta$ with $\int_R\beta(rx)\,d_rr=1$ gives $\int F=\int\beta\cdot f$. \emph{Normalization.} (N4). \emph{Downstream.} Uniqueness in PC4.10 and in \lean{IsQuotInt} statements of PC4.11.
+
+\paragraph{Proposition PC4.9 (root exchange).} \textbf{[rec]} \lean{exchange_isPos}, \lean{exchange_support}; closed.
+\emph{Statement.} For $\sigma$ smooth on $\GL_{n+c}(k)$, $1\le p<c$ and $\ell$ $(\psi,N_p)$-equivariant, $u\mapsto\ell(\sigma(\mathrm{rowE}_pu)v)$ lies in $\Sch(k^n)$, $\mathrm{exUp}\,\ell$ is $(\psi,N_{p+1})$-equivariant, $\mathrm{exDown}$ goes back, $\ell(\sigma(\mathrm{rowE}u)\sigma(\mathrm{colE}\beta)v)=\psi(u\cdot\beta)\ell(\sigma(\mathrm{rowE}u)v)$, and the $\GL_n$ exponent drops by $1$ under $\mathrm{exUp}$. \emph{Mechanism.} Commutator identities, smoothness, translation invariance, $d(mu)=\lvert\det m\rvert du$. \emph{Downstream.} PC4.10. \emph{Unread.} Nothing.
+
+\paragraph{Proposition PC4.10 (symmetric double integral and cell sum).} \textbf{[asm]} \lean{symDbl_existsUnique} read; \textbf{[stmt]} \lean{comb_eq_sum_cells}, \lean{exists_bilinear_position_middle_vertex}, \lean{fourierJacobi_target_bilinear_form_integral}, \lean{exists_linear_isQuotInt_tInt_alt}, \lean{schwartzBruhat_self_average_heisenberg}, \lean{symmetricDoubleIntegral_finite_combination}.
+\emph{Hypotheses.} $c+1=2\rho$, $\psi_k,\nu$ as in (N1), characters $\mu_1,\mu_2$ with open kernels, Haar measures as in (N2), $(A,\sigma)$ smooth, $T$ with \lean{TriPos}, $F\in A$, $\Phi_1,\Phi_2$ Schwartz. \emph{Conclusion.} (a) There is a unique $z$ with \lean{SymDbl}: the inner integral over $R_\rho\backslash\GL_{n_2+c}$ of $T(\Psi,\mathrm{opEFJ}(\Phi_0,\omega(h,h')\Phi_2),\sigma(h')F)$ is a quotient integral $w(h,\Psi,\Phi_0)$, and the outer Fourier--Jacobi integral over $\GL_{n_1+c+1}$ of $w$ against $\mathrm{fl}(\omega(1,h)\Phi_1)$ is $z$. (b) $z$ is linear in finite combinations. (c) If $F$ is a $(J_2,\lambda)$-eigenvector, $\Phi_1,\Phi_2$ have types $(L_0,L_1)$, $(L_1,L_2)$, and $A_1,A_2$ are finite sets of representatives of the double cosets that meet the supports, then
+\[
+z=\mathrm{vol}_J\sum_{\gamma\in A_1}\sum_{\beta\in A_2}w_1(\gamma)w_2(\beta)\ \mathrm{comb}\bigl(e_2(\beta),\,T(\xi_1(\gamma),\xi_2(\gamma,\beta),\sigma(\cdot)F)\bigr).
+\]
+\emph{Mechanism.} At the middle vertex $T$ is represented by a bilinear form $b$ with the right equivariance; one root exchange (PC4.9) moves $b$ to the Fourier--Jacobi position, Fourier inversion on $\Sch(k^{n_1})$ gives the Fourier--Jacobi functional, and PC4.8 gives existence and uniqueness. For (c), iterated root exchange down to position one turns the quotient integrals into integrals of compactly supported functions; the types make the integrand constant on each double coset $R\gamma J$, so the integral is a finite sum of values times volumes $\mathrm{vol}_J$. \emph{Normalization.} (N1), (N2), (N4), (N5); the weights $w_1,w_2$ and $\mathrm{vol}_J$ are what become $c_Q$. \emph{Downstream.} PC4.11. \emph{Unread.} The six named leaves, about $1{,}600$ theorems with PC4.4.
+
+\paragraph{Proposition PC4.11 (split-place double-step identity).} \textbf{[rec]} \lean{ValOneAt.valOne_all} (\lean{ValOne}).
+\emph{Hypotheses.} PC4.7 data, Haar measures as in (N2), vacua $f_1,f_2$ with $Q$-vacuum condition, $f$ continuous automorphic and typed, $g,h_1,h_2$ trivial at $q$. \emph{Conclusion.} There is $u$ such that for every $x$ the $y$-integral of $\mathrm{comb}(e_0,\,a\mapsto S.\mathrm{val}(\dots)(g\,a,\,h_1x,\,h_2y))$ is a quotient integral $u(x)$, and the Fourier--Jacobi quotient integral of $u$ is
+\[
+\mathrm{vol}_J\sum_{\gamma\in A_1}\sum_{\beta\in A_2}w_1(\gamma)w_2(\beta)\ S.\mathrm{val}\bigl(c_1*d_1(\gamma),\ c_2*d_2(\gamma,\beta),\ f_1,f_2,\varphi,\ \mathrm{trc}(e_2(\beta))f\bigr)(g,h_1,h_2).
+\]
+\emph{Mechanism.} Local elements commute with elements trivial at $q$; the integrand is $T(\omega(a,x)\Phi_1,\omega(x,y)\Phi_2,\tau(y)F)$ after the line characters cancel; then PC4.10. \emph{Downstream.} PC4.12. \emph{Unread.} \lean{doubleStep_local_weil_action_line_characters_cancel} (the cancellation of $\mu_S\mu_T^{-1}(\det)$ between the two steps in PC4.3).
+
+\subsection{From one twist place to \lean{valX}}
+
+\paragraph{Proposition PC4.12 (all twist places and the twist laws).} \textbf{[asm]} \lean{QVal.valQ}, \lean{QLawPf.qLaw_of_pin}, \lean{QTw.laws_of_pin_resc} (Wave 4); \textbf{[stmt]} \lean{QRed.reduce}, \lean{IterPeel.iterated_integral_product_groups}, \lean{QVal.Inv.pint_invariant}, \lean{QCells.finite_cells}, \lean{QValOuter.outer}, \lean{QLastPf.qLast_of_pin}, \lean{QFinMain.qFin_of_pin}.
+\emph{Hypotheses.} Finitely many twist steps $Q_1,\dots,Q_r$ at distinct split places, Haar measures on $\prod_iU(F_{q_i})$ and on the period subgroups normalized by (N2). \emph{Conclusion.} \lean{ValQ}: the iterated integral over the $r$ places equals $\prod_i\mathrm{vol}_J(Q_i)$ times the sum over $(\gamma_i)$, $(\beta_i)$ of the products of weights times $S.\mathrm{val}$ with the convolved combinations. Through the tuple data of PC4.13 this gives \lean{QLaw}, \lean{QLast}, \lean{QFin} with $c_Q(j)=\prod_q(\mathrm{idx}_q(j+1)\mathrm{idx}_q(j+2))^{-1}$. \emph{Mechanism.} Induction on $r$: Fubini for $G_{q_0}\times G_{Q\setminus q_0}$, invariance of the partial integral, finitely many double cosets at $q_0$ (\lean{FinOne}), and PC4.11 at $q_0$. The rescaling by roots of unity $s_t\zeta_t$ moves the laws from pinned to rescaled tuples. \emph{Downstream.} PC4.14 step 4. \emph{Unread.} The seven named leaves.
+
+\paragraph{Proposition PC4.13 (tuple data).} \textbf{[stmt]} \lean{Fam.colSide_alt} (top read, Wave 4) and its twelve \lean{T.true_geometry_*} producers.
+\emph{Conclusion.} For each tuple of the family there are twist places $Q$, quadratic-extension readings, frames and levels at $Q$, types, finite representative sets $A_1,A_2$, weights, kernel and volume data, and constants $\mathrm{sc}_j$, $c_T(j)$, such that the hypotheses of PC4.12 hold and $c_V$ is \emph{defined} by (N6), so that \lean{CVEq} holds by unfolding. \emph{Mechanism.} Choice of auxiliary split places and of local data at them, with the global consistency of the choices checked place by place. This is an existence statement; it has no published counterpart. \emph{Downstream.} \lean{hcol} $\to$ \lean{PlaceLaws} $\to$ \lean{valX}. \emph{Unread.} $15{,}760$ theorems, of which $8{,}610$ are the twist-law transport of PC4.12 and the rest are the existence of the data (charts \lean{Mem.Col2}, column data \lean{Formalism.L2}).
+
+\paragraph{Proposition PC4.14 (\lean{valX}).} \textbf{[rec]} Wave 4, \S2.1.
+\emph{Hypotheses.} \lean{PlaceLaws} (from PC4.6, PC4.12, PC4.13). \emph{Conclusion.}
+\[
+\int_{J\backslash U(V_{j+1})(\mathbb A_f)}\int_{B\backslash U(V_{j+2})(\mathbb A_f)}F(aq_1,a'q_2)\,dq_2\,dq_1=c_V(j)\ \mathrm{Per}_{B'}\bigl(\mathrm{two}_j(S\phi,C),\rho(a')G\bigr)
+\]
+with one real datum $C$ independent of the tuple. \emph{Mechanism.} Six exact identities: move to base points ($\mathrm{sc}_j\mathrm{sc}_{j+1}$); commute Heisenberg combinations at disjoint places; collapse each finite quotient to $G_Q$ ($\kappa$), with the level scalars $a$ and $a^{-1}$ of PC4.6 cancelling in the middle variable; evaluate at $Q$ by \lean{QLaw} ($c_Q$); identify the kernel data ($c_Gc_T$); translate by the finite element. \emph{Normalization.} (N2), (N6); $c(t)/c(t_0)$ is a root of unity because $\kappa$ and $c_G$ depend on $j$ and the common record alone and the other factors are rescaled by roots of unity (\lean{ratio_total_unitRatio_of_parts}). \emph{Downstream.} $c_V$, \lean{LawsX}, \lean{MIstar2}, \lean{BesselId}. \emph{Unread.} \lean{CollapseFactor.collapse_factor} (Fubini on a unimodular quotient, of published type), \lean{SeeSawRhs.unfolded_eq_kernel_data}.
+
+\paragraph{Outside the chain.} The class data, unit, Weil, bottom and anchor producers of R4-E feed \lean{KerX}, \lean{PerX} and \lean{RdX}, not \lean{valX}. They are not needed for this chain.
+
+\subsection{Is any conceptual mechanism unresolved?}
+
+\textbf{No.} Every proposition in the chain has an identified mechanism that is standard in the theory of the Weil representation: Stone--von Neumann uniqueness (PC4.3, PC4.4), Heisenberg commutation for Fourier--Jacobi and Bessel coefficients (PC4.5), lattice models at unramified places (PC4.6), Bessel periods of theta lifts (PC4.2, PC4.7), quotient integrals of semi-invariant functions (PC4.8), root exchange (PC4.9), finite double-coset decompositions with types (PC4.10, PC4.12), and Fubini over places (PC4.12, PC4.14). The two places where the argument is specific to this proof, the symmetric-position device and the normalization bookkeeping, are reconstructed and checked: the trilinear exponent vanishes exactly where the quotient integral is unimodular, root exchange shifts it by one per position, and the constant $c_V$ is defined by (N6) so that \lean{CVEq} is not an assumption.
+
+What remains is implementation depth of two kinds, and they carry different risk. The local identities PC4.4, PC4.5, PC4.6, PC4.10 (cell sum) and the transport in PC4.12 are explicit computations in known models; an error there would be a wrong constant or a wrong support statement, which the constant checks above constrain but do not exclude. PC4.13 is different in kind: it asserts that auxiliary data exist simultaneously for every tuple of the family. Its mechanism (choice of split places and local data) is known, but it is an existence claim that no reader has checked, and it is the one place in PC-4 where an unread hypothesis could fail to be satisfiable. It is the item to read first if PC-4 is reopened.
+
+\section{Comparison with Slijepčević}\label{sec:sin}
+
+This section compares the package of Section~\ref{sec:pkg} with S.~Slijepčević, \emph{Outline of Alpöge's proof of the generalised Riemann hypothesis}, arXiv:2611.00812v1 (21 November 2026), in the project folder, Sections 5 to 7 and 11 with Appendix~A. The comparison is at the level of statements. I did not descend into the archive again, except to read the statements of the six producers of \lean{Fam.colSide_alt} named below.
+
+\subsection{Where PC-4 sits in his outline}
+
+Slijepčević's Sections 6 and 7 have two strands. The first is the family construction: master data (Definition 6.10), column chains with kernels $K_i(c,c')=\rho_i(c)\rho'_i(c')D_i^\flat U_i(c,c')D_i^\sharp$ and the column map $\mathrm{col}_C=K_{m-1}\circ\cdots\circ K_0$ (Definition 6.8, (6.1)), points and selected data (Definitions 6.16, 6.17), and the existence of a definite-side family structure (Proposition 6.18). The second is the arithmetic of theta constants: theta agreement (Proposition 7.3), the norm identity of Rallis type (Proposition 7.12) and the tower identity (Proposition 7.14), which feed toric functoriality (FUN), Theorem 7.6. He notes that the development calls (FUN) the constant-function fit, which is \lean{fun0Fit_of_leaves}, the head of PC-6. So the Rallis-type norm and tower identities belong to PC-6. They are not on the PC-4 route.
+
+PC-4 sits in the first strand. Its law records have a reading map $\mathrm{rd}_j$ on classes and columns, and \lean{KerX} states that the theta lift of the readings at step $j$ through the kernel datum is $c_K$ times a finite combination of readings at step $j+1$; \lean{valX} computes the double-step period of these lifts with the constant $c_V$. On the evidence of these statements, the PC-4 chain is the archive's realization of the column chain as iterated theta lifts. Slijepčević writes that the column map ``presumably represents the theta lifts along the tower; we understand the definition but not this interpretation'' (after Definition 6.7, and again in Section 11). PC-4, as reconstructed here, gives that interpretation at the level of the double step.
+
+\subsection{Concordance}
+
+Status in Slijepčević: \emph{cited} (a known theorem with a reference), \emph{outline} (top level only), \emph{not understood} (listed in his Section 11), \emph{absent}. Bracketed numbers are references in his bibliography.
+
+\begin{longtable}{>{\raggedright}p{0.085\textwidth}>{\raggedright}p{0.235\textwidth}>{\raggedright}p{0.2\textwidth}>{\raggedright}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.235\textwidth}}
+\toprule
+& Matching statement in Slijepčević & Agreement & His status & Boundary; does ours go further\\
+\midrule
+PC4.1 & \S5 notation, $\omega_{\psi,\chi_V,\chi_W}$ with $\chi_V|_{\mathbb A_F^\times}=\eta^{\dim V}$; A.8 Kudla splitting [72], Howe duality [86], [42], [58]; Kashiwara--Vergne [64] & Same conventions & cited & Legitimate (Kudla 1994; HKS 1996; MVW; Gan--Takeda). Ours locates the Lean statements W2 to W6 and adds Stone--von Neumann and Weil's theta automorphy\\
+PC4.2 & none; nearest is the configuration of Definition 7.1, two dual pairs sharing $W$ & Different identity (proportionality of theta integrals, not commutation of two Weil actions) & absent & Ours goes further\\
+PC4.3 & linear models at a split place $v_1$ (Definition 7.1, $S^\circ(\mathcal M')$; (M3)) & Agrees in use & outline; (M3) formula not reproduced & HKS [49] legitimate. Ours reconstructs \lean{omLoc}\\
+PC4.4, PC4.5 & evaluation maps along $(\iota,\iota')$ invariant under $I_0$, $I_A$, $I_B$ (Definition 7.2): Heisenberg intertwining, invariance under translations, vacuum to vacuum & Same shape as \lean{HeisLaws}; his maps are axiomatized, adapted planes in place of our hyperbolic decompositions & definition only & No citation. Ours states the conclusion (PC4.4) and the mechanism (PC4.5); bodies unread on both sides\\
+PC4.6 & Proposition 7.3 inputs: spherical vectors of lattices, multiplicity one for coinvariants, unramified Howe duality; (M3) vacua match outside $T$ & Same mechanism & outline & MVW [86] legitimate for W4. Ours states the five laws and the level scalars $a$, $a^{-1}$\\
+PC4.7 to PC4.11 & none (no trilinear form, quotient integral, root exchange, cell sum or split-place identity); nearest are the cone operators and local zeta-type integrals of (M3) & n/a & absent & Ours goes further: PC4.7, PC4.9, PC4.11 reconstructed; PC4.8 checked\\
+PC4.12 & character data $(\alpha,\beta,S_0,Q)$ with $\nu$ ramified above $T=S_0\cup Q$; (A2), (A3): $c_1=C\,\epsilon_T(1-z)L^{S_0}(z,\nu)\,c$ with $C$ fixed by the step & Parallel normalization pattern: a factor fixed by the step and independent of the characters, as $\kappa$ and $c_G$ in (N6). Different objects & not understood (``we do not see how (A2) and (A3) \dots follow'') & No legitimate boundary for (A2), (A3). Ours gives the analogous statement for $c_V$ with a proof (root-of-unity ratio)\\
+PC4.13 & Definitions 6.16, 6.17 (a point is a choice of auxiliary data at each member: extension datum, coefficient level, kernel, row data); Proposition 6.18, steps 4, 5, 7; (D5) Gauss primes $T_\omega$ in $T^*\le T_\omega\le(1+\frac1{fk})T^*$ & Same kind of claim: a selection for every member of a family & stated as a theorem of the development, proved in outline; the forty conditions, step 5 and the auxiliary choices listed as not understood & Partial: Chebotarev, short-interval primes [31], [61] and Linnik [81] are legitimate for the choice of primes; the compatibility conditions have no citation. See below\\
+PC4.14 & none; Propositions 7.12, 7.14 are Rallis-type identities on the PC-6 route & Different identity & absent & Ours goes further (Wave 4 reconstruction)\\
+\bottomrule
+\end{longtable}
+
+\subsection{PC4.13}
+
+The six producers of \lean{Fam.colSide_alt} whose statements I read (\lean{T.exists_quadratic_extension_reads_of_true}, \lean{T.true_geometry_twist_local_data_alt}, \lean{T.true_geometry_quadratic_twist_level_alt}, \lean{T.true_geometry_exists_kernel_alt}, \lean{T.true_geometry_exists_volume_data_alt}, \lean{T.true_geometry_row_pair_relation_alt_alt_alt}) share one form. For a family package $W$ built from a size datum, growth and lattice instances, divisor data and extra data, they assume \lean{AllFamilyConditions W} and, for a member $a$ of the geometric family, \lean{a.Is} and \lean{a.True}. Under those hypotheses they assert, for every index $t$, a quadratic-extension datum $J$ with \lean{J.Reads} (the twist places, injective and lying over the right places of $F$), a kernel Weil datum on each step with the family's characters, nonzero volume constants, a level law, and nonzero row-pair constants. So PC4.13 is a conditional existence statement. The selection is made inside a family that already satisfies the family conditions, which is the shape of Slijepčević's selection $\sigma$ in Definition 6.17.
+
+What Slijepčević supplies is the statement that a definite-side family structure exists (Proposition 6.18) and the names of its inputs: Chebotarev, primes in short intervals from classical zero-density estimates, Linnik, the mass formula, a counting argument with the Siegel--Weil volume identity, openness of the conditions under enlarging the auxiliary extension (step 5), and the existence of members with large unramified exponents (step 7). He does not state the compatibility conditions of the selection. Section 11 lists the forty conditions, the openness step, the linking statements and ``the choice of auxiliary lattices and measures'' as described in words only, and the compatibility conditions of (D2), (D4), (D7) to (D9) as omitted. He does not mention twist places of the kind used by \lean{QLaw} or quadratic-extension readings. The Gauss primes $T_\omega$ of (D5) are auxiliary split primes in a short window, and they may be among these choices; I did not check that correspondence.
+
+\textbf{Verdict on PC4.13: partially corroborated but still residual.} An independent reader of the development confirms that a simultaneous selection of auxiliary data for every member is a theorem of the development, and that its inputs are the expected ones (Chebotarev, short-interval primes, openness). He does not supply the compatibility conditions, does not prove the selection, and marks the relevant steps as not understood. PC4.13 therefore remains the one genuine residual of PC-4. Its hypotheses \lean{AllFamilyConditions}, \lean{a.Is} and \lean{a.True} are discharged in the family construction, which is shared with PC-6, so the final discharge of PC4.13 belongs to the same campaign as the record construction.
+
+\subsection{Effect on the human-proof verdict}
+
+Unchanged. The comparison does not reveal a mechanism in PC-4 that is missing or contradicted. It does sharpen two points. First, PC-4 answers a question that Slijepčević leaves open, the reading of the column chain (6.1) as iterated theta lifts. Second, the Rallis-type norm and tower identities, and the step constants of theta agreement, which he lists as not understood, belong to PC-6 and are not needed for the chain from the local models to \lean{valX}.
+
+\section{Answers to the assignment}
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \lean{TriStep.tri} is reconstructed (Section~\ref{sec:tri}).
+\item The one-split-place identity is \lean{valOne_all} with \lean{symDbl_existsUnique} and the cell sum (Section~\ref{sec:split}).
+\item Root exchange enters in \lean{bilPos_exUp_exists} and \lean{exists_fj_of_exUp}, below \lean{symDbl_existsUnique}, and is proved internally. The seesaw enters as the commutation of the two Weil actions, \lean{biAct_all}, and as the collapse of the double integral (R4-C). Neither is cited.
+\item The local-model identities at the split place are reconstructed (\lean{omLoc}, \lean{tri}); those at the other finite places are R4-B.
+\item Normalizations are checked (risk audit).
+\item The root-of-unity statement for $c(t)/c(t_0)$ is \lean{ratio_total_unitRatio_of_parts}, a closure of $10$ theorems already read in Wave~4; it needs nothing new.
+\item \lean{nuQ_weil}, \lean{wfr_on}, \lean{SBes.cpt} are record fields supplied outside PC-4, and \lean{inHH_closed} is off the route (Section~\ref{sec:resid}).
+\item Published representation-theoretic facts moved to the boundary are W1 to W16.
+\end{enumerate}
+
+\section*{Verdict}
+
+\textbf{RESIDUAL CHILD REMAINS.}
+
+\begin{enumerate}[leftmargin=*,itemsep=3pt]
+\item \textbf{What closed.} \lean{TriStep.tri} with \lean{isBiTheta_of_prod}, \lean{valK_bilin}, \lean{per_int}, \lean{mem_space_of_typed}, \lean{valK_nEquiv}, \lean{val_eq_tensorVal}; \lean{valOne_all}; \lean{symDbl_existsUnique} with \lean{bilPos_exUp_exists} and \lean{exists_fj_of_exUp}; root exchange (\lean{exchange_isPos}, \lean{exchange_support}); \lean{omLoc}, moved to W1; the statement of \lean{quotInt_unique_exists}, moved to W13.
+\item \textbf{Smallest exact remaining internal residual list.} R4-A local split-place calculus (medium), R4-B finite-place flat laws (major in size), R4-C global seesaw (medium to major), R4-D tuple construction under \lean{colSide_alt} (major), R4-E class data, unit, Weil, bottom and anchor producers (major for \lean{clsPinD}, small for the rest).
+\item \textbf{External verification boundary.} W1 to W16 of Section~\ref{sec:ext}.
+\item \textbf{Risk audit.} No gap. Size reclassification of PC-4 from medium to major (Section~\ref{sec:flag}). W16 is consistent with the host record.
+\item \textbf{Single earliest blocker.} \lean{GlobalTheory.FlatBFLoc.flatBF_of_laws} (\Lpath{DLP/FlatMapBesselToFourierJacobiLocalModel.lean:21}), the first unread input of \lean{TriStep.tri}. Its own inputs are \lean{Unf.Flat.flatLaw} and \lean{FinPl.flatLaws_all}, the head of R4-B.
+\item \textbf{Conceptual status.} Section~\ref{sec:pkg} states PC-4 as fourteen propositions from the local models to \lean{valX}. No conceptual mechanism is unresolved; the remainder is implementation depth, with the existence of tuple data (PC4.13) as the one existence claim still unread. The comparison with Slijepčević (Section~\ref{sec:sin}) partially corroborates PC4.13 and leaves it residual.
+\item \textbf{Does this assignment still block the statement ``The entire RH proof has been reconstructed in ordinary mathematics modulo named external theorems''?} \textbf{Yes.} The split-place spine is reconstructed, but R4-B, R4-C, R4-D and R4-E are internal theorems of known mechanism whose bodies, about twenty thousand theorems in all, have not been read.
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,20 @@
+package	id	head	recount	after_D123	after_level_leaves	status	note
+exBL/bwit	W1	SelC.square_integrable_columns_of_witnesses (column reading + idxMatNF leaf)	313	64	64	RESIDUAL	untouched
+exBL/bwit	W2	exists_pinned_spectral_data_compatible + exists_kernel_spectral_data_at_witnesses	95	95	95	RESIDUAL	untouched
+exBL/bwit	W3	T.reFace_zero_part_conventions_chosen_again	36	36	36	RESIDUAL	untouched
+R4-D	D1	dat_exists children	735	77	0	CLOSED	L1 closed (Prop: level-prime datum = product of standard-pair indicators + factorization over places); 16 shared lemmas closed with L3
+R4-D	D2	exists_good + commutation_identity_alt + commutation_property_alt	533	99	94	RESIDUAL (rebasing steps)	L4 closed (transport of structure); remains PenChart.exists_readsStd_alt (50), Fam.readsOfStd_alt (42), 2 shared
+R4-D	D3	volume uniformity	515	128	0	CLOSED	L2 (discriminant lemma at level primes) and L3 (G-place cosets fixed by the family) closed
+R4-D	D5	AdForm.twS_ramL	181	181	84	RESIDUAL (reduced)	97 theorems under TwLev' closed with L2; remains ram_iff_scalar_ram / diaSum_iff, twTransAct
+R4-D	D7	QVecJoin.step_mid / step_top	83	76	76	RESIDUAL	untouched
+R4-D	D8	T.true_geometry_row_column_entry_alt	46	46	46	RESIDUAL	untouched
+R4-D	D9	T.true_geometry_twist_value_alt	43	28	28	RESIDUAL	untouched
+R4-E	E1a	theta kernel leaves	191	191	191	MECHANISM RECONSTRUCTED; leaves remain	untouched
+R4-E	E1b	tw_resid_datum + chr_moves_eq_rho_base	13 (+102 shared)	13 (+102)	13 (+102)	RESIDUAL	untouched
+R4-E	E1c	LevLaw.lev_law + clsKL_real	103	103	103	RESIDUAL	untouched
+R4-E	E2	AdForm.exists_clsT_of_pinTop	85	85	85	RESIDUAL	untouched
+R4-E	E3	AdForm.JetScales.exists_jetS	35	35	35	RESIDUAL	untouched
+R4-E	E4	AdForm.realOf_is	29	29	29	RESIDUAL	untouched
+R4-E	E5	AdForm.exists_readsG_of_level	27	27	27	RESIDUAL	untouched
+shared	K-a,K-b,K-c	kernel-law support leaves	243	243	243	LEAF	not in any head
+total (distinct, heads only)	-	bundle 195 + R4-D + R4-E 459	≈2,335	≈1,170	≈980	-	R4-D distinct: 1,681 → 517 → 327

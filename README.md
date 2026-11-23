@@ -1,6 +1,6 @@
 # Human-readable reconstruction of the Alpöge/Claude RH argument
 
-> **Status, 22 November 2026.** The internal reconstruction phase is complete. A final dependency audit starting from the Lean theorem `riemannHypothesis` finds no unresolved internal mathematical residuals on the live proof route. The exact-edge live subgraph contains 766,788 declarations, including 622,409 theorems. Every live internal mathematical dependency has been reconstructed at the human-proof level, assigned to an already reconstructed package, or transferred to an explicit external theorem boundary. The remaining work is source-fidelity verification of those external inputs and reconciliation of the audit into the human-readable manuscript. Details are in [`STATUS.md`](STATUS.md).
+> **Status, 22 November 2026.** The internal reconstruction phase is complete. A final dependency audit starting from the Lean theorem `riemannHypothesis` finds no unresolved internal mathematical residuals on the live proof route. The exact-edge live subgraph contains 766,788 declarations, including 622,409 theorems. Every live internal mathematical dependency has been reconstructed at the human-proof level, assigned to an already reconstructed package, or transferred to an explicit external theorem boundary. The remaining work is source-fidelity verification of those external inputs and reconciliation of the audit into the human-readable manuscript. Details are in [`STATUS.md`](STATUS.md). The certification report and its tables are in [`audit/final_certification/`](audit/final_certification/), and every report it cites is in [`audit/`](audit/).
 >
 > This repository does not claim an independent proof of RH by the reconstruction author. The proof being reconstructed is Alpöge's formally verified proof. The manuscript posted here predates the final audit and has not yet been reconciled with it.
 
@@ -16,7 +16,9 @@ The purpose of this repository is to provide a human-readable proof of the Riema
 - **A reconstruction-status document**, [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md), the public statement of what was reconstructed and what remained under audit as of 21 November 2026. It is kept as a historical record, and [`STATUS.md`](STATUS.md) supersedes it.
 - **An explicit external verification boundary**, [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md), listing the published theorems at which the reconstruction stops, with the state of their comparison against the literature as of 21 November 2026, before the source-fidelity audit began.
 - **A source and version manifest**, [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md), identifying the exact formal archive that was reconstructed.
-- **Selected audit documentation**, in [`audit/`](audit/), recording how the dependency structure was established.
+- **The final internal certification** of 22 November 2026, in [`audit/final_certification/`](audit/final_certification/): the report, the live-graph summary, the residual tables, the full ownership table and the scripts.
+- **The reports the certification rests on**, in [`audit/closure_reports/`](audit/closure_reports/) and [`audit/pre_synthesis/`](audit/pre_synthesis/), each with its status file, dependency map and scripts.
+- **Selected audit documentation** from 21 November 2026, in [`audit/`](audit/), recording how the dependency structure was established.
 
 ## Attribution
 
@@ -70,7 +72,7 @@ The raw theorem count is not the number of independent mathematical ideas, since
 | [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md) | Status as of 21 November 2026: what is reconstructed, the seven internal packages and small leaves then under audit, and what this repository does not claim. Historical record. Its package list predates the final audit and is superseded by [`STATUS.md`](STATUS.md). |
 | [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md) | The external verification boundary, with sources and comparison status as of 21 November 2026, before the source-fidelity audit began. |
 | [`SOURCE_MANIFEST.md`](SOURCE_MANIFEST.md) | The exact archive reconstructed (tarball hash, toolchain, Mathlib revision, final theorem), and the versions of the manuscript and audit synthesis. |
-| [`audit/`](audit/) | The post-closure audit synthesis of 21 November 2026 and a small set of reports documenting the major mechanisms and the main corrections. The later closure, source-fidelity and final certification reports are not yet included. |
+| [`audit/`](audit/) | The final internal certification of 22 November 2026 (`final_certification/`), every closure report it cites (`closure_reports/`), the pre-synthesis, orphan/interface and source-fidelity audits with the R-1 and R-2 reports (`pre_synthesis/`), and the post-closure synthesis and selected reports of 21 November 2026. [`audit/README.md`](audit/README.md) is the index. |
 | [`CITATION.cff`](CITATION.cff) | Citation metadata. |
 | [`LICENSE`](LICENSE) | Creative Commons Attribution 4.0 International (CC BY 4.0). It covers the manuscript, the documentation and the audit reports in this repository. The Lean archive is not part of this repository and is not covered. |
 

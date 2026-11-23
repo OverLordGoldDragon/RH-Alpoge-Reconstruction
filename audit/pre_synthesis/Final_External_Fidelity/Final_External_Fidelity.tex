@@ -1,0 +1,220 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\sloppy
+\newcommand{\lean}[1]{\nolinkurl{#1}}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}[lemma]{Proposition}
+\theoremstyle{definition}
+\newtheorem{statement}[lemma]{Statement}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\title{Final external fidelity pass\\[2pt]\large RH--Alpöge reconstruction}
+\author{Claude, for Jimmie Adriazola}
+\date{22 November 2026}
+\begin{document}
+\maketitle
+
+\section{Scope}
+
+This pass continues the external fidelity audit. It does not redo internal reconstruction, and it edits no project file. The authoritative ledger is \texttt{Authoritative\_External\_Theorem\_Ledger.md} and the citations for the manuscript are in \texttt{Corrected\_Source\_Map.md}. This report gives the arguments and the bridge lemmas behind them.
+
+The inputs are the Lean archive (\texttt{lean.tar.gz}, sha256 \texttt{9631b4f0\dots49c7fc}, 175{,}190 entries), \texttt{Final\_Six\_Wave\_6} (19:38 UTC), the orphan and interface pass (20:03 UTC), \texttt{External\_Theorem\_Fidelity.md} (18:09 UTC), the pre-synthesis audit and the status ledgers. Two gaps in the inputs affect what follows. The report of the earlier pass on ``26 high-risk inputs'' is not on disk, since its counts survive only in \texttt{GitHub\_Public\_Package/README.md}, so the nine entries with unchecked clauses in Section~\ref{sec:nine} are my reconstruction from \texttt{External\_Theorem\_Fidelity.md}. No output of Agent A was on disk at 20:41 UTC, so Section~\ref{sec:slot} is a reserved slot.
+
+Published texts opened in this pass were read through page fetches of author or arXiv versions. Theorem numbers taken from a published version that I did not open are marked as such.
+
+\section{V21: Bessel nonvanishing}\label{sec:v21}
+
+\subsection{The live statement}
+
+\lean{BesselNVGap} (\lean{SettingBlocks.lean}, line 406) is live under \lean{wuDecayOfGap}, and \lean{BesselNVG} is live under \lean{ampUnif_holds}. Reading the definitions it uses (\lean{Hpk}, \lean{UWset}, \lean{Nset}, \lean{psiGen}, \lean{eps48}, \lean{lam48}, \lean{IsDS}, \lean{IsHCTypeU}) gives the following.
+
+Let $k\ge2$ be even, $r\ge0$ and $N=2r+k+1$. The form \lean{Hpk} on $\mathbb C^N$ has $r$ hyperbolic planes $\langle e_a,e_a^*\rangle$ and a middle block of $k$ positive and one negative coordinate, so $V$ has signature $(r+k,r+1)$. The vector $z$ lies in the middle block with $h(z,z)<0$. The group $U(W)=$ \lean{UWset} fixes the $e_a$, the $e_a^*$ and $z$, so $W=z^\perp$ in the middle block is positive definite of dimension $k$ and $U(W)\cong U(k)$ is compact. The group $N=$ \lean{Nset} is the unipotent radical of the parabolic subgroup fixing the isotropic flag $\langle e_0\rangle\subset\langle e_0,e_1\rangle\subset\cdots$, and $\psi_c(n)=\exp\bigl(i\operatorname{Re}\sum_ac_a\ell_a(n)\bigr)$ with every $c_a\ne0$ is a generic character of $N$ fixed by $U(W)$. So $H=U(W)\ltimes N$ is the Bessel subgroup of the Gan--Gross--Prasad pair $U(W)\subset U(V)$ with $\dim V-\dim W=2r+1$.
+
+The representation $\sigma$ is a discrete series of $U(V)$ with Harish-Chandra parameter $\lambda=(v_0,\dots,v_{k-2},-b_0,\dots,-b_{2r+1})$, strictly decreasing with entries in $\mathbb Z+\frac{N-1}2=\mathbb Z$ (\lean{IsHCParam}), relative to the signs \lean{eps48}, which are $+$ on the $v_i$ and $+,-,+,-,\dots$ on $-b_0,-b_1,\dots$. \lean{IsDS} pins $\sigma$ by its lowest $K$-type $\lambda+\rho_n-\rho_c$. The representation $\pi$ of $U(W)$ has Harish-Chandra parameter $u\in(\mathbb Z+\frac12)^k$ (\lean{IsHCTypeU}). The hypotheses are interlacing $u_0>v_0>u_1>\cdots>v_{k-2}>u_{k-1}>-b_0$, half-integral differences, and a large gap condition \lean{GapBig} on $b$. The conclusion is that for a lowest-$K$-type unit vector $w$ there are $x,x_0\in U(V)$ with
+\begin{equation}\label{eq:bnv}
+T(x,x_0)=\int_{U(W)\times N}\langle\sigma(x_0)w,\sigma(hn)\sigma(x)w\rangle\,\overline{\psi_c(n)}\,\pi(h)^{-1}\,dh\,dn\ne0 .
+\end{equation}
+In Lean a nonintegrable Bochner integral is $0$, so \eqref{eq:bnv} also asserts integrability.
+
+This is the existence half of the local Gan--Gross--Prasad conjecture for real unitary groups in the Bessel case, for $\sigma$ discrete series and $U(W)$ compact. H.~He, Invent.\ Math.\ 209 (2017), treats codimension one only, so for $r\ge1$ it is not the source.
+
+\subsection{Sources}
+
+\emph{Xue, Duke Math.\ J.\ 172 (2023), Theorem~2.2} (opened in the author's PDF). For $W\subset V$ of dimensions $n$ and $n+2t+1$ with $V=W\oplus Z$, $h_V(z_i,z_{-j})=(-1)^n\delta_{ij}$, $H=U(W)\ltimes N$ and the character $\nu$, and for irreducible tempered $\pi$ of $U(V)$ and $\sigma$ of $U(W)$, one has $m(\pi,\sigma)=\dim\operatorname{Hom}_H(\pi\hat\otimes\sigma,\nu)=1$ if and only if $\eta_\pi(a_i)=\epsilon(\chi_i\otimes\phi_\sigma,\psi_{\mathbb C})$ and $\eta_\sigma(b_j)=\epsilon(\phi_\pi\otimes\mu_j,\psi_{\mathbb C})$ for all $i,j$. Xue's Section~2 fixes the parametrization: for a parameter $\phi=\chi_{\kappa_1}\oplus\cdots$ with $\kappa_1\ge\kappa_2\ge\cdots$, the $i$th coordinate is of type $(1,0)$ if $\eta(e_i)=(-1)^{i-1}$ and of type $(0,1)$ if $\eta(e_i)=(-1)^i$, and the root number of a conjugate-symplectic character of weight $\kappa$ is $+1$ for $\kappa>0$ and $-1$ for $\kappa<0$ (quoted there from Gan--Gross--Prasad, \emph{Restrictions of representations of classical groups: examples}, Prop.~2.1).
+
+\emph{Beuzart-Plessis, Astérisque 418 (2020)} (opened in arXiv:1506.01452). Admissible pairs have $\dim W^\perp=2r+1$ for any $r\ge0$ (§6.2). The $\xi$-integral of §8.1 is absolutely convergent on the Harish-Chandra Schwartz space $\mathcal C(G)$ and is a continuous extension of the integral (Proposition~8.1.1). Theorem~8.2.1 of the arXiv version, which Xue cites as Theorem~7.2.1 of the published version, says that for tempered $\pi$, $\mathcal L_\pi\ne0$ if and only if $m(\pi)\ne0$. Theorem~1 of the introduction (Theorem~12.4.1 in the arXiv version) gives exactly one distinguished member in each tempered Vogan packet.
+
+\subsection{Bridge lemmas}
+
+\begin{lemma}[B-V21.1]
+For $x,x_0\in U(V)$ the integral \eqref{eq:bnv} converges absolutely and equals the $\xi$-integral of Beuzart-Plessis applied to the corresponding matrix coefficient.
+\end{lemma}
+\begin{proof}
+$w$ is $K$-finite, so $g\mapsto\langle\sigma(x_0)w,\sigma(g)\sigma(x)w\rangle$ is a two-sided translate of a $K$-finite coefficient of a discrete series, which lies in $\mathcal C(U(V))$ by Harish-Chandra's theorem on discrete series coefficients. Coefficients of the compact group $U(W)$ are bounded and smooth, so the product lies in $\mathcal C(U(W)\times U(V))$. Beuzart-Plessis's integral is absolutely convergent on $\mathcal C$ and is the integral there.
+\end{proof}
+
+\begin{lemma}[B-V21.2]
+For $v,v'\in\pi$, $\langle T(x,x_0)v,v'\rangle=\mathcal L_{\sigma\otimes\pi^\vee}\bigl(\sigma(x)w\otimes v,\sigma(x_0)w\otimes v'\bigr)$ for the character $\overline{\psi_c}$. Hence $T\ne0$ for some $(x,x_0)$ if and only if $\mathcal L_{\sigma\otimes\pi^\vee}$ is nonzero on vectors of the form $\sigma(x)w\otimes v$.
+\end{lemma}
+\begin{proof}
+Expand $\langle\pi(h)^{-1}v,v'\rangle=\langle v,\pi(h)v'\rangle$, a coefficient of $\pi^\vee$, and use Lemma~B-V21.1 to exchange the finite sum over a basis with the integral.
+\end{proof}
+
+\begin{lemma}[B-V21.3]
+If $\mathcal L_{\sigma\otimes\pi^\vee}\ne0$, then it is nonzero on some pair $(\sigma(x)w\otimes v,\sigma(x_0)w\otimes v')$.
+\end{lemma}
+\begin{proof}
+$\mathcal L$ is continuous on the smooth vectors. The closed span of $\sigma(U(V))w$ in $\sigma^\infty$ is a nonzero closed invariant subspace, hence all of $\sigma^\infty$, because the smooth vectors of an irreducible unitary representation form a topologically irreducible representation. So the vanishing of $\mathcal L$ on these pairs forces $\mathcal L=0$.
+\end{proof}
+
+Since every generic character $\psi_c$ is conjugate to every other by an element of the Levi subgroup that commutes with $U(W)$ (scale $e_a$ by $t_a\in\mathbb C^\times$ and $e^*_a$ by $\bar t_a^{-1}$), and conjugation does not change $\pi$, the multiplicity does not depend on $c$. In particular $\psi_c$ and $\overline{\psi_c}=\psi_{-c}$ give the same answer.
+
+\begin{lemma}[B-V21.4]
+Under the interlacing hypotheses, the pair $(\sigma,\pi^\vee)$ is the distinguished member of its Vogan packet, so $m(\sigma,\pi^\vee)=1$.
+\end{lemma}
+\begin{proof}
+The parameters are $\phi_\sigma=\bigoplus_i\chi_{\lambda_i}$ and $\phi_{\pi^\vee}=\bigoplus_j\chi_{-u_j}$, with $\chi_\kappa(z)=(z/\bar z)^\kappa$. Each $\chi_{\lambda_i}\chi_{-u_j}$ is conjugate-symplectic of weight $\lambda_i-u_j\in\frac12+\mathbb Z$, so by the sign rule its root number is $c\cdot\operatorname{sgn}(\lambda_i-u_j)$, with $c=\pm1$ depending only on the choice of $\psi_{\mathbb C}$. Write $\lambda_1>\lambda_2>\cdots$ for the sorted parameter. The interlacing gives $\#\{j:u_j>v_{i-1}\}=i$ and $\#\{j:u_j>-b_m\}=k$. The distinguished character on the $V$ side is therefore $\eta(e_i)=c^k(-1)^{\#\{j:u_j>\lambda_i\}}=(-1)^{\#\{j:u_j>\lambda_i\}}$, and the sign of the $i$th coordinate is $s\,\eta(e_i)(-1)^{i-1}$ for a global sign $s$ fixed by the Whittaker datum. For $\lambda_i=v_{i-1}$ this is $s(-1)^{2i-1}=-s$, and for $\lambda_{k+m}=-b_m$ it is $s(-1)^{2k+m-1}=(-1)^{m+1}s$. So the sign pattern is eps48 or its negative. On the $W$ side the same computation gives $\eta(e_m)(-1)^{m-1}$ independent of $m$, so the distinguished $W'$ is definite.
+
+The relevant pure inner forms are $(V',W')$ with $V'=W'\oplus Z$ for the fixed $Z$, which here has signature $(r,r+1)$ because $z$ is negative. If $W'=(k,0)$ then $V'=(r+k,r+1)$, which is the pattern eps48. If $W'=(0,k)$ then $V'=(r,r+k+1)$, which is neither eps48, of signature $(r+k,r+1)$, nor its negative, of signature $(r+1,r+k)$. By the multiplicity-one theorem of Beuzart-Plessis the distinguished character belongs to some relevant member, so it is $(V,W)$ itself, with $\sigma$ the discrete series of parameter $\lambda$ and signs eps48 and with $\pi^\vee$ of parameter $-u$. Xue's Theorem~2.2 then gives $m=1$. Xue's normalization $h(z_0,z_0)=(-1)^n=+1$ is reached by passing to $(-V,-W)$, which leaves the groups unchanged and replaces $\nu$ by $\bar\nu$, harmless by the remark before the lemma.
+\end{proof}
+
+Lemmas B-V21.1 to B-V21.4 and Beuzart-Plessis's Theorem~7.2.1 give \eqref{eq:bnv}. \textbf{Verdict: MATCH AFTER SHORT BRIDGE.} The one fact taken through a quotation is the sign rule, which Xue's text states and attributes to GGP12b, Prop.~2.1. The argument uses only the ratios it gives, not its global constant.
+
+\section{F4: the CM theta package}\label{sec:f4}
+
+Section~11.1 of Six Wave 6 reduces \lean{NormSum.inp_all} to three propositions. The ledger lists every input. The four bridges are below.
+
+\begin{lemma}[B-F4.1, Masser's formula]
+Let $\Lambda\subset\mathbb C$ be a lattice, $s_2(\Lambda)=\lim_{s\to0^+}\sum'_{\omega\in\Lambda}\omega^{-2}\lvert\omega\rvert^{-2s}$, and $\alpha\in\mathbb C^\times$ with $\alpha\Lambda\subseteq\Lambda$. Then
+\[
+(\alpha^2-\lvert\alpha\rvert^2)\,s_2(\Lambda)=\sum_{0\ne Q\in\alpha^{-1}\Lambda/\Lambda}\wp_\Lambda(Q).
+\]
+\end{lemma}
+\begin{proof}
+Homogeneity gives $s_2(c\Lambda)=c^{-2}\lim_{s\to0}\lvert c\rvert^{-2s}\sum'\omega^{-2}\lvert\omega\rvert^{-2s}=c^{-2}s_2(\Lambda)$, so $s_2(\alpha^{-1}\Lambda)=\alpha^2s_2(\Lambda)$. For $Q\notin\Lambda$ the difference $\sum_{\omega}(Q+\omega)^{-2}\lvert Q+\omega\rvert^{-2s}-\sum'_\omega\omega^{-2}\lvert\omega\rvert^{-2s}$ converges absolutely and uniformly near $s=0$, with limit $\wp_\Lambda(Q)$, because $(Q+\omega)^{-2}-\omega^{-2}=O(\lvert\omega\rvert^{-3})$. Splitting $\alpha^{-1}\Lambda\setminus\{0\}$ into $\Lambda\setminus\{0\}$ and the $\lvert\alpha\rvert^2-1$ nonzero cosets gives $s_2(\alpha^{-1}\Lambda)=\lvert\alpha\rvert^2s_2(\Lambda)+\sum_{Q\ne0}\wp_\Lambda(Q)$, since the index $[\alpha^{-1}\Lambda:\Lambda]$ is $\lvert\alpha\rvert^2$. Comparing the two expressions proves the formula.
+\end{proof}
+
+This is the Lean statement \lean{QuasiPeriodConstIsogeny} verbatim, with $S$ a set of representatives of the nonzero cosets.
+
+\begin{lemma}[B-F4.2, Weil pairing]
+For $z,w\in\frac1m\Lambda$ let $\langle z,w\rangle_\Lambda=\exp\bigl(2\pi i\,m\operatorname{Im}(z\bar w)/A(\Lambda)\bigr)$. Then there is a sign $\epsilon\in\{\pm1\}$, the same for all lattices, with $\langle z,w\rangle_\Lambda=e_m(P_z,P_w)^\epsilon$. Consequently every $\rho\in\operatorname{Aut}(\mathbb C)$ carries $\langle\,,\rangle_\Lambda$ on $m$-torsion to $\langle\,,\rangle_{\Lambda^\rho}$.
+\end{lemma}
+\begin{proof}
+Both sides are alternating, bilinear and nondegenerate on $\Lambda/m\Lambda$ with values in $\mu_m$, and they agree up to inversion on an oriented basis $(\omega_1/m,\omega_2/m)$, both taking the value $e^{\pm2\pi i/m}$ there. The orientation convention is the same for every lattice, so $\epsilon$ is universal. AEC Prop.~III.8.1(e) gives $\rho(e_m(S,T))=e_m(\rho S,\rho T)$.
+\end{proof}
+
+\begin{lemma}[B-F4.3, transport of sigma identities]
+Let $F(z_0,\dots,z_n)=0$ be one of the identities $\sigma(u+v)\sigma(u-v)=(\wp(v)-\wp(u))\sigma(u)^2\sigma(v)^2$ or the Frobenius--Stickelberger formula $\det\bigl[1,\wp(z_i),\dots,\wp^{(n-1)}(z_i)\bigr]=(-1)^{n(n-1)/2}1!\cdots n!\,\sigma(\sum z_i)\prod_{i<j}\sigma(z_i-z_j)/\prod\sigma(z_i)^{n+1}$. Then the same identity holds for $\sigma^*(z)=\sigma(z)e^{-s_2z^2/2}$, and, written in the formal parameter $T$ of a Weierstrass model, it is an identity of power series with algebraic coefficients that persists under every embedding $\bar{\mathbb Q}\to\mathbb C_p$.
+\end{lemma}
+\begin{proof}
+For the second identity the Gaussian factors cancel because $(\sum z_i)^2+\sum_{i<j}(z_i-z_j)^2=(n+1)\sum z_i^2$, and the first is the case $n=1$. The coefficients of $\sigma^*(\varepsilon\ell(T))/(\varepsilon T)$ are polynomials over $\mathbb Q$ in $g_2,g_3,s_2$, which are algebraic by group~A of F4, and an identity of formal power series over a subfield of $\bar{\mathbb Q}$ is preserved by field embeddings. The constant $-2$ for $n=2$ is a unit for $p\ne2$, and the archive treats $p=2$ through $\theta_0$.
+\end{proof}
+
+\begin{lemma}[B-F4.4]
+Every $g\in GL_N(\mathbb A_E)$ is $\gamma^{-1}g'k^{-1}$ with $\gamma\in GL_N(E)$, $k\in\prod_vGL_N(\mathcal O_v)$ and $g'_p=1$.
+\end{lemma}
+\begin{proof}
+$GL_N(\mathcal O_p)g_p^{-1}$ is open in $GL_N(E_p)$ and $GL_N(E)$ is dense there, so there is $\gamma\in GL_N(E)$ with $\gamma g_p\in GL_N(\mathcal O_p)$. Put $k_p=(\gamma g_p)^{-1}$, $k_v=1$ for $v\ne p$, and $g'=\gamma gk$.
+\end{proof}
+
+\noindent\textbf{Genuinely used versus related.} The F4 inputs used are the first facts of complex multiplication, the Weil pairing, potential good reduction and formal groups, the $\sigma$ identities, Weil's metaplectic theory and Kudla's splitting. Masser's formula and B-F4.4 are proved above. Shimura 1976, Kubert--Lang, Mazur--Tate, Katz 1976 and Katz 1978 are related and are not logical inputs, and the same holds for Shimura's reciprocity law, which is not used because every $\rho$ fixes $K$. The only F4 items left open are bibliographic: exact locations in Weil 1964 or Mumford's \emph{Tata Lectures} III for the eighth root of unity and the inert Weil index, and proposition numbers inside Silverman. The archive proves each of these internally.
+
+\section{Siegel--Weil in the doubling form}\label{sec:sw}
+
+\subsection{Liveness}
+
+There are two Lean copies. The doubling copy \lean{GlobalTheory.Published.SiegelWeilUnitaryConvergent} is unused on the $R2$ path (\lean{adelC_of_siegelWeil_of_doubling_alt} names it \lean{_hSWc}). It is used on the \lean{MIstar2} path:
+\begin{center}
+\lean{miStar2_of_allTrue_alt_alt} $\to$ \lean{ontoAll_of_hecke_alt} $\to$ \lean{heckeForm_of_doubling'} $\to$ \lean{globalForm_of_siegelWeil'} $\to$ \lean{siegelWeil_fockDoubledPair_of_weil_and_ichino}.
+\end{center}
+The last theorem combines \lean{WeilSiegelFormulaUnitary} for $m>2n$, an absolutely convergent coset sum equal to the normalized mean $\fint$, with the doubling copy for $n<m\le2n$.
+
+\subsection{The isolated statement}
+
+\begin{statement}[SW-conv]\label{st:sw}
+Let $E/F$ be a CM extension, $W$ a hermitian space of rank $n$, $V$ a hermitian space of rank $m$ with Witt index $r$, $n<m\le2n$ and $n+r<m$. Let $\omega$ be the Weil representation of $U(W\oplus-W)\times U(V)$ attached to $\psi$ and a splitting character $\chi_V$, $f$ a $K$-finite (Fock) Schwartz function, and $\Phi_f(g)=\omega(g)f(0)$. Then $\theta(g,\cdot,f)$ is integrable on $U(V)(F)\backslash U(V)(\mathbb A)$, the Siegel Eisenstein series $E(g,s,\Phi_f)$ on $U(n,n)$ is holomorphic at $s_0=(m-n)/2$, and
+\[
+E(g,s_0,\Phi_f)=\fint_{[U(V)]}\theta(g,h,f)\,dh .
+\]
+\end{statement}
+
+This is the Lean statement read through \lean{sZero} $=(m-n)/2$, \lean{EisValueAt} (holomorphic value of the meromorphic continuation), and \lean{thetaMean}. The Eisenstein series converges absolutely only for $\operatorname{Re}s>n/2$, and $s_0\le n/2$ in this range, so Weil 1965 does not cover it. The source is A.~Ichino, \emph{On the Siegel--Weil formula for unitary groups}, Math.\ Z.\ 255 (2007), 721--729, whose abstract describes exactly this extension after Kudla--Rallis (\emph{On the Weil--Siegel formula}, J.\ reine angew.\ Math.\ 387 (1988), for symplectic--orthogonal pairs). Ichino 2004, Yamana 2013 (skew fields) and Gan--Qiu--Takeda 2014 treat other ranges. I could not open Ichino 2007, so its theorem number, its class of sections and its constant are unchecked. The constant $\kappa=1$ with the probability measure is what the $m>2n$ case gives and what the literature quoting Weil writes. \textbf{Verdict: PARTIAL MATCH, external residual R-1.}
+
+\section{The intersection-theory interface}\label{sec:is}
+
+\lean{IntersectionSystem} is an abstract function $I(P,n,\mathbf L)\in\mathbb R$ of a multihomogeneous prime $P\subset\mathbb Z[x_{k,i}]$ and $n$ hermitian lines $\mathbf L$ on the multiprojective cone. \lean{IsIntersectionSystem} (\lean{IsIntersectionFamily}) imposes exactly three axioms, for $P$ an arithmetic variety of the right dimension and smooth metrics.
+
+\begin{longtable}{L{3.4cm}L{6.4cm}L{5.4cm}}
+\toprule
+axiom & content & standard property\\
+\midrule
+(A1) symmetry & $I(P,n,\mathbf L\circ\sigma)=I(P,n,\mathbf L)$ & arithmetic intersection numbers are symmetric (Gillet--Soulé 1990, commutativity of $\widehat{CH}$)\\
+(A2) additivity & $I(P,n+1,(\mathbf L,A\otimes B))=I(\dots,A)+I(\dots,B)$ & $\hat c_1(\bar A\otimes\bar B)=\hat c_1(\bar A)+\hat c_1(\bar B)$\\
+(A3) recursion & $I(P,n+1,(\mathbf L,A))$ equals $\sum_W\operatorname{mult}_W(s)\,c_W$ minus $\int_{P(\mathbb C)}\log\lVert s\rVert_A\bigwedge_jc_1(L_j)$, with $c_W=I(W,n,\mathbf L)$ for horizontal $W$ and $c_W=\deg_{\mathbf L}(W)\log p$ for vertical $W$ & the inductive formula for heights, Bost--Gillet--Soulé, J.\ AMS 7 (1994), §3 (Prop.~3.2.1; number not reopened)\\
+\bottomrule
+\end{longtable}
+
+\emph{Normalization.} \lean{maDensity} is $D!\,(2/\pi)^D$ times the mixed determinant of the complex Hessians $\partial_i\bar\partial_j\varphi_k$, with $\varphi_k=\log h_k$ and $h_k$ homogeneous of degree one (a norm, not its square). Since $(i/\pi)\partial\bar\partial$ applied to $\varphi$ gives $D!\,\pi^{-D}\operatorname{mixdet}(\partial\bar\partial\varphi)\prod_j(i\,dz_j\wedge d\bar z_j)$ and $i\,dz\wedge d\bar z=2\,dx\wedge dy$, \lean{maDensity} is the Lebesgue density of $\bigwedge_k(i/\pi)\partial\bar\partial\log h_k=\bigwedge_kc_1(L_k)$. For $O(1)$ with $h=(1+\lvert z\rvert^2)^{1/2}$ on $\mathbb P^1$ this form has total mass $1$. The vertical term \lean{geoNum}$\cdot\log p$ is the degree of the vertical cycle times $\log p$, because \lean{geoNum} at level $0$ is a $\mathbb Z$-length and so counts residue degrees, and \lean{multAt} is the length $\operatorname{ord}_W(s)$. The sign of \lean{arInt} matches $h(Z)=h(\operatorname{div}s\cdot Z)-\int\log\lVert s\rVert\,c_1^{\,n}$. So the archive's normalization is that of Bost--Gillet--Soulé.
+
+\begin{lemma}[B-IS.1, uniqueness]
+If $II$ satisfies (A1) to (A3), then $II(P,n,\mathbf L)=h_{\mathbf L}(P)$, the Bost--Gillet--Soulé height, for every arithmetic subvariety $P$ of $\prod_k\mathbb P^{\iota_k-1}_{\mathbb Z}$ and every family of smooth hermitian lines whose last entry has nonnegative degree.
+\end{lemma}
+\begin{proof}
+Induct on $n$. For $P$ of arithmetic dimension one, (A3) has no horizontal $W$, so both sides equal $\sum\operatorname{mult}\cdot\deg\cdot\log p-\int\log\lVert s\rVert$. In general choose a multihomogeneous $s\notin P$ of the degree of the last line, which exists since $P$ is relevant. Both $II$ and $h$ satisfy (A3) with the same $s$, the horizontal $W$ have smaller dimension, and the induction hypothesis applies. (A1) and (A2) extend the identification from nonnegative degrees to general ones.
+\end{proof}
+
+\emph{Ownership.} Whether standard theory satisfies (A1) to (A3) is an external question, answered yes above. Lemma~B-IS.1, which turns ``$\forall\,II$ satisfying the axioms'' into a statement about the standard height, is an internal interface theorem and should be written in the PC-2 package.
+
+\begin{lemma}[B-Z.1, Zhang's inequality in the nef case]
+Let $\bar A$ be relatively semipositive, nef on vertical fibres and conjugation invariant on an arithmetic variety $P$ of dimension $n+1$, and suppose $h_{\bar A}(x)\ge e$ for every closed point. Then $(n+1)\,e\,\deg_A(P)\le h_{\bar A}(P)$.
+\end{lemma}
+\begin{proof}
+Let $\bar B=O(1,\dots,1)$ with Fubini--Study metrics. It is ample, semipositive and has $h_{\bar B}(x)\ge0$. A semipositive metric makes $A_{\mathbb C}$ nef, so $\bar A_\varepsilon=\bar A+\varepsilon\bar B$ is ample on the generic fibre for rational $\varepsilon>0$, relatively semipositive, and satisfies $h_{\bar A_\varepsilon}(x)\ge e$. Zhang's Theorem~5.2 (J.\ AMS 8 (1995)) gives $h_{\bar A_\varepsilon}(P)/((n+1)\deg_{A_\varepsilon}P)\ge\frac1{n+1}\sum_ie_i(\bar A_\varepsilon)\ge e_{n+1}(\bar A_\varepsilon)\ge e$, where $e_{n+1}$ is the absolute minimum. Both sides are polynomials in $\varepsilon$, and letting $\varepsilon\to0$ proves the claim.
+\end{proof}
+
+\section{The prime 2}\label{sec:p2}
+
+\subsection{Liveness}
+
+PC-1 assumes $p\ne2$ (\lean{hp2}). PC-2 does not. In Proposition~2.B, \lean{or_m1nef} applies \lean{rootModel_nefAt_of_hodgeCpt} to every $p\in S_B=\{p\le B\}\cup\texttt{bad}$ (\lean{RootTower.InS}), and \lean{RootTower.two_mem} gives $2\in\texttt{bad}$. The chain \lean{trivFlagMod_rootLines_model}$\,\to\,$\lean{triv_flag_mod_of_hodge_tate_free_of_root_lines} uses \lean{PointHT} at that $p$ with a constant $\kappa$ satisfying \lean{IsCp}, which is $\kappa=4$ when $p=2$, and \lean{pointHT} is derived from \lean{FarguesHodgeTate}. \textbf{So $p=2$ is live.} The earlier remark that $p=2$ is ``probably not used'' was wrong.
+
+\subsection{What is needed at $p=2$}
+
+\begin{statement}[HT2]
+Let $C$ be complete and algebraically closed over $\mathbb Q_2$ and $G$ a $2$-divisible group over $\mathcal O_C$. Then (i) $4\,\omega_{G^D}\subseteq\operatorname{im}(\alpha_G\otimes\mathcal O_C)$, and (ii) $\ker(\alpha_G\otimes\mathcal O_C)$ is the orthogonal of $\ker(\alpha_{G^D}\otimes\mathcal O_C)$ for the Weil pairing.
+\end{statement}
+
+\begin{lemma}[B-FHT.1, saturation]
+Let $M$ be a free module of finite rank over a valuation ring $\mathcal O$ with fraction field $C$, and $S_1,S_2\subseteq M$ saturated submodules ($x\in M$ and $ax\in S_i$ with $a\ne0$ imply $x\in S_i$). If $S_1\otimes C=S_2\otimes C$ then $S_1=S_2$.
+\end{lemma}
+\begin{proof}
+For $x\in S_1$ there is $a\ne0$ with $ax\in S_2$, so $x\in S_2$, and symmetrically.
+\end{proof}
+
+A kernel of a map to a torsion-free module is saturated, and so is an orthogonal under a perfect pairing. So clause (ii), for every $p$, follows from the Hodge--Tate sequence being a complex that is exact after inverting $p$. That is known for all $p$, and with B-FHT.1 it closes clause (ii) for odd $p$ from Fargues's Theorem~II.1.1. For clause (i) at $p=2$, Fargues's Chapter~II has the standing hypothesis $p\ne2$. A printed statement for all $p$ that the cohomology is killed by $p^{1/(p-1)+\epsilon}$ would suffice, since $2^{1+\epsilon}$ divides $4$. Scholze--Weinstein, Camb.\ J.\ Math.\ 1 (2013), §4.3, contains such a bound in a relative setting, and Faltings, J.\ AMS 12 (1999), is a second candidate. I did not locate a numbered statement that covers $p=2$ over $\mathcal O_C$. \textbf{Verdict: UNRESOLVED, external residual R-2.} It closes either with such a source or with a human version of the archive's internal proof of \lean{FarguesExact} at $p=2$.
+
+\section{Tamagawa identity}\label{sec:tam}
+
+\lean{TamagawaSpecialUnitary} uses \lean{locFactor} $E\,r\,v=\#\mathrm{SU}(\Lambda_v)(k_v)/(Nv)^{r^2-1}$, where \lean{resOrder} is the order of the reduction. Under \lean{Unr E}, every $\Lambda_v$ is self-dual for an unramified extension, so $\mathrm{SU}(\Lambda_v)$ is smooth with reductive special fibre, unitary at inert $v$ and $\mathrm{SL}_r$ at split $v$. For such a model the volume of $G(\mathcal O_v)$ for $\lvert\omega\rvert_v$, with $\omega$ a gauge form that is a generator at $v$, is $\#G(k_v)q_v^{-\dim G}$ (Weil, \emph{Adeles and Algebraic Groups}, Ch.~II). The factor \lean{relIndex} converts the gauge form of the basis $e$ to the integral Lie lattice, and the archimedean Haar measure is that of the same $e$ (\lean{tangentHaar}). Strong approximation splits $G(F)\backslash G(\mathbb A)$ into the components $\Gamma_j\backslash G(F_\infty)$. With the factor $\lvert d_{E^+}\rvert^{-\dim/2}$ of the Tamagawa measure, the identity is $\tau(\mathrm{SU}_r)=1$ (Kottwitz 1988, going back to Weil). Prasad's archimedean factor $\prod m_i!/(2\pi)^{m_i+1}$ does not occur, because no compact-dual normalization is used. \textbf{Verdict: MATCH AFTER SHORT BRIDGE, with Weil and Kottwitz as the sources instead of Prasad.}
+
+\section{The nine unchecked clauses}\label{sec:nine}
+
+The resolution of each entry is in §3 of the ledger. Fargues for odd $p$ is closed, and its $p=2$ part is now R-2. Strong approximation is closed by notation, because the hypothesis sits in the Lean statement. Zhang is closed by B-Z.1, the Tamagawa entry is closed and re-sourced, and SGA~7 and Mumford become an internal interface of PC-2. Raynaud's normalization of $w$, SGA~3 VII$_A$, the local-density measures of the convergent Siegel--Weil copy and the constants of \lean{SiegelWeilStd} remain open as normalization or bibliographic items. None of them is mathematical in the sense of a possible false statement, because each is a Layer~3 statement that the archive proves.
+
+\section{Slot for items transferred by Agent A}\label{sec:slot}
+
+No Agent A output existed on disk at 20:41 UTC. The orphan pass assigns the gauge volume (F5a, \lean{GaugeVolUD}), the Jacobian constant (F5b, \lean{RhsWLim}) and the Capelli eigen-equation (F5c, \lean{CoefCapAll}) to a new internal group SL-6 of PC-6, and \lean{bwit_exists_alt} and R4-D/E to PC-6 and PC-4. They are internal. If Agent A transfers any of them to the external boundary, each needs a row of the same form as the ledger. The only external inputs named for them so far are Capelli's identity and the Harish-Chandra isomorphism, which are already on the boundary.
+
+\section{Verdicts}
+
+\textbf{E. Has every external theorem used on the live RH route been verified statement-for-statement, including hypotheses and normalization? NO.} R-1 (Siegel--Weil, Weil's convergent range) and R-2 (integral Hodge--Tate at $p=2$) are live and unverified, and the large family R-3 was not compared in this or any earlier pass.
+
+\textbf{F. May the project say ``Every essential live step is either reconstructed in ordinary mathematics or reduced to an exact named external theorem''? NO.} The words ``exact named external theorem'' fail for R-1, where the theorem is identified but not checked, and for R-2, where no printed theorem is known, and the family R-3 has never been checked against print. The supportable form is narrower. The entries marked closed in the ledger (V21, the F4 package, strong approximation, Tamagawa, Zhang with the intersection-system interface, and Fargues for odd $p$) reduce to exact named theorems with written bridges, the remaining boundary is named but not yet verified, and every external statement is also proved inside the Lean archive.
+
+\end{document}

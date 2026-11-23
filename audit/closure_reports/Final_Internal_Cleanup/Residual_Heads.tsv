@@ -1,0 +1,30 @@
+package	head	exclusive_theorems	exclusive_lines	status_this_pass	mechanism_or_note
+exBL/bwit	GlobalTheory.Mem.R3.SelC.square_integrable_columns_of_witnesses	313	4923	RESIDUAL (X1)	column data and column reading at the base tuple; shared by the bwit and zeta-uniform branches of exBL
+exBL/bwit	  GlobalTheory.Mem.Col2.TC.RcHyp.hyps_of_isTw / chTh_ok_chi	254	3796	RESIDUAL (X1 core)	theta-equivariance ThEquivP of every step kernel at the base tuple: thEquivP_ambOf_tiesD (local product measures md_prod), chTh_ok_ambD (stepC_ok_deg), idxMatNF_of_isTw (unfolding nonvanishing via the internal TwistedEisensteinNonvanishing)
+exBL/bwit	  GlobalTheory.Mem.R3.SelC.colRecC	259	3855	RESIDUAL (X1)	evaluation of the column record is bijective; contains hyps_of_isTw
+exBL/bwit	  GlobalTheory.Mem.R3.SelC.jetK_chi / exists_eNu	21	299	RESIDUAL (X1, small)	jets of the kernel at chi; lattice identifications e_u
+exBL/bwit	GlobalTheory.Mem.Top.Bl.WPt.exists_pinned_spectral_data_compatible	73	1318	RESIDUAL (X7)	pinned spectral data compatible with the record; core oTied_of_ksExact (cyclotomic field containment, 66)
+exBL/bwit	GlobalTheory.Mem.Top.Bl.exists_kernel_spectral_data_at_witnesses	22	483	RESIDUAL (X7)	kernel spectral data at witnesses; joints_of_standard_character (16)
+exBL/bwit	GlobalTheory.T.reFace_zero_part_conventions_chosen_again	30	335	RESIDUAL (X2 leaf)	re-chosen face conventions for twisted arguments
+exBL/bwit	GlobalTheory.Mem.R3.RecInAt.recIn_parts_exists_alt	108	1877	CLOSED	Hecke-isotypic parts: commuting spherical Hecke operators, Hecke-polynomial membership (parts_in_hPart), eigenvalue via adjoint of the theta map (eigenvalue_of_part), parameter match by reciprocity (shared engines)
+exBL/bwit	GlobalTheory.HostDatumExists.exists_hostDatum_alt	19	353	CLOSED mod external	Hilbert class field as ray class field of conductor 1; integral class representatives prime to a finite set; Galois
+exBL/bwit	GlobalTheory.Mem.R3.SelRowPin.selected_lower_map_third_stage_alt	13	165	CLOSED	lower-map ties (shared) and gamDvd: stabiliser orders divide DGam (orbit-stabiliser)
+exBL/bwit	GlobalTheory.Mem.R3.SelSideW.selected_side_realization_alt + SelRealIn.realIn_exists_alt	14	163	CLOSED	transport of point data along R.T.cols = q.x.col.C (read in full)
+exBL/bwit	GlobalTheory.Mem.SJ.Place.exists_placement	6	78	CLOSED	rescaling by (c n)^{-1/2}
+R4-D	GlobalTheory.T.seeSawTwistPlaceLaws_of_rootOfUnityRescaling	1073	17914	TRANSFERRED to PC-4 R4-A..R4-C	seesaw twist-place laws QLaw, QLast, QFin for rescaled tuples
+R4-D	GlobalTheory.Fam.QuadraticExtensionData.dat_exists children (row_pair_property, row_pair_relation_alt_alt, twist_quadratic_value)	741	11722	RESIDUAL (D1)	row-pair rational-datum identity with constants C_j uniform in t; top (chartRescale by roots of unity) read
+R4-D	GlobalTheory.LowJoin.exists_quadratic_extension_readsLow leaves (exists_good, commutation_identity, commutation_property)	571	9747	RESIDUAL (D2 leaves)	gluing mechanism read in full and closed; local split-place existence exists_good and two commutation statements unread
+R4-D	GlobalTheory.Fam.vol_level_wt_const_alt children (chain_step_value, chain_step_identity, exists_volume_constant)	516	8122	RESIDUAL (D3)	volume of level times weight independent of the character and of t
+R4-D	GlobalTheory.AdForm.twS_ramL	182	3300	RESIDUAL (D5)	level-prime operators kill ramified columns
+R4-D	GlobalTheory.KRamT.kernel_keeps_ramT	97	1290	RESIDUAL (D6)	step kernels preserve level-ramified forms
+R4-D	GlobalTheory.QVecJoin.step_mid / step_top	88	1416	RESIDUAL (D7)	joint twist identity at middle and top steps
+R4-D	GlobalTheory.T.true_geometry_row_column_entry_alt	61	1263	RESIDUAL (D8)	chart-zero column bound
+R4-D	GlobalTheory.T.true_geometry_twist_value_alt	51	876	RESIDUAL (D9)	quadratic twist level
+R4-D	GlobalTheory.Fam.KomExist.exists_compactOpen_alt	-	-	CLOSED mod external	Weil data for Hecke characters of the right parity (Kudla splitting), internal weilDatumExists shared
+R4-D	GlobalTheory.Fam.FinData.main_alt_alt	-	-	CLOSED	finite combinations closed under scaling and convolution
+R4-E	GlobalTheory.KerTup.kernel_identity_tuple	204	3803	RESIDUAL (E1)	theta-kernel identity at every tuple
+R4-E	GlobalTheory.AdForm.LevLaw.lev_law	97	1660	RESIDUAL (E1)	chart level-pair action on the finite datum
+R4-E	GlobalTheory.AdForm.exists_clsT_of_pinTop	85	1477	RESIDUAL (E2)	last-period class data: tailTop_eq_of_pin (55), TopInv.law_top (39), isReps_stabOrd_top (10), top_translate (9)
+R4-E	GlobalTheory.AdForm.JetScales.exists_jetS	35	430	RESIDUAL (E3)	nonzero jet scale on true columns (pureTensorO_zero_eq_jetP)
+R4-E	GlobalTheory.AdForm.realOf_is	29	469	RESIDUAL (E4)	real data of true columns via the equivariant branching map (multiplicity one)
+R4-E	GlobalTheory.AdForm.exists_readsG_of_level	27	389	RESIDUAL (E5)	reading vector fixed by the class stabiliser character (Schur)

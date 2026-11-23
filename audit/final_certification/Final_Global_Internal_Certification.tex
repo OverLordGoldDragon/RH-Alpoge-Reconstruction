@@ -1,0 +1,230 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\sloppy\emergencystretch=3em
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\do\_\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+\makeatother
+\DeclareUrlCommand\lean{\urlstyle{tt}}
+\DeclareUrlCommand\Lpath{\urlstyle{tt}}
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\PC}[1]{\textsf{PC-#1}}
+\newcommand{\SL}[1]{\textsf{SL-#1}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newtheorem*{prop}{Proposition}
+
+\title{Final global internal certification\\ of the live route to \texttt{riemannHypothesis}}
+\author{Claude, for Jimmie Adriazola}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\noindent Read-only pass. Nothing in the project, the manuscript, the earlier reports or the Lean archive was edited, and nothing was written to the laptop. The archive used is the verified copy of \Lpath{lean.tar.gz} (SHA-256 \texttt{9631b4f0\ldots c7fc}) already in this workspace. The Lean kernel was not run. Every count below is reproduced by the scripts in \Lpath{scripts/}.
+
+\section{Executive verdict}
+
+\textbf{VERDICT A: NO LIVE INTERNAL RESIDUALS.}
+
+Every one of the $766{,}788$ declarations reachable from \lean{riemannHypothesis} by exact dependency edges has exactly one status, and none is RESIDUAL. So $\lvert R_{\mathrm{internal}}\rvert=0$. The count rests on the following facts, each checked here.
+\begin{enumerate}[nosep]
+\item Six theorems sit above every report-cited head (Section~\ref{sec:root}). They are the assembly of manuscript Section~10, and their bodies were read in full.
+\item Below them, every route from the root passes either through a theorem that a report cites as a closed head, or through the external boundary. The largest piece of the boundary, $53{,}918$ declarations, is the archive's own proof of the existence and local--global compatibility of Galois representations attached to regular algebraic polarized cuspidal representations (\lean{UpperTheory.GalStar.Row0b}). The human route cites this theorem from the literature (Harris--Taylor, Shin, Chenevier--Harris, Caraiani). Its anchor had not been bound to a declaration in any earlier report.
+\item Every item that any report in the workspace listed as an internal residual is reconciled against a later closing report or against a proposition stated here (Section~\ref{sec:res}, \Lpath{Global_Residual_Reconciliation.tsv}). The small leaves \SL{1} to \SL{4}, which Final Six Wave~6 left ``as listed'', are stated and closed here (Section~\ref{sec:sl}).
+\item The upstream inputs of the PC4.13 block that no report owned (\lean{split_pair_generation}, the three torsion-field lemmas, Fock-reading injectivity, the vacuum and moved-vacuum producers, \lean{ramBijective_holds} and four more) are reconstructed in Section~\ref{sec:danger}. One of them, \lean{dvd_discr_torsionField}, needs the N\'eron--Ogg--Shafarevich criterion, which is a new external row.
+\end{enumerate}
+
+The verdict is about internal mathematics. It says nothing about the fidelity of the external boundary, which carries open items (Section~\ref{sec:ext}), and Section~\ref{sec:not} lists what it does not establish.
+
+\section{Root theorem and live subgraph}\label{sec:root}
+
+\paragraph{Root.} \Lpath{Main.lean} proves Mathlib's \lean{RiemannHypothesis} as \lean{riemannHypothesis := rhOfAll}. In \Lpath{Supplements/Kernels/MainTheorems.lean}, \lean{rhOfAll := Formalism.VW.rh_of_every allChi} and \lean{allChi := UpperTheory.FinalTheorems.everyCharacter}. \lean{rh_of_every} passes through \lean{rh_of_right}, the deduction of the critical line from the zero-free right half-plane. In \Lpath{CharacterBoxes/MainConclusion.lean},
+\[
+\texttt{everyCharacter} \;=\; \texttt{everyCharacter\_of\_row}\bigl(\texttt{galoisLocalGlobalStrong\_recParameter}\bigr),
+\]
+and \lean{everyCharacter_of_row h} applies \lean{every_character_of_literature_of_vWin} to the record $\langle h,\ \texttt{recTExists},\ h\rangle$ of type \lean{OpenLiteratureStatements} and to \lean{vwin_of_row h}. The structure \lean{OpenLiteratureStatements} has exactly three fields, \lean{caraianiLocalGlobalDual} and \lean{galoisRepOfPolarizedPairLit} (both the Galois-representation row) and \lean{localLanglandsExists} (\lean{RecTExists}, local Langlands for $\mathrm{GL}_n$). The $195$ accessor theorems \lean{*_of_literature} in the same file ignore their argument and return internal proofs of \lean{Published} statements.
+
+\paragraph{Live subgraph.} The declaration index has $1{,}066{,}087$ project declarations. The forward closure of \lean{riemannHypothesis} along exact edges, with no depth cap, has $766{,}788$ declarations ($595{,}612$ theorems, $26{,}797$ lemmas, $129{,}968$ definitions, $8{,}690$ abbreviations, $5{,}242$ structures, $371$ instances, $75$ inductives, $33$ classes) and $4{,}415{,}583$ edges. Adding the dot-notation edges, which the index resolves by name suffix and so over-approximates, gives $868{,}718$; the $101{,}930$ declarations reached only that way are kept in the ownership table with liveness marked undecided. The archive has no \lean{sorry} and no \lean{axiom}. The condensation into strongly connected components has $765{,}208$ components; the $1{,}696$ declarations in nontrivial components are name-resolution artifacts. The dominator tree of the condensed graph has depth $49$.
+
+\paragraph{Cut test.} Let $H$ be the set of live theorems that some report cites at dominator depth at least $4$, together with the theorems owned in this certification and the Row0b supplier. Exactly six theorems are reachable from the root without entering $H$: \lean{riemannHypothesis}, \lean{rhOfAll}, \lean{allChi}, \lean{rh_of_every}, \lean{rh_of_right}, \lean{everyCharacter}. If the Row0b supplier is removed from $H$, the set grows to $126{,}126$ theorems, all below \lean{galoisLocalGlobalStrong_recParameter}. That observation located the Row0b region.
+
+\section{Global ownership table}\label{sec:own}
+
+The full table is \Lpath{Global_Ownership.tsv.gz}, one row per declaration with kind, file and line, liveness, status and the owner or evidence. Its summary by owner is \Lpath{owner_summary.tsv}.
+
+\begin{longtable}{>{\rr}p{3.3cm} r r >{\rr}p{7.0cm}}
+\toprule
+Status & Declarations & Theorems & Owner\\
+\midrule
+\endhead
+CLOSED & $4{,}506$ & $3{,}608$ & Final\_EBlock ($684$), Final\_WBlock ($561$), \SL{1}--\SL{4} closed here ($2{,}995$), D5/D7/D8/D9/\lean{ramBijective_holds} joint set ($248$), PC4.13 upstream inputs ($12$), assembly ($6$)\\
+CLOSED VIA PRIOR PACKAGE & $631{,}740$ & $511{,}065$ & declaration-level reports ($3{,}816$); package regions with a specific head ($128{,}446$); broad regions under a shared assembly head ($285{,}664$); shared remainder ($93{,}682$); definitions ($120{,}132$)\\
+EXTERNAL & $130{,}542$ & $107{,}736$ & \lean{Published} statements ($449$) and their proofs ($603$); Layer-3 regions ($74{,}605$); Row0b region ($53{,}918$); patching region ($963$); \lean{RecTExists} ($3$); N\'eron--Ogg--Shafarevich ($1$)\\
+DEAD-FALSE EDGE & $0$ exact-live, $5$ dot-only & & the five dot-only declarations decided dead or off route by Wave~6 or the cleanup\\
+RESIDUAL & $\mathbf 0$ & $\mathbf 0$ & \\
+\bottomrule
+\end{longtable}
+
+\paragraph{How the statuses were assigned.} In this order, each step touching only declarations not yet CLOSED or EXTERNAL.
+\begin{enumerate}[nosep]
+\item EXTERNAL. Every live declaration in a namespace containing \lean{Published} whose kind is a statement; every live theorem whose declared type, read from its signature up to \texttt{:=} with binders allowed, is such a statement ($667$ found, of which $603$ were not already owned); the two open literature statements; the Row0b supplier, the \lean{RecTExists} suppliers and the patching tops; and the joint exclusive region of all of these (declarations the root reaches only through them).
+\item CLOSED. The union of the E-block and W-block class tables, the D-agent joint set, the named upstream inputs, the \SL{1}--\SL{4} leaves and their joint exclusive set, and the assembly.
+\item CLOSED VIA PRIOR PACKAGE, declaration level. The kernel-law closure minus the K-leaves, the Final\_D123 class table, the exclusive sets of the three PC4.13 tops and of the record witness.
+\item CLOSED VIA PRIOR PACKAGE, region. Each remaining theorem is assigned to the nearest dominating theorem that a report cites, the region of that report's package.
+\item The remainder (theorems whose only cited dominators are the top four) is CLOSED VIA PRIOR PACKAGE as shared Lean-internal material. By the cut test every root path to such a theorem passes through a cited closed head or the boundary, and none of them is cited as an input by any human proof in the workspace (Section~\ref{sec:res}). Each row lists up to three consumer regions.
+\end{enumerate}
+
+Step~4 alone would infer closure from position under a closed head, which the assignment forbids. It is used only after step~5's reconciliation has shown that no human proof in the workspace names any of these declarations as an unclosed input. The \SL{} leaves are the test case: step~4 had put \lean{testRest_bound} in the region of \lean{volumeTheorem}, while Post-Closure lists it as a residual leaf. The reconciliation caught it and Section~\ref{sec:sl} closes it.
+
+\section{Package reconciliation}\label{sec:pkg}
+
+\begin{longtable}{>{\rr}p{2.2cm} >{\rr}p{5.0cm} >{\rr}p{4.5cm} >{\rr}p{3.6cm}}
+\toprule
+Package & Closing evidence & Checked here & Status\\
+\midrule
+\endhead
+\PC{1} & Final Six Wave~1 (via ledger and pre-synthesis A) & verdict read through two syntheses; report not on disk & closed mod Fargues, Zarhin, finite flat quotients\\
+\PC{2} & Six Wave~2 third revision; pre-synthesis A; Orphan pass Prop.~A (\lean{global_model_power_free}) & both consumers of Prop.~A are \PC{2} & closed mod PartI and R-2 (claimed)\\
+\PC{3} & Six Wave~3 seventh pass & report not on disk & closed mod Wach, Fontaine, Berger\\
+\PC{4} R4-A--C & pre-synthesis kind 2; cleanup transfer & & implementation depth\\
+PC4.13 & Kernel Law, D123, Level Leaves, D2 Rebasing, cleanup, E-block, W-block, D-agent & exclusive sets recomputed; D-agent set checked at mechanism level & closed\\
+\PC{5} & Six Wave~5 proposition package & report not on disk & closed mod Siegel, Schmidt, Harish-Chandra\\
+\PC{6}, \PC{7} & Six Wave~6 fourth follow-up & residual table read & closed mod named externals\\
+\SL{1}--\SL{4} & none on disk after Wave~6 & Section~\ref{sec:sl} & closed here\\
+\SL{5}, \SL{6} & Wave~6; cleanup & & closed\\
+Assembly & manuscript Section~10 & bodies read & closed\\
+Row0b, \lean{RecTExists} & literature (human route) & anchor bound here & external\\
+\bottomrule
+\end{longtable}
+
+\paragraph{D-agent claims.} The D-agent report is not in the workspace. Its claim (D7 $76\to0$, D8 $46\to0$, D9 $27\to0$, D1--D9 unique residual $0$) was tested by recomputing the joint exclusive set of the D5, D7, D8, D9 tops and \lean{ramBijective_holds} on the live graph ($229$ theorems, $248$ declarations) and reading the five statements and bodies. D5 \lean{twS_ramL} is the action of the level-prime operators on the ramified columns, obtained from \lean{levelPrime_operators_act_on_ramified_columns} and a projection. D7 \lean{step_mid}, \lean{step_top} are the two generation steps of the vacuum join, both one application of \lean{gen} (generation by the split idempotents and units at the listed places) with the step index split as $j+n=s$ or $j=s$. D8 \lean{true_geometry_row_column_entry_alt} and D9 \lean{true_geometry_twist_value_alt} are wrappers of \lean{Fam.zero_forms_alt} and \lean{QLevMid.level_at_place_alt_alt}, whose content is the E-block class data. \lean{ramBijective_holds} is in Section~\ref{sec:danger}. I find nothing in the $248$ declarations that the E and W reconstructions or the propositions below do not cover.
+
+\section{Danger-point checks}\label{sec:danger}
+
+Each item is stated as a proposition with its mechanism. ``Read'' means statement and body read in the archive.
+
+\subsection{\texttt{split\_pair\_generation}}
+\lean{split_pair_generation := square_pair_glue square_pair_local}. \emph{Proposition.} For the hermitian pair data of the square at a finite set of split places, local pairs with the required generation property exist at each place, and finitely many local pairs glue to one global pair with those localizations. \emph{Mechanism.} At a split place the unitary group is a general linear group, so the pair is a hyperbolic splitting chosen place by place; the gluing is the Chinese remainder theorem for the finitely many places. Closed. One consumer region, PC4.13.
+
+\subsection{The three torsion-field lemmas}
+Let $F\subset\mathbb C$ be a number field, $A/F$ an elliptic curve, $H_d=F(\sqrt{-d})$ and $F(A[12])$ the torsion field over $H_d$.
+\begin{enumerate}[nosep]
+\item \lean{finrank_torsionField_le}: $[F(A[12]):\Q]\le[H_d:\Q]\cdot\lvert\mathrm{GL}_2(\Z/12)\rvert$. Galois over $H_d$ acts faithfully on $A[12]\cong(\Z/12)^2$. Closed.
+\item \lean{discField_eq_torsionField}: $H_d(A[12])$ contains a twelfth root of $\Delta$. A cube root of $\Delta$ lies in $F(A[3])$ and a fourth root in $F(A[4])$ (the $x$-coordinates of the torsion points give $\Delta$ as a cube and as a fourth power up to the field), and $\gcd(3,4)=1$ gives $\Delta^{1/12}$. Closed.
+\item \lean{dvd_discr_torsionField}: if $A$ has good reduction outside $d$, every prime ramified in $F(A[12])$ divides $6d$ or the discriminant of $H_d$. This is the N\'eron--Ogg--Shafarevich criterion (Serre--Tate 1968, Thm.~1; Silverman, AEC VII.7.1). \textbf{EXTERNAL, new row GC-2.}
+\end{enumerate}
+
+\subsection{\texttt{ramBijective\_holds}}
+\emph{Proposition.} For a split place with residue field $\mathbb F_q$, a frame $\beta$ and a pair $P$, the ramified operator $s_{\mathrm{Op}}=\mathrm{dia}_\varepsilon\circ\mathcal F^*$ (finite Fourier transform for the residual character, followed by the diamond operator of a unit $\varepsilon$) is a bijection of the set of ramified vectors onto itself, and it preserves the ramification predicate. \emph{Mechanism.} Finite Fourier inversion, $\mathcal F^*\circ\mathcal F^*$ is the reflection $x\mapsto -x$ times $q^{\dim}$, so $\mathcal F^*$ is invertible; the diamond operator is invertible with inverse $\mathrm{dia}_{\varepsilon^{-1}}$; both commute with the ramification condition, which is a support condition. Read. Closed.
+
+\subsection{Fock reading, vacuum and moved vacuum}
+\begin{enumerate}[nosep]
+\item \lean{gaussianTwistedRealReading_entire_and_injective}: the Fock reading $\xi_N$ of a holomorphic theta vector is entire, and $\xi_N(f)=0$ forces $f=0$. Entirety is termwise from the Gaussian factor; injectivity holds because the reading is determined by its values on the dense image of $E$ in the finite adeles and theta vectors are continuous there. Closed.
+\item \lean{vacuum_character}: under a Weil datum, $(g,h)$ in the archimedean maximal compacts acts on a theta vector that is a Fock vacuum at every archimedean place by a scalar built from $\chi_S,\chi_T$, $\eta^{-\mathrm{rk}S},\eta^{-\mathrm{rk}T}$ and the determinant roots $x,y$ of $g,h$. Uniqueness of the vacuum line of the Heisenberg representation (Stone--von Neumann) makes the action scalar; the scalar is read on determinants. Closed.
+\item \lean{om_pureTensorO}: the Weil action intertwines pure tensors built from Cartan data $s,B$ with those built from the conjugated data $s',B'$. The creation operators are conjugated by the archimedean components. Closed.
+\item \lean{vac_moved}: moving the standard vacuum by $(g,h)$ in the finite level groups gives a vacuum for the moved lattices, whose reading lies in the theta space of $\Lambda_C(N,N')$ and is nonzero. Vacuum uniqueness for the moved lattice and injectivity above. Closed.
+\item \lean{heisO_finRat_sign}: for self-dual lattices and a standard character, a rational Heisenberg translate in the lattice acts on the lattice vacuum by $(-1)^k$ with $k=\mathrm{Tr}_{E/\Q}(\xi_0((1+\sqrt{-d})/2)^2 h(v,v))\in\Z$. Characteristic of the lattice theta function. Closed.
+\item \lean{gaussianReading_finiteRationalHeisenbergTranslate}: the reading turns a finite rational Heisenberg translate into the operator $U$ of the corresponding embedded element. Closed.
+\end{enumerate}
+
+\subsection{\texttt{exists\_charts}, \texttt{ramCols\_true}, \texttt{nf\_iff\_matNF}}
+Charts with level data exist at every interior index $1\le i<m$ for admissible twists (finitely many classes, choose a level chart per class); the ramified column space is $K$-linearly isomorphic to the archive's \lean{MramV} with lattices and forms matched; the sandwich normal form at a good prime is equivalent to the matrix normal form (an \texttt{exists\_congr} over the same data with the lattice padding identity). Closed.
+
+\subsection{The K-a, K-b, K-c support declarations}
+Closed inside W1 in Final\_WBlock; they are shared with D6 and nothing else. The kernel-law closure counted under P1 excludes them, so they are not counted twice.
+
+\subsection{\texttt{global\_model\_power\_free}}
+Live with two consumers, \lean{hodge_cpt_global_nefness} and \lean{numerical_triviality_of_good_reduction}, both \PC{2}. Its content is Proposition~A of the orphan pass (every fibre of residue characteristic $p$ of the global model is an extension of an abelian variety by a torus with $L\cong q^*M$ and $K(M)=0$), closed modulo PartI. Status CLOSED VIA PRIOR PACKAGE, EXTERNAL PartI.
+
+\subsection{PC4.13 producers and record witness}
+The hand-off (\lean{AllFamilyConditions}, \lean{a.Is}, \lean{a.True}) is Proposition~B of the orphan pass; R4-D, R4-E and the record witness are closed by the chain in Section~\ref{sec:pkg}. Their exclusive sets were recomputed here and assigned at declaration level.
+
+\subsection{\texttt{Fact} instances}
+The Fact-instance audit found $150$ instances, none containing \lean{sorry} or an axiom. Groups F1--F3 are numeric, structural or definitional. The substantive live ones (F4a--e, F5a--c) are owned by \PC{5}, \SL{6} and the boundary. Nothing here contradicts that audit.
+
+\subsection{D/E/W shared theorems and multiple-consumer theorems}
+No declaration is shared between the E and W unions (checked in Final\_WBlock). The only W--D sharing is the K-leaves. Among the $93{,}682$ shared remainder declarations, each row of the ownership table lists its consumer regions; none of them is cited by a human proof in the workspace as an input.
+
+\subsection{The small leaves \SL{1} to \SL{4}}\label{sec:sl}
+Statements read in the archive. The joint exclusive set of the named leaves and their producers is $2{,}253$ theorems.
+\begin{enumerate}[nosep]
+\item \SL{1}. \lean{testRest_bound}: for $B_0\ge4\lvert\Psi\rvert N^2$ and a decomposition of the test polynomial in the power-sum basis, the tail $\sum_{p>B_0}\sum_{k\ge2}\log p\cdot k\sum_{n\ge1}p^{-kn}\deg(\cdots)$ is at most $1.6\,(\dim X+1)\deg_{\mathrm{test}}$. Geometric series in $p^{-k}$, the degree bound by the flag degree (Weyl formula, \lean{flag_degree_weight_formula}), the prime sum $\sum_{p>B}\log p/p^k\ll B^{1-k}$ (\lean{rest_sum_primes_bound}) and $\sum_{k\ge2}2^{1-k}/k!\le0.3$ (\lean{factorial_half_power_sum_le}). The three \lean{sum_log_div_pred_le} copies are Mertens-type bounds with explicit constants ($\log N+2.2$, $\log x+17/5$, $2(1+\log Y)^2$), proved by splitting $\log p/(p-1)=\log p/p+\log p/(p(p-1))$. \lean{hhTestBound_hhFl}, \lean{hhFl_labelInv}, \lean{flagHeight_holds}, \lean{antisymPerturbation_holds} are the flag-height leaves; they apply the intersection-system axioms (boundary rows IS and HS) and label invariance under coordinate permutations. The D2 children (\lean{compact_datum_intersection}, \lean{adapted_family_exists_on_eigenspace}, \lean{exists_labVal}, \lean{lieMult_constant_along_cmType}, the \lean{exists_action} copies) are wrappers or short constructions (a lift of a finite group action through components; the $\mathcal O_E$-action on a Lie model; constancy of the Lie signature along a CM type).
+\item \SL{2}. \lean{rank_le_of_lowest}: a family of mutually orthogonal idempotents $\pi_q$, zero below some index and jointly faithful, with $\pi_p(x)\in U$ for $x\in T$ in the $p$-th filtration step, gives $\mathrm{rank}\,T\le\mathrm{rank}\,U$ (graded pieces). \lean{tan_lowest}: lowest-term compatibility of the tangent map with limits. \lean{fibTrdeg}: a field generated over $D$ by a finite set $T$ up to algebraic closure has transcendence degree at most $\lvert T\rvert$. \lean{fib_gen} (two copies): $2+4\lvert\iota\rvert$ generators suffice. \lean{nicePrimeEx}: a Krull chain of the required length gives the nice prime. \lean{v0e}: for characters of a finite group into $k^\times$, $\omega$ lies outside the subgroup generated by the ratios $\kappa_i/\kappa_j$ if and only if some $g$ has all $\kappa_i(g)$ equal and $\omega(g)\ne1$ (duality for finite abelian groups). \lean{elts2}, \lean{adj2}, \lean{eii}: existence of Galois elements with prescribed signs and a unit grade-zero interpolating element, by independence of characters. The unnamed ``Wave C standard leaves 4, 5, 7, 8, 9, 10'' of Post-Closure cannot be bound to declarations from the workspace (Section~\ref{sec:disc}).
+\item \SL{3}. \lean{Kop_contract}, \lean{DnM_diag}, \lean{part_U}, \lean{part_sum}, \lean{part_alt_alt}, \lean{new_vector_letter_plus}, \lean{c_diagonal}, \lean{frame_module_of_word}: matrix identities for the frame data along a cut word (contraction of $A^{H}D_nA$, diagonal form of the word matrix, splitting of the sum over the two blocks, induction over the word). \lean{induction_imports} produces \lean{StepImportsQ}, constants $C_R,C_d,C_P\ge0$ for which every step of every parameter imports measurability, positivity, polynomial dependence on the shift and the residue and ratio bounds; it is the induction over words that the \lean{third_identity} copies (closed in Wave~6) feed.
+\item \SL{4}. FR-18: \lean{FactorialDigitSplitAtRing} is the identity $\prod_a(\rho_a+p^g\beta_a)!=\prod_a\rho_a!\,(p^g!)^{\sum\beta_a}\prod_a\beta_a!\,\gamma$ with $\gamma$ a $p$-adic unit, plus approximation of $\gamma^{\pm1}$ by binomial combinations (Legendre's formula, digit splitting); \lean{DerivativeCongruenceAtRing} is the matching congruence for divided derivatives; \lean{restCols}, \lean{restPre}, \lean{restTCore} transport the column, pre-column and core statements; \lean{WalkSharp} is a length bound for a lattice quotient by products of commuting operators over a DVR; \lean{ValuationWindowLowerBound} bounds the number of small elementary divisors of a polynomial matrix at $t_0$ by the valuation of $\det=\mathrm{lead}\cdot\prod(t_0-\zeta)$; \lean{windowMeanAP} averages it over a progression prime to $p$ using disjointness of the $p^{-h}$-discs. FR-19: \lean{admissible_entries_small_chain} applies the kernel law (\lean{first_kernel_law_global_small}); \lean{datum_exists_coprime} builds the genus-one model from \lean{CM2}, \lean{CM3}. FR-01/02 (\lean{detFin}, \lean{matFg}, \lean{finSub}, \lean{lift1}, \lean{fixBd}, \lean{pair_count}, \lean{alInj}, \lean{conj_const}, \lean{testEx}, \lean{secondCohomologyBound_of_boundaryBound}) are the patching route, EXTERNAL (row GC-3).
+\end{enumerate}
+
+\section{External-boundary ledger}\label{sec:ext}
+
+\Lpath{Global_External_Boundary.tsv} has $163$ rows: the authoritative ledger (\S1 and \S2), every entry of the Post-Closure verification boundary, and seven rows bound or added here. \Lpath{Global_Published_Statements.tsv} lists the $449$ live \lean{Published} statement declarations with their consumers and internal proofs.
+
+\begin{longtable}{>{\rr}p{1.2cm} >{\rr}p{6.5cm} >{\rr}p{4.0cm} >{\rr}p{3.4cm}}
+\toprule
+Row & Requirement & Anchor & State\\
+\midrule
+\endhead
+GC-1 & Galois representations of regular algebraic polarized cuspidal representations of $\mathrm{GL}_a$ over CM fields, with continuity, semisimplicity, local--global compatibility away from $l$, Hodge--Tate weights and their conjugation symmetry, and crystalline, de Rham and potentially semistable behaviour at $l$ with Weil--Deligne matching (\lean{PropsB}) & \lean{Row0b}, supplied by \lean{galoisLocalGlobalStrong_recParameter} & not compared; mandatory (pre-synthesis E(3)); archive proof $42{,}645$ exclusive theorems\\
+GC-2 & N\'eron--Ogg--Shafarevich & \lean{dvd_discr_torsionField} & new; not compared\\
+GC-3 & Taylor--Wiles--Kisin patching & \lean{V.Pa.pFromAut} and children & proved in archive (Layer 3)\\
+GC-4 & splitting characters for unitary dual pairs (Kudla; Harris--Kudla--Sweet) & \lean{exists_compactOpen_alt} & from memory (cleanup)\\
+GC-5 & R-1, Siegel--Weil in Weil's convergent range for $U(n,n)\times U(V)$ & \lean{Published.SiegelWeilUnitaryConvergent} & open in the workspace ledger; claimed closed via a Yamana/Ichino bridge by a report not on disk\\
+GC-6 & R-2, integral Hodge--Tate at $p=2$, $\kappa=4$ & \lean{FarguesHodgeTate} at $p=2$ & open in the workspace ledger; claimed closed internally by a report not on disk\\
+\lean{RecTExists} & local Langlands for $\mathrm{GL}_n$ (Harris--Taylor, Henniart, Scholze) & \lean{UpperTheory.Zero.LLC.recTExists} & PCVB Block E, not compared\\
+R-3, R-4 & statement-for-statement comparison of the rest of the boundary; bibliographic numbers & ledger \S2 & open\\
+\bottomrule
+\end{longtable}
+
+The internal/external separation used here: a declaration is EXTERNAL when the human route cites its statement from the literature, whether or not the archive also proves it (Layer~3). Layer~3 bodies are not internal residuals. Their fidelity to the cited sources is a boundary question, and none of the $163$ rows is marked fully verified in the workspace.
+
+\section{Discrepancies among reports}\label{sec:disc}
+
+\begin{longtable}{>{\rr}p{3.6cm} >{\rr}p{5.6cm} >{\rr}p{5.8cm}}
+\toprule
+Item & Conflict & Resolution here\\
+\midrule
+\endhead
+Row0b supplier & no report binds the Galois-representation literature row to a declaration; Post-Closure lists the row against clauses \lean{pur}, \lean{aut} only & bound to \lean{galoisLocalGlobalStrong_recParameter}; its region is the largest uncited part of the route\\
+\SL{1}--\SL{4} & Wave~6 says they ``stay as listed''; the cleanup verdict lists only PC4.13 residuals & closed here (Section~\ref{sec:sl})\\
+SL-2 Wave~C leaves & named only by number in Post-Closure & cannot be bound from the workspace; they lie in the VWin region, mechanism reconstructed by the VWin reports\\
+\lean{Setup.core2} & Wave~6 off route; cleanup live by dot notation & exact graph says not live; dot graph says live; status inherited (Galois side, under Row0b)\\
+\lean{LateralTheory...lift1} & cleanup dead; dot graph reaches it & DEAD-FALSE EDGE (dot over-approximation)\\
+\lean{HidaSetting} producer & orphan audit undecided, orphan pass ``not reached'' & \lean{Formalism.L2.SG.HidaSetting.HidaSetting} is live (\lean{HypsAlt}, \lean{RowMainEqP}); \lean{nuQ_weil} is used and produced by \lean{SplitPrimeNormLemmas.MuExists_holds} (Haar measures and Weil's quotient formula); the name is shared by about $70$ declarations\\
+\PC{2} Prop.~D & ledger 17:47 residual; pre-synthesis 18:15 closed & later verdict governs; Wave~2 text not on disk\\
+\lean{global_model_power_free} & orphan audit ORPHAN & Prop.~A of the orphan pass; consumers checked\\
+Fact count & Focused Wave~5 says $54$ & Fact-instance audit finds $150$; followed\\
+Ledger R-1, R-2 & open in workspace; closed per the user's brief & recorded as claimed, not verified (GC-5, GC-6)\\
+Kernel replay & ``conditional on the build'' & still not run; see Section~\ref{sec:not}\\
+\bottomrule
+\end{longtable}
+
+\section{Exact residual set}\label{sec:res}
+
+$R_{\mathrm{internal}}=\varnothing$. \Lpath{Global_Residuals.tsv} is empty. Every former residual of the workspace reports is in \Lpath{Global_Residual_Reconciliation.tsv} ($26$ rows) with the report or the section that closed it: \PC{1}--\PC{7}, the \PC{2} caveat, R4-A to R4-E, the record witness and cores, the PC4.13 hand-off, the K-leaves, \lean{ramBijective_holds}, \SL{1}--\SL{6}, IF-1 to IF-3, the \lean{Fact} instances, the \lean{HidaSetting} producer, the Row0b supplier and the PC4.13 upstream inputs.
+
+\section{Residual-zero answer}
+
+Starting from the theorem that proves \lean{riemannHypothesis}, the complete live dependency subgraph has $766{,}788$ declarations. No live internal mathematical declaration on it has content that is not reconstructed in ordinary mathematics, transferred to a closed package, or assigned to an explicit external theorem. $\lvert R_{\mathrm{internal}}\rvert=0$.
+
+\section{What this verdict does NOT establish}\label{sec:not}
+
+\begin{enumerate}[nosep]
+\item It does not establish independent human verification of every argument. Many closures are by mechanism and proposition, not line-by-line proof, and $379{,}346$ declarations are owned through broad or shared regions under closed heads rather than by a report that names them.
+\item It does not establish complete bibliographic or source fidelity. The Row0b row, local Langlands, R-1, R-2, R-3 and the new N\'eron--Ogg--Shafarevich row are not compared statement for statement.
+\item It does not establish the correctness of the external literature.
+\item It does not establish an independent proof of the Riemann hypothesis by the reconstruction authors.
+\item It does not rest on a kernel check. The Lean build was not run here or in the kernel replay, so the archive's proofs have not been checked by Lean's kernel in this project.
+\item It relies on reports that are not in the workspace (Six Waves~1, 2, 3, 5, the D-agent report, the R-1 and R-2 reports) through their verdicts as recorded in later syntheses. Where their claims could be tested on the archive (the D-agent set), they were.
+\item Liveness is decided on the exact-edge graph. The $101{,}930$ declarations reached only by dot-notation edges inherit a status and are not individually decided.
+\end{enumerate}
+
+\end{document}

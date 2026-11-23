@@ -1,0 +1,297 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{esint}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\sloppy
+\newcommand{\lean}[1]{\nolinkurl{#1}}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}[lemma]{Proposition}
+\theoremstyle{definition}
+\newtheorem{statement}[lemma]{Statement}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\title{The Siegel--Weil formula in Weil's convergent range\\[2pt]\large External item R-1, RH--Alpöge reconstruction}
+\author{Claude, for Jimmie Adriazola}
+\date{22 November 2026}
+\begin{document}
+\maketitle
+
+\section{Scope and inputs}
+
+This report settles the external item R-1 of \texttt{Final\_External\_Fidelity}, the doubling-form Siegel--Weil formula for $n<m\le 2n$ on the \lean{MIstar2} route. It edits no project file and does not touch \texttt{RH\_Route\_Notes.tex}.
+
+The Lean archive was copied as the fourteen parts \texttt{lean.tar.gz.part01}--\texttt{part14} and joined. The joined file has sha256 \texttt{9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc}, which is the value in \texttt{Claude\_Kernel\_Replay/Kernel\_Replay\_Report.md}. It unpacks to 175{,}187 \texttt{.lean} files. The supporting files were \texttt{Final\_External\_Fidelity} (report, ledger, source map), \texttt{External\_Theorem\_Fidelity.md}, \texttt{Final\_Six\_Wave\_4} and \texttt{Final\_Six\_Wave\_6} with their dependency maps, \texttt{Final\_Internal\_Cleanup} and the orphan and interface dependency map.
+
+Published texts were read through page fetches. S.~Yamana, Pacific J.\ Math.\ 264 (2013), was read in the open MSP PDF. W.~Xiong, arXiv:1205.6025, and C.~Li's IHES lecture notes were read as cross-checks of normalization. A.~Ichino, Math.\ Z.\ 255 (2007), is behind the Springer paywall, and the page shows the abstract and the reference list without any article text. I did not open it.
+
+\section{Where the statement sits in the archive}\label{sec:where}
+
+\subsection{The consumer}
+
+The live chain recorded in the ledger is
+\begin{center}
+\lean{miStar2_of_allTrue_alt_alt} $\to$ \lean{ontoAll_of_hecke_alt} $\to$ \lean{heckeForm_of_doubling'} $\to$ \lean{globalForm_of_siegelWeil'} $\to$ \lean{siegelWeil_fockDoubledPair_of_weil_and_ichino}.
+\end{center}
+The last theorem is \lean{GlobalTheory.Core.Rk.IP.siegelWeilAll_of_hypotheses} (\lean{SiegelWeilFockDoubledPairOfWeilAndIchino.lean}, line 49). Its hypothesis on $V$ is $r=0$ or $n+r<m$, together with $n<m$. It splits on $m\le 2n$. For $m>2n$ it uses \lean{WeilSiegelFormulaUnitary}. For $m\le 2n$ it first turns $r=0$ into $n+r<m$ (using $n<m$) and then applies \lean{GlobalTheory.Published.SiegelWeilUnitaryConvergent}. The doubling copy is therefore consumed exactly on
+\begin{equation}\label{eq:range}
+n<m\le 2n,\qquad n+r<m .
+\end{equation}
+
+\subsection{How the archive discharges it}
+
+The name \lean{Published} suggests an assumption, and earlier passes treated R-1 as one. The archive proves it. In \lean{EveryCharacterOfLiteratureOfVWin.lean}, line 481,
+\begin{center}
+\lean{siegel_weil_unitary_convergent_of_literature (O) := UpperTheory.Lit.Sw47.convergent},
+\end{center}
+and the right-hand side does not use $O$. In \lean{FockAnisoFree.lean}, line 10,
+\begin{center}
+\lean{convergent := GlobalTheory.StdUnn.sw_doubled_of_std PositivityTheory.SiegelWeilCoefficients.field},
+\end{center}
+and in \lean{CoefND.lean}, line 24, \lean{field : SiegelWeilUnitarySchrodinger} is a closed theorem, proved from \lean{coefND} (nondegenerate Fourier coefficients of the Laurent coefficients of $E$ at $s_0$ against those of the theta mean) and \lean{wtc} (Weil's convergence of the theta integral). The textual trust audit of the Kernel Replay found no \lean{axiom}, \lean{sorry} or \lean{opaque} in the closure. So the doubling statement is a Layer~3 statement with an internal proof in two stages, a change of model \lean{sw_doubled_of_std} (read in full here) and the Schr\"odinger-model theorem \lean{field} (whose proof I did not read). The fidelity question is whether these statements are the published theorem, with the right constants.
+
+\section{A. The exact required statement}\label{sec:statement}
+
+Fix the following data, read from \lean{D7}, \lean{HSp}, \lean{IsCharAF}, \lean{IsHeckeChar}, \lean{ResEta}, \lean{absE}, \lean{IsCovolOne}, \lean{levelAll}, \lean{wittIdx}, \lean{IsCartanInv}, \lean{HolValueAt}, \lean{EisValueAt}, \lean{thetaMean}, \lean{thetaInt} and \lean{IsWeilSch}.
+\begin{itemize}[leftmargin=*]
+\item $F$ is a totally real number field, $E/F$ a CM extension with conjugation $x\mapsto\bar x$, and $\eta=\varepsilon_{E/F}$ the quadratic character of $\mathbb A_F^\times/F^\times$. The idelic norm is $|x|_{\mathbb A_E}=|N_{E/F}x|_{\mathbb A_F}$.
+\item $\psi$ is a nontrivial unitary character of $\mathbb A_F/F$, and $\chi$ is a unitary character of $\mathbb A_E^\times/E^\times$ with $\chi|_{\mathbb A_F^\times}=\eta^m$.
+\item $V$ is a hermitian space over $E$ of dimension $m$ with Gram matrix $Q$, $r$ is its Witt index over $E$, and $H=U(V)$.
+\item $J=\begin{pmatrix}0&1_n\\-1_n&0\end{pmatrix}$, $G=U(J)$ is the quasi-split $U(n,n)$, $P$ is the stabilizer of $\langle e_1,\dots,e_n\rangle$, with $m(a)=\operatorname{diag}(a,{}^t\bar a^{-1})$ and $n(b)=\begin{pmatrix}1&b\\0&1\end{pmatrix}$, $b={}^t\bar b$. $K=\prod_vK_v$ with $K_v$ the stabilizer of $\mathcal O_{E_v}^{2n}$ for $v$ finite and $K_w=G(F_w)\cap U(2n)$ for $w$ archimedean. For $g=pk$ with $p=n(b)m(a)$ put $|a(g)|=|\det a|_{\mathbb A_E}$.
+\item The Weil representation $\omega=\omega_{\psi,\chi}$ of $G(\mathbb A)\times H(\mathbb A)$ on $\mathcal S(V^n(\mathbb A))=\mathcal S(M_{m\times n}(\mathbb A_E))$ is
+\begin{align*}
+\omega(m(a))\varphi(x)&=\chi(\det a)\,|\det a|_{\mathbb A_E}^{m/2}\,\varphi(xa),\\
+\omega(n(b))\varphi(x)&=\psi\bigl(\operatorname{tr}(b\,{}^t\bar xQx)\bigr)\varphi(x),\\
+\omega\bigl(J\bigr)\varphi(x)&=\int_{M_{m\times n}(\mathbb A_E)}\varphi(y)\,\psi\bigl(\operatorname{Tr}_{E/F}\operatorname{tr}({}^t\bar xQy)\bigr)\,dy,\\
+\omega(h)\varphi(x)&=\varphi(h^{-1}x),
+\end{align*}
+where $dy$ gives $M_{m\times n}(E)\backslash M_{m\times n}(\mathbb A_E)$ volume $1$.
+\item Write $\psi_\tau(t)=e^{2\pi i l_\tau t}$ at the archimedean places $\tau$ and choose Cartan involutions $s_\tau$ of $Q$, meaning $s_\tau^2=1$, ${}^t\bar s_\tau Qs_\tau=Q$ and $Qs_\tau>0$. The Fock-polynomial space $\mathcal S_{\rm F}$ is spanned by
+\[
+\varphi(x)=P(x_\infty,\bar x_\infty)\exp\Bigl(-2\pi\sum_\tau|l_\tau|\operatorname{tr}\bigl({}^t\bar x_\tau Qs_\tau x_\tau\bigr)\Bigr)\varphi_f(x_f),
+\]
+with $P$ a polynomial and $\varphi_f$ Schwartz--Bruhat on the finite adeles.
+\item $s_0=\frac{m-n}{2}$, $f_\varphi(g,s)=|a(g)|^{s-s_0}\,(\omega(g)\varphi)(0)$, $E(g,s,\varphi)=\sum_{\gamma\in P(F)\backslash G(F)}f_\varphi(\gamma g,s)$ and $\theta(g,h,\varphi)=\sum_{\xi\in V^n(E)}(\omega(g)\varphi)(h^{-1}\xi)$.
+\end{itemize}
+
+\begin{statement}[SW-S, the Schr\"odinger form, \lean{GlobalTheory.Published.SiegelWeilUnitarySchrodinger}]\label{st:sws}
+Assume \eqref{eq:range}. For every $\varphi\in\mathcal S_{\rm F}$ and every $g\in G(\mathbb A)$,
+\begin{enumerate}[label=(\roman*)]
+\item $h\mapsto\theta(g,h,\varphi)$ is integrable on $[H]=H(F)\backslash H(\mathbb A)$,
+\item for $\operatorname{Re}s>n/2$ the section $f_\varphi(\cdot,s)$ is left $P(F)$-invariant and the series $E(g,s,\varphi)$ converges absolutely,
+\item the function $s\mapsto E(g,s,\varphi)$ continues meromorphically from a right half-plane along the ray $s_0+[0,\infty)$, the continuation is holomorphic at $s_0$, and
+\begin{equation}\label{eq:sw}
+E(g,s_0,\varphi)=\fint_{[H]}\theta(g,h,\varphi)\,dh ,
+\end{equation}
+where $\fint$ is the mean for the $H(\mathbb A)$-invariant probability measure on $[H]$.
+\end{enumerate}
+\end{statement}
+
+The live statement is the doubled form. Let $W$ be a hermitian space of dimension $n$ with form $h_W$, let $W^\square=W\oplus(-W)$ with form $h_W\oplus(-h_W)$, $G^\square=U(W^\square)$, and $P^\square$ the stabilizer of the diagonal $W^\Delta$ (\lean{siegelOf}, \lean{diagSub}). The Weil representation $\omega^\square$ of $G^\square(\mathbb A)\times H(\mathbb A)$ acts on theta functions on $V\otimes W^\square(\mathbb A)$ (\lean{IsWeilDatumO} with splitting characters $1$ on $G^\square$ and $\chi$ on $H$, and $\psi$ standard up to sign), and $\theta^\square(g,h,f)=(\omega^\square(g,h)f)(0)$. The Siegel--Weil section is
+\[
+\Phi_f(g)=\int_{M_{m\times n}(E)\backslash M_{m\times n}(\mathbb A_E)}(\omega^\square(g,1)f)(w,-w)\,dw .
+\]
+In the archive's coordinates, which use the dual frame of $W^\square$, the points $(w,-w)$ make up $V\otimes W^\Delta$. The flat section is $\Phi_f(g,s)=\Phi_f(g)\,\mathrm{ht}(g)^{s-s_0}$ with the Iwasawa height of the maximal compact $\widehat K$ fixed by the frame lattice and a majorant $a$ of $W$.
+
+\begin{statement}[SW-D, the doubled form, \lean{GlobalTheory.Published.SiegelWeilUnitaryConvergent}]\label{st:swd}
+Assume \eqref{eq:range}. For every Fock vector $f$ (relative to Cartan involutions commuting with $\widehat K$) and every $g\in G^\square(\mathbb A)$, the function $h\mapsto\theta^\square(g,h,f)$ is integrable on $[H]$, the series $E^\square(g,s)=\sum_{P^\square(F)\backslash G^\square(F)}\Phi_f(\gamma g,s)$ converges absolutely for $\operatorname{Re}s>n/2$, its continuation is holomorphic at $s_0$, and $E^\square(g,s_0)=\fint_{[H]}\theta^\square(g,h,f)\,dh$.
+\end{statement}
+
+The items asked for in Task~1 read off as follows.
+
+\begin{center}
+\begin{longtable}{L{4.2cm}L{10.8cm}}
+\toprule
+item & live statement\\
+\midrule
+dual pair & $(U(n,n),U(V))$, in the doubled form $(U(W\oplus-W),U(V))$\\
+type & unitary, $E/F$ CM\\
+dimensions & $\dim_EW=n$, $\dim_E W^\square=2n$, $\dim_EV=m$\\
+range & $n<m\le 2n$ and $n+r<m$ ($r$ the Witt index of $V$ over $E$); this is Weil's convergent range minus the absolutely convergent part $m>2n$\\
+theta integral & $\int_{[H]}\theta(g,h,\varphi)\,dh$, absolutely convergent, no regularization\\
+Eisenstein series & Siegel Eisenstein series on $U(n,n)$ of the Siegel--Weil section, unnormalized (no $L$-factor $b(s,\chi)$)\\
+evaluation point & $s_0=(m-n)/2$, which satisfies $s_0\le n/2$, outside the half-plane of absolute convergence\\
+constants & $\kappa=1$ against the probability measure; no other constant\\
+Haar measure on $H(\mathbb A)$ & any Haar measure, normalized by $\fint$ to total mass $1$ on $[H]$\\
+measure on $V^n(\mathbb A)$ & covolume $1$ for $V^n(E)$ (Tamagawa), self-dual for $\psi\circ\operatorname{Tr}_{E/F}$\\
+additive character & any nontrivial $\psi$ in SW-S; in SW-D a standard $\psi$, changed to $\psi_\lambda(x)=\psi(\lambda x)$ with $\lambda=-\xi_0/\mu\in F^\times$ by the chart\\
+splittings & linear Weil representation of $G(\mathbb A)\times H(\mathbb A)$ given by $\chi$ with $\chi|_{\mathbb A_F^\times}=\eta^m$; in SW-D the doubled group has splitting character $1$ and $H$ has $\chi_B$, and the chart produces $\chi=\chi_B^{-1}$\\
+test functions & Fock-polynomial at archimedean places, arbitrary Schwartz--Bruhat at finite places\\
+kind of identity & an equality of a holomorphic value with a convergent integral (first-term identity in Weil's range), not a residue identity and not a regularized identity\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\section{B. The published theorem}\label{sec:source}
+
+\subsection{The theorem whose statement I inspected}
+
+S.~Yamana, \emph{The Siegel--Weil formula for unitary groups}, Pacific J.\ Math.\ 264 (2013), no.~1, 235--256, \url{https://doi.org/10.2140/pjm.2013.264.235}, Theorem~2 (pp.~236--237).
+
+Setting of the paper. $E/F$ is a quadratic extension of number fields, $D$ a division algebra with center $E$ and $\dim_ED=\delta^2$, with an involution of the second kind. $W$ is a skew-hermitian right $D$-space of dimension $2n$ with a complete polarization, $V$ a hermitian $D$-space of dimension $m$, $r$ the dimension of a maximal totally isotropic subspace of $V(F)$, $G=U(W)$ and $H=U(V)$. $\chi_V$ is a character of $\mathbb A_E^\times/E^\times$ with $\chi_V|_{\mathbb A^\times}=\varepsilon_{E/F}^{\delta m}$. $\psi$ is a fixed nontrivial character of $\mathbb A/F$ and $\omega_{\psi,V,\chi_V}$ the Weil representation on $\mathcal S(V^n(\mathbb A))$. $\mathcal S(V^n(\mathbb A))$ also denotes the subspace of functions that correspond to polynomials in the Fock model at every archimedean place. $K$ is the standard maximal compact subgroup, $|a(g)|=\alpha_E(\nu(a))$ for $g=m(a)n(b)k$, $s_0=\delta(m-n)/2$ and $f_\varphi^{(s)}(g)=|a(g)|^{s-s_0}\omega(g)\varphi(0)$. The Eisenstein series converges absolutely for $\operatorname{Re}s>\delta n/2$ (p.~237, stated in the text).
+
+Theorem~2 opens with the words ``If $m\le n$ or if $m-r>n$, then for all $\varphi\in\mathcal S(V^n(\mathbb A))$ the series'' and states that $E(g;f_\varphi^{(s)})$ is holomorphic at $s=s_0$ with
+\[
+E(g;f_\varphi^{(s)})\big|_{s=s_0}=\kappa\,I(g;\varphi),\qquad \kappa=\begin{cases}2,&m\le n,\\1,&m-r>n,\end{cases}
+\]
+where $I(g;\varphi)=\int_{H(F)\backslash H(\mathbb A)}\Theta(g,h;\varphi)\,dh$ and $\Theta(g,h;\varphi)=\sum_{x\in V^n(F)}\omega(g)\varphi(h^{-1}x)$. Just before the theorem (p.~236) the paper records Weil's criterion, that $I(g;\varphi)$ converges absolutely for all $\varphi$ if $r=0$ or $m-r>n$. The paper attributes the case $m>2n$ to Weil (1965) and the case $\delta=1$ to Tan (1998), Ichino (2004, 2007) and Yamana (2011). Its proof of the case $m-r>n$ (§4, p.~247) states that Ichino [2007] proved the case $\delta=1$.
+
+The case $\delta=1$ of Theorem~2 is the case $D=E$, the commutative unitary case of SW-S. The source map's line saying that Yamana (2013) is ``the skew-field case, not Weil's convergent range for $d=1$'' should be withdrawn. Theorem~2 is stated for every $\delta\ge1$ and includes $m-r>n$.
+
+The paper never states how $dh$ is normalized (no occurrence of ``vol'', ``Tamagawa'' or a measure normalization near $I(g;\varphi)$). Lemma~\ref{lem:kappa} below fixes it.
+
+\subsection{The original source for $\delta=1$}
+
+A.~Ichino, \emph{On the Siegel--Weil formula for unitary groups}, Math.\ Z.\ 255 (2007), no.~4, 721--729, \url{https://doi.org/10.1007/s00209-006-0045-8}. C.~Li's IHES lecture notes (Theorem~2.3.1) give the theorem number as Theorem~1.1, for $n<m\le 2n$. I did not open Ichino's text, so Theorem~1.1 rests on that secondary citation. Li's notes state the theorem with the Tamagawa measure on $H(\mathbb A)$ and $\kappa=\frac12$ for $m>n$, $\kappa=1$ otherwise, for all $\varphi\in\mathcal S(V(\mathbb A)^n)$. They also note that the older papers in the Kudla--Rallis line assume $K$-finiteness for the meromorphic continuation, a hypothesis that Lapid removed in 2008.
+
+\subsection{Weil's convergence criterion}
+
+A.~Weil, \emph{Sur la formule de Siegel dans la théorie des groupes classiques}, Acta Math.\ 113 (1965), 1--87, n$^\circ$~51, Proposition~8, p.~75. I did not open this text, because Project Euclid served a bot-check page. The reference is from W.~Xiong, arXiv:1806.02049, Proposition~5.1. Its statement as used is that $\int_{[H]}\sum_\xi|\varphi(h^{-1}\xi)|\,dh<\infty$ for every Schwartz--Bruhat $\varphi$ if $r=0$ or $m-r>n$. Yamana (p.~236) and Li (§2.3) record it in the same form.
+
+\section{C. Normalization comparison}\label{sec:table}
+
+\begin{center}
+\begin{longtable}{L{2.9cm}L{4.1cm}L{4.1cm}L{3.3cm}}
+\toprule
+item & archive (SW-S) & Yamana Thm.~2, $\delta=1$ & relation\\
+\midrule
+\endhead
+field & $E/F$ CM & $E/F$ any quadratic extension of number fields & special case\\
+groups & $U(J)\cong U(n,n)$, $U(V)$ & $U(W)$, $W$ skew-hermitian $2n$ with complete polarization; $U(V)$ & equal; $J$ is the matrix of $W$ in a polarized basis\\
+dimensions & $n$, $m$ & $n$, $m$ & equal\\
+range & $n<m\le2n$, $n+r<m$ & $m\le n$ or $m-r>n$ & archive range lies in $m-r>n$\\
+$r$ & max.\ isotropic $E$-subspace of $V$ & max.\ totally isotropic subspace of $V(F)$ & equal\\
+character $\psi$ & nontrivial on $\mathbb A_F/F$ & fixed nontrivial on $\mathbb A/F$ & the theorem holds for each $\psi$\\
+character $\chi$ & $\chi|_{\mathbb A_F^\times}=\eta^m$ & $\chi_V^0=\varepsilon_{E/F}^{m}$ & equal\\
+$m(a)$, $n(b)$, $w$ & formulas of §\ref{sec:statement} & standard $\omega_{\psi,V,\chi_V}$ & equal for the sign convention of the archive (\lean{IsWeilSch} determines $\omega$ on generators)\\
+measure on $V^n(\mathbb A)$ & covolume $1$ & self-dual (implicit in $\hat\varphi$) & equal (self-dual for $\psi\circ\operatorname{Tr}$ is covolume $1$)\\
+theta kernel & $\sum_\xi(\omega(g)\varphi)(h^{-1}\xi)$ & $\sum_x\omega(g)\varphi(h^{-1}x)$ & equal\\
+test functions & Fock-polynomial for Cartan involutions $s_\tau$ of $Q$ & Fock-polynomial at every archimedean place & equal after Lemma~\ref{lem:cartan}\\
+section & $|a(g)|^{s-s_0}(\omega(g)\varphi)(0)$, $K=\prod K_v$ standard & $|a(g)|^{s-s_0}\omega(g)\varphi(0)$, $K$ standard & equal\\
+Eisenstein normalization & unnormalized coset sum & unnormalized $E(g;f^{(s)})$ & equal\\
+$L$-factors & none & none in Thm.~2 & equal\\
+point & $s_0=(m-n)/2$ & $s_0=\delta(m-n)/2$ & equal at $\delta=1$\\
+holomorphy & \lean{HolValueAt} (continuation along a right domain) & holomorphic at $s_0$ & equal by Lemma~\ref{lem:hol}\\
+measure on $[H]$ & probability ($\fint$) & $dh$, not stated & fixed by Lemma~\ref{lem:kappa}\\
+constant & $1$ & $\kappa=1$ ($m-r>n$) & equal after Lemma~\ref{lem:kappa}\\
+first or second term & first-term identity, value at $s_0$ & same & equal\\
+convergent or regularized & convergent ($m-r>n$) & convergent in this case & equal\\
+side clauses & (i) integrability, (ii) convergence and $P(F)$-invariance for $\operatorname{Re}s>n/2$ & recorded in the text (pp.~236--237) & Lemma~\ref{lem:side}\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\section{D. Bridge lemmas}\label{sec:bridge}
+
+\begin{lemma}[B-SW.1, choice of Cartan involution]\label{lem:cartan}
+If SW-S holds for one family of Cartan involutions $(s_\tau)$ of $Q$, it holds for every family.
+\end{lemma}
+
+\begin{proof}
+Two Cartan involutions $s,s'$ of $Q$ at $\tau$ give majorants $Qs,Qs'$, and $U(V)(F_\tau)$ acts transitively on the majorants of $Q$, so $s'=h_\tau sh_\tau^{-1}$ for some $h_\tau\in H(F_\tau)$. Let $h\in H(\mathbb A)$ have components $h_\tau$ at the archimedean places and $1$ elsewhere. Since ${}^t\bar h^{-1}Q=Qh$,
+\[
+\omega(h)\Bigl[e^{-2\pi|l|\operatorname{tr}({}^t\bar xQsx)}\Bigr]=e^{-2\pi|l|\operatorname{tr}({}^t\bar x\,{}^t\bar h^{-1}Qsh^{-1}x)}=e^{-2\pi|l|\operatorname{tr}({}^t\bar xQs'x)},
+\]
+and $\omega(h)$ maps polynomials in $(x,\bar x)$ to polynomials, so $\omega(h)$ maps $\mathcal S_{\rm F}(s)$ onto $\mathcal S_{\rm F}(s')$. The actions of $G$ and $H$ commute, so
+\[
+f_{\omega(h)\varphi}(g,s)=|a(g)|^{s-s_0}(\omega(h)\omega(g)\varphi)(0)=|a(g)|^{s-s_0}(\omega(g)\varphi)(h^{-1}0)=f_\varphi(g,s),
+\]
+and $\theta(g,h',\omega(h)\varphi)=\theta(g,h'h,\varphi)$. Right translation by $h$ preserves the invariant probability measure on $[H]$ and integrability. So each of (i), (ii), (iii) for $\omega(h)\varphi$ and $s'$ is the same statement as for $\varphi$ and $s$.
+\end{proof}
+
+\begin{lemma}[B-SW.2, holomorphic value]\label{lem:hol}
+Let $e(s)$ be holomorphic on $\operatorname{Re}s>\sigma_1$ with a meromorphic continuation $\tilde e$ to $\mathbb C$. Then \lean{HolValueAt e s0 c} holds if and only if $\tilde e$ is holomorphic at $s_0$ and $\tilde e(s_0)=c$.
+\end{lemma}
+
+\begin{proof}
+If $\tilde e$ is holomorphic at $s_0$, take $U=\mathbb C$ and $H=\tilde e$. Conversely, \lean{HolValueAt} gives a set $U\ni s_0$ that contains a half-plane $\operatorname{Re}s>\sigma$ and is closed under $s\mapsto s+t$ for $t\ge0$, and a function $H$, meromorphic at each point of $U$, analytic at $s_0$ with $H(s_0)=c$ and equal to $e$ for $\operatorname{Re}s>\sigma$. For $x\in U$ choose an open disc $D_x\ni x$ on which $H$ is analytic off $x$, and let $\Omega=\bigcup_{x\in U}D_x$. Every $D_x$ meets the discs centred on the ray $x+[0,\infty)\subset U$, and that ray reaches the half-plane, so $\Omega$ is open and connected. A point of $\Omega$ has a neighbourhood containing at most one centre $x$, so $H$ is meromorphic on $\Omega$. The meromorphic functions $H$ and $\tilde e$ agree on a half-plane, so they agree on $\Omega$ off a discrete set by the identity theorem. Near $s_0$, $\tilde e$ equals the analytic function $H$ off a discrete set, so $s_0$ is a removable point of $\tilde e$ and $\tilde e(s_0)=H(s_0)=c$.
+\end{proof}
+
+The Siegel Eisenstein series continues meromorphically to $\mathbb C$ (Langlands, and Tan, Canad.\ J.\ Math.\ 51 (1999) for $U(n,n)$), so Lemma~\ref{lem:hol} identifies clause (iii) with ``holomorphic at $s_0$'' in Yamana's sense.
+
+\begin{lemma}[B-SW.3, the constant and the measure]\label{lem:kappa}
+\begin{enumerate}[label=(\alph*)]
+\item Suppose that for a Haar measure $dh$ on $H(\mathbb A)$ and a constant $\kappa$ the identity $E(g,s_0,\varphi)=\kappa\int_{[H]}\theta(g,h,\varphi)\,dh$ holds for all $\varphi\in\mathcal S_{\rm F}$, and that \eqref{eq:sw} holds. Then $\kappa\operatorname{vol}([H],dh)=1$.
+\item Every published normalization of the convergent case that states its measure gives $\kappa\operatorname{vol}([H],dh)=1$. Yamana's $dh$ is therefore the probability measure, and Yamana's Theorem~2 at $\delta=1$ with $\kappa=1$ is identity \eqref{eq:sw}.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Put $c=\operatorname{vol}([H],dh)$, which is finite by Borel--Harish-Chandra since $H$ has no nontrivial $F$-rational characters. Then $\int_{[H]}\theta\,dh=c\fint_{[H]}\theta\,dh$, and the two identities give $(1-\kappa c)\fint_{[H]}\theta(g,h,\varphi)\,dh=0$ for all $\varphi$ and $g$. Take $g=1$ and $\varphi_+=\varphi_\infty^0\otimes\mathbf 1_{L}$, with $\varphi_\infty^0$ the Gaussian of §\ref{sec:statement} ($P=1$) and $\mathbf 1_L$ the characteristic function of $\prod_vM_{m\times n}(\mathcal O_{E_v})$. Then $\varphi_+\in\mathcal S_{\rm F}$, $\varphi_+\ge0$ and $\varphi_+(0)=1$, so $\theta(1,h,\varphi_+)=\sum_\xi\varphi_+(h^{-1}\xi)\ge\varphi_+(0)=1$ for every $h$. Hence $\fint_{[H]}\theta(1,h,\varphi_+)\,dh\ge1$ and $\kappa c=1$.
+
+(b) Li (IHES notes, Thm.~2.3.1) states the theorem for $n<m\le2n$, citing Ichino's Theorem~1.1, with the Tamagawa measure, for which $\operatorname{vol}([U(V)])=\tau(U(V))=2$, and with $\kappa=\frac12$ for $m>n$. So $\kappa c=1$ in the range \eqref{eq:range}. Xiong (Math.\ Z.\ 274 (2013); arXiv:1205.6025, §1 and §3.2) normalizes $dh$ by $\operatorname{vol}(H(F)\backslash H(\mathbb A))=1$ and writes Weil's formula for $(U(n,n),U(V))$, $V$ split of dimension $2r>2n$, with constant $1$, so $\kappa c=1$ there too. Yamana's Theorem~2 fixes $\kappa=1$ and leaves $dh$ implicit. By (a), Yamana's theorem and Li's statement are the same true theorem in the range \eqref{eq:range} exactly when Yamana's $dh$ has $c=1$, and $c=1$ is also what his case $m>2n$ requires against Weil's theorem as Xiong normalizes it. So Yamana's $dh$ is the probability measure. This identification of an implicit convention is the one interpretive step of the bridge, and it rests on Li's explicitly normalized statement in the same range.
+\end{proof}
+
+The archive's internal theorem \lean{field} proves \eqref{eq:sw} with $\fint$, so the archive and the three published normalizations agree on $\kappa c=1$.
+
+\begin{lemma}[B-SW.4, side clauses]\label{lem:side}
+Clauses (i) and (ii) of SW-S hold.
+\end{lemma}
+
+\begin{proof}
+(i) By Weil's criterion (Weil 1965, n$^\circ$~51, Prop.~8), $\int_{[H]}\sum_\xi|(\omega(g)\varphi)(h^{-1}\xi)|\,dh<\infty$ when $m-r>n$, since $\omega(g)\varphi$ is again Schwartz--Bruhat. So $\theta(g,\cdot,\varphi)$ is dominated by an integrable function.
+
+(ii) For $\gamma=n(b)m(a)\in P(F)$ the product formula gives $|\det a|_{\mathbb A_E}=1$, so $|a(\gamma g)|=|a(g)|$. Also $\chi(\det a)=1$ because $\chi$ is trivial on $E^\times$, and $\psi(\operatorname{tr}(b\,{}^t\bar0Q0))=1$. Hence $(\omega(\gamma)\omega(g)\varphi)(0)=(\omega(g)\varphi)(0)$, and $f_\varphi(\gamma g,s)=f_\varphi(g,s)$. For absolute convergence, $|f_\varphi(g,s)|=|f_\varphi(g,\operatorname{Re}s)|$ is bounded by a multiple of $|a(g)|^{\operatorname{Re}s+n/2}$ (the function $k\mapsto(\omega(k)\varphi)(0)$ is bounded on $K$), and Godement's criterion for the Siegel parabolic of $U(n,n)$, with $\rho_P=n/2$, gives convergence of $\sum_{P(F)\backslash G(F)}|a(\gamma g)|^{\sigma+n/2}$ for $\sigma>n/2$. Yamana records the half-plane of convergence on p.~237.
+\end{proof}
+
+\begin{lemma}[B-SW.5, from the Schr\"odinger form to the doubled form]\label{lem:dbl}
+SW-S implies SW-D.
+\end{lemma}
+
+This is \lean{GlobalTheory.StdUnn.sw_doubled_of_std}, whose assembly I read line by line. Each step below names the archive lemma that proves it. I read the statements of these lemmas and not their proofs, and I give the classical argument for each step.
+
+\begin{proof}
+\emph{Step 1, chart.} Choose $\mu\in E^\times$ with $\bar\mu=-\mu$ and a basis $T_\mu=(e\mid\mu e')$ of $W^\square$ in which $h_W\oplus(-h_W)$ becomes a scalar multiple of $J$. Conjugation by $T_\mu$ is an isomorphism $\kappa\colon U(W^\square)\to U(J)$ over $F$ that maps $P^\square$ onto $P$ and $G^\square(F)$ onto $G(F)$ (\lean{exists_standardUnitaryChart_doubledSpace}, \lean{mem_doublingSiegelParabolic_iff_chart_mem_siegelUnn}, \lean{standardUnitaryChart_mem_rational_iff}). Rescaling a form does not change its unitary group, which is why a skew $\mu$ can turn the hermitian form $h_W\oplus(-h_W)$ into the skew-hermitian $J$.
+
+\emph{Step 2, character.} The symplectic form of the archive on $V\otimes W^\square$ is $\operatorname{Tr}_{E/F}(\xi_0\,h_V\otimes h^\square)$ with $\bar\xi_0=-\xi_0$. In the chart it becomes $\operatorname{Tr}_{E/F}(\lambda\,h_V\otimes J)$ with $\lambda=-\xi_0/\mu\in F^\times$, so $\psi$ is replaced by $\psi_\lambda$. This $\psi_\lambda$ is a nontrivial character of $\mathbb A_F/F$ with $|l_\tau|=|\xi_0|_\tau/|\mu|_\tau$ (\lean{shiftedAdditiveCharacter_archimedeanParameters}).
+
+\emph{Step 3, model.} The operator $f\mapsto\mathrm{sch}(f)$, integration of a theta function along the rational points of the complementary Lagrangian, intertwines the theta-function model with the Schr\"odinger model on $\mathcal S(M_{m\times n}(\mathbb A_E))$. It takes $\omega^\square(g)$ to an operator $\omega(\kappa(g))$ that satisfies the Levi, unipotent and Weyl formulas of §\ref{sec:statement} for $\psi_\lambda$ and $\chi_B^{-1}$ (\lean{exists_weilDatum_transport_schwartzBruhat_standard}, \lean{transportedSchrodinger_standardLeviAction}, \lean{transportedSchrodinger_siegelUnipotentAction}, \lean{weyl_formula_standardUnitaryGroup_weilDatum}). Classically this is Weil's intertwining of models from the Stone--von Neumann theorem. The character $\chi_B^{-1}$ is again a Hecke character with restriction $\eta^{-m}=\eta^m$ (\lean{isHeckeChar_restrictionEta_inv}).
+
+\emph{Step 4, compact and height.} Some $p\in P^\square(\mathbb A)$ conjugates $\widehat K$ to $\kappa^{-1}(K)$ (\lean{exists_siegel_parabolic_conj_doubled_compact}). The function $H(g')=\mathrm{ht}(\kappa^{-1}(g')p^{-1})\,|a(p)|$ is then the Iwasawa height of $U(J)$ for $K$ (\lean{standardUnitaryHeight_isSiegelHeightFunction}). With $\Phi=\mathrm{sch}(\omega^\square(p^{-1})f)$ the flat sections satisfy
+\[
+\Phi_f(g,s)=|a(p)|^{s_0-s}\,f_\Phi(\kappa(gp),s)
+\]
+(\lean{doubledFlatSection_eq_translate_standardSection}).
+
+\emph{Step 5, Eisenstein series.} The coset sums correspond under $\kappa$ (\lean{cosetSum_along_mulEquiv_subgroups}), so for $\operatorname{Re}s>n/2$
+\[
+E^\square(g,s)=|a(p)|^{s_0-s}\,E(\kappa(gp),s,\Phi).
+\]
+The factor $|a(p)|^{s_0-s}$ is entire, nowhere zero and equal to $1$ at $s_0$, so holomorphy at $s_0$ and the value there pass from the right side to the left (\lean{holomorphicContinuationValue_nnrealPow_factor}).
+
+\emph{Step 6, theta.} Poisson summation along the rational complementary lattice gives $\theta^\square(g,h,f)=\sum_\xi\mathrm{sch}(\omega^\square(g)f)(h^{-1}\xi)=\theta(\kappa(gp),h,\Phi)$ (\lean{thetaKernel_eq_tsum_schrodingerFunction}). So the theta means agree and integrability passes over.
+
+\emph{Step 7, Fock vectors.} The operator $\omega^\square(p^{-1})$ moves the Cartan involution of $W^\square$ commuting with $\widehat K$ to the standard one and keeps Fock vectors Fock, and $\mathrm{sch}$ sends them into $\mathcal S_{\rm F}$ for $(l,s_B)$ (\lean{compactCommuting_cartanInvolution_moved_standard}, \lean{isPolynomialFockThetaVector_weilOperator_cartan}, \lean{schroedingerFunction_fockVector_polynomial_gaussian}).
+
+SW-S applied to $(n,V,\psi_\lambda,\chi_B^{-1},H,\Phi)$ and translated back through Steps 4--6 gives every clause of SW-D.
+\end{proof}
+
+The same identification, of the doubled Siegel--Weil section with the standard section through a chart of $W\oplus(-W)$, underlies the doubling method of Piatetski-Shapiro and Rallis and Li's unitary version (Li 1992). It changes conventions and models and does not alter the identity.
+
+\section{E. Verdict}\label{sec:verdict}
+
+\textbf{Classification. MATCH AFTER EXPLICIT BRIDGE.} The live statement SW-D follows from SW-S by Lemma~\ref{lem:dbl}. SW-S is the case $\delta=1$ of Yamana's Theorem~2 (Pacific J.\ Math.\ 264 (2013)) in the range $m-r>n$, restricted to \eqref{eq:range}, once three conventions are bridged. These are the Cartan involution in the Fock space (Lemma~\ref{lem:cartan}), the meaning of holomorphic value (Lemma~\ref{lem:hol}) and the measure behind $\kappa=1$ (Lemma~\ref{lem:kappa}). The side clauses follow from Weil's criterion and Godement's convergence theorem (Lemma~\ref{lem:side}). Ichino 2007 is the original source for $\delta=1$. Its theorem number, 1.1, comes from Li's notes, and Yamana's text confirms that Ichino proved this case.
+
+The archive also proves SW-S itself (\lean{PositivityTheory.SiegelWeilCoefficients.field}). Its mechanism, comparison of the nondegenerate Fourier coefficients of the Laurent coefficients of $E$ at $s_0$ with those of the theta mean, followed by a vanishing lemma for forms whose nondegenerate coefficients vanish, is the Kudla--Rallis strategy that Ichino follows. I did not read that proof. The verdict does not rest on it.
+
+\textbf{Is R-1 closed? YES.} What remains is bibliographic and cannot change the mathematics. Ichino's Theorem~1.1 should be checked against the printed article when a copy is available. Weil's n$^\circ$~51, Prop.~8 is cited through Xiong, and the convergence half-plane through Yamana's text and Godement. Yamana's PDF was read through a text extraction, which renders some symbols badly (the constant and $\varphi$ appear as stray glyphs). The hypotheses, the quantifier ``for all $\varphi\in\mathcal S(V^n(\mathbb A))$'', $s_0$, the section and the two values of $\kappa$ were read unambiguously from the surrounding text.
+
+\section*{Replacement ledger entry}
+
+The file \texttt{R1\_Replacement\_Ledger\_Entry.md} beside this report has the replacement rows for the SW-D line and the R-1 line of \texttt{Authoritative\_External\_Theorem\_Ledger.md}, and for the two Siegel--Weil lines of \texttt{Corrected\_Source\_Map.md}.
+
+\section*{Sources}
+\begin{itemize}[leftmargin=*]
+\item S.~Yamana, The Siegel--Weil formula for unitary groups, Pacific J.\ Math.\ 264 (2013), 235--256, doi:10.2140/pjm.2013.264.235. Theorem~2, pp.~236--237; proof of the case $m-r>n$ in §4, p.~247.
+\item A.~Ichino, On the Siegel--Weil formula for unitary groups, Math.\ Z.\ 255 (2007), 721--729, doi:10.1007/s00209-006-0045-8. Theorem~1.1 (number from Li's notes; text not opened).
+\item A.~Weil, Sur la formule de Siegel dans la théorie des groupes classiques, Acta Math.\ 113 (1965), 1--87, doi:10.1007/BF02391774. n$^\circ$~51, Prop.~8 (number from Xiong, arXiv:1806.02049, Prop.~5.1; text not opened).
+\item W.~Xiong, A weak second term identity of the regularized Siegel--Weil formula for unitary groups, Math.\ Z.\ 274 (2013), no.~3--4, from p.~1261; arXiv:1205.6025, §1 and §3.2 (measure normalization).
+\item C.~Li, Geometric and arithmetic theta correspondences, IHES lecture notes, \url{https://www.math.columbia.edu/~chaoli/IHES.pdf}, Theorem~2.3.1.
+\item V.~Tan, Poles of Siegel Eisenstein series on $U(n,n)$, Canad.\ J.\ Math.\ 51 (1999) (meromorphic continuation).
+\end{itemize}
+
+\end{document}

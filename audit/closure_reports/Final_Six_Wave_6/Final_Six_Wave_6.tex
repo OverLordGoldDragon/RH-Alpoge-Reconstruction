@@ -1,0 +1,1100 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,columns=fullflexible,language=Python}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\FR}[1]{\textsf{FR-#1}}
+\newcommand{\PC}[1]{\textsf{PC-#1}}
+\newcommand{\SL}[1]{\textsf{SL-#1}}
+\newcommand{\sC}{\textbf{Closed}}
+\newcommand{\sE}{\textbf{Closed modulo named external theorems}}
+\newcommand{\sR}{\textbf{Residual child remains}}
+\newcommand{\sD}{\textbf{Off route}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{Final Six-Agent Closure Wave, Agent 6\\ Global records (\PC{6}), \FR{10} (\PC{7}) and the final small-leaf sweep}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report closes what can be closed of \PC{6}, \PC{7} and the small groups \SL{1} to \SL{5} of \Lpath{Post_Closure_Internal_Residuals.md}, and it corrects the route on which several of those residuals were placed. Lean proof bodies were read as text and a reverse-dependency index of all $1{,}060{,}824$ declarations of the archive was built to decide which declarations are reachable from \lean{riemannHypothesis}. Nothing was built or run in Lean, and no existing file was edited. This is a reconstruction report, not a verification.
+\end{abstract}
+
+\section*{Delta in one paragraph}
+
+The core inequality behind \lean{FUN} is reconstructed. It is an arithmetic slope inequality for an injective map of hermitian $\mathcal O_K$-lattices with local denominators, plus a product-formula bound on those denominators, plus one explicit size inequality that I checked numerically. The record inequalities $C_l\ge 2C$ and $\log\mathrm{rd}_E\le L/C_l$ that \FR{12} needs are supplied by the record machinery itself, through a threshold list and one lemma on the root discriminant, so they are closed and need no numerical value of $C$. The half-level dual marking of \FR{10} is closed in elementary module theory. Three route facts change the residual list. First, the declaration \lean{fun0Fit_of_leaves} named as the earliest blocker of \PC{6} is off the route. Its live twin is \lean{fun0Fit_of_leaves_alt}, with the same sixteen predicates under new names. Second, the nonvacuity route through \lean{hostEx_of_zeroFreeRegion}, which Wave 5 called live, is not reachable from \lean{Main.lean}. Its consumers \lean{exists_richRec_of_zeroFreeRegion}, \lean{exists_glob0_of_zeroFreeRegion} and \lean{exists_coreTies_of_zeroFreeRegion} have no users, and the cluster around \lean{Inh.not_evG_false} is off the route too. So the nine analytic inputs of V17 do not enter the route there. Third, below \lean{FUN} sits a package the residual list does not name, the CM-period integrality package \lean{JoinOut} (denominators of zeta values and of toric periods, divided-power jets of Hilbert Eisenstein series at CM points). Its mechanism is known and it is not a new engine. A follow-up pass (Section~\ref{sec:joinfull}) reconstructed it down to Siegel--Klingen, Deligne--Ribet, Hecke's functional equation, the Hilbert class field theorem for $j$ and Shimura's main theorem of complex multiplication, with an explicit $q$-expansion argument and Masser's isogeny formula for the one non-holomorphic CM value, which I tested numerically. A second follow-up (Section~\ref{sec:fu2}) worked through the live interfaces of \PC{6} and \PC{7}. The analytic and arithmetic half of F1 and F5 (nonvanishing and size of Hecke $L$-values on the needed ranges, algebraicity, denominators and heights of the normalized values) closes modulo Hecke's functional equation, the Hecke--Landau nonvanishing at $s=1$, the Phragm\'en--Lindel\"of principle and \lean{JoinOut}. The theta half moves to the bottom theta producers of \PC{4}. What stays is a CM theta package F4 (\lean{NormSum.inp_all}, twenty-two statements on theta functions at CM points), the ten \lean{Open0} row theorems, now stated as exact propositions, and the assembly bodies of nonvacuity. \lean{UniqGap}, both \lean{secondCohomologyBound_of_boundaryBound} and \lean{isProdCuspChar_good} are all live, and each reduces to a published theorem or lies outside my assignment. A third follow-up (Section~\ref{sec:fu3}) closes F4 modulo named external theorems, with a numerical check of its integrality claims for $d=7$, reduces the ten \lean{Open0} entries to formal consequences of the bundle witnesses plus three published inputs, \PC{4}'s \lean{MIstar2} and the settled multiplicity engine, and finds no new mechanism in the nonvacuity assembly. A fourth follow-up (Section~\ref{sec:fu4}) reconstructs both statements behind \lean{ON}. \lean{SurjectiveOntoX} is a bound on local indices of theta-image lattices, proved by lattice algebra over the finite level groups plus explicit numerics, on top of ten estimate statements that reduce to constructions, to named theorems or to a transfer to \PC{1} (the Hodge--Tate inclusion \lean{fhSt}). \lean{LambdaLowerBound}$_2$ is the Rallis inner product formula at the base embedding, with Galois and complex conjugation at the other places. The live \lean{series_bound} and the live small leaves close or transfer. The verdict is \sE.
+
+\tableofcontents
+
+\section{Method and scope}
+
+\subsection{What was read}
+
+I read the three files of \Lpath{Post_Closure_Synthesis/}, the reports and dependency maps of \Lpath{Final_Closure_Wave_4/} and \Lpath{Final_Closure_Wave_5/}, the dependency maps of Final Waves B, C, E, F and of \Lpath{Final_F_GlobalRecords/}, and the archive \Lpath{src/lean/src/} unpacked from \Lpath{lean.tar.gz} ($175{,}187$ files). Paths below are relative to \Lpath{src/lean/src/}. \Lpath{TPS/} abbreviates \Lpath{Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/} and \Lpath{DP/} abbreviates \Lpath{Development/AbelianVarietyTheory/Proofs/DivisorProofs/}.
+
+\subsection{Route liveness}
+
+The archive keeps many twin declarations, often with suffixes \lean{_alt} or \lean{_alt_alt}, and only one of each pair is reachable from the top theorem. To decide which, I indexed every declaration header with its namespace, recorded the identifier tokens of its body, and built an inverted index from the last component of a name to the declarations that mention it. A reverse breadth-first search from a declaration then either reaches \lean{allChi} (the term behind \lean{riemannHypothesis}, \Lpath{Supplements/Kernels/MainTheorems.lean}) and prints the path, or exhausts a reverse closure without reaching it. I write \emph{live} for the first outcome and \emph{off route} when the reverse closure is exhausted. A closure that grew past the cap before reaching the root I write as \emph{undecided}. The token matching over-approximates use, so \emph{off route} is reliable when the exhausted closure is small, and every off-route claim below has a closure of at most $23$ declarations, each checked by a text search. Every live path quoted below was read step by step at its top.
+
+\subsection{Standard}
+
+I follow the closure standard of the prompt. \sC{} means the proof is reconstructed in ordinary mathematics. \sE{} names the theorems. \sR{} names the lowest internal theorem I could not read. \sD{} means the declaration is not reachable from the top theorem, so it is no residual at all.
+
+\section{Route corrections}\label{sec:route}
+
+\begin{longtable}{>{\rr}p{4.6cm} >{\rr}p{4.3cm} >{\rr}p{6.2cm}}
+\toprule
+Listed residual or claim & Finding & Consequence \\
+\midrule
+\lean{fun0Fit_of_leaves} (\Lpath{.../Divisors/TwistedPlaceChoiceLiesOverPair.lean}:345), \PC{6} earliest blocker & \sD. Reverse closure $\{$\lean{fun0Fit_of_leaves}, \lean{fun0Fit_close}, \lean{fun0Fit_of_join}, \texttt{hypsE}$_2$, \texttt{everyE}$_2$$\}$, the last with no user & The live twin is \lean{fun0Fit_of_leaves_alt} (\Lpath{TPS/LeafInfinitePlaceBound.lean}:83) under \lean{fittedFunction_at_zero_close_alt} and \lean{fourier_coefficient_fit_of_join_alt}. The sixteen predicates are the same \lean{LeafMM} $\dots$ \lean{LeafPol} of \Lpath{Formalism/LocalToGlobal/IndefiniteForms/IndefiniteTree/FunctionalLowerBoundOfConditionsNumeric.lean}, renamed (\lean{MM} is \lean{LeafMinimalMass}, \lean{IPb} is \lean{LeafInfinitePlaceBound}, and so on).\\
+\lean{hostEx_of_zeroFreeRegion} route ``live'' (Wave 5, \S4.6) & \sD. Reverse closure of four declarations: \lean{hostEx_of_zeroFreeRegion}, \lean{exists_richRec_of_zeroFreeRegion}, \lean{exists_glob0_of_zeroFreeRegion}, \lean{exists_coreTies_of_zeroFreeRegion}. The last two have no users & Wave 5 did not trace \lean{exists_coreTies_of_zeroFreeRegion} upward. V17 has no operative entry through this route (Section~\ref{sec:boundary}).\\
+Nonvacuity group around \lean{Inh.not_evG_false} & \sD. Reverse closure of ten declarations (\lean{not_baseCond_false}, \lean{not_exTrueG_false}, \lean{not_firstG_false}, \lean{exists_of_evG}, \lean{not_void}, \lean{not_step_false}, \lean{not_largeBaseProperty_of_disjoint}, \lean{exists_colW}, \lean{not_stepW_false}). \lean{exists_chGoodW} is off route & \lean{window_lower} and \lean{DsP_pos_and_lower} are live by other paths. The live nonvacuity producer is \lean{member_bundles_large_unramified_exponents_alt} (Section~\ref{sec:nonvac}).\\
+\lean{denominators_transport_reflection} & \sD{} (closure of two) & The live producer of \lean{JoinOut} is \lean{joinOut_of_five} (Section~\ref{sec:join}).\\
+\SL{5} items \lean{all_parts_transfer_of_facts} with \lean{all_parts_transfer_holds}, \lean{levelAmb_transfer}; \lean{levelCompare_statement}; \lean{passageLat_of} & \sD{} (closures of $3$ to $8$) & Struck from the residual list.\\
+Logarithmic-derivative bound of \lean{FUN} & live, but a record field & \lean{logDeriv_LFunction_at_one_le_along_family_alt} reads \lean{(Fm.params x hx i).logDerivative_le_power}, a field of the parameter choice of the family.\\
+\bottomrule
+\end{longtable}
+
+\section{\lean{FUN}}\label{sec:fun}
+
+\subsection{The live chain}
+
+The record nonemptiness \lean{nonempty_hyps_definite_side_of_closed_bound} (\Lpath{TPS/SiegelEisensteinSecondTermHypotheses.lean}:44) obtains \lean{ConstantFunctionFits} from \lean{fourier_coefficient_fit_of_join_alt}, which unpacks \lean{JoinOut} into five statements and calls \lean{fittedFunction_at_zero_close_alt} (\Lpath{TPS/FittedFunctionAtZeroClose.lean}:42). That theorem builds twelve intermediate statements and passes sixteen producers to \lean{fun0Fit_of_leaves_alt}. The latter is an assembly. It conjoins the sixteen eventual statements, extracts a grid and a function datum $d$ from \lean{ExistsFunctionIn}, and applies \lean{functional_lower_bound_of_conditions_numeric}, which is \lean{functional_lower_bound_of_conditions} with $N.\mathrm{hh}=x^{C_H}b$.
+
+\subsection{The core inequality, reconstructed}
+
+Fix a totally complex number field $K$, an $\mathcal O_K$-lattice $R\subset K^D$ with hermitian metrics at the infinite places $v$ given by frames $X_E(v)$ rescaled by $\kappa_v^{-1}$, a finitely generated nonzero $\mathcal O_K$-module $M\subset K^n$ with metrics $X'(v)$, and write $\ell_w=\log N\mathfrak p_w/[K:\mathbb Q]$ for a finite place $w$. Write $\mu_{\max}$ for the maximal slope, $\operatorname{mean}_v$ for the normalized mean over infinite places and $h(\Psi)$ for the archimedean height of a linear map.
+
+\begin{theorem}[\lean{functional_lower_bound_of_conditions}, 95 lines, read in full]\label{thm:fun}
+Let $\Psi\colon K^D\to K^n$ be $K$-linear, let $T$ be a finite set of finite places, let $r_w\in K^\times$ and $d_F(w)\in\mathbb Z$, and put $a_w=v_w(r_w)+d_F(w)$, with $a_w=0$ for $w\notin T$. Assume
+\begin{enumerate}[label=(\roman*),nosep]
+\item $\Psi$ is injective;
+\item $\Psi(R)_w\subseteq\mathfrak p_w^{-a_w}M_w$ for every finite $w$;
+\item $\mu_{\max}(M)\le E_M$, $h(\Psi)\le B_I$, $\sum_{w\in T}\ell_wd_F(w)\le B_F/2$ and $\sum_{w\in T}\ell_wv_w(r_w)\le G$.
+\end{enumerate}
+Then $\mu_{\max}(R)\le-\operatorname{mean}_v\log\kappa_v+E_M+B_I+2(G+B_F/2)$.
+\end{theorem}
+
+\begin{proof}
+By the local--global principle for lattices (\lean{PI.local_global_inclusion'}), (ii) and $a_w=0$ off $T$ give $\Psi(R)\subseteq\mathfrak a^{-1}M$ with $\mathfrak a=\prod_{w\in T}\mathfrak p_w^{a_w}$. Rescaling the frame of $R$ by $\kappa^{-1}$ moves every slope by $-\operatorname{mean}_v\log\kappa_v$ (\lean{kappa_normalise}). The slope inequality for an injective map of hermitian bundles over $\operatorname{Spec}\mathcal O_K$, $\mu_{\max}(R)\le\mu_{\max}(\mathfrak a^{-1}M)+h(\Psi)$, is \lean{Formalism.HN.slope_inequality_mean}, used in \lean{grid_lemma_A}. Scaling a module by a fractional ideal moves its maximal slope by the normalized log norm of the ideal (\lean{ideal_scaling_holds}), which in the archive's normalization of hermitian degrees over a totally complex field is $2\sum_w\ell_wa_w$. Then $\sum_w\ell_wa_w\le G+B_F/2$ by (iii) (\lean{grid_function_of_lemma_A}).
+\end{proof}
+
+In the application $r_w=\prod_{ij}r_q(\mu(w))_{ij}$ is a product of ratios of theta values, $\Psi$ is the matrix of \lean{LeafC} with $\Psi\iota_t P_t=(\prod_{ij}r_q(t)_{ij})^{-1}v_\mu(t)$ for the base type and every type $\mu(w)$, its injectivity comes from \lean{LeafKer} through \lean{psi_inj}, the local inclusions from \lean{LeafFP} through \lean{hence_local}, and the archimedean bound from \lean{LeafIP} through \lean{ip_first}. The budget $G$ is \lean{gridBudgetIdx}, supplied by \lean{gridHeightBoundIndexed} (\Lpath{.../ExponentGridsProofs/GridSquaresIndexEstimate.lean}:105, first 175 lines read). That lemma sums over $w$ the local inequality of \lean{LeafOneSquare},
+\begin{multline*}
+v_w(r_{ij})\le\lvert v_w(z_A)\rvert+\lvert v_w(z_A')\rvert+4\sum_{s=1}^{h_{ij}}\bigl(\lvert v_w(z_T)+g_T\rvert+\lvert v_w(z_{T'})+g_T\rvert\bigr)\\
++5\sum_s\mathrm{wt}_{S_d}(N_0)+d_{ij}\,\mathrm{wt}_{S_e}(l^{-2})+6\,\delta_w+y_{ij}\cdot2\sum_{q\in S_0}c_q\,v_w(q),
+\end{multline*}
+and bounds each sum by a height through the product formula, using the height bounds of \lean{LeafINT} and \lean{LeafARCH} (via \lean{norm_height_bound}), of \lean{LeafTHB}, the prime-counting bound \lean{PrimeCountingSumBound}, and $\sum_{w\mid l}\ell_wv_w(l)\le\log l$ (\lean{partial_nat}).
+
+Finally \lean{size_le} shows $E_M+B_I+2(G+B_F/2)\le x^{C_H}b$ from \lean{leafHypothesesConst} ($2\le m$, $m+3\le k$, $m^4\le f\le k$), \lean{DegreeAndSizeBounds}, \lean{PrimePowerModuliSumBound}, \lean{LeafCS}, \lean{LeafWt} and \lean{LeafPol}, through the polynomial inequality \lean{size_arith}
+\begin{multline*}
+E_M+B_I+2\Bigl(m^2\bigl(2(2+8N)\max(B_A+6B_\Delta,B_T)+10NB_T+2N+6B_\Delta+4m\Sigma\bigr)+\tfrac{B_F}{2}\Bigr)\\
+\le10^5C^3fm^2N^2\bigl((k+m-1)NL+P\bigr)b .
+\end{multline*}
+I checked \lean{size_arith} on $4\cdot10^5$ random parameter sets with every bounded quantity at its upper bound. The largest ratio of the two sides was $0.318$ (Appendix~\ref{app:code}).
+
+\noindent\textbf{Status.} Theorem~\ref{thm:fun} and its use are \sE{}: the slope inequality for hermitian vector bundles over number fields (Bost; Gaudron; Stuhler and Grayson for the Harder--Narasimhan formalism), which the archive proves internally (Layer 3) and which is on the boundary under Block B. Small leaves of the same file left unread: the bodies of \lean{psi_inj}, \lean{hence_local}, \lean{ip_first}, and of \lean{grid_squares_index_estimate}. Their statements are elementary (injectivity from a kernel and a basis, localization of a matrix lattice, an operator-norm bound, a weighted sum of absolute valuations).
+
+\subsection{The sixteen leaves}
+
+Each live producer was unwrapped through its \lean{first | exact} wrapper and read at the top.
+
+\begin{longtable}{>{\rr}p{2.6cm} >{\rr}p{4.0cm} >{\rr}p{5.2cm} >{\rr}p{3.4cm}}
+\toprule
+Predicate & Live producer & Content & Status\\
+\midrule
+\lean{ScaleCondition} & \lean{existsIntegralMultiple_holds_alt} & $b=e^{x^\varepsilon}$, so $1\le x$, $1\le\log b$, $\log x\le2x^\varepsilon$ eventually & \sC\\
+\lean{DescentHeightCondition} & \lean{desHLeaf_alt} (43 lines) & $2\le m$, $m+3\le k$, $m^4\le f\le k$ from the window \lean{PageWin} and $m^2\le4x$; $L_c\le b$ & \sC{} given record fields\\
+\lean{RankGapBound'} & \lean{rankGapBound_alt} (112 lines, read) & $mfN^2\le b$, $80r^4\le N$, $n_p\le2mr$, $R_p\le CmN^3b$, $\log(n_pR_p)\le4\log b$ from $c_{TO}=377$, $x^{377}\le t\le x^{\lceil|C_t|\rceil+1}$, \lean{design_lines_of_ranks} & \sC{} given record fields\\
+\lean{RamifiedSumBound'} & \lean{ramified_sums_seventh_bound_alt} (21) & $\Sigma_0\le2P$, $c_S\le45f\log b$ & arithmetic, top read\\
+\lean{DescentPolynomialCondition} & \lean{desPol_alt} (42) & $\mathrm{pol}(C,b)\le x^{C_H}$ & arithmetic, top read\\
+\lean{LeafWeightBound} & \lean{wt_tie_alt} (22) & $1\le B_w\le Cb$, $\log B_w\le C\log b$ from \lean{SizeAt} & transfer\\
+\lean{LeafMinimalMass} & \lean{mm_tie_alt} & $\mu_{\max}(M)\le E_M$ from the test datum (\lean{leafMM_of_test}) & transfer\\
+\lean{LeafKernel} & \lean{leafKernel_of_linK_injK_constK_formula2K} (15) & $\ker v_{\mu_0}=U_{\mu_0}$ from \lean{InjK}, \lean{ConstK}, \lean{Formula2K} & transfer over F3\\
+\lean{LeafUniqueMap} & \lean{oneMap_of_bundle_setAt_kernel_conditions} & the map $\Psi$ with root-of-unity twists $\zeta_t$ & transfer over F3\\
+\lean{LeafFixedPoint} & \lean{fp_tie_alt} (24) & local inclusions and $2\sum\ell_wd_F\le B_F$ & transfer over F2\\
+\lean{LeafHeightMapBound} & \lean{leafHeightMapBound_tie_of_infK} (29) & $h(v_b)\le B_{IPa}$ & transfer over F2\\
+\lean{LeafInfinitePlaceBound} & \lean{ipb_of_lamLow_alt} (67) & $\operatorname{mean}_v g\ge-3CfmN^2\log b$ from \texttt{LambdaLowerBound}$_2$ & transfer over \lean{ON}\\
+\lean{LeafUniqueSquareRoot} & \lean{oneSq_of_log_derivative_bound_thA} (57) & the local inequality displayed above & transfer over F1, F5\\
+\lean{LeafDensity} & \lean{den_tie_alt} (13) & prime-counting sum $\le B_T$ & transfer over F1\\
+\lean{LeafIntegrality} & \lean{int_tie_alt} (60, read in full) & $\sum\ell_w\delta_w\le B_\Delta$ and $v_w(z_A)\ge-3\delta_w$; matches $B_\Delta=C X$ with the \lean{NormSum} bound $C_F X$ and uses $C_F\le C$ & transfer over F1, F4\\
+\lean{ArchimedeanCondition} & \lean{arch_tie_of_logDeriv_bound} (34) & $\operatorname{mean}_v\log^+\lvert z_A\rvert_v\le B_A$ & transfer over F4\\
+\lean{LeafThetaBound} & \lean{thb_tie_alt} (45) & heights of $z_T$, $z_{T'}$ $\le B_T$ & transfer over F1\\
+\lean{BundleCondition} & \lean{bundle_of_rows_alt} & $\mathrm{WF}$ and an indefinite row datum & assembly\\
+\lean{ExistsFunctionIn} & \lean{ex_of_claims_alt} (59) & a function datum on every fitted grid & transfer over F1, F5\\
+\bottomrule
+\end{longtable}
+
+Of the sixteen, the four arithmetic leaves \lean{DescentHeightCondition}, \lean{RankGapBound'}, \lean{RamifiedSumBound'}, \lean{DescentPolynomialCondition}, together with the extra hypothesis \lean{ScaleCondition}, are closed modulo the parameter fields of the family (the window \lean{PageWin}, \lean{cTO}$=377$, \lean{t_win}), which are fixed by the parameter choice of \PC{6}. The transfers match constants (typically $C_F\le C$) and move statements from the intermediate groups F1 to F6 below to the datum $d$. Their content sits in those groups.
+
+\subsection{Intermediate groups: the exact residual children of \lean{FUN}}
+
+\begin{longtable}{>{\rr}p{1.0cm} >{\rr}p{5.0cm} >{\rr}p{9.0cm}}
+\toprule
+& Live producer (file) & Children named in the body\\
+\midrule
+F1 & \lean{square_top_term_joined_estimates} (\Lpath{.../LocalTypeDictionary/SquareTopTermJoinedEstimates.lean}:13) & \lean{completedHeckeL_bounded_in_vertical_strips}, \lean{fieldDat}, \lean{lNe_of_functionalEquation}, \lean{heckeLValue_upperBound_permutedWeights_of_FE}, \lean{ToricExist.torEx} (30), \lean{betaConjugate_mean_logAbs_bound_of_transport}, \lean{DenExist.denEx}, \lean{DenSumPf.denSum}, \lean{thbSt_of_inputs} (85), \lean{botSmall_holds}, \lean{botConst_of_theta_matching}, \lean{bottomPairs_exist_baseTuple}, \lean{bottomPairsExistEveryTuple_of_cmThetaHypotheses}, \lean{normBig_of_lNe}, \lean{lValueRatio_lower_bound_gauge}, \lean{triEx_of_howe_duality_real}, \lean{bottomTheta_nonvanishing}, \lean{tower_of_theta_matching_lNe}, \lean{oneSqSt_of_claims'} (218)\\
+F2 & \lean{sum_size_finite_away_archimedean_combined} & \lean{sumOKK_of_theta_local_inputs}, \lean{depthK_of_sumOKK}, \lean{sum_size_dictionary}, \lean{finite_and_infinite_scalar_bounds}, \lean{form_value_finite_infinite_factorization}, \lean{field_pair_comparison}, \lean{test_vector_value_factorization}, \lean{sum_size_finite_top_term_integral}, \lean{sum_size_bound_finite_places}, \lean{kernel_conjugation_mean_archimedean_top_term}, \lean{sum_size_bound_opposite_conjugation}, \lean{twisted_local_factor_away_from_level}, \lean{finiteSumDenominatorBound_of_factor_claims}, \lean{archimedeanSumSizeBound_largeData_from_factors}\\
+F3 & \lean{joined_local_sum_estimates} & \lean{thetaLift_row_properties} with \lean{twisted_theta_integral_converges}, \lean{twisted_local_factors_match}, \lean{twisted_square_theta_integrals_eq}; \lean{injK_of_separates} with \lean{twisted_convergence_with_real_places}, \lean{twisted_thetaLift_cuspidal}\\
+F4 & \lean{NormSum.inp_all} (24), \lean{intSt_of_forall_inp} (32), \lean{archSt_of_inp} (8) & CM theta norm hypotheses and the class-sum denominator bound\\
+F5 & \lean{thmA_upper_alt} (13), \lean{square_ratio_at_point_of_leading_term_alt} (27) & toric ratio estimate; $\mathrm{sqRatio}\in\iota(L)$\\
+F6 & \lean{JoinOut} via \lean{joinOut_of_five} & Section~\ref{sec:join}\\
+\bottomrule
+\end{longtable}
+
+F1 to F5 are the arithmetic of the true theta lifts: denominators and heights of theta values, toric periods and $L$-values entering the scalars $r_q$, $z_A$, $z_T$. Their mechanism is known at statement level (Hecke $L$-functions with their functional equation and growth in vertical strips, the Siegel--Weil and seesaw identities of \PC{4}, Howe duality). F3 consumes \lean{ThetaIntegralsAgree} and \lean{LocalMatching}, whose induction Final F reconstructed. None of F1 to F5 was read below the names listed. Together they form the medium package that \PC{6} called \lean{FUN}.
+
+\subsection{The CM-period integrality package \lean{JoinOut}}\label{sec:join}
+
+\lean{JoinOut} (\Lpath{.../Divisors/HypothesisBundleConversions.lean}:7) is the conjunction of \lean{ToricDenominator}, \lean{Transport}, \lean{TwistedTransport}, \lean{ZetaDenominators} and \lean{Refl}. On the route it is produced by \lean{join_out_of_literature} as \lean{joinOut_of_five} applied to \lean{EllipticMainTheoremCM}, \lean{HilbertClassFieldJ}, \lean{SiegelKlingenDeligneRibet}, \lean{PartialZetaFunctionalEquation}, \lean{HeckeTateFunctionalEquation}, all five themselves discharged by internal proofs (\lean{ellipticMainTheoremCM_holds}, \lean{siegelKlingen_holds} with \lean{deligne_ribet_of_literature}, \dots). Below \lean{joinOut_of_five} the internal producers are \lean{JetIntElliptic.jetInt} (over \lean{core}, \lean{HilbFam.sz_jet_conj}, \lean{hilbertEisensteinExpansion_of_lipschitz_hecke_zeta}, \lean{lipschitz_formula_totally_real_poisson}, \lean{heckeWeightTwo_of_fe} (43)), \lean{RoadELatAlg.latAlg_of_siegelKlingen} (143), \lean{LatConjEll.latConj} (193), \lean{LatValRam.latIntRam} (77), \lean{LatValUnr.latIntUnr} (83), \lean{JetExp.expansion_of_jetInt} (20), \lean{DerivAtOrigin.statement} (13) and \lean{joinOut_of_lat} (11).
+
+In ordinary terms, \lean{ZetaDenominators} bounds the denominators of $\zeta_{F}(1-2s)$-type partial zeta values of the maximal real subfield $F$ of a CM field $E$ (Siegel--Klingen; Deligne--Ribet), and \lean{ToricDenominator} bounds the denominators of class zeta values twisted by Hecke characters and divided by CM periods, at all CM types. The key statement \lean{LatJet.JetInt} (\Lpath{.../Divisors/JetAnalytic.lean}:239) asserts, for every prime $l$ and every embedding $\bar{\mathbb Q}\to\mathbb C_l$, that the iterated derivatives of a definite Eisenstein sum at a CM lattice $\Lambda$, divided by the powers $a_i^{2s}$ and $(b_i/a_i)^{\kappa_i}$ of CM periods with $\Omega^{12}=\Delta(\Lambda)$, have $l$-adic valuation at least an explicit bound.
+
+This is the theory of Damerell, Shimura and Katz (Damerell, Acta Arith. 17 (1970), 19 (1971); Shimura, Ann. of Math. 102 (1975); Katz, \emph{$p$-adic $L$-functions for CM fields}, Invent. Math. 49 (1978)). The mechanism is known and it is not a new engine. It is, however, a medium package that \Lpath{Post_Closure_Internal_Residuals.md} does not list, and Katz's integrality is proved for primes that split in $E$ (the ordinary case). \lean{JetInt} claims an explicit bound at every $l$, with the correction \lean{if l = d then 1/2 else 0} at the ramified prime. In the first version of this report I had read \lean{core} at the top only and listed this as a risk item. Section~\ref{sec:joinfull} resolves it. The archive's bound is proved at every prime by a route that does not use Katz's ordinary theory, and the one CM value it needs was checked numerically.
+
+\section{Follow-up: the CM-period integrality package \lean{JoinOut}, reconstructed}\label{sec:joinfull}
+
+This section was added on 22 November 2026, after the first version of the report, at Jimmie Adriazola's request to pursue \lean{JoinOut}. It supersedes the risk paragraph of Section~\ref{sec:join}. Every declaration named below is on the live route (\lean{join_out_of_literature} $\to$ \lean{joinOut_of_five}).
+
+\subsection{Setting}
+
+All five statements of \lean{JoinOut} concern a CM field $E$, abelian over $\mathbb Q$, with maximal real subfield $F$ of degree $n=[F:\mathbb Q]\ge2$, a prime $d>4$, an element $w\in E$ with $w^2=-d$, and a CM type $\varphi=(\varphi_i)_{i\in I}$ with $\varphi_i(w)=i\sqrt d$ for every $i$ (\lean{IsFieldData}). So the CM type is induced from the imaginary quadratic field $K=\mathbb Q(\sqrt{-d})\subset E$, and every CM period in the package is a period of the lattice $\Lambda=\mathcal O_K\subset\mathbb C$ (\lean{IsIntLattice}). Write $\Omega$ for a twelfth root of $\Delta(\Lambda)=g_2^3-27g_3^2$, $\tau$ for the generator of $\Lambda$ in the upper half plane, $s_2(\Lambda)$ for the nonholomorphic weight-two Eisenstein value $\bigl(\eta_1\bar\omega_2-\eta_2\bar\omega_1\bigr)/\bigl(\omega_1\bar\omega_2-\omega_2\bar\omega_1\bigr)$ (\lean{s2}, \Lpath{Formalism/LocalToGlobal/TorsionIntegrality/EisensteinTranslationProducts/SemiChar.lean}:20), which equals $G_2(\tau)-\pi/\operatorname{Im}\tau$ for $\Lambda=\mathbb Z+\mathbb Z\tau$, and $v_l$ for the valuation of an embedding $\bar{\mathbb Q}\to\mathbb C_l$ normalized by $v_l(l)=1$. The archive writes $v_l(x)\ge-\rho$ as \texttt{Sz l lam} $\rho$ \texttt{x}.
+
+\subsection{The live structure}
+
+\lean{joinOut_of_five} reduces to \lean{joinOut_of_lat} (\Lpath{DP/ToricPeriodZetaOfLatticeValueStatements.lean}:21, read in full), which produces the five components from four lattice statements:
+\begin{align*}
+\text{\lean{ZetaDenominators}}&\leftarrow\text{Siegel--Klingen, Deligne--Ribet},\\
+\text{\lean{ToricDenominator}}&\leftarrow\text{\lean{ZetaDenominators}},\ \text{\lean{LatIntRam}},\ \text{\lean{LatIntUnr}},\\
+\text{\lean{Transport}}&\leftarrow\text{\lean{HilbertClassFieldJ}},\ \text{\lean{LatAlg}},\ \text{\lean{LatConj}},\\
+\text{\lean{TwistedTransport}}&\leftarrow\text{\lean{PeriodEx}}\ (\leftarrow\text{\lean{EllipticMainTheoremCM}}),\ \text{\lean{LatAlg}},\ \text{\lean{LatConj}},\\
+\text{\lean{Refl}}&\leftarrow\text{\lean{HeckeTateFunctionalEquation}}.
+\end{align*}
+\lean{LatIntRam} and \lean{LatIntUnr} come from \lean{JetInt} through \lean{Expansion}. \lean{JetInt}, \lean{LatAlg} and \lean{LatConj} take \lean{HilbertClassFieldJ} and \lean{EllipticMainTheoremCM} as arguments and do not use them; their real inputs are the Fourier expansion of Hilbert Eisenstein series and the functional equation of partial zeta functions.
+
+\subsection{Zeta denominators}
+
+\begin{proposition}[\lean{ZetaDenom.zetaDenominators}, \Lpath{DP/PartialZetaDenominatorsCMFieldOfSiegelKlingenDel.lean}:146, read in full]
+Let $F$ be totally real of degree $n$, $k\ge2$ even, $N=nk$, and for an ideal class $C$ let $z(C)=\zeta_F(C,1-k)$. Then $z(C)\in\mathbb Q$, and for every prime $l$
+\[
+-v_l\bigl(z(C)/2^n\bigr)\le n\,v_l(2)+m_l(N),\qquad m_l(N)=\min_{a\ge2,\ l\nmid a}v_l(a^N-1),
+\]
+with $m_l(N)=0$ when $l$ is odd and $(l-1)\nmid N$, $m_l(N)=1+v_l(N)$ when $l$ is odd and $(l-1)\mid N$, and $m_2(N)=2+v_2(N)$. When $N\ge16$, $\sum_lc_l\log l\le N\log(N+1)$, where $c_l$ is the left side maximized over $C$.
+\end{proposition}
+
+\begin{proof}
+Siegel--Klingen gives the rationality and the continuation. Take $\varepsilon$ the indicator function of the classes over $C$, a ray-class function modulo $l^m$, and $\mathfrak c=(a)$ with $l\nmid a$. Multiplication by $(a)$ permutes the ray classes over $C$, so the translated value equals $z(C)$, and the Deligne--Ribet congruence gives $(1-a^{N})z(C)\in\mathbb Z_l$ (\lean{inZl_mul_zeta}). Minimizing $v_l(a^N-1)$ over $a$ is the lifting-the-exponent lemma (\lean{cmValues_minPadicVal_bound}): a primitive root modulo $l^2$ for odd $l$, and $a=3$ for $l=2$. The sum bound is \lean{dividedPowerValuations_cESum}; I checked it for every even $N$ from $16$ to $2\cdot10^5$ with $n=N/2$, the worst case, and the largest ratio of the two sides was $0.337$, at $N=16$.
+\end{proof}
+
+\noindent\textbf{Status.} \sE. The external theorems are the Siegel--Klingen theorem and the congruences of Deligne and Ribet (Invent. Math. 59 (1980)). The Lean form of \lean{DeligneRibet} (\texttt{.../PublishedTheorems/Divisors}$_2$\texttt{/SiegelKlingenDeligneRibet.lean}) asks that $r-N\mathfrak c^kr'$ be $l$-integral for an $l$-integral ray-class function of conductor $l^m$ and its translate by $\mathfrak c$ prime to $l$, which is the congruence of Deligne--Ribet in the form used by Cassou-Nogu\`es.
+
+\subsection{The CM value of the weight-two Eisenstein series}
+
+\begin{proposition}[\lean{CMSize.main}, \Lpath{DP/DenominatorBoundWeierstrassCmTorsion.lean}:30, read]\label{prop:cmsize}
+Let $\Lambda$ be stable under multiplication by $i\sqrt d$, $\Omega^{12}=\Delta(\Lambda)$, $l$ a prime, and $P\notin\Lambda$ with $MP\in\Lambda$ for some $M$ prime to $l$. Then
+\[
+v_l\Bigl(\frac{s_2(\Lambda)+\wp(P)}{\Omega^2}\Bigr)\ge-c_l,\qquad c_l=\begin{cases}0,&l\nmid2d,\\ 1/2,&l=d,\\ 1,&l=2,\ d\equiv3\ (4),\\ 2,&l=2,\ d\equiv1\ (4).\end{cases}
+\]
+\end{proposition}
+
+\begin{proof}
+Three facts are combined. First, $12\wp(P)/\Omega^2$ is $l$-integral for $l\nmid M$ (\lean{WpFam.LatTorsVal.main}, the integrality of the $x$-coordinate of a torsion point of order prime to $l$ in the model with discriminant $1$). Second, for $\alpha\in\mathcal O_K$ with $\alpha\Lambda\subseteq\Lambda$ and $N=\lvert\alpha\rvert^2$,
+\[
+(\alpha^2-N)\,s_2(\Lambda)=\sum_{0\ne Q\in\alpha^{-1}\Lambda/\Lambda}\wp(Q)
+\]
+(\lean{quasiPeriodConstIsogeny_thm}, Masser's isogeny formula for the quasi-period), and \lean{IsogFormula.main} turns it into the integrality of $(\alpha^2-N)(s_2+\wp(P))/\Omega^2-(\alpha^2-1)\wp(P)/\Omega^2$ for $l\nmid MN$. Third, one chooses $\alpha$. For $l\nmid2d$, $\alpha=i\sqrt d$ gives $\alpha^2-N=-2d$, a unit. For $l=d$, $\alpha=1+i\sqrt d$ has norm $1+d$ and $\alpha^2-N=2i\sqrt d-2d$ of valuation $1/2$ (\lean{SzRamified.main}). For $l=3$ with $d\equiv1\pmod3$ the two choices $1\pm i\sqrt d$ are combined (\lean{ArithThreeInert.main}). The case $l=2$ is treated in the same file.
+\end{proof}
+
+This is the only place in the package where a non-holomorphic quantity is evaluated at the CM point. I tested Proposition~\ref{prop:cmsize} independently. For $\Lambda=\mathcal O_K$ with class number one I computed $y=x^6$, $x=(s_2+\wp(P))/\Omega^2$, at $300$ to $900$ digits from $q$-expansions, for every nonzero $M$-torsion point $P$, formed $\prod_P(X-y(P))$, recognized its coefficients as rationals (fit error below $10^{-290}$), and read the valuations of the roots from the Newton polygon at each prime in the denominators. Separately I computed the minimal polynomials of single values by integer relation detection, including $d\equiv1\pmod4$ ($d=13$, class number two). Results are in Table~\ref{tab:cm}. In every case the only primes in the denominators are $2$, $d$, and the primes dividing $M$ (which the proposition excludes), the bound $-1/2$ at $l=d$ is attained, and at the inert primes $3$ and $5$ the value is integral. Before this I checked Masser's identity $(\alpha^2-d)s_2=\sum\wp(Q)$ for $\alpha=i\sqrt d$ and $d\in\{7,11,13,17,19,43\}$ to $400$ digits.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{rrllp{6.2cm}}
+\toprule
+$d$ & $M$ & method & degree & primes $l\nmid M$ dividing a denominator, with $\min v_l(x)$\\
+\midrule
+7 & 2 & product & 3 & $l=7$: $-1/2$\\
+7 & 3 & product & 8 & $l=7$: $-1/2$\\
+7 & 5 & product & 24 & $l=7$: $-1/2$\\
+11 & 2 & single value & 3 & $l=11$: $-1/2$\\
+11 & 3 & product & 8 & $l=11$: $-1/2$\\
+11 & 5 & product & 24 & $l=11$: $-1/2$\\
+19 & 2 & single value & 3 & $l=19$: $-1/2$\\
+19 & 3 & product & 8 & $l=19$: $-1/2$\\
+19 & 5 & product & 24 & $l=19$: $-1/2$\\
+43 & 2 & single value & 3 & $l=43$: $-1/2$\\
+43 & 3 & product & 8 & $l=43$: $-1/2$\\
+67 & 3 & product & 8 & $l=67$: $-1/2$\\
+163 & 2 & single value & 3 & $l=163$: $-1/2$\\
+163 & 3 & product & 8 & $l=163$: $-1/2$\\
+13 & 2 & single value & 4 & $l=13$: $-1/2$\\
+13 & 3 & single value & 8 & $l=13$: $-1/2$; $l=2$: $-1$ (bound $-2$)\\
+\bottomrule
+\end{tabular}
+\caption{Test of Proposition~\ref{prop:cmsize} for $\Lambda=\mathcal O_K$, $K=\mathbb Q(\sqrt{-d})$, $x=(s_2+\wp(P))/\Omega^2$. ``Product'' is $\prod(X-x(P)^6)$ over all nonzero $M$-torsion points $P$, with rational coefficients recognized to better than $10^{-290}$; ``single value'' is the minimal polynomial of $x(P)^6$ for $P=1/M$, found by integer relation detection and verified to the working precision. Every prime $l\nmid M$ outside the table is absent from the denominators, so $v_l(x)\ge0$ there, including the inert primes $3$ and $5$ wherever they occur and $l=2$ for every odd $M$ with $d\equiv3\pmod4$. The proposition allows $-1/2$ at $l=d$, $-1$ at $l=2$ for $d\equiv3\pmod4$ and $-2$ at $l=2$ for $d\equiv1\pmod4$.}\label{tab:cm}
+\end{table}
+
+\subsection{Jets at the CM point}
+
+\begin{proposition}[\lean{JetIntElliptic.core} with \lean{HilbFam.sz_jet_conj}, read in full]\label{prop:jet}
+Let $G$ be the Hilbert Eisenstein series of parallel weight $2s$ and level $N$ attached to the lattice data of $E$, restricted to the diagonal point $(\tau,\dots,\tau)$, and let $\partial^{\kappa}G$ be its Maass--Shimura jet of multi-order $\kappa$. With $\omega=\Omega c/(2\pi i)$,
+\[
+v_l\Bigl(\frac{\partial^\kappa G(\tau)\,(\pi/\operatorname{Im}\tau)^{\lvert\kappa\rvert}}{(2\pi i)^{\mathrm{wt}(\kappa)}\,\omega^{\mathrm{wt}(\kappa)}}\Bigr)\ge-\bigl(e+s\,v_l(\operatorname{disc}F)+2sbn+\lvert\kappa\rvert\rho\bigr),\qquad\mathrm{wt}(\kappa)=2sn+2\lvert\kappa\rvert,
+\]
+where $e$ bounds the zeta denominators of the constant terms, $l^b$ is the part of the level at $l$, and $\rho$ bounds $v_l$ of $(s_2+\wp)/\omega^2$ from below as in Proposition~\ref{prop:cmsize}.
+\end{proposition}
+
+\begin{proof}
+Write $T=2\pi i$ and choose a nonzero $N$-torsion point $y$. The holomorphic weight-two form $W(\tau)=(G_2(\tau)+\wp_N(y;\tau))/T^2$ of level $N$ replaces $G_2$ in the Maass--Shimura operator. Then (\lean{jet_conj_expand}, read in full)
+\[
+\frac{\partial^\kappa G(\tau)\,(\pi/\operatorname{Im}\tau)^{\lvert\kappa\rvert}}{T^{\mathrm{wt}(\kappa)}}=\sum_{\mu\le\kappa}\Bigl(\prod_i r(2s,\kappa_i,\mu_i)\Bigr)\Bigl(\frac{\pi/\operatorname{Im}\tau}{T^2}-W(\tau)\Bigr)^{\lvert\kappa-\mu\rvert}h_\mu(\tau),
+\]
+with integers $r$ and holomorphic modular forms $h_\mu$ of weight $\mathrm{wt}(\mu)$ for $\Gamma(N)$. The factor $(\pi/\operatorname{Im}\tau)/T^2-W(\tau)$ is $-(s_2+\wp(P))/T^2$, which Proposition~\ref{prop:cmsize} bounds after division by $\omega^2$. For $h_\mu$ the Fourier coefficients of the Hilbert Eisenstein series are divisor sums and, in the constant term, partial zeta values, so $v_l$ of every coefficient is at least $-(e+\dots)$ (\lean{sz_hfun_coef}, \lean{weierstrassTorsion_qExpansion_integral}). The $q$-expansion principle at level one then bounds the value: for a family $(f_i)$ of weight $w$ permuted by $\mathrm{SL}_2(\mathbb Z)$ with coefficients in an integrally closed ring $R$, the elementary symmetric functions of $f_i^{12}/\Delta^w$ are polynomials in $j$ over $R$, and $j(\tau)$ is an algebraic integer, so $f_i(\tau)/\Omega^w$ is integral over $R$ (\lean{QFam.isIntegral_value_div}, read in full; \lean{JInt.main}, read in full, proves $j(\tau)\in\bar{\mathbb Z}$ from the modular polynomial).
+\end{proof}
+
+This answers the question left open in Section~\ref{sec:join}. \lean{JetInt} is an explicit denominator bound valid at every prime, and its proof avoids the ordinary hypothesis of Katz's $p$-adic theory. The holomorphic pieces are bounded at every prime by the $q$-expansion principle, and the one non-holomorphic quantity, $(s_2+\wp(P))/\Omega^2$, is bounded at every prime by Masser's isogeny formula, with denominators at $2$ and $d$ that the numerics reproduce exactly. The archive's form is not stronger than what is true, and it does not rest on Katz. The risk item is withdrawn.
+
+\lean{Expansion} divides the jets by $\kappa_i!$ (\lean{JetExp.expansion_of_jetInt}) and pays $\lvert\kappa\rvert(1+[l=2])$ for it, which covers $v_l(\kappa!)\le\kappa/(l-1)$. \lean{LatIntRam} and \lean{LatIntUnr} (read in full, 77 and 83 lines) identify the CM lattice sum with the diagonal jet (\lean{DerivAtOrigin.statement}, from Hecke's continuation in weight two) and transfer the bound with the period factors $(2\pi/\sqrt d)^{\lvert\kappa\rvert}\Omega^{-\mathrm{wt}}$. \lean{ToricDenominator} (\lean{ToricDenomRow.toricDenominator}, read in full) writes a toric sum as a sum over the class group of class terms, each equal to a unit times a lattice value at an idele that is one at $l$ (\lean{classTerm_rep}), and applies the lattice bound.
+
+\subsection{Algebraicity and Galois conjugation}
+
+\lean{LatAlg} (\lean{latAlg_of_siegelKlingen}, 143 lines, read at the top) proves that the normalized CM values are algebraic, by the same expansion with rational Fourier coefficients and the $q$-expansion principle (Damerell's theorem in this setting). \lean{LatConj} (\lean{LatConjEll.latConj}, 193 lines, read at the top) proves that $\sigma\in\operatorname{Aut}\mathbb C$ carries the normalized value at $(\Lambda_0,\Omega_0)$ to the value at $(\Lambda_1,\Omega_1)$ whenever $\sigma$ acts on $g_2/\Omega^4$, $g_3/\Omega^6$ and on the torsion values $\wp/\Omega^2$, $\wp'/\Omega^3$ through an idele $t$ (the hypothesis \lean{TorsTransport}). Its steps are the Galois action on $q$-expansions through the cyclotomic character (\lean{qConj_family}), the transport of a modular family of level $N$ (\lean{WpFamGL.transport_GL}, read), and the transport of $s_2/\Omega^2$, which follows from Masser's formula because $s_2$ is $-\frac1{2d}\sum\wp(Q)$ over the kernel of $i\sqrt d$ (\lean{NormSqOfSquareEqNeg.main}, read in full).
+
+\lean{Transport} (\lean{transport_of}, read in full) obtains \lean{TorsTransport} for every $\sigma$ fixing $K$ from \lean{EllipticCM.exists_transports} (98 lines, read at the top), which is elementary: $\sigma(E)$ has complex multiplication by $\mathcal O_K$, hence is $\mathbb C/\mathfrak b$, and $\sigma$ on torsion is $\mathcal O_K$-linear, hence given by an idele. The identification of the action with the class group uses \lean{HilbertClassFieldJ}. \lean{TwistedTransport} (\lean{twistedTransport_of_latClaims}) needs the idele to be the Artin symbol, which is \lean{PeriodEx} from \lean{EllipticMainTheoremCM}. \lean{Refl} (\lean{refl_square}, 96 lines) is the functional equation of the Hecke $L$-functions.
+
+\subsection{Status of \lean{JoinOut}}
+
+\noindent\textbf{\sE}, with these external theorems:
+\begin{itemize}[nosep]
+\item Siegel--Klingen rationality of $\zeta_F(C,1-k)$; the Deligne--Ribet congruences (Invent. Math. 59 (1980));
+\item Hecke's functional equation for partial zeta functions and Hecke $L$-functions (Hecke 1917, 1920; Tate's thesis);
+\item for \lean{Transport}, $K(j(\mathcal O_K))$ is the Hilbert class field and $\operatorname{Gal}$ acts simply transitively on the $j(\mathfrak a)$ (Weber, Hasse 1927, Deuring; Lang, \emph{Elliptic Functions}, ch.~10);
+\item for \lean{TwistedTransport}, Shimura's main theorem of complex multiplication (Shimura, \emph{Introduction to the Arithmetic Theory of Automorphic Functions}, 1971, Thm.~5.4);
+\item the $q$-expansion principle at level one over an integrally closed ring and the integrality of $j$ at CM points, which the archive proves;
+\item Masser's isogeny formula for the quasi-period (Masser, \emph{Elliptic Functions and Transcendence}, LNM 437, 1975), which the archive proves.
+\end{itemize}
+The archive proves each of the five published statements internally (Layer 3). Small internal leaves read at statement level only: \lean{WpFam.LatTorsVal.main} (20), \lean{IsogFormula.main} (59), \lean{SzRamified.main} (50), \lean{ArithThreeInert.main} (47), \lean{HilbFam.sz_hfun_coef} (137), \lean{HilbFam.TwistSize.main} (68), \lean{HilbertEis.eisExp} (40), \lean{LipschitzTR.lipschitz} (98), \lean{HeckeTwo.heckeWeightTwo_of_fe} (43), \lean{HilbFam.iterD_defSum_eq_jet} (34), \lean{RoadE.passl} (76), \lean{CMVal.LatEnt.exists_isLatSum} (101), \lean{exists_isHeckeL_of_hasInf} (32), \lean{inZl_mul_zeta} (78), \lean{transportFor_of} (60), \lean{refl_square} (96), and the bodies of \lean{latAlg_of_siegelKlingen} and \lean{LatConjEll.latConj} below their tops. Their statements are elementary or classical, and each mechanism is identified above. Nothing in the package is a new engine, and no step is stronger than its classical counterpart.
+
+\section{Second follow-up: the live \PC{6} and \PC{7} interfaces}\label{sec:fu2}
+
+This section was added on 22 November 2026 at Jimmie Adriazola's request to continue on the live interfaces of \PC{6} and \PC{7}, with \lean{JoinOut} treated as closed. It covers the producers of F1 to F5 below \lean{fun0Fit_of_leaves_alt}, the entries of \lean{Open0} and the producers of nonvacuity, and it settles the three route questions left open in the first version. Where this section and an earlier one disagree, this section is the current one.
+
+\subsection{A forward live set}\label{sec:fwd}
+
+The reverse search of the first version could not decide declarations whose reverse closures pass $30{,}000$. I therefore built the forward closure of \lean{riemannHypothesis} as well. Each body token is resolved against the namespace of its declaration, the enclosing namespaces and the \lean{open} lines of its file, and a dotted token whose last component names at most eight declarations is resolved to all of them. The closure has $841{,}665$ of the $1{,}060{,}824$ declarations. It over-approximates use, so a declaration outside it is off route, and a declaration inside it is live once a path of single-candidate resolutions to it is printed. The set agrees with every earlier finding I tested, for instance \lean{fun0Fit_of_leaves_alt} inside, \lean{fun0Fit_of_leaves} and \lean{GlobalTheory.EX.hostEx_of_zeroFreeRegion} outside. A second pass stored the breadth-first parent of every node and stopped matching body tokens to top-level helpers of other files (names such as \lean{core}, \lean{key}, \lean{aux}, which collide with local names). It has $840{,}206$ declarations. The witness paths below are read from it, and every step was then checked by hand in the source.
+
+\subsection{The three route questions}\label{sec:three}
+
+\paragraph{\lean{UniqGap} is live, both declarations.} A path in which every step resolves to a single declaration is
+\begin{multline*}
+\texttt{riemannHypothesis}\to\texttt{rhOfAll}\to\texttt{allChi}\to\texttt{everyCharacter}\to\texttt{everyCharacter\_of\_row}\\
+\to\texttt{every\_character\_of\_literature\_of\_vWin}\to\texttt{every\_character\_of\_theta\_integrals\_local\_matching}\\
+\to\texttt{nonempty\_hyps\_definite\_side\_of\_closed\_bound}\to\texttt{hypotheses\_nonempty\_of\_unramified\_exponents\_alt}\\
+\to\texttt{rowsPos\_typeP}\to\texttt{bessel\_multiplicity\_one\_large\_gap\_and\_whittaker\_bessel}\to\texttt{GapIn.UniqGap}.
+\end{multline*}
+The statement wrapper is proved by \lean{uniqGap_and_besselOfW}, whose first component is \lean{CompanionTheory.Lime.BM.uniqGap_holds}, a proof of the second declaration \lean{CompanionTheory.Lime.BM.UniqGap} (the two are the same proposition, transported by \lean{uniqGap_of_uniq}). So \lean{UniqGap} sits on the nonvacuity route, as an input of the type bound \lean{TypeP} of the rows. Its content and status are in Section~\ref{sec:fu2nonvac}.
+
+\paragraph{\lean{secondCohomologyBound_of_boundaryBound}.} Both declarations are live, and every step of both paths was checked against the source. \lean{UpperTheory.V.Pa.secondCohomologyBound_of_boundaryBound} is reached through \lean{everyCharacter_of_row}, \lean{vwin_of_row}, \lean{automorphic_window_of_inputs}, the window theorems of \Lpath{.../ModularityArgument/ThresholdArguments/DenseThresholdCases/}, \lean{modU_of_printsH}, \lean{pFromAut}, \lean{UpperTheory.V.Pa.norm}, \lean{UpperTheory.V.Pa.core} and \lean{cohLim}. It is the step of the Taylor--Wiles--Kisin patching argument that passes from bounds on second Selmer classes modulo $t^m$, at every level $m$, to a class over $K[[t]]$ by an ultrafilter limit (77 lines, read at the top, with \lean{selmer_second_exists_ultrafilter_limit} and \lean{power_series_exists_ultrafilter_limit}). It lies on the automorphy route of \lean{vwin_of_row}, outside \PC{6} and \PC{7}. I hand it to the agent of that route as a small item with a standard compactness mechanism. \lean{PositivityTheory.AdelicQuotientData.secondCohomologyBound_of_boundaryBound} is reached through \lean{every_character_of_literature_of_vWin}, \lean{published_results_eigen}, \lean{jacquet_shalika_of_literature}, \lean{jacquetShalika}, \lean{jacquetShalikaRigidity}, \lean{rsPole} and \lean{rsPole_of_inputs}. Despite its name it is a lemma of functional analysis. From the height function and the minimum function $d_{\min}$ on $\mathrm{GL}_k(\mathbb A_E)$ it builds, for every weight $M$, a representation $\rho$ on a weighted function space and an injective intertwiner $J$ into functions on $\mathrm{GL}_k(\mathbb A_E)$ that takes smooth vectors to smooth vectors (read at the top, explicit estimates). It is a step of the archive's own proof of the rigidity theorem of Jacquet and Shalika (Amer.\ J.\ Math.\ 103 (1981)), which is a published theorem, so it is a Layer~3 proof of a published result and no residual of mine.
+
+\paragraph{\lean{isProdCuspChar_good}.} Live, through \lean{hypotheses_nonempty_of_unramified_exponents_alt}, \lean{allRows_of_open0_alt}, \lean{row_rRows_stage0_alt}, \lean{eventually_small_of_seeEx_primitive}, \lean{small_along_alt}, \lean{indefScale_theta_degree}, \lean{passIn3_at_realT_alt}, \lean{passIn3_of_rows} and \lean{goodCharacter_placewise_cuspidal_parabolic_product}, so it sits on the nonvacuity route. Its statement is the following. Let $G$ be a finite group identified by the record with $\prod_v\mathrm{GL}_r(\mathbb F_{p_v})$, the product over the places above the two primes $g_0,g_1$ of the host, and let $\chi$ be an irreducible character of $G$ with $\sum_g e_0(g)\chi(g)=\chi(1)$ for the good idempotent $e_0$ built from the series idempotents. Then $\chi=\prod_v\theta_v$ with every $\theta_v$ a cuspidal parabolic product character of $\mathrm{GL}_r(\mathbb F_{p_v})$. The proof (34 lines, read in full, with \lean{irreducible_character_good_idempotent_cuspidal_product}, 27 lines, read at the top) writes $\chi$ as a product of irreducible characters of the factors (\lean{exists_good_factor}), uses the idempotent to place each factor in the series of a squarefree label (\lean{exists_simple_label_of_seriesIdempotent_pair}), and concludes with \lean{squarefreeLabel_isCuspidalParabolicProductCharacter}, which says that a character with squarefree label is parabolically induced from cuspidal characters with distinct labels. That is Green's classification of the irreducible characters of $\mathrm{GL}_r(\mathbb F_q)$ (Green, Trans.\ AMS 80 (1955); Zelevinsky, LNM 869 (1981), ch.~9). So \lean{isProdCuspChar_good} is \sE, with Green's theorem proved inside the archive.
+
+\subsection{F1: the nineteen producers of \lean{square_top_term_joined_estimates}}\label{sec:fu2f1}
+
+\lean{square_top_term_joined_estimates} (\Lpath{.../LocalTypeDictionary/SquareTopTermJoinedEstimates.lean}:13, read in full) takes nine hypotheses, \lean{HoweDualityReal}, \lean{ThetaLocalInputs}, \lean{HeckeFunctionalEquationAbs}, the four components \lean{ToricDenominator}, \lean{Transport}, \lean{ZetaDenominators}, \lean{Refl} of \lean{JoinOut}, and \lean{ThetaIntegralsAgree}, \lean{LocalMatching}. On the live route they come from \lean{nonempty_hyps_definite_side_of_closed_bound} (\Lpath{TPS/SiegelEisensteinSecondTermHypotheses.lean}), where \lean{ThetaLocalInputs} is a structure of fifty-three \lean{Published} statements (\Lpath{.../LocalTypeDictionary/BernsteinUnitaryProductIrreducible.lean}:6), \lean{HeckeFunctionalEquationAbs} is obtained from \lean{HeckeTateFunctionalEquation}, \lean{JoinOut} is Section~\ref{sec:joinfull}, and \lean{ThetaIntegralsAgree} and \lean{LocalMatching} are the inductions that Final F reconstructed. So F1 has no hypothesis of its own that is still open. Each of its outputs is a statement of the form \lean{GBig} $Q$ (\Lpath{Development/AbelianVarietyTheory/Statements/PlaceShiftStatements/NormSmall.lean}:34), that is, there is $C_{F,0}$ such that for all $\varepsilon$ and $C_F\ge C_{F,0}$ there are $C_0,x_0$ with $Q$ true for every $C\ge C_0$, every record datum with $x\ge x_0$ and exponent $\varepsilon$, every level-character datum and every grid. The analytic bound $\mathrm{bTH}=C f b(\log b+\log x)$ recurs.
+
+\paragraph{Setting.} $E$ is the CM host field, abelian over $\mathbb Q$, with a CM type $\varphi=(\varphi_\tau)$ induced from $K=\mathbb Q(\sqrt{-d})$, and $n=[E:\mathbb Q]$. For a unitary Hecke character $\chi$ of $E$ with infinity type $\chi_\infty(\alpha)=\prod_\tau(\varphi_\tau(\alpha)/\lvert\varphi_\tau(\alpha)\rvert)^{2m_\tau}$, \lean{IsHeckeL} $\chi\,L$ means that $L$ is entire and equals $\prod_v(1-\chi(v)Nv^{-s})^{-1}$ for $\operatorname{Re}s>1$ (\Lpath{.../Divisors/EntireEqOfHalfPlane.lean}:56). The characters that occur are $\nu_t=\nu_{\mu_0}\xi_t$ and the family $\nu_{\mu_0}\delta_c$ of \lean{fam}, with weights $\kappa_\tau(s)\ge1$ for $1\le s\le h$, where $h$ is the half rank.
+
+\begin{proposition}[\lean{LNe}; \lean{lNe_of_functionalEquation}, \lean{lNe_square}, \lean{heckeL_ne_zero_int}, \lean{IsHeckeL.ne_zero_nat}, \Lpath{DP/SquareBottomHalfRankDiffLeHalfRank.lean}:84--181, \Lpath{DP/HeckeLNeZeroNat.lean}:10, read in full]\label{prop:lne}
+Let $\chi$ be a unitary Hecke character of the CM field $E$ with infinity type $2m$, $m_\tau>0$ for every $\tau$, and let $L$ be its $L$-function. Then $L(s)\ne0$ for every integer $s$ with $s+m_\tau>0$ for all $\tau$. In particular $L(s,\nu_t)\ne0$ for $1-e_0\le s\le h$ and $L(s,\nu_{\mu_0}\delta_c)\ne0$ for $s\ge1$.
+\end{proposition}
+
+\begin{proof}
+For $s\ge2$ the Euler product converges absolutely and is the exponential of a convergent series, so it is not zero. At $s=1$ the archive uses \lean{eulerProduct_ne_zero_one_of_entire}, the Hecke--Landau argument from the entireness of $(s-1)\zeta_E(s)$ and of $L(s,\chi)$ with $\chi$ nontrivial ($\chi$ is nontrivial because $m\ne0$). For $s\le0$ let $\Lambda(s)=\prod_\tau\Gamma(s+m_\tau)\cdot(\text{exponential factors})\cdot L(s)$ be the completed function and $\Lambda'$ the one of $\chi^{-1}$ with weights $-m$ (\lean{completed_eq}). The functional equation \lean{HeckeFunctionalEquationAbs} gives $\Lambda(s)=\varepsilon\,N^{1/2-s}\Lambda'(1-s)$ with $\lvert\varepsilon\rvert=1$ and $N=\lvert d_E\rvert\,N\mathfrak f_\chi$. Since $1-s\ge1$, $L(1-s,\chi^{-1})\ne0$ by the first two cases, and $\Gamma(1-s+m_\tau)$ is finite and nonzero, so $\Lambda'(1-s)\ne0$ and $\Lambda(s)\ne0$. Since $s+m_\tau\ge1$, $\Gamma(s+m_\tau)$ is finite, hence $L(s)\ne0$. The range $1-e_0\le s\le h$ satisfies $s+\kappa_\tau>0$ by \lean{kap_add} and \lean{squareBottomHalfRankDiff_le_halfRank}, which are index inequalities.
+\end{proof}
+
+\begin{proposition}[\lean{LBound}; \lean{lBound_of}, \Lpath{DP/HeckeLValueUpperBoundPermutedWeightsOfFE.lean}:16, read in full]\label{prop:lbound}
+In the same setting, with $\kappa$ replaced by any permutation $\kappa\circ\pi$ and $1\le s\le h$, $\log\lvert L(s,\chi)\rvert\le\mathrm{bTH}$.
+\end{proposition}
+
+\begin{proof}
+For $s\ge2$, comparison of Euler factors gives $\lvert L(s,\chi)\rvert\le\zeta_E(3/2)\le\zeta(3/2)^n$ (\lean{norm_heckeLFunction_le_zeta_three_halves_pow}). For $s=1$ the archive proves $\lvert L(1,\chi)\rvert\le\zeta(3/2)^n\,N\prod_\tau(2+\kappa_{\pi\tau})$ with $N\le\lvert d_E\rvert Q^2$ (\lean{norm_completedHeckeL_CM_one_le_phragmenLindelof}), by the Phragm\'en--Lindel\"of principle between $\operatorname{Re}s=3/2$ and $\operatorname{Re}s=-1/2$, using the functional equation and the boundedness of the completed function in vertical strips. Rademacher's explicit convexity bound gives the stronger $\zeta(3/2)^n(N\prod_\tau\lvert2+\kappa_\tau\rvert^2)^{1/4}$, so the claimed inequality is safely true. The final step is \lean{gridSizes_log_bound}, $c\,n+\log\lvert d_E\rvert+2\log Q+\sum_\tau\log(1+\kappa_\tau+s)\le\mathrm{bTH}$, an explicit inequality between record fields.
+\end{proof}
+
+The boundedness in vertical strips (\lean{completedHeckeL_bounded_in_vertical_strips}, \Lpath{DP/CompletedHeckeLBoundedInVerticalStrips.lean}:17, read in full) decomposes $L(s,\chi)$ into finitely many partial series over principal ideals in residue classes (\lean{heckeLSeries_eq_sum_principalPartialSeries}), each of which has an entire completion bounded in strips (\lean{completed_heckePartialLSeries_entire_bounded_strips}). That is Hecke's proof of the analytic continuation (Hecke 1918, 1920), proved inside the archive.
+
+The other seventeen producers are below. ``Read in full'' and ``read at the top'' refer to the unwrapped body.
+
+\begin{longtable}{>{\rr}p{2.0cm} >{\rr}p{5.6cm} >{\rr}p{4.4cm} >{\rr}p{3.0cm}}
+\toprule
+Output & Content in ordinary terms & Producer, inputs & Status\\
+\midrule
+\lean{FieldDat} & $E$ is CM and abelian, $\varphi$ is a CM type induced from $K$, the conductor datum is a base condition, and $\mathcal O_K$ is an integral lattice & \lean{fieldDat} (10, read in full), record fields & \sC\\
+\lean{TorEx} & $x=L(s,\nu_{\mu_0}\delta_c)$ is nonzero, equals the toric (CM lattice) sum of \lean{IsTor}, and $\beta=x\cdot(\text{CM period normalization})$ is algebraic & \lean{torEx} (30, read in full) over \lean{toricSum_eq}, \lean{Transport}, \lean{LNe} & \sE{} (Hecke's partial series; \lean{JoinOut})\\
+\lean{BetaArch} & $\log\lvert N(\beta)\rvert\le12\deg(\beta)\,\mathrm{bTH}$ & \lean{betaArch_of_transport} (103, top): every conjugate of $\beta$ is a normalized $L$-value of a permuted infinity type (\lean{Transport}), bounded by \lean{LBound} and the explicit period size \lean{sizes} (134, top) & \sE\\
+\lean{DenEx}, \lean{DenSum} & denominators $n_l$ of the normalized values exist, are supported on finitely many $l$, and $\sum_{l\in S}n_l\log l\le\mathrm{bTH}$ & \lean{denEx} (8), \lean{denSum} (127, top): \lean{ZetaDenominators} at the five bad primes ($\log l\le9L+1$), \lean{sum_ceil_off_le} elsewhere & \sE{} (\lean{JoinOut}); arithmetic read at the top\\
+\lean{ThbSt} & heights of the toric values $z_d$ are $\le\mathrm{bTH}$ & \lean{thbSt_of_inputs} (85, top): finite places from \lean{ToricDenominator} and \lean{DenSum}, infinite places from \lean{BetaArch} & \sE\\
+\lean{RhoLow} & for $l\mid w$, $w\nmid Q_t$: $-n_l v_w(l)\le v_w(z)+g_w$ for the ratio $z=L(s,\nu_t)/L(s,\nu_{\mu_0})$ & \lean{rhoLow_holds}, \lean{core} (110, read at the top): $l$-integrality of $\beta(\nu_t)/\beta(\nu_{\mu_0})$ from \lean{ToricDenominator} & \sE\\
+\lean{BotSmall} & the level is good, the base tuple has no twist places, bottom pairs are small & \lean{botSmall_holds} (9) with \lean{small_of}, record fields & \sC\\
+\lean{BotEx}, \lean{BotExT} & bottom pairs exist at the base tuple and at every twisted tuple & \lean{botEx_holds} (8), \lean{botExT_holds} (13), over F4 and \lean{exists_heckeU_*} & transfer over F4\\
+\lean{NormBig} & $\lVert P\rVert=A\prod_{s=1-e_0}^{h_0}L(s,\nu_t)$ with $A\ne0$ independent of $t$ & \lean{normBig_alt} (28): \lean{theta_lift_petersson_norm_ratio_formula}, \lean{big_theta_petersson_norm_ne_zero} & transfer to \PC{4}\\
+\lean{TriEx} & a bottom triple $X$ with constant $c_0$ exists & \lean{triEx_holds_alt} (26): \lean{bottom_theta_norm_factorization} (139), \lean{bottom_theta_lift_ne_zero} (33) & transfer to \PC{4}\\
+\lean{BotNe} & both members of a base bottom pair have a nonzero coordinate & \lean{bottomTheta_ne_zero_of_innerProduct_formula} (53) & transfer to \PC{4}\\
+\lean{BotConst} & $c_0(t)=\gamma c_0(\mu_0)$ with $v_w(\gamma)\le v_w(z)+v_w(z')+6\delta_w$ & \lean{botConst_of_inputs_alt} (40): \lean{bottom_constant_ratio_eq_local_factor_ratio}, \lean{rallis_inner_product_formula_first_occurrence}, then \lean{valuation_proportionalityRatio_le_bottomPairs} & transfer to \PC{4} for the two identities; the valuation step uses F4\\
+\lean{Tower} & the square constant ratio $c/c_0$ times a ratio of $L$-values equals a root-of-unity unit times step ratios times $c_0(t)/c_0(\mu_0)$ times another ratio of $L$-values & \lean{tower_alt_bis} (73, read in full): five Witt-tower identities \lean{witt_tower_top_stage_theta_norm_formula}, \lean{exists_factor_of_isStageC}, \lean{witt_tower_norm_step_of_small_rank}, \lean{witt_tower_norm_step_of_large_rank}, \lean{witt_tower_constant_ratio_eq_bottom}, and \lean{LNe} & the algebra is \sC; the five identities transfer to \PC{4}\\
+\lean{OneSqSt} & the local inequality of \lean{LeafUniqueSquareRoot} & \lean{oneSqSt_of_claims'} (218, read at the top): case $\mu_w=\mu_0$ trivial, otherwise valuation bookkeeping with \lean{exists_ratios}, \lean{stepRatio_vw_bound} over ten outputs above, \lean{Refl} and F4 & \sC{} over its inputs\\
+\bottomrule
+\end{longtable}
+
+So F1 splits three ways. Nine outputs (\lean{FieldDat}, \lean{LNe}, \lean{LBound}, \lean{TorEx}, \lean{BetaArch}, \lean{DenEx}, \lean{DenSum}, \lean{ThbSt}, \lean{RhoLow}) and the bookkeeping \lean{BotSmall}, \lean{OneSqSt} are closed modulo Hecke's functional equation, the Hecke--Landau nonvanishing at $s=1$, the Phragm\'en--Lindel\"of principle and \lean{JoinOut}. Two (\lean{BotEx}, \lean{BotExT}) rest on F4. Five (\lean{NormBig}, \lean{TriEx}, \lean{BotNe}, \lean{BotConst}, \lean{Tower}) rest on the theta identities named in the table for the bottom of the Witt tower, all under \Lpath{.../ThetaPairLifts/LocalTypeDictionary/} and all with hypotheses \lean{ThetaLocalInputs}, \lean{ThetaIntegralsAgree}, \lean{LocalMatching}. They are the bottom and anchor theta producers that the prompt assigns to \PC{4}, so I deduplicate them there. In ordinary terms they are the Rallis inner product formula at the first occurrence, the factorization of the Petersson norm of a bottom theta lift into local factors, the nonvanishing of the first-occurrence lift, the five norm-step identities along the Witt tower, and the factorization of the bottom triple integral (\lean{bottom_triple_integral_factorization}, also used by F5).
+
+\subsection{F2, F3, F5}\label{sec:fu2f235}
+
+\paragraph{F2.} \lean{sum_size_finite_away_archimedean_combined} (19, read in full) has fourteen producers. Two of them, \lean{rowSum_of_hypotheses_alt} (21) and \lean{finScalK_and_infScalK_of_theta_inputs} (6), discard \lean{ThetaLocalInputs} in their first line and are explicit size computations. The others bound the finite and archimedean sizes of the theta test-vector values through the factorizations \lean{form_value_finite_infinite_factorization}, \lean{test_vector_value_factorization}, \lean{field_pair_comparison} and the integrality statement \lean{pairIntRatK_of_thetaLocalInputs}, over F4. They belong to the local-model layer of \PC{4}, with F4 as their arithmetic input.
+
+\paragraph{F3.} \lean{joined_local_sum_estimates} (5) applies \lean{thetaLift_row_properties_conj} to the twisted forms of the two Final F inductions, \lean{twisted_square_local_matching} (64) and \lean{twisted_theta_integrals_agree} (25), and to \lean{weilConvergence_of_siegelSet}, the convergence of the twisted theta integral from the published \lean{SiegelSetUnitary}. The twisted statements repeat the Final F induction with a twisted Weil datum. They transfer over Final F and \PC{4}.
+
+\paragraph{F5.} \lean{thmA_upper_alt} (13, read in full) obtains \lean{ThA} from \lean{ToricRatioConjugates}, which is \lean{toricRatioConjugates_of_transport} applied to \lean{TwistedTransport}, and from \lean{FieldDat}, \lean{TorEx} and the record field for $\lvert L'/L(1)\rvert$. It is \sE{} through \lean{JoinOut}. \lean{square_ratio_at_point_of_leading_term_alt} (27) uses \lean{bottom_triple_integral_factorization} and transfers to \PC{4} for that identity.
+
+\subsection{F4: the CM theta package \lean{NormSum.Inp}}\label{sec:fu2f4}
+
+\lean{NormSum.inp_all} (\Lpath{Development/AbelianVarietyTheory/Proofs/FoundationProofs/CmThetaNormBoundHypothesesSatisfied.lean}:29) proves the twenty-two fields of \lean{Inp D} (\Lpath{.../Definitions/Foundations/NormSumPairRankZeroOfCurveCoordNorm.lean}) with no hypotheses. The twenty-one producer files have $6{,}730$ lines. The fields are statements about theta functions with characteristics on the CM elliptic curve $\mathbb C/\mathfrak a$, $\mathfrak a\subset\mathcal O_K$, and on its products, evaluated at CM and torsion points. Grouped by content:
+\begin{itemize}[nosep]
+\item algebraicity and Galois conjugation of the Taylor coefficients and vacuum values at CM points (\lean{use1}, \lean{alg}, \lean{conj}, \lean{nrm}, \lean{gal}, \lean{galEx}, \lean{bar}, \lean{curve}), which is Shimura's reciprocity law for theta values with complex multiplication;
+\item integrality (\lean{model}, \lean{transl}, \lean{two}, \lean{jets}, \lean{split}), that the normalized theta jets and torsion translates are integral, that theta functions over $2$ are units, and that the values vanish at odd split primes in the stated sense;
+\item the Weil representation and characters (\lean{g1}, \lean{perm}, \lean{uni}, \lean{mu}, \lean{odd3}, \lean{odd4}, \lean{rep}, \lean{t0Ex}, \lean{eqv}), that is, the induced type permutes under embeddings, the translation intertwiners are unitary, admissible characters with the Gauss-sum triple constant exist, the vacuum sign at inert places and the oddness condition hold, and a $2$-torsion CM point exists.
+\end{itemize}
+This is a medium package of the same nature as \lean{JoinOut}, for theta functions instead of Eisenstein series. The literature for its first two groups is Shimura, \emph{Theta functions with complex multiplication}, Duke Math.\ J.\ 43 (1976), and Kubert--Lang, \emph{Modular Units} (1981), for the unit and integrality statements. I read the producers at the top (sizes $2$ to $87$ lines) and none below. F4 is consumed by F1 (\lean{BotEx}, \lean{BotExT}, the valuation step of \lean{BotConst}), by F2, and by \lean{LeafIntegrality} and \lean{ArchimedeanCondition} through \lean{classSumDenominatorBound_of_cmThetaHypotheses} and \lean{archSt_of_inp}. It is the largest internal residual of \lean{FUN} after the \PC{4} transfers.
+
+\subsection{\lean{Open0}: the ten entries as exact propositions}\label{sec:fu2open}
+
+\lean{open_orbit_of_unramified_exponents_alt} (\Lpath{TPS/OpenOrbitOfUnramifiedExponents.lean}:39) builds the twelve entries of \lean{OpenParameterStatements}. Each entry has the form \lean{LinkedAt} $p$ $R$, that is, for every slot of the linkage of the parameters $p$ and every bundle built and good for $p$, the bundle property $R$ holds (\Lpath{TPS/RowGood.lean}:38). The bundle properties are
+\begin{longtable}{>{\rr}p{1.3cm} >{\rr}p{6.4cm} >{\rr}p{4.0cm} >{\rr}p{3.3cm}}
+\toprule
+Entry & Bundle property $R$ & Producer (unwrapped) & Published inputs\\
+\midrule
+\lean{hDcPtG} & \lean{DcPtG}: for every word $u$ and tuple $t$ used, $\iota(\mathrm{Pt}(x,F))=\mathrm{perCol}_u(t)(j(x),j(r_{V_0}F))$, the decomposition point values equal the period columns & \lean{linkedAt_hDcPtG} over \lean{rowE_dcPt_linked_alt} & none\\
+\lean{tie} & a compatibility \lean{Comparison}$_2$ exists for the bundle & \lean{at_tie_alt} over \lean{hasTie_of_linked} & seven (discrete series, Harish-Chandra, Casselman--Wallach, Weil pair, cusp decay)\\
+\lean{selJ} & an indefinite realization join (a word map $m$ with linear identifications and a chain tie) exists & \lean{at_selJ_alt} over \lean{selJ_of_bWit} & four, and \lean{hPA}, \lean{hDcPtG}, \lean{tie}\\
+\lean{hDivG} & \lean{DivRows3G}: the sharp and base row lattices are tied, rational lifts span at the used tuples, and the theta map is integral & \lean{at_hDivG_main_alt} over \lean{hDivG_linked_of_mIstar2} & seven, and \lean{mi} (\PC{4})\\
+\lean{hLamP} & \lean{RowsHoldLam3}: the isotypic components of the rows are independent, span the column spaces, and the Hecke eigenvalues at the base and twisted tuples equal the column labels & \lean{at_row_hLamP_alt_alt} over \lean{isotRank_of_wit_alt}, \lean{finiteTypes_via_full_heckeAlgebra_eigensystems} & twelve, including Dixmier--Malliavin, Flath, Zelevinsky\\
+\lean{kap} & \lean{RowsHoldKap3}: the infinity type of the rows equals $\kappa$ of the row-side family at every infinite place & \lean{row_kap_of_row_lam_alt_alt} (24), from \lean{hLamP} & thirteen\\
+\lean{good} & \lean{GoodFTAll}: every type is a good row & \lean{row_good_alt_alt} (10) over \lean{linkedAt_goodFTAll} & regular characters, Zelevinsky\\
+\lean{lab} & a Hida setting with good operator and label ties exists & \lean{row_lab_of_layer_alt_alt} (4) & same\\
+\lean{geo} & a compatibility point with class-sum pin and compatibility conditions exists & \lean{geometricWeakTies_of_linked_ties} (8), over \lean{class_sum_divisor_all_alt} & \lean{RayClassFieldSt}\\
+\lean{df} & \lean{DefiniteSideCondition} & \lean{linkedAt_df_of_parameters} & four\\
+\bottomrule
+\end{longtable}
+\noindent \lean{hPA} was closed in the first version and \lean{mi} is \PC{4}. All ten producers are thin wrappers that move a row theorem to the linkage through \lean{LinkedAt.of_row} and \lean{RowE.row}. The content sits in the row theorems named in the third column, which prove the bundle property for every bundle of the construction of \Lpath{Formalism/LocalToGlobal/} (Hilbert row conditions, divisibility, period columns). I read none of them below the top line, so the ten entries remain one medium residual, now stated as the ten propositions in the second column. \lean{hLamP} and \lean{kap} share one mechanism (Hecke eigensystems of the rows) and \lean{good} and \lean{lab} another (local Langlands for the good types).
+
+\subsection{Nonvacuity: the live children}\label{sec:fu2nonvac}
+
+\lean{hypotheses_nonempty_of_unramified_exponents_alt} (21, read in full) is the live nonvacuity producer. It calls \lean{member_bundles_large_unramified_exponents_alt} (Section~\ref{sec:nonvac}), \lean{hyps_e_third_layer_ser_n_of_geometric_galois}, \lean{ON}, \lean{Open0}, the Galois side \lean{UpperTheory.GalC.final_alt_alt}, \lean{allRows_of_open0_alt} (37) and \lean{nonempty_hyps_of_allRows_alt} (83), and through the last one eight further inputs. Four of them are theorems proved inside the archive with a published counterpart, three come from the convergent Siegel--Weil formula, and one is the genus mass formula.
+\begin{longtable}{>{\rr}p{3.0cm} >{\rr}p{6.6cm} >{\rr}p{5.4cm}}
+\toprule
+Input & Statement & Published counterpart\\
+\midrule
+\lean{rowsPos_typeP} with \lean{UniqGap} & two Bessel functionals on a discrete series of $U(p,q)$ whose Harish-Chandra parameter has gap $\ge120\,n^3$, with values in an irreducible finite-dimensional representation of the stabilizer, are linearly dependent; with \lean{BesselOfW} this gives the type bound \lean{TypeP} & multiplicity one for Bessel models of real unitary groups (Jiang--Sun--Zhu, GAFA 20 (2010), with Sun--Zhu, Ann.\ of Math.\ 175 (2012)). The archive proves the large-gap case (\lean{besselMapUniqGap}, \lean{uniq_of}, 74 lines) by an orbit argument over the Iwasawa, Levi and Cartan decompositions and the decay of matrix coefficients\\
+\lean{wuDecayOfGap} & for large gap the matrix coefficient $\varphi$ of the discrete series decays and is integrable & integrability of discrete series matrix coefficients far from the walls (Trombi--Varadarajan 1971; Hecht--Schmid 1976)\\
+\lean{rowsFinDim_link} & spaces of automorphic forms with fixed $K$-type and discrete series at infinity are finite-dimensional & Harish-Chandra, LNM 62 (1968)\\
+\lean{litThin} & a zero-density bound $\sum N(1-\tfrac1{400},Q,Q)\le C_1Q^{1/4}$ over primitive characters of conductor $\le Q$, a zero-free region with at most one real simple exceptional zero, the truncated explicit formula for $\psi_0(u,\chi)$, and $\#\{\rho:\lvert\gamma-t\rvert\le1\}\le C\log(N(\lvert t\rvert+2))$ & Montgomery, LNM 227 (1971), Thm.~12.2 (the stated exponent $1/4$ is weaker than Montgomery's by a wide margin); Landau--Page; Davenport, ch.~14, 16, 17\\
+\lean{rowNGP_of_siegelWeil}, \lean{rowMainEqP_of_siegelWeil}, \lean{volumeRatio} & from the convergent Siegel--Weil formula & published input\\
+\lean{genusMassAt_two} & the genus mass formula at level two & internal, from \lean{genusMassStd_all}\\
+\bottomrule
+\end{longtable}
+\noindent The analytic statements of \lean{litThin} belong to the same family as the HostEx inputs of the external boundary (\lean{ZeroCount}, \lean{ZFRDirichlet}, \lean{Jutila}), but on this route they are internal theorems (\lean{ZerosNearOne.main}, \lean{truncated_explicit_formula}, \lean{count_zeros_window}), so they should be recorded as Layer 3 proofs of published theorems. With these identifications the nonvacuity residual R4 reduces to the bodies of \lean{member_bundles_large_unramified_exponents_alt}'s children (unchanged), \lean{allRows_of_open0_alt}, \lean{nonempty_hyps_of_allRows_alt} and \lean{final_alt_alt}, plus the internal proofs of the published counterparts above if those are not accepted as external.
+
+\subsection{Effect on the residual list}
+
+R1 of the first version splits into R1a, the CM theta package F4 (medium, statement level above), and R1b, the bottom theta identities transferred to \PC{4}. The analytic and arithmetic part of F1 and F5 is no longer residual. R3 is unchanged in size but is now ten exact propositions. R4 is narrower. R8 is resolved by Section~\ref{sec:three}. \lean{UniqGap} and \lean{isProdCuspChar_good} are on the nonvacuity route and reduce to Jiang--Sun--Zhu and Green, the Jacquet--Shalika lemma is a Layer~3 step of a published theorem, and the patching lemma belongs to another route.
+
+\section{Third follow-up: F4, \lean{Open0} and \lean{ON}, nonvacuity}\label{sec:fu3}
+
+This section was added on 22 November 2026 at Jimmie Adriazola's request. It works on the live residuals that Section~\ref{sec:fu2} left, in the order F4, \lean{Open0} with \lean{ON}, nonvacuity. \lean{JoinOut}, the theta identities transferred to \PC{4}, \lean{global_model_power_free}, the \PC{4}.13 handoff and the patching route are not touched. Where this section and an earlier one disagree, this section is the current one.
+
+\subsection{F4: the CM theta package \lean{NormSum.inp_all}}\label{sec:fu3f4}
+
+\paragraph{Objects.} Let $K=\mathbb Q(\sqrt{-d})$ be the imaginary quadratic field of the host, $\mathfrak c\subset\mathcal O_K$ an ideal prime to $2d$, and $\Lambda=\delta\,\mathfrak c$ with $\delta^{12}=\Delta(\mathfrak c)$, so that $\Delta(\Lambda)=1$ (\lean{lamOf}, \lean{IsDiscriminantTwelfthRootOfIdealLattice}, \Lpath{Formalism/SharpRestriction/GlobalSchurBounds/GeneralLinearActions/IsDiscriminantTwelfthRootOfIdealLattice.lean}:53--60). Write $s_2(\Lambda)$ for the Hecke-regularized value $\lim_{s\to0}\sum'_{\omega}\omega^{-2}\lvert\omega\rvert^{-2s}$, so that Legendre's quasi-period is $\eta(\omega)=s_2\omega+\pi\bar\omega/A(\Lambda)$, and
+\[
+\sigma^*(z)=\sigma(z)\,e^{-s_2z^2/2},\qquad
+U_t\sigma^*(z)=\sigma^*(z+t)\exp\Bigl(-\frac{\pi z\bar t}{A}-\frac{\pi t\bar t}{2A}\Bigr)
+\]
+(\lean{sgStar}, \lean{U1}). The function $\sigma^*$ is the odd normalized theta function of the hermitian form $\pi\lvert z\rvert^2/A$, with $U_\omega\sigma^*=\pm\sigma^*$ for $\omega\in\Lambda$. On the abelian variety $\mathbb C^{fNN'}/\Lambda\otimes(\text{lattice})$ the archive builds theta vectors from products of $\sigma^*$ and of $\theta_0=U_{t_0}\sigma^*/U_{t_0}\sigma^*(0)$ along orthonormal bases, with translations $U_x$, lattice intertwiners $I_{A_1\to A_2}$ and Weil operators $W$.
+
+For a prime $p$ and an embedding $\bar{\mathbb Q}\to\mathbb C_p$, $E_\Lambda$ has a Weierstrass model $W$ over $\mathcal O_{\mathbb C_p}$ with unit discriminant (\lean{modelEx}), formal parameter $T$, formal logarithm $\ell(T)$ and exponential $\exp_W$, and the archive sets
+\[
+\Phi(T)=\frac{\sigma^*(\varepsilon\,\ell(T))}{\varepsilon T},\qquad \mathrm{ph}(T)=-\log\Phi(T),\qquad
+\mathrm{be}(x,y)=\mathrm{ph}(x+_Wy)-\mathrm{ph}(x)-\mathrm{ph}(y),
+\]
+with $\varepsilon=u^{-1}$ the scaling of the model (\lean{ePhi1}, \lean{G1.ph}, \lean{G1.be}). $f\simeq g$ means that $f-g$ has zero constant term and $\exp(f-g)$ has integral coefficients (\lean{Simeq}).
+
+\paragraph{The 22 fields, grouped by mechanism.}
+\begin{longtable}{>{\rr}p{3.0cm} >{\rr}p{12.0cm}}
+\toprule
+Group & Fields\\
+\midrule
+A. Algebraicity and Galois conjugation & \lean{curve}, \lean{gal}, \lean{galEx}, \lean{use1}, \lean{alg}, \lean{conj}, \lean{nrm}, \lean{bar}, with the bookkeeping fields \lean{g1}, \lean{perm}\\
+B. Integrality & \lean{model}, \lean{transl}, \lean{two}, \lean{jets}, \lean{split}\\
+C. Weil representation, signs, characters, auxiliary points & \lean{uni}, \lean{mu}, \lean{odd3}, \lean{odd4}, \lean{rep}, \lean{t0Ex}, \lean{eqv}\\
+\bottomrule
+\end{longtable}
+
+\begin{proposition}[Group A]\label{prop:f4a}
+Let $\rho$ be an automorphism of $\mathbb C$ over $K$ (or an embedding of a subfield containing $K(g_2,g_3)$). Then:
+\begin{enumerate}[label=(\roman*),nosep]
+\item the lattice $\Lambda^\rho$ with invariants $\rho(g_2),\rho(g_3)$ is again of the form $\delta'\mathfrak c'$ with $\mathfrak c'$ prime to any given integer;
+\item for every torsion point $t$ of $\Lambda$ there is $t'$ with $(\wp,\wp')(t')=\rho\bigl((\wp,\wp')(t)\bigr)$, and $t\mapsto t'$ is additive, commutes with $\mathcal O_K$ and preserves orders;
+\item $\rho(s_2(\Lambda))=s_2(\Lambda^\rho)$ and $\rho$ carries the Weil pairing values $e(\mathrm{Im}(z\bar w)/A)$ at torsion points to those of $\Lambda^\rho$;
+\item the Taylor coefficients at $0$ of every theta vector $G$ built above, of $U_xG$ for rational $x$, of the intertwiners and of the $p$-adic restrictions $\Xi$ are algebraic, $\rho$ applied to them gives the coefficients of the corresponding vector for $\Lambda^\rho$ and $x'$, up to the sign $\pm1$ for intertwiners, and complex conjugation acts by $G\mapsto\overline{G(\bar z)}$;
+\item the norm of a conjugated theta vector equals $\lVert\theta_0^{\Lambda^\rho}\rVert^{2fNN'}$.
+\end{enumerate}
+\end{proposition}
+
+\noindent\emph{Mechanism.} (i) is the first fact of complex multiplication: $E_\Lambda^\rho$ again has endomorphism ring $\mathcal O_K$, so its lattice is homothetic to an $\mathcal O_K$-ideal, which can be moved in its class to one prime to $n$, and the normalization $\Delta=1$ is preserved because $\rho(1)=1$ (\lean{galCurve_holds}, 38 lines, top; Silverman, \emph{Advanced Topics}, II.2.2 and II.4.3). (ii) is algebraic: $\rho$ acts on $E(\bar{\mathbb Q})$ through the coordinates $(\wp,\wp')$, the group law and the action of $a\in\mathcal O_K$ are given by rational functions over $K(g_2,g_3)$, and $\rho$ fixes $K$ (\lean{galStar_holds}, 48 lines, read at the top; \lean{invariants_dictionary} gives the lattice with prescribed invariants). (iii) uses Masser's formula $(\alpha^2-N\alpha)s_2=\sum_{Q\in E[\alpha]\setminus0}\wp(Q)$ for $\alpha\in\mathcal O_K$ with $\alpha^2\ne N\alpha$, which writes $s_2$ as a rational function of torsion coordinates over $K$, and the Galois equivariance of the Weil pairing (Silverman, \emph{AEC}, III.8.1). (iv) follows because every coefficient is a polynomial over $\mathbb Q(\zeta_m)$ in $g_2,g_3,s_2$, torsion coordinates and Weil pairing values. The translates at torsion points are Klein forms up to the root of unity $e^{\pi t\bar t/2A}$ factor, by Legendre's relation, and the algebraicity of $\sigma^*$ at torsion points follows from $\sigma(nz)/\sigma(z)^{n^2}=\psi_n(z)$ and the quasi-periodicity $U_\omega\sigma^*=\pm\sigma^*$ (\lean{integral_j_and_algebraic_data}, \lean{cmTheta_taylorCoeff_algebraic_and_conjugate}). (v) uses that the theta vectors factor along an orthonormal basis and that $U_x$ and the intertwiners are unitary (group C). So group A needs the first facts of complex multiplication and Masser's formula, which is already used by \lean{JoinOut}. Shimura's reciprocity law for theta values (Shimura, Duke Math.\ J.\ 43 (1976)) is related literature and is not used, because every $\rho$ here fixes $K$ and no idelic twist enters.
+
+\begin{proposition}[Group B]\label{prop:f4b}
+For every prime $p\nmid N\mathfrak c$ and every embedding:
+\begin{enumerate}[label=(\roman*),nosep]
+\item $E_\Lambda$ has a Weierstrass model over $\mathcal O_{\mathbb C_p}$ with $\Delta=1$, over $W(\bar{\mathbb F}_p)$ when $p\ge5$ is inert in $K$, and every such model has unit scaling $u$;
+\item (cube) $\mathrm{ph}(x+y+z)-\mathrm{ph}(x+y)-\mathrm{ph}(y+z)-\mathrm{ph}(z+x)+\mathrm{ph}(x)+\mathrm{ph}(y)+\mathrm{ph}(z)\simeq0$, the formal group law is integral, and $\mathrm{be}$ is biadditive up to $\simeq$;
+\item (CM) for $\alpha\in\mathcal O_K\otimes\mathbb Z_p$, $[\alpha]$ is integral on the formal group, $\mathrm{ph}([\alpha]x)\simeq\alpha\bar\alpha\,\mathrm{ph}(x)$ and $\mathrm{be}([\alpha]x,y)\simeq\mathrm{be}(x,[\bar\alpha]y)$ (for $p\ne2$);
+\item (jets) for $p\ne2$ the jets $i!\,[z^i]\,\mathrm{ph}(\exp_W z)$ are integral for $i\ne2$, $(\alpha-\bar\alpha)$ times the second jet is integral, the second jet is integral for $p\ne d$, and has absolute value at most $d^{1/2}$ for $p=d$;
+\item (split) if $p$ splits in $K$, $\mathrm{ph}\simeq0$ and $\mathrm{be}\simeq0$;
+\item (translates) for $t$ of order prime to $p$, $\Phi^{-1}\cdot(U_t\sigma^*)(\varepsilon\ell(T))$ is integral with unit constant term; at $p=2$ the analogous statement holds for $\theta_0$.
+\end{enumerate}
+\end{proposition}
+
+\noindent\emph{Mechanism.} (i) From $\Delta(\Lambda)=1$ and $j\in\mathcal O_H$: the model $y^2=4x^3-g_2x-g_3$ has unit discriminant and integral $j$, and a change of variables over $\mathcal O_{\mathbb C_p}$ makes the coefficients integral (\lean{modelEx_holds}, 87 lines, top, via \lean{exists_integral_model}). This is the criterion for potential good reduction (Silverman, \emph{AEC}, VII.5.5). At an inert $p$, $p$ splits completely in $H/K$, so $j\in\mathbb Q_{p^2}$ and the model descends to $W$. (ii) The cube defect equals $-\log$ of $\sigma^*(x+y+z)\sigma^*(x)\sigma^*(y)\sigma^*(z)/\bigl(\sigma^*(x+y)\sigma^*(y+z)\sigma^*(z+x)\bigr)$ times $T$-factors, in which the Gaussian $e^{-s_2z^2/2}$ cancels. The archive evaluates it through the addition formula $\sigma(u+v)\sigma(u-v)/(\sigma(u)^2\sigma(v)^2)=\wp(v)-\wp(u)$ and the Frobenius--Stickelberger determinant formula, each a rational function of $(x,y)$ with integral coefficients on the integral model (\lean{sigma_add_param}, 58; \lean{frobenius_stickelberger_padic_determinant_formula}, 24; \lean{theorem_of_cube_of_addition_formulas}). Integrality of the formal group law is Silverman, \emph{AEC}, IV.1. (iii) For $\alpha\in\mathcal O_K$ prime to $p$, $\sigma^*(\alpha z)/\sigma^*(z)^{N\alpha}=\alpha\prod_{Q\in(E[\alpha]\setminus0)/\pm}(\wp(z)-\wp(Q))$. The exponential factors cancel by Masser's formula, and the product is a unit series in $T$ because $E[\alpha]$ reduces injectively, so the $x(Q)$ are integral (\lean{phAt_mulBy_norm}, 161 lines, top). Density of such $\alpha$ in $\mathcal O_K\otimes\mathbb Z_p$, closedness of the integrality conditions and $\alpha=\beta+\gamma$ with units $\beta,\gamma$ extend it to all $\alpha$ (\lean{endInt_all}, \lean{phNorm_of'}, \lean{beConj_of'}). (iv) is formal from (ii) and (iii) (\lean{jetsPh_of}, read in full): odd jets vanish by parity, jets of order $\ge3$ are integral because the cube relation makes $\mathrm{ph}$ quadratic up to integral terms, and $\mathrm{be}(\alpha x,y)\simeq\mathrm{be}(x,\bar\alpha y)$ gives $(\alpha-\bar\alpha)\,\mathrm{jet}_2$ integral, applied to $\alpha_0=(1+\sqrt{-d})/2$ with $\alpha_0-\bar\alpha_0=\sqrt{-d}$. (v) is formal from (iii): at a split $p$, $\mathcal O_K\otimes\mathbb Z_p\cong\mathbb Z_p\times\mathbb Z_p$ contains $\alpha=(1,0)$ with $[\alpha]=\mathrm{id}$ on the formal group of the given embedding and $\alpha\bar\alpha=0$, so $\mathrm{ph}\simeq0$ (\lean{splitZero}, read in full). This is the CM case of Mazur--Tate's canonical $p$-adic sigma function together with Katz's identification of the $p$-adic $E_2$ with the CM value of $E_2^*$ (Mazur--Tate, Duke Math.\ J.\ 62 (1991); Katz, Ann.\ of Math.\ 104 (1976)). Those are consistent related literature, and the archive's proof does not use them. (vi) For $t$ of order $n$ prime to $p$, $t\mapsto\log\lvert U_t\sigma^*(0)\rvert_p$ satisfies the parallelogram law (cube relation) and is $\Lambda$-periodic, hence vanishes on $n$-torsion (\lean{transl_holds}, 50 lines, top). That is the unit property of Siegel--Robert elliptic units at primes not dividing the order (Kubert--Lang, \emph{Modular Units}, ch.~2; de~Shalit, \emph{Iwasawa Theory of Elliptic Curves with Complex Multiplication}, II.2), proved here by the cube relation.
+
+\paragraph{Independent numerical check of group B.} For $d=7$ I took $E:y^2+xy=x^3-x^2-2x-1$ (CM by $\mathcal O_{\mathbb Q(\sqrt{-7})}$, $j=-3375$), its short model $y^2=x^3-\tfrac{35}{16}x-\tfrac{49}{32}$ with $\Delta=-7^3$ for the $\wp$-lattice, computed $s_2$ of that lattice from $E_2^*$ at $\tau=(1+\sqrt{-7})/2$ to $80$ digits, and found $s_2=1/4$ exactly. I then expanded $\mathrm{ph}(\exp z)=-\log\sigma^*(z)+\log T(z)$ in exact arithmetic (Appendix, \texttt{f4\_jets.py}).
+\begin{itemize}[nosep]
+\item The jets $i!\,[z^i]$ for $i=4,\dots,22$ are integral at $p=3,5,11,13,17,23,29,37,43$ (inert and split).
+\item For the normalized lattice ($\Delta=1$) the second jet is $s_2\Delta^{-1/6}=\tfrac14(-7^3)^{-1/6}$, of absolute value exactly $7^{1/2}$ at $p=7$, so the bound of (iv) is sharp.
+\item $\exp(\mathrm{ph}(T))=T/\sigma^*(z(T))$ has integral coefficients through $T^{14}$ at the split primes $11,23,29,37,43$, as (v) claims. It fails at the inert primes $3,5,13$, where (v) is not claimed, which confirms that the check has power.
+\end{itemize}
+
+\begin{proposition}[Group C]\label{prop:f4c}
+On the theta spaces of the lattices $A=\Lambda\otimes L$ attached to self-dual hermitian lattices:
+\begin{enumerate}[label=(\roman*),nosep]
+\item translations $U_x$ and the intertwiners $I_{A_1\to A_2}$ are unitary and $I_{A_2\to A_1}I_{A_1\to A_2}=1$;
+\item $I_{A_2\to A_3}I_{A_1\to A_2}=\mu\,I_{A_1\to A_3}$ with $\mu^8=1$;
+\item for $g,g'$ supported at inert places, $W(g,g')e_0=(-1)^{N\,\mathrm{len}(L'_1)+N'\,\mathrm{len}(L_1)}I e_0$;
+\item if $W(g,g')e_0=c\,Ie_0$ then $c^2$ is $\pm$ a product of values of the splitting characters $\chi_V,\chi_{V'}$, and $c$ is a $p$-adic unit when $g,g'$ are trivial at $p$;
+\item every $g\in\mathrm{GL}_N(\mathbb A_E)$ equals $\gamma^{-1}g_pk^{-1}$ with $\gamma$ rational, $k$ integral, $g_p$ trivial at $p$;
+\item a $2$-torsion point $t_0$ with $w_0t_0,\bar w_0t_0\notin\Lambda$ exists for $\Lambda$ and for every conjugate;
+\item $W(\gamma,\gamma')F=\prod_\tau\tau(\det\gamma)^{-a_\tau}\tau(\det\gamma')^{-a'_\tau}\,F\circ(\gamma,\gamma')$ for rational $\gamma,\gamma'$.
+\end{enumerate}
+\end{proposition}
+
+\noindent\emph{Mechanism.} (i) and (ii) are the Schr\"odinger model of the finite Heisenberg group: the intertwiners between the theta spaces of commensurable lattices are unitary, and a triple composition differs from the direct one by Weil's eighth root of unity (Weil, Acta Math.\ 111 (1964); Mumford, \emph{Tata Lectures on Theta} III). They are proved in \lean{theta_translation_intertwiner_unitary} (21) and \lean{triple_constant} (70). (iii) is the Weil index of the norm form at an unramified quadratic place, $-1$ per step in the length of the moved lattice (\lean{vacuum_inert}, 75, top). (iv) is the splitting of the unitary Weil representation by the characters $\chi_V,\chi_{V'}$ (Kudla, Israel J.\ Math.\ 87 (1994)), with unit values off $p$ (\lean{vacuum_scalar}, 28, read in full; \lean{hecke_values}). (v) is weak approximation for $\mathrm{GL}_N$ at one place (\lean{exists_rep_trivial_at}, 24, read in full). (vi) follows from $2=w_0\bar w_0$ in $\mathcal O_K$ and the conjugation statements of group A (\lean{exists_point}, read in full). (vii) is the automorphy of theta series under rational elements, which holds by the definition of the Weil operators on the theta space (\lean{exact_equivariance}, \lean{oddEq_of_mem}). \lean{g1} and \lean{perm} say that the CM type of $E$ is induced from $K$, that $\sum_\tau\tau(y)=\varphi_0(\mathrm{Tr}_{E/K}y)$, and that an automorphism fixing $K$ permutes the $\tau$ (\lean{induced_type}, read in full).
+
+\paragraph{Verdict for F4.} \sE. The theorems used are the first facts of complex multiplication, Masser's formula (shared with \lean{JoinOut}), the potential good reduction criterion and formal groups (Silverman), the classical addition and Frobenius--Stickelberger formulas for $\sigma$, Weil's 1964 theory of the metaplectic intertwiners, Kudla's splitting and weak approximation. Shimura 1976, Kubert--Lang, Mazur--Tate and Katz are related literature that the archive's proofs do not need; none of them is an exact match for a field. The producer bodies were read at the top and the key lemmas named above in full or at the top. The $6{,}730$ lines below them implement these mechanisms. No internal proposition of F4 remains open.
+
+\subsection{\lean{Open0} and \lean{ON} as human propositions}\label{sec:fu3open}
+
+Every bundle $b$ in the linkage of the parameters comes with a witness $w$ whose component $w.x$ is a twisted input (\lean{TwIn}), and the row-side family of $b$ is $\mathrm{divisionPair}(w.x)$ (\lean{BundleWitness}, \lean{RealPackage}). \lean{rowConditions_at_companion_from_readings} (read in full) shows that the decomposition-point identity is the field \lean{x.C.pt} of the input and that the eigenvalue condition is transported from \lean{Lam3 x.Z}. With this the ten entries reduce to five propositions.
+
+\begin{longtable}{>{\rr}p{1.4cm} >{\rr}p{4.6cm} >{\rr}p{4.7cm} >{\rr}p{4.2cm}}
+\toprule
+& Proposition (for every bundle in the linkage) & Mechanism and inputs & Verdict\\
+\midrule
+O1 & \lean{hPA}, \lean{hDcPtG}; \lean{tie} (a compatibility datum exists); \lean{selJ} (a realization join exists); \lean{lab} (a Hida setting with label ties exists) & read off the witness: \lean{x.C.pt}; \lean{recursion_local_row_condition_alt} returns the fields \lean{x.Y.stdPsi} and \lean{x.pins.keep.psi}; \lean{tie_of_rpk_alt}; \lean{join_subspace_real_data_lattice_alt} with Schur's lemma; \lean{ties_of_genPin_goodFTAll'} & \sC{} (formal implementation)\\
+O2 & \lean{hLamP}: the isotypic parts of the rows for the finite types are independent, span the column spaces of their labels, and the Hecke eigenvalues at the base and twisted tuples are the labels; \lean{kap}: the infinity types agree & orthogonality of isotypic parts (\lean{rowFiniteTypes_isotypicParts_span_orthogonal}); a spherical eigensystem for each type (Schur); the theta map onto cusp forms at a used tuple is surjective because its lift matrix is invertible (\lean{liftMat_bij}); dimension equality and the twisted multiplicity equality, which is the discrete-series multiplicity engine (pseudo-coefficients, simple trace formula) that the prompt lists as settled. \lean{kap} follows from \lean{hLamP} (24 lines) & \sE{} (Harish-Chandra finiteness, cusp decay, Schur orthogonality, Weil pair, settled engine)\\
+O3 & \lean{good}: every finite type of the host is good & depth-zero local Langlands at members, Green's characters of $\mathrm{GL}_n(\mathbb F_q)$, Zelevinsky (\lean{goodFTAll_at_members_of_depthZero}) & \sE\\
+O4 & \lean{geo}: a compatibility point with class-sum pin exists & \lean{linked_ties_alt} over \lean{RayField} & \sE\\
+O5 & \lean{hDivG}: the sharp and base row lattices are tied and the division rows pairing vanishes & \lean{pairing_definite_base_vanish_of_miStar2} from \lean{MIstar2} (\PC{4}) and the base-level complex data conditions, then \lean{divisionRows_pairing_vanishes_of_rational_pairing_law} & \sE{} given \PC{4}'s \lean{MIstar2}\\
+O6 & \lean{df}: the definite-side condition & read off the kernel datum (\lean{rowsU_of_colPins_alt}, 68 lines, top: positivity of $H_V$, lattice property of $\nu$, column ties) with the record size bound \lean{memberRows_of_kernelDatum_sizes} & \sC{} at the mechanism level\\
+\bottomrule
+\end{longtable}
+
+\noindent So \lean{Open0} has no internal residual of its own. Its two external dependencies are \lean{MIstar2} (\PC{4}) and the settled multiplicity engine. Its consumers are \lean{allRows_of_open0_alt} and, through \lean{open_and_linked_of_stronger_extension_alt}, \lean{rowFun_at_gridA_alt}.
+
+\paragraph{\lean{ON}.} \lean{ontoX_and_lamLow_of_unitaryGroupHypotheses'} gives two statements, consumed by \lean{allRows_of_open0_alt} (\lean{ontoX}) and by the leaf \lean{LeafInfinitePlaceBound} of \lean{FUN} (\lean{lamLow}).
+
+\begin{proposition}[\lean{LambdaLowerBound}$_2$]\label{prop:lamlow}
+For every family of the class and every point $p$ of it, eventually in $x$, the eigenvalues $\lambda_v$ of the lift adjoint at every place $v$ of the reflex field satisfy the lower bound \lean{L6} of the row data $p.S(\mathrm{true})$, that is $\log\lambda_v\ge-(\text{size term})$, with the size term from \lean{hookLogSum_sub_sizeTerm_le_lowerBound}.
+\end{proposition}
+
+\noindent\emph{Mechanism} (\lean{lamLow_closing_alt}, \lean{lamLow_of_weak}, read at the top). $\lambda$ is algebraic, and its conjugates are the eigenvalues of the conjugate rational theta lifts at the other embeddings (\lean{conjRatLift5}, 18 lines, read at the top). At the base embedding the lift adjoint is positive and its eigenvalue is bounded below by the size data (\lean{liftAdjoint_eigenvalue_lower_bound_base_embedding}). At the other places the same holds for the conjugate lifts (\lean{rationalLift_lowerBound_off_basePlace}). The adelic input \lean{AdelC} comes from the Weil--Siegel formula, the doubling method, unramified doubling, Bernstein--Zelevinsky finiteness and the formal degree. The two lower bounds were read at their names only.
+
+\begin{proposition}[\lean{SurjectiveOntoX}]\label{prop:ontox}
+For every family of the class with \lean{DIVinN} there is $C_0\ge0$ such that, eventually in $x$, at every point $p$ with \lean{More} $p$ and every $C\ge C_0$, the row map $p.S(\mathrm{false})$ is onto the lattice $p.N(C,C_H)$.
+\end{proposition}
+
+\noindent\emph{Mechanism} (\lean{ontoX_of_hypotheses_alt_alt}, read in full; \lean{ontoX_of_twist_shares_exp_alt}, top). The surjectivity is assembled from ten statements about the record objects at each point: exported (from reciprocity and Casselman--Wallach), page, geometric, runs, rational, maximum, rank at twisted places, twist bound, share and bad-places counts (from \lean{GreenCuspidal} and the model statement), and the exponent bound (from Clozel's cohomological representations, $l$-adic Hecke characters, Chebotarev, base change for definite unitary groups, Bhatt--Scholze crystalline lattices and local Langlands). The published inputs are named. The internal statements \lean{page_estimate_statement'}, \lean{runs_estimate_statement'}, \lean{rational_estimate_statement'}, \lean{maximum_estimate_statement'}, \lean{shareSt_of_shareWSt_alt}, \lean{badWSt_of_greenCuspidal_of_modelSt}, \lean{expSt_of_base_change_and_crystalline_lattices} and \lean{onto_x_of_all_estimates} were read at their names only.
+
+\paragraph{Verdict for \lean{ON}.} Both statements have a mechanism known at the level just described, but the internal estimate statements below them were not read, so I cannot call the mechanism reconstructed. They are the two residuals of this section.
+
+\subsection{Nonvacuity}\label{sec:fu3nonvac}
+
+\begin{longtable}{>{\rr}p{3.8cm} >{\rr}p{7.6cm} >{\rr}p{3.6cm}}
+\toprule
+Producer & What it does & Verdict\\
+\midrule
+\lean{DsP_pos_and_lower} (read in full) & $0<D_s(P)$ and $(2/3)^f\,\mathrm{mass}(L_{\mathrm{std}})\cdot\prod(\text{index terms})\cdot\prod_\tau d_\sigma\le D_s(P)$, from positivity of the Siegel mass of the standard hermitian lattice (a sum of $1/\lvert\mathrm{Aut}\rvert$), of the local indices and of the formal degrees, and $(2/3)^f\le1$ & \sC\\
+\lean{window_lower} (top) & explicit lower bound for the counting window from the Vandermonde lower bound at the places, the scale sizes, the rank constants and the host bounds, under \lean{SiegelMassRatioCM} & \sE{} (Siegel mass formula ratio)\\
+\lean{recExP_of_recAtG}, \lean{memberTop_final_contextParameters}, \lean{classSel} (read in full) & the existence engine: choose the integer $d_u$ (\lean{exists_du_nat}), take $D_s(P)>0$, apply \lean{window_lower}, and select a family class and a selection satisfying every row condition at once & \sC{} over the two rows above\\
+\lean{nonempty_hyps_of_allRows_alt} (83, read in full) & packs the 25 row conditions, the analytic inputs (\lean{LitThin}, \lean{WuDecayOfGap}, \lean{RowsFinDim}, \lean{TypeP}, \lean{RowNGP}, \lean{RowMainEqP}) and the genus mass into the hypothesis structure & \sC{} (assembly)\\
+\lean{allRows_of_open0_alt} (37, read in full) & the 25 row conditions: the \lean{Open0} entries, \lean{ON}, the six period and valuation rows (\lean{six_rows_at_member_alt}, from good twist cores over true columns), \lean{sLp}, \lean{sO}, \lean{hTF} (Siegel--Weil), \lean{hServ} (Artin reciprocity), \lean{c30} (label counts under Siegel--Weil), \lean{rRows} (with \lean{isProdCuspChar_good}) & \sC{} (assembly) given \lean{Open0} and \lean{ON}\\
+\lean{member_bundles_large_unramified_exponents_alt} children & published inputs (Artin reciprocity, CM curves good outside a prime, Weber ray fields, discrete series, convergent Siegel--Weil), the settled multiplicity engine (\lean{twisted_local_multiplicity_eq}), local Langlands and purity at members, toric transport (\lean{JoinOut}) & \sE\\
+\lean{final_alt_alt} (top) & the Galois-side bound \lean{LinkN} from Galois preconditions at members and good cuts. Its analytic core is \lean{theoremE_corollaryA_closing_all_data}, the Selmer engine (Bloch--Kato, Tate duality, Euler characteristic) of the Galois route; its leaves are the \FR{10} Galois leaves already classed as published & no new mechanism; the Selmer engine lies outside \PC{6} and \PC{7}\\
+\bottomrule
+\end{longtable}
+
+\noindent The assembly contains no mathematical mechanism beyond counting with the Siegel mass formula, positivity of masses, indices and formal degrees, an integer choice and the row conditions already classified. Nonvacuity is \sE, given \lean{Open0} (above), \lean{ON} (residual) and the external engines named.
+
+\subsection{Effect on the residual list}
+
+F4 and \lean{Open0} close. The nonvacuity assembly closes modulo \lean{ON}. The two \lean{ON} statements are what remains of R1a, R3 and R4.
+
+\section{Fourth follow-up: \lean{ON}, \lean{series_bound} and the small leaves}\label{sec:fu4}
+
+This pass takes the four residuals R1 to R4 of the third follow-up. It reads the live producers of \lean{SurjectiveOntoX} and of \lean{LambdaLowerBound}$_2$, the eight declarations behind the live \lean{series_bound}, and every live copy of \lean{third_identity}, \lean{pair_count}, \lean{stepB_of} and \lean{core2}. Liveness was decided on the forward set \lean{live_par2} and confirmed by a printed witness path for each declaration, checked by hand. Packages closed earlier were not reopened. This section supersedes the residual list of Section~\ref{sec:fu3} and is the authoritative \PC{6}/\PC{7} status.
+
+\subsection{A correction to Section~\ref{sec:fu3}}
+
+Proposition~\ref{prop:ontox} described \lean{SurjectiveOntoX} as surjectivity of a row map. The statement that \lean{ontoX_of_hypotheses_alt_alt} delivers to its consumer is the predicate \lean{IndefData.ON} (\Lpath{Formalism/LocalToGlobal/IndefiniteForms/IndefSide.lean}:318), which is a bound on local indices of theta-image lattices. The name records the use the consumer makes of it, since \lean{allRows_of_open0_alt} turns the index bound into surjectivity onto $p.N(C,C_H)$ by a counting argument that Section~\ref{sec:fu3nonvac} closed. Proposition~\ref{prop:on4} below is the correct statement.
+
+\subsection{R1: the index bound \lean{ON}}\label{sec:fu4r1}
+
+\paragraph{Setting.} Fix a point $p$ of a family of the class. It gives a CM field $E$ with maximal totally real subfield $F$, a finite set $T$ of places $w$ of $E$ split over $F$, with conjugate $\bar w$, ramification index $e_w$ and residue characteristic $\ell(w)$, an integer $D\ge1$ (the record dimension), and for each type $j=1,\dots,m$ a hermitian $\mathcal O_E$-lattice $M_j$. For each label $t$ there is a theta map $\theta_{j,t}$ and a lattice $T_{j,t}$, and the image $\theta_{j,t}(T_{j,t})$ is a lattice in $M_j\otimes E$. Write
+\[
+I_w(j,t)=\operatorname{idx}_w\bigl(M_j,\theta_{j,t}(T_{j,t})\bigr)
+\]
+for the $w$-adic index, the length of $(M_j)_w/(M_j\cap\theta_{j,t}(T_{j,t}))_w$ as an $\mathcal O_{E_w}$-module. The point also fixes a label $\mu(w)$ at each $w\in T$, nonnegative depth functions $F_0(w,j)$ and $J_0(t,w,j)$, an error $\varepsilon_0(w,j)$, a constant $C$ and a size $E_{1u}(j)$ (fields of \lean{IndefNum} and \lean{IndefScale.num}).
+
+\begin{proposition}[\lean{ON}]\label{prop:on4}
+Under the hypotheses of the family, eventually along the family, the following hold at every point.
+\begin{enumerate}[label=(\roman*),nosep]
+\item For every $w\in T$,
+\[
+\sum_{j=1}^m\bigl(I_w(j,\mu(w))+I_{\bar w}(j,\mu(w))\bigr)\le\Bigl(\sum_{j=1}^m\bigl(2e_wF_0(w,j)+e_w\varepsilon_0(w,j)\bigr)+\frac{2e_w}{\ell(w)^2}\Bigr)D .
+\]
+\item $\varepsilon_0(w,j)\ge0$ for all $w$ and $j$.
+\item For every $j$,
+\[
+\sum_{w\in T}\log N(w)\,\bigl(e_w\varepsilon_0(w,j)+e_wJ_0(\mu(w),w,j)\bigr)\le C\,E_{1u}(j).
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof, following \lean{on_core} and \lean{local_bound}]
+The live producer chain is \lean{onto_path_alt} (\Lpath{TPS/OntoPath.lean}:18), which builds the record object with \lean{exists_isRec} and then applies \lean{twistedPlacesBoundChain_twoRunChain}, \lean{onClauses_with_error_of_splitPart} and \lean{on_of_onWith_canonical}. The two places of each split pair are handled by \lean{on_base_atPlaces} and \lean{on_core_atPlaces}, and both reduce to \lean{on_core} (\Lpath{ExampleSatisfiesConditionsAtFive.lean}:603, 270 lines, read in full).
+
+\emph{Step 1, the local bound at one place} (\lean{local_bound}, line 409, read in full). Let $P$ be the finite level group at $w$, $U\le P$ the stabilizer subgroup of the unipotent part, $\psi$ a character of $U$, and $e_\psi=\lvert U\rvert^{-1}\sum_{u\in U}\psi(u)^{-1}u$ its idempotent. The theta-image lattice is compared with $M_j$ through a chain $M_s\supseteq T_{h1}\supseteq T_h\supseteq T_{hK}\supseteq T_{h0}\supseteq T_{hJ}$ and the auxiliary lattice $X_3$. Each inclusion is either multiplication by the idempotent, whose denominator is $\lvert U\rvert$, or a Mackey decomposition of an induced lattice over $P$, or scaling by an element $a$ with $v_w(a)=E$. Scaling a lattice of rank $\rho$ costs index at most $E\rho+r$. Adding the steps gives
+\[
+I_w(j,t)\le e_w\Bigl((e_0+v_{U0})\,d_W+\frac{r/e_w+n_Zv_{U0}}{[P:U]}+\varepsilon_0\Bigr),
+\]
+where $d_W$ is the rank of the $W$-side lattice, $r$ its hermitian rank, $n_Z$ the size of the share set and $v_{U0}$ the depth of $U$.
+
+\emph{Step 2, shares.} The share statement gives $n_Z/[P:U]\le3D$ (\lean{share_numeric}).
+
+\emph{Step 3, depths by place class.} At the level places $g_1,g_2$ the depth is $v_{U0}=f\,r(r-1)/2$ divided by the level exponent (the unipotent radical of the Siegel parabolic). At small, ramified ($q_1$, $d$) and good places with threshold $Y$, the depth is read from the depth table of the geometric statement. The sum over $j$ of step 1 at $w$ and $\bar w$ is then at most the right side of (i), which is (i).
+
+\emph{Step 4, the global sum.} \lean{local_sum_exact} adds the local bounds over $T$ with the depth sums of $\theta$, the budget $R_b$ and the error term $E_J$ bound the result, and \lean{local_conditions_global_form}, \lean{budget_numeric} and \lean{absorb_local_conditions_exact} absorb the constants once $C_E\ge4C^2+25C+C_b+44$. This is (iii). Item (ii) holds by construction of $\varepsilon_0$ as a sum of nonnegative terms.
+\end{proof}
+
+Steps 1 to 4 are lattice algebra over a finite group and inequalities between explicit numbers, so the core of \lean{ON} is \sC. The inputs enter through the record and the ten estimate statements. Table~\ref{tab:r1leaves} traces each of them to its mechanism.
+
+\begin{longtable}{>{\rr}p{2.3cm} >{\rr}p{4.0cm} >{\rr}p{5.2cm} >{\rr}p{3.6cm}}
+\caption{The leaf statements of \lean{ON}.}\label{tab:r1leaves}\\
+\toprule
+Statement & Live producer & Mechanism & Boundary, verdict\\
+\midrule
+\endfirsthead
+\toprule
+Statement & Live producer & Mechanism & Boundary, verdict\\
+\midrule
+\endhead
+Page, geometric, depth & \lean{pageSt_alt}, \lean{geoSt_of_pageSt_alt} (\lean{runsHold_of_ties}, \lean{leaves_sup_span_data}, \lean{chartIndependence_unconditional}), \lean{leafDepth_all_run} & depth of each leaf at each place class, read from the chart statements \lean{AvFSt}, \lean{HTFSt}, \lean{UpFSt} through \lean{depthTable_goodPrimes_of_chartForm}, \lean{leafDepthRam_run}, \lean{leafDepth2_run}, \lean{leafDepthLevel_run} & \sC{} given the three chart statements\\
+\lean{AvFSt}, \lean{UpFSt} & \lean{colength_bound_split_place_chart} (76 lines), \lean{unramified_companion_chart_characters} (77 lines), tops read & at a split place of good reduction the formal group of the abelian scheme is uniformized by a split formal group law, equivariantly for the $\mathcal O_E$-action (\lean{uniformization_split_formal_group_law_equivariant}, \lean{exists_nilChart_reads_of_isChartJ}, \lean{exists_powerSeries_reading_groupHom_nilpotentCharts}). The colength bound is the valuation of the action matrices in these coordinates; the unramified companion characters are the Frobenius eigencharacters on the toric part & \sE{} (Serre--Tate and Katz canonical coordinates; Silverman, \emph{AEC}, IV)\\
+\lean{HTFSt} & \lean{hodgeTate_inclusion_chart} (94 lines, top read) & reduces to \lean{FormalTorsion.fhSt}, the inclusion $\mathrm{Lie}\subseteq W\subseteq(\zeta_p-1)^{-1}\mathrm{Lie}$ for the Hodge--Tate image of the Tate module & transferred to \PC{1} (Fontaine 1982, \emph{Formes diff\'erentielles et modules de Tate})\\
+Runs at $p_{de},p_{de}'$ & \lean{bigOn_runsSt}, \lean{exists_runs_at_alt}, \lean{exists_run_pins} (71 lines, read in full), \lean{finiteGroup_levelStructure_action_fixedRuns} & for $l\in\{p_{de},p_{de}'\}$ take the finite-order Hecke character $\delta$ of the record, convert it to a unitary character with the same finite part (\lean{TameFinitePart.exists_xiRec}), complete the core datum to a top datum (\lean{exists_top_of_core}, through \lean{exists_completion_of_core_satisfying_laws} and theta nonvanishing \lean{thNe0_of_lawsM}) and to a full datum (\lean{exists_full_of_xiRec}); the pins are read off & \sC{} (constructions; no published input)\\
+Rational & \lean{bigOn_ratSt}, \lean{twistedClassSums_rational_of_rayClassFields} & twisted class sums are rational over the ray class field & \sE{} (\lean{RayField}, global Artin reciprocity)\\
+Maximum & \lean{maxSt_alt}, \lean{spanOverClasses_of} (\lean{baseThetaKernel_series_unique}, \lean{kernel_thetaSeries_span_over_class_representatives}) & theta kernel series span over class representatives, using \lean{SeriesRatS} & \sE{} through R3\\
+Rank at twisted places & \lean{rankLocSt_of_max_geo_runs}, \lean{compareOffOwn_atRuns_alt} (\lean{classSumsSpan_core}) & linear algebra of the spans above & \sC\\
+Twist & \lean{twistSt_of_alt} (40 lines, read in full) & quantifier assembly of the exported, geometric and rank statements, with constant $\max(c_1,c_2)$ & \sC\\
+Share & \lean{shareSt_of_shareWSt_alt}, \lean{shareWSt_of_modelSt_alt}, \lean{isWhit_and_eq_embLL_inv_and_halfUnip} (48 lines, top read), \lean{shareSize_bounds}, \lean{modelSt_alt} & an explicit Whittaker vector for the half-unipotent character built from $\psi$ on $\mathbb Z/g_k$ at the two level places, then the size inequality & \sC{} (mechanism from statement and first steps)\\
+Bad places & \lean{badSt_of_badW_alt}, \lean{badWSt_of_greenCuspidal_of_modelSt} & cuspidal characters of $\mathrm{GL}_n(\mathbb F_q)$ & \sE{} (Green 1955, on the boundary)\\
+Exponent & \lean{exponent_bound_of_unitaryThetaStandardTheorems_alt}, \lean{expSt_of_alt} & the cut \lean{LeviCut.exCut} is the denominator of the Levi projection on dual Weyl module lattices; the exponent bound combines it with \lean{numSt_alt}, \lean{sumExpSt_alt} and \lean{modelSt_of_small_frame_gal} & \sE{} (Bhatt--Scholze crystalline lattices, Chebotarev, Clozel, base change, local Langlands, all already named)\\
+\bottomrule
+\end{longtable}
+
+\paragraph{Verdict for R1.} \sE. The core is internal, the chart statement \lean{HTFSt} transfers to \PC{1} through \lean{fhSt}, and the theta-series input transfers to R3, which closes below. For three producers, the run completion, the share Whittaker vector and the Levi cut, the mechanism was reconstructed from the statements and the first steps of the proofs, and the bodies were not read line by line. They are the first places to look if a further check is wanted. No genuine residual remains in R1.
+
+\subsection{R2: the eigenvalue lower bound \lean{LambdaLowerBound}$_2$}\label{sec:fu4r2}
+
+\paragraph{What $\lambda_v$ is.} Let $V,W$ be the hermitian spaces of type $i$, $\theta$ the global theta lift for the Weil representation $\omega_\psi$, and $p$ an isotypic part of the representation of type $i$. For each complex embedding $\sigma$ of the coefficient field $L$ (the places $v$ of \lean{L6}) the predicate \lean{IsScalarOn} of \lean{RowLatticeBoundForBasis} says that $\theta$ scales the hermitian majorant on $p$ by a scalar $\lambda_\sigma(p)$. Equivalently $\theta\theta^*=\lambda_\sigma(p)\,\mathrm{Id}$ on $p$, where the adjoint is taken for the majorant. When $p=0$ the scalar is defined by \lean{scal.abs} as $\exp$ of the bound below, so the inequality is an identity there.
+
+\paragraph{The bound.} Write
+\[
+\mathrm{lowB}(D,i,b)=H(D,i)-8f\,n_V^2\,\log\bigl(b\,\mathrm{rd}\,g_0g_1n_V\bigr),
+\]
+where $H(D,i)$ is the hook sum \lean{hookPlus} of the type, $f$ the degree of the totally real field, $n_V$ the dimension of $V$, $\mathrm{rd}$ the root discriminant of $E$, $g_0g_1$ the level and $b$ the size parameter (\Lpath{Formalism/LocalToGlobal/Divisibility/Numbers.lean}:72).
+
+\begin{proposition}[\lean{LambdaLowerBound}$_2$]\label{prop:lamlow4}
+Under the hypotheses of the family, eventually along the family, for every point, every type $i$, every isotypic part $p$ and every complex embedding $\sigma$ of $L$,
+\[
+\log\lambda_\sigma(p)\ge\mathrm{lowB}(D,i,b)\ge l_{6m}(i),
+\]
+and therefore $l_6(i)=l_{6m}(i)-C\,l_{6u}(i)\le\log\lambda_\sigma(p)$, which is \lean{L6}.
+\end{proposition}
+
+\begin{proof}[Proof, following \lean{lamLow_of_weak}]
+The live chain is \lean{lamLow_of_hypotheses_alt_alt} (\Lpath{TPS/LamLowOfPublished.lean}:17), then \lean{lamLow_closing_alt}, then \lean{lamLow_of_weak} (\Lpath{DP/LiftEigenvalueLowerBoundOfWeakCharacterisation.lean}:20). It splits into the base embedding $\sigma_0$ and the others.
+
+\emph{Base embedding} (\lean{liftAdjoint_eigenvalue_lower_bound_base_embedding}, through \lean{scalar_of_lift_ofCore}, \lean{scalar_on_part_ofCore} and \lean{lowTop_ofCore}). The adelic statement \lean{AdelC} is the Rallis inner product formula in the following form. For $\varphi,\varphi'$ in the Schwartz space and $f$ in the cusp-form multiplicity space,
+\[
+\langle\theta(\varphi,f),\theta(\varphi',f)\rangle=c\;L^S\!\bigl(\tfrac12,\pi\times\chi\bigr)\prod_{v\in S}Z_v(\varphi_v,\varphi'_v,f_v),
+\]
+proved in \lean{innerProductFormula_of_hypotheses} from the Weil--Siegel formula and the continuation of the Siegel Eisenstein series, with convergence from rapid decay of cusp forms. By Schur's lemma on the multiplicity space $\theta^*\theta$ is a scalar $l$ on each type part. The producer \lean{adelC_of_innerProductFormula} bounds $\log l$ from below term by term. The finite zeta integrals form an Euler product equal to the partial $L$-value (\lean{finiteZetaL}, from Bernstein--Zelevinsky finiteness and the unramified doubling computation; \lean{finiteZetaC_of_finiteZetaL}). The archimedean integral is the matrix coefficient of the Fock vacuum, whose lowest $K$-type coefficient is real (\lean{fockCoefficientC}, from the harmonic module statement \lean{harmonicModule_of}, which is proved from Fock decay and a $\cosh$ integral). The formal degree at the real place is bounded above by the dimension of the corresponding representation of the compact dual (\lean{formalDegreeUpperC_of_hypotheses}), and the Weyl dimension formula writes that dimension as a product of hook ratios, which gives the term $H(D,i)$. The mass of the orthonormal lattice frames is bounded below because the Gram matrix is the identity, so each $\mathrm{gramAt}$ is positive definite (\lean{massLower_of_stdV}). The level index times the Schwartz norm and the $\delta$-norms are computed exactly (\lean{thetaLevelIndex_mul_schwartzNorm_formula}, \lean{deltaNorm_all}). The losses add up to at most $8fn_V^2\log(b\,\mathrm{rd}\,g_0g_1n_V)$, so $\log l\ge\mathrm{mainTerm}-8fn_V^2\log(\cdots)$, and $\mathrm{mainTerm}\ge H(D,i)$ because every hook factor is at least $1$ (\lean{HookPlusLeMainTerm}). Finally $\theta_G=\mathrm{proj}_H\circ\theta$ and the parts of the polarised dual system span (\lean{principalLevel_eigenparts_and_conjugate_characters}), so \lean{mul_norm_sq_le_norm_adjoint_sq_of_spanning_parts} and \lean{LowTopBound.le_eigenvalue} give $\exp(\mathrm{lowB})\le\lambda_{\sigma_0}(p)$.
+
+\emph{Other embeddings over $K$} (\lean{rationalLift_lowerBound_off_basePlace}, \lean{lowForm_six}, \lean{lower_overK_six}). The lift has a rational model (\lean{conjRatLift5}). For $\sigma\ne\sigma_0$ over $K$ choose $s\in\mathrm{Aut}(\mathbb C)$ with $\sigma=s\circ\sigma_0$. Then $s$ applied to the rational lift is the lift for the conjugated datum, which belongs to the same family, with the same type, sizes and level, so the base argument applies to it and gives the same bound. \lean{l6m_le_log_lam3_other_places} records this.
+
+\emph{Embeddings not over $K$.} These are complex conjugates $\bar\sigma$ of embeddings over $K$. The lift for $\bar\sigma$ is the complex conjugate of the lift for $\sigma$, and $\bar\theta\bar\theta^*=\overline{\theta\theta^*}$ has the same real eigenvalue.
+
+\emph{Constants.} \lean{thetaLift_weightSizes_eventually_along_family} gives the sizes eventually along the family, and \lean{hookLogSum_sub_sizeTerm_le_lowerBound} gives $l_{6m}\le\mathrm{lowB}$. The cases $\sigma=\sigma_0$, $\sigma\ne\sigma_0$ over $K$, $\sigma$ not over $K$ and $p=0$ cover every place of \lean{L6}.
+\end{proof}
+
+\paragraph{Normalization.} The adjoint in \lean{AdelC} (\lean{adjLev}) is the adjoint for the level hermitian majorant, and \lean{scalar_on_part_ofCore} transfers the scalar to the majorant of \lean{RowLatticeBoundForBasis}, so the two $\lambda$'s agree at $\sigma_0$. Conjugation carries both structures along. I found no mismatch.
+
+\paragraph{Verdict for R2.} \sE. The external theorems are the Rallis inner product formula through its published inputs \lean{CuspRapidDecay}, \lean{WeilSiegelFormulaUnitary}, \lean{SiegelEisensteinContinuation}, the doubling method (\lean{DoublingMethodLocalZetaIntegrals}, \lean{UnramifiedDoublingGL}), \lean{BernsteinZelevinskyFiniteness} and \lean{FormalDegreeCompactDual}. In the literature these are Rallis (1987), Kudla--Rallis (1994), Ichino (2004) for the Siegel--Weil formula on unitary groups, Piatetski-Shapiro--Rallis (1987) and Lapid--Rallis (2005) for doubling, Li (1992) for the unramified computation, and Harish-Chandra (1966) for formal degrees. \lean{SiegelWeilUnitaryConvergent} is an argument of \lean{adelC_of_siegelWeil_of_doubling_alt} that the proof does not use. The internal pieces \lean{harmonicModule_of}, \lean{massLower_of_stdV} and \lean{deltaNorm_all} are \sC.
+
+\subsection{R3: \lean{series_bound}}\label{sec:fu4r3}
+
+\paragraph{Liveness.} Two declarations carry the name. \lean{GlobalTheory.LevelSeries.series_bound} (\Lpath{Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/SerIntAtOfSeriesRat.lean}:137, 104 lines, read in full) is live. Its first live consumer is \lean{SerStd.untwRatS}, then \lean{untwisted_theta_rational_on_good_covers}, then \lean{seriesRatS_and_serInt_of_globalArtin}, which takes \lean{GlobalArtinReciprocity} as its one hypothesis. \lean{GlobalTheory.KZ.ExpBound.series_bound} is a different statement, the tail bound $\lvert\psi(w)-a_0\rvert\le Be^{-2\pi(\operatorname{Im}w-t)}$ for a convergent $q$-series, proved in 54 lines by summing a geometric tail. It is \sC. The copy in \lean{Formalism.FN.WDiv} is off route.
+
+\paragraph{The statement.} Let $(V,W)$ be a vacuum pair with lattices $\Lambda_V,\Lambda_W$ and vacuum $f_0$, $r=\operatorname{rk}W$ odd, $\chi$ a Hecke character with base level $M_0$, and $l$ a prime. Then there is $c\in\mathbb N$ such that for every level $l_2$ with $M(l_2)=M_0p_d$, $p_d$ prime to $M_0l$, every dictionary between the group and the uniformized moduli $X_o$, every $O$-valued Schwartz function $\Phi$ of level $M(l_2)$ with theta vector $\varphi$, and every harmonic polynomial $Q$ with coefficients in $O$, the product $l^c\,\theta(s g)(\varphi\otimes Q)$ is an $O$-linear combination of rational sections $f_k$ of $X_o$ that are holomorphic and integral at every algebraic integral point over $\mathfrak l$ (\lean{BddAll}). The exponent $c$ does not depend on the level.
+
+\begin{longtable}{>{\rr}p{3.6cm} >{\rr}p{1.2cm} >{\rr}p{6.7cm} >{\rr}p{3.4cm}}
+\caption{The producers of \lean{series_bound}.}\label{tab:r3}\\
+\toprule
+Producer & Lines & Content and mechanism & Verdict\\
+\midrule
+\endfirsthead
+\toprule
+Producer & Lines & Content and mechanism & Verdict\\
+\midrule
+\endhead
+\lean{LevelFourier.smul_mem_trSp} & 171 & level-$M$ functions with values in $O$ lie in $l^{-vK}$ times the $O$-span of lattice translates of $f_0$, with $K$ the number of generators of the lattice \lean{latO}; uses that \lean{latO} is self-dual up to sign (\lean{latO_selfDual_approx_sign}) & \sC\\
+\lean{LevelSeries.exists_flip_theta} & 76 & a central flip element in the idempotent sum at the half-level places, with flip scalar integral up to $l^{c_f}$; finitely many places divide $M_0$ & \sC\\
+\lean{LevelSeries.exists_move_denomAt} & 68 & translating by $s\in G_{f,\mathbb C}(V)$ changes denominators by at most $l^{c_m}$, via an open subgroup on which the hermitian lattice is standard (\lean{rationalPart_denominator_bounded_by_prime_power}) & \sC\\
+\lean{ArchAct.real_act_harm} & 50 & a real rational point acts on the Fock vacua by a power $\det^{k(\tau)}$ and on harmonic letter polynomials by substitution, integrally after $l^{cd+\sum_\tau cn\lvert k(\tau)\rvert}$ & \sC\\
+\lean{ConstBound.const_dvd} & 52 & $c_3=v_l\bigl(M_0^{[E:\mathbb Q]n(p+q)}M_0^{n\operatorname{rk}\Lambda}(2\operatorname{disc}_EM_0)^d\bigr)$ bounds the $l$-part of the lattice indices & \sC\\
+\lean{clsScal_mem_valRing} & 127 & class scalars of split-supported idempotents lie in the valuation ring, because $\chi$ has finite order on local units and $\chi(\varpi)N(\varpi)^{1/2}$ is a unit away from $l$ & \sC\\
+\lean{SerId.exists_forms_of_transSum} & 54 & the translate sum equals a classical short theta series (\lean{thetaKernel_translateSum_eq_classicalShortSeries}), expanded over $O$; the integrality at algebraic points comes from the dictionary hypotheses \lean{IsDict} and \lean{FrameTie} of \lean{series_bound}, supplied by the consumer's \lean{CoreJ} datum & \sC{} given the dictionary\\
+\bottomrule
+\end{longtable}
+
+The first version listed \lean{PinBase.baseCc_of_framePin} as the seventh producer. That name does not resolve in the archive, and its role in \lean{series_bound} is played by \lean{exists_forms_of_transSum}. The assembly takes $c=vK+c_f+c_a+c_3$, and level independence follows from the quantifier order, as Section~\ref{sec:fu2} recorded.
+
+\paragraph{Verdict for R3.} \sE. \lean{series_bound} and its producers are internal and elementary, being finite generation of lattices, explicit formulas for the Schr\"odinger and Fock models of the Weil representation, and valuation arithmetic. The classical-adelic theta dictionary is Weil (1964). On the live route the rationality of the theta series rests on \lean{GlobalArtinReciprocity}, which \lean{seriesRatS_and_serInt_of_globalArtin} takes as its hypothesis and which is on the boundary as \lean{RayField}.
+
+\subsection{R4: the small leaves}\label{sec:fu4r4}
+
+Each declaration below is live by a printed witness path. The last column names the package the path runs through.
+
+\begin{longtable}{>{\rr}p{3.8cm} >{\rr}p{6.6cm} >{\rr}p{2.4cm} >{\rr}p{2.2cm}}
+\caption{Live copies of the \SL{1} to \SL{4} leaves.}\label{tab:r4}\\
+\toprule
+Declaration (lines) & Content and mechanism & Verdict & Route\\
+\midrule
+\endfirsthead
+\toprule
+Declaration (lines) & Content and mechanism & Verdict & Route\\
+\midrule
+\endhead
+\lean{FourierDecayAlt.P.third_identity} (3) & \lean{EnergyAbsoluteIdentity} from four parts. The signed identity says the step operator applied to $d\cdot g_X$ is $(-1)^{k-l}\prod_s(Y+\lambda_s)\,d_w\,X$; \lean{polynomial_sign} gets the sign of $\prod_s(Y+\lambda_s)$ from interlacing (\lean{lambda_side_inequality}); \lean{types_interlace} and \lean{boxes_fit} are the interlacing and box conditions. Gelfand--Tsetlin branching identities & \sC & \lean{CarrierGap}, through \lean{poincareLelong}\\
+\lean{FourierDecayAlt.P.MAx3.F.core2} (57) & the matrix identity $A^{H}D_nA=\cdots$ for the abelian blocks along a cut word, the induction step of \lean{third_identity_frame} & \sC & same\\
+\lean{FourierDecayAlt.P.GermSumLattices.core2} (116) & a character sum over lattice cosets with $\psi$ unitary, $\gamma$ a class function on squares and $\mu_{m+1}$ the roots of unity, evaluated as a Gauss sum & \sC & \lean{CarrierGap}, through \lean{germ_identity_bis}\\
+\lean{FourierDecayAlt.P.Fr6.core2} (7) & cancel an invertible factor $F$ from $D(T\lambda F-\lambda TF)=T\lambda F-TlF$ & \sC & same\\
+\lean{L2.Th1.B.Det.core2} (29) & a polynomial identity for three points on $y^2=4x^3-2ha^4x-g_3a^6$ with the derivative relations, a ring computation & \sC & F4 jets (\lean{ThLoc.LocJets.jetsTwo})\\
+\lean{TuranPowerSumBounds.core2} (142) & the Deuring--Heilbronn step from Tur\'an's power-sum inequality, which enters as the hypothesis \lean{hT} & \sE{} (Tur\'an's second main theorem) & primes in progressions, Galois side\\
+\lean{Reformulated.B.DeterminantIdentities.core2} (57) & the determinant of a group-algebra element lies in the image when the characteristic polynomials lift (Chenevier determinants) & \sC & $V$-window automorphy\\
+\lean{UpperTheory.V.Pr.core2} (18) & if $v(\beta)<v(\alpha)$ then $(a\alpha^m+b\beta^m)^2-4c\alpha^m\beta^m\ne0$ for some $m$, by comparing valuations & \sC & $V$-window automorphy\\
+\lean{PI.UnitKronW.stepB_of} (33) & Kronecker's theorem through an irreducible factor of the minimal polynomial & \sC & \lean{finite_order_adelic}\\
+\lean{MainNotions.PlaneGram.stepB_of} (108) & valuation collapse in a monomial order after the Fock projection, given \lean{V2} (valuation calculus on letters) and \lean{PROJ} (the projection loses at most $r^2\lg_p(r,2\sum_id_i)$), which \lean{stmt} produces from the admitted record (\lean{second_valuation_of_admitted}, \lean{brPROJ}) & \sC{} given the record & G-link, Green route\\
+\lean{Gal.FiniteEtaleModels.stepB_of} (48) & assembly of eight Galois-side statements (\lean{TjExG} to \lean{PulledEx}) & transferred & Galois side (weight one Kodaira--Spencer)\\
+\lean{pair_count} (37) & the number of locally constant cocycles for $\psi_i\psi_j^{-1}$ at level $m$ is at most $\lvert K\rvert^{m(1+d)+C}$ & transferred & patching route (\lean{UpperTheory.V.Pa.locV})\\
+\bottomrule
+\end{longtable}
+
+\paragraph{Verdict for R4.} Every live copy is \sC, \sE, or outside \PC{6}/\PC{7}. The copy \lean{UpperTheory.TorsionCardinalitySetup.Setup.core2} and the \lean{Formalism.DivisionValues} copy of \lean{stepB_of} are off route. \lean{pair_count}, \lean{fixBd}, \lean{detFin}, \lean{alInj} and \lean{UpperTheory.V.Pa.lift1} are on the patching route, which is handled separately. The four \lean{FourierDecayAlt} items and \lean{PlaneGram.stepB_of} are the copies in the \PC{6}/\PC{7} neighbourhood, and they close.
+
+\subsection{Dependency paths}\label{sec:fu4paths}
+
+The live paths from \lean{riemannHypothesis}, as printed by the forward search and checked by hand, are as follows.
+
+\begin{itemize}[nosep]
+\item R1 and R2. \lean{riemannHypothesis}, \lean{rhOfAll}, \lean{allChi}, \lean{everyCharacter}, \lean{everyCharacter_of_row}, \lean{every_character_of_literature_of_vWin}, \lean{every_character_of_theta_integrals_local_matching}, \lean{nonempty_hyps_definite_side_of_closed_bound}, \lean{ontoX_and_lamLow_of_unitaryGroupHypotheses'}, then \lean{ontoX_of_hypotheses_alt_alt} (R1) and \lean{lamLow_of_hypotheses_alt_alt} (R2).
+\item R3. The same path to \lean{nonempty_hyps_definite_side_of_closed_bound}, then \lean{hypotheses_nonempty_of_unramified_exponents_alt}, \lean{hyps_e_third_layer_ser_n_of_geometric_galois}, \lean{exists_hyp_n_of_geometric_galois_compat}, \lean{seriesRatS_and_serInt_of_globalArtin}, \lean{untwisted_theta_rational_on_good_covers}, \lean{SerStd.untwRatS}, \lean{LevelSeries.series_bound}.
+\item R4, the \PC{6}/\PC{7} part. \lean{every_character_of_literature_of_vWin}, \lean{hsUse_outright}, \lean{poincareLelong}, \lean{lelongLimitAtBranches}, \lean{branchProperAtPoint}, \lean{ProperOpenProjectionBranchLocus.proof}, \lean{CarrierGap.offDiag}, \lean{CarrierGap.carrierP}, \lean{lemma_model}, \lean{induction_imports}, \lean{third_identity}.
+\end{itemize}
+
+None of these paths ends in a residual after this pass.
+
+\subsection{Transfer ledger}\label{sec:fu4ledger}
+
+\begin{longtable}{>{\rr}p{3.2cm} >{\rr}p{7.2cm} >{\rr}p{4.6cm}}
+\toprule
+Receiver & Item & Status here\\
+\midrule
+\PC{4} & the bottom theta identities below F1 and F3 (as in Section~\ref{sec:fu2}); \lean{MIstar2} behind \lean{Open0} entry O5 & unchanged, not duplicated\\
+\PC{1} & \lean{FormalTorsion.fhSt}, the Hodge--Tate inclusion behind \lean{HTFSt} in R1 & new transfer\\
+Selmer engine & \lean{final_alt_alt} & unchanged\\
+Patching route & \lean{pair_count}, \lean{fixBd}, \lean{detFin}, \lean{alInj}, \lean{UpperTheory.V.Pa.lift1}, the Taylor--Wiles \lean{secondCohomologyBound} route & not touched\\
+Galois-side package & the eight hypotheses of \lean{FiniteEtaleModels.stepB_of}; \lean{TuranPowerSumBounds.core2} (primes in progressions) & new transfer\\
+Multiplicity engine & the twisted multiplicity equality behind \lean{Open0} entry O2 & settled\\
+External audit & new names for R2 (Rallis, Kudla--Rallis, Ichino, Piatetski-Shapiro--Rallis, Lapid--Rallis, Li, Bernstein--Zelevinsky, Harish-Chandra), for R1 (Serre--Tate canonical coordinates), for R4 (Tur\'an's second main theorem); \lean{RayField} and Green already on the boundary & added to Section~\ref{sec:boundary}\\
+\bottomrule
+\end{longtable}
+
+\section{\lean{Open0} and \lean{ON}}
+
+\noindent\emph{Status note.} This section is the first-version account. Section~\ref{sec:fu3open} closes \lean{Open0}, and Section~\ref{sec:fu4r1} and Section~\ref{sec:fu4r2} close \lean{ON}.
+
+
+\lean{open_orbit_of_unramified_exponents_alt} (\Lpath{TPS/OpenOrbitOfUnramifiedExponents.lean}:39, read in full) builds the twelve entries of \lean{OpenParameterStatements} (\Lpath{TPS/GeometricWeakTies.lean}:39). Wave 5 and Final F described each entry as one named theorem applied to published statements. The live producers below show that most entries are internal packages.
+
+\begin{longtable}{>{\rr}p{1.4cm} >{\rr}p{5.6cm} >{\rr}p{8.0cm}}
+\toprule
+Entry & Live producer & Finding\\
+\midrule
+\lean{hPA} & \lean{PrimAt.linkedAt_hPA} & \sC. Witness transport through \lean{LinkedAt.of_row}, \lean{RowE.row}, \lean{of_wit_alt}; every node at most five lines\\
+\lean{hDcPtG} & \lean{rowE_dcPt_linked_alt} (live) & internal: projections and idempotents of \Lpath{Formalism/LocalToGlobal/Divisibility/ProjLemmas.lean}, \lean{complex_data_conditions_base_level_of_primitive_links} (48), \lean{orthogonal_projection_exists} (45)\\
+\lean{tie} & \lean{TieOfLink.hasTie_of_linked} & internal over seven published representation-theoretic statements\\
+\lean{selJ} & \lean{JoinLinked.selJ_of_bWit} & consumes \lean{hPA}, \lean{hDcPtG}, \lean{tie}; row-side lattices (\lean{rowSideDef3_both} (56), \lean{index_of_lvlTie} (62))\\
+\lean{mi} & \lean{miStarRow_alt_alt} (live) & \lean{MIstar2}, the seesaw identity. Belongs to \PC{4}\\
+\lean{hDivG} & \lean{DivLinked.hDivG_linked_of_mIstar2} & consumes \lean{mi}; theta-map lattice lemmas (\lean{ThRead.lat_of} (41), \lean{theta_of} (40), \lean{orth_ker_inf_range} (97))\\
+\lean{hLamP} & \lean{at_row_hLamP_alt_alt} & \lean{LamLinked.isotRank_of_wit_alt}, \lean{rowConditions_at_companion_from_readings}, \lean{finiteTypes_via_full_heckeAlgebra_eigensystems}; cuspidal trace computations (\lean{trCusp'_of_steps} (116))\\
+\lean{kap} & \lean{KapLinked.row_kap_of_row_lam_alt_alt} (24) & consumes \lean{hLamP}; \lean{divisorEmbedding_kappa_eq_rowsKappa_at_infinitePlace}\\
+\lean{good} & \lean{GoodLinked.row_good_alt_alt} & \lean{linkedAt_goodFTAll}\\
+\lean{lab} & \lean{LabLinked.row_lab_of_layer_alt_alt} & \lean{row_lab_of_good_alt_alt}\\
+\lean{geo} & \lean{GeoZeroAt.geometricWeakTies_of_linked_ties} & over \lean{RayField} and the entries above\\
+\lean{df} & \lean{linkedAt_prmR_df_of_cuspRapidDecay} & \lean{DefSide.linkedAt_df_of_parameters}\\
+\midrule
+\lean{ON} & \lean{ontoX_of_hypotheses_alt_alt} (18), \lean{lamLow_of_hypotheses_alt_alt} (19) & assemblies over published statements and \lean{llOf_alt} (local Langlands); bodies of the internal children unread\\
+\bottomrule
+\end{longtable}
+
+So \lean{hPA} closes, \lean{mi} moves to \PC{4}, and the other ten entries are one medium package of row-side lattice and cuspidal-trace lemmas. Its mechanism is the one Final F described at statement level (row theorems proved for every bundle with the linkage condition). I did not read below the producers named.
+
+\section{Record inequalities for the \FR{12} gap}\label{sec:rec}
+
+The gap supply of \FR{12} uses two family conditions, $2C\le C_l$ (\lean{hCl3}) and $\log\mathrm{rd}_E\le L/C_l$ (\lean{H11}), with $C$ the counting constant. Both are supplied inside the archive.
+
+\begin{proposition}[\lean{countClauses_closed}, \Lpath{Development/AbelianVarietyTheory/Proofs/FlagMeasures/CountClausesClosed.lean}:58, read in full; live]
+For every family class, every list of counting constants $c_{30}$ with $C\ge0$, and every family in the class whose late constants dominate the threshold list \lean{linkThresholds}, eventually in $x$ the hypotheses of the counting theorem hold, in particular the gap $C\,r^{19}f^5\log(b\cdot\mathrm{rd}_E)$.
+\end{proposition}
+
+\begin{proof}
+The family constant is $C_l=\mathrm{sCl}(F_m)=\min(C_{fL},C_w,C_\Delta,C_{\mathrm{Count}},C_{h0r},C_{\mathrm{gap}})$ (\Lpath{.../CuspSpanNormBounds/LeSCSCl.lean}:13). The quantifier \lean{Closed.large} (\Lpath{.../SmoothDesignExistence/DGamSmooth.lean}:38) restricts to families that are large for a threshold list, and \lean{linkThresholds} puts $\max(2,2C,8C_\Gamma)$ in the last slot, where $C=c_{30}(\mathrm{cOut}).C$ depends only on the first sixteen (outer) constants. So \lean{link_thresholds_spec} gives $2\le C_l$ and $2C\le C_l$ with no circularity. The second condition is \lean{log_root_discriminant_le} (\Lpath{.../StandingHypothesesHoldFamily.lean}:1110, read in full). From the size data, $\mathrm{rd}_E\le2nx^{\varepsilon/100}\sqrt{qd}$ with $\log q,\log d\le X^{21}$ for $X=x^{\varepsilon/100}$, and \lean{permutedRowProductSplitSum} gives $\log\mathrm{rd}_E\le1+3X/\theta+X^{21}\le L/C_l$ whenever $C_l\le X$, which \lean{standing_hypotheses_of_bounds} receives from \lean{hX1}. Then \lean{gap_product_le_of_bounds} turns $C X(L+\log\mathrm{rd}_E)\le2CXL\le C_lXL$ into the required gap, as Wave 4 read.
+\end{proof}
+
+So the record inequalities are \sC. The value $1.6\cdot10^{15}(C_g+4)$ in the prompt never has to be checked, because $C_l$ is chosen after $C$. They are supplied by this machinery and need no independent work by Agent 5.
+
+\section{Nonvacuity on the live route}\label{sec:nonvac}
+
+The live producer of the bundles is \lean{member_bundles_large_unramified_exponents_alt} (\Lpath{TPS/MemberBundlesLargeUnramifiedExponents.lean}:34, read in full), called by \lean{hypotheses_nonempty_of_unramified_exponents_alt}. It assembles \lean{SiegelMassRatioCM}, \lean{MemberE} and the built-and-good bundle condition from \lean{compatibleSystem_member_hypotheses} (global Artin reciprocity, \lean{CMCurveGoodOutsidePrimeSt}, \lean{WeberRayFieldSt}, Harish-Chandra and discrete-series statements, the convergent Siegel--Weil formula), \lean{compatibleSystem_member_rationalWeights}, \lean{compatibleSystem_weightOne_saturated}, \lean{member_multiplicatively_closed_alt}, \lean{hyps_e_third_layer_ser_n_of_geometric_galois}, \lean{member_exists_baseLattice_alt} and \lean{compatibleSystem_weilBlock_ne_alt}. \lean{window_lower} (uses \lean{SiegelMassRatioCM}) and \lean{DsP_pos_and_lower} are live by other paths and stay residual. \lean{exists_chGoodW}, \lean{not_evG_false} and its siblings are off route. The six internal producers above replace the old nonvacuity leaves; I read them at the top only.
+
+\section{\FR{10} (\PC{7})}
+
+\subsection{The dual marking: closed}
+
+\lean{Dict.DualMark.dual_marking} (\Lpath{Development/AbelianVarietyTheory/Proofs/SiegelThetaTransformation/DualHalfLevelMarkingExistsAndMatch.lean}:317, read in full with the statements of the in-file lemmas).
+
+\begin{theorem}
+Let $E$ be a CM field, $L\subset E^r$ an $\mathcal O_E$-lattice self-dual for $\mathrm{Tr}_{E/\mathbb Q}\circ h$, $M\ge3$ a level with $\mathfrak m\bar{\mathfrak m}=(M)$, and $m\colon\Lambda\to L$ a marking that induces an isomorphism $\mathfrak m\Lambda/M\Lambda\cong\mathfrak mL/ML$. For a primitive $M$-th root of unity $\zeta$ there is $\delta\colon\Lambda\to L$ with $\zeta^{E_\Lambda(x,c\,a)}=e\bigl(-E(\delta x,M^{-1}m(a))\bigr)$ for $a\in\mathfrak m\Lambda$. Every such $\delta$ satisfies $L\subseteq\delta(\Lambda)+\mathfrak mL$ and $\delta(a)\in\mathfrak mL\iff a\in\mathfrak m\Lambda$, the pair $(m,\delta)$ is carried to a pair of the same kind by every unitary $g$, two pairs with $\delta\equiv\delta'\bmod\mathfrak mL$ have $m\equiv m'\bmod ML$ on $\mathfrak m\Lambda$, and $\overline{\mathfrak m}$ is the conjugate ideal.
+\end{theorem}
+
+The proof uses that $L$ is finitely presented and flat, hence projective, a bijective $\mathbb Z$-bilinear form $B$ on $L$ representing $E$ (\lean{exists_form}, from trace-form duality \lean{perfect_iff_traceFormDual_eq}), the idempotent separator $c$ of $\mathfrak m$ and $\bar{\mathfrak m}$ (\lean{cSep_spec}, the Chinese remainder theorem), and the in-file lemmas \lean{exists_dual}, \lean{exists_dual_sub_mem}, \lean{mem_of_dual_mem}, \lean{mark_eq_of_dual}, each a statement about dual bases modulo an ideal for a perfect pairing. This is \sC{} in elementary module theory over a Dedekind domain.
+
+\subsection{Lifting marked points: reduced}
+
+\lean{Dict.MarkLift.exists_lift_marked} (\Lpath{.../SiegelThetaTransformation/ExistsLiftMarked.lean}:358, 49 lines, read) lifts a marked point to a level cover. It uses \lean{anFib_lift_ex} (142 lines, the analytic fibre with a frame and an exponential map whose kernel is the period lattice), \lean{exists_aut}, \lean{LevelActionLaws.exists_move} (a level automorphism realizing a given $\mathcal O_E$-automorphism of $\Lambda/M\Lambda$, from \lean{exists_sim} and \lean{exists_levAut}), \lean{move_fibre}, \lean{rho_eq}, and \lean{frames_lift_to_cover} with \lean{firstFiveLaws}. The last is the first five of \lean{allSixLaws} (\Lpath{.../UniformizationProofs/AllSixAbelianSchemeLawsHold.lean}:22), proved from \lean{abelianSchemeLaws_all}, \lean{furtherLaws_of_laws} and \lean{twistBaseChange}. These are the complex uniformization laws of the PEL moduli problem. Their published type is the uniformization of PEL Shimura varieties and of their level covers (Shimura; Deligne, \emph{Travaux de Shimura}, S\'em. Bourbaki 389 (1971); Kottwitz, J. Amer. Math. Soc. 5 (1992), \S5; Lan, 2013, ch.~1). Status: \sR, lowest internal theorem \lean{abelianSchemeLaws_all}, with \lean{anFib_lift_ex} and \lean{exists_levAut} as small children.
+
+\subsection{Producers of \lean{series_bound}}
+
+The seven producers live in \Lpath{Development/AbelianVarietyTheory/Proofs/InertiaEigenvalues/}. Their unwrapped names and sizes are \lean{LevelFourier.smul_mem_trSp} (171), \lean{LevelSeries.exists_flip_theta} (76), \lean{LevelSeries.exists_move_denomAt} (68), \lean{ArchAct.real_act_harm} (50), \lean{ConstBound.const_dvd} (52), \lean{clsScal_mem_valRing} (127), \lean{PinBase.baseCc_of_framePin} (89). I read the statements and first steps of \lean{smul_mem_trSp} and \lean{const_dvd}. They confirm the level independence that Wave 4 inferred. \lean{smul_mem_trSp} has the form $\exists K\,\forall M\ne0\,\dots$, with $K$ the number of generators of the tensor lattice \lean{latO} and fixed before the level. \lean{const_dvd} has the form $\exists c\,\forall\ell_2$ with $\ell_2.M=M\cdot p_d$, $p\nmid p_d$, $\dots$, with $c$ the $p$-adic valuation of $M^{[E:\mathbb Q]n(p+q)}M^{n\,\mathrm{rk}\Lambda}(2\,\mathrm{disc}_E\,M)^d$ for the fixed base level $M$. So the exponent $c=vK+c_f+c_a+c_3$ of \lean{series_bound} is level independent by quantifier order. The bodies (theta series in the Schr\"odinger model of the lattice Weil representation) are \sR, small to medium. The fourth follow-up reads them and closes this entry (Section~\ref{sec:fu4r3}).
+
+\subsection{Galois-side leaves}
+
+The leaves \lean{residual_irreducible_of_theorem_three_prime}, \lean{Conclusion42}, \lean{TripFin.triplesGood}, \lean{good_finite_types_all}, \lean{SeriesRat}, \lean{HeckeTransform}, \lean{RatioConj}, \lean{heckeInt}, \lean{heckeReadTie} were classed by the cleanup pass as published type or \lean{litN}. I did not reopen them.
+
+\section{Final small-leaf sweep}
+
+\subsection{\SL{5} bookkeeping}
+
+\begin{longtable}{>{\rr}p{4.2cm} >{\rr}p{10.8cm}}
+\toprule
+Item & Finding\\
+\midrule
+Budget at \Lpath{.../RootLatticeThresholds/CarrierXAll.lean}:451 & \sC. In the live caller \lean{carrierDataBuilt_of_hyp} the budget hypothesis \lean{hAe} is discharged by choosing $A_0=\mathrm{decayThreshold}(\lvert C_c\rvert+\lvert C_d\rvert+\lvert C_e\rvert,k,r_S)$ itself (\lean{poly_le_decayThreshold}), so no margin against $r^{19}$ is needed. With \lean{Kst}$=5$ the companion lemma \lean{polys} reads $20kx^3+400x^4+8000x^3\le8400(kx^3+x^4)$, $20kx^3+400x^4\le8400(kx^3+x^4)$ and $48000x^3+120x\le48120(kx^3+x^4)$ for $x=r+1\ge1$. I checked all three symbolically (every coefficient in $k$ and $x-1$ is nonnegative)\\
+Step of \lean{con_trace} from $g^N$ to $g$ & \sC. Let $K$ be algebraically closed of characteristic $l$, $V\subset K$ a valuation ring, $M\in M_4(V)$, $d_i\in V$ with $d_i^m=1$, $M_{ii}\equiv d_i\bmod\mathfrak m_V$ and $\chi_{M^N}=\prod_i(X-d_i^N)$. Every eigenvalue $x$ of $M$ has $x^N=d_i^N$ for some $i$, so $x$ is algebraic over $\mathbb F_l$, hence so is $\operatorname{tr}M-\sum d_i$. A nonzero element of $K$ algebraic over $\mathbb F_l$ is a root of unity, hence a unit of $V$, while $\operatorname{tr}M-\sum d_i=\sum(M_{ii}-d_i)\in\mathfrak m_V$. So $\operatorname{tr}M=\sum d_i$. The argument does not need $l\mid N$ or $l\nmid N$\\
+Five facts of \lean{all_parts_transfer_of_facts}; \lean{levelCompare_statement}; \lean{passageLat_of} & \sD\\
+\lean{isProdCuspChar_good} & live on the nonvacuity route; \sE{} through Green's classification (Section~\ref{sec:three})\\
+Two declarations of \lean{UniqGap} & live on the nonvacuity route, one proposition; reduces to Jiang--Sun--Zhu (Sections~\ref{sec:three}, \ref{sec:fu2nonvac})\\
+Two declarations of \lean{secondCohomologyBound_of_boundaryBound} & both live. The \lean{PositivityTheory} one is a Layer~3 step of Jacquet--Shalika rigidity; the \lean{UpperTheory.V.Pa} one is a patching step on the automorphy route, outside \PC{6} and \PC{7} (Section~\ref{sec:three})\\
+Trace of \lean{exists_coreTies_of_zeroFreeRegion} to \lean{Main.lean} & done. It has no user (Section~\ref{sec:route})\\
+\bottomrule
+\end{longtable}
+
+\subsection{\SL{1} to \SL{4}}
+
+The reverse search confirms \lean{testRest_bound} (\SL{1}) live through \lean{topCovolSlim2_use_alt_alt}, \lean{deep_slim_use}, \lean{deepStR_of_use}; \lean{admissible_entries_small_chain} and \lean{datum_exists_coprime} (\SL{4}, \FR{19}) live. For \lean{core2}, \lean{third_identity}, \lean{stepB_of}, \lean{lift1}, \lean{fixBd}, \lean{pair_count}, \lean{detFin}, \lean{alInj} the search was undecided because their names are shared by several namespaces. I did not read new bodies in \SL{1} to \SL{4}; they stay as listed.
+
+\section{External boundary}\label{sec:boundary}
+
+\begin{longtable}{>{\rr}p{3.4cm} >{\rr}p{11.6cm}}
+\toprule
+Entry & Finding\\
+\midrule
+V17, the inputs of \lean{hostEx_of_zeroFreeRegion} & The route recorded for them is off route. \lean{LogDerOne} is live as a field of \lean{ThetaLocalInputs}, but it is discharged by the internal theorem \lean{LogDerOneProof.logDerOne_holds} (69 lines, read at the top), which proves $\lvert L'/L(1,\chi)-\sum_\rho(1-\rho)^{-1}\rvert\le C\log3q$ for primitive $\chi$ from \lean{LWide.logDeriv_LFunction_strip} and $L(1,\chi)\ne0$ (Mathlib). That is a Layer 3 proof of the partial-fraction formula (Davenport, ch.~16). For \lean{Jutila}, \lean{PageThm}, \lean{TZRat} and \lean{QuadraticHeckeZeroEstimates} every consumer theorem I found is off route. The only consumers not decided are the hypothesis bundles \lean{ArithmeticGeometryHyps} and \lean{PublishedTypesAtPlace}. For \lean{ExplZeta}, \lean{ExplChi}, \lean{ZeroCount} and \lean{ZFRDirichlet} the undecided consumers are \lean{explicit_formula_used}, \lean{zeroCount_holds}, \lean{zFRDirichlet}, \lean{ZeroFreeHalf.main}, \lean{HostZeroFree.main}, \lean{QH.twistK} and \lean{page_across}. V17 should be moved from \emph{operative} to \emph{not shown operative}, with \lean{LogDerOne} listed as Layer 3\\
+V18, the prime number theorem for primitive characters in the form of \lean{psi_thin} & stays. \lean{QH.thinH} is live through \lean{every_character_of_green_v_win}\\
+\lean{RayField} & undecided as a name, but it is an explicit argument of the live \lean{rowFun_at_gridA_alt} and \lean{linkedAt_geometricWeakTies_of_tie}, through \lean{P.rayClassFieldSt}. It stays\\
+Slope inequality for hermitian bundles & now the stopping point of the core of \lean{FUN}, already on the boundary (Block B). The archive's proof is \lean{Formalism.HN.slope_inequality_mean} (Layer 3)\\
+\textbf{New} (for \lean{JoinOut}, Section~\ref{sec:joinfull}) & Siegel--Klingen; Deligne--Ribet (1980); Hecke's functional equation for partial zeta and Hecke $L$-functions; $K(j(\mathcal O_K))$ is the Hilbert class field (Weber, Hasse, Deuring); Shimura's main theorem of complex multiplication (1971, Thm.~5.4). Katz's $p$-adic theory is not used, so it is not a boundary item. Masser's isogeny formula and the level-one $q$-expansion principle are proved in the archive\\
+\textbf{New candidate}: complex uniformization of PEL moduli and of level covers & Shimura; Deligne 1971; Kottwitz 1992; Lan 2013. Stopping point for \lean{allSixLaws} below \lean{exists_lift_marked}\\
+\textbf{New} (second follow-up) & For F1: nonvanishing of $L(1,\chi)$ for nontrivial Hecke characters (Hecke, Landau) and Hecke's analytic continuation, both proved in the archive; the Phragm\'en--Lindel\"of principle (Rademacher 1959 for the explicit convexity). For nonvacuity: Bessel multiplicity one for real unitary groups (Jiang--Sun--Zhu 2010, Sun--Zhu 2012), integrability of discrete series far from the walls (Trombi--Varadarajan 1971, Hecht--Schmid 1976), Harish-Chandra finiteness (LNM 62), Montgomery's zero density theorem, Landau--Page and the truncated explicit formula (Davenport), Green's character theory of $\mathrm{GL}_r(\mathbb F_q)$; all proved in the archive, so they are Layer~3 proofs of published theorems. Jacquet--Shalika rigidity is in the same position\\
+\textbf{New} (F4, third follow-up) & first facts of complex multiplication (Silverman, \emph{Advanced Topics}, II.2, II.4); Masser's formula for $s_2$ (shared with \lean{JoinOut}); potential good reduction and formal groups (Silverman, \emph{AEC}, IV, VII.5); the addition and Frobenius--Stickelberger formulas for $\sigma$; Weil 1964 for the metaplectic intertwiners and the eighth roots of unity; Kudla 1994 for the splitting characters; weak approximation. Shimura 1976, Kubert--Lang, Mazur--Tate and Katz are related, not used\\
+\bottomrule
+\end{longtable}
+
+\section*{Verdict}
+
+\textbf{CLOSED MODULO NAMED EXTERNAL THEOREMS}
+
+This verdict follows the fourth follow-up (Section~\ref{sec:fu4}) and replaces the verdict of the earlier versions.
+
+\subsection*{1. What closed}
+
+\begin{itemize}[nosep]
+\item The core inequality of \lean{FUN} (Theorem~\ref{thm:fun}), modulo the hermitian slope inequality, with \lean{size_le} and \lean{size_arith} checked.
+\item The four arithmetic leaves of \lean{FUN} (\lean{DescentHeightCondition}, \lean{RankGapBound'}, \lean{RamifiedSumBound'}, \lean{DescentPolynomialCondition}) and the extra hypothesis \lean{ScaleCondition}, modulo the family parameter fields, and the identification of the other twelve leaves as transfers over F1 to F6 and \lean{ON}.
+\item The record inequalities $2C\le C_l$ and $\log\mathrm{rd}_E\le L/C_l$ (Section~\ref{sec:rec}).
+\item The \lean{Open0} entry \lean{hPA}.
+\item \lean{dual_marking}.
+\item Level independence of the \lean{series_bound} exponent, by quantifier order in \lean{smul_mem_trSp} and \lean{const_dvd}.
+\item \SL{5}: the \lean{CarrierXAll} budget, the \lean{con_trace} step, the trace of \lean{exists_coreTies_of_zeroFreeRegion}.
+\item \lean{JoinOut} (follow-up, Section~\ref{sec:joinfull}): \sE, with a list of small internal leaves. The non-holomorphic CM value it needs was tested numerically, and the strength risk is withdrawn.
+\item Second follow-up (Section~\ref{sec:fu2}): \lean{LNe} and \lean{LBound} (Propositions~\ref{prop:lne}, \ref{prop:lbound}), with \lean{FieldDat}, \lean{TorEx}, \lean{BetaArch}, \lean{DenEx}, \lean{DenSum}, \lean{ThbSt}, \lean{RhoLow}, \lean{BotSmall}, \lean{OneSqSt} and F5's \lean{thmA_upper_alt}, \sE; the theta outputs \lean{NormBig}, \lean{TriEx}, \lean{BotNe}, \lean{BotConst}, \lean{Tower} reduced to named \PC{4} producers; \lean{isProdCuspChar_good} \sE{} (Green); \lean{UniqGap} reduced to Jiang--Sun--Zhu; the liveness of all five declarations of the old R8 settled.
+\item Third follow-up (Section~\ref{sec:fu3}): F4 (\lean{NormSum.inp_all}, 22 fields) \sE, with the integrality claims checked numerically for $d=7$; \lean{Open0} (all ten entries) \sC{} or \sE; the nonvacuity assembly (\lean{DsP_pos_and_lower}, \lean{window_lower}, \lean{classSel}, \lean{nonempty_hyps_of_allRows_alt}, \lean{allRows_of_open0_alt}, the children of \lean{member_bundles_large_unramified_exponents_alt}) \sC{} or \sE{} given \lean{ON}.
+\item Fourth follow-up (Section~\ref{sec:fu4}): \lean{ON} (Proposition~\ref{prop:on4}) and its ten estimate statements \sE, with \lean{HTFSt} transferred to \PC{1}; \lean{LambdaLowerBound}$_2$ (Proposition~\ref{prop:lamlow4}) \sE{} through the Rallis inner product formula; the live \lean{series_bound} and its producers \sE{} through \lean{GlobalArtinReciprocity}; every live copy of \lean{third_identity}, \lean{stepB_of} and \lean{core2} \sC, \sE{} or transferred; \lean{pair_count} on the patching route.
+\item Struck as off route: \lean{fun0Fit_of_leaves} and \lean{fun0Fit_close}, the \lean{hostEx_of_zeroFreeRegion} route, the \lean{not_evG_false} cluster with \lean{exists_chGoodW}, \lean{denominators_transport_reflection}, \lean{all_parts_transfer_of_facts}, \lean{levelCompare_statement}, \lean{passageLat_of}.
+\end{itemize}
+
+\subsection*{2. Smallest exact remaining internal residual list}
+
+No residual remains in \PC{6} or \PC{7}. The table keeps the four former residuals with their final status, so that the synthesis can map them.
+
+\begin{longtable}{>{\rr}p{2.2cm} >{\rr}p{2.3cm} >{\rr}p{3.4cm} >{\rr}p{2.9cm} >{\rr}p{2.4cm} >{\rr}p{1.5cm}}
+\toprule
+Theorem & Live consumer & Mathematical assertion & Mechanism & External boundary & Verdict\\
+\midrule
+R1 \lean{SurjectiveOntoX} (\lean{ontoX_of_hypotheses_alt_alt}) & \lean{allRows_of_open0_alt}, hence nonvacuity & local index bound \lean{ON} for theta-image lattices at split places, with the global weighted sum bound (Proposition~\ref{prop:on4}) & idempotents and Mackey decomposition over the level group, scaling, place-class depths, explicit absorption; ten estimate statements (Table~\ref{tab:r1leaves}) & \lean{RayField}, Green, Bhatt--Scholze, Chebotarev, Clozel, base change, Serre--Tate; \lean{fhSt} to \PC{1} & \sE\\
+R2 \lean{LambdaLowerBound}$_2$ (\lean{lamLow_of_hypotheses_alt_alt}) & \lean{LeafInfinitePlaceBound} of \lean{FUN} & $\log\lambda_\sigma(p)\ge\mathrm{lowB}\ge l_{6m}$ for the eigenvalue of $\theta\theta^*$ on every isotypic part at every embedding (Proposition~\ref{prop:lamlow4}) & Rallis inner product formula, formal degree and hook formula, mass bound, Galois and complex conjugation & Siegel--Weil, doubling, unramified doubling, Bernstein--Zelevinsky, Harish-Chandra, cusp decay & \sE\\
+R3 \lean{LevelSeries.series_bound} & \lean{SerStd.untwRatS} & $l^c\theta$ is an $O$-combination of rational sections integral at algebraic points, $c$ independent of the level & lattice generation, Weil representation formulas, valuations (Table~\ref{tab:r3}) & \lean{GlobalArtinReciprocity} at the consumer; Weil 1964 & \sE\\
+R4 small leaves & Table~\ref{tab:r4} & Table~\ref{tab:r4} & identities and valuation arguments & Tur\'an's second main theorem & \sC{}, \sE{} or transferred\\
+\bottomrule
+\end{longtable}
+
+\subsection*{3. External verification boundary}
+
+Changes: V17 moves to \emph{not shown operative}, with \lean{LogDerOne} recorded as a Layer 3 proof. For \lean{JoinOut} add Siegel--Klingen, Deligne--Ribet, Hecke's functional equation, the Hilbert class field theorem for $j$ and Shimura's main theorem of complex multiplication; Katz's theorem is not needed. Add the uniformization of PEL moduli for R5. The fourth follow-up adds the Rallis inner product formula and its inputs (Rallis 1987, Kudla--Rallis 1994, Ichino 2004, Piatetski-Shapiro--Rallis 1987, Lapid--Rallis 2005, Li 1992, Bernstein--Zelevinsky, Harish-Chandra 1966), Serre--Tate canonical coordinates, and Tur\'an's second main theorem, and it transfers Fontaine's Hodge--Tate inclusion to \PC{1}. The hermitian slope inequality (Block B) becomes the stopping point of the core of \lean{FUN}. V18 and \lean{RayField} stay.
+
+\subsection*{4. Risk audit}
+
+\begin{itemize}[nosep]
+\item \emph{Gap.} None found. Every read proof matched its statement.
+\item \emph{Circularity.} None. In particular $C_l$ is chosen after $C$ by the threshold list.
+\item \emph{Vacuous existence.} The live nonvacuity producer differs from the one the earlier waves checked. Its children close given \lean{ON}, and \lean{ON} closes in Section~\ref{sec:fu4r1}.
+\item \emph{Naming.} The third follow-up described \lean{SurjectiveOntoX} as surjectivity. It is an index bound, and Section~\ref{sec:fu4} corrects this. The first version named a seventh \lean{series_bound} producer \lean{PinBase.baseCc_of_framePin}, which does not resolve.
+\item \emph{Reading depth.} In R1 the run completion, the share Whittaker vector and the Levi cut were reconstructed from statements and first steps.
+\item \emph{Incompatible hypothesis.} None found.
+\item \emph{Missing constant.} None. The constants of \lean{size_arith}, \lean{polys} and \lean{log_root_discriminant_le} were checked.
+\item \emph{Strength.} The first version flagged \lean{LatJet.JetInt}, which claims an $l$-adic bound at every $l$. The follow-up shows that the bound is proved at every prime without Katz's ordinary theory, through the $q$-expansion principle and Masser's isogeny formula, and the one non-holomorphic CM value it rests on matches the claimed denominators numerically, sharply at $l=d$. Withdrawn.
+\item \emph{Strength of F4.} The jets statement claims integrality at every odd prime, including inert ones, and a bound $d^{1/2}$ at the ramified prime. The $d=7$ computation confirms both, and it shows that the split-prime statement fails at inert primes, where it is not claimed.
+\item \emph{Bookkeeping.} The post-closure list named off-route twins in three places. The synthesis should map every residual to its live twin.
+\end{itemize}
+
+\subsection*{5. Single earliest blocker}
+
+None inside \PC{6} or \PC{7}. The first item of the assignment that rests on another package is \lean{hodgeTate_inclusion_chart} (\Lpath{Development/AbelianVarietyTheory/Proofs/UnramifiedDepth/HodgeTateInclusionChartCharacters.lean}:49), through \lean{FormalTorsion.fhSt}, transferred to \PC{1}.
+
+\subsection*{6. Does this assignment still block the statement?}
+
+No. Theorem by theorem:
+\begin{itemize}[nosep]
+\item \lean{ON}, \lean{SurjectiveOntoX}. The core is \sC{} (Proposition~\ref{prop:on4}). Its estimate statements are \sC{} or \sE, and \lean{HTFSt} rests on \lean{fhSt} in \PC{1}.
+\item \lean{ON}, \lean{LambdaLowerBound}$_2$. \sE{} through the Rallis inner product formula and the named inputs (Proposition~\ref{prop:lamlow4}).
+\item \lean{series_bound}. \sE{} through \lean{GlobalArtinReciprocity}.
+\item The small leaves. \sC{} or \sE{} (Tur\'an), or on the patching and Galois-side routes.
+\item F4, \lean{Open0}, the nonvacuity assembly, \lean{FUN}, \lean{JoinOut}, the record inequalities and the analytic half of F1, as closed in the earlier sections.
+\end{itemize}
+The statement ``the live RH route has been reconstructed in ordinary mathematics modulo named external theorems'' is therefore not blocked by \PC{6} or \PC{7}. It still depends on the transfers of Section~\ref{sec:fu4ledger}, namely the bottom theta identities and \lean{MIstar2} in \PC{4}, \lean{fhSt} in \PC{1}, the Selmer engine, the patching route and the Galois-side package. Nothing in my assignment suggests that a mechanism fails.
+
+\appendix
+\section{Code of the independent checks}\label{app:code}
+
+\begin{lstlisting}
+# size_arith: worst case with every bounded quantity at its upper bound
+import random, math
+worst=0
+for _ in range(400000):
+    m=random.choice([1,2,3,5,10,100,1000])*random.uniform(1,3)
+    f=random.uniform(1,1e4); k=f*random.uniform(1,10)
+    N=(k+m-1)*random.uniform(1,100)
+    L=random.uniform(1,1e5); b=math.exp(min(L,700)) if random.random()<0.5 else random.uniform(1,1e9)
+    C=random.uniform(1,100); PPF=random.uniform(0,1e6)
+    Sg=2*PPF; cs=45*f*L; lx=2*L; R=k+m-1
+    np_=2*m*R; Rp=C*m*N**3*b; lg=4*L; l1=1+L; l2=C*L+1+L; l3=1+L+C*L; Bw=C*b
+    EM=4*f*np_*Rp*lg
+    hI=C*f*m*N*b*L+C*m*m*N*N*Sg+3*C*f*m*N*N*L
+    FP=C*f*b*N*m*(m*L+m*Sg)+C*f*m*m*N*N*(L+Sg)*b
+    Del=C*f*(2*N)*l1+C*f*(2*N)*Bw*L+C*f*(2*N)**2*Bw*cs
+    Arch=C*f*(2*N)*Bw*(L+l2)+C*f*N*N*(L+l3)+C*N*N*cs
+    T=C*f*b*(L+lx)
+    lhs=EM+hI+2*(m*m*(2*(2+8*N)*max(Arch+6*Del,T)+10*N*T+2*N+6*Del+4*m*Sg)+FP/2)
+    rhs=100000*C**3*f*m*m*N*N*(R*N*L+PPF)*b
+    worst=max(worst,lhs/rhs)
+print('max lhs/rhs',worst)          # output: 0.318
+
+# polys of CarrierXAll.lean (Kst = 5, so 4*Kst*(r+1) = 20x with x = r+1)
+import sympy as sp
+k,y=sp.symbols('k y',nonnegative=True); x=1+y
+e1=8400*(k*x**3+x**4)-(20*k*x**3+400*x**4+8000*x**3)
+e2=8400*(k*x**3+x**4)-(20*k*x**3+400*x**4)
+e3=48120*(k*x**3+x**4)-(48000*x**3+120*x)
+for e in (e1,e2,e3):
+    print(all(c>=0 for c in sp.Poly(sp.expand(e),k,y).coeffs()))   # True, True, True
+\end{lstlisting}
+
+\noindent The F4 check of Section~\ref{sec:fu3f4} (\texttt{f4\_jets.py}, run with $N=9$ for the second part):
+\begin{lstlisting}
+# F4 check: CM curve with CM by O_K, K=Q(sqrt(-7)), d=7.
+# Model y^2+xy = x^3 - x^2 - 2x - 1 (j=-3375), converted to y^2 = x^3 + A x + B (good at p>=5, p!=7).
+# ph(T) = -log( sigma*(z(T)) / T ), T = -x/y, sigma* = sigma(z) exp(-s2 z^2/2).
+# Checks: (a) jets i!*coeff_i of ph(exp z) for i>=3 are p-integral, jet2 = s2 has |.|_7 = 7^{1/2};
+#         (b) at split p, exp(ph(T)) = T/sigma*(z(T)) has p-integral coefficients (splitZero);
+#             at inert p, it should fail somewhere (sanity).
+import mpmath as mp, sympy as sp
+mp.mp.dps=80
+# short model from a-invariants
+a1,a2,a3,a4,a6=1,-1,0,-2,-1
+b2=a1**2+4*a2; b4=2*a4+a1*a3; b6=a3**2+4*a6
+c4=b2**2-24*b4; c6=-b2**3+36*b2*b4-216*b6
+A=sp.Rational(-c4,48); B=sp.Rational(-c6,864)   # y^2 = x^3 + A x + B  (over Z[1/6])
+print('c4,c6,A,B',c4,c6,A,B, 'Delta', -16*(4*A**3+27*B**2))
+g2=-4*A; g3=-4*B
+# G_{2k}(L) for the lattice of (P')^2=4P^3-g2 P-g3: G4=g2/60, G6=g3/140, recursion for P coefficients
+N=9
+# P(z)=z^-2+sum_{k>=1} c_{k} z^{2k}, c1=g2/20,c2=g3/28, c_k = 3/((2k+3)(k-2)) sum_{m=1}^{k-2} c_m c_{k-1-m} (k>=3)
+c={1:sp.Rational(1,20)*g2,2:sp.Rational(1,28)*g3}
+for k in range(3,N+1):
+    c[k]=sp.Rational(3,(2*k+3)*(k-2))*sum(c[m]*c[k-1-m] for m in range(1,k-1))
+z=sp.symbols('z')
+P=z**-2+sum(c[k]*z**(2*k) for k in range(1,N+1))
+# sigma: log(sigma/z) = -sum_k c_k z^{2k+2}/((2k+1)(2k+2))
+logsig_over_z=-sum(c[k]*z**(2*k+2)/((2*k+1)*(2*k+2)) for k in range(1,N+1))
+# s2 numerically
+tau=(1+mp.sqrt(-7))/2; q=mp.exp(2j*mp.pi*tau)
+def Ek(k,terms=200):
+    s=0
+    for n in range(1,terms):
+        s+= n**(k-1)*q**n/(1-q**n)
+    return s
+E2=1-24*Ek(2); E4=1+240*Ek(4); E6=1-504*Ek(6)
+E2s=E2-3/(mp.pi*mp.im(tau))
+G4O=mp.pi**4/45*E4; G6O=2*mp.pi**6/945*E6; s2O=mp.pi**2/3*E2s
+G4L=mp.mpf(sp.N(g2/60,80)); G6L=mp.mpf(sp.N(g3/140,80))
+Om_m2=G6L*G4O/(G6O*G4L)    # Omega^{-2}
+s2L=Om_m2*s2O
+print('Omega^-2 check G4:', mp.nstr(Om_m2**2*G4O-G4L,10))
+print('s2(L) =',mp.nstr(s2L,30))
+# identify s2 = (u + v sqrt(-7)) with u,v rational
+re,im=mp.re(s2L),mp.im(s2L)
+r1=mp.identify(re); r2=mp.identify(im/mp.sqrt(7))
+print('re',r1,'im/sqrt7',r2)
+u=sp.nsimplify(r1); v=sp.nsimplify(r2) if r2 else 0
+s2=u+v*sp.sqrt(-7)
+print('s2 =',s2)
+# ph(exp z) = -log(sigma*(z)) + log T(z) ; T=-x/y with x=P, y=P'/2 => T=-2P/P'
+Pp=sp.diff(P,z)
+T=sp.series(-2*P/Pp,z,0,2*N).removeO()
+logT_over_z=sp.series(sp.log(sp.expand(T/z)),z,0,2*N-2).removeO()
+ph_z=sp.expand(s2*z**2/2 - logsig_over_z + logT_over_z)
+def vp(x,p):
+    x=sp.nsimplify(x)
+    if x==0: return sp.oo
+    # element u+v sqrt(-7): use valuation of rationals u,v (p odd, p!=7)
+    uu,vv=sp.re(sp.expand(x)),sp.im(sp.expand(x))/sp.sqrt(7)
+    vals=[]
+    for w in (uu,vv):
+        w=sp.Rational(sp.nsimplify(w))
+        if w!=0: vals.append(sp.multiplicity(p,w.p)-sp.multiplicity(p,w.q))
+    return min(vals) if vals else sp.oo
+print('\njets i!*coeff_i, min p-adic valuation over coefficient parts')
+for i in range(2,2*N-4,2):
+    jet=sp.factorial(i)*ph_z.coeff(z,i)
+    print(i, {p:vp(jet,p) for p in (3,5,11,13,17,23,29,37,43)})
+# jet2 at p=7: s2 = u+v sqrt(-7); |s2|_7 = 7^{1/2} means 7-adic valuation -1/2 in K_7
+print('jet2 = s2 =',s2)
+# (b) exp(ph(T)) = T/sigma*(z(T)) as series in T: invert z->T
+Tser=sp.series(-2*P/Pp,z,0,2*N).removeO()
+# compute z(T) by series reversion
+
+# z(T): invert T(z) = z + a5 z^5 + ... by fixed-point iteration, truncated at order M
+M=2*N-3
+t=sp.symbols('t')
+def trunc(e,var,M):
+    e=sp.expand(e); return sum(e.coeff(var,k)*var**k for k in range(0,M+1))
+Tz=trunc(Tser,z,M)
+zT=t
+for it in range(M):
+    zT=trunc(t-(Tz.subs(z,zT)-zT),t,M)
+print('z(T)=',str(zT)[:120])
+expph_z=trunc(sp.series(sp.exp(ph_z),z,0,M+1).removeO(),z,M)
+expph_T=trunc(expph_z.subs(z,zT),t,M)
+print('\nexp(ph(T)) coefficients, valuations (split: 11, 23, 29, 37, 43; inert: 3, 5, 13, 17)')
+for k in range(0,M+1,2):
+    co=expph_T.coeff(t,k)
+    print(k,{p:vp(co,p) for p in (3,5,13,17,11,23,29,37,43)})
+\end{lstlisting}
+
+
+The reverse-dependency index is a token index over declaration bodies. A declaration is called off route only when its whole reverse closure was exhausted, and each such closure (at most $23$ declarations) was rechecked with a text search of the archive.
+
+\end{document}

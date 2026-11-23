@@ -1,0 +1,400 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\OEr}{\mathcal O_E}
+\newcommand{\A}{\mathbb A}
+\newcommand{\Af}{\mathbb A_f}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\vol}{\operatorname{vol}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The class-data block E1--E5\\ Eight propositions behind the kernel and top class data of PC4.13}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The class-data block R4-E sits under \lean{AdForm.clsPinD_of_famCol_of_trueW}, which produces the kernel class data and the top class data that the seesaw laws \lean{KerX}, \lean{PerX}, \lean{RdX} consume. After the kernel-law, D1--D3, level-leaf and D2-rebasing passes its five heads E1--E5 were the largest residual (ledger $483$ theorems, plus $102$ shared theorems of the datum transport E1b). This pass rebuilds the declaration graph from the verified archive, recomputes the live closure of each head, and reads the block down to the statements of its leaves and the bodies of its main nodes. The block contains $631$ distinct theorems ($469$ exclusive to the class-data block and $162$ reached only through the union of the three PC4.13 blocks, which the ledger had not counted, apart from E1b). They are explained by eight ordinary propositions: a comparison of the adelic Weil theta kernel with the classical datum kernel at split places, a transport law for the finite datum, a character identity at determinant roots, an eigenvalue law for the level groups, two Fock-model identities at the archimedean places, the class-point dictionary of a definite unitary group, the branching identity at the top step, and the existence of the twist datum. The datum transport is shared by E1a and E1c, and the class-point dictionary is shared by E1, E2, E4 and E5. Each proposition is proved here or reduced to a theorem already on the external boundary. The verdict is that E1--E5 are closed at the human-proof boundary. No item was transferred to the D-agent. Nothing was built or run in Lean, and no existing project file was edited.
+\end{abstract}
+
+\tableofcontents
+
+\section{Sources, method and the answer in brief}
+
+\subsection{Copies}
+\lean{lean.tar.gz} ($239{,}275{,}554$ bytes) was copied once from the project folder and has SHA-256 \texttt{9631b4f020199e58\allowbreak 0ba86178cb56c6e9\allowbreak b09f690c2369a80d\allowbreak c4334aa93f49c7fc}, the value in the Kernel Replay report, both on the device and after the copy. The unpacked tree ($175{,}190$ files) matches the Kernel Replay per-file manifest \lean{Source_Manifest_sha256.txt} (SHA-256 \texttt{380706b2\ldots d65d0a6}) with no mismatch. The supporting reports were bundled on the device into one archive \lean{Final_EBlock/_transfer/eblock_support.tar.gz} (SHA-256 \texttt{f1d24484\ldots 236cf}, $85$ members, no PDFs) and checked after the copy: \lean{Final_Internal_Cleanup}, \lean{Final_Kernel_Law}, \lean{Final_D123}, \lean{Final_Level_Leaves}, \lean{Final_D2_Rebasing}, \lean{Final_Six_Wave_4} and \lean{Final_Six_Wave_6} (the PC-4 reports), \lean{Post_Closure_Synthesis}, \lean{Core_Report_7_Kernel_Law.tex}, the orphan/interface pass, the orphan dependency audit, the final external fidelity ledger, the current status ledger and the kernel replay report.
+
+\subsection{Method}
+The cleanup scripts \lean{index_decls.py} and \lean{build_graph.py} were rerun on the unpacked tree with the private-declaration list from \texttt{rg}. The index has $1{,}066{,}087$ declarations, as in the earlier passes, and $5{,}943{,}183$ exact edges. Only exact edges are used. Dot-notation edges and typeclass resolution are not followed. The exclusive set of a block is the part of its forward closure that the root \lean{riemannHypothesis} cannot reach once the block top is removed (\lean{exclusive.py}). For the three PC4.13 tops \lean{bwit_exists_alt}, \lean{Fam.colSide_alt} and \lean{AdForm.clsPinD_of_famCol_of_trueW} the exclusive sets have $202$, $2{,}815$ and $478$ theorems, and the joint exclusive set has $3{,}657$. The class-data figure reproduces the ledger's $479$ to within one theorem. A head's sub-closure is taken inside the class-data exclusive set together with the joint-only part (material reachable only through the union of the three blocks and exclusive to none of them). Cross-head edges were checked in the source text. Every one is a fully qualified name in a proof body, so none of them comes from short-name, namespace, dot-notation or local-variable resolution.
+
+\subsection{Answer in brief}
+\textbf{A. E-block verdict: YES.} E1--E5 are closed at the human-proof boundary. Their content is the eight propositions of Section~\ref{sec:props}. The external theorems they use are already on the boundary (Weil's constants and Kudla's splitting through the Weil-datum axioms, and the branching rule for unitary groups). The E-block adds no new boundary row.
+
+\section{Liveness and the corrected dependency graph}\label{sec:dag}
+
+\subsection{The block top and its consumers}
+The block top is \lean{GlobalTheory.AdForm.clsPinD_of_famCol_of_trueW} (\Lpath{TPS/ClsPinDOfFamCol.lean}:22, read in full). Its first live consumers are \lean{kerX_of_clsPinD}, \lean{perX_of_clsPinD} and \lean{rdX_of_clsPinD} under \lean{lawsLinks_of_geo_rows_cols_alt} and \lean{famAllQ_of_allTrue_alt}, as the orphan pass established. The body chooses one real datum $\rho=\mathrm{realOf}(u,\mathrm{pk}_z W,f.g,s,J)$, with jet scales $s$ from \lean{exists_nonzero_jetScale_trueColumns} and translates $J$ from \lean{exists_translates_of_values_frames}, proves its axioms with \lean{trueColumns_realData_spec}, and then for each tuple index $t$ produces a kernel class datum with \lean{kernelPart_laws_of_columnPins} and a top class datum with \lean{exists_lastPeriod_classData_of_lastStep}, the latter after reading the level forms through \lean{exists_rowForm_reading_levelForm_lastSpace}. Each of these calls goes through a one-line statement wrapper to the head in the table below.
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{0.9cm}>{\rr}p{4.6cm}>{\rr}p{4.6cm}>{\rr}p{1.4cm}>{\rr}p{1.6cm}}
+\toprule
+head & exact top declaration & wrapper called by the block top & in block & with joint-only\\
+\midrule
+E1 & \lean{KerLaws.clsKL_is} (children \lean{KerTup.kernel_identity_tuple}, \lean{LevLaw.lev_law}, \lean{KJRealLive.clsKL_real}, \lean{ClsKLive.kval}) & \lean{T.kernelPart_laws_of_columnPins} & 317 & 443\\
+E2 & \lean{AdForm.exists_clsT_of_pinTop} & \lean{T.exists_lastPeriod_classData_of_lastStep} & 85 & 105\\
+E3 & \lean{AdForm.JetScales.exists_jetS} & \lean{T.exists_nonzero_jetScale_trueColumns} & 35 & 35\\
+E4 & \lean{AdForm.realOf_is} & \lean{T.trueColumns_realData_spec} & 29 & 63\\
+E5 & \lean{AdForm.exists_readsG_of_level} & \lean{T.exists_rowForm_reading_levelForm_lastSpace} & 27 & 29\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The ledger's E1a, E1b and E1c are the three parts of E1. E1a is \lean{kernel_identity_tuple} (204 in the block, 307 with the joint-only transport), E1b is the transport \lean{movedDatum_eq_finiteDatum_representativePair} (102, joint-only) together with \lean{chr_moves_eq_rho_base} (13, in the block), and E1c is \lean{lev_law} with \lean{clsKL_real} (110 in the block). The block also contains nine declarations outside the five heads, namely the top, its five wrappers, \lean{AdForm.jOf_exists}, \lean{AdForm.isTr_unique} and the wrapper \lean{T.exists_translates_of_values_frames}. The last three define the translates $J_v(k)(z')=j(v)(z)$ for the unique frame $z$ with $k z=z'$, and uniqueness holds because $k$ is invertible. They were read in full and are closed.
+
+\subsection{Shared subgraphs}
+Of the $631$ theorems in the union of the five sub-closures, $587$ serve one head and $44$ serve exactly two. No theorem serves three heads. The shared theorems (file \lean{EBlock_Shared_Theorems.tsv}) are these.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item E1 and E2 (19). The double-coset representatives of the chart levels and the continuity of their characters, \lean{T.chartLevels_reps_represent_unitaryDoubleCosets} and its children (17), and two chart-value lemmas.
+\item E2 and E4 (18). The branching identity at the top step, \lean{TrueBranch.branching_true_columns} and its four children (11), and seven class-point lemmas.
+\item E1 and E4 (4). The infinity-type shift \lean{T.exists_charExponent_infinity_kernel_shift} with two children, and \lean{T.trueColumnSteps_are_standardHermitianPairs}.
+\item E2 and E5 (3). The frame maps \lean{Mem.ColAd.frL}, \lean{lT}, \lean{lT_apply}.
+\end{itemize}
+Inside E1 the largest reuse is the datum transport \lean{AdForm.TwResid.xiAt_transport_tw}: it is reached from E1a through \lean{moved_datum_val_tw} and from E1c through \lean{ReadLaw.transport_base}. The determinant-root character lemma \lean{DetRootRead.chr_at_detRoot} is reached from E1b and from E1c. The base vector, the Heisenberg lattice data and the moved-vacuum law enter E1 only through pinned inputs, which are produced outside the block.
+
+\subsection{False edges and dead material}
+No cross-head edge is false. The support leaves K-b (\lean{SO.stdOK}) and K-c (\lean{sqSplit_of}, \lean{muOneL_of}, \lean{muOneR_of}) are not reachable from any E-head in either of their two copies (\lean{eb_kreach.py}). The K-a statements \lean{rational_integrality_link} and \lean{hermitian_form_integral_values} are reachable from E1 only in their \lean{GlobalTheoryTheory} copies and only through \lean{TC.laHyp_eSmooth_true} and \lean{Ker.laHyp_ambOf_top}, the Heisenberg lattice data that the kernel-law pass closed (its component K3). That copy is also reached from the root through \lean{Ker.kerStd_core} and \lean{KS.locNorm_thF_of}, outside the three PC4.13 blocks. Section~\ref{sec:K} says what this means for K-a.
+
+The corrected graph is in \lean{Final_EBlock_Dependency_Map.md}.
+
+\section{Setting}\label{sec:set}
+
+The notation follows \Lpath{Formalism/LocalToGlobal/IndefiniteReal/LocalNewformFunction.lean} and \Lpath{KernelLattices/XiIndCClass.lean}, which were read. $E$ is a CM field with totally real subfield $F$, CM type $\Phi$ (the index set \texttt{Tau}) and adele rings $\A_E\supset\A_{E,f}$. A step has hermitian spaces $S$, $T$ over $E$ of even ranks $a$, $b$, with identity Gram matrices on the true columns (\lean{trueColumnSteps_are_standardHermitianPairs}). Put $W=M_{b\times a}$ and, for $x,y\in W(\A_E)$,
+\[
+\langle x,y\rangle=\Tr_{\A_E/\A_F}\bigl(\xi_0\,\tr(y^*x)\bigr),\qquad \rho(w_0)f(w)=\psi\bigl(\tfrac12\langle w,w_0\rangle\bigr)f(w+w_0),
+\]
+where $\psi$ is the standard character of $\A_F/F$, $\xi_0\in E$ is totally imaginary and $y^*$ is the conjugate transpose (\lean{symplO}, \lean{heisO}). A theta function is a smooth function $f$ on $W(\A_E)$ of finite level with $f(\gamma+w)=\psi(-\tfrac12\langle\gamma,w\rangle)f(w)$ for $\gamma\in W(E)$ (\lean{IsThetaFunO}). A Weil datum is a unitary action $\omega$ of $U(S)(\A)\times U(T)(\A)$ on theta functions with $\omega(g,h)\rho(w_0)=\rho(hw_0g^{-1})\omega(g,h)$, invariant at $0$ under rational points, and split at the split places by the character $\mu$ (\lean{IsWeilDatumO}). The theta kernel is $\vartheta_\omega(g,h)(f)=\omega(g,h)f(0)$ (\lean{thetaKO}).
+
+For self-dual $\OEr$-lattices $N\subset E^a$, $N'\subset E^b$ let $\Lambda\subset W(\A_{E,f})$ be the closure of their hom-lattice (\lean{latO}). A vacuum $f_0$ is a theta function with $\rho(2u)f_0=f_0$ for $u\in\Lambda$, with $\rho(u)f_0=f_0$ for $u\in\Lambda$ in a split half, which is annihilated by the archimedean Fock annihilation operators and has norm one (\lean{IsVacO}). The Fock reading $\xi_N(f)$ is the entire function on $V=\prod_{\tau\in\Phi}M_{b\times a}(\mathbb C)$ obtained by dividing the restriction of $f$ to the archimedean coordinate by the Gaussian (\lean{xiN}).
+
+Let $SS$ be a finite set of primes $P$ of $E$ with $\bar P\notin SS$, prime to $2\,Q_S\,q\,d$, and $\varepsilon\in\A_E$ the sum of the idempotents at $P\in SS$ (\lean{IsIdemSum}). Then $\varepsilon\bar\varepsilon=0$. Put $X=\varepsilon W(\A_E)$ and $Y=\bar\varepsilon W(\A_E)$. For an odd $c>0$ the half lattices of level $c$ are $A_c$ and $B_c$, the twists of the hom-lattice by $c^{-1}$ at $SS$ and $c$ at $\overline{SS}$, respectively by $c$ at $SS$ and $c^{-1}$ at $\overline{SS}$ (\lean{halfAO}, \lean{halfBO}). The classical datum kernel $\theta_{N,N'}[\Xi;E]$ of a finite datum $\Xi$ on $\Hom(E^a,E^b)$ of level $c$ (supported in $c^{-1}\Hom_{SS}(N,N')$, periodic under $c\Hom_{SS}(N,N')$) is the coset sum of the kernel-law report, Section~3 (\lean{thC}), and $\alpha$ is the semicharacter of the period lattice (\lean{alV}).
+
+\section{The eight propositions}\label{sec:props}
+
+The propositions are numbered by mechanism. Each statement lists its hypotheses in the order of the archive's quantifiers, and the counts are the theorems that the classification script assigns to the mechanism (Section~\ref{sec:count}).
+
+\subsection{M1. The adelic kernel at split places is the classical kernel}
+
+\begin{lemma}[halves]\label{lem:halves}
+In the setting of Section~\ref{sec:set}, with $c$ odd and $SS$ prime to $2Q_Sqd$:
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $\langle X,X\rangle=\langle Y,Y\rangle=0$, so $\psi(\tfrac12\langle x,x'\rangle)=1$ for $x,x'\in X$, and likewise on $Y$.
+\item For $x\in A_c$ the finite part $R=(1-\varepsilon)\,\mathrm{finRat}(x)$ of the rational point outside $SS$ lies in $\Lambda$. For $y\in B_c$ the part $(1-\varepsilon-\bar\varepsilon)\,\mathrm{finRat}(y)$ lies in $\Lambda$, and $\varepsilon\,\mathrm{finRat}(y)\in c\Lambda$.
+\item The number $k_0(x)=\Tr_{E/\mathbb Q}\bigl(\xi_0(\tfrac{1+\sqrt{-d}}2)^2h(x,x)\bigr)$ is an integer for $x\in A_c$ and for $x\in B_c$, and $\alpha(\iota x)=(-1)^{k_0(x)}$.
+\item $A_c$ and $B_c$ are self-dual for the Fock form, $\alpha$ is a semicharacter on each, and $\psi(\langle c\,u,\bar\varepsilon y\rangle)=1$ for $u\in\Lambda$, $y\in B_c$.
+\item The representative systems of $\Lambda/A_c$, $B_c/(\Lambda\cap A_c)$ and $\Lambda/B_c$ are finite and genuine.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) $\tr((\varepsilon y)^*\varepsilon x)=\bar\varepsilon\varepsilon\,\tr(y^*x)=0$. (b) Off $SS\cup\overline{SS}$ the twists do nothing, so the components of $\mathrm{finRat}(x)$ there lie in the completed hom-lattice. At $\bar P$ with $P\in SS$ the element $x$ lies in $c$ times the lattice. This is \lean{halfA_components_mem_completedLattice_offPrimes}, \lean{halfB_components_mem_completedLattice_offConj} and \lean{off_part_mem}, whose proofs choose a denominator prime to $SS$ (\lean{OffDen.exists_den_avoid}). (c) Complex conjugation exchanges $P$ and $\bar P$, so in the $P$-component of $h(x,x)$ the factor coming from $x$ at $P$ (with denominator $c^{-1}$) is paired with the conjugate of the factor at $\bar P$ (multiplied by $c$), and the powers of $c$ cancel. At the primes outside $SS\cup\overline{SS}$ the element $x$ is integral and $N$, $N'$ are self-dual. So the hermitian cocycle of $x$ is integral at every prime (\lean{hermitian_cocycle_integral_of_local}), and its trace against $\xi_0(\frac{1+\sqrt{-d}}2)^2$ is an integer by the same computation that gives the integrality on the period lattice, now on the twisted halves (\lean{halfA_signTrace_isInteger}). The formula for $\alpha$ is the definition of $\alpha$ as $(-1)$ to the nearest integer of $\tfrac{\sqrt d}2H$, together with $\tfrac{\sqrt d}2H(\iota x,\iota x)=k_0(x)$ (\lean{SemiTrace.alV_embH_eq_neg_one_zpow}). (d) The twist by $c^{\mp1}$ at $P$ and $c^{\pm1}$ at $\bar P$ is dual to itself under the pairing of $P$ with $\bar P$ (\lean{TwPerSelfDual.twO_selfDual}). The semicharacter property is (c) applied to $x+x'$ (\lean{SemiTwist.semiChar_twO}). The last claim holds because $c\,u$ and $\bar\varepsilon y$ pair into $\OEr$ at $\bar P$ (\lean{HalfPairing.char_sympl_halfB}). (e) The three groups are lattices containing one another up to finite index (\lean{PeriodReps.reps_genuine}).
+\end{proof}
+
+\begin{lemma}[vacuum relations]\label{lem:vac}
+Let $f_0$ be a vacuum of $\Lambda$, $x\in A_c$ and $y\in B_c$. Then
+\begin{gather*}
+\rho(R)f_0=\alpha(\iota x)f_0,\qquad \rho(\bar\varepsilon y)f_0=\alpha(\iota y)\,\rho(\mathrm{finRat}\,y)f_0,\\
+\rho(\varepsilon x)\rho(\mathrm{finRat}\,y)f_0=\alpha(\iota x)\,\rho(\mathrm{finRat}\,x)\rho(\mathrm{finRat}\,y)f_0 .
+\end{gather*}
+\end{lemma}
+
+\begin{proof}
+The first relation is \lean{HalfARest.heisO_rest_eq}, read in full. Put $Y_0=\mathrm{finRat}(x)$, so that $c\,Y_0\in\Lambda$ and $Y_0=\varepsilon Y_0+R$. The vacuum sign law (\lean{LatVacSign.heisO_finRat_sign}, an upstream theorem outside the block) says that for a rational $v$ with $\mathrm{finRat}(v)\in\Lambda$ one has $\rho(\mathrm{finRat}\,v)f_0=(-1)^{k_0(v)}f_0$. Apply it to $v=c^2x$, so $(-1)^{k_0(v)}=(-1)^{c^4k_0(x)}=(-1)^{k_0(x)}$ since $c$ is odd. Decompose $c^2Y_0=X_1+c^2R$ with $X_1=\varepsilon c^2Y_0\in\Lambda\cap X$. Then $\rho(-X_1)f_0=f_0$ by half invariance, $\psi(\frac12\langle X_1,c^2R\rangle)=1$ because the pairing of $\varepsilon$-components with the rest is integral (\lean{halfCocycle_isotropic_idempotentHalves_trivial}), and $\rho(c^2R)f_0=\rho(R)f_0$ because $c^2R=R+2u$ with $u=\tfrac{c^2-1}2R\in\Lambda$ and $\psi(\frac12\langle R,2u\rangle)=1$. Composing these three gives $\rho(R)f_0=(-1)^{k_0(x)}f_0=\alpha(\iota x)f_0$ by Lemma~\ref{lem:halves}(c).
+
+For the second relation write $\mathrm{finRat}\,x=\varepsilon x+R$. By the composition law $\rho(a)\rho(b)=\psi(\tfrac12\langle a,b\rangle)\rho(a+b)$, the commutation $\rho(R)\rho(\mathrm{finRat}\,y)=\psi(\langle R,\mathrm{finRat}\,y\rangle)\rho(\mathrm{finRat}\,y)\rho(R)$ with $\psi(\langle R,\mathrm{finRat}\,y\rangle)=1$ (\lean{char_sympl_rest_eq_one}, from Lemma~\ref{lem:halves}(b)), the trivial cocycle $\psi(\frac12\langle\varepsilon x,R\rangle)=1$ (\lean{CocycleSS.cocycle_trivial}) and $\alpha(\iota x)^2=1$ (\lean{alV_mul_self_halfA}), the first relation gives the second (\lean{AdForm.HalfHeis.heisO_halfA_eq}, read in full). The third relation is the same argument with the roles of $\varepsilon$ and $\bar\varepsilon$ exchanged, using $\varepsilon\,\mathrm{finRat}(y)\in c\Lambda$ (\lean{ConjHalfHeis.heisO_conjHalf_eq}).
+\end{proof}
+
+\begin{lemma}[finite Fourier expansion]\label{lem:four}
+Let $\Phi$ be a Schwartz--Bruhat function on $X$ supported in $k^{-1}\Lambda$ and periodic under $k(\Lambda\cap X)$ for some $k\ge1$, and let $\Xi$ be a finite datum of level $c$ with $\Phi(\varepsilon\gamma)=\Xi(\gamma)$ for rational $\gamma$. Choose representatives $S_X$ of $\Lambda/A_c$, $S_A$ of $B_c/(\Lambda\cap A_c)$ and $S_B$ of $\Lambda/B_c$, with rational lifts $p_x\in A_c$, $p_y\in B_c$. Then for every $t\in X$
+\[
+\Phi(t)=\sum_{x\in S_X}\sum_{y\in S_B}K(x,y)\,\psi\bigl(\langle t+\varepsilon p_x,\bar\varepsilon p_y\rangle\bigr)\,\mathbf 1_{\Lambda\cap X}(t+\varepsilon p_x),
+\qquad K(x,y)=\frac1{\lvert S_A\rvert}\sum_{s\in S_A}\Xi(s-x)\,\langle y,s\rangle_{\mathrm{brk}}^{-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:halves}(d) the pairing $(t,y)\mapsto\psi(\langle t,\bar\varepsilon y\rangle)$ identifies $B_c$ modulo its annihilator with the character group of the finite group $(\Lambda\cap X)/c(\Lambda\cap X)$ (\lean{HalfSplit.splitHyp_halves}). The function $\Phi$ is supported in finitely many cosets $-\varepsilon p_x+(\Lambda\cap X)$ (Lemma~\ref{lem:halves}(e) and \lean{HalfAConj.mem_perO_inf_halfAO}). On each coset it is a function on the finite group $(\Lambda\cap X)/c(\Lambda\cap X)$, and Fourier inversion on that group expands it in the characters $\psi(\langle\cdot+\varepsilon p_x,\bar\varepsilon p_y\rangle)$ with the coefficients $K(x,y)$, which are the normalized Fourier coefficients of the translate $s\mapsto\Xi(s-x)$. The value of $\Phi$ at an $\varepsilon$-point is computed on rational points by density of $E$ in the completions at $SS$ (\lean{AdForm.HalfLat.half_mem_latO_iff}, \lean{PerLift.exists_rep_add_mem}). This is \lean{AdForm.DatumFour.four_expand}.
+\end{proof}
+
+\begin{proposition}[M1, kernel identity at split places; $176$ theorems]\label{prop:M1}
+Let $\omega$ be a Weil datum for $(\mu,\mu)$, $f_0$ a vacuum of $\Lambda$, $\Phi$ as in Lemma~\ref{lem:four} with $w$ its theta function in every place model (\lean{IsThetaAt}). Let $g\in U(S)(\Af)$, $h\in U(T)(\Af)$ carry the standard lattices to $N$, $N'$, let $c$ be odd and $SS$ prime to $2Q_Sqd$, let $(N,N')$ satisfy the period-lattice facts (\lean{LaFacts}), and let $\Xi$ be a finite datum of level $c$ with $\Phi\circ\mathrm{act}(g,h)^{-1}=\Xi\circ\mathrm{toHom}$ on rational points. Suppose that the Fock pure-tensor value at $0$ of every holomorphic theta function is the jet of its reading with scale $s$, and that $\xi_N(\omega(g,h)f_0)=\kappa\,E$. Then for every polynomial $P$
+\[
+\vartheta_\omega(g,h)\bigl(\text{pure tensor of }w\text{ at }P\bigr)=\kappa\cdot\mathrm{jet}_{P,s}\bigl(\theta_{N,N'}[\Xi;E]\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+Step (E1) to (E6) of the kernel-law report, Section~6, now with every leaf proved. By the Heisenberg intertwining of $\omega$, $\omega(g,h)w$ is the theta function of $\Phi\circ\mathrm{act}(g,h)^{-1}$ for the moved vacuum $\omega(g,h)f_0$ (\lean{SplitMove.isThetaAt_move}). Lemma~\ref{lem:four} expands the moved datum. A place model carries translations by $X$ and modulations by $Y$ to Heisenberg operators and the half indicator to the vacuum, so the theta function is $\sum K(x,y)\rho(\varepsilon p_x)\rho(\bar\varepsilon p_y)f_0'$. Lemma~\ref{lem:vac} replaces each half operator by $\alpha$ times the finite part of a rational operator. The Fock reading intertwines finite rational Heisenberg translates with the Fock operators $U_{\iota\gamma}$ (\lean{gaussianReading_finiteRationalHeisenbergTranslate}, upstream), so the reading is the coset sum $\sum K(x,y)\alpha(\iota x)\alpha(\iota y)U_{\iota x}U_{\iota y}\,\xi_N(f_0')$. This is $\theta_{N,N'}[\Xi;\kappa E]$ by the coset formula of the datum kernel (\lean{ThetaCosetSum.xiL_eq_kernel}). Finally the value at $0$ of the pure tensor is the jet of the reading by hypothesis (\lean{AdForm.DatumRead.reads_datum_eq_thC}, \lean{KJInf.CoreG.thetaKernel_eq_jet_thC}, both read in full).
+\end{proof}
+
+\subsection{M2. Transport of the finite datum}
+
+The finite datum of a step at a pair of decorated points $(p,p')$ is a product of local factors at finitely many primes,
+\[
+\xi(p,p';x)=\varphi_T(p,p';x)\prod_{P}F_P(p,p';x),
+\]
+where $\varphi_T$ is the level-prime datum and $F_P$ is the entry datum at a bad prime for steps below the penultimate one (\lean{XiEntry}), the penultimate coupling $\psi_{\mathrm{At}}$ (\lean{XiCpl1}) or the last-step local top factor (\lean{xiOver}).
+
+\begin{proposition}[M2, datum transport; $105$ theorems]\label{prop:M2}
+Let $p,p'$ be decorated points of steps $i,i+1$ with standard base points $k,k'$, and let $q,q'$ be decorated points with base points $yk$, $y'k'$ in the same cosets as $p,p'$. Then there is $M_0\ge1$ such that for all $x,x_0\in\Hom(E^a,E^b)$ with
+\[
+y'^{-1}\,x\,y\equiv x_0\pmod{M_0}\quad\text{at every prime of the twist and bad sets,}
+\]
+one has $\xi(p,p';x_0)=\xi(q,q';x)$. Consequently, if $\Phi$ is a split-half Schwartz--Bruhat function with $\Phi(\varepsilon z)=p\,\xi_{A}(z)$ for the twist datum $A$, then for the representatives $h(c),h(c')$ of a class pair the moved datum satisfies $\Phi\bigl(\mathrm{act}(h(c)^{-1},h(c')^{-1})\,\varepsilon z\bigr)=p\,\xi(\mathrm{rep}\,c,\mathrm{rep}\,c';z)$, and $h(c)$, $h(c')$ carry the standard lattices to the lattices of the representatives.
+\end{proposition}
+
+\begin{proof}
+Each factor is equivariant and locally constant. Equivariance is transport of structure. The factors are built from the frames of the decorated lattices at $P$ (valuation conditions on entries and readings of frames modulo powers of $P$), and moving the base point by $y$ moves the frames by $y$, so $F_P(yp,y'p';x)=F_P(p,p';y'^{-1}xy)$ (\lean{Transport.LevelDatum.phiT_eq}, \lean{Transport.Entry.eq_of_near}, \lean{Transport.Pen.psiAt_frames}, \lean{Transport.Last.read_cong}). Local constancy holds because each factor reads finitely many entries modulo a fixed power of $P$, and a matrix close enough to an invertible one is invertible with the same reading (\lean{Entry.exists_inv_of_near}, \lean{Entry.exists_modulus}, \lean{TwistRead.read_sub_le}, \lean{Last.locM_int}). Taking $M_0$ as the product of the moduli of the finitely many factors gives the first claim (\lean{AdForm.TwResid.xiAt_transport_tw}, read in full, which splits into the three cases $i+2<m$, $i+2=m$, $i+1=m$). For the second claim, choose a rational approximation $\gamma_0$ of $\mathrm{act}(h(c)^{-1},h(c')^{-1})z$ on the $\varepsilon$-half modulo $M_0k$ times the standard hom-lattice (\lean{exists_rat_half_approx}, density of $E$ at the split places), use the periodicity of $\Phi$ to replace the moved point by $\gamma_0$, and apply the first claim with the congruence at the idempotent places (\lean{CongAtIdem.cong_at_idem}, \lean{tw_resid_datum}, \lean{moved_datum_val_tw}, read in full). The lattice statement is \lean{moves_rep_tw}: $h(c)$ has finite matrix equal to the chart point of $c$, which carries the standard lattice to the representative's lattice.
+\end{proof}
+
+\subsection{M4. Characters at determinant roots}
+
+\begin{proposition}[M4; $17$ theorems]\label{prop:M4}
+Let $\chi$ be the step character of a twist datum $A$, $h(c)$ a class representative and $x$ a determinant root of $h(c)$ (an idele with $x\bar x^{-1}=\det h(c)$, \lean{IsDetRoot}). Then $\chi(x)$ depends on $c$ only through the base point and the class reading, and
+\[
+\chi(x)^{-1}\chi(y)=\chi(x_r(\alpha))\,\chi(x_r(\gamma))^{-1}\,\rho_i(c)\,\rho'_i(c')\,\chi_F(N_i,N_{i+1};N,N')
+\]
+for determinant roots $x,y$ of $h(c),h(c')$, where $x_r$ are the base roots, $\rho,\rho'$ the class characters and $\chi_F$ the character factor of the base vector.
+\end{proposition}
+
+\begin{proof}
+$\chi$ is a Hecke character trivial on $E^\times$, so its value at a determinant root splits as a product over places (\lean{DetRootRead.chr_at_detRoot}). The finite matrix of $h(c)$ is the chart point times a base point, so the local components at the twist primes are the determinants of the chart points, which the class reading records as $\rho$, and at the other places they are those of the base point (\lean{TwDat.chr_root_mul_base}). The remaining factor is the value of $\chi$ on the determinant ideal of the pair of lattices, which is $\chi_F$ by definition of the base vector. This is \lean{TwDat.chr_moves_eq_rho_base}, and the same computation for level elements is \lean{MovedLaw.chr_root_eq_prod}.
+\end{proof}
+
+\subsection{M3. The level groups act on the combined datum by their character}
+
+\begin{proposition}[M3, level-pair law; $87$ theorems]\label{prop:M3}
+Let $A$ be a twist datum satisfying its axioms, with pinned Weil data $\omega_j$, vacua $f_{0,j}$ and moved-vacuum law, and let $w_j(\alpha,\gamma)=\mathrm{comb}(dd_j(\alpha,\gamma),f_{0,j})$ be the theta function of the finite datum of characters $(\alpha,\gamma)$ at step $j<m$. For all $\kappa\in U_j(\alpha)$ and $\kappa'\in U_{j+1}(\gamma)$,
+\[
+\omega_j(\kappa,\kappa')\,w_j(\alpha,\gamma)=\chi_j(\kappa)^{-1}\chi_{j+1}(\kappa')\,w_j(\alpha,\gamma).
+\]
+\end{proposition}
+
+\begin{proof}
+\lean{AdForm.LevLaw.lev_law}, read in full. (i) The level elements keep the standard lattice (\lean{AdForm.levels_keep_stdLat}, an entrywise check on the chart levels). (ii) The moved-vacuum law at $(\kappa,\kappa')$ and at $(1,1)$ gives readings $c_0\mu(x_r)^{-1}\mu(y_r)\theta$ and $c_0\theta$, so $\omega_j(\kappa,\kappa')f_0-pf_0$ has zero reading for $p=\mu(x_r)^{-1}\mu(y_r)$. The reading is injective on theta functions (\lean{gaussianTwistedRealReading_entire_and_injective}, upstream), hence $\omega_j(\kappa,\kappa')f_0=pf_0$. (iii) The datum transforms by the character, $p\,\Phi(\mathrm{act}(\kappa^{-1},\kappa'^{-1})z)=\chi(\kappa)^{-1}\chi(\kappa')\Phi(z)$ on the $\varepsilon$-half. For $z$ outside the half both sides vanish. On the half, approximate by rational points (\lean{DenseHalf.half_eq_rat_add_nsmul}). Choose rational level elements at the twist primes with the same characters (\lean{RatApprox.approx}). The level element moves the base points to points in the same cosets, so Proposition~\ref{prop:M2} identifies the datum at the moved points with the datum at the base points evaluated at the transformed argument (\lean{ReadLaw.transport_base}), and Proposition~\ref{prop:M4} computes the character factor (\lean{MovedLaw.moved_law}). The support and level of $\Phi$ are preserved by the action (\lean{SBMove.isSBHalf_actO_lev}). (iv) If $\omega(k,k')f_0=pf_0$, $(k,k')$ keeps the lattice and $\Phi$ transforms by a scalar, then the Heisenberg intertwining gives $\omega(k,k')\theta_\Phi=\theta_{\Phi\circ\mathrm{act}^{-1}}$ for the moved vacuum, which is the scalar times $\theta_\Phi$ (\lean{LevLaw.omega_eq_smul}).
+\end{proof}
+
+\subsection{M5. Fock calculus at the archimedean places}
+
+\begin{proposition}[M5; $47$ theorems]\label{prop:M5}
+Let $(S,T)$ be a standard pair at the infinite places.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item There is $s\neq0$ such that for every holomorphic theta function $f$ with reading $G=\xi_N(f)$ and every monomial $D^k$ in the creation operators, $\bigl(a^+\bigr)^kf\,(0)=s^{\lvert k\rvert}\,\partial^kG(0)$. Hence the Fock pure-tensor value at $0$ is $\mathrm{jet}_{P,s}(G)$.
+\item If the Weil datum has infinity type $e$, then for $k\in U(S)(\mathbb R)$, $k'\in U(T)(\mathbb R)$ and every polynomial $P$,
+\begin{multline*}
+\omega(k,k')\bigl(\text{pure tensor of }f\text{ at }P\bigr)\\
+=\prod_\tau\det(k_\tau)^{-e_\tau-b/2}\det(k'_\tau)^{e_\tau+a/2}\,\bigl(\text{pure tensor of }f\text{ at }P(k_\tau^{-1}\,\cdot\,k'_\tau)\bigr).
+\end{multline*}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) On the archimedean line $f=g\cdot(G\circ z)$ with $g$ the Gaussian and $z$ the complex coordinate scaled by $\delta$ (\lean{JetRead.eq_gs_xiN}). The creation operator is $(\partial_u-i\partial_{Ju})/\mathrm{fs}$ in real directional derivatives. Since $G$ is holomorphic, $\partial_{Ju}G=i\partial_uG$, and differentiating $g$ produces a linear form $\lambda_u$ in $\bar z$. So $a^+_u(g\,G)=g\cdot c_K(\partial_u+\lambda_u)G$ (\lean{JetRead.aPlus_read}, \lean{dRho_read}). Holomorphic derivatives kill $\lambda_v$, so expanding $(\partial+\lambda)^k$ every term except $\partial^kG$ carries a factor $\lambda$ that vanishes at $0$, and $g(0)=1$ (\lean{Ker.CreOp.foldr_creation_zero}). This gives $s=-c_K\delta$ (\lean{JetRead.pureTensorO_zero_eq_jetP}, read in full), and E3 picks one $s_j$ for each step. (b) The Weil datum maps the Fock vacuum to $\prod\det(k)^{\cdot}\det(k')^{\cdot}$ times itself (\lean{WeilVacChar.vacuum_character}, upstream) and conjugates the creation operators by the linear substitution (\lean{OrientedHeis.om_pureTensorO}, upstream). The exponent bookkeeping, with $a,b$ even and the twist by an unramified character of infinity type $a/2$, $b/2$, is \lean{KJReal.exp_identity}, and the result is \lean{KJReal.om_pureTensorO_onb}. The infinity type comes from the kernel shift of the twist datum (\lean{TwDat.chr_exp_shifts}).
+\end{proof}
+
+\subsection{M6. Class points of a definite unitary group}
+
+\begin{proposition}[M6, algebraic modular forms; $100$ theorems]\label{prop:M6}
+Let $G$ be a unitary group of a positive definite hermitian space over $E/F$, $U\subset G(\Af)$ open compact with a continuous finite-order character $\chi$, and $(h_c)_{c\in C}$ the chart representatives of a level chart.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $G(\A)=\bigsqcup_cG(F)\,h_c\,G(\mathbb R)\,U$, the set $C$ is finite, and the stabilizer $\Gamma_c=G(F)\cap h_cUG(\mathbb R)h_c^{-1}$ is finite of order $\mathrm{stabOrd}(U,h_c)$, equal to the order of the chain stabilizer.
+\item If $f$ is a function on $G(\A)$, left $G(F)$-invariant, right $(U,\chi)$-equivariant and transforming under $G(\mathbb R)$ by a representation $r$, then $f$ is determined by the vectors $w_c$ read at $h_c$, and each $w_c$ satisfies $w_c=\chi(s)^{-1}r(\gamma_s)w_c$ for $s\in\Gamma_c$. Conversely, prescribed vectors with this property come from a unique such $f$.
+\item Integrals and averages of such $f$ over $G(F)\backslash G(\A)$ are the class sums $\vol(U)\sum_c\lvert\Gamma_c\rvert^{-1}(\cdots)(h_c)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) $G(\mathbb R)$ is compact. The chart identifies the double coset space with the finite set of chart classes (\lean{ChartReps.reps_of_chart}, using the rational points and the finite-part isomorphism \lean{RatPtsEquiv.rat_equiv}, \lean{FinPartIso.exists_finIso}), and the stabilizer is the image of the chart stabilizer (\lean{stabOrd_of_chart}). Finiteness of the class number is built into the chart data. Continuity of $\chi$ holds because $\chi$ is trivial near $1$ at the bad places by deep congruence (\lean{levelCharacter_trivial_near_one_of_local_bad_places}, \lean{continuous_chartLevelCharacters_adelic_tuple}). Together these are \lean{ChartReps.twDat_reps}, and at the top step \lean{ClassPtReps.isReps_stabOrd_top} and the decomposition \lean{TwDat.Is.evz_decomp}. (b) For $s\in\Gamma_c$ write $\gamma_s=h_csh_c^{-1}$ with $s=u\,k_\infty$. Then $f(h_c)=f(\gamma_sh_c)=f(h_c\,u\,k_\infty)=\chi(u)\,r(k_\infty)f(h_c)$, which is the stated relation (\lean{StabInv.reading_stab_inv}, \lean{coset_law_moved}). The converse defines $f$ on each double coset and is well defined exactly by this relation (\lean{exists_rowForm_prescribed_values_class_representatives}). This is Gross's dictionary between automorphic forms on definite groups and tuples of vectors fixed by finite arithmetic groups, and it is proved here directly. (c) Unfold the integral over the finitely many double cosets (\lean{KerVal.kernel_classSum}, \lean{TopTranslate.top_translate}, \lean{LevChiTop.emb_mem_chi} for the embedded top level).
+\end{proof}
+
+\subsection{M7. Branching at the top step}
+
+\begin{proposition}[M7; $13$ theorems]\label{prop:M7}
+At the top step, with $N_m=(N_m-1)+1$, the weights $\lambda_T(\tau)$ of $U(N_m)$ and $\sigma_T(\tau)$ of $U(N_m-1)$ interlace for every $\tau$, the explicit lowering map from the polynomial model of $\lambda_T$ to that of $\sigma_T$ is $U(N_m-1)$-equivariant and nonzero, it agrees with the lower map of the period datum, and the embedding of the last group has block form at the real places.
+\end{proposition}
+
+\begin{proof}
+Interlacing is a check on the recorded weights (\lean{TrueBranch.lamT_record}, \lean{sgT_record}). Equivariance and nonvanishing are verified on the explicit formula for the lowering map (\lean{brEqv_formula}, \lean{ne_formula}). Mathematically they are the branching rule for $U(n)\supset U(n-1)$ (Weyl, Zhelobenko), which says that the restriction is multiplicity free with constituents exactly the interlacing weights, so an equivariant map to the $\sigma_T$-isotypic part is unique up to scalar. This row is already on the boundary ("standard monomial theory; Pieri, branching, Weyl dimension formula"). The block form is an entry check of the embedding on frames (\lean{EmbTopBlock.isBlock_infM_emb}, \lean{BlockMatrixCriteria.isBlock_of_entries}).
+\end{proof}
+
+\subsection{M8. Existence of the twist datum}
+
+\begin{proposition}[M8; $34$ theorems]\label{prop:M8}
+For every word $u$ and index $a$ there is an adelic twist datum $A$ satisfying \lean{TwDat.Is}, with a unique top character and standard base points below the top step.
+\end{proposition}
+
+\begin{proof}
+Assembly by choice. At step $0$ a level chart exists by \lean{chart_exists}, at the middle steps by \lean{ChExM.exists_charts} with the standard base point $k_{\mathrm{std}}$ (\lean{kStd_pt}, \lean{kStd_at_SQ}), and at the top step the chart base point carries the standard point (\lean{lastStepChartBasePoint_carries_stdPoint}, by \lean{TopBase.topBase_ok}). The level characters have finite order. The step character and the split idempotent are chosen once (\lean{TupEx.exists_chr}, \lean{exists_idem}). The axioms of \lean{TwDat.Is} are then the conjunction of the per-step facts (\lean{TupEx.fullStep}, \lean{comp}, \lean{AdForm.exists_twDat}, read in full). The chart existence theorems are upstream of the block, and this datum is the one that the level-leaf pass rebased in L4.
+\end{proof}
+
+\section{The five heads}\label{sec:heads}
+
+\subsection{E1, the kernel class datum}
+\textbf{Statement.} For a family as in the block top, a real datum $\rho$ with jet scales $s$ (E3) and translates $J$, and every tuple index $t$ with its column pins, the kernel class datum $\mathrm{clsKL}(\rho,\ldots)$ satisfies its axioms \lean{ClsK.Is}. The quantifier order is $\forall$ family data, $\forall\rho$, $\forall t$, $\forall$ pins, then the axioms, so $\rho$ is fixed before $t$. The statement is adelic and representation theoretic. It has four parts.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Kernel identity} (E1a, \lean{kernel_identity_tuple}). For every step $i$, characters $(\alpha,\gamma)$, classes $c,c'$ with those characters and polynomial $P$,
+\begin{multline*}
+\vol\bigl(U_i(\alpha)\bigr)\,\vartheta_{\omega_i}\bigl(h_i(c),h_{i+1}(c')\bigr)\bigl(\text{pure tensor of }w_i(\alpha,\gamma)\text{ at }P\bigr)\\
+=c_K(i)\,A^{(2)}_i(c,c')(P\text{ rescaled by }s/c_D).
+\end{multline*}
+Proof. Proposition~\ref{prop:M2} moves the datum to the representative pair, Proposition~\ref{prop:M4} and the moved-vacuum pin give $\kappa=c_0\mu(x_r)\mu(x_r')^{-1}\rho\rho'w$, Proposition~\ref{prop:M1} gives the classical kernel, Proposition~\ref{prop:M5}(a) converts the jet, and the case where the datum vanishes is handled separately. This is the body of \lean{kernel_identity_tuple}, read in full.
+\item \emph{Level law} (E1c, \lean{lev_law}). Proposition~\ref{prop:M3}.
+\item \emph{Real points} (E1c, \lean{clsKL_real}). The kernel vectors transform under the real points by the determinant powers of Proposition~\ref{prop:M5}(b), with exponents $s_S=-e-b/2$ and $-s_D=e+a/2$ from the infinity type of the twist datum.
+\item \emph{Values} (\lean{kval}). The kernel value is a class sum of jets over the double cosets of Proposition~\ref{prop:M6}(a),(c).
+\end{itemize}
+\textbf{Role.} This is the kernel datum that \lean{kerX_of_clsPinD} turns into \lean{KerX} by Schur orthogonality (orphan pass, Proposition~C).
+
+\subsection{E2, the top class datum}
+\textbf{Statement.} Under the level condition at $t$, with classes \lean{ClassesAtPrimes} at a finite bad set, readings \lean{ReadsP} and the tail-coefficient identity, there is a top class datum $E$ with $E.\mathrm{Is}$ (\lean{ClsT.Is}). The axioms are four. (i) The points $h_c$ represent the classes of the top level $U_T$ in $G_T(\Af)$ with stabilizer orders equal to the chain stabilizers. (ii) The product of a top translate of the form with the top reading is $U_T$-invariant. (iii) A translate of the form at $h_cx$ is read by the period of the class datum. (iv) The weighted class sum of the lowered top readings equals $c_P$ times the tail of the tuple. The statement is adelic over the top space $X'$. \textbf{Proof.} (i) is Proposition~\ref{prop:M6}(a). (ii) holds because the characters of the form and of the reading cancel on the embedded level, by \lean{LevChiTop.emb_mem_chi} and the decomposition \lean{evz_decomp} (\lean{TopInv.law_top}). (iii) is Proposition~\ref{prop:M6}(b),(c) (\lean{top_translate}). (iv) is Proposition~\ref{prop:M6}(c) with the lowering map of Proposition~\ref{prop:M7} and the evaluation \lean{rd_emb_evz} (\lean{tailTop_eq_of_pin}). \textbf{Role.} \lean{perX_of_clsPinD} turns it into \lean{PerX} by multiplicity-one branching.
+
+\subsection{E3, the jet scale}
+\textbf{Statement.} For a standard character $\psi$ and an infinite family $\theta$ there are scalars $s_j\neq0$, one for each step, such that the Fock pure-tensor value at $0$ of every holomorphic theta function equals the jet of its reading with scale $s_j$. It is archimedean and local. \textbf{Proof.} Proposition~\ref{prop:M5}(a) at each step, with the standard pair of \lean{stdPair_world}. \textbf{Role.} The scales are chosen before $t$ and enter $\rho$.
+
+\subsection{E4, the real datum}
+\textbf{Statement.} If the top embedding is the standard one, then $\mathrm{realOf}(u,R,g,s,J)$ satisfies \lean{RealDat}-axioms. The compact groups map onto the unitary groups at every step and at the top, the ranks increase, the scales are nonzero, the exponents are nonnegative, the translates lie in the valuation space and are invariant, and the top step branches. It is archimedean with one global input. \textbf{Proof.} Surjectivity onto $U(N_j)$ follows from Gram matrix $1$ (\lean{SeeSaw.ontoUni_inB}), nonnegativity of exponents from the kernel shift of a twist datum (Proposition~\ref{prop:M8} and \lean{exists_charExponent_infinity_kernel_shift}), the translate conditions from the definition of $J$, and the top condition from Proposition~\ref{prop:M7} (\lean{realOf_is}, read in full). \textbf{Role.} This is the datum $\rho$ fixed before the tuple index. The uniformity that the seesaw needs is this order of quantifiers.
+
+\subsection{E5, the readings at the last space}
+\textbf{Statement.} Under the level condition at the base point $b_T$, every level form $f$ of the tuple has a reading $G'$ by the classes $K$, meaning $f(v)(h\,b_T)=\langle\mathrm{pol}(j\,v),w_c\rangle$ for $h$ with finite matrix the class point $y_c$. It is adelic. \textbf{Proof.} The coefficient vector $w_c$ exists by \lean{exists_coefficientVector_reading_realRepresentation_form}, Proposition~\ref{prop:M6}(b) shows it is fixed by the stabilizer up to $\chi$, and the converse of Proposition~\ref{prop:M6}(b) builds $G'$. The normalizing factor $\lvert\Gamma_c\rvert^{-1}$ cancels in the class sum (\lean{exists_readsG_of_level}, read in full). \textbf{Role.} It feeds the tail-coefficient identity used in E2.
+
+\section{The support leaves K-a, K-b, K-c}\label{sec:K}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{1cm}>{\rr}p{3.6cm}>{\rr}p{2.4cm}>{\rr}p{7.6cm}}
+\toprule
+leaf & assertion & live under E1--E5? & disposition\\
+\midrule
+K-a & $\frac{\sqrt d}2H(v,v)\in\mathbb Z$ on admissible period lattices & yes, through \lean{laHyp_ambOf_top} only (\lean{GlobalTheoryTheory} copy) & The E-block's own instances of this integrality, on the twisted halves $A_c$, $B_c$, are Lemma~\ref{lem:halves}(c), proved from self-duality and the different. The period-lattice instance enters only through the Heisenberg lattice data closed by the kernel-law pass and is also live outside PC4.13. The ledger's K-a (the \lean{Ker.Cd} copy, 105 theorems) is not reached by E1--E5 and stays with the X1/D6 kernel-law leaves.\\
+K-b & standard theta data \lean{SO.stdOK} & no & dead under E1--E5, not re-audited\\
+K-c & split data for Weil's triple constant on the move triangles & no & dead under E1--E5, not re-audited\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Counts}\label{sec:count}
+
+\subsection{Per mechanism and per head}
+The classification script \lean{eb_classify.py} assigns each theorem of the union to the first mechanism in the order M2, M1, M4, M5, M6, M7, M3, M8 whose root closure contains it, and the rest to the assembly of its head.
+
+\begin{center}\small
+\begin{tabular}{lrrrrrr}
+\toprule
+mechanism & union & E1 & E2 & E3 & E4 & E5\\
+\midrule
+M1 split-place comparison & 176 & 176 & & & & \\
+M2 datum transport & 105 & 105 & & & & \\
+M3 level-pair law & 87 & 87 & & & 1 & \\
+M4 determinant-root characters & 17 & 17 & & & & \\
+M5 Fock calculus & 47 & 13 & & 34 & 3 & \\
+M6 class points & 100 & 21 & 71 & & 7 & 28\\
+M7 branching & 13 & & 11 & & 13 & \\
+M8 twist datum & 34 & & & & 34 & \\
+assembly of the heads & 52 & 24 & 23 & 1 & 5 & 1\\
+\midrule
+total & 631 & 443 & 105 & 35 & 63 & 29\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The per-head totals add up to $675$. The union is $631$ because $44$ theorems serve two heads (Section~\ref{sec:dag}). The union splits as $469$ theorems exclusive to the class-data block and $162$ joint-only theorems. Of the joint-only part, $102$ are the E1b transport that the ledger counted separately, and $60$ (the twist-datum existence, the chart double cosets and a few frame lemmas) were not counted before.
+
+\subsection{Residual before and after}
+\begin{center}\small
+\begin{tabular}{>{\rr}p{3cm}rrr}
+\toprule
+head & ledger (block-exclusive) & recount (with joint-only) & after this pass\\
+\midrule
+E1 (E1a, E1b, E1c) & 191 + 13 (+102) + 103 & 443 & 0\\
+E2 & 85 & 105 & 0\\
+E3 & 35 & 35 & 0\\
+E4 & 29 & 63 & 0\\
+E5 & 27 & 29 & 0\\
+\midrule
+per-head sum & 483 (+102) & 675 & 0\\
+unique union & 483 (+102) & 631 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The heads go from five to zero. No shared theorem was subtracted twice: the after-column is the union, and a theorem used by two heads is closed once. With the E-block empty, the residual in the heads after the D2-rebasing pass ($W1$ 64, $W2$ 95, $W3$ 36, R4-D 233 distinct, E-block 483) drops to the bundle-witness heads and the D-heads, about $195+233=428$ distinct theorems. The statement-level kernel-law leaves K-a, K-b and K-c (243) are counted separately as before, since none of them belongs to the E-block.
+
+\section{Residual structure after the pass}\label{sec:resid}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{2.2cm}>{\rr}p{6.2cm}>{\rr}p{2.4cm}>{\rr}p{3.4cm}}
+\toprule
+block & heads & distinct theorems & owner\\
+\midrule
+bundle witness & W1, W2, W3 & 195 & not this pass\\
+R4-D & D5, D7, D8, D9 & 233 & D-agent\\
+R4-E & none & 0 & closed here\\
+shared leaves & K-a (\lean{Ker.Cd} copy), K-b, K-c & 243 & kernel-law leaves of X1/D6\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Transfer ledger}\label{sec:transfer}
+
+\paragraph{To the D-agent.} Nothing is transferred. No declaration of the E-block union lies in the forward closure of D7 or D9. Twenty-five lie in the forward closure of D5 and three in that of D8 (\lean{eb_dlane.py}). All $28$ are joint-only material outside the D-heads' counted residuals. The $25$ under D5 are the chart double-coset representatives and the continuity of level characters (M6, $20$ declarations) and three chart-value lemmas of the assembly. The three under D8 are two residue lemmas of the datum transport (M2) and the top-point lemma \lean{TopPtModel.adAt_of_prV} of the twist-datum existence (M8). They are reconstructed here, and the D-agent may cite Propositions~\ref{prop:M2} and~\ref{prop:M6} for them.
+
+\paragraph{Upstream inputs, outside the three PC4.13 blocks.} These are live through other routes and are not E-block residual: the moved-vacuum producer \lean{MovedVac.vac_moved}, the injectivity of the Fock reading \lean{gaussianTwistedRealReading_entire_and_injective}, the rational Heisenberg invariance \lean{gaussianReading_finiteRationalHeisenbergTranslate}, the vacuum sign law \lean{LatVacSign.heisO_finRat_sign}, the archimedean vacuum character \lean{WeilVacChar.vacuum_character} and pure-tensor action \lean{OrientedHeis.om_pureTensorO}, the chart existence theorems \lean{chart_exists} and \lean{ChExM.exists_charts}, and the Heisenberg lattice data \lean{laHyp_eSmooth_true}. None of them is reached by a D-head (\lean{eb_upstream.py}).
+
+\paragraph{External theorem boundary.} Weil, Acta Math. 111 (1964) and Kudla's splitting, through the axioms of the Weil datum, are already on the boundary. The branching rule for $U(n)\supset U(n-1)$ is already on the boundary row "standard monomial theory; Pieri, branching, Weyl dimension formula". Finiteness of the class number is not used as an external theorem, because the chart data enumerate the classes. Gross's dictionary (Proposition~\ref{prop:M6}(b)) is proved directly. No new boundary row.
+
+\section{Final consequence}\label{sec:final}
+
+\textbf{G.} The E-block no longer blocks the claim that every live internal mathematical step on the RH route has been reconstructed in ordinary mathematics or transferred to an explicit external theorem boundary. The claim is still blocked by the bundle-witness heads W1--W3 and by the D-heads D5, D7, D8 and D9, together about $428$ distinct theorems, and it rests on the separately counted kernel-law leaves.
+
+\section{Scripts and limits}\label{sec:limits}
+
+\paragraph{Scripts} (in \Lpath{scripts/}, importing \lean{q.py} of the cleanup scripts, with the graph at \Lpath{/home/claude/idx/g2}). \lean{eb_sets.py} computes the head sub-closures and overlaps. \lean{eb_tree.py} prints a sub-closure as a tree. \lean{eb_classify.py} assigns mechanisms and writes \lean{EBlock_Declaration_Classes.tsv} and \lean{EBlock_Shared_Theorems.tsv}. \lean{eb_who.py} tests which block tops and heads reach a declaration. \lean{eb_kreach.py} tests the K-leaves. \lean{eb_path.py} gives witness paths. \lean{eb_dlane.py} and \lean{eb_upstream.py} produce the transfer ledger, and \lean{eb_overlap.py} checks the overlap with the D1--D3 classes (none). The final synthesis can rerun \lean{eb_classify.py} to get every count in this report.
+
+\paragraph{What was read.} In full: the block top and its wrappers, \lean{kernel_identity_tuple}, \lean{lev_law}, \lean{clsKL_real}, \lean{exists_clsT_of_pinTop}, \lean{exists_jetS}, \lean{realOf_is}, \lean{exists_readsG_of_level}, \lean{moved_datum_val_tw}, \lean{moves_rep_tw}, \lean{xiAt_transport_tw}, \lean{phiT_tw}, \lean{law_rat}, \lean{law_read}, \lean{heisO_halfA_eq}, \lean{heisO_rest_eq}, the main part of \lean{heisO_conjHalf_eq}, \lean{pureTensorO_zero_eq_jetP}, \lean{om_pureTensorO_onb}, \lean{exists_twDat}, \lean{fullStep}, \lean{stepCh_all}, \lean{stepCh_mid}, \lean{twDat_reps}, the opening of \lean{reps_of_chart}, \lean{jOf_exists}, \lean{isTr_unique}, and the definitions in \Lpath{LocalNewformFunction.lean} and \Lpath{XiIndCClass.lean}. At the statement: the five leaves of Proposition~\ref{prop:M1}, \lean{reading_stab_inv}, \lean{rd_emb_evz}, \lean{evz_decomp}, \lean{emb_mem_chi}, \lean{law_top}, \lean{tailTop_eq_of_pin}, \lean{top_translate}, \lean{isReps_stabOrd_top}, \lean{branching_true_columns}, \lean{chr_moves_eq_rho_base}, \lean{halfA_signTrace_isInteger}, \lean{heisO_finRat_sign}, the three local transport theorems and the K-a statements. For the nodes read at the statement, the proofs given above are reconstructions from the statement and its children. Those children were seen through the dependency trees, not line by line. In particular the integrality in Lemma~\ref{lem:halves}(c), the Fourier inversion of Lemma~\ref{lem:four} and the local-constancy moduli in Proposition~\ref{prop:M2} were reconstructed without reading every arithmetic step of \lean{twO_selfDual}, \lean{four_expand} and the \lean{Transport} files. An adversarial pass should start there.
+
+\paragraph{Limits.} Exact edges only, so a dependency that exists only through typeclass resolution is not seen. Counts are of theorems and lemmas in the rebuilt graph and agree with the ledger to within one theorem where they overlap. Nothing was built or run in Lean, no literature was verified, and no existing project file, report, handoff or manuscript was edited.
+
+\end{document}

@@ -31,6 +31,8 @@ The internal residual set is empty, `|R_internal| = 0`. Every live internal math
 - The exact-edge live graph has 766,788 declarations, of which 622,409 are theorems.
 - The archive has no `sorry` and no `axiom` declarations.
 - Qualification on the graph extraction. About 102,000 further declarations are reached through dot-notation dependency edges. Their ownership is inherited from the declarations that reach them. They produce no internal residual, but the extraction method for these edges has not yet been documented in full.
+- Evidence tiers. About 3,800 declarations are closed by a report that names them. About 379,000 are classed by region, since they lie under a package head that a report closed, and no report names them individually. Section 3 of the certification report states this inference.
+- The certification did not run the Lean kernel.
 
 ## 4. Closed blocks
 
@@ -43,7 +45,7 @@ The internal residual set is empty, `|R_internal| = 0`. Every live internal math
 | K-a, K-b, K-c | closed |
 | `ramBijective_holds` | closed internally |
 | R-1, doubling Siegel–Weil formula | closed after an explicit bridge |
-| R-2, integral Hodge–Tate input at $p=2$ | closed |
+| R-2, integral Hodge–Tate input at $p=2$ | closed internally, using Scholze–Weinstein (2013), Prop. 5.1.6(iii) |
 
 The final pass also found items that were under-owned or lay upstream of several packages, and closed them. These are `split_pair_generation`, `ramBijective_holds`, the K-support leaves, `HidaSetting`, the small leaves SL-1 to SL-4, and the torsion-field inputs they need.
 
@@ -52,6 +54,7 @@ The final pass also found items that were under-owned or lay upstream of several
 The source-fidelity check of the external theorem boundary is not complete.
 
 - The largest external region identified by the final audit runs from `Row0b` to `galoisLocalGlobalStrong_recParameter`. It supplies the existence and local–global compatibility of Galois representations for regular algebraic polarized cuspidal representations over CM fields. The manuscript cites Harris–Taylor, Shin, Chenevier–Harris and Caraiani for it. This region has not yet had a detailed source-fidelity check.
+- The certification added two external rows, the Taylor–Wiles–Kisin patching region and the Néron–Ogg–Shafarevich criterion (used by `dvd_discr_torsionField`). The full list of external declarations is [`audit/final_certification/Global_External_Boundary.tsv`](audit/final_certification/Global_External_Boundary.tsv).
 - The rest of the boundary is listed in [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md) as of 21 November 2026. The source-fidelity audit since then has matched, corrected or reclassified part of it, and has not covered all of it.
 
 ## 6. Reconstruction, formal certification and human verification
@@ -67,5 +70,5 @@ These are three different things.
 ## 7. Documents
 
 - The manuscript [`RH_Route_Notes.pdf`](RH_Route_Notes.pdf) predates the final audit. Its Section 1.3 and Section 11 describe the state of 21 November 2026, when internal packages were still under audit.
-- The report of the final certification pass is not yet in this repository.
+- The final certification is in [`audit/final_certification/`](audit/final_certification/). [`Global_Residual_Reconciliation.tsv`](audit/final_certification/Global_Residual_Reconciliation.tsv) names, for each former residual, the report that closed it. Those reports are in [`audit/closure_reports/`](audit/closure_reports/) and [`audit/pre_synthesis/`](audit/pre_synthesis/).
 - [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md), [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md), [`PROOF_DEPENDENCY_MAP.md`](PROOF_DEPENDENCY_MAP.md) and the files in [`audit/`](audit/) are kept as records of the reconstruction and its corrections. Where they differ from this file, this file is more recent.

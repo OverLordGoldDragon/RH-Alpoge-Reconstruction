@@ -1,0 +1,430 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\OEr}{\mathcal O_E}
+\newcommand{\Ok}{\mathcal O}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Mat}{\mathrm{Mat}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Af}{\mathbb A_{f}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The tuple-construction heads D1, D2 and D3\\ One completion dictionary at split primes, and what it closes}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+After the kernel-law pass the three tuple-construction heads D1 (the row-pair rational datum), D2 (existence of a reading at the twist primes) and D3 (volume of the level times the weight is constant) held $1{,}828$ theorems on the ledger, about four fifths of what remained. This pass reads the three heads and their closures ($1{,}397$ distinct theorems on the graph, $262$ of them shared by at least two heads) and finds that they rest on one reusable mechanism and three assembly arguments. The mechanism is a completion dictionary at a split prime $P$ of degree one. Under explicit matching conditions between local constants and rational constants, every rational object of the column data at $P$ (level groups and their characters, double cosets, test functions, volumes, unfolding integrals and their deep finite sums, representative systems) is the image under $\sigma_0$ of the corresponding object of a $p$-adic chain over $E_P$, up to an explicit sign. All three heads use it at the twist primes and D1 uses it again at the G-places. The assembly arguments are the factorization of a rational theta datum over places (D1), the construction of a reading from local representative systems and local Schr\"odinger data (D2), and an index formula for adelic level groups that are restricted products (D3). All four are reconstructed here in ordinary mathematics. They close $1{,}181$ of the $1{,}397$ theorems. What remains is four statement-level leaves inside the heads ($216$ theorems) and the two rebasing steps of D2 that lie outside the graph head ($94$ theorems). On the ledger the three heads drop from $1{,}828$ to $304$ theorems. Counted without repetition, the residual drops from about $2{,}335$ to about $1{,}170$ theorems. Nothing was built or run in Lean, and no existing file was edited.
+\end{abstract}
+
+\tableofcontents
+
+\section{Method and the answer in brief}
+
+\subsection{Method}
+The work continues in the workspace of the kernel-law pass, with the same unpacked archive (SHA-256 \texttt{9631b4f0\ldots 3f49c7fc}), the same declaration index ($1{,}066{,}087$ declarations) and the same exact-edge graph. The three heads were taken as the closures, inside the block-exclusive set of \lean{colSide_alt}, of
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item D1, \lean{QuadraticExtensionData.dat_exists} ($741$ theorems),
+\item D2, \lean{LowJoin.exists_quadratic_extension_readsLow} ($453$ theorems, which contains \lean{LowJoin.exists_good}),
+\item D3, \lean{Fam.vol_level_wt_const_alt} ($516$ theorems).
+\end{itemize}
+Their union has $1{,}397$ theorems. The ledger's D2 also counts two rebasing statements, \lean{T.true_geometry_commutation_identity_alt} and \lean{T.true_geometry_commutation_property_alt}, which lie partly outside this graph head. They are treated in Section~\ref{sec:D}.
+
+Seven scripts were added (\Lpath{scripts/d123_*.py}). \Lpath{d123_layers.py} computes the closure of every declaration in the union whose statement assumes the twist-prime matching structure \lean{AtTwist} or that belongs to the localization bridges (\lean{VolBridge}, \lean{UnipRead}, \lean{RankOneMatrix}, \lean{denseGL_completion}). \Lpath{d123_layers2.py} does the same for the G-place matching structure (\lean{AtType}, the symmetric chain, \lean{SymBridge}, \lean{EntryBridge}, \lean{UnfoldSum}). \Lpath{d123_final.py} classifies the union into the mechanisms below and the leaves, and writes \Lpath{D123_Declaration_Classes.tsv}. The other scripts print trees and statements.
+
+Every declaration named below as read was read in the source, in full where the text says so and at the statement where the text says so. In particular the following were read in full: \lean{dat_exists}, \lean{xi_eq_xiOff_mul} with the definition of \lean{locXi}, \lean{ratDatum_add_twist_places_alt}, \lean{mid_locFac_alt}, \lean{pen_locFac_alt}, \lean{exists_good}, \lean{exists_system}, \lean{levelAgree}, \lean{sumAgree}, \lean{repsOnto}, \lean{exists_rep_flat_ne}, \lean{reps_injOn}, \lean{exists_normal_rep}, \lean{volLev_mul_wt_mid_alt}, \lean{vol_level_wt_const_alt}, \lean{chr_xr_pow_eq_one}, and the definitions in \Lpath{EntryAgree.lean}, \Lpath{IsOneComb.lean}, \Lpath{IsLocFac.lean}, \lean{QExt}, \lean{cosStab}, \lean{parahoric}, \lean{IsRepSystem}, \lean{IsNormalRep}, \lean{relaxedLevelSubgroup} and \lean{baseLevelSubgroup}.
+
+\subsection{Answer in brief}
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+\item \textbf{They share a mechanism.} The three heads are built on Proposition~\ref{prop:C}, the completion dictionary at a twist prime. Its closure has $406$ theorems, of which D1 uses $281$, D2 uses $265$ and D3 uses $143$. D1 uses the same dictionary a second time at the G-places, where the representatives are standard and the local chain is the symmetric one (Proposition~\ref{prop:Cty}, $150$ theorems). The localization bridges of D3 (membership in a rational parabolic, a rational unipotent radical or a lattice stabilizer is membership of the local image) are part (i) of the dictionary.
+\item \textbf{The rest is assembly over places.} D1 is the factorization of a rational theta datum over places (Proposition~\ref{prop:F}). D2 is the construction of a reading from local data at each twist prime (Proposition~\ref{prop:R}), whose local input is the existence of local Schr\"odinger combinations (Lemma~\ref{lem:L}). D3 is an index formula for a level group that is a restricted product of local groups (Proposition~\ref{prop:V}).
+\item \textbf{Counts.} Of $1{,}397$ theorems, $1{,}181$ are closed. D1 keeps $77$, D2 keeps $27$ inside the graph head (and the ledger's D2 keeps $99$ with its rebasing steps), D3 keeps $128$. On the ledger the three heads drop from $1{,}828$ to $304$.
+\item \textbf{Leaves.} The theorems that remain are under four statement-level leaves, listed in Section~\ref{sec:D}. Two of them (L2 and L3) are one statement, that the local penultimate level of a reading at a place where it does not twist is the same for every reading. L1 is the rationality of the datum at the level prime. L4 is the adelic twist datum with standard base points.
+\end{enumerate}
+
+\section{The three heads as written}\label{sec:heads}
+
+Fix the data of a true geometric family $a$ in the family package $W$, a twist parameter $t$, and write $J$ for a quadratic-extension datum over $a$ at $t$ (\lean{Fam.QuadraticExtensionData}). The datum $J$ has a finite list of twist places $P_1,\dots,P_r$ of $E$, local fields $k_i=E_{P_i}$, local geometric data $G_i$, local extension data $E_i$ (\lean{QExt}), finite index sets $\mathrm{Ch}_j$ with embeddings into the rational index sets, and an adelic twist datum $A$. The predicate \lean{Reads} says that the local data read the rational column data at every twist place and that the base points are moved and standard.
+
+\paragraph{D1.} \lean{dat_exists} says the following. There are constants $C_j\ne0$, independent of $t$, $J$ and the characters, such that for every reading $J$ and all $\alpha\in\mathrm{Ch}_j$, $\gamma\in\mathrm{Ch}_{j+1}$ the combination $\mathrm{comb}(d_Q)\,\mathrm{comb}(d_G)\,\mathrm{comb}(d_T)$ applied to the vacuum is the theta function of a rational datum whose values are
+\[
+z\longmapsto C_j\,\mathrm{wt}_j(\alpha)\,\zeta_j(\alpha,\gamma)\,\xi_j(\alpha,\gamma;z),
+\]
+where $\zeta_j$ is a root of unity, and $\zeta_j\,\chi(x_r)\,\chi(x_r')^{-1}$ is a root of unity $\rho_j$ independent of $\gamma$. Here $\xi_j$ is the finite datum of $A$,
+\begin{equation}\label{eq:xi}
+\xi_j(\alpha,\gamma;z)=\sigma_0\Big(\varphi_T(z)\prod_{P\ \mathrm{bad}}\mathrm{loc}_P(\alpha,\gamma;z)\Big),
+\end{equation}
+the product over the bad primes of the row group, each local factor being the deep finite sum \lean{XiAt} of the column data at $P$ for a middle step, \lean{PsiAt} for the penultimate step and \lean{locTop} for the last step, at the rational representatives attached to $\alpha$ and $\gamma$ (definition of \lean{locXi}, read in full).
+
+\paragraph{D2.} \lean{exists_quadratic_extension_readsLow} says that a reading exists, in the weak form \lean{ReadsLow}. Its core is \lean{LowJoin.exists_good}: at each twist prime $P$ there are local extension data $E$, a continuous local additive character and a sign $sg=\pm1$ such that the local twist datum of $E$ matches $P$ in the sense of \lean{AtTwist}, the depth $M$ of $E$ is the rational depth, the local representatives at every step where the rational index set is nonempty are exactly the local images of the rational representatives, and each nonempty local index set is reached by a bounded rational element with nonvanishing deep finite sum (structure \lean{LowJoin.Good}).
+
+\paragraph{D3.} \lean{vol_level_wt_const_alt} says that for each step $j$ there is $V_j\ne0$ with
+\[
+\vol\big(U_j(\alpha)\big)\,\mathrm{wt}_j(\alpha)=V_j
+\]
+for every reading $J$ and every $\alpha\in\mathrm{Ch}_j$, and similarly at the top step. Here $U_j(\alpha)$ is the adelic level subgroup of $A$ at the base point of $\alpha$ and $\mathrm{wt}_j(\alpha)$ is the weight of $J$, the product over twist places of the inverse Haar volumes of the local level groups.
+
+\section{Setting at a split prime}\label{sec:set}
+
+Let $E$ be the CM field of the host, $K$ the coefficient field and $\sigma_0\colon K\to\mathbb C$ the fixed embedding. Let $P$ be a prime of $E$ of degree one over $\mathbb Q$, $q$ the rational prime below it, $k$ a nonarchimedean local field and $\iota\colon E\to k$ a field embedding. Write $\Ok$ for the integers of $k$, $\varpi$ for a uniformizer and $v$ for the valuation of $k$ with $v(\varpi)=1$.
+
+\begin{definition}[completion at $P$]\label{def:compl}
+The pair $(\iota,\varpi)$ is a completion at $P$ (\lean{IsCompl}) if $\iota(E)$ is dense in $k$, $v(\iota a)=v_P(a)$ for all $a\in E^\times$, and $\varpi$ is a uniformizer. Then $\iota$ induces ring isomorphisms
+\[
+\OEr/P^{n}\;\xrightarrow{\ \sim\ }\;\Ok/\varpi^{n}\Ok\qquad(n\ge0),
+\]
+because $\OEr\to\Ok/\varpi^n\Ok$ is surjective by density and its kernel is $P^n$ by the valuation identity.
+\end{definition}
+
+\paragraph{The local twist chain.} The archive fixes ranks $\kappa,\tau$, the number of steps $m=s+2$, and for $j+c=s+1$ the finite sets $X_j$ with $|X_j|=N_j=\kappa+j(\tau+1)$. A local twist datum $W$ (\lean{TwData}) is a uniformizer $\varpi$, a continuous additive character $\psi$ of $k$ of conductor $1$ (trivial on $\Ok$, nontrivial on $\varpi^{-1}\Ok$), a tame character $\delta$ of $k^\times$ (trivial on $1+\varpi\Ok$), unramified characters $\eta_i$ (trivial on $\Ok^\times$) and a complex number $sg$. From $W$ the archive builds a chain $\mathcal T=\mathcal T(W)$ (\lean{Chain.ofTwist}). For each $(j,c)$ it gives
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item a level $(J_{j,c},\lambda_{j,c})$, where $J_{j,c}\subset\GL(X_j\sqcup\{1,\dots,c\})(k)$ is the parahoric subgroup of integral matrices whose lower left block is $\equiv0\bmod\varpi$ (in the frame of the standard order), and $\lambda_{j,c}(g)=\delta(\det D)$ for the upper left block $D$ of $g$;
+\item the root-exchange subgroup $R_{j,c}$ (\lean{RootEx.R}), the subgroup of matrices fixing the last coordinate line and its dual condition;
+\item a Schwartz--Bruhat test function $\Phi_{j,c}$ on $\Mat_{X_{j+1}\times X_j}(k)$, supported on $\varpi^{-M}$-integral matrices and invariant under $\varpi^{M}$-integral translations;
+\item the unfolding entries $\xi^{\mathrm{loc}}_j(g,g')$, Fourier--Weil integrals of $\Phi$ moved by $g$ and $g'$, and the index sets $I_{j,c}(g)$ of double cosets $R\,g'\,J$ on which the unfolding integral \lean{flat} does not vanish;
+\item at the last two steps the functions $\Psi$ and $\xi_{\mathrm{top}}$ and the box quotient $\varpi^{-M}\Ok^{X}/\varpi^{M}\Ok^{X}$ with its coset data.
+\end{itemize}
+A representative system is a family $A_{j,c}$ of sets of representatives with $A_{0,c}=\{1\}$ such that $g'\mapsto R\,g'\,J$ is a bijection from $A_{j+1,c}$ onto $\bigcup_{g\in A_{j,c+1}}I_{j,c}(g)$ (\lean{IsRepSystem}).
+
+\paragraph{The rational column data at $P$.} The row group data of the archive give, at each bad prime $P$, rational counterparts: the rational level $J^{\mathrm{rat}}_j(P)$ and character, the rational test function $\Phi^{\mathrm{rat}}_j$, the rational deep finite sums $\Xi^{\mathrm{rat}}_j(\gamma,\gamma')$ (\lean{XiAt}), $\Psi^{\mathrm{rat}}$ (\lean{PsiAt}) and the top sum (\lean{locTop}), rational volumes and relative indices, the rational representatives $h_j(b,P)$ for $b$ in the rational index sets $\beta_j$, and the local constants of \lean{LocCst} (an additive character $\psi_P$ on $P$-integral elements with values in $K$, the residue character of the tuple, the values $\mu_{q,i}(P)$ and a square root $\mathrm{sq}_P$ of $q$ in $K$). A rational automorphism $\gamma$ of $E^{N}$ and a local matrix $g$ correspond (\lean{IsGL}) if $g$ is the matrix of $\gamma$ in an ordered basis of the standard shape, read through $\iota$. Write $g=\iota(\gamma)$.
+
+\begin{definition}[matching at a twist prime]\label{def:at}
+$W$ matches the column data at $P$ (\lean{AtTwist}) if
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $P$ is not a G-place and $m=s+2$,
+\item $(\iota,\varpi)$ is a completion at $P$,
+\item $\psi(\iota a)=\sigma_0(\psi_P(a))$ whenever $q^{D_P}a$ is $P$-integral,
+\item $\delta(\iota a)=\sigma_0\big(\mathrm{res}(a)\big)^{-1}$ for every $P$-unit $a$, where $\mathrm{res}$ is the residue character of the tuple at $P$,
+\item $(\eta_{i+1}\delta)(\varpi)=\sigma_0(\mu_{q,i+1}(P))$ for $i<m$,
+\item $\sigma_0(\mathrm{sq}_P)=sg\cdot\sqrt q$.
+\end{enumerate}
+The sign of a rational automorphism is $\sgn(\gamma,n)=sg^{\,v_P(\det\gamma)\,n}$. Since $\mathrm{sq}_P^2=q$, condition (f) gives $sg^2=1$ (\lean{Model.sg_sq}).
+\end{definition}
+
+\section{The completion dictionary}\label{sec:C}
+
+\subsection{Statement}
+
+\begin{proposition}[completion dictionary at a twist prime]\label{prop:C}
+Let $P$ be a prime of $E$ of degree one, $(\iota,\varpi)$ a completion at $P$, and $W$ a local twist datum that matches the column data at $P$ in the sense of Definition~\ref{def:at}. Let $\nu$ be the Haar measure on $k$ with $\nu(\Ok)=1$ and assume the local constants are admissible (\lean{LocCst.Ok}). Let $\gamma,\gamma'$ be rational automorphisms at steps $j$ and $j+1$ and $g=\iota(\gamma)$, $g'=\iota(\gamma')$.
+\begin{enumerate}[label=(\roman*),itemsep=2pt]
+\item \emph{Levels.} $g\in J_{j,c}$ if and only if $\gamma\in J^{\mathrm{rat}}_j(P)$, and then $\lambda_{j,c}(g)=\sigma_0(\lambda^{\mathrm{rat}}_j(\gamma))$. For rational $\gamma_1,\gamma_2$ at one step, $R\,\iota(\gamma_1)\,J=R\,\iota(\gamma_2)\,J$ if and only if $\gamma_1,\gamma_2$ lie in one rational double coset. Membership of $\gamma$ in the rational first parabolic, in its unipotent radical $N_1$, or in the stabilizer of the standard lattice at $P$ is membership of $\iota(\gamma)$ in the corresponding local group.
+\item \emph{Test functions.} $\Phi_{j,c}(\iota x)=\sigma_0(\Phi^{\mathrm{rat}}_j(x))$ for every rational matrix $x$.
+\item \emph{Volumes.} $\nu$-volumes of the stabilizer groups $C(g)$ of the local levels are the $\sigma_0$-images of the rational volumes, and if the rational projection $\mathrm{pr}^{\mathrm{rat}}(\gamma)$ lies in $\GL_{N}(\OEr_{,P})$, then for the Haar measure $m$ on $\GL_{X}(k)$ with $m(\GL_X(\Ok))=1$
+\[
+m\big(\mathrm{pr}\,C(g)\big)^{-1}=\big[\GL_N(\OEr_{,P}):\mathrm{pr}^{\mathrm{rat}}(\gamma)\big].
+\]
+\item \emph{Sums and entries.} If $\gamma,\gamma'$ have entries bounded by the rational depth, then for all sufficiently large depths
+\[
+\xi^{\mathrm{loc}}_j(g,g')(\iota x)=\sgn(\gamma,n)\,\sgn(\gamma',n')\,\sigma_0\big(\Xi^{\mathrm{rat}}_j(\gamma,\gamma')(x)\big)
+\]
+for every rational $x$, with explicit integers $n,n'$ depending on the step. The same identity holds for $\Psi$ at the penultimate step and for $\xi_{\mathrm{top}}$ at the last step, and $\Psi(g;\,\cdot\,,y)$ is supported in the $\varpi^{-M}$-box and $\varpi^{M}$-periodic.
+\item \emph{Representatives.} Assume the rational index data are admissible (\lean{ChIdx.Ok}) and the rational representatives are determined by their double cosets (\lean{IdxProd}). Then there is a representative system $A$ of $\mathcal T$, adapted to the $\varpi^{\pm M}$-boxes, such that $A_{j,c}=\{\iota(h_j(b,P)) : b\in\beta_j\}$ whenever $\beta_j\ne\emptyset$, and every nonempty $A_{j+1,c}$ contains the image of a rational $\gamma$ with entries bounded by the depth and nonvanishing deep finite sum.
+\end{enumerate}
+\end{proposition}
+
+The archive states (i) as \lean{LevelAgree} with the bridges \lean{prX_iff_locHom}, \lean{mem_rationalFirstParabolic_iff_localGL_mem_rootExchange}, \lean{mem_N1_iff_local_hom}, \lean{mem_stabL_stdAt_iff_locHom_mem_KO}, (ii) as \lean{PhiAgree}, (iii) as \lean{VolAgree}, (iv) as \lean{SumAgree}, \lean{EntryAgree} and \lean{LastAgree}, and (v) as \lean{LowJoin.exists_system}.
+
+\subsection{Four lemmas}
+
+\begin{lemma}[integrality and residues transfer]\label{lem:C1}
+Let $(\iota,\varpi)$ be a completion at $P$. A rational matrix $x$ has $P$-integral entries if and only if $\iota(x)$ has entries in $\Ok$, and $x\equiv y\bmod P^n$ if and only if $\iota x\equiv\iota y\bmod\varpi^n$. A $P$-integral $a$ is a $P$-unit if and only if $v(\iota a)=0$, and then the residue of $\iota a$ in $\Ok/\varpi$ is the image of $a\bmod P$ under the isomorphism of Definition~\ref{def:compl}.
+\end{lemma}
+
+\begin{proof}
+Entry by entry, $v(\iota a)=v_P(a)$ gives the first two statements and the unit criterion. The residue statement is the case $n=1$ of the isomorphism $\OEr/P^n\cong\Ok/\varpi^n\Ok$.
+\end{proof}
+
+\begin{lemma}[density and double cosets]\label{lem:C2}
+Let $H\subset\GL_N(k)$ be a closed subgroup cut out by linear conditions on entries with coefficients in $\iota(E)$ (such as $R_{j,c}$, the first parabolic or $N_1$), and let $J\subset\GL_N(k)$ be an open subgroup. Then $H(E)=H\cap\GL_N(E)$ is dense in $H$. For rational $\gamma_1,\gamma_2$ the local double cosets $H\,\iota\gamma_1\,J$ and $H\,\iota\gamma_2\,J$ agree if and only if $\gamma_2\in H(E)\,\gamma_1\,J^{\mathrm{rat}}$, where $J^{\mathrm{rat}}=\{\gamma:\iota\gamma\in J\}$.
+\end{lemma}
+
+\begin{proof}
+The set $H$ is the intersection of $\GL_N(k)$ with a linear subspace $L$ of $\Mat_N(k)$ defined over $\iota(E)$. Since $\iota(E)$ is dense in $k$, $L(E)$ is dense in $L$, and $H$ is open in $L$, so $L(E)\cap H=H(E)$ is dense in $H$. For the double cosets, the direction from rational to local is clear. Conversely suppose $\iota\gamma_2=h\,\iota\gamma_1\,j$ with $h\in H$ and $j\in J$. The set $\{h'\in H: \iota\gamma_1^{-1}h'^{-1}\iota\gamma_2\in J\}=H\cap\iota\gamma_2 J\iota\gamma_1^{-1}$ is open in $H$ and contains $h$, so it contains a rational $h'\in H(E)$. Then $j'=\iota\gamma_1^{-1}h'^{-1}\iota\gamma_2$ is the image of the rational matrix $\gamma_1^{-1}h'^{-1}\gamma_2$ and lies in $J$, so $\gamma_2=h'\gamma_1 j'$ with $j'\in J^{\mathrm{rat}}$.
+\end{proof}
+
+\begin{lemma}[unfolding integrals are finite sums]\label{lem:C3}
+Let $V=\Mat_{Y\times Y'}(k)$ with the self-dual Haar measure for $\psi$, normalized so that $\Mat(\Ok)$ has volume $1$, and let $\Phi$ be a function on $V$ supported on $\varpi^{-A}\Mat(\Ok)$ and invariant under translation by $\varpi^{B}\Mat(\Ok)$, with $A,B\ge0$. Then for every $y\in\varpi^{-B}\Mat(\Ok)$
+\[
+\int_V\Phi(x)\,\psi(\operatorname{tr}(y^{t}x))\,dx=q^{-B\,|Y||Y'|}\sum_{x\in\varpi^{-A}\Mat(\Ok)/\varpi^{B}\Mat(\Ok)}\Phi(x)\,\psi(\operatorname{tr}(y^{t}x)),
+\]
+and the sum may be taken over the images of rational representatives of $P^{-A}\Mat(\OEr_{,P})/P^{B}\Mat(\OEr_{,P})$. If in addition $\Phi(\iota x)=C\,\sigma_0(\Phi^{\mathrm{rat}}(x))$ and $\psi(\iota a)=\sigma_0(\psi_P(a))$ for $q^{N}a$ integral with $N\le A,B$, then the integral at $y=\iota y_0$ equals $C$ times $\sigma_0$ of the rational finite sum, with the power of $q$ replaced by its expression through $\mathrm{sq}_P$ up to the factor $sg^{e}$, $e$ the exponent of $\sqrt q$ that occurs.
+\end{lemma}
+
+\begin{proof}
+The integrand is invariant under $\varpi^{B}\Mat(\Ok)$-translation, because $\Phi$ is and $\psi(\operatorname{tr}(y^{t}x))$ is for $y\in\varpi^{-B}\Mat(\Ok)$ ($\psi$ has conductor $1$). It is supported on $\varpi^{-A}\Mat(\Ok)$. The integral is therefore the sum over the finite quotient times the volume $q^{-B|Y||Y'|}$ of a coset, which is the displayed formula. The quotient $\varpi^{-A}\Ok/\varpi^{B}\Ok$ is isomorphic to $P^{-A}\OEr_{,P}/P^{B}$ by Definition~\ref{def:compl} (multiply by $\varpi^{A}$ and by the image of a rational element of valuation $A$), so rational representatives exist. Substituting the two matching identities term by term gives the rational sum. The volume factor is a power of $q$. Writing $q^{e/2}=(\sqrt q)^{e}=sg^{e}\,\sigma_0(\mathrm{sq}_P)^{e}$ by Definition~\ref{def:at}(f) and $sg^2=1$ turns it into $\sigma_0$ of a rational constant times $sg^{e}$.
+\end{proof}
+
+In the entries of the chain the exponent $e$ is $v_P(\det\gamma)$ times the size of the block on which $\gamma$ acts, because the Weil action of $\gamma$ on $\Phi$ carries the normalizing factor $\lvert\det\iota\gamma\rvert^{n/2}=q^{-v_P(\det\gamma)n/2}$. This is the origin of $\sgn(\gamma,n)$ in Proposition~\ref{prop:C}(iv).
+
+\begin{lemma}[normal forms]\label{lem:C4}
+Let $T$ be a chain whose levels lie in $\GL(\Ok)$, whose test functions are supported on integral matrices and periodic modulo $\varpi$, and let $A$ be a representative system. Then every double coset $R\,g\,J$ in the image of $A_{j,c}$ contains an element $r g$, $r\in R$, whose lattice $L=(rg)\,\Ok^{X_j\sqcup\{1..c+1\}}$ has a basis in normal form: the standard basis vectors of $X_j$, and last vectors $\varpi^{e_i}(z_i,\,\epsilon_i)$ with $-j\le e_i\le0$ and $z_i$ integral.
+\end{lemma}
+
+\begin{proof}
+Induction on $j$. For $j=0$ the representative is $1$ and the lattice is standard. For the step, let $g'$ be a representative at $j+1$ with $\mathrm{flat}(g,g')\ne0$ for some representative $g$ at $j$, which by induction we may assume in normal form after left multiplication by $R$. Nonvanishing of the unfolding integral forces, by Lemma~\ref{lem:C3}, the support condition that the moved test function meets the integral matrices, which says that the lattice of $g'$ is contained in $\varpi^{-1}$ times the lattice of $g$ in the last coordinates and contains the standard part. Over the discrete valuation ring $\Ok$ such a lattice has an echelon basis (Hermite normal form), and the root exchange group $R$ acts on the last column by the integral unipotent operations that reduce the off-diagonal entries. This gives exponents in $[-(j+1),0]$ (\lean{LatClass.step_normal}).
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:C}}
+
+\emph{(i).} The parahoric $J_{j,c}$ is defined by the conditions that the matrix and its inverse are integral and the lower left block has positive valuation. By Lemma~\ref{lem:C1} these hold for $\iota\gamma$ exactly when the rational conditions defining $J^{\mathrm{rat}}_j(P)$ hold for $\gamma$ (\lean{mem_par_iff}). If $g\in J$, its upper left block $D$ is integral with unit determinant, $\det D=\iota(\det D^{\mathrm{rat}})$ (\lean{det_block}), and $\det D^{\mathrm{rat}}$ is a $P$-unit. By Definition~\ref{def:at}(d), $\lambda(g)=\delta(\det D)=\sigma_0(\mathrm{res}(\det D^{\mathrm{rat}}))^{-1}$, which is the rational character value. The double coset statement is Lemma~\ref{lem:C2} with $H=R$ (\lean{dc_iff}). The first parabolic, $N_1$ and the standard lattice stabilizer are cut out by linear conditions on entries and integrality conditions, so the last sentence is again Lemma~\ref{lem:C1}.
+
+\emph{(ii).} The local test function $\Phi_{j,c}$ is the characteristic function of an integrality condition on blocks, twisted by the characters $\delta$, $\eta$ and $\psi$. By Lemma~\ref{lem:C1} and Definition~\ref{def:at}(c)--(e) its value at $\iota x$ is $\sigma_0$ of the rational value (\lean{phiAgree_of_atTwist}).
+
+\emph{(iii).} The groups $C(g)$ and their projections are compact open subgroups of the integral group defined by congruence conditions modulo $\varpi^{n}$ for some $n$. Their volumes are $[\GL(\Ok):C]^{-1}$ (the normalization), and the indices are computed in $\GL(\Ok/\varpi^n)$. By Definition~\ref{def:compl} this finite group is $\GL(\OEr/P^n)$, and by Lemma~\ref{lem:C1} the conditions correspond, so the indices agree with the rational relative indices (\lean{local_volume_agrees_row_subgroup_unitary}).
+
+\emph{(iv).} The local entry is an unfolding integral of the moved test function. The moved test function at rational points is, by (ii) and the Weil action of $\iota\gamma,\iota\gamma'$, equal to $\sigma_0$ of the moved rational test function times $\lvert\det\rvert$ factors. The boundedness of $\gamma,\gamma'$ gives the support and periodicity hypotheses of Lemma~\ref{lem:C3} (\lean{completionMatrix_boundedRationalAut_integral}, \lean{linearWeilAction_support_and_period_integral}), and Lemma~\ref{lem:C3} turns the integral into the rational deep finite sum with the sign factors (\lean{unfoldingIntegral_positionOne_eq_finite_sum}, \lean{sumAgree}). The entry is the same computation with the base frame equal to $1$ (\lean{entryAgree}), and $\Psi$ and the top sum are the same computation at the last two steps, where the support and periodicity in the box are those of Lemma~\ref{lem:C3} with $A=B=M$ (\lean{lastAgree}).
+
+\emph{(v).} Define $A$ step by step. At $j=0$ put $A_{0,c}=\{1\}$, which is the image of the unique rational representative (\lean{reps_zero}). If $\beta_{j+1}\neq\emptyset$ put $A_{j+1,c}=\{\iota h_{j+1}(b,P)\}$. Otherwise choose one representative in each double coset of $\bigcup_{g\in A_{j,c+1}}I_{j,c}(g)$, in normal form when the coset contains one. The bijection property is checked in three parts when $\beta_{j+1}\ne\emptyset$.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Maps to.} For $b\in\beta_{j+1}$ the rational index data give $\alpha\in\beta_j$ whose rational deep finite sum with $h_{j+1}(b,P)$ is nonzero (\lean{ChIdx.Ok.nonvan}). By (iv) the local unfolding integral is $\sgn\cdot\sigma_0$ of that sum, nonzero because $sg\ne0$, so $R\,\iota h_{j+1}(b,P)\,J\in I_{j,c}(\iota h_j(\alpha,P))$ (\lean{exists_rep_flat_ne}).
+\item \emph{Injective.} If two images lie in one local double coset, then by (i) the rational representatives lie in one rational double coset, and \lean{IdxProd} makes them equal (\lean{reps_injOn}).
+\item \emph{Onto.} Let $R\,h'\,J\in I_{j,c}(g)$ with $g=\iota h_j(\alpha,P)$. By Lemma~\ref{lem:C4}, $g$ may be taken in normal form, and the support condition then bounds a representative $g_1$ of $R\,h'\,J$ (\lean{exists_bounded_rep}). By Lemma~\ref{lem:C2} the open set $g_1 J$ contains $\iota\gamma$ for a rational $\gamma$ whose entries satisfy the same bounds (\lean{bounds_of_isGL}). By (iv) the rational deep finite sum of $(h_j(\alpha,P),\gamma)$ is $\sgn^{-1}$ times the local unfolding integral at a rational point where it is nonzero, so it is nonzero. The rational index data then provide $b$ with $h_{j+1}(b,P)$ in the rational double coset of $\gamma$, and by (i) its image represents $R\,h'\,J$ (\lean{repsOnto}, \lean{exists_twistIndex_representative_of_bounds}).
+\end{itemize}
+When $\beta_{j+1}=\emptyset$ the bijection holds by the choice. The adaptation to the boxes follows from the normal forms, which bound the lattices between $\varpi^{M}$ and $\varpi^{-M}$ for $M\ge s+1$ (\lean{adapted_of_normal}), and at the last step from the support of $\Psi$ in (iv). The last assertion of (v) is the onto step. \qed
+
+\subsection{The same dictionary at the G-places}
+
+At a G-place the rational representatives are standard ($h_j(b,P)=1$, \lean{StdMatch.twSt_h}) and the local chain is the symmetric chain of the type prime (\lean{SymChain}, matching structure \lean{AtType}).
+
+\begin{proposition}[completion dictionary at a G-place]\label{prop:Cty}
+Let $P$ be a G-place of the family, of degree one, and $j$ a step. There is a local symmetric chain at a uniformizer $\varpi\equiv q$ modulo higher order, with additive character and test functions matching the rational ones, and a constant $c_{P,j}\ne0$, such that for every reading $J$ and all $\alpha,\gamma$
+\[
+\sigma_0\big(\mathrm{loc}_P(\alpha,\gamma;z)\big)=c_{P,j}\,\Xi_{P,j}(z),
+\]
+where $\Xi_{P,j}(z)=\Xi^{k}_{P,j}(F_T\,z\,F_S)$ for a Schwartz--Bruhat function $\Xi^{k}_{P,j}$ on $\Mat(k)$ that is the image of the lattice vacuum under a local Schr\"odinger combination at $P$ (\lean{IsLocFac}). Neither $c_{P,j}$ nor $\Xi_{P,j}$ depends on $t$, $J$, $\alpha$ or $\gamma$.
+\end{proposition}
+
+\begin{proof}
+Since $h=1$ at $P$, the local factor \eqref{eq:xi} at $P$ is the deep finite sum of the standard column datum, which depends on the family alone. Choose the local symmetric chain with $\varpi$ the image of a rational element congruent to $q$ (\lean{exists_symData_of_unif_congr}), with the conductor-one character of the standard global character at the split place (\lean{psi_tie}) and the local component of the Hecke character, which is tame and residual (\lean{chi_tie}, \lean{splitPoint_heckeComponent_tame_and_residual}). Lemmas~\ref{lem:C1}--\ref{lem:C3} apply verbatim with $sg=1$, and identify the standard rational sum with the local entry at the identity coset up to a nonzero constant, the volume of the congruence Jacobi stabilizer (\lean{EntryBridge.entry_agree}, \lean{volN_one_ne}), and the same at the penultimate and last steps (\lean{psiAgree_of_atType}, \lean{topAgree}, \lean{matchAtType}). The local entry is a Schwartz--Bruhat function, hence by Lemma~\ref{lem:L}(a) below the image of the vacuum under a local combination (\lean{midXi_isLocFac'}, \lean{penXi_isLocFac_of_allTrue}, \lean{isLocFac_xiStd_alt}).
+\end{proof}
+
+\section{Local data at a twist prime and the readings (D2)}\label{sec:L}
+
+\begin{lemma}[local data]\label{lem:L}
+Let $k$ be a nonarchimedean local field, $\psi$ a character of conductor $1$ and $V=\Mat_{Y\times Y'}(k)$ with its Schr\"odinger model, in which the Heisenberg element $(a,b)$ acts by $f(x)\mapsto\psi(\operatorname{tr}(b^{t}x))f(x+a)$ up to the central character, and the lattice vacuum is $f_0=\mathbf 1_{\Mat(\Ok)}$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item Every Schwartz--Bruhat function on $V$ is a finite linear combination of Heisenberg translates of $f_0$.
+\item Let $\sigma$ be a smooth representation of $\GL_n(k)$, $l$ a linear functional, $J$ a compact open subgroup with character $\lambda$, and $v$ a vector with $\sigma(j)v=\lambda(j)v$. Any finite iterate of integrals of $u\mapsto l(\sigma(u)\sigma(\alpha)v)$ over compact open subsets of unipotent subgroups, against continuous characters, is a finite linear combination $\sum_g e(g)\,l(\sigma(g)v)$.
+\item A compact open subgroup $J\subset\GL_X(\Ok)$ acts on the finite set $\varpi^{-M}\Ok^{X}/\varpi^{M}\Ok^{X}$, and every orbit has a representative that is the image of a rational vector.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Schwartz--Bruhat functions are spanned by the indicators $\mathbf 1_{a+\varpi^{M}\Mat(\Ok)}$ with $M\ge0$, since an indicator with $M<0$ is a finite sum of indicators with $M=0$. Translation by $a$ is the Heisenberg action of $(a,0)$. For $M\ge0$, orthogonality of characters on the finite group $\Mat(\Ok)/\varpi^{M}\Mat(\Ok)$, whose dual is $\varpi^{-M}\Mat(\Ok)/\Mat(\Ok)$ under $\psi(\operatorname{tr}(b^tx))$ because $\psi$ has conductor $1$, gives
+\[
+\mathbf 1_{\varpi^{M}\Mat(\Ok)}(x)=q^{-M|Y||Y'|}\sum_{b\in\varpi^{-M}\Mat(\Ok)/\Mat(\Ok)}\psi(\operatorname{tr}(b^{t}x))\,\mathbf 1_{\Mat(\Ok)}(x),
+\]
+a combination of the translates $(0,b)\cdot f_0$. Translating by $a$ finishes the proof.
+
+(b) The vector $\sigma(\alpha)v$ is fixed up to the character $\lambda^{\alpha}$ by the compact open subgroup $\alpha J\alpha^{-1}$. On a compact open subset $\Omega$ of a unipotent subgroup $N$ the integrand $u\mapsto\chi(u)\,l(\sigma(u)\sigma(\alpha)v)$ is invariant, up to the factor $\chi\lambda^{\alpha}$, under the open subgroup $N\cap\alpha J'\alpha^{-1}$ for a small $J'\subset J$ on which $\chi$ is trivial. So $\Omega$ is a finite union of cosets $u_i(N\cap\alpha J'\alpha^{-1})$ on which the integrand is constant up to that factor, and the integral is $\sum_i\vol\cdot\chi(u_i)\,l(\sigma(u_i\alpha)v)$. Iterating gives a finite combination of the values $l(\sigma(g)v)$ (\lean{exists_isOneComb}, \lean{isOneComb_sph_level}).
+
+(c) The quotient is finite of order $q^{2M|X|}$. Its elements are classes of $\varpi^{-M}$-integral vectors, and by Definition~\ref{def:compl} each class contains the image of a rational $P^{-M}$-integral vector.
+\end{proof}
+
+\begin{proposition}[readings exist]\label{prop:R}
+Let the family be true and $t$ a twist parameter, and let $P$ be a twist prime with completion $(\iota,\varpi)$ and local field $k$. There are local twist data $W$ matching the column data at $P$ (Definition~\ref{def:at}) with $sg=\pm1$, and local extension data $E$ at $P$ whose representative system is the one of Proposition~\ref{prop:C}(v). Consequently a reading $J$ satisfying \lean{ReadsLow} exists.
+\end{proposition}
+
+\begin{proof}
+\emph{Matching data.} Take $\varpi$ the given uniformizer and $\psi$ the local component of the standard global additive character at the split place, which has conductor $1$ and satisfies Definition~\ref{def:at}(c) because the global character is standard (\lean{weilCharacter_splitDegreeOne_place_eq_exp}). Let $\mu_{i+1}$ be the local component at $P$ of the step character $\chi_i^{-1}$. It is tame and its values on the image of $E$ are $\sigma_0$ of the rational values $\mu_{\mathrm{At}}$, because the global character agrees with $\mu_0\xi$ and has conductor dividing $P$ (\lean{step_inverse_character_local_component_chain_tame}, \lean{comp_eq_muAt_and_tame}). Write $\mu_{i+1}=\eta_{i+1}\delta$ with $\delta$ the common restriction to $\Ok^\times$, which is tame, and $\eta_{i+1}$ unramified. Condition (d) follows from tameness and Lemma~\ref{lem:C1}, condition (e) from the values at $\varpi$, and $sg=\sigma_0(\mathrm{sq}_P)/\sqrt q$ gives (f) with $sg^2=1$ (\lean{exists_completionTwistData_chainColumns}).
+
+\emph{Local extension data.} Proposition~\ref{prop:C}(v) gives a representative system $A$ adapted to the boxes. Index the representatives by finite sets $\mathrm{Ch}_j$, take the orbit representatives of Lemma~\ref{lem:L}(c) for the coset data at the penultimate step, and realize each test function, entry, $\Psi$ and top function of the chain as a local combination of the vacuum by Lemma~\ref{lem:L}(a), and each one-dimensional integral functional by Lemma~\ref{lem:L}(b). The indices are $[\GL(\Ok):J]$. This is the structure \lean{QExt} (\lean{exists_qExt}, \lean{exists_ext_of_reps}).
+
+\emph{Assembly.} Doing this at each twist prime gives the fields of \lean{LowJoin.Good}. The sign field is $sg=\pm1$, the matching field is the first paragraph, the depth field holds because the rational depth is $m$ and $M\ge s+1$, and the fields \lean{rat} and \lean{next} are Proposition~\ref{prop:C}(v) (\lean{exists_good}, read in full). Gluing the local data over the twist primes with the adelic twist datum gives \lean{ReadsLow}; the adelic twist datum with standard base points is leaf L4.
+\end{proof}
+
+\section{Assembly over places}\label{sec:A}
+
+\subsection{The rational datum factors over places (D1)}
+
+Write $\mathrm{RD}(e,\Xi,f)$ for the statement that $f$ is the theta function, with vacuum $f_0$, of a Schwartz--Bruhat datum on the $e$-half of the standard lattice whose values at rational points are $\Xi$ (\lean{IsRatDatum}); here $e$ is the idempotent of a finite set $\mathcal P$ of split places.
+
+\begin{proposition}[factorization over places]\label{prop:F}
+\begin{enumerate}[label=(\roman*),itemsep=2pt]
+\item \emph{Local combinations multiply.} Suppose $\mathrm{RD}(e_{\mathcal P},\Xi,f)$, and let $p_1,\dots,p_n$ be distinct split places outside $\mathcal P$ with local combinations $c_i$ that send the lattice vacuum at $p_i$ to Schwartz--Bruhat functions $\Xi^{k}_i$, read at rational points as $\Xi_i$ (\lean{IsLocFac}). Then
+\[
+\mathrm{RD}\Big(e_{\mathcal P\cup\{p_1..p_n\}},\ \Xi\prod_i\Xi_i,\ \mathrm{comb}(c_1)\cdots\mathrm{comb}(c_n)f\Big).
+\]
+\item \emph{Twist-place factors.} For every reading $J$ there are roots of unity $\sigma_j(\beta)$ and $\tau_j(\beta)$ with $\tau_j(\beta)\,\sigma_{j+1}(\beta)=1$ such that at every twist place $P_i$ the local combination $d_L(\alpha_i,\gamma_i)$ of $E_i$ sends the vacuum to a function read at rational points as $\sigma_j(\alpha)\tau_j(\gamma)\,\sigma_0(\mathrm{loc}_{P_i}(\alpha,\gamma;\cdot))$.
+\item \emph{Characters.} The values $\chi_{j+1}(x_r(\beta))$ at the determinant roots of the base points are roots of unity, and $\chi_{j+2}(x_r(\beta))\,\chi_{j+1}(x_r(\beta))^{-1}$ does not depend on $\beta$.
+\end{enumerate}
+With Proposition~\ref{prop:Cty} at the G-places and leaf L1 at the level prime, these give \lean{dat_exists}.
+\end{proposition}
+
+\begin{proof}
+\emph{(i).} By induction on $n$ it suffices to treat one place $p\notin\mathcal P$. The theta function of a datum is the image of an adelic Schwartz--Bruhat function under the theta distribution, and the datum of $\mathrm{RD}(e_{\mathcal P},\Xi,f)$ is $\Phi=\Phi_{\mathcal P}\otimes\Phi^{\mathcal P}$ with $\Phi^{\mathcal P}$ the vacuum at every split place outside $\mathcal P$, in particular $\mathbf 1_{\Mat(\Ok_p)}$ at $p$ (\lean{placeModel_standardLattice_values_are_theta}). The local combination at $p$ is a finite combination of Heisenberg elements supported at $p$, which act on the $p$-factor alone and commute with the theta distribution. It replaces the $p$-factor $\mathbf 1_{\Mat(\Ok_p)}$ by $\Xi^{k}_p$, so $\mathrm{comb}(c)f$ is the theta function of $\Phi\cdot\Xi^{k}_p$ on the $(e_{\mathcal P}+e_p)$-half, whose rational values are $\Xi\cdot\Xi_p$ (\lean{ratDatum_factor}, \lean{ratDatum_comb_place}). A Schwartz--Bruhat function on the half is determined by its values at rational points, by density of $E$ in each completion (\lean{RatHalfDense.eq_of_rat}), so the datum is the stated one (\lean{ratDatum_list}, \lean{ratDatum_foldr_comb}).
+
+\emph{(ii).} By Proposition~\ref{prop:C}(iv) and the definition of $d_L$ in \lean{QExt}, the vacuum is sent to the local entry, which at rational points is $\sgn(\gamma_\alpha,n)\sgn(\gamma_\gamma,n')\,\sigma_0(\mathrm{loc})$ for the rational representatives $\gamma_\alpha,\gamma_\gamma$ of $\alpha$ and $\gamma$. The sign attached to the representative of $\beta$ at step $j+1$ enters the factor of the pair $(j,j+1)$ with the exponent $n'$ and the factor of $(j+1,j+2)$ with the exponent $n$, and these exponents are equal (both are the size $N_{j+1}+c_{j+1}$ of the block on which the representative acts, \lean{sgnAt_alt}). So with $\tau_j(\beta)=\sgn(\gamma_\beta,N_{j+1}+c_{j+1})^{-1}$ and $\sigma_{j+1}(\beta)=\sgn(\gamma_\beta,N_{j+1}+c_{j+1})$ the product is $1$, and both are $\pm1$ since $sg^2=1$ (\lean{facAt_sgnAt_mul_sgnAt}). At the last two steps the moved base point changes the local functions by an element $g$ of the last local level, and $\Psi$ and $\xi_{\mathrm{top}}$ transform under $g$ by a constant $c$ that is a value of $\delta$ and the $\eta_i$ on the compact group; since $\delta$ is tame and the $\eta_i$ unramified, these values lie in the image of the finite group $(\Ok/\varpi)^\times$ and $c$ is a root of unity (\lean{LevelLaw.last_steps_law}, \lean{exists_root_of_unity_moveAt}). These constants are absorbed in $\sigma$ and $\tau$ in the same way (\lean{exists_roots_of_unity_signs_facAt}).
+
+\emph{(iii).} The character $\chi_{j+1}$ agrees with $\mu_0\xi$, and $\xi$ has finite order $n$ because the tuple has finite order. So $\chi_{j+1}^{n}$ agrees with $\mu_0^{n}$, which is trivial on the base group. The base point $x_r(\beta)$ is a determinant root of a finite idelic unit $d=\det g$, where $g$ preserves the standard lattice, and $\chi^{n}_{j+1}$ is trivial on such roots, so $\chi_{j+1}(x_r(\beta))^{n}=1$ (\lean{chr_xr_pow_eq_one}, read in full). The base points at a step differ by elements whose determinant roots are killed by $\chi_{j+2}\chi_{j+1}^{-1}$, which gives the second statement (\lean{chr_quot_chart_free_alt}).
+
+\emph{Assembly of \lean{dat_exists}.} By \eqref{eq:xi} (definition, \lean{xi_eq_xiOff_mul}) the finite datum is $\varphi_T$ times the product over G-places times the product over twist places. The comb $d_T$ produces $\varphi_T$ (leaf L1). The combs $d_G$ at the G-places produce $\prod_P c_{P,j}\Xi_{P,j}$ by Proposition~\ref{prop:Cty} and part (i), and the constant $\prod_P c_{P,j}$ is independent of $t$ (\lean{xiLev_eq_const_mul_locFac_alt}, \lean{ratDatum_xiOff_common_alt}). The combs $d_Q$ at the twist places produce the remaining factor up to $\prod_i\sigma_j(\alpha)\tau_j(\gamma)$ by parts (i) and (ii) (\lean{ratDatum_add_twist_places_alt}, read in full). Taking $\zeta_j=\prod\sigma\tau$ and using (iii) gives the root of unity $\rho_j$. The weight $\mathrm{wt}_j(\alpha)$ enters through the normalization of $d_Q$, and \lean{dat_exists} rescales the charts (\lean{chartRescale}, read in full).
+\end{proof}
+
+\subsection{Volume of the level times the weight (D3)}
+
+Let $\varphi=(\varphi_i)\colon G(\Af)\to\prod_i\GL_{X_j}(k_i)$ be the product of the local components at the twist places of a reading (\lean{localHomProduct}, \lean{reductionHomAtLastLevel}), and $\mathrm{grp}(J)$ the subgroup of adelic elements equal to $1$ outside the twist places.
+
+\begin{proposition}[volume uniformity]\label{prop:V}
+Fix a step $j$ and the family $a$.
+\begin{enumerate}[label=(\roman*),itemsep=2pt]
+\item \emph{Locality.} For a middle step there is a compact open subgroup $U^{\mathrm{up}}_j$ depending on $a$ alone with $\varphi(U^{\mathrm{up}}_j)=\prod_i\GL_{X_j}(\Ok_i)$, and for every reading $J$ and $\alpha$
+\[
+U_j(\alpha)=\big\{g\in U^{\mathrm{up}}_j:\ \varphi_i(g)\in H_i(\alpha_i)\ \text{for all } i\big\},
+\]
+where $H_i(\alpha_i)$ is the projection of the stabilizer of the local level at the representative of $\alpha_i$. For the penultimate step the same holds with the base level subgroup $U^{0}_j$ (Lemma~\ref{lem:tf}) and $H_i(\alpha_i)=c_i^{-1}\,\mathrm{cosStab}(J_i,\varpi^{M},\mathrm{cos}(\alpha_i))\,c_i$ for elements $c_i$ of the last local level.
+\item \emph{Weights.} $\mathrm{wt}_j(\alpha)=\prod_i[\GL_{X_j}(\Ok_i):H_i(\alpha_i)]$.
+\item \emph{Index formula.} $\vol(U_j(\alpha))\,\mathrm{wt}_j(\alpha)=\vol(U^{\mathrm{up}}_j)$ (respectively $\vol(U^0_j)$), which is nonzero and independent of $t$, $J$ and $\alpha$. The top step is the same with the spherical level.
+\end{enumerate}
+\end{proposition}
+
+\begin{lemma}[tuple freeness]\label{lem:tf}
+For the penultimate step, the relaxed level subgroup $\big(U_j(\alpha)\cdot\mathrm{grp}(J)\big)\cap G(\Af)_{\mathrm{c}}\cap\varphi^{-1}\big(\prod_i\GL(\Ok_i)\big)$ is the same subgroup $U^0_j$ for every reading $J$ and every $\alpha$, provided the local penultimate levels of two readings agree at every place where neither twists (leaves L2 and L3).
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{lem:tf}]
+The level group $U_j(\alpha)$ is the stabilizer in the compact adelic group of local lattice and coset data at every finite place, so it is the restricted product of its local groups (\lean{FinPl.LocProd}, \lean{mem_U_iff}). Let $J,J'$ be readings and $Q$ a finite set of places containing the twist places of both. For $g$ in the relaxed group of $J$, the element obtained by setting the components at $Q$ equal to $1$ lies in $U_{j}'(\alpha')$, because at a place outside $Q$ the local groups of $J$ and $J'$ agree; this is where L2 (level primes) and L3 (G-places) are used (\lean{cut_mem_U_alt}). At the places of $Q$ where $J'$ twists, the local components of $g$ lie in $\GL(\Ok)$ (\lean{relax_rd_mem_KO_alt}), and at places of $Q$ where $J'$ does not twist they lie in the local level of $J'$ by the same comparison. Hence $g\in U'_j(\alpha')\cdot\mathrm{grp}(J')$, and the relaxed groups coincide (\lean{relax_le_sup_alt}, \lean{relaxed_level_eq_tuple_free_alt}).
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:V}]
+\emph{(i), middle steps.} $U^{\mathrm{up}}_j$ is defined from the family as the relaxed group $(U\cdot\mathrm{grp})\cap G(\Af)_{\mathrm c}\cap\varphi^{-1}(\prod\GL(\Ok_i))$; the subgroup $\mathrm{grp}(J)$ is normal in $G(\Af)$, so the product is a subgroup. If $g\in U_j(\alpha)$, then $g\in U^{\mathrm{up}}_j$, and $\varphi_i(g)\in H_i(\alpha_i)$ by Proposition~\ref{prop:C}(i) applied to the local level of the representative (\lean{prX_le_KO_of_prCat}, \lean{prCat_iff}, \lean{phi_mem_H_alt}). Conversely write $g=u\,x$ with $u\in U_j(\alpha)$ and $x\in\mathrm{grp}(J)$. Then $\varphi_i(x)=\varphi_i(u)^{-1}\varphi_i(g)\in H_i(\alpha_i)$ for every $i$, and an element supported at the twist places whose local components lie in the local level groups belongs to $U_j(\alpha)$ by the restricted product structure (\lean{cutAt_mem_U_of_mem_relax_not_twAt}, \lean{mem_level_alt}). So $g\in U_j(\alpha)$ (\lean{level_eq_up_inf_alt}). Surjectivity of $\varphi$ onto $\prod\GL(\Ok_i)$ holds because an adelic element may be prescribed at finitely many places and set to $1$ elsewhere (\lean{LevOnto.onto_alt}).
+
+\emph{(i), penultimate step.} By Lemma~\ref{lem:tf} the relaxed group is $U^0_j$. Membership in $U_j(\alpha)$ adds the local conditions at the twist places, which are the stabilizer conditions of the coset data: $g$ fixes the level and sends the coset $\mathrm{cos}(\alpha_i)$ of $\varpi^{-M}\Ok^{X}/\varpi^{M}\Ok^{X}$ to itself after conjugation by the local level element $c_i$ that moves the base point (\lean{levels_alt}, \lean{level_iff_relax_alt}, \lean{uloc_iff}).
+
+\emph{(ii).} By definition $\mathrm{wt}_j(\alpha)=\prod_i m(H_i(\alpha_i))^{-1}$ with $m(\GL(\Ok_i))=1$, and $m(H)^{-1}=[\GL(\Ok):H]$ for every open subgroup $H$ (\lean{inv_haarVolume_toReal_eq_relIndex_integral}). For the penultimate step the index of the coset stabilizer is the chart weight (\lean{relIndex_couplingCosetStabilizer_eq_chartWeight}). Proposition~\ref{prop:C}(iii) identifies these indices with the rational ones used in the weight.
+
+\emph{(iii).} By (i) the map $\varphi$ induces a bijection $U^{\mathrm{up}}_j/U_j(\alpha)\to\prod_i\GL(\Ok_i)/H_i(\alpha_i)$: it is well defined and injective because $U_j(\alpha)=U^{\mathrm{up}}_j\cap\varphi^{-1}(\prod H_i)$, and onto because $\varphi(U^{\mathrm{up}}_j)=\prod\GL(\Ok_i)$. Hence $[U^{\mathrm{up}}_j:U_j(\alpha)]=\mathrm{wt}_j(\alpha)$ by (ii), and for a Haar measure on the unimodular group $G(\Af)$, $\vol(U^{\mathrm{up}}_j)=[U^{\mathrm{up}}_j:U_j(\alpha)]\,\vol(U_j(\alpha))$ (\lean{archimedeanLevelVolume_mul_relIndex}). The left side depends on $a$ alone and is nonzero (\lean{volLev_mul_wt_mid_alt}, \lean{pen_vol_alt}, read in full for the middle step). The top step uses the spherical level group at the twist places, the same dictionary for the top level (\lean{TopAgree.main_alt_alt}, \lean{red_iff_levTop}) and the fact that conjugating stabilizers at split places keep the moved frame lattice (\lean{TopVol.MovesAt.main_alt_alt}) (\lean{TopVol.main_alt_alt}).
+\end{proof}
+
+\section{Application table}\label{sec:C2}
+
+Counts are theorems (theorem and lemma declarations) in the union of the three closures. A theorem reached from two heads is counted once in the total and under each head in the head columns.
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{3.3cm}>{\rr}p{6.2cm}r r r r}
+\toprule
+mechanism & what it closes & total & D1 & D2 & D3\\
+\midrule
+\endhead
+C-tw, Prop.~\ref{prop:C} & \lean{LevelAgree}, \lean{PhiAgree}, \lean{VolAgree}, \lean{SumAgree}, \lean{EntryAgree}, \lean{LastAgree}, \lean{exists_system}, the \lean{VolBridge}/\lean{UnipRead}/\lean{RankOneMatrix} bridges, \lean{denseGL_completion}, \lean{LatClass} normal forms & 406 & 281 & 265 & 143\\
+C-ty, Prop.~\ref{prop:Cty} & \lean{SymBridge}, \lean{EntryBridge}, \lean{UnfoldSum}, \lean{SymChain}; G-place local factors & 150 & 150 & 5 & 0\\
+L, Lemma~\ref{lem:L} and Prop.~\ref{prop:R} & \lean{exists_qExt}, \lean{exists_ext_of_reps}, \lean{exists_isOneComb}, \lean{isOneComb_sph_level}, \lean{comp_eq_muAt_and_tame} & 130 & 0 & 130 & 0\\
+A, Props.~\ref{prop:F}, \ref{prop:V} and assembly of \ref{prop:R} & \lean{dat_exists}, \lean{ratDatum_add_twist_places_alt}, \lean{ratDatum_foldr_comb}, \lean{exists_roots_of_unity_signs_facAt}, \lean{chr_xr_pow_eq_one}, \lean{chr_quot_chart_free_alt}, \lean{xiLev_eq_const_mul_locFac_alt}; \lean{vol_level_wt_const_alt}, \lean{level_prod_alt}, \lean{level_eq_up_inf_alt}, \lean{LevOnto.onto_alt}, \lean{pen_vol_alt}, \lean{levels_alt} (modulo L2, L3), \lean{TopVol.main_alt_alt}; \lean{exists_good} & 495 & 233 & 26 & 245\\
+\midrule
+closed & & 1{,}181 & 664 & 426 & 388\\
+leaves & L1 to L4, Section~\ref{sec:D} & 216 & 77 & 27 & 128\\
+\midrule
+union & & 1{,}397 & 741 & 453 & 516\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent The file \Lpath{D123_Declaration_Classes.tsv} lists every declaration of the union with its heads and its class.
+
+\section{Recomputed residual list}\label{sec:D}
+
+\subsection{The leaves inside D1 to D3}
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{0.7cm}>{\rr}p{4.6cm}>{\rr}p{7.4cm}r}
+\toprule
+ID & declaration & content & size\\
+\midrule
+\endhead
+L1 & \lean{Fam.ratDatum_dT_levelPrime_alt} & at the level primes, the comb $d_T$ applied to the vacuum is the theta function of the rational datum $\sigma_0\circ\varphi_T$ of the base points (the twisted finite datum at the level prime is theta, \lean{twistFiniteDatum_theta_at_levelPrime}) & 61\\
+L2 & \lean{PenLevPrime.uloc_le_of_std} & at a split point of a level prime with standard data (\lean{StdT}), the local level of one twist datum at any index is contained in that of any other & 101\\
+L3 & \lean{PenLevTyp.uloc_le_alt} & at a bad G-place prime to $T$ where neither reading twists, the local penultimate levels of two readings agree (coset data at the base point agree, \lean{cosetIn_p0_eq_of_reads}); its closure contains $16$ elementary frame lemmas also used by Prop.~\ref{prop:Cty} & 27\\
+L4 & \lean{AdForm.exists_twDat_baseStd} & an adelic twist datum with standard base points, common bases, trivial components away from $T$ (\lean{exists_adelicReading_lastStep_trivial_off_level}) & 27\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent L2 and L3 are one statement, tuple freeness of the local penultimate levels at places where the readings do not twist, split by the kind of place. They are the exact input of Lemma~\ref{lem:tf}.
+
+\subsection{The heads after this pass}
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{1.0cm}>{\rr}p{5.4cm}r r r>{\rr}p{4.2cm}}
+\toprule
+head & declaration & ledger & recount & after & what remains\\
+\midrule
+\endhead
+D1 & \lean{dat_exists} children & 741 & 735 & 77 & L1 ($61$) and the $16$ shared theorems under L3\\
+D2 & \lean{exists_good}, \lean{commutation_identity_alt}, \lean{commutation_property_alt} & 571 & 533 & 99 & the rebasing steps \lean{PenChart.exists_readsStd_alt} ($50$) and \lean{Fam.readsOfStd_alt} ($42$) with two shared theorems, and $5$ theorems under L1, L3, L4\\
+D3 & volume uniformity & 516 & 515 & 128 & L2 ($101$) and L3 ($27$)\\
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & 88 & 83 & 76 & $7$ theorems collapse with C-tw\\
+D9 & \lean{T.true_geometry_twist_value_alt} & 51 & 43 & 28 & $15$ theorems collapse with C-tw\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent The recount for D2 is the union of the closures of its three ledger children. The ledger's $571$ also counted part of the leaf set of \lean{exists_quadratic_extension_readsLow}. The two rebasing steps say that a reading in the weak sense can be replaced by one with standard penultimate charts (\lean{ReadsStd}), by choosing rational coset representatives in the local orbits, and that such a reading can be rebased to a full reading (\lean{Reads}), by moving the base points so that the dead coupling term vanishes (\lean{CplDead.xiCpl1_eq_zero_of_frames}). They were read at the statement level. The first is the orbit form of Lemma~\ref{lem:L}(c) with Proposition~\ref{prop:C}(i) (\lean{twistPrime_rational_coset_sameOrbit_iff_level}), and is likely to close in the same way. The second contains a vanishing statement that this pass did not reconstruct.
+
+The other heads (W1 to W3, D5, D8, E1 to E5, K-a to K-c) do not meet the closed set, except that $97$ theorems of D5 lie under L2, so they would fall with that leaf. Counted without repetition, the tuple-construction block R4-D (D1 to D9 without D6) had $1{,}681$ distinct theorems after the kernel-law pass and has $517$ after this pass, a drop of $1{,}164$. The theorems that D7 and D9 lose lie inside the union of D1 to D3, so they are part of that drop. With the bundle witness ($195$) and R4-E ($459$) the residual goes from about $2{,}335$ to about $1{,}170$ distinct theorems. (A first version of this report subtracted the per-head drops one by one and gave about $820$, which counted the $262$ shared theorems more than once.) The fifteen heads remain fifteen, but D1 to D3 are now short leaf lists.
+
+\subsection{External boundary}
+No new row. The pass uses the structure of nonarchimedean local fields and their completions, Hermite normal forms over a discrete valuation ring, orthogonality of characters of finite abelian groups, the Schr\"odinger model of the Heisenberg group, smoothness of admissible vectors, and Haar measure on unimodular groups. These are textbook facts.
+
+\section{Verdict}
+
+\begin{quote}
+\emph{Do D1, D2 and D3 share a reusable mechanism?}
+
+\textbf{YES.}
+\end{quote}
+
+\noindent The shared mechanism is the completion dictionary at a split prime of degree one (Proposition~\ref{prop:C}). It is used at the twist primes by all three heads ($406$ theorems), and D1 uses it a second time at the G-places (Proposition~\ref{prop:Cty}, $150$ theorems). The three heads then differ only in the assembly over places, which is the factorization of a theta datum for D1, the gluing of local data for D2 and an index formula for restricted products for D3. Reconstructing the dictionary and the three assemblies closes $1{,}181$ of the $1{,}397$ theorems of the three heads. The residual inside the heads is four statement-level leaves, two of which are one statement about local levels, together with the two rebasing steps of D2.
+
+\paragraph{Recommendation for the next cleanup pass.} The highest-yield items are L2 and L3 ($128$ theorems, one statement, and $97$ theorems of D5 share their closure with L2), then the two rebasing steps of D2 ($94$), then L1 ($61$). After these the tuple-construction block R4-D consists of D5, D7, D8 and D9.
+
+\appendix
+\section{Scripts and limits}
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \Lpath{scripts/d123_core.py}: the closures of D1, D2 and D3 inside \lean{colSide_alt}, their union and shared core.
+\item \Lpath{scripts/d123_layers.py}: the twist-prime dictionary layer (closure of the \lean{AtTwist} statements and the bridges) and the rest by head.
+\item \Lpath{scripts/d123_layers2.py}: the G-place dictionary layer.
+\item \Lpath{scripts/d123_final.py}: final classes, leaves, effect on D5, D7, D8 and D9, and the declaration table.
+\item \Lpath{scripts/d123_T.py}, \Lpath{d123_tree.py}, \Lpath{d123_blocks.py}, \Lpath{d123_brief.py}: trees and statements used for reading.
+\end{itemize}
+The scripts import the index module \Lpath{q.py} of the cleanup pass. The counting convention is that of the cleanup ledger: a theorem is closed when it lies in the union and outside the closure of every leaf, so a theorem shared by a leaf and a closed block is counted as residual. Lemmas~\ref{lem:C4} and \ref{lem:L}(b), the coset part of Proposition~\ref{prop:V}(i) and the G-place model choice in Proposition~\ref{prop:Cty} are reconstructed from their statements and the proof skeletons, without reading every internal lemma line by line. Nothing was built or run in Lean.
+
+\end{document}

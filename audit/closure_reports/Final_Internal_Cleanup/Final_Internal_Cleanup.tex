@@ -1,0 +1,359 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\PC}[1]{\textsf{PC-#1}}
+\newcommand{\SL}[1]{\textsf{SL-#1}}
+\newcommand{\sC}{\textbf{Closed}}
+\newcommand{\sE}{\textbf{Closed modulo named external theorems}}
+\newcommand{\sR}{\textbf{Residual child remains}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{Final internal cleanup\\ The record witness, PC4.13, the SL-6 leaves and two liveness families}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This pass takes the short list of owned internal items that the orphan and interface pass left unresolved or partly read. The three small leaves of \SL{6} close, two of them in elementary analysis and one modulo the Capelli identity and Harish-Chandra's theorem on the infinitesimal character of discrete series. Both families of declarations whose liveness was undecided are settled, with one correction to Wave~6 and one corrected witness path. The record witness \lean{bwit_exists_alt} is reconstructed as a proposition with its hypotheses, its object, its downstream use and its uniformity, and five of its sub-blocks close. The PC4.13 tuple construction (R4-D) and the class data (R4-E) are cut down to the material that no other live branch uses, and the seesaw laws inside R4-D are transferred to R4-A to R4-C. What survives is about $2{,}700$ exclusive theorems in sixteen named heads, so the answer to the final question is still no. Nothing was built or run in Lean, and no existing file was edited.
+\end{abstract}
+
+\tableofcontents
+
+\section{Sources, method and the answer}
+
+\subsection{Copies}
+
+Before any analysis the Lean archive and the reports were copied from the project folder into the workspace and checked. The archive \Lpath{lean.tar.gz} has SHA-256 \texttt{9631b4f0\ldots c7fc}, the same as the concatenation of its fourteen parts. Unpacked it gives $175{,}187$ files ending in \texttt{.lean} with $1{,}030{,}531{,}854$ bytes, the same count and total as \Lpath{src/lean} on the project machine. The $137$ report and ledger files used here (the six \Lpath{Final_Six_Wave} reports and maps, \Lpath{Pre_Synthesis_Audit} with \Lpath{Orphan_Interface_Pass}, \Lpath{Directory_Assessment}, the synthesis folders, the earlier waves, the manuscript and the two preprints) were checked by SHA-256 of the sorted list of their checksums, which agreed on both sides.
+
+\subsection{Liveness and exclusive material}
+
+I indexed all $1{,}066{,}087$ declarations with their namespace, the opens active at the declaration (including \texttt{open \ldots in}), and the identifier tokens of the text with comments and strings removed. A token resolves through the enclosing namespaces, the namespace prefixes of the declaration's own dotted name, every open taken absolutely and relative to the namespace, and \texttt{\_root\_}. A token that does not resolve is shortened from the right, which catches projections, constructors and generated lemmas. Private declarations ($65{,}565$ of them) are visible only inside their own file. When the head of a dotted token is a local variable, the remaining components are matched by last component, and these edges are kept in a separate class. Typeclass resolution is not followed. The resulting graph has $5{,}943{,}183$ exact edges.
+
+Every \emph{live} claim below comes with a witness path from \lean{riemannHypothesis} in which each short-name edge was checked in the caller's text. Two edges failed the check and are corrected in Section~\ref{sec:live}. Every \emph{dead} claim comes with an exhausted reverse closure and a text search for dot-notation uses.
+
+For the three large residual blocks I computed the \emph{exclusive} part, the theorems in the block's forward closure that are not reachable from \lean{riemannHypothesis} once the block's root and its statement wrapper are removed. Material outside the exclusive part is used by other live branches, so it is owned there. False edges elsewhere can make material look shared, and missed edges can make it look exclusive, so the counts are indicative. The heads were read in the source.
+
+\subsection{The answer}
+
+\textbf{Final internal verdict: YES.} Live internal mathematical residuals remain. They sit in three blocks of the PC4.13 family construction and its record witness, the exclusive heads listed in Table~\ref{tab:residual}. The final claim of the project cannot yet be made (Section~\ref{sec:final}).
+
+\section{The record witness \texorpdfstring{\lean{bwit_exists_alt}}{bwit\_exists\_alt}}\label{sec:bwit}
+
+\subsection{Where it sits}
+
+\lean{GlobalTheory.Mem.R3.SelAll.bwit_exists_alt} (\Lpath{TPS/BwitExists.lean}:53, where \Lpath{TPS/} abbreviates \Lpath{Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/}) is live through
+\lean{hypotheses_nonempty_of_unramified_exponents_alt}, \lean{large_unramified_exponent_bundles_exist_alt}, \lean{member_bundles_large_unramified_exponents_alt}, \lean{compatibleSystem_weilBlock_ne_alt}, \lean{exists_weilBlock_ne_at_member_alt}, \lean{geometric_parameter_uniform_alt}, \lean{exBL_isLinked_prmR_alt} and the wrapper \lean{local_langlands_prm_reduction_alt}. Each edge is a qualified call. Its only consumer is \lean{exBL_isLinked_prmR_alt}, which also calls \lean{zeta_uniform_of_extension'} and \lean{eta_size_recursion_alt}. The orphan pass listed the two together, so I treat \lean{exBL_isLinked_prmR_alt} as the unit.
+
+\subsection{The statement}
+
+The archive's vocabulary is kept, with each object glossed by its role. The \emph{parameters} $p$ are built from a norm-choice extension $N$ of a local Langlands record (\lean{RecTExists}) and a geometric datum $\Gamma$. For a context $K$ of the family, a \emph{weighted point} $q$ is a point of the slots of $p$ with its object $O_q$, its record datum $D_q$, its saturation pack and its core data. A \emph{record} $R$ at $q$ is a tied spectral datum on $O_q$, and it is \emph{compatible} with $q$ when its columns, characters and twists are those of $q$ (\lean{RecordCompatibleExtended}). A \emph{bundle condition} $b$ at $(D_q,O_q,c)$ is a tuple $(R,S,P,\mathrm{pin},\mathrm{DH},C,B)$ of a record, a spectral matching, a row-side family, a pin of the row side, a definite-height pair, square-integrable columns and a bounded realisation (\Lpath{TPS/ColumnChoiceWithTies.lean}:47). A \emph{bundle witness} $w$ for $(q,b)$ is a twisted input $x$ with twisted arguments $a$, a twisted bundle (intersection-number identity, real input, recursive input, equality of real packages, host datum), the compatibility of $R$ with $q$, and twelve transport fields (\Lpath{TPS/TwistedBundle.lean}:57). A bundle is \emph{linked} when it has a witness.
+
+\begin{proposition}[record witness, \lean{bwit_exists_alt}]\label{prop:bw}
+Assume the ten published statements \lean{GreenCuspidal}, \lean{DiscreteSeriesCover}, \lean{HarishChandraModules}, \lean{CasselmanWallach}, \lean{WeilRepresentationUnitaryPair}, \lean{DiscreteSeriesExists}, \lean{HarishChandraFinite}, \lean{CuspRapidDecay}, \lean{GlobalArtinReciprocity} and \lean{RayField}. Let $p$ be the parameters of a norm-choice extension $N$ with no extra slot, and assume that every admissible extension datum of $N$ carries an extension with law, and that eventually along the family every weighted point satisfies the multiplicity identity \lean{MultEq} of its real datum. Then eventually along the family the following holds at every context $K$. For every weighted point $q$, every record $R$ compatible with $q$, every real $c$ and every pair $(n_1,n_2)$ with $\Delta(D_q)=n_1$ and $\eta(O_q)=m(D_q)\,n_2$, if the scale of $O_q$ equals the scale of $K$ and the value condition \lean{Val} holds at $O_q$, there is a bundle condition $b$ at $(D_q,O_q,c)$ with $b.R=R$ and a witness for $(q,b)$.
+\end{proposition}
+
+\paragraph{Why the family conditions need it.} The rows of the main theorem are statements at linked bundles. \lean{exBL_isLinked_prmR_alt} turns Proposition~\ref{prop:bw} into \lean{ExBL}, the existence on a large set of points of a linked bundle for the linkage \lean{BundleLinkage}~$p$, and this is what the nonvacuity route consumes. In Proposition~B of the orphan pass, part (i), the six family conditions of $W=\lean{packB_alt}\,b$ are read off the witness field by field (\lean{truePack_of_bWit_alt}), so without a witness the family conditions are not available.
+
+\paragraph{Uniformity.} The statement has the shape \lean{EvP fun _ K => ∀ q R c DH, … → ∃ b, …}. The proof obtains one threshold as the conjunction of two eventual statements, the host-frame hypothesis \lean{hostHyp_frames_ev} and the multiplicity hypothesis, and then works at a fixed context point by point. No choice couples two points, two records or two values of $c$. The construction is therefore simultaneous in every required parameter, with one cutoff for all of them.
+
+\subsection{The mechanism}
+
+The body (26 lines, read in full) is an assembly. It transports the saturation pack of $q$ along the equality $R.T.\mathrm{cols}=q.x.\mathrm{col}.C$ of the record's columns with the point's columns. It then calls six producers and assembles $b$ and $w$, with two congruence lemmas for heterogeneous equality (\lean{rpk_eq_alt}, \lean{real_tb_congr_of_heq}).
+\begin{enumerate}[nosep]
+\item \lean{exists_selected_realization_alt} gives the twisted arguments $a$, the twisted input $x$, the columns $C$ and the face, period and scale identities. Its body (\lean{exists_selection_pair_local_langlands_alt}, 19 lines) takes columns from \lean{exists_square_integrable_columns_of_heq_data} and the arguments from \lean{selection_group_ambient_tie}, with the multiplicity piece \lean{wp3_ne_bot_and_piece_at_of_multEq} and the joined evaluation \lean{ev_at_join_pinned}.
+\item \lean{selected_realization_geometric_alt} gives the real input (\lean{realIn_exists_alt}, 39 lines, a transport of the point's saturation, host and exponent data).
+\item \lean{selected_realization_side_alt} gives the recursive input (\lean{recIn_parts_exists_alt}, 40 lines).
+\item \lean{selected_lower_map_holds_alt} gives the pin of the row side.
+\item \lean{HostDatumExists.exists_hostDatum_alt} gives the host datum.
+\item \lean{selected_side_realization_holds_alt} gives the side condition (29 lines, transport).
+\end{enumerate}
+
+\subsection{What closes}
+
+The forward closure of \lean{exBL_isLinked_prmR_alt} has $30{,}606$ declarations. Of its theorems, $653$ ($10{,}439$ lines) are exclusive. They split into the blocks below.
+
+\begin{proposition}[Hecke parts, X3]\label{prop:parts}
+At a weighted point, for every type $\pi$ of the first lift the row realisation has a spherical Hecke eigensystem $\mathrm{eig}(\pi)$, each eigensystem is carried by a base index, the isotypic parts of the realisation lie in the Hecke parts cut out by the Hecke polynomials of the eigensystem, and the eigenvalue $\lambda_3(i,\mu_0,c,v_0)$ on the $i$-th component equals $\lambda'(\mu_0,i+1,\pi)$. These data form an eigensystem index with $\lambda$ constant on each class.
+\end{proposition}
+
+\begin{proof}[Mechanism]
+The spherical Hecke operators at the good places commute and act semisimply on the finite-dimensional realisation, semisimplicity coming from the Schur property that \lean{CuspRapidDecay} gives (\lean{schurAll_of_cuspRapidDecay}). So the realisation is a direct sum of simultaneous eigenspaces (\lean{row_type_has_spherical_hecke_eigensystem}, shared, and \lean{exists_hasEig}). A vector on which every Hecke operator at $P$ acts by the coefficients $c(P,\cdot)$ lies in the part where the Hecke polynomial \lean{heckePolyOf} with those coefficients vanishes (\lean{parts_in_hPart}, read in full, through \lean{mem_hPart_of_partFull}). The eigenvalue identity follows by moving a nonzero vector of the part through the adjoint of the theta map, which preserves the base level (\lean{eigenvalue_of_part}, read at the top, through \lean{adjoint_mem_base_level}). The index is assembled in \lean{partsRec_of_eig} (41 lines, read in full) with $\lambda$ constant because two types with the same eigensystem are carried by the same index. The match of the logarithmic eigenvalues with the discrete-series parameter is \lean{scal_rows_alt}, which applies the reciprocity engine shared with other branches.
+\end{proof}
+
+\begin{proposition}[host datum, X4]\label{prop:host}
+Let $E/K$ be the CM host with its frames and host pins. There is a host datum whose field $H_E$ is the Hilbert class field of $E$ inside a fixed closure, characterised as the maximal unramified abelian extension, whose class representatives are integral ideals of $K$, one in each class, prime to $T_u$ for every member $u$ and to every prime under the twist places, and whose auxiliary field is Galois over $\mathbb Q$. Its place datum is any prescribed set of places over a common prime.
+\end{proposition}
+
+\begin{proof}
+\lean{exists_hostDatum_alt} (29 lines, read in full) takes $H_E$ from \lean{rayField_top_maximal_unramified}, the ray class field of conductor one, which is class field theory (\lean{GlobalArtinReciprocity}, \lean{RayField}, both on the boundary). The representatives come from \lean{HostDatumExists.exists_reps}, which applies the elementary fact that every ideal class contains an integral ideal prime to a given nonzero ideal $m$, here the product of the $T_u$ and the primes of the finite set. Galois descent of the auxiliary field is transported along an algebra isomorphism.
+\end{proof}
+
+\paragraph{Lower-map ties, X5.} The pin of the row side is given by the lower-map ties of the columns (shared) and by \lean{gamDvd}, which says that the order of the stabiliser of every class of unimodular lattices in the finite unitary group divides the fixed constant $D_\Gamma(E,R)$. The proof (13 lines) is orbit and stabiliser followed by the divisibility of the group order. \sC.
+
+\paragraph{Transport, X6.} \lean{realIn_exists_alt} and \lean{selected_side_realization_alt} move the point's data along the column equality and the identification of twist places $Q_\mu$ (read in full). \sC.
+
+\paragraph{Placement, X2 head.} \lean{exists_placement} rescales the extended evaluation by $(c\,n_P)^{-1/2}$ so that its norm matches, read in full. \sC. Its sibling \lean{reFace_zero_part_conventions_chosen_again} ($30$ theorems) re-chooses the face conventions of the twisted arguments and was not read.
+
+\subsection{What survives}
+
+\paragraph{X1, kernel laws and column reading at the base tuple.} \lean{square_integrable_columns_of_witnesses} ($313$ exclusive theorems) is shared by the \lean{bwit} branch and the zeta-uniform branch of \lean{exBL_isLinked_prmR_alt}. Its core is \lean{TC.RcHyp.hyps_of_isTw} and \lean{chTh_ok_chi} ($254$ theorems, read at the top). For every index $a$ and word $u$ it proves that the chain of step kernels of the base tuple is admissible, and the step that carries the mathematics is the theta-equivariance \lean{ThEquivP} of every step kernel (\lean{thEquivP_ambOf_tiesD}). Below that sit the local product measures (\lean{md_prod}), the degree computation \lean{stepC_ok_deg}, and the nonvanishing of a double-coset unfolding datum, which the archive takes from its own internal theorem \lean{TwistedEisensteinNonvanishing}. The column record \lean{colRecC}, the jets \lean{jetK_chi} and the lattice identifications \lean{exists_eNu} complete the reading. The mechanism is the per-step kernel law of the seesaw (Weil-representation equivariance of the theta kernel under the dual pair at each step), the same kind of law as R4-E's kernel identity. \sR.
+
+\paragraph{X7, record-compatible extension.} \lean{exists_recPinE_alt} under \lean{exBL_isLinked_alt} produces, at each point, a record compatible with the point. Its exclusive children are the pinned spectral data (\lean{exists_pinned_spectral_data_compatible}, $73$ theorems, with \lean{CyclotomicFieldContainment.oTied_of_ksExact}) and the kernel spectral data at witnesses ($22$ theorems, with \lean{joints_of_standard_character}). Not read beyond the top. \sR.
+
+\paragraph{Verdict on the record witness.} \sR. Statement, hypotheses, object, downstream use, uniformity and assembly are reconstructed (Proposition~\ref{prop:bw}). X2 (except one leaf), X3, X4, X5 and X6 close. X1, X7 and the leaf \lean{reFace_zero_part_conventions_chosen_again} remain, about $440$ exclusive theorems.
+
+\section{PC4.13, the tuple construction R4-D}\label{sec:r4d}
+
+\subsection{Liveness, consumer and the proposition}
+
+\lean{Fam.colSide_alt} (\Lpath{TPS/ColSide.lean}:35) is live through \lean{open_orbit_of_unramified_exponents_alt}, the main-theorem chain and \lean{Fam.miStar2_of_allTrue_alt_alt} (path in \Lpath{Liveness_Witness_Paths.md}). Its first live consumer is \lean{MiTop.famAllQ_of_allTrue_alt} (\Lpath{TPS/FamAllQOfAllTrue.lean}:38) through the wrapper \lean{true_geometry_family_invariance_alt}. Its proposition is Proposition~B(ii),(iii) of the orphan pass. I add the following precision, read from the body (223 lines, read in full) and from \Lpath{TPS/QuadraticExtensionData.lean}.
+
+\begin{proposition}[tuple data, R4-D]\label{prop:r4d}
+Let $W$ satisfy the family conditions, $u$ a word, and $a$ a true geometric member with the identity $iA$ at the top. Then there are
+\begin{enumerate}[nosep,label=(\roman*)]
+\item for every tuple index $t$ a quadratic-extension datum $J_t$ that reads $t$: an enumeration $i\mapsto\mathrm{pl}_i$ of the twist places $Q_t$, injective and onto, at each $\mathrm{pl}_i$ a local quadratic-extension datum $E_i$ with the family characters, the prescribed restriction of $\xi_R$, a sign $\pm1$, the twist at the place, the GL-type completion of the index matrices, the coset and standard-kernel conditions, a decomposition of the penultimate kernel through the twist-place group, and a section of the local index sets;
+\item constants $C_j\neq0$, chosen before $t$, and for each reading $J_t$ roots of unity $s_t$, $\rho_t$ and scalars $\zeta_t$ with the rational-datum identity at every step;
+\item constants $V_j\neq0$ and $V_T\neq0$, chosen before $t$, with $\mathrm{vol}(U_j(\alpha))\,\mathrm{wt}_j(\alpha)=V_j$ for every character $\alpha$ and the analogous top identity;
+\item Weil data $\mathrm{kom}_{t,j}$ for the family characters at $t$;
+\item twist relations $S'_{t,j}$, chosen before the rows, preserving the ramified forms and giving the readings of every family built from the coefficients;
+\end{enumerate}
+and with these data the column choice, the pinned and rescaled tuples and the family satisfy the column condition and the column output, including the laws \lean{QLaw}, \lean{QLast}, \lean{QFin} for every $t$.
+\end{proposition}
+
+\paragraph{Quantifiers and compatibility.} In the body, $C$ and $(V,V_T)$ are obtained before $t$, $J_t$ and $(s_t,\zeta_t,\rho_t)$ are chosen per $t$, $\mathrm{kom}$ per $(t,j)$, and $S'$ as one function of $(t,j)$. The kernel data are matched to $J_t$ through \lean{(hJ t).chr}, since $\mathrm{kom}_{t,j}$ is built from \lean{chrK_alt}~$W\,t\,j$ and $J_t.A.\mathrm{chr}(j+1)$ equals it by the reading. The top character set of $J_t$ is a singleton because each local $E_i$ has one character at the top. The unit-ratio conditions on $c_K$ and $c_P$ follow from the roots of unity in (ii) and the nonvanishing in (ii), (iii), by \lean{unitRatio_laws}. Nothing else couples different tuples, and the constants that the laws need are uniform in $t$ by the order of quantifiers.
+
+\subsection{What transfers and what closes}
+
+The forward closure has $28{,}610$ declarations and $2{,}816$ exclusive theorems.
+
+\paragraph{The laws.} The field \lean{laws} is \lean{true_geometry_family_final_alt}, that is \lean{laws_resc_alt} and \lean{QTw.laws_of_pin_resc}, which proves \lean{QLaw}, \lean{QLast} and \lean{QFin} from the iterated seesaw integral at the twist places, its last steps and the finite cells. These are the seesaw twist-place laws of R4-A to R4-C. The pre-synthesis audit classes R4-A to R4-C as implementation depth with human propositions stated, and the manuscript records the reduction of the twist-place laws to one split place as reconstructed. They account for $1{,}073$ of the exclusive theorems and are transferred to R4-A to R4-C.
+
+\begin{proposition}[kernel Weil data, R4-D(iv)]\label{prop:kw}
+For every tuple $t$ and step $j<m$ there is a Weil datum $\mathrm{kom}_{t,j}$ between the lattices $X_j$ and $X_{j+1}$ for the pair of family characters $(\chi_{t,j},\chi_{t,j})$.
+\end{proposition}
+
+\begin{proof}
+\lean{exists_compactOpen_alt} (16 lines, read in full) applies the existence theorem \lean{weilDatumExists} to the Hecke character $\chi_{t,j}$ (\lean{isHecke_mu}), whose restriction to the totally real field has the parity required by the even ranks of $X_j$ and $X_{j+1}$ (\lean{resEta_even}, \lean{even_rankX}). That existence theorem is Kudla's splitting of the metaplectic cover over unitary dual pairs by a character of the right parity (Kudla 1994; Harris, Kudla and Sweet 1996; from memory), proved inside the archive and shared with other branches. \sE.
+\end{proof}
+
+\paragraph{Finite combinations.} \lean{FinData.main_alt_alt} (19 lines, read in full) shows that the twist combinations $d_Q$, $d_G$, $d_T$ are finite combinations, by closure of finite combinations under scaling and convolution. \sC.
+
+\paragraph{The gluing of readings.} \lean{exists_quadratic_extension_readsLow} (88 lines, read in full) builds $J_t$ by enumerating $Q_t$, choosing at each place a good local datum with \lean{exists_good}, and gluing the local index sets into the tuple's index set through the product decomposition \lean{twistIndexSet_eq_prod_localRepresentatives} and \lean{exists_bij}, with the relation given by the unique GL completion of a rational twist automorphism (\lean{existsUnique_completionMatrix_of_rationalTwistAut}, uniqueness of a block completion over a local field). The gluing is closed. Its leaves are not, see below.
+
+\subsection{What survives}
+
+The remaining $1{,}743$ exclusive theorems ($28{,}746$ lines) are in eight heads.
+\begin{enumerate}[nosep,label=D\arabic*.]
+\item The row-pair rational-datum identity (ii), under \lean{dat_exists}: \lean{true_geometry_row_pair_property_alt}, \lean{true_geometry_row_pair_relation_alt_alt}, \lean{true_geometry_twist_quadratic_value_alt}. The top of \lean{dat_exists} (69 lines) was read. It builds $s_t$ by \lean{chartRescale} from products of roots of unity, which closes the rescaling, but the identity it rescales is in the unread children.
+\item The local existence \lean{exists_good} at a split twist place and the two commutation statements \lean{true_geometry_commutation_identity_alt}, \lean{true_geometry_commutation_property_alt}.
+\item The volume uniformity (iii): \lean{true_geometry_chain_step_value_alt}, \lean{true_geometry_chain_step_identity_alt}, \lean{exists_volume_constant_of_true_geometry}.
+\setcounter{enumi}{4}
+\item \lean{AdForm.twS_ramL}: the level-prime operators annihilate the ramified columns (behind \lean{colOf_readS_alt}).
+\item \lean{KRamT.kernel_keeps_ramT}: the step kernels preserve the level-ramified forms (behind \lean{kernels_keep_ramL}).
+\item \lean{QVecJoin.step_mid}, \lean{step_top}: the joint twist identity at the middle and top steps.
+\item \lean{true_geometry_row_column_entry_alt}: the chart-zero column bound.
+\item \lean{true_geometry_twist_value_alt}: the quadratic twist level.
+\end{enumerate}
+\textbf{Verdict on R4-D.} \sR. The proposition, the quantifier order and the object identity are reconstructed. The laws are transferred, the Weil data close modulo Kudla, the finite-combination data and the gluing of readings close. D1, D2, D3 and D5 to D9 remain.
+
+\section{The class data R4-E}\label{sec:r4e}
+
+\lean{AdForm.clsPinD_of_famCol_of_trueW} is live through \lean{true_geometry_family_column_data_alt}, \lean{lawsLinks_of_geo_rows_cols_alt} and the wrapper \lean{cls_pin_d_of_true_family}. Its first live consumers are \lean{kerX_of_clsPinD}, \lean{perX_of_clsPinD} and \lean{rdX_of_clsPinD} inside \lean{lawsLinks_of_geo_rows_cols_alt}. Its proposition is Proposition~C of the orphan pass, with the order of quantifiers checked there (the real datum before the family index). Of the $14{,}525$ declarations in its closure, $479$ theorems are exclusive, in five heads.
+\begin{enumerate}[nosep,label=E\arabic*.]
+\item The kernel laws \lean{KerLaws.clsKL_is}: the theta-kernel identity at every tuple (\lean{KerTup.kernel_identity_tuple}, 204), the action of the chart level pair on the finite datum (\lean{LevLaw.lev_law}, 97) and the determinant powers of the live-chart kernel vectors (\lean{clsKL_real}, 13).
+\item The last-period class data \lean{exists_clsT_of_pinTop}: \lean{tailTop_eq_of_pin} (55), \lean{TopInv.law_top} (39), \lean{isReps_stabOrd_top} (10), \lean{top_translate} (9).
+\item The jet scale \lean{JetScales.exists_jetS} through \lean{pureTensorO_zero_eq_jetP} (35).
+\item The real data of true columns \lean{realOf_is} through \lean{branching_true_columns} (29), whose mechanism is multiplicity-one branching from $U(n+1)$ to $U(n)$.
+\item The readings of level forms \lean{exists_readsG_of_level} through \lean{reading_stab_inv} (27), whose mechanism is Schur's lemma for the class stabiliser.
+\end{enumerate}
+The external inputs named by the orphan pass (Schur orthogonality, multiplicity-one branching, finiteness of class numbers) are on the boundary. None of the five heads was read beyond its top, so none closes here. \textbf{Verdict on R4-E.} \sR.
+
+\section{The small leaves SL-6}\label{sec:sl6}
+
+\subsection{Gauge volume of \texorpdfstring{$U(k)$}{U(k)}}
+
+\begin{proposition}[\lean{GaugeVolUD}, \lean{Formalism.L2.SG.Pf.GV.gaugeVolU}]\label{prop:sl6a}
+Let $\mathfrak u(k)$ be the Lie algebra of $U(k)\subset M_k(\mathbb C)$ with the Frobenius norm $\lVert X\rVert^2=\sum_{i,j}\lvert X_{ij}\rvert^2$, let $\lambda$ be the Lebesgue measure of this Euclidean structure and $B_\rho$ its ball of radius $\rho$, and let $\mu$ be a Haar measure on $U(k)$. Then the limit
+\[
+g=\lim_{\rho\to0^+}\frac{\mu(\exp B_\rho)}{\lambda(B_\rho)}
+\]
+exists and is positive, and
+\[
+\frac{\mu}{g}\bigl(U(k)\bigr)=\mathrm{vol}\,U(k):=\prod_{i=0}^{k-1}\frac{(2\pi)^{i+1}}{i!}.
+\]
+\end{proposition}
+
+\begin{proof}
+Write $\mu_1$ for the Haar probability measure and $T^+$ for the upper triangular matrices with positive diagonal, with coordinates $t_{jj}>0$ and $t_{ij}\in\mathbb C$ for $i<j$. Gram--Schmidt gives a homeomorphism $U(k)\times T^+\to\mathrm{GL}_k(\mathbb C)$, $(u,t)\mapsto ut$. Lebesgue measure $dZ$ on $M_k(\mathbb C)=\mathbb C^{k^2}$ is invariant under left multiplication by $U(k)$, and the change of variables in $t$ gives
+\[
+\int f(Z)\,dZ=C\int_{U(k)}\int_{T^+}f(ut)\,w(t)\,dt\,d\mu_1(u),\qquad w(t)=\prod_{j=1}^{k}t_{jj}^{\,2(k-j)+1},
+\]
+for some $C>0$ (\lean{qr_lintegral}). Testing with $f(Z)=e^{-\operatorname{tr}Z^*Z}$, for which $\operatorname{tr}Z^*Z=\sum\lvert t_{ij}\rvert^2$, the left side is $\pi^{k^2}$ and the right side is
+\[
+C\,\pi^{k(k-1)/2}\prod_{j=1}^{k}\int_0^\infty e^{-x^2}x^{2(k-j)+1}\,dx=C\,\pi^{k(k-1)/2}\prod_{m=1}^{k}\frac{(m-1)!}{2},
+\]
+so $C=V(k):=\prod_{m=1}^{k}2\pi^m/(m-1)!$ (\lean{qr_const}, \lean{gaussE_qr_const}). Near $(1,1)$ take coordinates $x$ on $\mathfrak u(k)$ given by the real diagonal parts and the complex strictly lower entries, with coordinate Lebesgue measure $\lambda_c$. The map $(x,t)\mapsto\exp(X(x))\,t$ has differential $(X,T)\mapsto X+T$ at $(0,1)$, which has Jacobian one in these coordinates, and $w(1)=1$. Lebesgue differentiation then gives $\mu_1(\exp B)/\lambda_c(B)\to1/V(k)$ as $B$ shrinks to $0$ (\lean{chartWR_vol}, \lean{volU_density}). For $X\in\mathfrak u(k)$ one has $\lVert X\rVert^2=\sum_jx_{jj}^2+2\sum_{i>j}\lvert x_{ij}\rvert^2$, so $\lambda=2^{k(k-1)/2}\lambda_c$. For $\mu=c\,\mu_1$ this gives $g=c/(2^{k(k-1)/2}V(k))$ and $(\mu/g)(U(k))=2^{k(k-1)/2}V(k)=\mathrm{vol}\,U(k)$ (\lean{volU_ratio}, \lean{ratio_tendsto}).
+\end{proof}
+
+The value is the Riemannian volume for $\langle X,Y\rangle=\operatorname{Re}\operatorname{tr}XY^*$. For $k=1$ it is $2\pi$, and for $k=2$ it is $8\pi^3$, which matches $U(2)=(U(1)\times SU(2))/\{\pm1\}$ with the centre a circle of length $2\pi\sqrt2$ and $SU(2)$ a round three-sphere of radius $\sqrt2$. The script \Lpath{scripts/sl6_constants_check.py} checks the Gaussian constant and the factor $2^{k(k-1)/2}$ symbolically for $k\le12$. \sC.
+
+\subsection{Jacobian constant of the double-coset decomposition}
+
+\begin{proposition}[\lean{RhsWLim}, \lean{GlobalTheory.RankOneChart.rhsWLim}]\label{prop:sl6b}
+Let $V=\mathbb C^{1+k}$ carry the hermitian form $h(v,w)=w^*Jv$ with $J=\mathrm{diag}(1,-1,\dots,-1)$, let $G=U(V,h)\cong U(1,k)$ with its gauge Haar measure $\mu_G$ (density one at the identity in exponential coordinates for the Frobenius norm), and let $z,z'\in V$ with $T=h(z,z)>0$ and $T'=h(z',z')>0$. Let $\mu_W$, $\mu_{W'}$ be Haar measures of total masses $a$, $a'$ on the stabilisers $H_z$, $H_{z'}\cong U(k)$, and let $m(\zeta)$ be a measurable section with $h(m(\zeta)z',z)=\zeta$ for $\lvert\zeta\rvert^2>TT'$. Then for every measurable $\varphi\ge0$ on $G$,
+\[
+\int_G\varphi\,d\mu_G=c_{W}\int_{\mathbb C}(\lvert\zeta\rvert^2-TT')_+^{\,k-1}\int_{H_z}\int_{H_{z'}}\varphi\bigl(h\,m(\zeta)\,h'^{-1}\bigr)\,d\mu_{W'}(h')\,d\mu_W(h)\,d\zeta,
+\]
+where
+\[
+c_W=\frac{2\,\mathrm{vol}\,U(k)^2}{(TT')^k\,\mathrm{vol}\,U(k-1)\,a\,a'}.
+\]
+\end{proposition}
+
+The archive states the identification of the constant as a limit at the base point $m(\zeta_0)$, $\zeta_0=2\sqrt{TT'}$. The density of $\mu_G$ there is one by left translation (\lean{GaugeShiftW}), so the limit in \lean{RhsWLim} equals $c_W^{-1}$, which is the identity above.
+
+\begin{proof}
+By $G$-equivariance we may take $z=\sqrt T\,e_0$ and $z'=\sqrt{T'}\,e_0$. Then $H_z=H_{z'}=K$ acts on $e_1,\dots,e_k$, and $\mathfrak g=\mathfrak k\oplus\mathfrak p$ orthogonally for the Frobenius form, with $\mathfrak p=\Bigl\{\begin{pmatrix}is&\gamma^*\\\gamma&0\end{pmatrix}\Bigr\}$ and $\lVert X\rVert^2=s^2+2\lvert\gamma\rvert^2$ on $\mathfrak p$.
+
+The orbit map $g\mapsto gz'$ identifies $G/K$ with the hyperboloid $X_{T'}=\{v:\lvert v_0\rvert^2-\lvert v'\rvert^2=T'\}$. The measure $\omega_{T'}=\delta(h(v,v)-T')\,dv$ is $G$-invariant. At $z'$ it is Lebesgue measure on the tangent coordinates $(\operatorname{Im}v_0,v')$ divided by $\lvert d\,h(v,v)\rvert=2\sqrt{T'}$. The map $X\mapsto Xz'=\sqrt{T'}(is,\gamma)$ sends Frobenius--Lebesgue measure on $\mathfrak p$, which is $2^k\,ds\,d^{2k}\gamma$, to $2^kT'^{-k-1/2}\,d(\operatorname{Im}v_0)\,d^{2k}v'$. So the invariant measure $\nu$ on $X_{T'}$ for which $\mu_G$ disintegrates as $\nu$ times gauge measure on the fibres is $\nu=2^{k+1}T'^{-k}\,\omega_{T'}$.
+
+Next push $\omega_{T'}$ forward by $v\mapsto\zeta=h(v,z)=\sqrt T\,v_0$. Integrating over $v'\in\mathbb C^k$ with $\lvert v'\rvert^2=R=\lvert v_0\rvert^2-T'$ gives $\int\delta(R-\lvert v'\rvert^2)\,d^{2k}v'=\pi^kR^{k-1}/(k-1)!$, so the push-forward is
+\[
+\frac{\pi^k}{(k-1)!\,T^k}\,(\lvert\zeta\rvert^2-TT')_+^{\,k-1}\,d\zeta,
+\]
+and the fibre over $\zeta$ is a sphere in $\mathbb C^k$ on which the conditional measure is the normalised $U(k)$-invariant measure, that is the push-forward of $\mu_K^{\mathrm g}/\mathrm{vol}\,U(k)$ under $h\mapsto h\,m(\zeta)z'$.
+
+Assembling the two steps,
+\[
+\mu_G=\frac{2^{k+1}\pi^k}{(k-1)!\,\mathrm{vol}\,U(k)\,(TT')^k}\;\Phi_*\bigl((\lvert\zeta\rvert^2-TT')_+^{k-1}d\zeta\otimes\mu_K^{\mathrm g}\otimes\mu_K^{\mathrm g}\bigr),\qquad\Phi(\zeta,h,h')=h\,m(\zeta)\,h'^{-1}.
+\]
+Since $\mathrm{vol}\,U(k)/\mathrm{vol}\,U(k-1)=(2\pi)^k/(k-1)!$ by the product formula, the constant equals $2/((TT')^k\,\mathrm{vol}\,U(k-1))$. Replacing the gauge measures by $\mu_W=(a/\mathrm{vol}\,U(k))\,\mu_K^{\mathrm g}$ and $\mu_{W'}=(a'/\mathrm{vol}\,U(k))\,\mu_K^{\mathrm g}$ gives $c_W$.
+\end{proof}
+
+The archive proves the same identity from seven leaves (\lean{rhsWLim_of_leaves}). They are the Haar density in the chart (\lean{HaarDens}), the polar form of the invariant measure on the hyperboloid (\lean{HypQ}, which is the second step above), the chart measure formula (\lean{HypChart}, the factor $1/2$ of the first step), the existence of the gauge measure on the stabiliser (\lean{GaugeK}), its volume (\lean{GaugeVolUk}, Proposition~\ref{prop:sl6a}), the tube-mass asymptotics (\lean{TubeLimK}, Lebesgue differentiation along the fibration), and the uniqueness of invariant measures on the orbit (\lean{OrbRepY}, Weil's quotient formula, on the boundary). The derivation above is independent of the archive and gives the archive's constant exactly. The script checks the equality of the two constants for $k\le12$ and the sphere integral numerically. \sC.
+
+\subsection{Capelli eigenvalue on carrier coefficients}
+
+\begin{proposition}[\lean{CoefCapAll}, \lean{coefCap_carrierInT_own}]\label{prop:sl6c}
+Let $\sigma$ be a discrete series of $U(p,q)$, $n=p+q$, with Harish-Chandra parameter $\lambda$ above the gap threshold, let $a,b$ be vectors with $b$ smooth, and let $P,Q$ be the transport matrices of the carrier with $QP=PQ=1$. For the coefficient $f(g)=\langle a,\sigma(PgQ)b\rangle\,T_0$ and the Capelli operator $\mathrm{Cap}(u)$ of the transported form,
+\[
+\mathrm{Cap}\Bigl(Y+\tfrac{n-1}{2}\Bigr)f=\prod_{s=1}^{n}(Y+\lambda_s)\,f.
+\]
+\end{proposition}
+
+\begin{proof}[Mechanism]
+A left-invariant differential operator acts on a matrix coefficient through the derived representation, so $\mathrm{Cap}(u)f(g)=\langle a,\sigma(PgQ)\,d\sigma(\mathrm{qdet}(u))\,b\rangle\,T_0$ (\lean{capelliH_cf_rect}, read in full, with smoothness of $b$). The quantum determinant is central in $U(\mathfrak{gl}_n)$ and its Harish-Chandra image is $\prod_s(u-\tfrac{n-1}{2}+\lambda_s)$ (Capelli's identity). On a discrete series with lowest $K$-type determined by $\lambda$ it therefore acts by $\prod_s(Y+\lambda_s)$. The archive verifies this scalar on an explicit lowest-$K$-type function $\Psi$ (\lean{psiCapelli}) and transfers it to every $\sigma$ satisfying \lean{IsDS}, which defines $\sigma$ by its minimal $K$-type (\lean{infChar_of_model}, \lean{anyCap}). That transfer is the lowest-$K$-type characterisation of discrete series together with Harish-Chandra's theorem that its infinitesimal character is $\lambda$.
+\end{proof}
+
+\sE: the Capelli identity (Molev, \emph{Yangians and Classical Lie Algebras}, ch.~7, already on the boundary) and Harish-Chandra's infinitesimal character of discrete series with the lowest-$K$-type characterisation (Schmid; Vogan; attribution from memory). The second is transferred to the boundary by name.
+
+\section{Liveness of the two families}\label{sec:live}
+
+\subsection{Family 1}
+
+\lean{UpperTheory.V.Pa.secondCohomologyBound_of_boundaryBound} is \textbf{LIVE AND CLOSED}. The witness path is
+\lean{modU_of_printsH}, \lean{Pa.pFromAut}, \lean{Pa.raw}, \lean{Pa.coreBC}, \lean{Pa.core}, \lean{Pa.cohLim}, \lean{secondCohomologyBound_of_boundaryBound}, below the V-window chain \lean{everyCharacter_of_row}, \lean{vwin_of_row}, \lean{automorphic_window_of_inputs}, \ldots, \lean{linkedUnlE_holds_alt}. \lean{pFromAut} names \lean{UpperTheory.V.Pa.raw}, \lean{raw} is \lean{raw_main coreBC}, \lean{coreBC} calls \lean{core} at \Lpath{CoreBC.lean}:49 with no local binder of that name and no private \lean{core} in the file, \lean{Pa.core} calls \lean{cohLim} at \Lpath{LiftPt.lean}:149, and \lean{cohLim} names the declaration of \Lpath{SecondCohomologyBoundOfBoundaryBound.lean} in namespace \lean{UpperTheory.V.Pa}.
+
+This corrects the earlier witnesses. Wave~6 reached \lean{Pa.core} from \lean{Pa.norm}, but \lean{norm} uses the private \lean{core} of \Lpath{ConjugationDescendsToSubring.lean}:137, a four-argument lemma, and the orphan pass's candidate ran through a local hypothesis \lean{key}. Both are false edges, and the path above replaces them.
+
+The content is the step of Taylor--Wiles--Kisin patching that passes from bounds on second Selmer classes modulo $t^m$, for every $m$, to a class over $K[[t]]$ (77 lines, read at the top). It takes an ultrafilter on $\mathbb N$ finer than the cofinite filter and passes to the limit of the level-$m$ solutions and of finitely many coefficients (\lean{selmer_second_exists_ultrafilter_limit}, \lean{power_series_exists_ultrafilter_limit}). This is a compactness argument. It lies on the patching route that the boundary lists as proved in the archive.
+
+\subsection{Family 2}
+
+The eight shared names \lean{core2}, \lean{third_identity}, \lean{stepB_of}, \lean{lift1}, \lean{fixBd}, \lean{pair_count}, \lean{detFin}, \lean{alInj} resolve to $25$ declarations. Twenty-three are live and two are dead. No member is LIVE AND RESIDUAL. The full table is in \Lpath{Final_Internal_Cleanup_Status.md}, Section~E, and the paths are in \Lpath{Liveness_Witness_Paths.md}.
+
+\begin{itemize}[nosep]
+\item \textbf{Dead.} \lean{Formalism.DivisionValues.stepB_of}, whose reverse closure with dot edges is $\{$\lean{stepB_of}, \lean{reduction_second_step}, \lean{stepB}$\}$ and is exhausted. \lean{LateralTheory.CohomologicalPurity.Thom.ExcP.Chart.lift1}, whose exact reverse closure has $21$ declarations and is exhausted, and the archive contains no use of the form \texttt{x.lift1}.
+\item \textbf{A correction to Wave~6.} \lean{UpperTheory.TorsionCardinalitySetup.Setup.core2}, which Wave~6 put off route, is live. It is used by dot notation, \texttt{hS.core2} with \texttt{hS : Setup \ldots}, at \Lpath{TraceIdentityOfTjElement.lean}:502 inside \lean{lat_main}. \lean{lat_main} is called by \lean{trace_identity_of_tjElement}, which is \lean{CovMain.trTj_of}, which \lean{FiniteEtaleModels.stepB} uses on the Galois side. Its content is a counting identity, $\#\{g:K(g),\ \mathfrak w g=1\}=[\Lambda:H_0\Lambda+\mathfrak w\Lambda]$, proved by a bijection between the killed points and a quotient of lattices. LIVE AND CLOSED, owner the Galois side.
+\item \textbf{Patching members.} \lean{UpperTheory.V.Pa.lift1} and \lean{alInj} (through \lean{Pa.core}, \lean{galOut}, \lean{ctx_out}, \lean{pres}, \lean{claim1}), \lean{fixBd} and \lean{pair_count} (through \lean{b1Ar}, \lean{b1abs}, \lean{W1_bound_arithmetic_rank_two}), \lean{Det.detFin} (through \lean{choice}). For \lean{Pa.lift1} the shortest exact path runs through a local \texttt{have lift1} in \lean{mkPt}, which is false, and the path through \lean{claim1} is the real one. LIVE AND EXTERNAL, on the patching row of the boundary.
+\item \textbf{New owners.} \lean{GlobalTheory.HoweR.QuadT.core2} (the Weyl-algebra commutator identity $\sum_al_{ai}u_{aj}=\sum_au_{aj}l_{ai}+\delta_{ij}\,\#\iota$, on the Howe-duality route), \lean{PositivityTheory.Rg.Sw.HSt.L3.core2} (vanishing of a singular determinant integral in the archive's proof of the Siegel--Weil formula, Layer~3 of V5), and the private \lean{core2} of \Lpath{DecompU.lean} (fixed vectors moved through the automorphic dictionary on the V-window route). The first and third are LIVE AND CLOSED, the second LIVE AND EXTERNAL.
+\item \textbf{Already classified by Wave~6 and confirmed live.} The remaining eleven, with the statuses of Wave~6's Table~R4 (closed, or external through Turán's second main theorem for \lean{TuranPowerSumBounds.core2}, or transferred to the Galois side for \lean{Gal.FiniteEtaleModels.stepB_of}), plus three definitions named \lean{lift1} (\lean{CosieveBC}, \lean{ThK.Dbl.Inert}, \lean{ColumnSystems.Pf}), which are closed.
+\end{itemize}
+
+\section{Residual table and transfer ledger}
+
+{\small
+\begin{longtable}{>{\rr}p{2.6cm} >{\rr}p{1.0cm} >{\rr}p{1.1cm} >{\rr}p{2.7cm} >{\rr}p{2.7cm} >{\rr}p{1.9cm} >{\rr}p{2.2cm}}
+\caption{Residual table. Sizes are exclusive theorems.}\label{tab:residual}\\
+\toprule
+theorem/family & live? & owner & mathematical content & mechanism & external boundary & verdict\\
+\midrule\endfirsthead
+\toprule
+theorem/family & live? & owner & mathematical content & mechanism & external boundary & verdict\\
+\midrule\endhead
+\lean{bwit_exists_alt}, \lean{exBL_isLinked_prmR_alt} & live & \PC{6} record core & Proposition~\ref{prop:bw} & assembly; X2--X6 closed & class field theory, discrete series (on boundary) & \sR: X1 ($\approx313$), X7 ($\approx95$), one X2 leaf ($30$)\\
+R4-D, \lean{Fam.colSide_alt} & live & \PC{4} & Proposition~\ref{prop:r4d} & assembly and quantifiers; laws transferred; Weil data, finite combinations and gluing closed & Kudla splitting (new) & \sR: D1, D2 leaves, D3, D5--D9 ($1{,}743$)\\
+R4-E, \lean{clsPinD_of_famCol_of_trueW} & live & \PC{4} & Proposition~C (orphan pass) & stated in the orphan pass & Schur, branching, class numbers & \sR: E1--E5 ($479$)\\
+\SL{6}a \lean{GaugeVolUD} & live & \PC{6} & Proposition~\ref{prop:sl6a} & Gaussian integral in QR coordinates, Lebesgue differentiation & none & \sC\\
+\SL{6}b \lean{RhsWLim} & live & \PC{6} & Proposition~\ref{prop:sl6b} & fibration over the hyperboloid, Gelfand--Leray measure, sphere fibres & Weil's quotient formula (on boundary) & \sC\\
+\SL{6}c \lean{CoefCapAll} & live & \PC{6} & Proposition~\ref{prop:sl6c} & coefficient of the quantum determinant; Harish-Chandra image & Capelli; Harish-Chandra (transfer) & \sE\\
+Family 1 & live & patching & ultrafilter limit of second Selmer classes & compactness & patching row & LIVE AND CLOSED\\
+Family 2 ($25$ declarations) & 23 live, 2 dead & per route & Section~\ref{sec:live} & Section~\ref{sec:live} & Turán; Siegel--Weil; Howe duality; patching & resolved, none residual\\
+\bottomrule
+\end{longtable}}
+
+\begin{longtable}{>{\rr}p{4.2cm} >{\rr}p{2.3cm} >{\rr}p{3.1cm} >{\rr}p{5.4cm}}
+\caption{Transfer ledger.}\\
+\toprule
+item & from & to & reason\\
+\midrule
+\lean{seeSawTwistPlaceLaws_of_rootOfUnityRescaling} ($1{,}073$ exclusive theorems) & R4-D & \PC{4} R4-A to R4-C & the seesaw twist-place laws \lean{QLaw}, \lean{QLast}, \lean{QFin}\\
+\lean{KomExist.exists_compactOpen_alt} & R4-D & external boundary, new row & splitting characters for unitary dual pairs (Kudla; Harris--Kudla--Sweet), proved internally by \lean{weilDatumExists}\\
+\SL{6}c & \PC{6} SL-6 & external boundary & Capelli (existing row); Harish-Chandra's infinitesimal character and the lowest-$K$-type characterisation (new by name)\\
+\lean{exists_hostDatum_alt} & record core & external boundary, existing rows & Hilbert class field by class field theory\\
+Family 1 & \PC{6} sweep & patching route & live, closed as a compactness step\\
+\lean{Setup.core2} & off route (Wave~6) & Galois side & live by dot notation, elementary counting\\
+\lean{HoweR.QuadT.core2}, \lean{Rg.Sw.HSt.L3.core2}, private \lean{core2} of \Lpath{DecompU.lean} & unowned & Howe duality, Siegel--Weil V5, V-window & live, contents above\\
+\bottomrule
+\end{longtable}
+
+\section{The final claim}\label{sec:final}
+
+\textbf{No.} The project cannot yet say that every live internal mathematical step on the RH route has been reconstructed in ordinary mathematics or transferred to an explicit external theorem boundary. Theorem by theorem:
+\begin{itemize}[nosep]
+\item \lean{bwit_exists_alt} and \lean{exBL_isLinked_prmR_alt}. Proposition~\ref{prop:bw}, its object and its uniformity are reconstructed, and five sub-blocks close. X1 (the kernel laws and the column reading at the base tuple), X7 (the pinned and kernel spectral data of a record compatible with the point) and one face-convention leaf remain. Not closed.
+\item R4-D. Proposition~\ref{prop:r4d} and its quantifier order are reconstructed, the laws are transferred, the Weil data close modulo Kudla, and the finite combinations and the gluing of readings close. The eight heads D1, D2 (leaves), D3, D5 to D9 are stated identities whose proofs are not reconstructed. Not closed.
+\item R4-E. Proposition~C stands and its five heads are unread. Not closed.
+\item \SL{6}a and \SL{6}b close. \SL{6}c closes modulo Capelli and Harish-Chandra.
+\item Families 1 and 2 are settled and contain no residual.
+\end{itemize}
+The surviving set is about $2{,}700$ exclusive theorems in sixteen named heads, all inside the PC4.13 family construction and its record witness. Three of the heads, X1, D6 and E1, are instances of one statement, the theta-equivariance of the step kernels of the tower at specific data. A single reconstruction of that law in the generality the three heads use would likely discharge them together, and it is the natural first target of any further pass.
+
+\section*{Files}
+
+\Lpath{Final_Internal_Cleanup_Status.md} (verdict, residual table, newly closed items, transfer ledger, liveness table, final claim), \Lpath{Residual_Heads.tsv} (every surviving head with its exclusive size), \Lpath{Liveness_Witness_Paths.md}, and \Lpath{scripts/} (indexer, graph builder, query tools, exclusive-closure tools, and the constant check for SL-6).
+
+\end{document}

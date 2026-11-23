@@ -1,0 +1,25 @@
+package	id	head	ledger_exclusive_theorems	recount	after_kernel_law	after_D123	status_this_pass	mechanism_or_note
+exBL/bwit	W1	GlobalTheory.Mem.R3.SelC.square_integrable_columns_of_witnesses	313	313	64	64	RESIDUAL	untouched this pass
+exBL/bwit	W2	exists_pinned_spectral_data_compatible + exists_kernel_spectral_data_at_witnesses	95	95	95	95	RESIDUAL	untouched
+exBL/bwit	W3	GlobalTheory.T.reFace_zero_part_conventions_chosen_again	30	36	36	36	RESIDUAL	untouched
+R4-D	D1	dat_exists children (row_pair_property, row_pair_relation_alt_alt, twist_quadratic_value)	741	735	735	77	REDUCED to leaves	Prop C (twist-prime dictionary), Prop C' (G-place dictionary), Prop F (factorization over places); remains L1 ratDatum_dT_levelPrime_alt (61) + 16 shared under L3
+R4-D	D2	exists_good, commutation_identity_alt, commutation_property_alt	571	533	533	99	REDUCED	exists_good closed by Prop C(v), Lemma L, Prop R; remains rebasing steps PenChart.exists_readsStd_alt (50), Fam.readsOfStd_alt (42) + 2 shared + 5 under L1/L3/L4
+R4-D	D3	chain_step_value, chain_step_identity, exists_volume_constant	516	515	515	128	REDUCED to leaves	Prop C(i,iii) + Prop V (restricted product index formula); remains L2 uloc_le_of_std (101), L3 uloc_le_alt (27)
+R4-D	D5	GlobalTheory.AdForm.twS_ramL	182	181	181	181	RESIDUAL	untouched; 97 theorems lie under L2
+R4-D	D7	GlobalTheory.QVecJoin.step_mid / step_top	88	83	83	76	RESIDUAL (partial collapse)	7 theorems closed with C-tw
+R4-D	D8	GlobalTheory.T.true_geometry_row_column_entry_alt	61	46	46	46	RESIDUAL	untouched
+R4-D	D9	GlobalTheory.T.true_geometry_twist_value_alt	51	43	43	28	RESIDUAL (partial collapse)	15 theorems closed with C-tw
+R4-E	E1a	thetaKernel_eq_jet_thC leaves	204	191	191	191	MECHANISM RECONSTRUCTED; leaves remain	untouched this pass
+R4-E	E1b	movedDatum_eq_finiteDatum_representativePair + chr_moves_eq_rho_base	-	13 (+102 shared)	13 (+102 shared)	13 (+102 shared)	RESIDUAL	untouched
+R4-E	E1c	LevLaw.lev_law + clsKL_real	97+13	103	103	103	RESIDUAL	untouched
+R4-E	E2	GlobalTheory.AdForm.exists_clsT_of_pinTop	85	85	85	85	RESIDUAL	untouched
+R4-E	E3	GlobalTheory.AdForm.JetScales.exists_jetS	35	35	35	35	RESIDUAL	untouched
+R4-E	E4	GlobalTheory.AdForm.realOf_is	29	29	29	29	RESIDUAL	untouched
+R4-E	E5	GlobalTheory.AdForm.exists_readsG_of_level	27	27	27	27	RESIDUAL	untouched
+shared	K-a	IntegralLatticeDensity.rational_integrality_link etc.	-	105	105	105	LEAF	untouched
+shared	K-b	IntegralLatticeDensity.SO.stdOK	-	41	41	41	LEAF	untouched
+shared	K-c	split data inside sqSplit_of, muOneL_of, muOneR_of	-	97	97	97	LEAF	untouched
+D123 leaf	L1	GlobalTheory.Fam.ratDatum_dT_levelPrime_alt	-	61	-	61	LEAF (statement level)	level-prime datum phiT is rational (twistFiniteDatum_theta_at_levelPrime)
+D123 leaf	L2	GlobalTheory.PenLevPrime.uloc_le_of_std	-	101	-	101	LEAF (statement level)	local penultimate level at a level prime is the same for all twist data with standard data
+D123 leaf	L3	GlobalTheory.PenLevTyp.uloc_le_alt	-	27	-	27	LEAF (statement level)	local penultimate level at a non-twisting G-place is the same for all readings
+D123 leaf	L4	GlobalTheory.AdForm.exists_twDat_baseStd	-	27	-	27	LEAF (statement level)	adelic twist datum with standard base points

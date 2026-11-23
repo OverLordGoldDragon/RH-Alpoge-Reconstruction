@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\OEr}{\mathcal O_E}
+\newcommand{\A}{\mathbb A}
+\newcommand{\Af}{\mathbb A_f}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\vol}{\operatorname{vol}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The bundle-witness heads W1--W3\\ Five propositions behind the record-compatible bundle witness}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The heads W1, W2 and W3 are the last unread parts of the record witness \lean{exBL_isLinked_prmR_alt}, which produces the linked bundles that the family conditions of PC4.13 read. This pass identifies each head on the rebuilt declaration graph, removes what the kernel-law pass and the earlier packages already closed, and reads what is left. The kernel-law pass had left three support leaves K-a, K-b and K-c at statement level, and all of them lie inside W1. Counted with them, the three heads contain $430$ distinct theorems (W1 $299$, W2 $95$, W3 $36$), and no theorem belongs to two heads. They are explained by five propositions: the column record of the base tuple, the integrality and split data of the Fock period lattices, the class-field pieces of the small field, the joints of the standard character, and the conventions on zero parts. These are separate arguments. The one shared support is the K-leaf block, which W1 shares with the closed D6 branch. Each proposition is proved here, or reduced to Artin reciprocity, the Weber ray-class-field theorem of complex multiplication and Weil's 1964 constants, all of which are already on the external boundary. The verdict is that W1--W3 are closed at the human-proof boundary. Nothing was transferred to the D-agent, nothing was built or run in Lean, and no existing project file was edited.
+\end{abstract}
+
+\tableofcontents
+
+\section{Sources, method and the answer in brief}
+
+\subsection{Copies and graph}
+The archive, its checksum and the supporting reports are those of the E-block pass, \lean{lean.tar.gz} with SHA-256 \texttt{9631b4f0\ldots 3f49c7fc}, unpacked and checked file by file against the Kernel Replay manifest. The graph is the same rebuild with $1{,}066{,}087$ declarations and exact edges only.
+
+\subsection{Which block top}
+The earlier passes measured the W-heads against two different tops. The cleanup pass used \lean{GlobalTheory.Mem.Top.Bl.exBL_isLinked_prmR_alt}, with $652$ exclusive theorems. The kernel-law pass used its child \lean{GlobalTheory.Mem.R3.SelAll.bwit_exists_alt}, with $202$ exclusive theorems. W2 does not lie under \lean{bwit_exists_alt}. It lies under \lean{exBL_isLinked_alt}, the other branch of the same top. This pass therefore uses \lean{exBL_isLinked_prmR_alt} as the block top. The domain of a head is the block-exclusive set together with the joint-only material, meaning the theorems reachable only through the union of this top, \lean{Fam.colSide_alt} and \lean{AdForm.clsPinD_of_famCol_of_trueW} and exclusive to none of them ($610$ theorems). From each head's closure in this domain the following are subtracted as already closed.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item The kernel law of \lean{Final_Kernel_Law}: the closure of its components K1--K6 and K8, and the X1 core \lean{hyps_of_isTw} and \lean{chTh_ok_chi}, which that pass read in full. The normal-form leaf \lean{idxMatNF_of_isTw} is excepted, as that pass moved it to W1.
+\item The E-block union of \lean{Final_EBlock}.
+\item The D1--D3 union of \lean{Final_D123}.
+\end{itemize}
+The K-leaves K-a, K-b and K-c are \emph{not} subtracted, because the kernel-law pass left them at statement level.
+
+\subsection{Answer in brief}
+\textbf{A. W-block verdict: YES.} W1, W2 and W3 are closed at the human-proof boundary. Section~\ref{sec:props} states and proves the five propositions. The external theorems used are Artin reciprocity, the Weber ray-class-field theorem and Weil's 1964 constants, all already on the boundary.
+
+\section{The three heads}\label{sec:id}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{0.8cm}>{\rr}p{4.5cm}>{\rr}p{4.4cm}>{\rr}p{4.6cm}}
+\toprule
+head & exact declaration & first live consumer & live path from the block top\\
+\midrule
+W1 & \lean{Mem.R3.SelC.square_integrable_columns_of_witnesses} (\Lpath{TPS/ExistsRowsKCColPins.lean}:213) & \lean{Top.Bl.ze_u_prm_of_extension_with_law}, also \lean{T.exists_square_integrable_columns_of_heq_data} on the \lean{bwit} branch & \lean{exBL_isLinked_prmR_alt} $\to$ \lean{zeta_uniform_of_extension'} $\to$ \lean{ze_u_prm_of_extension_with_law} $\to$ W1\\
+W2a & \lean{Top.Bl.WPt.exists_pinned_spectral_data_compatible} (\Lpath{TPS/TiedDataSAssemble.lean}:55) & \lean{T.exists_spectral_data_compatible} (wrapper) under \lean{WPt.exists_recPinE_alt} & \lean{exBL_isLinked_prmR_alt} $\to$ \lean{eta_size_recursion_alt} $\to$ \lean{exBL_isLinked_alt} $\to$ \lean{exists_reciprocity_record_compatible} $\to$ \lean{exists_recPinE_alt} $\to$ W2a\\
+W2b & \lean{Top.Bl.exists_kernel_spectral_data_at_witnesses} (\Lpath{TPS/TiedSKAtWitnesses.lean}:23) & \lean{WPt.exists_recPinE_alt} & as W2a\\
+W3 & \lean{T.reFace_zero_part_conventions_chosen_again} (statement of \lean{Mem.R3.reFace_zero_parts}) & \lean{Mem.R3.twArgs_exists} & \lean{exBL_isLinked_prmR_alt} $\to$ \lean{local_langlands_prm_reduction_alt} $\to$ \lean{bwit_exists_alt} $\to$ \lean{exists_selected_realization_alt} $\to$ \lean{exists_selection_pair_local_langlands_alt} $\to$ \lean{selection_group_ambient_tie} $\to$ \lean{column_params_instance_data} $\to$ \lean{twArgs_exists} $\to$ W3\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Every edge on these paths, and every edge from a consumer to its head, is a fully qualified call in a proof body, checked in the source text. None comes from short-name, namespace, dot-notation or local-variable resolution. The K-leaves enter W1 through \lean{colRecC} $\to$ \lean{hyps_of_isTw} $\to$ \lean{chTh_ok_chi} $\to$ \lean{thEquivP_ambOf_tiesD} $\to$ \lean{thIndEq_ambOf_car} $\to$ \lean{SqG.eqP_car}, and \lean{eqP_car} calls the K-c lemmas through \lean{eqP_all}, \lean{eqP_gen} and \lean{eqP_of_pair}.
+
+\subsection{The propositions represented by the heads}
+
+\paragraph{W1.} Let $q$ be a weighted point of a context $K$, $t$ a pinned kernel entry at $q$ (\lean{KPin}), and assume the row family of $q$ is nonempty. Then there are face data $(D_c,S_p,Z_{sc})$ and a column reading $C_0$ such that for every tied spectral datum $T$ with kernel $t$, every twisted argument $a$ with face $D_c$ and every twisted input $x$ equal to $a.x$ whose reading data agree with $C_0$, there are square-integrable columns for $T$ and $x$ with the prescribed face, period, weights and character set $X_g$, and with compatible column characters. The quantifier order is $\exists(D_c,S_p,Z_{sc},C_0)$ before $\forall T$, so the face and the reading depend on $t$ alone. The statement is global (adelic forms on the columns of the base tuple) and representation theoretic.
+
+\paragraph{W2.} (a) Assume Artin reciprocity and the Weber ray-class-field theorem. For every local Langlands record, context and weighted point $q$ whose level data are tied and zeta-compatible, there is a tied spectral datum $S$ compatible with $q$. (b) For every compatible $S$ and pinned kernel entry $t$ there is a tied kernel spectral datum $T$ extending $S$ with $T.\mathrm{ker}=t$, all coordinates equal to $1$, minimal row pins, the joints of the standard character, and Weil-compatible equivariance. Part (a) is arithmetic (class fields of a small field), and part (b) is local (characters at the places over the small primes).
+
+\paragraph{W3.} Let $R$ be a real datum at a face $F$ satisfying its pins and its axioms, such that every part with nonzero eigenspace has nonzero weight space and the part conditions away from the base place $v_0$. Then for every re-choice of the face data $(D_c,S_p,Z_{sc})$ there are scalars $(\kappa,\lambda)$ and an error term such that the updated datum satisfies the pins, the axioms and the error identity at the new face, $\kappa$ is unchanged, $\lambda$ is unchanged on every part with nonzero eigenspace, and the readings $(Y,Z)$ are unchanged. This is a statement about conventions at a fixed point.
+
+\section{One mechanism or several}\label{sec:common}
+
+The three heads are separate arguments. Their residual sets are pairwise disjoint (Section~\ref{sec:count}). W1 and W2b both concern the kernel entry $t$ of the base tuple, but W2b produces a tied kernel datum with kernel $t$, while W1 consumes one to build columns, and the two share no theorem. W2a and W2b meet only in the four-line assembly \lean{exists_recPinE_alt}, together with the host datum that the cleanup pass closed. The one shared structure is the K-leaf block (integrality and split data of the Fock period lattices). It lies entirely inside W1, and W1 shares it with \lean{Fam.colSide_alt} through the kernel law of the closed D6 branch. It is reconstructed once below as Proposition~\ref{prop:Q2} and serves both. In the classification requested, W1--W3 are three separate arguments, with one shared support block between W1 and D6.
+
+\section{The five propositions}\label{sec:props}
+
+\subsection{Q1. The column record of the base tuple (W1, 64 theorems)}
+
+\begin{proposition}[column record]\label{prop:Q1}
+Let the base tuple of the true columns satisfy the kernel laws of the kernel-law report, Proposition~A. Then:
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item The column record \lean{colRecC} built from the base tuple, with index sets \lean{idxT}, finite coupling index sets, step kernels and evaluation datum, satisfies its axioms. Its face depends on the kernel entry $t$ alone.
+\item The square-integrable columns built from this record (\lean{squareIntegrableColumnsOfKernel}) have compatible column characters (\lean{ColumnCharactersCompatible}).
+\item The column reading $C_0$ (\lean{exists_readC_wU_eq_id}) exists with word map the identity, and the identification $e_\nu$ of the step-zero space is an isometry for the majorants.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) The axioms of the record are the kernel equivalence and the chain conditions of every step, which are the conclusions of \lean{hyps_of_isTw} (closed by the kernel law), the index-set conditions \lean{idxT_ok} (\lean{of_forall_ix} passes a statement proved for every index to the indices of the tuple), finiteness of the coupling index sets, and \lean{evaluationDatum_ok_baseTuple}. The face is a function of \lean{colRecK}~$t$, so the existential precedes $\forall T$.
+
+(ii) Compatibility has six fields. Five are definitional ties (group, places, point character, weights through \lean{wtTie_base} and \lean{lamOfCol_colK_eq_lamTrue}, and the host weights through \lean{iT_heq}). The sixth field is the character set, the normal form and the column evaluation.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Character set} (\lean{mem_iff_XgE}). For a finite group $G$ and a set $X_g$ of absolutely irreducible characters, $\chi\in X_g$ if and only if $\chi$ is absolutely irreducible and $\sum_g\chi(g)e(g^{-1})=\chi(1)$, where $e$ is the central idempotent $\sum_{\chi\in X_g}\frac{\chi(1)}{\lvert G\rvert}\sum_g\chi(g^{-1})g$. This follows from Schur orthogonality: pairing $\chi$ with $e$ gives $\chi(1)$ when $\chi\in X_g$ and $0$ otherwise. The criterion is transported along the group isomorphism $e_G$ and the embedding $\sigma$.
+\item \emph{Normal form} (\lean{idxMatNF_of_isTw} through \lean{twNF_imp_matNF}, read in full). At a prime $P$ outside the $G$-places, the image $h(\Lambda_Y)$ of the twisted lattice has the twisted normal form, meaning $y\in h(\Lambda_Y)$ if and only if the first $N$ coordinates minus $y_N z$ lie in the standard lattice and the last coordinates are $q^{n_i}$ times integers. This is equivalent to $h(\Lambda_Y)$ being the image of $\Lambda_Y$ under the block matrix $\begin{pmatrix}1&z\,e_0^{\mathsf T}\\0&\mathrm{diag}(q^{n_i})\end{pmatrix}$. One direction writes $y=\iota(\ell)+\sum_is_i\,\mathrm{nfGen}_i$ with $\ell=y'-y_Nz$ and $s_i=q^{-n_i}y''_i$, and the converse reads the coordinates back. Linear algebra over the local ring.
+\item \emph{Column evaluation} (\lean{exists_read_fam}, \lean{exists_read}, \lean{evC_res_lvl}, \lean{evRow_res_lvl}). The evaluation of a row value $x$ at the level is $\mathrm{lvlE}\circ\mathrm{lvlPr}\circ V_0E\,(x)$, and this composite is the identity on the level space (\lean{lvlE_lvlPr_V0E}, upstream). The hypotheses are that the hermitian form is positive definite at $v_0$, that $v_0$ is a conjugation place, and that the characters in $X_g$ are absolutely irreducible. So every family of row values is read by some column, which is the surjectivity required.
+\end{itemize}
+(iii) The majorant of the step-zero space in its rational basis equals the weighted class sum $\sum_c\mathrm{wt}(c)^{-1}\langle x_c,y_c\rangle_v$ (\lean{majAt_eq_classSum}). Both sides are sesquilinear and agree on the diagonal, so polarization gives equality. The norm of a column at step zero equals the norm of its coordinate vector (\lean{nrm_stepZero_eq}), so $e_\nu$ preserves norms, and by polarization it preserves the majorants (\lean{exists_eNu}). The record character agrees with the level character on norm-one ideals because the ratio of determinants is pinned (\lean{chiRec_eq_chi}). The remaining nodes are the definitions \lean{ExtendedDataRemainder}, \lean{NuC} and \lean{scaledRamifiedLattice} and the heterogeneous-equality transports \lean{tup_heq} and \lean{args_pinned_heq_zsOf_mem_eq}.
+\end{proof}
+
+\subsection{Q2. Integrality and split data of the Fock period lattices (K-leaves, 235 theorems)}
+
+Let $E$ be the CM host with CM type $\Phi$, $\mathfrak a=\mathfrak A_0\subset\OEr$ the ideal of the CM elliptic curve, $\Lambda_0$ its period lattice, $\delta$ a twelfth root of the discriminant of $\Lambda_0$, and $d$ the discriminant parameter. For self-dual $\OEr$-lattices $N\subset E^a$ and $N'\subset E^b$ with $a,b$ even (\lean{admitted}), the period lattice is $\Lambda(N,N')=\iota(\mathfrak a\Hom(N,N'))\subset V=\prod_{\tau\in\Phi}M_{b\times a}(\mathbb C)$, with $\iota(x)=\delta(\tau(x))_\tau$. The Fock form is $H$ and $\alpha(v)=(-1)^{q(v)}$, where $q(v)$ is the nearest integer to $\frac{\sqrt d}2H(v,v)$.
+
+\begin{proposition}[Q2]\label{prop:Q2}
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item \emph{(K-a, 105 theorems.)} $\delta\neq0$, and for $v,w\in\Lambda(N,N')$ the numbers $\frac{\sqrt d}2H(v,v)$ and $\sqrt d\,\mathrm{Re}\,H(v,w)$ are integers. Hence $\alpha$ is a semicharacter on $\Lambda(N,N')$.
+\item \emph{(K-b, 41 further theorems.)} The standard data are admissible (\lean{StdOK}). The standard lattice $\OEr^N$ is self-dual, $\alpha$ is a semicharacter on $\Lambda(\mathrm{std},\mathrm{std})$, the half lattices of the standard frame exist, the CM theta constant equals the value $\varphi_0(\omega)$ fixed by the base datum, and the image of the fourth power of the standard period lattice under the base change $\gamma_0$ is commensurable with the standard lattice with explicit clearing integers.
+\item \emph{(K-c, 89 further theorems.)} For self-dual $L,L_1\subset E^N$ and $L',L''\subset E^{N'}$ the four period lattices of the square $(L,L',L_1,L'')$ have a common pair of polarizing subgroups (\lean{SqSplit}). For the move triangles $(\mathrm{std},L,L_1)$ and their mirror images, Weil's triple constant equals $1$ (\lean{MuOneL}, \lean{MuOneR}).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) $\delta\neq0$ because the Weierstrass discriminant $g_2^3-27g_3^2$ of a lattice in $\mathbb C$ does not vanish (\lean{discrNe}, \lean{discNeZero}). The sum over the CM type of an embedding and its conjugate is the trace, $\sum_{\tau\in\Phi}(\tau(z)+\overline{\tau(z)})=\Tr_{E/\mathbb Q}(z)$ (\lean{FL.sum_tau_trace}), so $\sqrt d\,\mathrm{Re}\,H(\iota x,\iota y)=\Tr_{E/\mathbb Q}\bigl(\kappa\,\tr(y^*x)\bigr)$ for a constant $\kappa\in E$ fixed by $\xi_0$, $d$ and the scale (\lean{Hf_embV}). For generators $x=aA_0$ and $y=bB_0$ with $a,b\in\mathfrak a$ and $A_0,B_0\in\Hom(N,N')$, one has $\tr(y^*x)=a\bar b\,\tr(B_0^*A_0)$. Since $N'$ is self-dual, $B_0^*A_0$ maps $N$ to its dual, which is $N$, so its trace lies in $\OEr$ (\lean{sE_hom}). The curve ideal satisfies $\kappa\,\mathfrak a\bar{\mathfrak a}\subset\mathfrak d^{-1}_{E/\mathbb Q}$ (\lean{trOK_gen}), so the trace is an integer (\lean{TI.trOK_YY}, \lean{hermitian_pairing_integral}). Integrality on generators extends to the lattice because $H(v+w,v+w)=H(v,v)+H(w,w)+2\,\mathrm{Re}\,H(v,w)$ (\lean{IO.HfInt_closure}, \lean{HfIntRec_of_gen}). Then $\alpha(v+w)=\alpha(v)\alpha(w)(-1)^{\sqrt d\,\mathrm{Re}H(v,w)}$, which is the semicharacter property (\lean{rational_integrality_link}).
+
+(b) $\OEr^N$ with $h(x,y)=\sum x_i\bar y_i$ is its own dual (\lean{stdL_isSD}), and the semicharacter is (a) for $N=N'=\mathrm{std}$ (\lean{SO.betaSemi}, \lean{SO.selfDual}). The theta constant identity \lean{SO.theta_eq} is the defining formula of \lean{cmTheta} evaluated at the phase of $\omega$ (\lean{AR.ph_om}). The half lattices are those of the standard frame (\lean{SO.half}, \lean{SO.hst}). The clearing integers \lean{SO.up} and \lean{SO.down} are the products of the denominators of the finitely many entries of $\gamma_0$ and $\gamma_0^{-1}$ (\lean{exists_nat_clearing_order_denominators}, \lean{denom}).
+
+(c) Choose $n\neq0$ in $\OEr$ with $nL\subset L_1\subset n^{-1}L$ (\lean{exists_n}). The split-pair theorem gives a matrix $e$ preserving $L'$ and $L''$ with $e^2\equiv e$, $e^*e\equiv0$ and $(1-e)^*(1-e)\equiv0$ modulo $n(L'\cap L'')$ (\lean{SplitPairGen}, discharged by the upstream theorem \lean{split_pair_generation}, which uses that $E/F$ is unramified at every prime in the sense of \lean{IsCMUnram}). The images of $e$ and $1-e$ are isotropic and complementary modulo $n$, so on all four period lattices of the square they cut out one pair of Lagrangian subgroups on which $\alpha$ is a character (\lean{law_of_good}, \lean{good_of_lat}, \lean{bet_phi}). This is \lean{sqSplit_of}. For the move triangles, Weil's formula writes the triple constant as a product of sign data attached to a projection $p$, an involution $\sigma$ and multiplication by an $l\in\OEr$ with $\bar l\,l=-1+4es$ (\lean{Mu.signData_of}). The sign data are multiplicative (\lean{al_mul}, \lean{altE_mul}), and such an $l$ exists because $-1$ is a norm modulo $4e$ (\lean{J.negOneNorm}). This is the computation that the kernel-law report proved as its Lemma~3, there for fixed-point-free unitaries, and it gives $\mu=1$ (\lean{muOneL_of}, \lean{muOneR_of}). Weil's triple formula itself is \lean{tripleFormula}, which is on the boundary (F4-C1) and also proved in the archive.
+\end{proof}
+
+\subsection{Q3. The class-field pieces of the small field (W2a, 66 theorems)}
+
+\begin{proposition}[Q3]\label{prop:Q3}
+Assume Artin reciprocity for number fields and the Weber ray-class-field theorem: for an imaginary quadratic field $K$ with $\mathrm{disc}\,K<-4$, an $\mathcal O_K$-lattice $L$ and $n\geq1$, the field $K(\text{Weber values of the }n\text{-torsion of }\mathbb C/L)$ is the ray class field of conductor $n\mathcal O_K$. Let $K=\mathbb Q(\sqrt{-d})$ with $d\equiv7\pmod{16}$ prime, and let $\delta$ be the field datum of the stage, consisting of a CM elliptic curve over the $j$-field with good reduction outside $6d$, the ray field, the torsion field and the fields $K_\Psi$. Then inside a fixed algebraic closure there are pieces with the following properties.
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item $H_K=K(j(\mathcal O_K))$ is the Hilbert class field of $K$.
+\item The ray field is abelian over $K$ with the prescribed conductor.
+\item The torsion field $M$ has the stated degree bound, it is ramified only above primes dividing $6d$, and it contains a twelfth root of the discriminant $\Delta$ of the curve, which generates it over $H_K$.
+\item The compositum of the $K_\Psi$ has explicit generators and is ramified only at primes dividing their discriminants.
+\end{enumerate}
+When the small field of the stage is the listed field (\lean{KsExact}), its ring of integers is the set of integral elements of that field, which gives the tied datum \lean{OTied}.
+\end{proposition}
+
+\begin{proof}
+(i) Since $d\equiv7\pmod{16}$, the discriminant is $-d<-4$, so the Weber theorem with $n=1$ applies and $K(j(\mathcal O_K))$ is the ray class field of conductor $1$ (\lean{isRayFieldIn_hilbertField}, \lean{hilbert_qb}). By Artin reciprocity an abelian extension is determined by its norm group, so this field is the Hilbert class field (\lean{isHilbertCF_qb}). Galois-ness of $\mathbb Q(\sqrt{-d})$ and its discriminant are checked directly (\lean{isGalois_finrank_discr_adjoin_sqrt_neg_prime}). (ii) Abelianness transfers along the embedding into the closure, and the conductor bound holds because a prime ramified in a number field divides the discriminant, through the different ideal (\lean{ray_qb}, \lean{natAbs_discr_dvd}, \lean{natCast_mem_differentIdeal}). (iii) The degree bound and the ramification at good primes of the torsion field are upstream (\lean{finrank_torsionField_le}, \lean{dvd_discr_torsionField}). The field generated by a twelfth root of $\Delta$ is the torsion field (\lean{discField_eq_torsionField}, upstream), so a twelfth root $z$ of $\Delta$ lies in $M$, and $z\neq0$ because $\Delta$ is a unit. (iv) The compositum of finitely many fields generated by roots is generated by those roots, and a prime dividing the discriminant of a compositum divides the discriminant of one of the factors (\lean{sup_adjoin_roots}, \lean{prime_dvd_discr_iSup_kPsi}, \lean{exists_kPsiField_generators}). The final claim is the intersection argument of \lean{oTied_of_ksExact} and \lean{ksQ_eq}, read in full: an element of the closure lies in the image of $\mathcal O_{K_s}$ if and only if it lies in the listed field and is integral over $\mathbb Z$.
+\end{proof}
+
+\subsection{Q4. Joints of the standard character (W2b, 22 theorems)}
+
+\begin{proposition}[Q4]\label{prop:Q4}
+Let $\psi$ be the standard character of $\A_F/F$ normalized by \lean{IsStdChar}~$(-1)$, $v$ a prime of $F$ of degree one over $p$ and unramified, and $\varepsilon$ its idempotent. Then the following hold.
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item For $a\in\mathcal O_F$ and $b\in\mathbb Z$ with $a\equiv b\pmod v$, $\psi\bigl(\varepsilon\,a/p\bigr)=\exp(2\pi i\,b/p)$. Hence the residue character $\psi_0$ of the local datum at a small prime $g_k$ is $y\mapsto\psi(\varepsilon\,c\,y/g_k)$ for $c$ close to the image of $\xi_0$.
+\item The character $\chi_B$ at $v$ takes the value $\omega_k(n)^{2(a+1)}$ at $n$ prime to $g_k$.
+\item The finite idele of a ratio $k\in E^\times$ at a split place is a determinant lift of the corresponding local idele.
+\end{enumerate}
+Consequently the tied datum $S$ extends to a tied kernel datum $T$ with $T.\mathrm{ker}=t$ and all coordinates $1$, satisfying the joints \lean{JointsSAlt}.
+\end{proposition}
+
+\begin{proof}
+(i) The local component of the standard character at $v$ is $x\mapsto\exp\bigl(2\pi i\,\{\Tr_{F_v/\mathbb Q_p}x\}_p\bigr)$ up to the global sign fixed by the normalization. At a degree-one unramified place the trace is the identity, and $\{a/p\}_p=\{b/p\}_p$ since $a-b\in v$ (\lean{standardAddChar_placeIdempotent_div_prime}). Matching the reduction of the column character with this value is \lean{columnCharacter_reduction_eq_exp}, through the primality of the lower ideal (\lean{lowIdeal_isPrime}) and the existence of an integral inverse of $\xi_0$. (ii) Evaluation of the chain character on the integers prime to $g_k$ (\lean{JointsStd.om_std}). (iii) The determinant of the one-by-one unitary idele is the ratio, place by place (\lean{isDetLift_local}). The joints then hold field by field (\lean{joints_of_standard_character}), and $T$ is assembled with the kernel entry and the row pin (\lean{exists_kernel_spectral_data_at_witnesses}, \lean{lowerMap_tieTw_alt}).
+\end{proof}
+
+\subsection{Q5. Conventions on zero parts (W3, 36 theorems)}
+
+\begin{proposition}[Q5]\label{prop:Q5}
+In the setting of W3, define $\lambda'$ to agree with $\lambda$ on every part whose eigenspace $E_p$ is nonzero and to take the new face's convention on the parts with $E_p=0$ (\lean{zeroLam}). Keep $\kappa$, and take the error term of the new face. Then every pin, every axiom and the error identity hold at the new face, and the readings are unchanged.
+\end{proposition}
+
+\begin{proof}
+\emph{Zero parts are zero.} If $E_p=0$, then the level subspace $Q_p$ at the base place is $0$ (\lean{qp_bot}). A vector in the $p$-part of the row space corresponds to a row (\lean{part_iff_rows3}), and the subspaces are stable in each block. Its image under the theta map $\Theta$ lies in $E_p=0$, and $\Theta$ is injective on the row, so the vector is $0$. \emph{Nonzero parts are untouched.} On a part with $E_p\neq0$ the weight space is nonzero and the part conditions hold away from $v_0$, so $\lambda'=\lambda$ there (\lean{zeroLam_of_ne}, \lean{scalarsZeroPartConvention_fixedPlace}). Each axiom is an identity of the form $\lambda_p\cdot(\text{something on the }p\text{-part})=\ldots$. It is unchanged on nonzero parts and holds trivially on zero parts, where both sides vanish. This covers the scalar conditions (\lean{scal_zeroLam}), the primitive rows and their two theorems (\lean{thmA_zeroLam}, \lean{thmB_zeroLam}), the Galois conjugation (\lean{galD_zeroLam}), the further rows (\lean{furtherRows_updatedScalars}) and the pins (\lean{pins_updS}). The complex data $X_E$ of the readings involve $\lambda$ through parts only, so they are unchanged (\lean{XE_updS_zeroLam}), and the readings are carried over (\lean{read_updS_keep}). The body is \lean{reFace_zero_parts}, read in full.
+\end{proof}
+
+\section{Interaction with the closed blocks}\label{sec:closed}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{3.4cm}>{\rr}p{11.4cm}}
+\toprule
+closed block & what W1--W3 reuse\\
+\midrule
+kernel law (\lean{Final_Kernel_Law}) & $462$ of W1's $761$ theorems in the W-domain ($673$ if the K-leaves are counted, which that pass left at statement level): Proposition~A, the X1 core \lean{hyps_of_isTw} and \lean{chTh_ok_chi}, and the base vector with its constants. Proposition~\ref{prop:Q2}(c) reuses its Lemma~3 (the $-1$-norm computation).\\
+D1--D5 & no overlap (Final\_D123 classes, and the D5, D7, D8, D9 closures do not reach any W residual)\\
+E1--E5 & no overlap. The E-block's Lemma~1(c) is the twisted-half instance of Proposition~\ref{prop:Q2}(a), proved by the same trace argument.\\
+PC packages, cleanup pass & host datum X4 (Hilbert class field, closed in the cleanup) is the other input of \lean{exists_recPinE_alt}. The Hecke parts X3 and transports X5, X6 are closed there. The \lean{GlobalArtinReciprocity} and ray-field rows are those of PC-6.\\
+orphan/interface pass & Proposition~BW of the cleanup and Proposition~B of the orphan pass give the statement and use of the record witness. They are not reopened.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Counts}\label{sec:count}
+
+\begin{center}\small
+\begin{tabular}{lrrrr}
+\toprule
+mechanism & union & W1 & W2 & W3\\
+\midrule
+Q1 column record & 64 & 64 & & \\
+Q2 K-leaves (K-a 105, K-b 41, K-c 89) & 235 & 235 & & \\
+Q3 class-field pieces & 66 & & 66 & \\
+Q4 joints of the standard character & 22 & & 22 & \\
+Q5 zero-part conventions & 36 & & & 36\\
+assembly (\lean{exists_pinned_spectral_data_compatible}) & 7 & & 7 & \\
+\midrule
+total & 430 & 299 & 95 & 36\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The per-head totals add up to $430$, which is also the union, since no theorem serves two heads. W1's $64$ agrees with the kernel-law ledger. The K-leaves were counted as $243$ by the kernel-law pass on its graph and are $235$ here (K-a $105$, K-b $41$ beyond K-a, K-c $89$ beyond both). The K-leaves are shared with \lean{Fam.colSide_alt} through the closed D6, and none of them belongs to D5, D7, D8 or D9. W2 is $95$ and W3 $36$, against ledger values of $95$ and $36$.
+
+\begin{center}\small
+\begin{tabular}{lrrr}
+\toprule
+head & before (ledger) & recount & after this pass\\
+\midrule
+W1 & 64 (+243 K-leaves, counted separately) & 299 & 0\\
+W2 & 95 & 95 & 0\\
+W3 & 36 & 36 & 0\\
+\midrule
+unique union & 195 (+243) & 430 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Residual structure after the pass}\label{sec:resid}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{3cm}>{\rr}p{5.4cm}>{\rr}p{2.6cm}>{\rr}p{3.4cm}}
+\toprule
+block & heads & distinct theorems & owner\\
+\midrule
+bundle witness & none (W1, W2, W3 closed) & 0 & closed here\\
+K-leaves & none (K-a, K-b, K-c closed as Proposition~\ref{prop:Q2}) & 0 & closed here\\
+R4-E & none & 0 & closed (\lean{Final_EBlock})\\
+R4-D & D5, D7, D8, D9 & 233 & D-agent\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent After this pass and the E-block pass, the surviving internal residual on the PC4.13 construction is the D-agent's lane: D5 ($84$), D7 ($76$), D8 ($46$) and D9 ($28$), together $233$ distinct theorems on the ledger.
+
+\section{Transfer ledger}\label{sec:transfer}
+
+\paragraph{To the D-agent.} Nothing. No W residual and no K-leaf is reached by D5, D7, D8 or D9 (\lean{wb_dlane.py}).
+
+\paragraph{External boundary.} No new row.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \lean{GlobalArtinReciprocity} is already on the boundary (PC-6, cleanup X4).
+\item \lean{WeberRayFieldSt}, the ray-class-field theorem of complex multiplication, is part of the archive's published hypothesis bundle (\lean{UnitaryGroupThirdPlaceHypotheses}) and already on the boundary through Wave~6. Its rows there are "Weber ray fields", "$K(j(\mathcal O_K))$ Hilbert class field (Weber, Hasse, Deuring)" and "Shimura main theorem of CM". Fidelity is in the R-3 campaign.
+\item Weil's triple formula and unitary constant are row F4-C1, also proved in the archive.
+\end{itemize}
+
+\paragraph{Upstream inputs, outside the PC4.13 blocks.} These are live through other routes and not W-residual: \lean{split_pair_generation} (the split-pair theorem, \Lpath{Formalism/PeriodIntegrals}), \lean{TorsionDegree.finrank_torsionField_le}, \lean{TorsionRam.dvd_discr_torsionField}, \lean{DiscRoot.discField_eq_torsionField}, \lean{lvlE_lvlPr_V0E}, \lean{AtG.ramCols_true}, \lean{QNF.nf_iff_matNF} and \lean{discNeZero}. None is reached by a D-head (\lean{wb_upstream.py}).
+
+\section{Final consequence}\label{sec:final}
+
+\textbf{G. NO.} W1--W3 no longer block the claim that every live internal mathematical step on the RH route has been reconstructed or transferred to an explicit external boundary. Together with the E-block pass, the only internal heads left on the PC4.13 construction are D5, D7, D8 and D9, which belong to the D-agent.
+
+\section{Scripts and limits}\label{sec:limits}
+
+\paragraph{Scripts} (in \Lpath{scripts/}, importing \lean{q.py} of the cleanup scripts). \lean{wb_excl.py} computes the exclusive and joint sets of the four tops. \lean{wb_kleaves.py} computes the K-leaves in the W-domain. \lean{wb_sets.py} computes the head closures, subtracts the closed material and reports overlaps. \lean{wb_tree.py} prints residual trees. \lean{wb_classify.py} assigns mechanisms and writes \lean{WBlock_Declaration_Classes.tsv}. \lean{wb_dlane.py} and \lean{wb_upstream.py} produce the transfer ledger.
+
+\paragraph{What was read.} In full: \lean{square_integrable_columns_of_witnesses}, \lean{exists_square_integrable_columns_of_data}, \lean{squareIntegrableColumnsOfKernel}, \lean{colRecC}, \lean{colPins_colK'}, \lean{twNF_imp_matNF}, \lean{mem_iff_XgE}, \lean{exists_eNu}, \lean{evRow_res_lvl}, \lean{exists_pinned_spectral_data_compatible}, \lean{oTied_of_ksExact}, \lean{exists_pieces}, \lean{exists_recPinE_alt}, \lean{splitPair_of_gen}, \lean{reFace_zero_parts}, \lean{XE_updS_zeroLam}, \lean{scalarsZeroPartConvention_fixedPlace}, and the opening of \lean{scal_zeroLam}, \lean{qp_bot}, \lean{psiG_of_loc}, \lean{joints_of_standard_character}, \lean{discrNe} and \lean{trOK_YY}. At the statement only: \lean{exists_read}, \lean{majAt_eq_classSum}, \lean{nrm_stepZero_eq}, \lean{chiRec_eq_chi}, \lean{wtTie_base}, \lean{ksQ_eq}, \lean{columnCharacter_reduction_eq_exp}, \lean{isDetLift_local}, \lean{om_std}, \lean{SO.stdOK} and its components, \lean{sqSplit_of}, \lean{muOneL_of}, \lean{signData_of}, and the definitions \lean{SqSplit}, \lean{MuOneL}, \lean{SplitPair}, \lean{SplitPairGen} and \lean{WeberRayFieldSt}.
+
+\paragraph{Where an adversarial pass should start.} The proofs of Proposition~\ref{prop:Q2}(c) (the common polarization of a square and the sign data of the move triangles), the ramification bound in Proposition~\ref{prop:Q3}(iii), and the curve-ideal inclusion $\kappa\,\mathfrak a\bar{\mathfrak a}\subset\mathfrak d^{-1}$ in Proposition~\ref{prop:Q2}(a) were reconstructed from statements, dependency trees and the outer proofs, not line by line. The constant $\kappa$ was not computed explicitly. The K-c count of $89$ includes material the kernel-law pass had already marked closed under its constants (for example \lean{negOneNorm}), so it slightly overstates what was new.
+
+\paragraph{Limits.} Exact edges only. Counts agree with the earlier ledgers to within the stated differences of graph and block top. Nothing was built or run in Lean, no literature was verified, and no existing project file, report, handoff or manuscript was edited.
+
+\end{document}

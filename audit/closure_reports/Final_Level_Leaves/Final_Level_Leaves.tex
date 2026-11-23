@@ -1,0 +1,266 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\OEr}{\mathcal O_E}
+\newcommand{\Ok}{\mathcal O}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Af}{\mathbb A_{f}}
+\newcommand{\Lb}{\Lambda}
+\newcommand{\Lbd}{\Lambda^{\vee}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The four leaves of D1 to D3\\ Local levels where a reading does not twist, the level-prime datum, and rebasing}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The pass on D1, D2 and D3 left four statement-level leaves inside the three heads. L2 and L3 say that the local penultimate level of a reading is the same for every reading at a place where the reading does not twist, at a level prime (L2) and at a G-place (L3). L1 is the rationality of the datum at the level primes, and L4 is the existence of an adelic twist datum with standard base points. This pass reads the four leaves and everything below them ($216$ theorems) and reconstructs each in ordinary mathematics. At a level prime the local level of any step level structure with the base lattice $\Lb=\{x:\pi_T\mid x_n\}$ is the subgroup acting trivially on the discriminant group $\Lbd/\Lb$, whatever level functional the structure has; this one lemma is L2, and it also closes $97$ of the $181$ theorems of D5. At a G-place where neither reading twists, the local level is the chart level of the coset data of the base point, and those coset data are fixed modulo integral vectors by the family. L1 is the factorization over places of the previous pass applied at the level primes, with the local factor the indicator of the standard lattice pairs. L4 is transport of structure by an adelic element supported at finitely many places. After this pass D1 and D3 are empty, D2 keeps its two rebasing steps ($94$ theorems) and D5 keeps $84$. Counted without repetition, the residual drops from about $1{,}170$ to about $980$ theorems. This report also corrects the total of the previous report. Nothing was built or run in Lean, and no existing project file was edited.
+\end{abstract}
+
+\tableofcontents
+
+\section{Method, and a correction}
+
+The workspace, archive, index and graph are those of the two previous passes. Each leaf was taken as its closure inside the block-exclusive set of \lean{colSide_alt}. Read in full were \lean{uloc_le_of_std}, \lean{twLev_prime}, \lean{comp_mem_Uloc} with \lean{mem_Uloc_of_row}, \lean{mem_stabFun_of_sub} and \lean{pair_lastRow}, \lean{comp_fixes_stdPair}, \lean{chi_std_trivial}, \lean{level_col_sub_one_mem}, \lean{uloc_le_alt}, \lean{cosetIn_p0_eq_of_reads}, \lean{mem_UAd_iff_of_not_plF}, \lean{exists_twDat_baseStd}, \lean{exists_twDat_top_trivial} with the definitions \lean{mvEl}, \lean{mvB}, \lean{moved}, and the opening of \lean{moved_is}; and the definitions \lean{StepLevel}, \lean{Pair}, \lean{Pair.HasVal}, \lean{Maps}, \lean{phiOne}, \lean{phiT}, \lean{ColCond}, \lean{StdT}, \lean{TwLev'}, \lean{TwVec'}, \lean{OverAll}. Read at the statement were \lean{ratDatum_of_overAll}, \lean{phiT_base_eq_prod}, \lean{phiT_eq_one_iff_colCond}, \lean{maps_rd_iff_colCond}, \lean{eq_prod_gl_mul_off} and \lean{uloc_T_iff}. The script \Lpath{scripts/lvl_final.py} recomputes the heads.
+
+\paragraph{Correction to the previous report.} The previous report gave the total residual after the D1 to D3 pass as about $820$. That figure subtracted the drop of each head separately, so the $262$ theorems shared by two or three of the heads were subtracted more than once, and the theorems that D7 and D9 lost were subtracted although they already lie inside the union of D1 to D3. Counted without repetition, the tuple-construction block R4-D (heads D1 to D9 without D6, each head the union of the closures of its ledger children) had $1{,}681$ theorems after the kernel-law pass and $517$ after the D1 to D3 pass. With the bundle witness ($195$) and R4-E ($459$) the total went from about $2{,}335$ to about $1{,}170$. The per-head figures of that report ($77$, $99$, $128$) were right. The copy of \Lpath{Final_D123} that goes to the project folder carries the corrected sentence.
+
+\section{L2: the local level at a level prime}\label{sec:L2}
+
+\subsection{Setting}
+Let $F$ be the totally real field of the host, $E$ the CM field, $x\mapsto\bar x$ the conjugation, and $h(x,y)=\sum_i\bar x_iy_i$ the standard hermitian form on $E^n$ (the archive's spaces have Gram matrix $1$, \lean{spaces_in_coordinates}). Let $T$ be the level prime of the word and $\pi_T\in\OEr$ with $\pi_T\bar\pi_T=T$, $\pi_T$ and $\bar\pi_T$ coprime, $\pi_T$ not in the square of its prime. Let $v$ be the place of $F$ above $T$; it splits in $E$ as $w\bar w$ with $\pi_T\in w$, and $E_w$ has residue field $\mathbb F_T$. Write $k=E_w$, $\Ok$ for its integers and $\varpi$ for the image of $\pi_T$, a uniformizer of $k$. Then $E\otimes_FF_v=k\times\bar k$, and $g\mapsto g_w$ identifies the unitary group $U(E_v)$ with $\GL_n(k)$, the $\bar w$-component being $g_{\bar w}=\overline{(g_w^{t})^{-1}}$.
+
+Put
+\[
+\Lb=\{x\in\OEr^{n}:\ \pi_T\mid x_n\},\qquad \Lbd=\{y\in E^n:\ h(\Lb,y)\subset\OEr\}=\{y:\ y_i\in\OEr\ (i<n),\ \bar\pi_Ty_n\in\OEr\}.
+\]
+Then $T\Lbd\subset\Lb$ and $[\Lbd:\Lb]=T^2$. Locally
+\[
+\Lb_w=\Ok^{n-1}\oplus\varpi\Ok,\quad \Lb_{\bar w}=\Ok^{n},\qquad \Lbd_w=\Ok^{n},\quad \Lbd_{\bar w}=\Ok^{n-1}\oplus\varpi^{-1}\Ok,
+\]
+so the discriminant group $D_v=\Lbd_v/\Lb_v$ is $D_w\oplus D_{\bar w}$, two lines over $\mathbb F_T$, each read off from the last coordinate.
+
+A step level structure (\lean{StepLevel}) with base lattice $\Lb$ has, at $v$, a local level of the form
+\begin{equation}\label{eq:uloc}
+U_v=\{g\in U(E_v):\ g\Lb_v=\Lb_v\}\cap\{g:\ f\circ g=f\},
+\end{equation}
+where $f\colon\Lbd_v\to M$ is a nonzero $\OEr\otimes\Ok_{F,v}$-linear map with $f(\Lb_v)=0$, $f(T\Lbd_v)=0$ and $|M|=T$ (fields \lean{UlocAlt}, \lean{fT_ne}, \lean{fT_L}, \lean{fT_T}, \lean{fM_card}). The functional $f$ belongs to the structure and may differ from one twist datum to another. The base lattice does not: for every adelic twist datum $A$ satisfying \lean{TwDat.Is}, every step $j$ and every index $b$, the base lattice of $A.K_j(b)$ is $\Lb$ (field \lean{reads.lb}).
+
+\subsection{The lemma}
+
+\begin{lemma}[discriminant]\label{lem:disc}
+In the setting above, let $U_v$ be given by \eqref{eq:uloc} for some admissible functional $f$. Then
+\[
+U_v=\{g\in U(E_v):\ g\Lb_v=\Lb_v,\ (g-1)\Lbd_v\subset\Lb_v\}=\{g:\ g_w\in\GL_n(\Ok),\ \text{last row of }g_w\equiv e_n\bmod\varpi\}.
+\]
+In particular $U_v$ does not depend on $f$.
+\end{lemma}
+
+\begin{proof}
+Let $g\in U(E_v)$ with $g\Lb_v=\Lb_v$. Since $g$ is unitary it preserves duality, so $g\Lbd_v=\Lbd_v$. At $w$ this says $g_w\in\GL_n(\Ok)$ and $g_w(\Ok^{n-1}\oplus\varpi\Ok)=\Ok^{n-1}\oplus\varpi\Ok$, which means the last row of $g_w$ is $(0,\dots,0,a)\bmod\varpi$ with $a\in\Ok^\times$. On $D_w=\Ok^n/(\Ok^{n-1}\oplus\varpi\Ok)$ the element $g$ acts by $x_n\mapsto (g_wx)_n=a\,x_n\bmod\varpi$. Modulo $\varpi$, $g_w$ is block upper triangular with lower right entry $a$, so $g_{\bar w}=\overline{(g_w^t)^{-1}}$ is block lower triangular modulo $\varpi$ with lower right entry $\bar a^{-1}$ and last column $\equiv(0,\dots,0,\bar a^{-1})^t$. For $y\in\Lbd_{\bar w}$ with last coordinate $\varpi^{-1}c$ the last coordinate of $g_{\bar w}y$ is $\bar a^{-1}\varpi^{-1}c$ plus an integral term. So $g$ acts on $D_{\bar w}$ by $\bar a^{-1}$, which in $\mathbb F_T$ is $a^{-1}$ because $\mathbb F_T$ is the prime field. Hence $g$ acts on $D_v$ trivially if and only if it acts trivially on one of the two lines, if and only if $a\equiv1$.
+
+The ring $\OEr\otimes\Ok_{F,v}=\Ok\times\bar\Ok$ acts on $D_w$ through the first factor and on $D_{\bar w}$ through the second, so $D_w$ and $D_{\bar w}$ are simple and not isomorphic, and the only submodules of $D_v$ of index $T$ are $D_w$ and $D_{\bar w}$. The functional $f$ vanishes on $\Lb_v$, so it factors through $D_v$, and its kernel has index $T$ because $f\ne0$ and $|M|=T$. So $\ker f$ is one of the two lines and $f$ is injective on the other. Now $f\circ g=f$ means $f((g-1)y)=0$ for all $y$. If $g$ acts trivially on $D_v$ this holds. Conversely it says that $g$ acts trivially on the line on which $f$ is injective, hence by the first paragraph on all of $D_v$. This proves the first equality. The second is the first paragraph: $g$ preserves $\Lb_v$ and acts trivially on $D_v$ exactly when $g_w\in\GL_n(\Ok)$ and the last row of $g_w$ is $e_n$ modulo $\varpi$ (the condition at $\bar w$ is then automatic).
+\end{proof}
+
+The archive proves the inclusion ``$\supset$'' as \lean{mem_Uloc_of_row} with \lean{mem_stabFun_of_sub} (an element that moves $\Lbd_v$ into $\Lb_v$ fixes every functional that kills $\Lb_v$) and the inclusion ``$\subset$'' as \lean{uloc_T_iff} with \lean{chartLevel_column_sub_one_mem_baseLattice}.
+
+\subsection{The standard pair and the level groups}
+
+The standard pair at the split point $p_i$ over $v$ is the lattice $\Ok^n$ (in the frame of $p_i$) with the functional $x\mapsto(\bar\pi_T x_n\bmod\varpi)$, which is nonzero because $\bar\pi_T$ is a unit at $w$ (\lean{StdT}). Its stabilizer in $\GL_n(k)$ is the group of Lemma~\ref{lem:disc}, by the same computation (\lean{pair_lastRow}, \lean{comp_fixes_stdPair}).
+
+\begin{proposition}[level groups at the level primes]\label{prop:L2}
+Let $A$ be an adelic twist datum with \lean{TwDat.Is}, $j$ a step and $b$ an index, and let $p_1,\dots,p_r$ be the split points over the places dividing $T$, with frames and standard pairs $Q_{j,i}$.
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item If $g\in\GL_n(k_i)$ fixes $Q_{j,i}$, the adelic element $\mathrm{gl}(g)$ with component $g$ at $p_i$ and $1$ elsewhere lies in $U_j(b)$ and the level character $\chi_j(b)$ is trivial on it.
+\item Every $\kappa\in U_j(b)$ is $\prod_i\mathrm{gl}(g_i)\cdot\kappa'$ with $g_i$ fixing $Q_{j,i}$ and $\kappa'$ trivial at the places over $T$.
+\item For two twist data $A,A'$, any steps and indices, the local levels at a place over $T$ coincide.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) The level group is the restricted product of its local levels (\lean{U_eq}). The component of $\mathrm{gl}(g)$ at $v_i$ lies in the group of Lemma~\ref{lem:disc}, which is the local level there, and its other components are $1$. The character is trivial on elements that are $1$ at the bad places (\lean{lev_chi_eq_one}), and $v_i$ is not bad, because $T$ is prime to the G-primes $g_0,g_1$ and $v_i$ is not under the twist set (\lean{chi_std_trivial}). (ii) Every adelic element is the product of its components at finitely many places and an element trivial there (\lean{eq_prod_gl_mul_off}). The component of $\kappa$ at $v_i$ lies in the local level, which by Lemma~\ref{lem:disc} is the stabilizer of $Q_{j,i}$. (iii) Both local levels equal the group of Lemma~\ref{lem:disc}, since the base lattice is $\Lb$ for every twist datum (\lean{uloc_le_of_std}).
+\end{proof}
+
+Proposition~\ref{prop:L2} is \lean{TwLev'} (with \lean{twLev_prime}) and \lean{uloc_le_of_std}, the whole of leaf L2. D5 uses \lean{TwLev'} for the action of the level-prime operators on ramified columns, which is why $97$ of its theorems lie in this closure.
+
+\section{L3: the local level at a G-place where no reading twists}\label{sec:L3}
+
+\begin{proposition}[G-places]\label{prop:L3}
+Let $J,J'$ be readings of the family, $\alpha,\alpha'$ indices at the penultimate step, and $v$ a place of $F$ that divides a G-prime, does not divide $T$, and at which neither $J$ nor $J'$ twists. Then the local penultimate levels of $J$ at $\alpha$ and of $J'$ at $\alpha'$ at $v$ coincide.
+\end{proposition}
+
+The proof rests on two lemmas.
+
+\begin{lemma}[coset of the base point]\label{lem:coset}
+At every G-place $w$ of $E$, the coset of the penultimate base point of a reading is $z+\mathrm{std}_w$, where $\mathrm{std}_w$ is the lattice of $w$-integral vectors and $\iota_w(z)\equiv y_0(w)\bmod\Ok_w$ coordinatewise, $y_0(w)$ being the local base vector of the family's local geometry at $w$. In particular the coset is the same for every reading.
+\end{lemma}
+
+\begin{proof}
+The coset of the base point at $w$ is $z+\mathrm{std}_w$ with $z$ the image of the coset representative under the lifted frame of the decoration (\lean{coset_at}). The lifted frame is congruent to the identity modulo $w$ (\lean{valuation_frs_sub_kronecker_lt_one}, an elementary statement about frames near the Kronecker matrix), and $q$ times the representative is $w$-integral (\lean{intAt_q_mul}), so the frame changes $z$ by a $w$-integral vector (\lean{intAt_sub_of_near}). The reading condition \lean{Reads.cosG} says that the local coordinates of the representative are $y_0(w)$ modulo integers. Two readings therefore give $z,z'$ with $\iota_w(z-z')$ integral, and since $\iota_w$ detects $w$-integrality the two cosets agree (\lean{cosetIn_p0_eq_of_reads}).
+\end{proof}
+
+\begin{lemma}[elements supported at $v$]\label{lem:supp}
+Let $x$ be a unitary adelic element with $x_{v'}=1$ for $v'\ne v$. Then $x$ lies in the penultimate level of $J$ at $\alpha$ if and only if it lies in the chart level group attached to the column-level symbol and the G-place cosets (the \lean{bar} data) of the base point of $\alpha$.
+\end{lemma}
+
+\begin{proof}
+The chart matrix of the base point is $k_{\mathrm{std}}$ times an element that is trivial at every place where the reading does not twist (\lean{Reads.pen}), and $k_{\mathrm{std}}$ is trivial at places prime to $T$ (\lean{kStd_spec}). So both are trivial at $v$, and $x$ commutes with them because the two are supported at disjoint sets of places (\lean{commute_of_off}). The element $x$ is also trivial at the places of the twist set, since those are twist places of $J$ and $v$ is not. Under these three conditions the level of the reading at the representative $c$ is the chart level of the representative's \lean{bar} data (\lean{mem_lev_iff}), and the \lean{bar} data of the representative are those of the base point (\lean{cos_iff_bar}, \lean{TwDat.Is.rep}).
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:L3}]
+An element $h$ of the local level of $J$ at $v$ is the component at $v$ of the adelic element $x$ equal to $h$ at $v$ and $1$ elsewhere, which lies in the level group (the level group is a restricted product). By Lemma~\ref{lem:supp}, $x$ lies in the chart level of the \lean{bar} data of $J$. By Lemma~\ref{lem:coset} these \lean{bar} data are those of $J'$, so by Lemma~\ref{lem:supp} for $J'$ the element $x$ lies in the level of $J'$, and $h$ lies in its local level at $v$ (\lean{stepLevel_uloc_le_of_agree}, \lean{uloc_le_alt}). The argument is symmetric.
+\end{proof}
+
+With Propositions~\ref{prop:L2} and~\ref{prop:L3}, Lemma~13 of the previous report (tuple freeness of the relaxed penultimate level) holds without hypothesis, and Proposition~12 (volume uniformity, D3) is proved in full.
+
+\section{L1: the datum at the level primes}\label{sec:L1}
+
+For decorated lattices $d,d'$ the archive's level-prime datum is
+\[
+\varphi_T(x)=\begin{cases}1&\text{if } x(d_P)\subset d'_P \text{ and } f'_P(xy)=f_P(y)\text{ for } y\in d_P \text{, at every level prime } P,\\ 0&\text{otherwise}\end{cases}
+\]
+(\lean{phiT}), where $d_P$ is the lattice of $d$ at $P$ and $f_P$ its functional with values in $\OEr/P$. For a pair of standard pairs $Q,Q'$ write $\phi_1(Q,Q')$ for the indicator of the matrices $z$ with $z(Q)\subset Q'$ preserving the functionals (\lean{Maps}, \lean{phiOne}).
+
+\begin{proposition}[level-prime datum]\label{prop:L1}
+Let $J$ be a reading, $\alpha,\gamma$ indices at steps $j,j+1$, and $p_1,\dots,p_r$ the split points over the level primes with frames and standard pairs $Q_{j,i},Q_{j+1,i}$.
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item For every rational matrix $z$, $\varphi_T(z)=\prod_i\phi_1(Q_{j,i},Q_{j+1,i})(z_i)$, where $z_i$ is $z$ read in the frames at $p_i$.
+\item If $c_T$ is a combination of Heisenberg operators at the level places that sends the vacuum to $\bigotimes_i\phi_1(Q_{j,i},Q_{j+1,i})$, then $\mathrm{comb}(c_T)$ applied to the vacuum is the theta function of the rational datum $\sigma_0\circ\varphi_T$ on the half of the idempotent of the level places.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) The decorations of base points at a level prime are standard: the lattice is the standard lattice and the functional is $y\mapsto\pi_Ty_n\bmod P$ (\lean{base_deco_fn}). So $\varphi_T(z)=1$ exactly when, at every $P$, $z$ maps the standard lattice into the standard lattice and preserves $\pi_Ty_n\bmod P$, a condition on the columns of $z$ (\lean{ColCond}, \lean{phiT_eq_one_iff_colCond}). By Lemma~4 of the D1 to D3 report (integrality and residues transfer under the completion at the split point) and \lean{StdT}, the same condition read in the frames at $p_i$ is $z_i(Q_{j,i})\subset Q_{j+1,i}$ with the functionals preserved (\lean{maps_rd_iff_colCond}). Taking the product over $P$ gives (i) (\lean{phiT_base_eq_prod}).
+
+(ii) This is Proposition~11(i) of the D1 to D3 report (local combinations at distinct split places multiply the rational datum by the local factors) with the vacuum datum, value $1$, as starting point and the local factors $\phi_1(Q_{j,i},Q_{j+1,i})$. The idempotents of distinct split points are orthogonal and sum to the idempotent of the level places (\lean{split_point_idempotents_orthogonal_sum_places}), and the iterated local construction is the theta function of the product datum (\lean{OverAll}, \lean{overAll_eq}, \lean{ratDatum_of_overAll}). By (i) the rational values of the product datum are $\sigma_0\circ\varphi_T$ (\lean{twVec'}, \lean{ratDatum_dT_levelPrime_alt}).
+\end{proof}
+
+With Proposition~\ref{prop:L1} the comb $d_T$ in the assembly of \lean{dat_exists} is accounted for, and Proposition~11 of the previous report (D1) is proved in full.
+
+\section{L4: rebasing by transport of structure}\label{sec:L4}
+
+\begin{lemma}[standard base points]\label{lem:L4}
+Let $A$ be an adelic twist datum with \lean{TwDat.Is} (the archive's existence statement \lean{exists_tupleChain_adelicData}, outside this head, gives one). There is a twist datum $A'$ with the same index sets such that $A'$ satisfies \lean{TwDat.Is}, its base points at the steps $i<m$ are $k_{\mathrm{std}}$, its chart data at each step are common to all indices, and its top base point is trivial at every place prime to $T$ outside the twist set.
+\end{lemma}
+
+\begin{proof}
+Let $S$ be the finite set of places prime to $T$ at which the top base point $k_m(\beta)$ is not $1$ and which are not under the twist set (\lean{offPl}, \lean{offPl_finite}). Choose a unitary finite adele $w(\beta)$ with $w(\beta)_v=k_m(\beta)_v$ for $v\in S$ and $w(\beta)_v=1$ otherwise; this is possible because finitely many components of a finite adele can be prescribed and the components of $k_m(\beta)$ are unitary. At $v\in S$ the top base point is integral and reduces to $1$ (\lean{isRed_one_of_topPt}), so $w(\beta)$ is a base point of the top level (\lean{exists_mv}, \lean{mvEl_spec}). Define $A'$ by transport of structure along $w$: base points $w^{-1}k$, level groups $w^{-1}Uw$, characters $\chi\circ\mathrm{Ad}(w)$, representatives $h\,w$, and the rest unchanged (\lean{moved}). Every condition in \lean{TwDat.Is} is stated in terms of these objects and of the standard decorated lattices, and $w$ stabilizes the standard decorated lattice at every place (it is $1$ or a component of the standard top base point), so each condition for $A'$ is the transported condition for $A$ (\lean{std_move'}, \lean{isPtOf_move}, \lean{kT_move}, \lean{moved_is}). At the lower steps nothing moves, and there the base points of $A$ are already $k_{\mathrm{std}}$. Finally, replacing the chart data $(k_A,x_r)$ of each index by those of one fixed index changes nothing in \lean{TwDat.Is}, because the chart matrices of all indices at a step are equal (\lean{exists_twDat_baseStd}).
+\end{proof}
+
+\section{Counts and the recomputed residual list}\label{sec:D}
+
+\subsection{The leaves}
+\begin{center}\small
+\begin{tabular}{>{\rr}p{0.8cm}>{\rr}p{5.2cm}>{\rr}p{4.6cm}r r}
+\toprule
+leaf & declaration & reconstruction & size & also in\\
+\midrule
+L1 & \lean{Fam.ratDatum_dT_levelPrime_alt} & Proposition~\ref{prop:L1} & 61 & D1\\
+L2 & \lean{PenLevPrime.uloc_le_of_std} & Lemma~\ref{lem:disc}, Proposition~\ref{prop:L2} & 101 & D3, D5 ($97$)\\
+L3 & \lean{PenLevTyp.uloc_le_alt} & Lemmas~\ref{lem:coset}, \ref{lem:supp}, Proposition~\ref{prop:L3} & 27 & D3, D1 ($16$)\\
+L4 & \lean{AdForm.exists_twDat_baseStd} & Lemma~\ref{lem:L4} & 27 & D2\\
+\midrule
+total & & & 216 &\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{The heads}
+Each head is the union of the closures of its ledger children, recomputed on the graph.
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{1.0cm}>{\rr}p{5.4cm}r r r>{\rr}p{3.9cm}}
+\toprule
+head & declaration & recount & after D1--D3 & now & what remains\\
+\midrule
+\endhead
+D1 & \lean{dat_exists} children & 735 & 77 & 0 & \textbf{closed}\\
+D2 & \lean{exists_good}, \lean{commutation_identity_alt}, \lean{commutation_property_alt} & 533 & 99 & 94 & rebasing steps \lean{PenChart.exists_readsStd_alt}, \lean{Fam.readsOfStd_alt}\\
+D3 & volume uniformity & 515 & 128 & 0 & \textbf{closed}\\
+D5 & \lean{AdForm.twS_ramL} & 181 & 181 & 84 & level-prime operators on ramified columns (\lean{ram_iff_scalar_ram}, \lean{twTransAct})\\
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & 83 & 76 & 76 & untouched\\
+D8 & \lean{T.true_geometry_row_column_entry_alt} & 46 & 46 & 46 & untouched\\
+D9 & \lean{T.true_geometry_twist_value_alt} & 43 & 28 & 28 & untouched\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent Without repetition the block R4-D (D1 to D9 without D6) goes $1{,}681\to517\to327$ over the last two passes.
+
+\subsection{The full residual list}
+
+\begin{center}\small
+\begin{longtable}{>{\rr}p{0.9cm}>{\rr}p{6.4cm}>{\rr}p{5.0cm}r}
+\toprule
+ID & declarations & content & size\\
+\midrule
+\endhead
+\multicolumn{4}{l}{\emph{Bundle witness}}\\
+W1 & \lean{SelC.colRecC} glue, \lean{chKerC_congr}, \lean{jetK_chi}, \lean{exists_eNu}, and the normal-form leaf \lean{idxMatNF_of_isTw} & column reading at the base tuple & 64\\
+W2 & \lean{exists_pinned_spectral_data_compatible}, \lean{exists_kernel_spectral_data_at_witnesses} & spectral data compatible with the record & 95\\
+W3 & \lean{T.reFace_zero_part_conventions_chosen_again} & face conventions & 36\\
+\multicolumn{4}{l}{\emph{Tuple construction (R4-D)}}\\
+D2r & \lean{PenChart.exists_readsStd_alt}, \lean{Fam.readsOfStd_alt} & a weak reading can be made standard at the penultimate charts and rebased to a full reading & 94\\
+D5 & \lean{AdForm.twS_ramL} outside L2 & level-prime operators kill ramified columns & 84\\
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & joint twist identity at the middle and top steps & 76\\
+D8 & \lean{true_geometry_row_column_entry_alt} & chart-zero column bound & 46\\
+D9 & \lean{true_geometry_twist_value_alt} & quadratic twist level & 28\\
+\multicolumn{4}{l}{\emph{Class data (R4-E)}}\\
+E1a & theta kernel leaves (\lean{four_expand}, \lean{heisO_halfA_eq}, \lean{heisO_conjHalf_eq} and two more) & finite Fourier analysis at the split places & 191\\
+E1b & \lean{tw_resid_datum}, \lean{chr_moves_eq_rho_base} & moved datum at the representative pair & 13 (+102)\\
+E1c & \lean{LevLaw.lev_law}, \lean{clsKL_real} & chart level-pair action on the finite datum & 103\\
+E2--E5 & \lean{exists_clsT_of_pinTop}, \lean{exists_jetS}, \lean{realOf_is}, \lean{exists_readsG_of_level} & last-period class data, jet scale, real data, readings by Schur & 176\\
+\multicolumn{4}{l}{\emph{Support of the kernel law (not in any head)}}\\
+K-a, K-b, K-c & integrality link, standard data, split move triangles & see the kernel-law report & 243\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\noindent Without repetition the heads total about $195+327+459\approx980$ theorems, against about $1{,}170$ after the D1 to D3 pass and about $2{,}335$ after the kernel law. The $102$ shared theorems of E1b and the $243$ of K-a to K-c are counted separately, as before.
+
+\section{Verdict and next step}
+
+The four leaves are closed. D1 and D3 are empty, and the tuple-construction block now consists of the two rebasing steps of D2 and the heads D5, D7, D8 and D9, together $327$ distinct theorems. Of these, the two rebasing steps are the closest to what is already reconstructed: the first is the orbit form of Lemma~9(c) and Proposition~3(i) of the D1 to D3 report (choose rational coset representatives in the local orbits at the twist primes), and the second moves base points by the transport of Lemma~\ref{lem:L4} and needs a vanishing statement for the dead coupling term (\lean{CplDead.xiCpl1_eq_zero_of_frames}) that has not been read yet. D5 is the action of the level-prime operators on ramified columns and now rests on Proposition~\ref{prop:L2}. The class data E1 to E5 ($483$ theorems in heads) are the largest remaining block.
+
+\appendix
+\section{Scripts and limits}
+\Lpath{scripts/lvl_final.py} closes the four leaves and recomputes the heads; it imports \Lpath{q.py} of the cleanup scripts and reads \Lpath{d123_final.pkl} from the previous pass. Lemma~\ref{lem:supp} and the transport step of Lemma~\ref{lem:L4} were reconstructed from the outer proofs and the statements of \lean{mem_lev_iff} and \lean{moved_is}, without reading those two proofs line by line. Nothing was built or run in Lean.
+
+\end{document}

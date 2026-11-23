@@ -1,0 +1,27 @@
+item	content	listed_as_residual_by	closed_by	final_status	note
+PC-1	local integral Hodge-Tate package at a good prime (FamEx.TestPt.testFacts, familyExistsPos_holds)	Post_Closure_Internal_Residuals	Final_Six_Wave_1 (16:55) per Current_Status_Ledger and Pre_Synthesis_Audit_Report A	CLOSED VIA PRIOR PACKAGE (modulo FarguesHodgeTate/FarguesExact, Zarhin, QuotientByFiniteFlat)	report not in workspace; verdict read through two later syntheses
+PC-2	global tower and covolume; Proposition D (O_E-equivariant de Rham datum)	Post_Closure; ledger 17:47 lists Prop D	Final_Six_Wave_2 third revision; Pre_Synthesis_Audit_Report A (closed modulo X, caveat GeomPF)	CLOSED VIA PRIOR PACKAGE	Wave 2 report not in workspace; Prop D closure read through the pre-synthesis audit; R-2 (p = 2) claimed by a report not in workspace
+PC-2 caveat	GlobalTheory.T.global_model_power_free (Proposition A)	Orphan_Dependency_Audit 2.1 (ORPHAN)	Orphan_Interface_Pass (Proposition A, closed modulo PartI)	CLOSED VIA PRIOR PACKAGE / EXTERNAL PartI	checked here: two live consumers, both PC-2 (Sec. 5.7)
+PC-3	Wach-module layer below Theorems B and C	Post_Closure	Final_Six_Wave_3 seventh pass per ledger	CLOSED VIA PRIOR PACKAGE (modulo V8 Wach record, Fontaine, Berger)	report not in workspace
+PC-4 R4-A..C	seesaw twist-place laws	Final_Six_Wave_4	Pre_Synthesis kind 2 (implementation depth, propositions stated); Final_Internal_Cleanup transfer of the laws field	CLOSED VIA PRIOR PACKAGE	
+PC4.13 R4-D	Fam.colSide_alt tuple data (2,816 exclusive)	Final_Internal_Cleanup B	Final_Level_Leaves, Final_D2_Rebasing, Final_Kernel_Law, Final_D123, D-agent (D5-D9), Final_EBlock, Final_WBlock	CLOSED	exclusive sets recomputed here; D-agent report not in workspace, its joint set (248 decls) checked here at mechanism level
+PC4.13 R4-E	AdForm.clsPinD_of_famCol_of_trueW class data (479 exclusive)	Final_Internal_Cleanup B	Final_EBlock (E1-E5)	CLOSED	
+record witness	SelAll.bwit_exists_alt / exBL_isLinked_prmR_alt (653 exclusive)	Final_Internal_Cleanup B	Final_Internal_Cleanup Prop. BW and sub-blocks; Final_D123; Final_Level_Leaves	CLOSED VIA PRIOR PACKAGE	
+PC4.13 hand-off	AllFamilyConditions W, a.Is, a.True	Orphan_Dependency_Audit 2.2 (ORPHAN)	Orphan_Interface_Pass Prop. B	CLOSED VIA PRIOR PACKAGE	
+K-a/K-b/K-c	kernel-law leaves	Final_Kernel_Law	Final_WBlock (inside W1)	CLOSED	shared with D6; checked in Final_WBlock
+ramBijective_holds	bijectivity of the ramified reading	D-agent assignment	this certification (finite Fourier inversion)	CLOSED	Sec. 5.3
+PC-5	lattice counting FR-12	Post_Closure	Final_Six_Wave_5 proposition package per ledger	CLOSED VIA PRIOR PACKAGE (modulo Siegel, Schmidt, Harish-Chandra and others)	report not in workspace
+PC-6 R1-R4	FUN groups, Open0/ON, nonvacuity, small leaves	Final_Six_Wave_6 earlier versions	Final_Six_Wave_6 fourth follow-up verdict	CLOSED VIA PRIOR PACKAGE	
+record cores	stepW_core and six others	Orphan_Dependency_Audit 7.5	Final_Internal_Cleanup; Orphan_Interface_Pass	CLOSED VIA PRIOR PACKAGE	
+PC-7 R5,R6	allSixLaws below exists_lift_marked; seven series_bound producers	Final_Six_Wave_6	Final_Six_Wave_6 fourth follow-up (R3 table)	CLOSED VIA PRIOR PACKAGE (uniformization of PEL moduli candidate boundary)	
+SL-1	DeepStR flag and test leaves, D2 children	Post_Closure; Wave 6 'stay as listed'	this certification Sec. 5.9	CLOSED	statements read; mechanisms elementary or transfers to the IS/HS intersection rows
+SL-2	rank-four leaves (named interiors)	Post_Closure; Wave 6 'stay as listed'	this certification Sec. 5.9	CLOSED	the unnamed 'Wave C standard leaves 4,5,7,8,9,10' cannot be bound to declarations from the workspace; they lie in the VWin region
+SL-3	FR-11 frame lemmas, StepImportsQ (induction_imports)	Post_Closure	Final_Six_Wave_6 R4 (core2, third_identity copies); this certification Sec. 5.9	CLOSED	
+SL-4	FR-18 producers, R8 items, FR-19, FR-01/02	Post_Closure	this certification Sec. 5.9 (FR-18, FR-19); patching row (FR-01/02)	CLOSED / EXTERNAL (patching)	
+SL-5	bookkeeping	Post_Closure	Final_Six_Wave_6 SL-5 table; Final_Internal_Cleanup families 1 and 2	CLOSED VIA PRIOR PACKAGE	
+SL-6	GaugeVolUD, RhsWLim, CoefCapAll	Orphan_Interface_Pass	Final_Internal_Cleanup Props SL6a-c	CLOSED VIA PRIOR PACKAGE	
+IF-1, IF-2, IF-3	interface checks	Orphan_Dependency_Audit 3	Orphan_Interface_Pass	CLOSED VIA PRIOR PACKAGE	
+V16 Fact instances	150 Fact instances	Pre_Synthesis	Fact_Instance_Audit (Orphan_Interface_Pass)	CLOSED VIA PRIOR PACKAGE / EXTERNAL per group	F4/F5 substantive ones owned by PC-5, SL-6 and the boundary
+HidaSetting producer	record with fields nuQ_weil, wfr_on	Orphan_Dependency_Audit 1.1 (U)	this certification: live via HypsAlt > RowMainEqP; produced by Formalism.L2.SG.SplitPrimeNormLemmas.MuExists_holds	CLOSED VIA PRIOR PACKAGE	Haar measures and Weil's quotient integral formula (classical analysis row)
+Row0b supplier	UpperTheory.Gal.Int.galoisLocalGlobalStrong_recParameter (42,645 exclusive theorems)	not on any residual list	this certification: bound to the literature row 'Galois representations of RACSDC representations' (PCVB Block D)	EXTERNAL	newly bound anchor; fidelity of pur/aut mandatory and not compared
+upstream inputs of PC4.13	split_pair_generation, three torsion-field lemmas, Fock injectivity, vacuum_character, vac_moved, om_pureTensorO, heisO_finRat_sign, exists_charts, ramCols_true, nf_iff_matNF	not on any residual list (uncited)	this certification Sec. 5.1-5.5	CLOSED (dvd_discr_torsionField: EXTERNAL, Neron-Ogg-Shafarevich)	

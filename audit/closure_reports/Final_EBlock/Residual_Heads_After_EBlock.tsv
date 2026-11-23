@@ -1,0 +1,20 @@
+package	id	head	ledger	recount_with_joint_only	after_EBlock	status	mechanism_or_note
+exBL/bwit	W1	SelC.square_integrable_columns_of_witnesses	64	-	64	RESIDUAL	not in scope
+exBL/bwit	W2	exists_pinned_spectral_data_compatible + exists_kernel_spectral_data_at_witnesses	95	-	95	RESIDUAL	not in scope
+exBL/bwit	W3	T.reFace_zero_part_conventions_chosen_again	36	-	36	RESIDUAL	not in scope
+R4-D	D5	AdForm.twS_ramL	84	-	84	RESIDUAL (D-agent)	not reopened
+R4-D	D7	QVecJoin.step_mid / step_top	76	-	76	RESIDUAL (D-agent)	not reopened
+R4-D	D8	T.true_geometry_row_column_entry_alt	46	-	46	RESIDUAL (D-agent)	not reopened
+R4-D	D9	T.true_geometry_twist_value_alt	28	-	28	RESIDUAL (D-agent)	not reopened
+R4-E	E1a	KerTup.kernel_identity_tuple	191	307	0	CLOSED	M1 (Prop E with Lemmas 1-3), M2, M4, M5(a)
+R4-E	E1b	movedDatum_eq_finiteDatum_representativePair + chr_moves_eq_rho_base	13 (+102 shared)	115	0	CLOSED	M2 datum transport (shared with E1c), M4
+R4-E	E1c	LevLaw.lev_law + clsKL_real	103	208	0	CLOSED	M3 level-pair law (uses M2, M4), M5(b)
+R4-E	E1 (kval)	ClsKLive.kval	(in E1)	23	0	CLOSED	M6 class sums (shared with E2)
+R4-E	E2	AdForm.exists_clsT_of_pinTop	85	105	0	CLOSED	M6 class points, M7 branching
+R4-E	E3	AdForm.JetScales.exists_jetS	35	35	0	CLOSED	M5(a) Fock creation operators = derivatives
+R4-E	E4	AdForm.realOf_is	29	63	0	CLOSED	M8 twist-datum existence, M7, M5
+R4-E	E5	AdForm.exists_readsG_of_level	27	29	0	CLOSED	M6(b) algebraic modular forms dictionary
+shared	K-a	IntegralLatticeDensity.rational_integrality_link (Ker.Cd copy) etc.	105	-	105	LEAF	not reached by E1-E5; E-block instances proved as Lemma 1(c)
+shared	K-b	IntegralLatticeDensity.SO.stdOK	41	-	41	LEAF	dead under E1-E5
+shared	K-c	split data inside sqSplit_of, muOneL_of, muOneR_of	97	-	97	LEAF	dead under E1-E5
+total (distinct, heads only)	-	W + R4-D + R4-E	approx 890 (+102 shared)	-	approx 428	-	E-block unique union 631 -> 0; per-head sum 675 (44 shared theorems counted once in the union)

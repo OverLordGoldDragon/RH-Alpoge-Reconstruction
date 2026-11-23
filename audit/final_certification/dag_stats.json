@@ -1,0 +1,81 @@
+{
+ "decls_indexed": 1066087,
+ "live": 766788,
+ "live_dot": 868718,
+ "dot_only": 101930,
+ "live_edges": 4415583,
+ "kinds": {
+  "theorem": 595612,
+  "def": 129968,
+  "lemma": 26797,
+  "structure": 5242,
+  "instance": 371,
+  "abbrev": 8690,
+  "inductive": 75,
+  "class": 33
+ },
+ "components": 765208,
+ "nontrivial_scc_nodes": 1696,
+ "max_dom_depth": 49,
+ "status": {
+  "CLOSED VIA PRIOR PACKAGE": 631740,
+  "EXTERNAL": 130542,
+  "CLOSED": 4506
+ },
+ "status_theorems": {
+  "CLOSED VIA PRIOR PACKAGE": 511065,
+  "EXTERNAL": 107736,
+  "CLOSED": 3608
+ },
+ "shared_remainder": 93682,
+ "shared_by_num_consumer_regions": {
+  "3": 66058,
+  "4": 11295,
+  "5": 10167,
+  "6": 3254,
+  "2": 1854,
+  "7": 1054
+ },
+ "top_dirs": {
+  "Development": 525106,
+  "Formalism": 157910,
+  "GroundTheory": 43057,
+  "ReciprocityTheory": 27212,
+  "CompanionTheory": 10374,
+  "PositivityTheory": 2913,
+  "Lemmata": 213,
+  "Supplements": 2,
+  "Main.lean": 1
+ },
+ "external_breakdown": {
+  "Layer 3": 74605,
+  "proof of a Published statement (Layer 3)": 328,
+  "Row0b": 53918,
+  "proof of a Published statement (Layer 3; binder-aware detect": 275,
+  "Published statement": 449,
+  "Neron-Ogg-Shafarevich criterion (new boundary row)": 1,
+  "Taylor-Wiles-Kisin patching row (proved in the archive, Laye": 963,
+  "RecTExists": 3
+ },
+ "closed_breakdown": {
+  "Final_EBlock M3": 91,
+  "Final_EBlock A": 61,
+  "Final_WBlock Q3": 69,
+  "Final_EBlock M8": 38,
+  "Final_EBlock M2": 117,
+  "Final_Global_Certification Sec. 5.9: SL-": 2995,
+  "Final_Global_Certification: D5/D7/D8/D9/": 248,
+  "Final_WBlock Q1": 101,
+  "Final_WBlock Q4": 24,
+  "Final_EBlock M7": 14,
+  "Final_EBlock M6": 108,
+  "Final_EBlock M1": 183,
+  "Final_EBlock M4": 19,
+  "Final_EBlock M5": 53,
+  "Final_Global_Certification: upstream inp": 12,
+  "Final_WBlock A": 7,
+  "Final_WBlock Q5": 48,
+  "assembly layer: manuscript Sec. 10 (row ": 6,
+  "Final_WBlock Q2": 312
+ }
+}

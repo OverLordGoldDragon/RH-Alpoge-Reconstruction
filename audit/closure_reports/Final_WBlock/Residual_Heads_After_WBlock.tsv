@@ -1,0 +1,14 @@
+package	id	head	ledger	recount	after_WBlock	status	mechanism_or_note
+exBL/bwit	W1	Mem.R3.SelC.square_integrable_columns_of_witnesses	64	64	0	CLOSED	Q1 column record of the base tuple (kernel-law core reused)
+shared	K-a	Ker.Cd.IntegralLatticeDensity.rational_integrality_link + hermitian_form_integral_values	105	105	0	CLOSED	Q2(a) integrality of (sqrt d/2)H on period lattices; delta != 0
+shared	K-b	Ker.Cd.IntegralLatticeDensity.SO.stdOK	41	41	0	CLOSED	Q2(b) standard theta data
+shared	K-c	Ker.Cd sqSplit_of, muOneL_of, muOneR_of	97	89	0	CLOSED	Q2(c) common polarization of squares (split_pair_generation upstream); Weil triple constant 1 via sign data and -1 norm mod 4e (kernel-law Lemma 3); tripleFormula on boundary F4-C1
+exBL/bwit	W2a	Top.Bl.WPt.exists_pinned_spectral_data_compatible	73	73	0	CLOSED	Q3 class-field pieces of the small field; GlobalArtinReciprocity, WeberRayFieldSt (both already on boundary)
+exBL/bwit	W2b	Top.Bl.exists_kernel_spectral_data_at_witnesses	22	22	0	CLOSED	Q4 joints of the standard character
+exBL/bwit	W3	T.reFace_zero_part_conventions_chosen_again	36	36	0	CLOSED	Q5 conventions on zero parts
+R4-D	D5	AdForm.twS_ramL	84	-	84	RESIDUAL (D-agent)	not reopened
+R4-D	D7	QVecJoin.step_mid / step_top	76	-	76	RESIDUAL (D-agent)	not reopened
+R4-D	D8	T.true_geometry_row_column_entry_alt	46	-	46	RESIDUAL (D-agent)	not reopened
+R4-D	D9	T.true_geometry_twist_value_alt	28	-	28	RESIDUAL (D-agent)	not reopened
+R4-E	E1-E5	(Final_EBlock)	483	631	0	CLOSED	closed in Final_EBlock
+total	-	W block + K-leaves	195 + 243	430	0	-	unique union 430 -> 0; remaining internal heads: D5, D7, D8, D9 (233 distinct, ledger)

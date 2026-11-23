@@ -4,6 +4,16 @@ This directory contains selected reconstruction and audit records documenting ho
 
 The reports were prepared by Claude (Anthropic) as working reports for Jimmie Adriazola, during a sequence of reconstruction passes on 20 and 21 November 2026. In each pass one or more agents read proofs of the Lean archive as text, wrote them in ordinary mathematics down to classical statements or named published theorems, and recorded what remained unread. No report built or ran the archive, and no report is a kernel check or a verification of the archive.
 
+## Final internal certification (22 November 2026)
+
+| Directory | Content |
+|---|---|
+| [`final_certification/`](final_certification/) | The final global internal certification: report (`.pdf`, `.tex`), live-graph summary, empty residual table, residual reconciliation table, external boundary, published-statement list, full ownership table (`Global_Ownership.tsv.gz`, one row per live declaration) and the scripts that build the graph |
+| [`closure_reports/`](closure_reports/) | Every closure report the certification cites: `Final_Six_Wave_1` to `_6` (PC-1 to PC-7), `Final_Internal_Cleanup`, `Final_Kernel_Law`, `Final_D123`, `Final_Level_Leaves`, `Final_D2_Rebasing`, `Final_D5`, `Final_D_Block` (D1 to D9), `Final_EBlock` (E1 to E5), `Final_WBlock` (W1 to W3, K-a to K-c), each with its status file, dependency map and scripts |
+| [`pre_synthesis/`](pre_synthesis/) | The pre-synthesis audit report, the orphan-dependency audit, the orphan/interface pass with the `Fact`-instance audit, the external-fidelity audit with its ledger and source map, the R-1 (Siegel–Weil) and R-2 ($p=2$ Hodge–Tate) reports, and the status ledger the certification cites |
+
+The reports were prepared by Claude as working reports for Jimmie Adriazola on 22 November 2026. None of them built or ran the Lean archive.
+
 ## Current synthesis
 
 These three files were the most recent audit state on 21 November 2026. They are kept as historical records. The current status is [`../STATUS.md`](../STATUS.md), and the later closure, source-fidelity and final certification reports are not yet in this directory.

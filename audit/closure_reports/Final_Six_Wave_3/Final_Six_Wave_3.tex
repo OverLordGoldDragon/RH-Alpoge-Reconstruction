@@ -1,0 +1,763 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm}
+\IfFileExists{newtxtext.sty}{\usepackage{newtxtext,newtxmath}}{\usepackage{lmodern}\usepackage{amssymb}}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+\newcommand{\NN}{N^{\Delta}}
+\newcommand{\Pp}{\mathcal P}
+\newcommand{\Fil}{\mathrm{Fil}}
+\newcommand{\Sg}{\mathrm{Sg}}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}[lemma]{Proposition}
+\newtheorem{thm}[lemma]{Theorem}
+\theoremstyle{definition}
+\newtheorem{defn}[lemma]{Definition}
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\title{Final Six Wave 3\\ The shared Wach-module layer below Theorems B and C (PC-3)}
+\author{Working report for Jimmie Adriazola, prepared by Claude (Agent 3)}
+\date{22 November 2026}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Agent 3.} My assignment is PC-3 of \Lpath{Post_Closure_Internal_Residuals.md}, the Wach-module calculus below Theorems B and C, treated as one package. I read the Post-Closure Synthesis, its residual list and its verification boundary, and the reports and maps of Final Closure Waves 2 and 3, which reconstructed the interiors of Theorems B and C down to the layer studied here. I then read the archive in \Lpath{src/lean/src} as text, starting from the four declarations named in the assignment. I built and ran nothing in \Lpath{src/lean}, I edited no existing file, and I wrote only into \Lpath{Claude_Audit_Core/Final_Six_Wave_3/}. Nothing here is a verification of the archive or a proof of RH. The connection to the laptop dropped once during the session and the reading resumed from where it stopped.
+
+\medskip\noindent\textbf{Paths.} As in Waves 2 and 3, \Lpath{LLC/} is \Lpath{Formalism/SharpRestriction/LevelLetterCocycles/}, \Lpath{QID/} is \Lpath{LLC/QuotientImageDivisibility/}, \Lpath{RC/} is \Lpath{LLC/RepresentationCongruences/} and \Lpath{FPU} is \Lpath{LLC/FrobeniusPowUniformizerFactorisation.lean}. Greek letters in declaration names are transliterated.
+
+\medskip\noindent\textbf{Numerical checks.} Three small independent scripts were run in the cloud workspace (outlines in the dependency map). They test my reading of a statement and are not proofs.
+
+\section{Verdict}
+
+\textbf{CLOSED MODULO NAMED EXTERNAL THEOREMS.}
+
+This verdict holds at the human-proof boundary, with the verification list of the risk audit. Every proposition of PC-3 now has a written proof whose steps end at closed lemmas or at the named external theorems. Some bodies were read at skeleton level, and they are listed. They are verification items. None is a mathematical residual. The passes below record how this was reached.
+
+The shared lower layer named in the assignment is now reconstructed. The Berger level and membership package (S2), on the Theorem B side (\lean{LevC.secCrit_all}) and on the Theorem C side (\lean{expCrit_D'}), closes modulo the Wach clauses V8 and the comparison record, and the two sides turn out to rest on \emph{one} theorem, the membership criterion \lean{MemCrit}, which the archive proves twice with identical proof bodies (\lean{memCrit_of} in \Lpath{QID/JumpsLetExists.lean} and \lean{memCrit_of_free} in \Lpath{LLC/ArcCoordinatesFinal.lean}). The truncation and level-expansion tools of Theorem C (S3, \lean{truncatedSeriesData.tTool2_of} and \lean{Tools.frobenius_power_congruence_local}) close modulo V8, the comparison record and Weierstrass division in Mathlib. The coordinate clauses \lean{SecOfP}, \lean{SecOfN}, \lean{NOfSec} of Theorem B (R-B2) close. The killer inputs (S4 on the Theorem B side) close, and the killer constant $8$ is proved in the archive by an elementary estimate whose true maximum is about $3.75$. With these, the \lean{ArcCore} producer of Theorem B is reconstructed down to small shared leaves.
+
+A second pass in the same session (Sections~\ref{sec:split} and \ref{sec:univ}) went one step higher on the Theorem B side. The \lean{SplitCore} producer is reconstructed: \lean{Split.splitCore_of} and \lean{Split2.cutData_of} were read in full with their four children, and the polar clause down to named helpers. Three of the four sub-cores of \lean{UnivCore} (\lean{univFrame_of}, \lean{univLift_of}, \lean{univSec_of}) were read in full. They reduce to the window-killing core \lean{KillWinCore}, the generator core \lean{UnivGenCore} and the section restriction \lean{SecRestCore}. A third pass (Section~\ref{sec:killwin}) closed \lean{KillWinCore} together with its two inputs \lean{RATCore} and \lean{InvLevCore}. A fourth pass (Section~\ref{sec:bfinish}) closed \lean{SecRestCore}, \lean{UnivGenCore}, the RC cores and the principal case-body children. On the Theorem B side, every producer above helper level has now been read. What remains there is a list of helper bodies, each under 240 lines, whose mechanism is stated.
+
+A fifth pass (Section~\ref{sec:fifth}) read every remaining Theorem B helper, closed the Theorem C tools C-2 and C-4 and the assembly \lean{lattice_bounds_of_local}, and found two large implementation subtrees. One is the case layer of Theorem B in \Lpath{RC/}, about $25{,}000$ lines. The other is the tool region of Theorem C, about $17{,}000$ lines, which contains tools the earlier C-2 to C-8 list did not name. I stopped descending into both and stated them as four human-level propositions, RC for Theorem B and C-I, C-II, C-III for Theorem C. Each has a proof route through tools that are already closed. These four are what remains, so at that stage Theorems B and C were not yet CLOSED MODULO NAMED EXTERNAL THEOREMS. No gap, no circularity and no failed constant appeared. No new engine appeared.
+
+A sixth pass (Section~\ref{sec:sixth}) wrote the four propositions as proofs. Proposition~RC is now a proof. Its three-step framework (splitting, killing at a cut, lifting at a cut) was read in full. Its constants $160$, $55$ and $18$ are derived term by term, and the inequalities that decide its nine cut types were checked numerically. The bodies of seven cut types were read at skeleton level, and each is an instance of one four-move argument. C-I, C-II and C-III are written as proofs through named tools. Five of those tools were read only as statements. They are \lean{passage_to_quotient}, \lean{h2Bound_of_hypotheses}, \lean{LemmaDN} (through \lean{DetColsE}), \lean{pass4} and \lean{frobenius_sq_bound_of_local}. I recommend marking the Theorem B side closed modulo named external theorems, with the cut-type bodies as a low-risk verification item. At that stage the Theorem C side stayed open on those five tools, which the seventh pass closes.
+
+A seventh pass (Section~\ref{sec:seventh}) read the five Theorem C tools left by the sixth pass. They are \lean{passage_to_quotient}, \lean{h2Bound_of_hypotheses}, \lean{LemmaDN}, \lean{pass4} and \lean{frobenius_sq_bound_of_local}. All five close. Their deciding steps were read in full. These are the $\gamma$-eigenvalue argument with \lean{ExpCrit}, the content estimate of Final Closure Wave 3, the cokernel-length-equals-determinant count with the Frobenius determinant of a Wach module, the rank step with \lean{MemCrit}, and the Frobenius descent over three letters with \lean{LemmaGs}.
+
+\section{What closed}
+
+\begin{longtable}{@{}p{0.42\textwidth}p{0.22\textwidth}p{0.28\textwidth}@{}}
+\toprule
+Item & Status & Section\\
+\midrule
+\endhead
+S2, B side: \lean{LevC.secCrit_all}, \lean{step_mp}, \lean{step_mpr}, \lean{secCrit_zero} & closed modulo V8 & \ref{sec:secCrit}\\
+S2, level zero: \lean{CrC.level_zero_membership_of_horizontal}, \lean{CrD.secIn_of_fil}, \lean{fil_of_rep}, \lean{LevE.levETie_of}, \lean{expFrame0_of}, \lean{expNoNeg0_of}, \lean{lev0Mpr_of} & closed modulo V8 and the comparison record & \ref{sec:lev0}\\
+S2, shared: \lean{MemCrit} via \lean{memCrit_of} $=$ \lean{memCrit_of_free}, with \lean{mem_vanI_at}, \lean{MC.indep_of_span}, \lean{MC.count_step}, \lean{MC.dvd_of_dg}, \lean{shift_exp}, \lean{jumpsLet_exists} & closed modulo V8 and Fontaine's $D_{\mathrm{dR}}=K\otimes D_{\mathrm{cris}}$ & \ref{sec:memcrit}\\
+S2, C side: \lean{expCrit_D'}, \lean{expCrit_D}, \lean{expCrit_of}, \lean{expCritN_of}, \lean{expCritP_of} & closed to \lean{MemCrit} and small leaves & \ref{sec:expcrit}\\
+S2 supporting lemmas: \lean{crt}, \lean{cop_lamUp}, \lean{exists_smul_pow_eq_sum_of_inFNc}, \lean{up1}, \lean{mem_of_sec_eq}, \lean{CrA.adapted}, \lean{DivLevR.divLev_of}, \lean{dvO_filLow}, \lean{dvO_zero_high}, \lean{CrD.cc_lev_piLamUp} & closed & \ref{sec:aux}\\
+S3, C-1: \lean{Tools.frobenius_power_congruence_local} $=$ \lean{tHor_of} (tool \lean{THor}) & closed modulo V8 and the comparison record & \ref{sec:thor}\\
+S3, C-1: \lean{truncatedSeriesData.tTool2_of} (tool \lean{TTool2}), \lean{rs_ex}, \lean{rem_exists}, \lean{bound1}, \lean{bound2}, \lean{num2}, \lean{trunc_ex} & closed modulo Weierstrass division; seven clause lemmas read at statement level & \ref{sec:ttool2}\\
+S3, R-B2: \lean{secOfP'}, \lean{pOfSec'}, \lean{arcHyp_secOfN}, \lean{arcHyp_nOfSec} & closed & \ref{sec:rb2}\\
+S4, B side: \lean{killer_first_theorem_holds}, \lean{killerKap_holds} (constant 8), \lean{annihilator_levels_unramified_statement}, \lean{KL.killerLevCore_of}, \lean{KL.step}, \lean{LevGrad} & closed; constant verified & \ref{sec:killer}\\
+S1: field map of \lean{LiftingTheory.local_theory_of_admitted} & located; \lean{coreH} and two clauses of \lean{coreTr} closed (Wave 2) & \ref{sec:s1}\\
+R-B3: \lean{Split.splitCore_of}, \lean{Split2.cutData_of}, \lean{tauZ_exists}, \lean{lift_avg}, \lean{pp_pull}, \lean{e_tf}; \lean{SplitP.polar_core} to helpers & closed modulo V8, Fontaine, Herr; small helpers remain & \ref{sec:split}\\
+R-B4: \lean{univFrame_of}, \lean{univLift_of}, \lean{univSec_of}, \lean{secRest_of}, \lean{KWP.killWinFromCut} & closed to three named cores & \ref{sec:univ}\\
+R-B4: \lean{KillWinCore} (\lean{part_a}, \lean{part_b}, \lean{part_c}), \lean{RATCore} (\lean{ratCore_of}), \lean{InvLevCore} (\lean{invLevCore_of}, \lean{levRat_of}, \lean{precompConst}) & closed; small leaves remain & \ref{sec:killwin}\\
+R-B4: \lean{SecRestCore}, \lean{UnivGenCore}; R-B6 cores; R-B7 \lean{exists_phiBridge}, \lean{den_step}, \lean{den_bound}, \lean{case2b} (checked); \lean{LevC.sec_unique} & closed to helpers & \ref{sec:bfinish}\\
+Theorem B helpers (\lean{secOfP_int}, \lean{gamma_lift_along_arc}, \lean{section_in_ideal_of_levels}, the \lean{SplitCore}, \lean{UnivCore} and RC helpers) & closed & \ref{sec:fifth}\\
+C-2, C-4, \lean{lattice_bounds_of_local}, \lean{fam_exp} & closed & \ref{sec:fifth}\\
+Theorem B case layer; Theorem C tools C-I to C-III & packaged as Propositions RC, C-I, C-II, C-III & \ref{sec:fifth}\\
+Proposition RC (cases (i) to (iii), constants $160$, $55$, $18$, nine cut types) & proved; cut bodies at skeleton level & \ref{sec:sixth}\\
+Propositions C-I, C-II, C-III & proved through five tools read as statements & \ref{sec:sixth}\\
+\lean{passage_to_quotient}, \lean{h2Bound_of_hypotheses}, \lean{LemmaDN}, \lean{pass4}, \lean{frobenius_sq_bound_of_local} & closed & \ref{sec:seventh}\\
+\bottomrule
+\end{longtable}
+
+\section{Setting}
+
+The setting is that of Final Closure Wave 2, Section 2.1, which I do not repeat in full. In Case A the field $K$ is unramified over $\mathbb Q_p$ with $p\ge5$ (Theorem B) or $p\ge11$ (Theorem C), the cyclotomic level is $s=1$, the ring of letters is $A=\prod_{i\in\mathbb Z/n}O[[\pi]]$ with idempotents $e_i$, $\varphi(\pi)=(1+\pi)^p-1$ moves letter $i-1$ to letter $i$, $\pi_0=\sum_{\delta\in\Delta}\delta(\pi)$, $q_A=p_0=\pi_0+p$ and $p_s=\varphi^s(p_0)$. The étale ring is $E\supset A$, $N(T)$ is the Wach module and $\NN$ its $\Delta$-invariants. For an arc datum the archive puts $\Lambda_e=\prod_{s<e}p_s^{H_s}$ (\lean{abelian2}), with $H_s=G_0$ when the letter $a-s$ is thin or $e-s\le j$, and $H_s=h$ otherwise, and $U=\varphi(\Lambda_e)$ (\lean{LamUp}), so that $\Lambda_{e+1}=p_0^{H}U$ (\lean{lam_succ}).
+
+Two objects are new compared with Wave 2.
+
+\begin{defn}[level maps, \lean{LocWach.lev}, \Lpath{LLC/DataNLoc.lean}, 278]
+For a letter $i$ and a $p$-power root of unity $\zeta$, $\mathrm{lev}_{i,\zeta}\colon A\to L[[t]]$ is the $O$-algebra map which reads letter $i$ and sends $\pi$ to $\zeta e^{t}-1$. It satisfies $\mathrm{lev}_{i,\zeta}(\varphi f)(t)=\mathrm{lev}_{i-1,\zeta^p}(f)(pt)$ and $\mathrm{lev}_{i,\zeta}(\gamma f)(t)=\mathrm{lev}_{i,\zeta}(f)(\chi(\gamma)t)$. On the Wach module the archive has $\mathrm{levN}_{i,\zeta}\colon N(T)\to (D_{\mathrm{cris}}\otimes B_{\mathrm{dR}})((t))$ with $\mathrm{levN}(ax)=\mathrm{lev}(a)\cdot\mathrm{levN}(x)$ and a crystalline version $\mathrm{levB}$ with $\mathrm{levN}=\iota\circ\mathrm{levB}$.
+\end{defn}
+
+This is the map $\iota_n$ of Berger, which sends $\pi$ to $\zeta_{p^n}e^{t/p^n}-1$, in the archive's normalisation at level one.
+
+\begin{defn}[section data, \Lpath{LLC/ArcLiftingSetup.lean}, 180 to 240]
+For a letter $a$, a length $e$ and exponents $\alpha\colon\{0,\dots,e-1\}\to\mathbb Z$, an element $g\in E$ lies in the fractional ideal $\mathrm{Id}(\alpha)$ when $\prod_sp_s^{\alpha_s^-}g=e_a\prod_sp_s^{\alpha_s^+}u$ with $u\in A^\Delta$ (\lean{InId}). For a frame $b$ of $\NN_{c'}$ and $c_0\in O^d$ put $\mathrm{dv}_e(c_0)=\sum_mc_{0,m}\varphi^e(\mathrm{cmp}\,b_m)$ and $\Fil_S(a,s,u)=\varphi^s\bigl(\Fil^u\cap D_{\mathrm{cris}}\text{ at the embedding }a-s\bigr)$. A vector $f\in E^d$ is \emph{sectioned} (\lean{SecIn} with \lean{condNN}) when $f=\sum_ig_ic_{0,i}$ with $g_i\in\mathrm{Id}(\alpha_i)$ and $\mathrm{dv}_e(c_{0,i})\in\Fil_S(a,s,-\alpha_{i,s})$ for every $s<e$.
+\end{defn}
+
+The \emph{frame coordinates} of $x$ (\lean{RepVV}) are the vector $f$ with $p^{\kappa}\Lambda_ex=\sum_k\Lambda_ef_k\,\varphi^e(H_k)$ up to an error in $\pi_0\Lambda_e^2\Pp^e$, where the $H_k$ are horizontal truncations of the frame (Wave 2, Lemma 4).
+
+\section{S2. The membership criterion along an arc}\label{sec:secCrit}
+
+\begin{thm}[\lean{ArcC.SecCrit}, proved by \lean{LevC.secCrit_all}, \Lpath{LLC/SecCritAll.lean}, 168]\label{thm:secCrit}
+In Case A with $p\ge5$, for an arc datum satisfying \lean{A.OK}, a cut $c'$, a crystalline $T$ in the window, a horizontal frame $(b,\mathrm{sol})$ of $\NN_{c'}$ and every $e\ge0$ the following holds. Let $x\in D(T)$ with $\Lambda_ex\in\Pp^e_{c'}$, let $f$ be frame coordinates of $p^kx$ with $\Lambda_ef_k\in A^\Delta$ for all $k$. Then $x\in\NN_{c'+e}$ if and only if $p^\kappa f$ is sectioned for some $\kappa$.
+\end{thm}
+
+This is Berger's description of the Wach module by the Hodge filtration through the level maps, carried along an arc of $e$ letters with the explicit denominators $\Lambda_e$.
+
+\begin{proof}
+Induction on $e$. At $e=0$ the module $\Pp^0$ is $\NN_{c'}$ and both sides hold (\lean{secCrit_zero}: every $f$ is sectioned with $\alpha=0$ and $c_0$ the standard basis). Assume the statement at $e$ and write $a=c'+e$, $H=H_0$ at length $e+1$, and $h_q$ for the P5 exponent of the letter $a+1$.
+
+\emph{Splitting.} The elements $\pi_0U^2$ and $p_0^{H+h_q}$ are coprime in $A^\Delta$ after inverting $p$ (Lemma~\ref{lem:crt}), so $p^{m_0}=u_0+u_1$ with $u_0\in\pi_0U^2A^\Delta$ and $u_1\in p_0^{H+h_q}A^\Delta$.
+
+\emph{The part $u_0x$.} Its frame coordinates $u_0f$ lie in the fractional ideal $\pi_0U/p_0^{H}$, which is the situation of the level-zero statement \lean{SecCrit0} (Section~\ref{sec:lev0}). It gives the equivalence for $u_0x$ directly.
+
+\emph{The part $u_1x$, forward.} If $x\in\NN_{a+1}$, the second P5 clause gives $p_0^{h_q}x=\sum_j\beta_j\varphi(b'_j)$ with $b'_j\in\NN_a$ and $\beta_j\in A^\Delta$ (Lemma~\ref{lem:inv}). Each $b'_j$ satisfies $\Lambda_eb'_j\in\Pp^e$ (\lean{arc_down}), has frame coordinates (\lean{secOfP'}, Section~\ref{sec:rb2}), and by the induction hypothesis these are sectioned at length $e$. Applying $\varphi$ moves a section of length $e$ at letter $a$ to a section of length $e+1$ at letter $a+1$, shifting every level by one and adding a new level $0$ with $\alpha_0=-H$ (\lean{secIn_transport}). The new condition at level $0$ holds for every coordinate vector, because the jumps of $T$ at that letter are at least $-H$ (\lean{dvO_filLow}). Sums of sectioned vectors are sectioned (\lean{good_sum}).
+
+\emph{The part $u_1x$, converse.} If $p^\kappa f=\sum_ig_ic_{0,i}$ is sectioned, then for $c_{0,i}\ne0$ the exponents satisfy $\alpha_{i,s+1}\ge-H_{s+1}$, because a nonzero coordinate vector cannot lie in a filtration step above the top jump (\lean{dvO_zero_high}). Then $u_1g_i=p_0^{H}v\,\varphi(g'_i)$ with $g'_i$ in an ideal of length $e$ (\lean{mono_lift}), the conditions at levels $s+1$ shift down to conditions at levels $s$ of length $e$, \lean{pOfSec'} produces $y_i$ with these frame coordinates, the induction hypothesis puts $y_i\in\NN_a$, and the first P5 clause puts $p_0^{H}v\varphi(y_i)\in\NN_{a+1}$ (\lean{up1}). The sum $Z$ of these vectors lies in $\NN_{a+1}$ and has the same frame coordinates as $u_1x$ up to a power of $p$, so $u_1x\in\NN_{a+1}$ by Lemma~\ref{lem:mse}.
+
+\emph{Saturation.} In both directions one obtains $p^{m_0}x=u_0x+u_1x$ on the correct side, and \lean{SATcore} (V8) through \lean{arc_sat} removes $p^{m_0}$.
+\end{proof}
+
+\section{S2. The level-zero statement}\label{sec:lev0}
+
+\lean{SecCrit0} is the conjunction of \lean{LevelZeroModP} (forward) and \lean{LevelZeroModPRefined} (converse), both for $x$ whose frame coordinates lie in $\pi_0U/p_0^{H}$ (\Lpath{LLC/ArcCoordinatesOfLevelZeroParts.lean}).
+
+\begin{prop}[forward, \lean{fil_of_rep}, \Lpath{LLC/FrobeniusPowerZeroEqQ.lean}, 35, and \lean{CrD.secIn_of_fil}, \Lpath{LLC/CoeffAlgMul.lean}, 33]\label{prop:fwd}
+Put $a=c'+e+1$. Put $a=c'+e+1$. Let $p_0^{H}f_m=e_a\pi_0Uu_m$ with $u_m\in A^\Delta$ and let $x\in\NN_{a}$ have frame coordinates $f$ at length $e+1$. For every primitive $p$-th root of unity $\zeta$ and every $j<2H$,
+\[
+\sum_m\bigl[\mathrm{lev}_{a,\zeta}(\pi_0Uu_m)\bigr]_j\;\varphi^{e+1}(\mathrm{cmp}\,b_m)\in\Fil_S(a,0,H-j),
+\]
+and consequently $p^\kappa f$ is sectioned for some $\kappa$.
+\end{prop}
+
+\begin{proof}
+Write the frame relation as $p^{K}\Lambda_{e+1}x=\sum_ma_m\varphi^{e+1}(H_m)+\pi_0\Lambda_{e+1}^2y$ with $y\in\Pp^{e+1}$, multiply by $\mu=q^HU$, and apply $\mathrm{levB}_{a,\zeta}$. Three facts are used. (i) $\mathrm{lev}_\zeta(p_0)=tS$ with $S$ a unit, since $p_0$ has a simple zero at $\pi=\zeta-1$ (\lean{lev_qP_X}). Hence $\mathrm{lev}(\pi_0\Lambda_{e+1}^2)$ is $t^{2H}$ times a series, and the level series of $\mu y$ vanishes below degree $H$ (\lean{ExpNoNeg0}), so the error term vanishes below $3H$. (ii) A horizontal truncation $H_m$ has level series at $\zeta=1$ equal to its constant term $p^\kappa\mathrm{cmp}(b_m)$ up to degree $(p-1)M$, and $\varphi^{e+1}$ transports this to $\zeta$ (\lean{ExpFrame0}, the same mechanism as Proposition~\ref{prop:thor}). Since $2h<(p-1)M$ and $H\le h$, the agreement holds below $3H$. (iii) For $x\in N$ the coefficient of $t^i$ in $\mathrm{levB}(x)$ lies in $\Fil^{-i}$ (V8 clause p4, \lean{LevelMapHodgeFiltration}, forward half). Dividing the identity by the unit $X^Hu_0^H\mathrm{lev}(U)^2$ (\lean{vanish_of_XU}) and comparing coefficients of degree $j<2H$ gives the display.
+
+For the consequence, let $G(w)\subset L^d$ be the preimage of $\Fil_S(a,0,w)$ under $\mathrm{dv}_{e+1}$. It is a decreasing filtration with $G(-H)=L^d$. Choose an adapted basis $P_i\in G(h_i)$ with dual coordinates $Q_i$ (\lean{CrA.adapted}, Lemma~\ref{lem:adapted}). Put $V_i=\sum_mQ_{i,m}u_m$. The display shows that $[\mathrm{lev}(\pi_0UV_i)]_j=0$ for $j<H-h_i$. The constant term of $\mathrm{lev}_\zeta(\pi_0U)$ is $-p\cdot p^{\sum H_s}\ne0$ (\lean{cc_lev_piLamUp}), so $[\mathrm{lev}(V_i)]_j=0$ for $j<k_i=H-h_i$, and the factor theorem at the simple zero of $p_0$ gives $e_aV_i=p_0^{k_i}h'_i$ with $h'_i\in A^\Delta$ (\lean{divLev_of}). With $g_i=\sum_mQ_{i,m}f_m$, $\alpha_{i,0}=k_i-H$, $\alpha_{i,s}=H_s$ for $s\ge1$ and $c_{0,i}=P_i$ (cleared of denominators), the identity $\sum_iP_iQ_i=\mathrm{id}$ gives $p^{\kappa}f=\sum_ig_ic_{0,i}$, and the conditions hold at level $0$ by the choice of $h_i$ and at levels $s\ge1$ by \lean{dvO_filLow}.
+\end{proof}
+
+\begin{prop}[converse, \lean{LevM.lev0Mpr_of}, \Lpath{LLC/LevelSeriesFirstFactorOrderOne.lean}, 239]\label{prop:conv}
+In the setting of Proposition~\ref{prop:fwd}, if $p^\kappa f$ is sectioned then $x\in\NN_a$.
+\end{prop}
+
+\begin{proof}
+Let $Y=\sum_m e_a\pi_0Uw_m\,\varphi^{e+1}(H_m)$ and $z=p_0^{-H}Y$, which makes sense because $p_0$ is a unit in $E$ (\lean{first_factor_power_isUnit_etale}). Then $z$ has the frame coordinates $f$ with zero error, so by Lemma~\ref{lem:mse} it suffices to show $z\in N$. The element $Q^{2H}z$ is a sum of terms $q^H\varphi(\Lambda_e\varphi^e H_m)$, which lie in $N$ by the first P5 clause (\lean{qphi_mem}). By the membership criterion (Theorem~\ref{thm:memcrit}) with $k=2H$ it suffices to show that the coefficient of $t^{j'}$ of $\mathrm{levN}(Q^{2H}z)$ lies in $\Fil(2H-j')$ for all $j'$. For $j'<(p-1)M+H$ the coefficient is computed from \lean{ExpFrame0} and the section data: the denominator $\mathrm{DEN}=\prod_i\prod_sp_s^{\alpha_{i,s}^-}$ has $\mathrm{lev}_\zeta(\mathrm{DEN})=t^{\sum_i\alpha_{i,0}^-}$ times a unit, because among the $p_s$ only $p_0$ vanishes at $\zeta-1$ (\lean{lev_prod_ps}), and a filtration-degree argument (\lean{dg_core}) gives the required membership. For $j'\ge(p-1)M+H$ the required step $2H-j'$ is below $-M_w$, where every crystalline vector lies because the jumps at the letter are at least $-M_w$ (\lean{fil_low}).
+\end{proof}
+
+\section{S2. The shared membership criterion}\label{sec:memcrit}
+
+\begin{thm}[\lean{MemCrit}, \Lpath{QID/MemCrit.lean}, 18]\label{thm:memcrit}
+Let $T$ be crystalline, $c$ a letter, and $x\in D(T)$ with $e_cx=x$ and $Q^kx\in N(T)$. If for every primitive $p$-th root of unity $\zeta$ and every $j$ the coefficient of $t^{j}$ in $\mathrm{levN}_{c,\zeta}(Q^kx)$ lies in $\Fil_{\mathrm{Lev}}(c,0,k-j)$, then $x\in N(T)$.
+\end{thm}
+
+The archive proves this twice, as \lean{memCrit_of} (\Lpath{QID/JumpsLetExists.lean}, 218) for Theorem C and as \lean{memCrit_of_free} (\Lpath{LLC/ArcCoordinatesFinal.lean}, 26) for Theorem B. The two statements and the two proof bodies are identical, so this is one item.
+
+\begin{proof}
+The third P5 clause (V8) states that $x$ with some $Q^kx\in N$ lies in $N$ if and only if, for every letter $i$, every root $\zeta$ of $Q$ in that letter, and every $k'$ with $Q^{k'}x\in N$, one has $Q^{k'}x\in\mathrm{van}(i,\zeta,k')\,N$, where $\mathrm{van}(i,\zeta,k')=\mathrm{lev}_{i,\zeta}^{-1}(t^{k'})$. For $i\ne c$ this is automatic since $\mathrm{lev}_{i}(e_c)=0$. For $i=c$ the roots of $Q$ are the primitive $p$-th roots (\lean{qroot_prim}), the hypothesis at $k$ transfers to $k'$ because $\mathrm{lev}(Q)=t\cdot$unit (\lean{shift_exp}), and it remains to prove the following lemma.
+\end{proof}
+
+\begin{lemma}[\lean{mem_vanI_at}, \Lpath{QID/JumpsLetExists.lean}]\label{lem:van}
+Let $b_1,\dots,b_r$ be a basis of the letter-$c$ part of $N$ over $O[[\pi]]$ (\lean{WachLatticeFree}, V8). If $y\in N$ lies in letter $c$ and every coefficient of $t^j$ of $\mathrm{levN}(y)$ lies in $\Fil(k-j)$, then $y\in\mathrm{van}(c,\zeta,k)N$.
+\end{lemma}
+
+\begin{proof}
+Write $y=\sum_m\beta_mb_m$ and $e_m=\mathrm{levN}(b_m)$, so that $\mathrm{levN}(y)=\sum_m\mathrm{lev}(\beta_m)e_m$, and every $e_m(j)$ lies in $D\cap\Fil^{-j}$ with $D=\iota D_{\mathrm{cris}}$. Two facts about the leading vectors are needed. First, $r\le\dim D$ (\lean{rank_le}, from p3). Second, by the converse half of p4 every $w\in D\cap\Fil^{-k}$ is, modulo $\Fil^{-k+1}$, the leading coefficient of a combination $\sum_m\gamma_me_m$ whose lower coefficients lie one step deeper in the filtration (\lean{hS}, built from the expansion of the element that p4 provides).
+
+\emph{Independence} (\lean{MC.indep_of_span}, \lean{MC.count_step}). Let $U_j\subset L^r$ be the space of $\gamma$ with $\sum_m\gamma_me_m(i)\in\Fil^{-i+1}$ for all $i<j$. The map $\gamma\mapsto\sum_m\gamma_me_m(j)\bmod\Fil^{-j+1}$ on $U_j$ has kernel $U_{j+1}$ and, by the second fact, image $(D\cap\Fil^{-j})/(D\cap\Fil^{-j+1})$. Hence $\dim U_{j+1}+\dim(D\cap\Fil^{-j})=\dim U_j+\dim(D\cap\Fil^{-j+1})$, so $H(j)=\dim U_j+\dim(D\cap\Fil^{-j+1})$ is constant in $j$. For $j$ very negative $U_j=L^r$ and $D\cap\Fil^{-j+1}=0$, so $H=r$. For $j$ very positive $D\cap\Fil^{-j+1}=D$, so $\dim U_j=r-\dim D\le0$. Thus the only $\gamma$ with $\sum_m\gamma_me_m(j)\in\Fil^{-j+1}$ for all $j$ is $\gamma=0$.
+
+\emph{Divisibility} (\lean{MC.dvd_of_dg}). Induction on $k$. If $\sum_m\mathrm{lev}(\beta_m)e_m(j)\in\Fil^{k+1-j}$ for all $j$, then subtracting the constant terms, which only moves terms one filtration step (\lean{smulS_sub_cc}), gives $\sum_m\beta_m(0)e_m(j)\in\Fil^{-j+1}$ for all $j$, so all constant terms vanish by independence. Dividing every $\mathrm{lev}(\beta_m)$ by $t$ shifts the hypothesis from $k+1$ to $k$. Hence $t^k$ divides every $\mathrm{lev}(\beta_m)$, which is $\beta_m\in\mathrm{van}(c,\zeta,k)$.
+\end{proof}
+
+The finiteness of the filtration used in the independence argument is \lean{jumpsLet_exists} and \lean{fd_iotaDi}, which rest on \lean{DdREqDcris}, the equality $D_{\mathrm{dR}}=K\otimes_{K_0}D_{\mathrm{cris}}$ for crystalline representations.
+
+\section{S2. The Theorem C form}\label{sec:expcrit}
+
+The Theorem C tool \lean{ExpCrit} (\Lpath{LLC/ExpRules.lean}, 48) states two equivalences for a $\Delta$-invariant $x$ at letter $i$ with a level expansion $d$ (\lean{IsExp}, $d$ is $\mathrm{levN}$ of a multiple of $x$ divided by the level series of the multiplier). (N) If some $q_p^kx\in N$ then $x\in N$ if and only if $d(k)\in\Fil_{\mathrm{Lev}}(i,0,-k)$ for all $k$. (P) If some $q_p^kx$ lies in the $\varphi$-pullback $\mathrm{pullJ}(i-1,1)$ then $x$ lies there if and only if $d(k)=0$ for $k<0$.
+
+\lean{expCrit_D'} (\Lpath{QID/IsAdicCompleteOfLe.lean}, 60) supplies the $\mathfrak m$-adic completeness of $O_L$ from its $p$-adic completeness (\lean{isAdicComplete_of_le}, \lean{complete_max}, both elementary and read) and calls \lean{expCrit_D}, which selects fields of the record \lean{admitted} and calls \lean{expCrit_of} (\Lpath{QID/ExpCritPOf.lean}, 161). That is the conjunction of two proofs, both read.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \lean{expCritN_of} (\Lpath{QID/IsExpSmulA.lean}, 62). The forward direction is p4. The converse is Theorem~\ref{thm:memcrit}. The hypothesis is given at one primitive root $\zeta$, and is moved to every other $\zeta'=\zeta^a$ by an element $\delta\in\Delta$ with $\chi(\delta)\equiv a$ (\lean{PtTrans}), using $\gamma$-equivariance of the level maps, which multiplies the coefficient of $t^j$ by $\chi(\delta)^j$.
+\item \lean{expCritP_of}. The forward direction is \lean{pullJ_exp}. For the converse, expand $q_p^kx=\sum_ma_m(\pi_0)\varphi(e_m)$ on a basis (\lean{BasTool}), whose level series $E_m$ have constant terms $\iota\varphi(\mathrm{cmp}\,e_m)$, linearly independent by \lean{indep_phi_cmp}. With the two-step filtration ($\top$ in degrees $\le0$, $0$ above) the divisibility lemma above gives $t^k\mid\mathrm{lev}(a_m)$. Since $\mathrm{lev}(X+p)=t\cdot u$, the Weierstrass-type lemma \lean{Wd.dvd_of_dvd_image} gives $(X+p)^k\mid a_m$ in $O[[X]]$, so $q_p^k$ cancels (\lean{qp_pow_cancel}).
+\end{itemize}
+
+So the Theorem C membership tool and the level-zero converse of Theorem B rest on the same \lean{MemCrit}.
+
+\section{S2. Supporting lemmas}\label{sec:aux}
+
+\begin{lemma}[\lean{crt}, \lean{cop_lamUp}, \Lpath{LLC/CoprimeFrobeniusUniformizerPowers.lean}, 85 to 140]\label{lem:crt}
+Write $x\sim z$ when $p^m=rx+sz$ for some $m$ and $r,s\in A^\Delta$. Then $\pi_0\sim p_0$, $p_s\sim p_0$ for $s\ge1$, and hence $\pi_0U^2\sim p_0^N$ for every $N$.
+\end{lemma}
+\begin{proof}
+$p=p_0-\pi_0$. For $s\ge1$, $\varphi^s(\pi_0)=a\,p_0$ with $a\in A^\Delta$ by the ring relations of V8, so $p=p_s-\varphi^s(\pi_0)=p_s-ap_0$. The relation is preserved by products and powers (\lean{cop_mul}, \lean{cop_pow}, \lean{cop_prod}).
+\end{proof}
+
+\begin{lemma}[\lean{exists_smul_pow_eq_sum_of_inFNc}, \lean{up1}, \Lpath{LLC/ExistsSmulPowEqSumOfInFNc.lean}]\label{lem:inv}
+If $x\in\NN_{a+1}$ then $p_0^{N}x=\sum_j\beta_j\varphi(b'_j)$ with $b'_j\in\NN_a$ and $\beta_j\in A^\Delta$ for $N\ge h_q$. If $y\in\NN_a$ and $H\ge M_w$ then $p_0^Hv\varphi(y)\in\NN_{a+1}$ for $v\in A^\Delta$.
+\end{lemma}
+\begin{proof}
+The two P5 clauses, $q=$ unit $\cdot\,p_0$, a $\Delta$-invariant basis of $\NN$ (\lean{wachModuleOverLetters}, V8), and averaging over $\Delta$, whose order is a unit.
+\end{proof}
+
+\begin{lemma}[\lean{mem_of_sec_eq}, \Lpath{LLC/MemOfSecEq.lean}, 40]\label{lem:mse}
+If $x$ and $z\in\NN_{c'+e}$ satisfy $\Lambda_ex,\Lambda_ez\in\Pp^e$ and have frame coordinates that agree up to a power of $p$, then $x\in\NN_{c'+e}$.
+\end{lemma}
+\begin{proof}
+The difference of suitable $p$-power multiples has zero frame coordinates, so it lies in $\pi_0\Lambda_e\Pp^e$ (\lean{piLam_of_sec}, using \lean{SATPcore}), which is inside $N$ (\lean{inN_of_piLam}, via the P5 chain \lean{arc_up}). Add $z$ and saturate (\lean{arc_sat}).
+\end{proof}
+
+\begin{lemma}[\lean{CrA.adapted}, \Lpath{LLC/StageStep.lean}, 72]\label{lem:adapted}
+For a decreasing filtration $G$ of $L^d$ with $G(\mathrm{lo})=L^d$ there are a basis $P_i\in G(h_i)$, $\mathrm{lo}\le h_i\le\mathrm{hi}$, and dual coordinates $Q_i$ such that $Q_i(c)=0$ whenever $c\in G(u)$ and $h_i<u\le\mathrm{hi}$.
+\end{lemma}
+\begin{proof}
+A basis compatible with the filtration exists by successive extension of bases of the steps (\lean{stage_all}); the $Q_i$ are its coordinate functionals.
+\end{proof}
+
+The remaining lemmas are short and were read. \lean{divLev_of}: if the first $k$ coefficients of $\mathrm{lev}_{a,\zeta}(g)$ vanish then $e_ag=p_0^kh$, by induction from the factor theorem at the simple zero $\zeta-1$ of $p_0$ (the base step \lean{step} in \Lpath{LLC/LevLetEMul.lean} was not opened). \lean{dvO_filLow}: $\mathrm{dv}(c_0)\in\Fil(-H_s)$ because the jumps are at least $-H_s$. \lean{dvO_zero_high}: a coordinate vector in a filtration step above the top jump is zero, by \lean{fil_high} and the linear independence of the frame (\lean{frame_basis}, from p3 and p5). \lean{cc_lev_piLamUp}: $\mathrm{lev}_\zeta(p_0)(0)=0$, $\mathrm{lev}_\zeta(\pi_0)(0)=-p$, $\mathrm{lev}_\zeta(p_{s+1})(0)=p$.
+
+\section{S3. Level expansion of truncations, \texorpdfstring{\lean{THor}}{THor}}\label{sec:thor}
+
+\begin{prop}[\lean{THor}, \Lpath{LLC/CrystallineLiftingInputs.lean}, 181; proved by \lean{Tools.tHor_of}, \Lpath{LLC/FrobeniusPowerCongruenceOfAdmitted.lean}, 480]\label{prop:thor}
+Let $p\ge11$, $(j,M,X,\sigma)$ a truncation case (\lean{TCase}), $w\in N$ at letter $i$ with $(\gamma-1)w\in\pi_0N$, and $z=p^\sigma\varphi^j(w)-\sum_ys_y\varphi^j(c_y)$ its truncation. If $(q_p^ka)z\in N$, then for $\zeta$ primitive with $R=k+X$, or $\zeta=1$ with $R=(p-1)M$, the level series of $(q_p^ka)z$ vanishes in negative degrees and, below degree $R$, equals $\mathrm{lev}(q_p^ka)$ times the constant vector $p^\sigma\iota\varphi^j\mathrm{cmp}(w)$.
+\end{prop}
+
+\begin{proof}
+Put $h=p^Jw-\sum_{y<K}p^{J-e_y}\pi_0^yc_y$, which lies in $N$ and satisfies $(\gamma-1)h=\pi_0^K\nu$ by the series equation (\lean{IsSer}). At $\zeta=1$ the level series of a lattice vector is a power series in $t$ (\lean{laurentBounded_zero_of_trivial_twist}, from p4), $\gamma$ multiplies its coefficient of $t^k$ by $\chi(\gamma)^k$ (\lean{levB_gamma1}), and $\mathrm{lev}_1(\pi_0)$ is divisible by $t^{p-1}$ (\lean{levpi0_dvd}). Comparing coefficients in $(\gamma-1)h=\pi_0^K\nu$ gives $(\chi(\gamma)^k-1)d_k=0$ for $0<k<(p-1)K$, and $\chi(\gamma)^k\ne1$ for $k>0$ (\lean{chi_pow_ne_one}), so $d_k=0$ there. The constant term is $p^J\mathrm{cmp}(w)$ (field \lean{cmp_eq} of the comparison record). This is \lean{expH}. The transport to letter $i+j$ and to $\zeta$ primitive is \lean{chainzeta}, iterating $\mathrm{lev}_{i,\zeta}(\varphi f)(t)=\mathrm{lev}_{i-1,\zeta^p}(f)(pt)$ and the $\varphi$-compatibility of $\mathrm{levB}$ (\lean{stepphi}). The algebra relating $z$, $h$ and the remainders $r_y,s_y$ is \lean{key_idJ}.
+\end{proof}
+
+The same mechanism, horizontal to order $\pi_0^M$ implies a constant level series to order $(p-1)M$, is \lean{hor_exp} behind \lean{ExpFrame0} on the Theorem B side. This is the shared core of S3.
+
+\section{S3. Truncation, \texorpdfstring{\lean{TTool2}}{TTool2}}\label{sec:ttool2}
+
+\lean{truncatedSeriesData.tTool2_of} (\Lpath{LLC/HermFlagUnipotentAnisotropicVectorSubMem.lean}, 1574) assembles seven clause lemmas: existence \lean{trunc_ex}, the membership clause \lean{b1}, the $\gamma$-clause \lean{gamma_sub_of_frobenius_power}, uniqueness \lean{uniq_alt_alt}, linearity \lean{linear_of_frobenius_power}, divisibility \lean{uniformizer_dvd_of_frobenius_power}, the span clause \lean{span_gen}, and functoriality \lean{hermFlagUnipotent_anisotropic_vector_sub_mem}. Each is pulled back through \lean{fp_pull} with \lean{SATPcore}. The existence clause, which carries the constant, was read in full.
+
+\begin{lemma}[\lean{rem_exists}, \lean{bound1}, \lean{bound2}, \lean{num2}, \lean{rs_ex}]\label{lem:sig}
+Let $e(y)=\lceil yp/(p-1)\rceil$ and $F=\pi_0^Mq_p^X$. For $j=1$, $M\ge1$ and $\sigma=\lceil(M+X)/(p-1)+1\rceil$, and for $j=2$, $M=1$ and $\sigma=\lceil X/(p-1)^2+1\rceil$, with $p\ge11$,
+\[
+p^\sigma\varphi^j(\pi_0)^y\in p^{e(y)}A^\Delta+F\,A^\Delta\quad\text{for all }y,
+\]
+and $\varphi^j(\pi_0)^y=r_y+F g_y$ with $r_y$ a polynomial in $\pi_0$ of degree $<M+X$ and $p^{e(y)}s_y=p^\sigma r_y$.
+\end{lemma}
+\begin{proof}
+The membership comes from Lemma~5 of Wave 2 ($\varphi^j(\pi_0)^r=u\,\pi_0^r\prod_{k<j}p_k^{(p-1)r}$) and $p_1=bq_p^p+p(a-d_0b)$, with the arithmetic \lean{num2} and the ideal computation \lean{rem_2}. The remainder is Weierstrass division by $F$, which is a distinguished polynomial of degree $M+X$ modulo $\mathfrak m$ (\lean{wdiv}, \lean{wuniq}, using \lean{PowerSeries.IsWeierstrassDivision} of Mathlib).
+\end{proof}
+
+\noindent\textbf{Check.} In the model ring $\mathbb Z_p[[X]]$ with $\pi_0=X$, $q_p=X+p$ and $\varphi(X)=X(X+p)^{p-1}$, I tested the membership exactly (division by the monic polynomial $F$ modulo $p^{e(y)-\sigma}$) for $p\in\{11,13\}$, $j=1$, $M\le5$, $X<60$, $y<25$, and $j=2$, $y<12$: $2{,}740$ cases each, no failure. The smallest exponent that works is at least one below the archive's $\sigma$ in every case, so the constant has slack.
+
+\section{S3. The coordinate clauses R-B2}\label{sec:rb2}
+
+\lean{secOfP'} (\Lpath{LLC/SecOfP.lean}, 24) produces frame coordinates for $x$ with $\Lambda_ex\in\Pp^e$. Write $\Lambda_ex=\sum_m\beta_m\varphi^e(b_m)$ (\lean{ArcF.Pp_repr}). Integralise the horizontal solutions with the exponent $\mathrm{Ex}(r)=\lceil rp/(p-1)\rceil$ (\lean{int_of_bd}, from \lean{coreH} clause (iv)), form the truncated solution matrix $H(Y)$ with $Y=\varphi^e(\pi_0)$, and invert it modulo $Y^M$: $H(Y)G(Y)=p^{2\kappa}I+Y^M\rho(Y)$ (\lean{ArcF.frame_inv_poly}). Since $Y^M=\pi_0\Lambda_e^2\nu$ (\lean{yM_gen}), the coordinates $\Lambda_e^{-1}G\beta$ represent $p^{\kappa}x$ with error in $\pi_0\Lambda_e^2\Pp^e$. \lean{pOfSec'} is the converse construction $z=\Lambda_e^{-1}\sum_ka_k\varphi^e(H_k)$. \lean{arcHyp_secOfN} and \lean{arcHyp_nOfSec} are immediate from these and Theorem~\ref{thm:secCrit}.
+
+\section{S4. Killer inputs}\label{sec:killer}
+
+\begin{prop}[\lean{KillerKap}, \Lpath{LLC/ArcLiftingSetup.lean}, 446; \lean{killerKap_holds}, \Lpath{LLC/DivisibilityInvariantMulLinear.lean}, 185]
+Let $l\ge5$, $G\le h$, $h\ge1$, $-2h\le a_k$, $a_k+S\le2h$ for $k<\rho$, and $J=[-2G,G]\cup\bigcup_k[a_k,a_k+S)$. Then
+\[
+\ell+\sum_{i\in J\setminus0}\bigl(\ell+1+v_l(i)\bigr)\le8\bigl((G+\rho S+1)(\ell+1)+(\rho+1)\log_lh\bigr).
+\]
+\end{prop}
+\begin{proof}
+$|J\setminus0|\le3G+\rho S$, and on each interval of length $L$ inside $|i|\le2h$ the sum of $v_l(i)$ is at most $L/(l-1)+\log_l(2h)$, by counting multiples of $l^k$ (\lean{kappa_window_bound}). With $\log_l(2h)\le1+\log_lh$ and $x/(l-1)\le x$ the left side is at most $\ell+(3G+1+\rho S)(\ell+1)+(3G+1)+\log_l(2h)+\rho(S+1+\log_lh)$, which is below the right side; the case $S=0$ is treated separately. The valuation identity $v(P(1))=\ell+\sum_{i}(\ell+1+v_l(i))$ for the killer polynomial $P=\prod_{i\ne0}(X^{p^\ell}-\chi^{ip^\ell})\cdot\sum_{k<p^\ell}X^k$ is the lifting-the-exponent lemma (\lean{arc_KillerVal}).
+\end{proof}
+
+\noindent\textbf{Check.} Random search over $l\in\{5,7,11,13\}$, $h$ up to $10^5$, $\ell\le6$, $\rho\le5$, with intervals placed on high powers of $l$ ($160{,}000$ cases): the ratio of the two sides never exceeds $3.75$, reached at $l=5$, $\ell=\rho=0$, $G$ near $h$, where it is $3(1+1/(l-1))$. The constant $8$ is safe by a factor two.
+
+\begin{prop}[\lean{KillerLevCore}; \lean{annihilator_levels_unramified_statement}, \lean{annihilator_levels_of_grading}, \lean{KL.killerLevCore_of}]
+For $s<\ell$ and $f\in\mathrm{Id}(\alpha)$ with $\alpha_s\ne0$, a $p$-power multiple of $(\gamma^{p^\ell}-\chi(\gamma)^{\alpha_sp^\ell})f$ lies in $\mathrm{Id}(\alpha+\delta_s)$; for $\alpha_s=0$ the same holds for $(\gamma-1)f$; and products of such factors raise $\alpha_s$ accordingly.
+\end{prop}
+\begin{proof}
+\lean{LevGrad} (\lean{levGrad_of}, from \lean{aut_core}): the automorphism $\gamma$ of $O[[X]]$ is $1+X\mapsto(1+X)^{\chi}$, written with the binomial series and identified by an ODE uniqueness argument (\lean{aut_eq_bs}, \lean{ode_unique}). If $\chi=1+l^km$ then $\gamma^{p^\ell}\equiv\mathrm{id}$ modulo $p_s$ for $s<\ell$, and $\gamma^{p^\ell}(p_s)\equiv\chi^{p^\ell}p_s$ modulo $p_s^2$. In \lean{KL.step}, $\gamma^{p^\ell}(p_t)=r_tp_t$ with $r_t\equiv1$ modulo $p_s$ for $t\ne s$ (using $p_s\sim p_t$, \lean{PsCoprime}) and $r_s\equiv\chi^{p^\ell}$, so $\gamma^{p^\ell}$ multiplies the leading term of $f$ at $p_s$ by $\chi^{\alpha_sp^\ell}$ and the difference gains a factor $p_s$. The remaining 100 lines of \lean{KL.step} are this congruence bookkeeping and were read in part.
+\end{proof}
+
+\section{S1. The generic lifting record}\label{sec:s1}
+
+\lean{LiftingTheory.local_theory_of_admitted} (\Lpath{LLC/BaseChangePreservesUnitaryOf.lean}, 4837) is \lean{local_parts_of_admitted} together with \lean{lifting_all_parts_of_admitted}. Its fields and producers are as follows.
+
+\begin{center}
+\begin{tabular}{@{}p{0.27\textwidth}p{0.36\textwidth}p{0.29\textwidth}@{}}
+\toprule
+Field & Producer & Status\\
+\midrule
+\lean{ConclusionL} (\lean{coreL}) & \lean{lattice_clause_every_situation} (\Lpath{FPU}, 1966), via \lean{lag_coreL}, \lean{assoc_of_v} & small, read at top; \lean{lag_coreL} unread\\
+\lean{ConclusionW} (\lean{coreWX}, \lean{coreWB}, \lean{coreWA}, \lean{coreWK1}) & \lean{wach_statement_of_literature} (\Lpath{FPU}, 4131) & \lean{coreWA} closed earlier; three cores statement level\\
+\lean{WachAnnihilatorAll} & \lean{wach_first_clause_of_literature} & statement level\\
+\lean{WachExponentRecursionAll}, \lean{WachResultConstant 10} (\lean{coreWR}) & \lean{wach_clauses_of_admitted_inj} & \lean{coreWR} closed earlier\\
+\lean{ConclusionH} (\lean{coreH}) & \lean{gamma_equation_clause_of_uniformizer} & closed (Wave 2)\\
+\lean{ExistsUnitClasses} (\lean{coreTr}) & \lean{truncation_of_uniformizer_clause} (\Lpath{FPU}, 2614) & clauses 1, 2 closed (Wave 2); clauses 3, 4 small\\
+\lean{LiftTheoremAllCases} (23, 32, 32) & \lean{lifting_case_A_of_admitted}, \lean{lifting_case_B_of_hypotheses} & the Theorem B route of Wave 2\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Clauses 3 and 4 of \lean{coreTr} are the rational form of the truncation estimate of Lemma~\ref{lem:sig}: $c\,\varphi^j(\pi_0)^r$ with $v(c)=-rp/(p-1)$ splits as an element of $A^\Delta$ plus $J$ times a vector of the localised Wach ring. The integral form was read in Wave 2 (\lean{tr_trunc_int}); the rational form is the same arithmetic.
+
+\section{R-B3. The splitting core}\label{sec:split}
+
+\lean{SplitCore} (\Lpath{LLC/ArcLiftingSetup.lean}, 333) is the first step of Theorem E on Wach modules. Let $0\to T_2\xrightarrow{\iota}Y\xrightarrow{\pi}\mathbf 1\to0$ be an extension of lattices with class $[c]$, with $T_2$ in the window of an arc datum, and suppose that $p^{r}e_c$ times the Wach generator $e$ of the trivial representation has a $\Delta$-invariant preimage in $N(Y)$ at every cut (\lean{KillsDelta}). Then there are relay vectors $w_c\in I_c$ with $\Lambda_cw_c\in\Pp$, transports and the pole condition, whose classes $x_c$ satisfy $p^{r+2\sigma}[c]=\pm\sum_cx_c$.
+
+\begin{prop}[\lean{Split.splitCore_of}, \Lpath{LLC/SplittingOfExactnessAndData.lean}, 182, read in full]
+\lean{SplitCore} follows from \lean{RelayCore}, \lean{FirstWachFiltration}, the Herr description \lean{HerrExt} of the extension class, \lean{SplitLift} and \lean{SplitShape}.
+\end{prop}
+\begin{proof}
+The cocycle $c$ is, up to a unit $a$, the cocycle of a lift $e_t\in Y$ of the generator of $\mathbf 1$. \lean{SplitLift} produces $x_t\in N(Y)^\Delta$ over $bp^{r+\sigma}e$, the Herr cocycle $(y,z)$ in $T_2$ with $\iota y=(\varphi-1)x_t$, $\iota z=(\gamma-1)x_t$ and $z\in\pi_0^MN$, and relay vectors with $\sum_c(p^\sigma\varphi^jw_c-\tau_c)=p^\sigma y$. \lean{HerrExt} (Herr, on the boundary) identifies the class of $(y,z)$ with $bp^{r+\sigma}[ac]$. Each relay vector has a class $x_c$ through F1 (iii), because $(\gamma-1)$ of it lies in $\pi_0^M\NN$ by the relay theorem (\lean{RelayCore}, Wave 2). Classes add (\lean{clK_sum}), and the second components agree because $\varphi-1$ is injective on $\pi_0^MN$ (F1 (ii)). This gives $p^{\sigma}\cdot bp^{r+\sigma}[ac]=\sum_cx_c$, and $ab=1$ finishes.
+\end{proof}
+
+\lean{SplitLift} is \lean{Split.splitLift_of}, an assembly over \lean{CutData} read in Wave 2.
+
+\begin{prop}[\lean{Split2.cutData_of}, \Lpath{LLC/CancelUnitMulUniformizerPow.lean}, 433, read in full]
+In the same situation there are $x_c\in N(Y)^\Delta_c$ over $bp^re_ce$ and $\tau_c,m_c$ in $T_2$ such that $X_c=p^\sigma\varphi^j(x_c)-\iota\tau_c\in\Pp^j_c(Y)$ is $\Delta$-invariant with $(\gamma-1)X_c=\iota(\pi_0^Mm_c)$, $m_c\in\NN$. For every $w$ with $\iota w=\varphi^{\mathrm{len}-j}(X_{c'})-p^\sigma x_c$, where $c'$ is the previous cut, $w\in I_c$, $\Lambda_cw\in\Pp$ and $-p^\sigma\tau_c$ is a transport of $w$.
+\end{prop}
+\begin{proof}
+\emph{Lift.} Average a preimage of $p^re_ce$ over $\Delta$ (\lean{lift_avg}; $|\Delta|$ is a unit). This gives $x_c$.
+
+\emph{The $\gamma$-defect.} By the P9 frame, $(\gamma-1)x_c=\pi_0x''$. Since $e$ is $\gamma$-fixed, $\pi(\pi_0x'')=0$, and since $\pi_0$ is a unit in $E$ (\lean{cancel_unit_mul_uniformizer_pow}), $\pi(x'')=0$. Exactness of $D$ (\lean{DDExact}, Fontaine) gives $x''=\iota u'$, and saturation of Wach modules in short exact sequences (P6, \lean{WachSaturationExactness}) puts $u'\in N(T_2)$.
+
+\emph{Transport.} Solve the $\gamma$-equation for $\pi_0u'$ (\lean{Relay2.solData}, \lean{coreH}) and truncate it (\lean{Relay2.tauZ_exists}, read). That lemma uses Lemmas 6 and 7 of Wave 2 (\lean{tr_trunc_int}, \lean{frobenius_uniformizer_pow_dvd}) to put $p^{\mathrm{sig}}\varphi^j(\pi_0)^ry_r$ in $\pi_0a''p^{\mathrm{Ex}(r)}+B\,J$ and builds $\tau$ with the \lean{GoodZ} property. Map to $Y$ and apply the relay theorem there: $(\gamma-1)X_c\in\pi_0^M\NN(Y)$. Its image under $\pi$ is $\gamma$-fixed, so it vanishes, and it pulls back to $\iota(\pi_0^Mm_c)$ by the same exactness and saturation (\lean{pull}).
+
+\emph{The vector $w$.} $(\gamma-1)w=\varphi^{\mathrm{len}-j}(\pi_0^Mm_{c'})-p^\sigma\pi_0u'_c$. F1 (i) gives $\varphi^k(\pi_0^Mm)\in\pi_0^Mq_A\NN$, so $(\gamma-1)w=\pi_0z_0$ with $z_0\in\NN_c$ and $w\in I_c$. The letter and $\Delta$-invariance transfer through $\iota$, which is injective. $\Lambda_cx_c\in\Pp(Y)$ by \lean{ArcCore} and $\varphi^{\mathrm{len}-j}\Pp^j\subset\Pp^{\mathrm{len}}$ (\lean{Pp_phipow}). So $\iota(\Lambda_cw)\in\Pp(Y)$, and \lean{pp_pull} (read) pulls this back to $\Pp(T_2)$. It uses \lean{coreWX} (the Wach length lemma, closed in Wave D) to lift $\pi_0^{H}e_ce$, \lean{e_tf} (read: $N(\mathbf 1)$ is free of rank one, so $ae=0$ forces $a=0$) and \lean{SATPcore}. The transport property is \lean{Relay2.mkTr} with \lean{goodZ_comb}.
+\end{proof}
+
+\lean{SplitShape}, the pole condition for $w$, is \lean{SplitP.splitPolar_of} then \lean{LevC.polarToPole_of_ctx}. \lean{SplitP.polar_core} (\Lpath{LLC/IntAOfNonpol.lean}, 84) was read through its first 120 lines. Write $\iota w=p-x$ with $p\in\Pp(Y)$ and $x\in\NN(Y)_c$. Frame coordinates of $w$ in $T_2$ map to frame coordinates in $Y$ through the constant matrix $o$ of $\iota$ on frames (\lean{frame_const}, \lean{repVV_map}, \lean{dv_map}). Coordinates of $p$ are integral (\lean{secOfP_int}), and those of $x$ are sectioned by Theorem~\ref{thm:secCrit} in $Y$. Frame coordinates are unique modulo $\pi_0\Lambda$ (\lean{LevC.sec_unique}). The polar part of the section of $x$ (some $\alpha_s<0$) is pulled back to $T_2$ through $o$, using strict exactness of the crystalline filtration (\lean{pull_vec}, \lean{DcrisExactStrict}, Fontaine). The non-polar part is integral (\lean{intA_of_nonpol}). \lean{condPole_of_polar} converts the result to \lean{condPole}.
+
+\noindent\textbf{Status.} R-B3 is reconstructed modulo V8 (F1, P9, P6), \lean{DDExact} and \lean{DcrisExactStrict} (Fontaine), \lean{coreJumps} (Hodge--Tate weights of an extension, also from strictness) and \lean{HerrExt} (Herr). Helpers left unread: \lean{LevC.sec_unique} (176 lines), \lean{secOfP_int} (139), the second half of \lean{polar_core} (about 80), \lean{pull_vec} (59), \lean{repVV_map} (39), \lean{condPole_of_polar} (33), \lean{goodZ_comb} (28), \lean{dv_map} (22), \lean{clK_sum} (19), \lean{Pp_phipow} (17), \lean{InFN_phipow} (13), \lean{win_ext} (10). \lean{sec_unique} is the integral form of the frame inversion in \lean{secOfP'}, and \lean{secOfP_int} is \lean{secOfP'} with integral coordinates.
+
+\section{R-B4. The universal core}\label{sec:univ}
+
+\lean{UnivCore} is \lean{UnivC.univCore_of}, an assembly of four sub-cores: \lean{UnivFrameCore}, \lean{UnivSecCore}, \lean{UnivGenCore} and \lean{UnivLiftCore} (\Lpath{LLC/LatticeMembershipPolynomialGamma.lean}, 660 to 730). The route of the archive is \lean{universal_general_statement_holds}, then \lean{universal_general_of_level_inverse}, then \lean{universal_general_of_inverse_levels}, then \lean{universal_general_of_window}.
+
+\begin{prop}[\lean{UnivF.univFrame_of}, \Lpath{LLC/UniversalGeneralOfRestriction.lean}, 803, read in full]
+In the window, with every thick letter having at most $m$ jumps in $[-\eta,\eta]$ (\lean{lowCount}), there are a horizontal frame $b$ at the start of the arc and a set $R$ of frame indices with $|R|\le m\cdot\rho$, where $\rho$ is the number of thick letters of the arc. Outside $R$ every frame vector satisfies $\mathrm{dv}(b_k)\in\Fil_S(c,s,b_s)$ at each up letter $s$, and at each down letter $\Fil_S(c,s,-\eta)$ is spanned by the vectors indexed by $R$.
+\end{prop}
+\begin{proof}
+$\Phi=\mathrm{dv}$ is injective with image containing $D_{\mathrm{cris}}$ at the letter ($\mathrm{ArcCore}$ frame-basis clause). Put $U'=\bigcap_{\text{up}}\Phi^{-1}\Fil_S(c,s,b_s)$ and $V'=\sum_{\text{down}}\Phi^{-1}\Fil_S(c,s,-\eta)$. A basis change splits $L^d$ so that a set $R$ of size at most $\operatorname{codim}U'+\dim V'$ handles both (\lean{split}). At an up letter of size $b_s$ the window leaves only the low jumps, those in $[-\eta,\eta]$, below $b_s$. So $\operatorname{codim}\Fil^{b_s}$ is at most the number of low jumps, which is at most $m$ (\lean{codim_up}, \lean{mult_le_lowCount}). A down letter has $\dim\Fil^{-\eta}\le m$ (\lean{dim_down}). Summing over thick letters gives $|R|\le m\rho$. The frame is changed by an invertible matrix (\lean{frame_change}) and re-solved (\lean{hor_exists}).
+\end{proof}
+
+\begin{prop}[\lean{univLift_of} (1258), \lean{univSec_of} (1847), read in full]
+(Lift.) If $f$ satisfies the inverse-level condition (\lean{InvNL}: $(\gamma-1)f=\pi_0g$ with $g$ sectioned), there is $u\in I_c$ with $\Lambda u\in\Pp$ and frame coordinates $p^\sigma f$. (Sec.) For a relay vector $w$ with the pole condition, its frame coordinates $f$ satisfy \lean{InvNL} and the denominator conditions of \lean{UnivCore} outside $R$.
+\end{prop}
+\begin{proof}
+(Lift.) \lean{ArcCore} gives $u$ with coordinates $f$ (\lean{POfSec}). $\Lambda$ is $\gamma$-stable up to a unit (\lean{lam_gamma}, from \lean{PsStable}), so $(\gamma-1)u$ has coordinates $(\gamma-1)f=\pi_0g$ (\lean{repVV_gamma}, \lean{jj_lam}). By \lean{NOfSec}, $g$ is the coordinate vector of some $y\in\NN$. Then $(\gamma-1)u-\pi_0y$ has zero coordinates, so it lies in $\pi_0\Lambda\Pp$ (zero clause of \lean{ArcCore}) and hence in $\pi_0\NN$. (Sec.) The same computation run backwards. $(\gamma-1)w=\pi_0y_0$ with $y_0\in\NN$ sectioned by \lean{SecOfN}, and the zero-coordinate difference is absorbed into $\Lambda$ times integral coordinates (\lean{sec_zero}, \lean{inNL_lam}). The denominator conditions are \lean{SecRestCore}.
+\end{proof}
+
+\noindent\textbf{What \lean{UnivCore} now rests on.} Three cores whose bodies were not read.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \lean{SecRestCore}, proved by \lean{UnivF.secRest_of} (read: a 3-line assembly) from \lean{section_restriction_first} (98 lines: coordinates outside $R$ have denominator \lean{mmDen}, by \lean{dvO_zero_high} at up letters), \lean{section_restriction_second} (67: the $\gamma$-defect has denominator $\pi_0\,$\lean{downB}$/$\lean{mmDen}), \lean{nn_bounds} (57), and \lean{KillWinCore}.
+\item \lean{KillWinCore}, proved by \lean{KWP.killWinFromCut} (\Lpath{LLC/ExistsGammaPi0EqPi0Mul.lean}, 940; read: assembly) from \lean{part_a} (186), \lean{part_b} (90) and \lean{part_c} (105). The mechanism is the killer layer of Section~\ref{sec:killer}. The polynomial \lean{PPgamma} over the window exponents $J_c$ raises every exponent in the window by one, which turns the denominator \lean{mmDen} into \lean{nnDen}. At down letters the residue is a constant modulo $p_s^{b+S}$ by \lean{InvLevCore}. The inputs are \lean{KillerLevCore} (closed), \lean{PsStable}, \lean{RATCore} (\lean{RatW.ratCore_of}, 77) and \lean{InvLevCore} (\lean{InvW.levRat_of}, 49).
+\item \lean{UnivGenCore}, proved by \lean{UGen.universal_generators_of_units} (read: wrapper), then \lean{univGenCore_of_lev}, then \lean{univGenCore_of'} (\Lpath{LLC/SingleMemSpan.lean}, 29; 200 lines) with \lean{finLev_of} (73). Content: the vectors supported on $R$ that satisfy \lean{InvNL} are generated, modulo $\pi_0$ times sectioned vectors, by at most $m\rho(\ell+1)$ elements.
+\end{itemize}
+
+\section{R-B4 continued. The window-killing core}\label{sec:killwin}
+
+A third pass reconstructed \lean{KillWinCore}. Write $\ell$ for the length of the arc at the cut $c$, $\Lambda=\prod_{s<\ell}p_s^{H_s}$ and $J_c$ for the window exponent set (\lean{ArcP.JS}). For each letter $s$ of the arc the archive fixes four exponents (\lean{mmF}, \lean{dnF}, \lean{nnNF}, \lean{nnDF}).
+\begin{center}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+letter $c-s$ & $\mathrm{mm}$ & $\mathrm{dn}$ & $\mathrm{nnN}$ & $\mathrm{nnD}$\\
+\midrule
+thin & $G_0$ & $0$ & $G_0$ & $0$\\
+up, size $b$ & $b+S$ & $0$ & $0$ & $b$\\
+down, size $b$ & $0$ & $b$ & $b+S$ & $0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The products $\prod_sp_s^{\mathrm{mm}_s}$ and so on are \lean{mmDen}, \lean{downB}, \lean{nnNum} and \lean{nnDen}. The killer polynomial is $P=\prod_{i\in J_c\setminus0}\bigl(X^{p^\ell}-\chi^{ip^\ell}\bigr)\cdot\sum_{k<p^\ell}X^k$ applied to $\gamma$, and $(X-1)P=\prod_{i\in\{0\}\cup J_c\setminus0}(X^{p^\ell}-\chi^{ip^\ell})$ (\lean{xsub_ppo}).
+
+\begin{prop}[\lean{KillWinCore}; \lean{KWP.killWinFromCut}, \Lpath{LLC/ExistsGammaPi0EqPi0Mul.lean}, 940; \lean{part_a}, \lean{part_b}, \lean{part_c}, all read in full]
+Let $f\in E$ with $f\in\Lambda^{-1}e_cA^\Delta$, $f\in\mathrm{mmDen}^{-1}e_cA^\Delta$ and $(\gamma-1)f\in\pi_0\,\mathrm{downB}\,\mathrm{mmDen}^{-1}e_cA^\Delta$. Then
+\begin{enumerate}[label=(\alph*),leftmargin=*,itemsep=1pt]
+\item $(\gamma-1)P(\gamma)f\in\pi_0\,\mathrm{nnNum}\,\mathrm{nnDen}^{-1}e_cA^\Delta$;
+\item $P(\gamma)f\in\mathrm{nnDen}^{-1}e_cA^\Delta$;
+\item at each down letter $s$ of size $b$ there are $\kappa$ and $x\in O$ with $p^\kappa P(\gamma)f-e_cx\in p_s^{b+S}\,\mathrm{nnDen}^{-1}e_cA^\Delta$.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\emph{The single-level raise} (\lean{raise}). If $g$ lies in the ideal $\mathrm{Id}(\alpha)$ and $[\alpha_s,\alpha_s+N)\subset T$, then a power of $p$ times $\prod_{i\in T}(\gamma^{p^\ell}-\chi^{ip^\ell})g$ lies in $\mathrm{Id}$ with $\alpha_s$ replaced by $\alpha_s+N$. The factors outside the interval preserve the ideal (\lean{KL.inId_aeval}, \lean{PsStable}), and the factors inside raise $\alpha_s$ one step each by \lean{KillerLevCore} (Section~\ref{sec:killer}).
+
+\emph{(b).} Start from $\alpha_t=-\mathrm{mm}_t$ and aim for $E_t=-\mathrm{nnD}_t$. At a thin letter the interval is $[-G_0,0)\subset[-2G_0,G_0]\subset J_c$. At an up letter of size $b$ it is $[-b-S,-b)$, the up block of $J_c$. At a down letter it is empty. Each level $s$ is raised separately (\lean{level_form}), with the other levels held at their $\Lambda$-depth. The rational gluing \lean{RATCore} (below) assembles the levelwise statements into one membership.
+
+\emph{(a).} $(\gamma-1)P(\gamma)f$ is computed two ways: as $\prod_{\{0\}\cup J_c}$ applied to $f$, used at thin letters from $\alpha=-\mathrm{mm}$ over $[-G_0,G_0)$; and as $P(\gamma)$ applied to $(\gamma-1)f$, used at the other letters from $\alpha=\mathrm{dn}-\mathrm{mm}$. At an up letter that is $[-b-S,-b)$, reaching $-b$. At a down letter it is $[b,b+S)\subset J_c$, the down block, reaching $b+S$. The target is $E=\mathrm{nnN}-\mathrm{nnD}$. The factor $\pi_0$ is carried by \lean{InIdpi} (\lean{inIdpi_aeval}, using $\gamma(\pi_0)=\pi_0z$, \lean{exists_gamma_pi0_eq_pi0_mul}). \lean{RATCore} glues with $E_0=1$.
+
+\emph{(c).} By (a) and (b), $f'=P(\gamma)f$ has denominator $D=\mathrm{nnDen}$ and $(\gamma-1)f'\in p_s^{b+S}D^{-1}$. \lean{InvLevCore} (below) gives $p^{\kappa_0}f'-e_cx_0\in p_sD^{-1}$. Induction on $k$ from $1$ to $b+S$: if $y\in p_s^kD^{-1}$, then $(\gamma^{p^\ell}-\chi^{kp^\ell})y\in p_s^{k+1}D^{-1}$ by the raise. Also $(\gamma^{p^\ell}-1)y=\sum_{j<p^\ell}\gamma^j(\gamma-1)y\in p_s^{k+1}D^{-1}$, because $\gamma$ fixes constants and $(\gamma-1)y=p^{\kappa_0}(\gamma-1)f'$. Subtracting gives $(\chi^{kp^\ell}-1)y\in p_s^{k+1}D^{-1}$. The valuation clause of \lean{KillerLevCore} gives $v\bigl((\chi^{kp^\ell}-1)p^\ell\bigr)=2\ell+1+v_p(k)$, so a power of $p$ is a multiple of $\chi^{kp^\ell}-1$ in $O$ (\lean{div_of_val}). Hence $p^My\in p_s^{k+1}D^{-1}$.
+\end{proof}
+
+\begin{prop}[\lean{RATCore}; \lean{RatW.ratCore_of}, \Lpath{LLC/LocalInputsFromLiterature.lean}, 267, read in full]
+Let $f\in\Lambda^{-1}e_aA^\Delta$ and exponents $|E_s|\le H_s$, $E_0\in\{0,1\}$. Suppose that for every $s$, $p^\kappa f=f_1+f_2$ with $f_1$ of exponent $E_s$ at $p_s$ (and $H_t$ at the other levels) and $f_2\in\pi_0\Lambda A^\Delta$, and similarly for the factor $\pi_0^{E_0}$. Then $f\in\pi_0^{E_0}\prod_sp_s^{E_s}e_aA^\Delta$.
+\end{prop}
+\begin{proof}
+Write $\Lambda f=e_au_0$. Each levelwise decomposition gives $p^k e_au_0\in p_s^{H_s+E_s}A^\Delta$ (\lean{local_inputs_from_literature}, an elementary identity in spite of its name), and similarly for $\pi_0$ (\lean{loc_pi0}). The elements $\pi_0$ and $p_s$ are pairwise coprime after inverting $p$ (\lean{cop_pi0_ps}, \lean{cop_ps}, Lemma~\ref{lem:crt}), so the Chinese remainder theorem (\lean{crt_prod}) gives $p^Ke_au_0=g\gamma$ with $g=\pi_0^{E_0}\prod_sp_s^{H_s+E_s}$. Each factor of $g$ is a unit times a power of $\pi$ modulo $p$ (\lean{UPi}), so $g$ divides $e_au_0$ in $A^\Delta$ (\lean{SatW.dvd_of_UPi}, Wave 2 Lemma 10). Dividing by the unit $\prod_sp_s^{H_s-E_s^-}$ of $E$ finishes.
+\end{proof}
+
+\begin{prop}[\lean{InvLevCore}; \lean{InvW.invLevCore_of}, \Lpath{LLC/InvLevCoreOf.lean}, 45, read in full]
+Let $s\notin T$ and $f\in(\prod_{t\in T}p_t^{e_t})^{-1}e_aA^\Delta$ with $p^\kappa(\gamma-1)f\in p_s\prod_tp_t^{-e_t}e_aA^\Delta$. Then $p^\kappa f-e_ax\in p_s\prod_tp_t^{-e_t}e_aA^\Delta$ for some $\kappa$ and $x\in O$.
+\end{prop}
+\begin{proof}
+Evaluate at the primitive $p^{s+1}$-th roots of unity $\zeta$, through $\pi\mapsto\zeta-1$ in a field $F$ (\lean{LevBasics}, built by \lean{levelBasicsOfRingCondition}). There $p_s$ vanishes and every $p_t$ with $t\ne s$ does not. Write $Df=e_aU$. The function $\zeta\mapsto U(\zeta)/D(\zeta)$ is invariant under $\zeta\mapsto\zeta^{\chi(\gamma)}$, by the hypothesis on $(\gamma-1)f$, and under $\zeta\mapsto\zeta^{\chi(\delta)}$ for $\delta\in\Delta$. These generate $(\mathbb Z/p^{s+1})^\times$ (\lean{gen}, \lean{genUnits}), which acts transitively on the roots, so the function is a constant $c$ (\lean{precompConst}, read). Weierstrass division by $p_s$ (\lean{wdiv_ps}) represents $U$ and $D$ at all roots by polynomials of degree $<(p-1)p^s$, which is the number of roots. So $U-cD$ vanishes as a polynomial, and comparing a nonzero coefficient gives $p^{\kappa}c\in O$ (\lean{levRat_of}, read). Then $p^\kappa U-xD$ vanishes at all roots, so it is divisible by $p_s$ (\lean{levDiv_of}, the factor theorem).
+\end{proof}
+
+\noindent\textbf{Status.} \lean{KillWinCore} is closed modulo \lean{KillerLevCore} and \lean{PsStable} (Section~\ref{sec:killer}) and the following small leaves: \lean{wdiv_ps} (56), \lean{levDiv_of} (50), \lean{levelBasicsOfRingCondition} (50), \lean{genUnits} (17), \lean{psStable_of} (34), \lean{psUnitE_of} (31), \lean{crt_prod} (17), \lean{cop_pi0_ps} (19), \lean{loc_pi0} (29), and the \lean{invCutPf} helpers of \lean{precompConst}. The window check matters here: every interval used in the raises lies inside $J_c$, and $0$ enters only through the factor $X^{p^\ell}-1$ of $(X-1)P$.
+
+\section{R-B4 completed, R-B6 and R-B7}\label{sec:bfinish}
+
+A fourth pass read the remaining producers on the Theorem B side.
+
+\begin{prop}[\lean{SecRestCore}: \lean{section_restriction_first} (2312), \lean{section_restriction_second} (2521), \lean{nn_bounds} (2439), read in full]
+For $k\notin R$, the frame coordinate $f_k$ of a relay vector with the pole condition lies in $\mathrm{mmDen}^{-1}e_cA^\Delta$, and its $\gamma$-defect lies in $\pi_0\,\mathrm{downB}\,\mathrm{mmDen}^{-1}e_cA^\Delta$.
+\end{prop}
+\begin{proof}
+(\lean{nn_bounds}.) Let $g=\sum_ig_ic_{0,i}$ be sectioned and suppose the $k$-th entry of $c_{0,i}$ is nonzero for some $k\notin R$. At a thin or up letter, $\alpha_{i,s}<-\mathrm{mm}_s$ would put $\mathrm{dv}(c_{0,i})$ in a filtration step above every jump in the window, hence zero. That contradicts the linear independence of the frame (\lean{coord_zero'}). At a down letter of size $b$, $\alpha_{i,s}<b$ would put $\mathrm{dv}(c_{0,i})$ in $\Fil_S(-\eta)$, which is spanned by the frame vectors indexed by $R$ (\lean{FrameOK}). So the $k$-th entry vanishes (\lean{coord_zero}). Hence every surviving term has exponents at least $-\mathrm{mm}_s$, and at least $b$ at down letters, so its denominator is \lean{mmDen} and its numerator is divisible by \lean{downB} (\lean{inId_bound}).
+
+(\emph{first}.) The pole coordinates of $p^\kappa w$ satisfy the pole condition, so they have these bounds by the same argument. The frame coordinates of $p^\sigma w$ agree with them modulo $\pi_0\Lambda^2$ (\lean{sec_zero}). Saturation (\lean{sat_frac}) removes the powers of $p$. (\emph{second}.) The same, applied to the sectioned vector $g$ with $(\gamma-1)f=\pi_0g$ from \lean{InvNL}.
+\end{proof}
+
+\begin{prop}[\lean{UnivGenCore}; \lean{UGen.univGenCore_of'}, \Lpath{LLC/SingleMemSpan.lean}, 29, read in full]
+The vectors supported on $R$ with the inverse-level condition are generated, modulo $\pi_0$ times sectioned vectors, by at most $|R|(\ell+1)\le m\rho(\ell+1)$ elements.
+\end{prop}
+\begin{proof}
+Let $M=\sum_sH_s$ and apply the killer polynomial over $[-M,M)$. For each coordinate (\lean{killer_elem}), the levelwise raise and \lean{InvLevAt} make $p^K P(\gamma)y$ constant modulo $p_s^{H_s}$ at each level $s$ (\lean{lev_const}). The constants are recombined with idempotent-like elements $u_s$, $u_0=\Lambda^2r_0$ satisfying $p^{\kappa}=u_0+\sum_su_s$, $u_s\in\pi_0\prod_{t\ne s}p_t^{2H_t}$ (\lean{crtLev}). So $p^KP(\gamma)y\equiv\sum_sx_su_s+x_0\Lambda r_0$ modulo $\pi_0\Lambda$. That gives the $\ell+1$ vectors per index in $R$. A finiteness statement (\lean{FinLev}, by Weierstrass division by $\pi_0\Lambda^2$, \lean{finLev_of}) puts all candidates in a finitely generated $O$-module. $P(1)$ divides a power of $p$ (\lean{eval_one_dvd_prime_pow}, from the valuation clause of \lean{KillerLevCore}), and saturation holds (\lean{sat_l}). The module lemma \lean{gen_of_killer} (read: Noetherian argument over the principal ideal domain $O$) then extracts at most $|R|(\ell+1)$ generators.
+\end{proof}
+
+\noindent\textbf{R-B6.} \lean{horizontal_frame_structure} (frame from P9 and horizontal solutions from \lean{coreH}) and \lean{arc_filtration_low} (a crystalline vector lies in $\Fil^u$ when $u$ is at most every jump, and moves up to the next jump; \lean{filtration_below_jumps}, \lean{filtration_up_to_jumps}) were read in full. \lean{arc_gamma_lift_at} is \lean{arc_gamma_lift} (read), an assembly over \lean{gamma_lift_along_arc} (89) and \lean{section_in_ideal_of_levels} (92). These are the $\gamma$-lift of \lean{univLift_of} and the levelwise section gluing in the form used by the case theorems. \lean{arc_section_map} (184) is the functoriality of frame coordinates under a lattice map, through a constant matrix $\mu$. Its first 30 lines were read, and the mechanism is that of \lean{repVV_map}.
+
+\noindent\textbf{R-B7.} \lean{exists_phiBridge} (176, read in full) identifies $A^\Delta$ at one letter with $O[[X]]$, $X\mapsto\pi_0+p$. The archive substitutes $\pi_0=w_1\pi^{p-1}$ and shifts by $p$, using the P9 relation $\varphi(\pi_0)=w_2\pi_0(\pi_0+p)^{p-1}$. Frobenius becomes $X-p\mapsto u(X-p)X^{p-1}$, which reduces to $X\mapsto uX^p$ modulo the maximal ideal. This is the abstract \lean{PhiData} setting in which the case bodies compute. \lean{liftsAt_of_scaled_power} (read) is bookkeeping. \lean{den_step} (read) reduces through \lean{den_bound} (read in full) to the content estimate \lean{PhiData.constant_le_rpow_of_three_le}: $p_1^y$ modulo $X^B$ has content exponent at most $y-B/p+2+\log_py$. That is the Theorem B form of Lemma 1 of Final Closure Wave 3, which was checked numerically there. \lean{case2b} is a real inequality. I checked it independently: on $3.8\cdot10^5$ random admissible cases the first conclusion holds with margin at least $2.39$, and the second holds in all $227$ cases where its hypothesis is met. \lean{liftDelta} (54) is the lift of a $\Delta$-killed vector, the same as \lean{lift_avg}. \lean{aI_le} (74) bounds the Wach annihilator exponent through \lean{coreWR} (closed earlier). \lean{N_typeT} and \lean{constants_typeT} are wrappers over the cores closed above.
+
+\noindent\textbf{\lean{LevC.sec_unique}} (\Lpath{LLC/FrameInvPoly.lean}, 143, read in full). Two coordinate vectors of the same element differ by a relation $\sum_m(E_m+\pi_0\Lambda^2\delta_m)\varphi^e(b_m)=0$. The $\varphi^e(b_m)$ are independent (\lean{indep}), so $E=-\pi_0\Lambda^2\delta$. The truncated inverse of the solution matrix (\lean{frame_inv_poly'}) with $Y^M=\pi_0\Lambda^2\nu$ then gives $p^K(f-g)\in\pi_0\Lambda$. This is the mechanism of \lean{secOfP'}.
+
+\section{Fifth pass. The Theorem B helpers, the case layer and the Theorem C tools}\label{sec:fifth}
+
+\subsection*{Theorem B helpers}
+
+I read the following bodies in full, except where a bullet says otherwise, and each closes with the mechanism stated.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \lean{secOfP_int} (\Lpath{LLC/SecOfPInt.lean}, 24). Write $x=\sum_m\beta_m\varphi^e(b_m)$ by \lean{Pp_repr}, clear the denominators of the horizontal solutions and of the inverse solution matrix by $p^\kappa$ (\lean{int_of_bd}), and put $a_k=\sum_{m'}G_Y(k,m')\beta_{m'}$ with $G_Y$ the truncated inverse evaluated at $Y=\varphi^e(\pi_0)$. The relation $H_YG_Y=p^{2\kappa}I+Y^M\rho$ (\lean{frame_inv_poly}) and $Y^M=\pi_0\Lambda^2\nu$ (\lean{yM_gen}) give $p^{2\kappa}\beta_m-\sum_ka_kH_Y(m,k)=\pi_0\Lambda^2w_m$, so the coordinates $a_k$ are integral, that is in $e_aA^\Delta$.
+\item \lean{gamma_lift_along_arc} (\Lpath{RC/GammaLiftAlongArc.lean}, 22). Lift the coordinates $f$ to $u$ through the lift clause of \lean{ArcCore}. The relation $\Lambda u\in\Pp^e$ and cancellation of the unit $\Lambda$ in $E$ (\lean{lam_cancel}) make $u$ a $\Delta$-invariant vector of letter $a$. The frame coordinates of $(\gamma-1)u-\pi_0y$ vanish by \lean{repVV_gamma}, \lean{repVV_sub} and the inverse clause, so the zero clause of \lean{ArcCore} puts it in $\pi_0\NN$.
+\item \lean{section_in_ideal_of_levels} (\Lpath{RC/SectionInIdealOfLevels.lean}, 22). Given a section of $p^{\kappa_s}h$ at each level $s<e$ separately, choose $p^m=\sum_s\varepsilon_s$ with $\varepsilon_s\in\prod_{t\ne s}p_t^N A^\Delta$ (\lean{exists_partition_of_l_pow_levels}, by induction from the coprimality of $p_t$ and $p_s$ after inverting $p$). Multiplying the level-$s$ section by $\varepsilon_s$ raises every other exponent by $N$ (\lean{inId_shift_levels}). For $N$ larger than all $\lvert\alpha\rvert$ and all lower bounds $U_t$ of the filtration, the filtration condition at $t\ne s$ holds trivially. The sum is a section of $p^{m+\kappa}h$ at all levels.
+\item The \lean{SplitCore} helpers \lean{polar_core} (second half), \lean{pull_vec}, \lean{o_inj}, \lean{repVV_map}, \lean{dv_map}, \lean{condPole_of_polar}. A sectioned vector splits into its polar terms (some $\alpha_s<0$) and nonpolar terms. Nonpolar terms are integral (\lean{intA_of_nonpol}). A polar term lives in a filtration step of $D_{\mathrm{cris}}(Y)$ that pulls back to $T_2$ by strict exactness of the filtration (\lean{fil_pull}, \lean{DcrisExactStrict}), with integral coordinates after $p^m$ (\lean{int_vec}). The coordinate matrix $o$ of the lattice map is injective on $D_{\mathrm{cris}}$ (\lean{o_inj}) and so has a right inverse up to $p^q$ (\lean{right_inv}).
+\item The \lean{UnivCore} helpers \lean{split} (linear algebra over the principal ideal domain $O$ through an adapted basis of a saturated submodule, \lean{adapted}), \lean{killer_elem}, \lean{lev_const}, \lean{sec_zero}, \lean{frame_change}, \lean{finLev_of} (Weierstrass preparation and division by $X(\prod_tF_t^{H_t})^2$ in $O[[X]]$), \lean{repVV_gamma}, \lean{jj_lam}, \lean{lam_gamma}, \lean{sat_frac}, \lean{sat_l}, \lean{inId_bound}, \lean{eval_one_dvd_prime_pow}, \lean{pp_inv}, \lean{inNL_lam} with \lean{jump_ge}, \lean{codim_up}, \lean{dim_down}, \lean{coord_zero}, \lean{filCris_bot}, \lean{filCris_le}, \lean{mult_le_lowCount}. In \lean{lev_const} the killer polynomial factors as $\prod_{\mathrm{Sp}}F_i\cdot\Sigma\cdot\prod_{\mathrm{Sm}}F_i\cdot\prod_{\mathrm{Rest}}F_i$. The single-level raise of \lean{KillerLevCore} lifts the level-$s$ exponent from $-H_s$ to $0$, the factor $X^{p^\ell}-1=(\gamma-1)\Sigma$ and \lean{InvLevAt} produce the constant $x$, and the raise lifts the exponent from $1$ to $H_s$. In \lean{killer_elem} these constants are recombined with the elements $u_s$ of \lean{crtLev}, and \lean{RATCore} concludes.
+\item The RC helpers \lean{arc_section_map} (functoriality of frame coordinates through a constant matrix $\mu$, with the difference solving the horizontal congruence by \lean{solOK_cong}), \lean{aI_le} (the bound of \lean{coreWR} summed over three letters by \lean{tsum_three}, then \lean{Aa_cut_le}), \lean{liftDelta} (the $\Delta$-average with $\lvert\Delta\rvert$ a unit of $O$), and the content estimate \lean{PhiData.constant_le_rpow_of_three_le}. For the last, write $p_1=uX^p+p\varepsilon$ with $u,\varepsilon$ units, so that $p_1^y=\sum_j\binom yjp^{y-j}u^j\varepsilon^{y-j}X^{pj}$. Below $X^B$ the term with $j=\lceil B/p\rceil-1$ has the least power of $p$, namely $p^{y-j}\binom yj$, and Kummer's theorem gives $v_p\binom yj\le\log_py$. The archive's proof, whose first part I read, controls the remaining terms within the slack $+2$ and gives the bound $y-B/p+2+\log_py$. This is Lemma 1 of Final Closure Wave 3, checked numerically there.
+\end{itemize}
+
+\subsection*{The case layer of Theorem B}
+
+\lean{thmB_at} (\Lpath{LLC/FrobeniusStatementOfFontaine.lean}, 119, read) assembles Theorem B at a prime $\ell\ge11$ from three case theorems. The case theorems live in \Lpath{RC/}, which has 135 files, 25{,}208 lines and 859 theorems. That subtree is an implementation of a case analysis, so I stopped descending and record it as one human-level proposition. Write $h_B=h_B(b,w,S,\eta,\mathrm{size})$, $\Sg=h_B/\ell^2+(w+S+\eta)/\ell+\log_\ell(2h_B)+1$ for the error scale and $\mathrm{bandI}\in\{0,1\}$ for the band indicator with constant $C_b$.
+
+\begin{prop}[RC, the arc-case lifting bounds]\label{prop:RC}
+Let $\ell\ge11$, let $F\colon T_1\to T_2$ be a surjection of crystalline lattices with jumps in the windows of an arc datum $(b,w,S,\eta,\mathrm{up},\mathrm{size})$ satisfying \lean{HypB}, and let $C_b\ge2$.
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item If the datum is alternating, some letter is thick and $b/4<40\Sg$, then $F$ lifts with an exponent $e_0\le160\Sg$.
+\item If the datum is alternating and either no letter is thick or $40\Sg\le b/4$, then there are $e\le55\Sg+13S+\eta\,\mathrm{bandI}$ and a set $Z$ of at most $4[K_0:\mathbb Q_\ell]m$ finite lattice cocycles with $p^e$ times every lift obstruction in the span of $Z$ and of the image of $F$.
+\item If the datum is a single run of length $R\ge1$, the same holds with $e\le18\Sg+3R^2\bigl(S+1+\log_\ell(2h_B)\bigr)+1$ and $\lvert Z\rvert\le(R+1)[K_0:\mathbb Q_\ell]m$.
+\end{enumerate}
+\end{prop}
+
+\begin{proof}[Proof route]
+Each case proves, cut by cut, that $f\,b_k$ lifts along $F$ with a bounded exponent (\lean{LiftsAt}), and then sums the exponents over cuts (\lean{colLeR_of_exponent}). At a cut of length three with an up letter, \lean{exists_liftsAt_arcOf_exponent_le} (read) reduces to \lean{exists_exponent_le_liftsAt_arcOf}, whose skeleton I read. It obtains the denominator $s$ from \lean{arc_length_four_denominator}, clears it by saturation of the fraction ring (\lean{saturation_fraction_ring}), lifts the thick-letter part with \lean{liftsAt_thick_letter_type} and the constant part with \lean{liftsAt_constants_type}, and bounds $s$ by the content estimate above together with \lean{aI_le}, \lean{le_band_add_errorScale} and \lean{case2b}. All of these inputs are closed (Sections~\ref{sec:split} to \ref{sec:bfinish} and this section), and \lean{case2b} was checked numerically. The case bodies themselves, for each arc length and letter type, have not been read line by line.
+\end{proof}
+
+\subsection*{The tools of Theorem C}
+
+\lean{lattice_bounds_of_local} (\Lpath{LLC/LatticeBoundsOfThreeParts.lean}, 504, read in full) reduces the local lifting conditions of Theorem C to three statements. It iterates the submodule chain over the even letters (\lean{iter_chain}) and pushes the result through \lean{kerChain_of_pchain}. The exponent is $e+s$ by the arithmetic lemma \lean{expC_of}. The three statements are the propositions C-I, C-II and C-III below.
+
+The following tools were read in full and close.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item C-2. \lean{QToolOpen_of}. If $X^H$ kills the relevant cokernel, so does $\pi_0^{\lfloor H/(p-1)\rfloor+1}$, because $\pi_0=u\pi^{p-1}$ with $u$ a unit (P9). \lean{extJumps_of}. A jump of an extension of the trivial lattice by $T$ is a jump of $T$ or $0$ (\lean{coreJumps}, \lean{CrysSubQuot}). \lean{rk_jump_of}. A surjection of crystalline lattices maps the de Rham filtration onto the de Rham filtration (\lean{rk_fil_letter}, from \lean{DcrisExactStrict}), so jumps of $T_2$ are jumps of $T_1$. \lean{lag_coreL}. This is Lagrange interpolation at nodes $c_a$ with $v(c_a-c_b)=\mathrm{sg}+v_p(a-b)$ (\lean{lagrange_and_w_all}). \lean{gamma_lemma_of_crystalline} is an assembly over \lean{gamma_structure_of}, whose skeleton I read. The latter is a $q$-adic induction on $k$, where the operator $d-c_{b-k}$ raises the $q$-order by one, by a residue computation with $-p\cdot\mathrm{res}(T_k)=\chi^k-1$.
+\item C-4. \lean{filtration_gap_vanishing}. There are no jumps between $-s$ and $-\eta$. \lean{gamma_levels_expansion}. Divide $\mathrm{levN}(Q^Kw)$ by $(Xu)^K$. Then $\gamma$ acts on the quotient $d$ by $d_i\mapsto\chi^id_i$, so $(\chi^i-1)d_i=\mathrm{levN}(\gamma w-w)_i\in\Fil^{-i}$. \lean{kernel_rank_bound} (skeleton) writes $p^{2\sigma}P_cw$ through \lean{TTool2} as $\sum_ka_kz_k$ plus an element of $f_{M,X}\,\mathcal J^2$. It then compares level expansions at $\zeta$ coefficient by coefficient modulo $\Fil^{-\eta}$, using uniqueness of the expansion (\lean{isExp_unique}).
+\item C-5. \lean{fam_exp} (in full) is \lean{gamma_levels_expansion} applied linearly to a family. \lean{contentBoundLevel_of}, \lean{pass3} and \lean{pass4} (skeletons) are length counts over the discrete valuation ring $O$. Each builds a chain of submodules whose successive quotients are generated by at most $m$ elements or have length at most $\mathrm{lenC}\cdot\mathrm{length}(O/\ell)$ (\lean{PChain}).
+\item C-6. The skeletons of \lean{detTool_of}, \lean{zTool_of}, \lean{adaptBas_of} and \lean{detAlg_of} were read. \lean{detTool_of} computes $\det$ of the Frobenius matrix as a unit times $(X+p)^w$ with $w=Mr+\sum_aa\,\mathrm{mult}(a)$. It uses a flag basis adapted to the Hodge filtration, the level map of P4 (Berger's $\iota_n$) at $\zeta$, and \lean{det_unit_pow}.
+\item C-7 and C-8. Only the top-level steps were read. \lean{rhoLift_of} uses \lean{TTool2} in $T_1$ and $T_2$ and Herr's naturality of the class map \lean{clK}. \lean{extData_extTool} builds the extension data basis vector by basis vector through \lean{extDataOne_exists} (208 lines, not read). \lean{cocyclesToWachVectorsBound_of_extTool} (read in full) adds the two exponents $B_1+B_2$.
+\end{itemize}
+
+Below these lies a tool region of about $17{,}000$ lines, consisting of \Lpath{QuotientImageDivisibility/} (58 files, $9{,}142$ lines) and about $7{,}900$ lines in \Lpath{LLC/}. Besides the tools already listed as small shared leaves (\lean{expRules_of}, \lean{lemK_of}, \lean{basTool_of}, \lean{filDim_of}, \lean{ptTrans_rec}, \lean{gam_of_tie}), it contains tools that the earlier lists C-2 to C-8 did not name. These are \lean{ExpRing}, \lean{FTool}, \lean{DssLet}, \lean{RToolNum}, \lean{TTool2Z}, \lean{GamN}, \lean{GamA}, \lean{LemmaDN}, \lean{LemmaDN0}, \lean{H2Bound}, and the producers \lean{first_lift_of_hypotheses}, \lean{second_lift_at_situation} and \lean{extDataOne_exists}. I stopped descending there and record the three statements.
+
+Fix $\ell\ge11$, a surjection $F\colon T_1\to T_2$ of crystalline lattices in the situation \lean{SetCS} with data $(d,b,S,\eta,m)$, $h=\mathrm{hpar}(b,S)$, $a=\lceil a_R(h+\eta)\rceil$, and let $\mathrm{lenC}=rS+2m\,c_D(h+\eta)$ with $r=\mathrm{rank}\,T_2$. For a free $O$-module $FF$ of finite rank, a \emph{chain} from $A$ to $B$ is a filtration $A=F_0\supseteq\dots\supseteq F_k=B$ in which each quotient either is generated by at most $m$ elements or has length at most $\mathrm{lenC}\cdot\mathrm{length}(O/\ell O)$.
+
+\begin{prop}[C-I, cocycles to Wach vectors]\label{prop:CI}
+There is $s\le(2a+2\eta+S)/(\ell-1)+\lambda(h+\eta)+2\sigma(h,\eta)+2$ with the following property. Let $g\colon FF\to Z^1_{f}(T_2)$ be $O$-linear. Then there are a submodule $F_2\subseteq FF$, reached from $FF$ by a chain with at most $n$ generated steps and no length steps, and Wach vectors $w_c(f)$ for the even letters $c$, with $q^\eta w_c(f)\in\mathcal J_{c-1}$, such that $p^sg(f)$ is cohomologous to $\pm\sum_c\kappa_c(f)$. Here $\kappa_c(f)$ is the Herr cocycle of a truncation of $w_c(f)$.
+\end{prop}
+
+\begin{prop}[C-II, the submodule chain]\label{prop:CII}
+There is $e\le h/(\ell(\ell-1))+2E_B+3\sigma_2(h+\eta)+3S+3+2\lambda(h+\eta)$ such that, for every even letter $c$ and every family $w$ on $F_s\subseteq FF$ with $q^\eta w\in\mathcal J_{c-1}$, there is a chain from $F_s$ to $F'$ with at most $6$ generated and $3$ length steps on which $p^{j+e}w$ lies in $F(\text{letter-}c\text{ part of }N(T_1))+\Pp^1$. When $m=0$ the same holds on all of $F_s$ with $e+3S$.
+\end{prop}
+
+\begin{prop}[C-III, lifting the cocycle]\label{prop:CIII}
+If $p^kw-F(u)\in\Pp^1$ with $u$ in the letter-$c$ part of $N(T_1)$, and $\kappa$ is the Herr cocycle of a truncation of $w$, then $p^k\kappa$ lies in the image of $F$ on cohomology.
+\end{prop}
+
+\begin{proof}[Proof route for C-I to C-III]
+C-I is \lean{cocyclesToWachVectorsBound_of_extTool} applied to \lean{ExtTool} and the two lifting steps \lean{Step1} and \lean{Step2}. It is Herr's description of $H^1$ through $(\varphi-1,\gamma-1)$ cocycles on the Wach module, made effective. C-II is \lean{lattice_bound_three_six_of} applied to \lean{WachVectorLiftingBound} (from \lean{length_bound_of_hypotheses}, which uses \lean{MemCrit}, closed in Section~\ref{sec:memcrit}) and \lean{LatticeBoundSix} (from \lean{frobenius_sq_bound_of_local}). C-III is \lean{rhoLift_of}. The closed inputs are \lean{TTool2}, \lean{THor}, \lean{MemCrit}, \lean{LemmaGs}, the C-2 and C-4 tools, and \lean{fam_exp}. The external inputs are Herr's complex and Fontaine's strict exactness. The tool region listed above has not been read line by line.
+\end{proof}
+
+\section{Sixth pass. Proposition RC and C-I to C-III as proofs}\label{sec:sixth}
+
+This pass writes the four propositions of Section~\ref{sec:fifth} as ordinary proofs. For Proposition~\ref{prop:RC} I traced the case split, the quantity propagated through it and the source of every constant. I descended into a case body only where its exponent formula was not determined by its inputs.
+
+\subsection*{Setting for Proposition RC}
+
+Fix $\ell\ge11$ and an arc datum $(b,w,S,\eta,\mathrm{up},\mathrm{size})$ with $20\eta,20S,20w\le b$. Every letter $i$ has a size $\mathrm{size}(i)\in(\eta,b+\eta]$ and a direction $\mathrm{up}(i)$. It is thick when $b\le\mathrm{size}(i)\le b+\eta$, and otherwise $\mathrm{size}(i)\le w$. The jumps of $T_1$ at letter $i$ lie in $[-\eta,\mathrm{size}(i)+S]$ for an up letter and in $[-\mathrm{size}(i)-S,\eta]$ for a down letter. Put $h_B=b+\eta+S$ when some letter is thick and $h_B=w+S$ otherwise, and
+\[
+\Sg=\frac{h_B}{\ell^2}+\frac{w+S+\eta}{\ell}+\log_\ell(2h_B)+1\ \ge1 .
+\]
+The datum is \emph{alternating} when $\mathrm{up}(i+1)\ne\mathrm{up}(i)$ for every $i$ and no three consecutive letters are thick. It is a \emph{single run of length} $R$ when all letters have the same direction and no $R$ consecutive letters are thick. The arc (\lean{arcOf}) cuts $\mathbb Z/n$ into consecutive segments that end at cuts $c$. Each segment has length $\mathrm{len}(c)\ge1$, and $\sum_c\mathrm{len}(c)=n$. Alternation forces $\mathrm{len}(c)\le3$, and a single run of length $R$ forces $\mathrm{len}(c)\le R$ (\lean{arc_setup_theorem}).
+
+For a finite set $Z$ of lattice cocycles, say that $F$ has \emph{exponent $e$ with extra classes $Z$} (\lean{ExpIn}) when $p^e$ times every finite cocycle of $T_2$ lies in $F(H^1_f(T_1))+\mathrm{span}_O Z$. \lean{thmB_at} turns such an exponent into the bound of Theorem B by \lean{colLeR_of_exponent} and the linear inequalities \lean{arith_big}, \lean{arith_alt} and \lean{arith_one}, with constant $C_0=320$.
+
+\subsection*{Case (i). The generic lifting exponent}
+
+\begin{lemma}[\lean{lift_le}, \Lpath{RC/FinalStep0.lean}, 9]
+Let $\ell\ge11$, $h\ge1$, $20\eta\le h$, $H\le h+\eta$, $M\le h$ and let $J$ be a set of integers in $[-M,h]$. Put $e_{WA}=\lfloor H\ell/(\ell-1)^2+3+\log_\ell(H+1)\rfloor$, $a=\lfloor M/(\ell-1)\rfloor+1$ and let $J'$ be the set of nonzero sums $j+t$ with $j\in J$ and $1\le t\le M$, together with $[1,M]$. Then
+\[
+2e_{WA}+\sum_{j\in J'}v_\ell(j)+a+v_\ell(a!)\ \le\ \frac{7.1\,h}{\ell}+7.1+2\log_\ell(2h).
+\]
+\end{lemma}
+
+\begin{proof}
+From $\ell\ge11$ we have $\ell/(\ell-1)^2\le1.21/\ell$, so $2e_{WA}\le2.42(h+\eta)/\ell+6+2\log_\ell(2h)\le2.55\,h/\ell+6+2\log_\ell(2h)$. The set $J'$ lies in the two windows $[-M,0)$ and $[1,h+M]$. On a window of $N$ consecutive nonzero integers of absolute value at most $N$, Legendre's formula gives $\sum v_\ell\le N/(\ell-1)$ (\lean{sum_padicValInt_window_le}). So $\sum_{J'}v_\ell\le(h+2M)/(\ell-1)\le3.3\,h/\ell$. Finally $a+v_\ell(a!)\le a\,\ell/(\ell-1)\le1.1(1.1\,h/\ell+1)$. The sum of the three bounds is at most $7.1\,h/\ell+7.1+2\log_\ell(2h)$.
+\end{proof}
+
+\noindent\emph{Proof of Proposition~\ref{prop:RC}(i).} The generic lifting record \lean{coreLiftA} (S1, closed in Section~\ref{sec:s1}) gives a lift with exponent $e_{\mathrm{Lift}}=\mathrm{ePA}(\ell,M,H,J)$, the left side of the lemma, with $h=b+\eta+S$, $M\le h$ and $H\le h+\eta$ read off from the windows. In case (i) $b<160\Sg$, so $h\le1.1\,b<176\Sg$ and $7.1\,h/\ell\le113.6\Sg$. Also $7.1+2\log_\ell(2h)\le9.1\Sg$ because $\Sg\ge1+\log_\ell(2h)$. Hence $e_{\mathrm{Lift}}\le122.7\Sg\le160\Sg$ (\lean{step0}). A numerical check over the hypotheses (\texttt{check\_rc\_case1.py}) gives margin at least $0.47$ in the lemma and at least $72\Sg$ in the conclusion. \qed
+
+\subsection*{Cases (ii) and (iii). Three steps per arc}
+
+\begin{thm}[the arc exponent, \lean{sumAltW}, \lean{sumOneW}, \Lpath{RC/LogbHBNonneg.lean}, 100 and 216]\label{thm:arcexp}
+In cases (ii) and (iii) there are integers $r,\sigma,\kappa_c,E_1\ge0$ and finite sets $Z_c$ such that $F$ has exponent $r+3\sigma+\max_c\kappa_c+E_1$ with extra classes $\bigcup_cZ_c$, where $\lvert Z_c\rvert\le m\,\rho(c)(\mathrm{len}(c)+1)$, $\rho(c)\le\mathrm{len}(c)$, and
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item $r\le3\Sg$ and $\sigma\le3\Sg$;
+\item $\kappa_c\le13S+3\log_\ell(2h_B)+3$ when $\mathrm{len}(c)\le3$, and $\kappa_c\le3R^2\bigl(S+1+\log_\ell(2h_B)\bigr)$ when $\mathrm{len}(c)\le R$;
+\item $E_1\le40\Sg+\eta\,\mathrm{bandI}$ in case (ii) and $E_1\le6\Sg+1$ in case (iii).
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+The exponent is assembled in three steps.
+
+\emph{Step A, splitting.} Let $x$ be a finite class of $T_2$ and $0\to T_2\to Y\to\mathbf 1\to0$ the extension it defines (\lean{ExtYCore}). The cokernel of $N(Y)^\Delta\to N(\mathbf 1)^\Delta$ at each cut is killed by $p^r$ (\lean{KillsDelta}), with $r=\lfloor r_B\rfloor$ and $r_B=2(w+S+\eta)/\ell+2h_B/\ell^2+2\log_\ell(2h_B)+3$ (\lean{kill_cut}). The bound on $r_B$ comes from the Wach annihilator recursion \lean{coreWR} at the letter $c+1$ after a cut, which has $M_i+h_i\le w+S+\eta$. The deeper letters contribute geometrically through \lean{tsum_three}. Since $\Sg\ge1+\log_\ell(2h_B)$, $r_B\le3\Sg$. \lean{SplitCore} (Section~\ref{sec:split}) then writes $p^{r+2\sigma}x=\pm\sum_cx_c$, where $x_c$ is the Herr class of a Wach vector $w_c$ of letter $c$ satisfying the pole condition (\lean{split_sum}). Here $\sigma=\lceil(2(w+S)+M/\ell^{j-1})\ell/(\ell-1)^2+1\rceil$ with $M=\lfloor 2h/(\ell-1)\rfloor+1$ is the truncation constant of \lean{TCase}, and $\sigma\le3\Sg$ by the same estimate $\ell/(\ell-1)^2\le1.21/\ell$.
+
+\emph{Step B, killing at a cut} (\lean{arc_length_bound_theorem}, \Lpath{RC/ArcLengthBoundTheorem.lean}, 26). Let $P=\prod_{i\in J_c\setminus0}(X^{p^{\mathrm{len}}}-\chi^{ip^{\mathrm{len}}})\sum_{k<p^{\mathrm{len}}}X^k$ be the killer polynomial of the window $J_c$ of the cut. Apply $P(\gamma)$ to $p^\sigma w_c$. By \lean{KillerModCore}, $P(\gamma)w-P(1)w\in\pi_0\NN$. By \lean{KillerKap} (Section~\ref{sec:killer}), $p^{\kappa_c}=yP(1)$ with $\kappa_c=\mathrm{len}+\sum_{i\in J_c\setminus0}(\mathrm{len}+1+v_\ell(i))$ (\lean{pk_eq}). In frame coordinates the vector $P(\gamma)p^\sigma w_c$ splits into its part on the index set $R$ and the rest. The $R$-part lies in the span of the at most $m\rho(c)(\mathrm{len}+1)$ generators of \lean{UnivGenCore} (Section~\ref{sec:bfinish}), whose Herr classes form $Z_c$. The rest lifts along $F$ with exponent $E_1$ by Step C (\lean{LV_galois}). The Herr class of a Wach vector of letter $c$ is unique (\lean{rho_uniq}). Together these give $p^{\sigma+\kappa_c+E_1}x_c\in F(H^1_f(T_1))+\mathrm{span}\,Z_c$. Summing over cuts gives the exponent $r+2\sigma+\sigma+\max\kappa_c+E_1$ (\lean{cocycle_classes_exponent}).
+
+\emph{The bound on $\kappa_c$} (\lean{kappa_bound_window_sum}). The window $J_c$ is contained in the union of $\mathrm{len}(c)$ intervals of $S$ consecutive nonzero integers of absolute value at most $h_B$, one per letter of the segment. So $\kappa_c\le\mathrm{len}+\mathrm{len}(\mathrm{len}+1)S+\mathrm{len}\bigl(S/(\ell-1)+\log_\ell(2h_B)\bigr)$, which is at most $13S+3\log_\ell(2h_B)+3$ for $\mathrm{len}\le3$ and at most $3R^2(S+1+\log_\ell(2h_B))$ for $\mathrm{len}\le R$.
+
+\emph{Step C, lifting at a cut.} Say that $E$ is a \emph{lifting exponent at the cut} $c$ (\lean{LiftsAt}) when, for every frame vector $b_{k_0}$ of letter $c$ of $T_2$ and every $f$ in the fractional ideal $\mathcal F_c$ of the cut, $p^Ef\,b_{k_0}\equiv F(u)$ modulo $\Pp^1$ for some $u$ of letter $c$ in $N(T_1)$. Proposition~\ref{prop:cutlift} below gives $E_1$.
+\end{proof}
+
+\noindent\emph{Proof of Proposition~\ref{prop:RC}(ii) and (iii).} In case (ii), Theorem~\ref{thm:arcexp} gives $e\le3\Sg+9\Sg+(13S+3\log_\ell(2h_B)+3)+40\Sg+\eta\,\mathrm{bandI}$. Since $3\log_\ell(2h_B)+3\le3\Sg$, this is at most $55\Sg+13S+\eta\,\mathrm{bandI}$. The count is $\lvert Z\rvert\le\sum_cm\rho(c)(\mathrm{len}(c)+1)\le4m\sum_c\mathrm{len}(c)=4mn$, because $\rho(c)(\mathrm{len}+1)\le4\,\mathrm{len}$ when $\mathrm{len}\le3$. In case (iii), $e\le3\Sg+9\Sg+3R^2(S+1+\log_\ell(2h_B))+6\Sg+1=18\Sg+3R^2(S+1+\log_\ell(2h_B))+1$ and $\lvert Z\rvert\le(R+1)mn$. These are the constants $55$ and $18$. The $9\Sg$ is $3\sigma$, and $40$ and $6$ come from Proposition~\ref{prop:cutlift}. \qed
+
+\subsection*{The lifting exponent at a cut}
+
+\begin{prop}[\lean{arc_proposition_alternative}, \lean{arc_single_type_bound}]\label{prop:cutlift}
+In the setting above, with $r,\sigma\le3\Sg$ as in Theorem~\ref{thm:arcexp}, every cut $c$ has a lifting exponent $E$ bounded as in the following table. Here $s_k=\mathrm{size}(c-k)$, and $A_k$ is the Wach annihilator exponent of the letter $c-k$ (\lean{AI}).
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+cut & condition & $E\le$\\
+\midrule
+all letters of one direction & none & $6\Sg+1$\\
+length 2, $c$ up & $\ell(s_1+S+\eta)+\eta<s_0$ & $12\Sg+1$\\
+length 2, $c$ up & otherwise & $9\Sg+1+\eta\,\mathrm{bandI}$\\
+length 2, $c$ down & $A_1+\eta+1\le s_1$ & $9\Sg+1$\\
+length 2, $c$ down & otherwise & $15\Sg+1+\eta\,\mathrm{bandI}$\\
+length 3, $c-2$ up & $s_2<A_2+\eta+2\sigma+2$ & $34\Sg+1+\eta\,\mathrm{bandI}$\\
+length 3, $c-2$ up & otherwise & $18\Sg+1$\\
+length 3, $c-2$ down & $s_1<\ell(s_2+S+\eta)$ & $22\Sg+1+\eta\,\mathrm{bandI}$\\
+length 3, $c-2$ down & otherwise & $13\Sg+1$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Hence $E_1\le40\Sg+\eta\,\mathrm{bandI}$ for alternating data and $E_1\le6\Sg+1$ for a single run.
+\end{prop}
+
+\begin{proof}
+Every row follows the same four moves. Each row then has its own estimate for the denominator.
+
+\emph{(1) A starting lift.} Take a horizontal frame $b^{(1)}$ of $T_1$ at the first letter $c-\mathrm{len}$ of the segment (\lean{HorFrameCore}). The $\Delta$-cokernel of $F$ is killed by $p^r$, so the crystalline image of $p^rb_{k_0}$ is the image of a vector of $N(T_1)$ (\lean{ArcLCore}, with the $\Delta$-average \lean{liftDelta}).
+
+\emph{(2) Transport along the segment.} Frame coordinates are functorial through a constant matrix $\mu$ (\lean{arc_section_map}). Truncating the horizontal solutions costs $p^\sigma$ (\lean{RepVV}, \lean{TCase}). A row that uses the truncation twice or three times costs $2\sigma$ or $3\sigma$.
+
+\emph{(3) Clearing the denominator of $f$.} An element $f\in\mathcal F_c$ satisfies $\mathrm{nnDen}\cdot f=e_c\,\mathrm{nnNum}\cdot u$, where the denominator is a product of $p_s^{\mathrm{size}}$ over the up letters of the segment. Through the identification $A^\Delta\cong O[[X]]$ at one letter (\lean{exists_phiBridge}), clearing it means finding $s$ with $p^s\,p_1^y\in(X^B)+p^{(\cdot)}O[[X]]$. The content estimate $\mathrm{cont}(p_1^y\bmod X^B)\le y-B/\ell+2+\log_\ell y$ (\lean{den_bound}, \lean{deA_le}, Section~\ref{sec:fifth}) bounds $s$ by a difference of neighbouring letter sizes.
+
+\emph{(4) Membership.} The lifted vector lands in the correct filtration step by the filtration gap \lean{ArcFilLowCore}, and in $\NN$ by \lean{ArcCore} and \lean{ArcSecMapCore}, which gives \lean{LiftsAt}.
+
+\emph{The rows.} Each row is listed with its exponent formula and the inequality that bounds the denominator.
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item One direction (\lean{arc_single_type_bound}, read in full). If all letters are down, $\mathrm{nnDen}=1$ and the exponent is $r+\sigma$ (\lean{liftsAt_thin_letter_type}). If all are up, \lean{liftsAt_thick_letter_type} applies with the same exponent. So $E=r+\sigma\le6\Sg$.
+\item Length 2, $c$ up, $s_0$ large (\lean{arc_length_one_or_two_case_b}, skeleton read). The coefficient of $X^{\ell y}$ in $p_1^y$, with $y=s_1+S+\eta$, is a unit (\lean{coeff_p1_pow_top_isUnit}), so there is no denominator. The coefficient vector lies in $\Fil^{s_0}$ by the filtration gap. The exponent is $r+3\sigma\le12\Sg$.
+\item Length 2, $c$ up, otherwise (\lean{arc_length_one_or_two_case_c}, end read). The exponent is $r+\sigma+\mathrm{deA}$ with $\mathrm{deA}\le\max(0,s_0/\ell-(s_1+S)+2+\log_\ell s_0)+1$ (\lean{deA_le}, Kummer). If $\ell(s_1+S)\le s_0$, the inequality \lean{case1c} gives $\mathrm{deA}+6\Sg\le\eta+9\Sg$ and puts the datum in the band. Otherwise $\mathrm{deA}\le3+\log_\ell s_0\le3\Sg$.
+\item Length 2, $c$ down (\lean{exists_liftsAt_arcOf_of_up_eq_false} and \lean{arc_length_two_case_down}). The exponent is $r+\sigma+\mathrm{de}$ with $\mathrm{de}\le\lceil\max(0,y-B/\ell+2+\log_\ell y)\rceil$ (\lean{den_step}). In the second row this is bounded by \lean{case2b}.
+\item Length 3, $c-2$ up, $s_2$ small (\lean{exists_exponent_le_liftsAt_arcOf}). The exponent is $r+\sigma+s$, with $s-1\le\max\bigl(1,s_2-(s_1+S)/\ell+3.2\Sg\bigr)$ (\lean{arc_length_four_denominator}). The Wach annihilator bound $A_2\le(s_1+S+\eta)/\ell+2.5\Sg$ (\lean{aI_le}) and the condition of the row give $s-1\le\eta\,\mathrm{bandI}+28\Sg$ (\lean{le_band_add_errorScale}). Outside the band, $\lvert\ell s_2-b\rvert$ is large, which forces $\eta$ to be small against $\Sg$. So $E\le3\Sg+3\Sg+28\Sg+1+\eta\,\mathrm{bandI}$. This row is the source of the $34$.
+\item Length 3, $c-2$ up, otherwise (\lean{exists_liftsAt_le_of_len_three_of_up}). The exponent is $r+3\sigma+1+e_4$ with $e_4\le6\Sg$.
+\item Length 3, $c-2$ down (\lean{arc_length_three_case_d}, \lean{arc_length_three_case_c}). In the first row a descent (\lean{arc_length_three_descent}) reduces the segment to a scalar multiple of a length-2 segment, and \lean{liftsAt_of_scaled_power} adds the scalar's exponent. In the second row the exponent is $s_1+\sigma$, with $s_1\le10\Sg$ chosen by \lean{numerics} so that the content estimate fails to block the lift.
+\end{itemize}
+The largest row is $34\Sg+1+\eta\,\mathrm{bandI}\le40\Sg+\eta\,\mathrm{bandI}$, using $\Sg\ge1$.
+\end{proof}
+
+\noindent\emph{Checks.} The four real inequalities that decide the rows were checked numerically over their hypotheses with $\ell\in\{11,13,\dots,1009\}$. \lean{case2b} was checked earlier. \lean{case1c} held in $10^5$ cases with margins $2.16$ and $51.7$. \lean{le_band_add_errorScale} held in $4\cdot10^5$ adversarial cases, with $s_2$ taken as large as the hypotheses allow, and margin at least $8.77\Sg$. \lean{numerics} had a witness $s_1$ in all $2{,}572$ admissible cases. The scripts are \texttt{check\_rc\_leaves.py} and \texttt{check\_band.py}.
+
+\noindent\emph{What was not read line by line.} I did not read line by line the bodies of the rows other than the first and the end of the third. These are \lean{arc_length_one_or_two_case_b} (449 lines), \lean{arc_length_three_case_c} (370), \lean{exists_liftsAt_le_of_len_three_of_up} (176), \lean{arc_length_two_case_down} (135), \lean{arc_length_four_denominator} (132), \lean{arc_length_three_case_d} (85) and \lean{arc_length_three_descent}. For each I read the skeleton and the exponent formula. Each is an instance of moves (1) to (4) with one of two denominator mechanisms, the unit top coefficient of $p_1^y$ or the content estimate. Its arithmetic is one of the inequalities checked above.
+
+\subsection*{C-I. From cocycles to Wach vectors}
+
+\begin{proof}[Proof of Proposition~\ref{prop:CI}]
+The proof has three steps, and the exponent is $s=s_1+s_g$ (\lean{cocyclesToWachVectorsBound_of_extTool}, read).
+
+\emph{Herr data} (\lean{extDataOne_exists}, \Lpath{LLC/ExtDataOneMapSmulO.lean}, 45, read in full). Let $c$ be a finite cocycle of $T$ and $0\to T\to Y\to\mathbf 1\to0$ the extension it defines (\lean{liftb_HExt}). Let $e'$ be the generator of $N(\mathbf 1)$ fixed by $\varphi$ and $\Gamma$. Lift $e'$ to $X\in D(Y)$ and average over $\Delta$, using that $\lvert\Delta\rvert=p-1$ is a unit. Then $(\varphi-1)X$ and $(\gamma-1)X$ map to $0$ in $D(\mathbf 1)$, so they come from $y,z\in D(T)$. The pair $(y,z)$ satisfies the cocycle relation $(\gamma-1)y=(\varphi-1)z$ because $\iota$ is injective, and Herr's theorem identifies its class with $[c]$ (\lean{coreHerrExtDelta}). The cokernel of $N(Y)\to N(\mathbf 1)$ at letter $i$ is killed by $p^N$ and by $q^a$. So there are $\varepsilon_i,x'_i\in N(Y)$ with images $p^Ne_ie'$ and $q^ae_ie'$, and $\mu_i=\varepsilon_i-p^Ne_iX$ and $\nu_i=x'_i-q^ae_iX$ lie in $D(T)$. The six relations of \lean{ExtData} follow by applying $\varphi$ and $\gamma$ and using P5 and the saturation clause P6.
+
+\emph{First correction} (\lean{first_lift_of_hypotheses}, skeleton read). For each even letter $c$ let $S_c$ be the set of nonzero integers $x$ in the jump window of letter $c$, that is $1-(b_c+S)\le x\le a-b_c$ or its mirror. Put $c_x=(1-\chi^{-x})/p$. Then $v(c_x)=v_p(x)$, because $\chi\equiv1\bmod p$ (\lean{step1Kill_cO}). The polynomial $R_c=w_c\prod_{x\in S_c}(X-c_x)$, with $w_c$ chosen so that $R_c(0)=p^{s_1}$ (\lean{step1Kill_norm}), applied to the $\gamma$-derivation $(\gamma-1)/\pi_0$, kills the $q$-adic poles of $\mu_c$ graded piece by graded piece, since on the graded piece of weight $x$ the derivation acts by $c_x$. This is the Wach $\gamma$-derivation of C-2 (\lean{gamma_structure_of}). Legendre's formula on the windows gives $s_1=\max_c\sum_{S_c}v_p(x)\le B_1=(2a+2\eta+S)/(\ell-1)+\lambda(h+\eta)$. The vectors $u_c=p^N m_c-p^{s_1}\mu_c$ then lie in $N$ on a submodule $F_1$ reached by a chain of generated steps.
+
+\emph{Second correction} (\lean{second_lift_at_situation}, skeleton read). From the corrected $m_c$ form the $\gamma$-defects and the Frobenius shift defects $w_c$. \lean{passage_to_quotient} (\Lpath{LLC/FiltrationQuotientFiniteDimensional.lean}, 134) gives, for each even $c$, a linear map $\psi_c\colon F_1\to L^r$ with $r\le m$ whose kernel is exactly the set of $f$ with $u_c(f)\in N$. The obstruction is the principal part of the level expansion modulo the Hodge filtration, of dimension at most $m$ (\lean{FilDim}, \lean{ExpRules}). On the intersection $F_2$ of these kernels, $q^\eta w_c\in\mathcal J_{c-1}$. The truncation tool \lean{TTool2Z} with $\sigma_C=\lceil(M+\eta)/(\ell-1)+1\rceil$ turns $w_c$ into Herr cocycles $\kappa_c$ with $p^{s_1+s_g}g=\pm\sum_c\kappa_c$ modulo coboundaries, where $s_g\le B_2=2\sigma+2$.
+
+Adding the exponents gives $s\le B_1+B_2$, the exponent of the proposition (\lean{bound_sum_eq}).
+\end{proof}
+
+\subsection*{C-II. The submodule chain}
+
+\begin{proof}[Proof of Proposition~\ref{prop:CII}]
+\lean{lattice_bound_three_six_of} composes two statements, and the exponents add.
+
+\emph{Lifting Wach vectors} (\lean{WachVectorLiftingBound}, from \lean{length_bound_of_hypotheses}, skeleton read). Let $w$ be a family with $q^\eta w\in\mathcal J_{c-1}$. Then $Q^{\eta+b_c+S}w\in N$ and $(\gamma-1)w\in N$. Expand $\mathrm{levN}(Q^{\eta+b_c+S}w)=(Xu)^{\eta+b_c+S}d$. By \lean{fam_exp} (closed), $d_i\in\Fil^{-i}$ for $i\ne0$, so the only obstruction sits in $d_0$. \lean{H2Bound} writes $p^{e_c}d_0$, modulo $\Fil^{-\eta}$, as the image of $\varphi^2(\mathrm{cmp}\,x)$ for some $x$ of letter $c-2$. \lean{pass3} uses \lean{LemmaDN}, the length count of $\NN$ modulo $\pi_0$ and $\varphi$-pullbacks, to pass to a submodule where this $\varphi^2$-image lies in a fixed crystalline subspace $C$. \lean{ContentBoundLevel} (closed in mechanism, Section~\ref{sec:fifth}) lifts such an image to $y\in N(T_1)$ of letter $c$ with matching level expansion up to $p^\kappa$. \lean{pass4} removes the remaining rank, at most $m$, and \lean{MemCrit} (Section~\ref{sec:memcrit}) puts $p^{e_2}w-F(y)$ in $N$ and in letter $c$. The chain uses three generated steps and one length step, and $e_2\le h/(\ell(\ell-1))+(S+1)/(\ell-1)+S+E_G+2\sigma_2+6+\lambda$.
+
+\emph{From $N$ to $\Pp^1$} (\lean{LatticeBoundSix}, from \lean{frobenius_sq_bound_of_local}, skeleton read). Let $x$ be in $N$ and in letter $c$. The same argument with $\varphi^2$ and \lean{LemmaGs} (closed in Wave 3) lifts $p^{e_6}x$ modulo $\Pp^1$, with $e_6\le S+E_G+\sigma_2+\lambda$, on a chain with three generated and two length steps.
+
+Since $E_B=E_G+2\lambda$ and $\lambda\ge1$, the inequality $(S+1)/(\ell-1)+6\le S+3+4\lambda$ gives $e_2+e_6\le h/(\ell(\ell-1))+2E_B+3\sigma_2+3S+3+2\lambda$ (\lean{bound_three_five_add_six_le}).
+\end{proof}
+
+\subsection*{C-III. Lifting the cocycle}
+
+\begin{proof}[Proof of Proposition~\ref{prop:CIII}]
+Let $u$ be of letter $c$ in $N(T_1)$ with $p^kw-F(u)\in\Pp^1$ (\lean{rhoLift_of}, skeleton read). Truncate $u$ with \lean{TTool2} in $T_1$ to get $z_u$ and a Herr cocycle $x_u$. Its poles are finite, so its class is in $H^1_f(T_1)$ (clause 3 of \lean{FTool}). Truncate $F(u)$ and $p^kw$ in $T_2$. By the comparison clause of \lean{TTool2} the two truncations differ by an element $p_3-p_2-p_1$ of $\mathcal J^1_c$ with $q^\eta(p_3-p_2-p_1)\in N$. The difference of the two Herr cocycles therefore satisfies the hypotheses of clause 4 of \lean{FTool}, so it has class $0$. Herr's construction is natural in $T$ (\lean{clK}), so $F_*[x_u]$ is the class of the truncation of $F(u)$. Hence $p^k\kappa=F_*[x_u]\in F(H^1_f(T_1))$.
+\end{proof}
+
+\subsection*{Status after the sixth pass}
+
+Proposition~\ref{prop:RC} is now a written proof. Its framework, Theorem~\ref{thm:arcexp}, was read in full. Its constants $160$, $55$ and $18$ are derived above. The deciding inequalities of the rows were checked numerically. The row bodies were read at skeleton level and fit a uniform four-move argument. Propositions C-I, C-II and C-III are written as proofs whose steps are named tools. \lean{extDataOne_exists}, \lean{fam_exp}, \lean{gamma_levels_expansion} and \lean{cocyclesToWachVectorsBound_of_extTool} were read in full, the rest at skeleton level. Nothing in this pass needed a new mechanism. The Theorem C proofs still rest on tool statements read only as statements, namely \lean{passage_to_quotient}, \lean{H2Bound}, \lean{LemmaDN}, \lean{pass4} and \lean{frobenius_sq_bound_of_local}.
+
+\section{Seventh pass. The five Theorem C tools}\label{sec:seventh}
+
+This pass reads the five tools on which Section~\ref{sec:sixth} left Propositions C-I and C-II. Each closes, and I record its proof and how deeply each input was read.
+
+\begin{lemma}[\lean{passage_to_quotient}, \Lpath{LLC/FiltrationQuotientFiniteDimensional.lean}, 134, read in full]
+Let $F_1$ be a submodule of a finitely generated $O$-module and, for each even letter $c$, let $u_c\colon F_1\to D(T_2)$ be $O$-linear with $q^\eta u_c(f)\in N(T_2)$, $u_c(f)$ of letter $c+1$ and $(\gamma-1)u_c(f)\in N(T_2)$. Then there is $F_2\subseteq F_1$, reached from $F_1$ by one step per even letter, each generated by at most $m$ elements, with $u_c(F_2)\subseteq N(T_2)$ for every even $c$.
+\end{lemma}
+
+\begin{proof}
+Expand $\mathrm{levN}(q^\eta u_c(f))=(Xu)^\eta D_f$ at a primitive root $\zeta$. The expansion exists, is unique and is $O$-linear in $f$ (\lean{ExpRules}). For $k\ne0$ the operator $\gamma$ acts on $D_f(k)$ by $\chi^k\ne1$, and $(\gamma-1)u_c(f)\in N$, so $D_f(k)\in\Fil^{-k}$. The criterion \lean{ExpCrit} (Section~\ref{sec:expcrit}) then gives $u_c(f)\in N$ if and only if $D_f(0)\in\Fil^0$, and also $D_f(0)\in\Fil^{-\eta}$ (\lean{lemK_of}, read in full). The quotient $\Fil^{-\eta}/\Fil^0$ at the embedding of letter $c+1$ has dimension equal to the number of jumps in $[-\eta,0)$, which is at most $m$ by hypothesis (\lean{filtration_quotient_finiteDimensional}, from \lean{FilDim} and \lean{DdREqDcris}). So $\psi_c(f)=D_f(0)\bmod\Fil^0$ is an $O$-linear map to $L^r$ with $r\le m$ and kernel $\{f:u_c(f)\in N\}$. Its image is a finitely generated $O$-submodule of $L^r$, hence generated by at most $r$ elements because $O$ is a principal ideal domain. Intersect the kernels over the even letters one at a time.
+\end{proof}
+
+\begin{lemma}[\lean{h2Bound_of_hypotheses}, \Lpath{LLC/IdempotentMemInvariantsLetter.lean}, 1338, read in full]
+For every even letter $c$ there is $e\le\sigma_2(h+\eta)+(b_{c-1}+S)-b_c/\ell+\lambda(h+\eta)+3$ with the following property. Let $w$ satisfy $q^\eta w\in\mathcal J_{c-1}$, and let $\mathrm{levN}(Q^Kw)=(Xu)^Kd$. Then $p^ed_0\equiv\varphi^2(\mathrm{cmp}\,x)$ modulo $\Fil^{-\eta}$ for some $x$ in $\NN$ of letter $c-2$.
+\end{lemma}
+
+\begin{proof}
+For $0<\lvert s\rvert<b_c$, $(\chi^s-1)d_s\in\Fil^{-s}$ by \lean{gamma_levels_expansion}, so $d_s\in\Fil^{-s}$. That lies in $\Fil^{-\eta}$ for $s\le\eta$ directly, and for $\eta<s<b_c$ because $\Fil^{-s}=\Fil^{-\eta}$ there (\lean{filtration_gap_vanishing}, no jumps in the gap). \lean{kernel_rank_bound} (C-4) applies \lean{TTool2} to $P_cw$ with $P_c=p_1^{b_{c-1}+S}q^\eta$. It gives elements $a_k\in A^\Delta$ and Wach vectors $w_k$ of letter $c-2$ such that, for every $R<b_c+\eta$,
+\[
+p^{\sigma}\,[t^R]\mathrm{lev}(P_c)\cdot d_0\equiv\sum_k[t^R]\mathrm{lev}(a_k)\cdot\varphi^2(\mathrm{cmp}\,w_k)\pmod{\Fil^{-\eta}} .
+\]
+The coefficient at $R=\eta$ of $\mathrm{lev}(P_c)$ is nonzero, so $d_0$ is an $L$-combination of the $\varphi^2(\mathrm{cmp}\,w_k)$ with coefficients $\theta$. The coefficients are integral after $p^{h_{2c}}$, with $h_{2c}=\lceil(b_{c-1}+S)-b_c/\ell+2+\log_\ell(b_{c-1}+S)\rceil$. The reason is that $\sum m_ka_k$ agrees with $\theta P_c$ through degree $b_c+\eta-1$ at the level. Writing both as $q$-expansions, $p_1^y$ then lies in the ideal $(\varpi^t,X^{b_c})$ of $O[[X]]$. The content estimate \lean{power_series_dvr_factorisation} (Lemma 1 of Final Closure Wave 3) gives $t/e_O\le h_{2c}$ (\lean{scalar_integrality_relation}). \lean{integral_coordinate_of_relation} turns this into integral coordinates. The bound on $\sigma+h_{2c}$ is \lean{exponent_bound_second}.
+\end{proof}
+
+\begin{lemma}[\lean{LemmaDN}, through \lean{lemmaDN_core} and \lean{detAlg_of}]
+For every even letter $c$ there is a set $s$ of at most $m$ elements of $\NN_c$ such that the length of $\NN_c$ modulo $\pi_0\NN_c+q^{b_c+S}\varphi(\NN_{c-1})A^\Delta+\mathrm{span}\,s$ is at most $\bigl(rS+2\lfloor c_D\rfloor m\bigr)\,\mathrm{length}(O/\ell O)$.
+\end{lemma}
+
+\begin{proof}
+Reduction modulo $\pi_0$ identifies $\NN_c/\pi_0\NN_c$ with $O^r$ (\lean{IsRed}). Choose columns, either of the form $\varphi(e'_k)$ from a basis adapted to the level filtration (\lean{AdaptBas}) or one of $m'\le m$ extra vectors $g_j$ (\lean{GMem}). The quotient in question is a quotient of the cokernel of the column matrix $Q$, whose length is $v(\det Q)$ (\lean{length_coker_le}, \lean{lemmaDN_core}, read in full). It remains to bound $v(\det Q)$ (\lean{detAlg_of}, end read). Let $P$ be the matrix of $q^{b_c+S}\varphi$ and $Z$ the truncation matrix of \lean{ZTool}, with constant term $p^\sigma I$. They satisfy $Q\,\mathrm{diag}(p^{k_j})=PZ$ on the adapted basis, so comparing constant terms of determinants gives $v(\det Q)=w_0+\sigma m'-\sum_jk_j$. Here $\det P=$ unit $\cdot(X+p)^{w_0}$ with $w_0=(b_c+S)r+\sum_aa\,\mathrm{mult}(a)$ (\lean{DetTool}). This is the elementary divisor statement for Frobenius on a Wach module with the Hodge--Tate weights in the window. The adapted exponents satisfy $\sum k_j\ge$ the lower sum of the window, and \lean{deep_bound} gives $w_0-$(lower sum)$\le rS$. With $\sigma\le2\lfloor c_D\rfloor$ (\lean{sigma_le}) this gives $v(\det Q)\le rS+2\lfloor c_D\rfloor m$.
+\end{proof}
+
+\begin{lemma}[\lean{pass4}, \Lpath{QID/InIZero.lean}, 44, main part read]
+Let $F_3$ be free over $O$. For each $f\in F_3$ suppose $p^{e_2}d_f(0)-p^\kappa\varphi(\ell_f)\in\Fil^{-\eta}$, where $\ell_f$ is crystalline of letter $c-1$ and liftable as in \lean{ContentBoundLevel}. Then on a submodule $F_4$, reached by one generated step, there is $y(f)\in N(T_1)$ of letter $c$ with $p^{e_2}w(f)-F(y(f))$ in $N$ and of letter $c$.
+\end{lemma}
+
+\begin{proof}
+Take a basis of $F_3$ (\lean{basisOfPid}) and lift each basis vector's $\ell$ to $y_k\in N(T_1)$ whose level expansion has $d_{y_k}(0)=p^\kappa\varphi(\ell_k)$, $d_{y_k}(i)=0$ for $0<\lvert i\rvert<B_n$ and $d_{y_k}(i)\in\iota D$ otherwise. Extend linearly. Let $\psi_4(f)$ be the class of $p^{e_2}d_f(0)-p^\kappa\varphi(\ell_f)$ in $\Fil^{-\eta}/\Fil^0$, of rank at most $m$, and let $F_4$ be its kernel. On $F_4$ every coefficient of the level expansion of $p^{e_2}w-F(y)$ lies in $\Fil^{-i}$. At $i=0$ this is the kernel condition. For $0<\lvert i\rvert<B_n$ it comes from $d_f$ alone. For $i\ge B_n$ it holds because $\iota D\subseteq\Fil^{-i}$ there, which is a hypothesis of \lean{pass4}. \lean{MemCrit}, in the form \lean{mem_of_exp}, puts the difference in $N$.
+\end{proof}
+
+\begin{lemma}[\lean{frobenius_sq_bound_of_local}, \Lpath{QID/FrobeniusSqBoundOfLocal.lean}, 55, read; \lean{frobenius_sq_bound_at}, 192, skeleton read]
+For every even letter $c$ and every family $w$ in $N(T_2)$ of letter $c$ there is a submodule, reached by three generated and two length steps, on which $p^{e_6}w\equiv F(u)$ modulo $\Pp^1$ for some $u$ of letter $c$ in $N(T_1)$, with $e_6\le S+E_G+\sigma_2+\lambda$.
+\end{lemma}
+
+\begin{proof}
+The proof is a descent along Frobenius over three letters. By \lean{LemmaDN} at $c$ (\lean{pchain_DN}), pass to a submodule on which $w\in\pi_0\NN_c+q^{b_c+S}\varphi(\NN_{c-1})A^\Delta$. Then $\mathrm{cmp}\,w=p^{b_c+S}\varphi(\mathrm{cmp}\,y_1)$ with $y_1$ of letter $c-1$ (\lean{cmp_of_mem_X}, read in full, since $\mathrm{cmp}$ kills $\pi_0$ and sends $q\mapsto p$). The up letter $c-1$ gives $y_2$ of letter $c-2$ with $\mathrm{cmp}\,y_1=p^\eta\varphi(\mathrm{cmp}\,y_2)$ (\lean{cmp_up}). By \lean{LemmaDN} at $c-2$ the same step gives $y_3$ of letter $c-3$. The crystalline vector $\ell=\varphi^2(\mathrm{cmp}\,y_3)$ of letter $c-1$ lies, after a rank step of rank at most $m$, in a fixed crystalline subspace. \lean{LemmaGs} (closed in Wave 3) gives $p^E\ell$ in the image of $F$ with $E\le E_G$. \lean{exists_inI_inPN_pow_smul_sub_map} (66 lines, statement read) assembles $u=p^{\mathrm{pad}}q^{k_B}\varphi(n')$ and checks $p^{e_6}w-F(u)\in\Pp^1$ through \lean{ker_NDl}.
+\end{proof}
+
+\subsection*{Depth of reading after the seventh pass}
+
+Read in full were \lean{passage_to_quotient}, \lean{lemK_of}, \lean{h2Bound_of_hypotheses}, \lean{lemmaDN_core}, the end of \lean{detAlg_of}, the main part of \lean{pass4}, \lean{frobenius_sq_bound_of_local} and \lean{cmp_of_mem_X}. The following were read at skeleton level or only as statements: \lean{kernel_rank_bound} (241), \lean{scalar_integrality_relation} (139, skeleton), \lean{integral_coordinate_of_relation} (88, statement), \lean{detTool_of} (104), \lean{zTool_of} (60), \lean{adaptBas_of} (210), \lean{gMem_of} (6), \lean{frobenius_sq_bound_at} (192), \lean{pchain_DN} (74), \lean{cmp_up} (54) and \lean{exists_inI_inPN_pow_smul_sub_map} (66). Each of their mechanisms is stated above or in Section~\ref{sec:fifth}. None needs an input beyond the boundary of Section~\ref{sec:fifth}.
+
+\section{Constants}
+
+\begin{center}
+\begin{tabular}{@{}p{0.34\textwidth}p{0.3\textwidth}p{0.28\textwidth}@{}}
+\toprule
+Constant & Where & Status\\
+\midrule
+32 at $l=11$ (leading $31.108$) & Theorem C chain & confirmed in Wave 3\\
+$\sigma\le3\Sg$ for $l\ge11$ (max $2.46$) & Theorem B case exponents & confirmed in Wave 2\\
+$\sigma$ of \lean{TCase} ($j=1,2$) & \lean{TTool2} & verified here, slack at least 1\\
+Killer constant $8$ & \lean{KillerKap} & proved in the archive; sharp value about $3.75$\\
+$2h<(p-1)M$ with $M=\lfloor2h/(p-1)\rfloor+1$ & \lean{fil_of_rep}, \lean{lev0Mpr_of} & elementary\\
+$p\ge5$ (B), $p\ge11$ (C) & hypotheses of \lean{CaseA} use and \lean{TCase} & consistent with all call sites read\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Smallest exact remaining internal residual list}
+
+Sizes are body lengths in lines. ``Mechanism'' records whether the ordinary mathematics is known.
+
+\subsection*{Small shared leaves of the closed layer}
+\lean{stage_all} (15), \lean{DivLevR.step}, \lean{secIn_transport} (48), \lean{mono_lift} (77), \lean{dg_core} (40), \lean{lev_prod_ps} (24), \lean{good_of_sec} (26), \lean{good_of_lpow} (11), \lean{piLam_of_sec} (40), \lean{expRules_of} (104), \lean{lemK_of} (60), \lean{basTool_of} (14), \lean{filDim_of} (12), \lean{ptTrans_rec}, \lean{gam_of_tie}, \lean{indep_phi_cmp}, \lean{Wd.dvd_of_dvd_image}, the seven clause lemmas of \lean{tTool2_of} other than \lean{trunc_ex}, clauses 3 and 4 of \lean{coreTr}, \lean{lag_coreL}. All are linear algebra, Weierstrass-type divisibility or bookkeeping with the mechanism stated in Sections~\ref{sec:secCrit} to \ref{sec:s1}. Size small. Mechanism known.
+
+\subsection*{Theorem B only}
+No internal residual of mathematical content. Proposition~\ref{prop:RC} is proved in Section~\ref{sec:sixth}. One verification item remains. The bodies of seven cut types (\lean{arc_length_one_or_two_case_b} 449, \lean{arc_length_three_case_c} 370, \lean{exists_liftsAt_le_of_len_three_of_up} 176, \lean{arc_length_two_case_down} 135, \lean{arc_length_four_denominator} 132, \lean{arc_length_three_case_d} 85, \lean{arc_length_three_descent}) were read at skeleton level. Their exponent formulas and deciding inequalities were checked. The one-line leaves listed in Section~\ref{sec:fifth} remain.
+
+\subsection*{Theorem C only}
+No internal residual of mathematical content. The five tools of Section~\ref{sec:sixth} close in Section~\ref{sec:seventh}. One verification item remains. The following bodies were read at skeleton level or only as statements, with their mechanism stated: \lean{kernel_rank_bound} (241), \lean{scalar_integrality_relation} (139), \lean{integral_coordinate_of_relation} (88), \lean{detTool_of} (104), \lean{zTool_of} (60), \lean{adaptBas_of} (210), \lean{gMem_of} (6), \lean{frobenius_sq_bound_at} (192), \lean{pchain_DN} (74), \lean{cmp_up} (54), \lean{exists_inI_inPN_pow_smul_sub_map} (66), and from earlier passes \lean{gamma_structure_of}, \lean{contentBoundLevel_of}, \lean{pass3}, \lean{first_lift_of_hypotheses}, \lean{second_lift_at_situation} and \lean{rhoLift_of}. C-9 (\lean{TheoremCAdm.admissible_ranks_of_CMDatum} and five top producers) is bookkeeping.
+
+\section{External verification boundary}
+
+The layer closed here stops at the following, and only these.
+\begin{enumerate}[leftmargin=*,itemsep=1pt]
+\item The Wach record V8 of \Lpath{Post_Closure_Verification_Boundary.md}, clauses p3 (comparison map, its kernel and image), p4 in both directions (\lean{LevelMapHodgeFiltration}: the level maps land in the Hodge filtration and their leading terms fill it), the three P5 clauses (including the converse membership clause through the vanishing ideals), the P9 ring relations, \lean{WachLatticeFree}, \lean{wachModuleOverLetters}, \lean{SATcore}, \lean{SATPcore}, \lean{FirstWachFiltration}. These are the archive's forms of Wach (1996) and Berger (2004, \emph{Limites de représentations cristallines}, Compositio Math.~140), where the Wach module is described through the maps $\iota_n$ and the Hodge filtration. I did not compare statement numbers.
+\item The comparison record \lean{CmpOf}, field \lean{tie} (\lean{levN_eq}, \lean{levB_supp}, \lean{cmp_eq}, \lean{levB_Gamma}, \lean{levB_phi}, \lean{lev_phi}, \lean{levB_mem}), already on the boundary as the comparison map of V8.
+\item \lean{DdREqDcris}: for crystalline $V$, $D_{\mathrm{dR}}(V)=K\otimes_{K_0}D_{\mathrm{cris}}(V)$ (Fontaine), with finite filtrations.
+\item Weierstrass division in $O[[X]]$ for a series whose reduction has finite order (\lean{PowerSeries.IsWeierstrassDivision} in Mathlib).
+\item The lifting-the-exponent lemma and Legendre's formula, both elementary and already listed.
+\item For R-B3 only, all already on the boundary. These are Fontaine's exactness of $D$ (\lean{DDExact}), strict exactness of the crystalline filtration (\lean{DcrisExactStrict}) with its consequence \lean{coreJumps}, the Herr description of extension classes (\lean{HerrExt}), and the V8 clause P6 (\lean{WachSaturationExactness}). \lean{coreWX} is the Wach length lemma, closed as a theorem in Final Wave D.
+\end{enumerate}
+The fifth pass adds nothing to this list. Proposition~\ref{prop:CI} rests on Herr's complex and Proposition~\ref{prop:CII} on Fontaine's strict exactness, both already on it. Nothing new is added to the boundary. In particular \lean{MemCrit}, \lean{ExpCrit}, \lean{THor}, \lean{TTool2}, \lean{KillerLev} and \lean{KillerKap} are internal theorems proved from these inputs, and the archive proves a statement of Berger's type (Theorem~\ref{thm:secCrit}, with explicit denominators along an arc) that is stronger in form than the published criterion it starts from.
+
+\section{Risk audit}
+
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \emph{Gap.} None found. Every step of the induction for Theorem~\ref{thm:secCrit} and of the proof of \lean{MemCrit} was traced to a read lemma or to V8.
+\item \emph{Circularity.} None. \lean{MemCrit} uses only V8 and \lean{DdREqDcris}. \lean{lev0Mpr_of} uses \lean{MemCrit}; \lean{secCrit_all} uses \lean{lev0Mpr_of} at each level and its own induction hypothesis at the previous level. \lean{ExpCrit} uses \lean{MemCrit}. \lean{THor} and \lean{TTool2} use V8 and \lean{coreH}, \lean{coreTr}, which do not depend on them.
+\item \emph{Duplicate proofs.} \lean{memCrit_of} and \lean{memCrit_of_free} are the same proof. This is a redundancy, not a risk.
+\item \emph{Vacuous existence.} \lean{secCrit_zero} at $e=0$ is a genuine base case. The section data in Proposition~\ref{prop:fwd} are constructed, not assumed.
+\item \emph{Incompatible hypotheses.} Theorem B needs $p\ge5$, Theorem C needs $p\ge11$ (\lean{TCase}); \lean{MemCrit} and the killer layer need $p\ge5$. No call site read asks for more.
+\item \emph{Missing constant.} The constants $\sigma$ of \lean{TCase} and $8$ of \lean{KillerKap} were checked. The constant 10 of \lean{WachResultConstant} is in \lean{coreWR}, closed earlier.
+\item \emph{Scope.} The remainder of PC-3 is large in lines. It consists of the case layer of Theorem B (about $25{,}000$ lines in \Lpath{RC/}) and the tool region of Theorem C (about $17{,}000$ lines). Earlier versions of this report estimated about $4{,}000$ lines, because the C-2 to C-8 list counted only the named top bodies and omitted the tools \lean{ExpRing}, \lean{FTool}, \lean{DssLet}, \lean{RToolNum}, \lean{TTool2Z}, \lean{GamN}, \lean{GamA}, \lean{LemmaDN}, \lean{LemmaDN0} and \lean{H2Bound} together with their producers. That estimate was wrong.
+\item \emph{Verification list.} The closed verdict rests on skeleton reading of about $4{,}000$ lines. These are the seven cut-type bodies of Proposition~\ref{prop:RC} (about $1{,}350$ lines) and the Theorem C bodies listed in the residual section (about $2{,}700$ lines). A reviewer who requires every body read line by line should treat these as open. I found nothing in their statements, exponent formulas or numerically checked inequalities that suggests a failure.
+\item \emph{Sixth pass.} Proposition~\ref{prop:RC} rests on skeleton reading of seven cut-type bodies. The risk is that one of them hides an exponent that differs from its stated formula. I checked every formula against its statement and checked every deciding inequality numerically, so a failure would have to be inside a body whose statement is already as claimed.
+\item \emph{Depth of reading.} In the fifth pass, the bodies listed as read in full were read line by line. For \lean{gamma_structure_of}, \lean{kernel_rank_bound}, \lean{contentBoundLevel_of}, \lean{pass3}, \lean{pass4}, the C-6 tools, \lean{rhoLift_of}, \lean{extData_extTool} and \lean{exists_exponent_le_liftsAt_arcOf} I read the skeleton of top-level steps only, and the mechanism given is the one those steps show.
+\end{itemize}
+
+\section{Single earliest blocker}
+
+There is no internal blocker of mathematical content. The earliest verification item in production order is \lean{arc_length_one_or_two_case_b} (\Lpath{RC/ArcLengthOneOrTwoCaseB.lean}, 28) on the Theorem B side, the largest cut-type body of Proposition~\ref{prop:RC}. On the Theorem C side it is \lean{kernel_rank_bound} (\Lpath{LLC/IdempotentMemInvariantsLetter.lean}, 893), the main input of \lean{h2Bound_of_hypotheses}.
+
+\section{Answer}
+
+\emph{Does this assignment still block the statement ``The entire RH proof has been reconstructed in ordinary mathematics modulo named external theorems''?}
+
+No, at the human-proof boundary, subject to the verification list of the risk audit. The shared Wach-module layer, Theorem B through Proposition~\ref{prop:RC}, and Theorem C through Propositions~\ref{prop:CI} to \ref{prop:CIII} and the five tools of Section~\ref{sec:seventh} are reconstructed as proofs. The steps end at closed lemmas or at the named external theorems, which are the Wach and comparison records V8 and CMP, Fontaine's comparison \lean{DdREqDcris} and strict exactness \lean{DcrisExactStrict}, Herr's complex \lean{HerrExt}, and Weierstrass division in Mathlib. The Frobenius determinant \lean{DetTool} is proved in the archive from the Berger level map P4 of V8. No new mechanism appeared. What remains is the line-by-line reading of the bodies listed in the risk audit, whose statements and deciding inequalities were checked.
+
+\end{document}

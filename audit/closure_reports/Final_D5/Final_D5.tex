@@ -1,0 +1,172 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\Ok}{\mathcal O}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Af}{\mathbb A_{f}}
+\newcommand{\Fq}{\mathbb F}
+\newcommand{\rT}{\rho}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{4pt}
+
+\title{The head D5\\ Diamond operators at the level primes on ramified column forms}
+\author{Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The head D5, \lean{AdForm.twS_ramL}, says that the level-prime operators of the archive act on twist-ramified column forms and that their action on the attached adelic forms is the product over the level places of explicit local operators. The leaf pass closed $97$ of its $181$ theorems through the description of the level groups at the level primes. This pass reads the remaining $84$ and reconstructs them. The mechanism is the classical one for forms of level $\Gamma_1(p)$ viewed as functions on lattices with a point of order $p$: a vector fixed by the stabilizer of a lattice pair is the same thing as an equivariant form on pairs, the diamond operators scale the level functional, and a form is ramified when its sum over the diamond operators vanishes. Three lemmas translate this to the archive's adelic forms (a stabilizer criterion for ramification, the diamond translate of a class representative, and the extension from representatives to all points), and two propositions finish the head (ramification of column forms is detected locally, and Hecke combinations at the level places act on column forms). D5 is closed. Counted without repetition, the tuple-construction block R4-D goes from $233$ to $149$ theorems and the residual in the heads from about $890$ to about $800$. Nothing was built or run in Lean, and no existing project file was edited.
+\end{abstract}
+
+\section{The statement}
+
+Fix the data of a true family, a word $u$, a tuple $a$, an adelic twist datum $A$ with \lean{TwDat.Is} and a step $j$. Let $p_1,\dots,p_r$ be the split points over the places dividing the level prime $T$, each with local field $k_i=E_{w_i}$ of residue field $\Fq=\mathbb F_T$, frames $\beta_i$ and standard pairs $Q_i$ (the lattice $\Ok^{n}$ with the functional $x\mapsto\bar\pi_Tx_n\bmod\varpi$).
+
+\paragraph{Column forms and their adelic forms.} A column form is a function $\phi(c,y)$ of a class $c$ of the step and a parameter $y$, lying in the space $F_j$ of the forms package (\lean{ColT}, \lean{Fi}). The twist datum attaches to $\phi$, to an index $b$ and to $y$ an adelic function $\rT_b(\phi,y)$ on $G(\mathbb A)$ (\lean{TwDat.rd}): at an adelic point $x$ whose chart point is $d$, it is the class transport of $\phi$ at the class of $d$ (\lean{chartScalarForm_adelicPoint_eq_classTransport}). It satisfies the automorphy law
+\begin{equation}\label{eq:law}
+\rT_b(\phi,y)(\gamma\,x\,g\,\kappa)=\chi_b(\kappa)\,\rT_b(\phi,y')(x)
+\end{equation}
+for $\gamma$ rational, $x$ a finite adelic point, $g$ at infinity carrying $y$ to $y'$, and $\kappa$ in the level group $U_b$ with character $\chi_b$ (\lean{rd_mul_level}). Every adelic point is $\gamma\,h_c\,g\,\kappa$ for a class representative $h_c$.
+
+\paragraph{Ramification.} The forms package has dilations $\mathrm{dil}(s,c)$ and twists $\mathrm{dilT}(s,c)$ at the level places, indexed by $s\in\Fq^\times$. A column form is twist-ramified (\lean{RamT}) if $\sum_{s}\mathrm{dilT}(s,c)\,\phi(\mathrm{dil}(s,c))=0$ for every place $v\mid T$ and every class $c$, and \lean{RamL} adds that $\phi$ vanishes on the classes outside the image of the reading.
+
+\paragraph{The head.} \lean{twS_ramL} says that there are operators $S_j(\eta)$ on column forms, indexed by $\eta\in(\Fq^\times)^r$, such that for every \lean{RamL} form $\phi$:
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item each $\rT_b(\phi,y)$ is continuous and automorphic, and ramified at every $p_i$ in the local sense defined below;
+\item $S_j(\eta)\phi$ is again \lean{RamL}, and $\rT_b(S_j(\eta)\phi,y)$ is obtained from $\rT_b(\phi,y)$ by applying the local operator $\mathrm{sOp}(\eta_i)$ at each $p_i$ in turn.
+\end{enumerate}
+
+\section{The local theory at a level prime}
+
+Let $k$ be a local field with residue field $\Fq$ and $n\ge1$. A \emph{pair} is $P=(\Lambda,f)$ with $\Lambda\subset k^n$ a lattice and $f\colon\Lambda\to\Fq$ a nonzero $\Ok$-linear map (\lean{Pair}). The group $\GL_n(k)$ acts on pairs by $g(\Lambda,f)=(g\Lambda,f\circ g^{-1})$, and $\Fq^\times$ acts by $s(\Lambda,f)=(\Lambda,sf)$; the two actions commute. The action of $\GL_n(k)$ is transitive, since all lattices are translates of $\Ok^n$ and $\GL_n(\Ok)$ acts transitively on the nonzero linear forms on $\Ok^n/\varpi\Ok^n$. For each $s$ fix $g_s\in\GL_n(k)$ with $g_sP=sP$.
+
+Let $\pi$ be a representation of $\GL_n(k)$ on a space $M$ (here $M$ is the space of functions on $G(\mathbb A)$ and $\pi(g)$ is right translation by the frame image $\mathrm{gl}(g)$, \lean{Frame.rep}). A \emph{form} is a map $\Phi$ from pairs to $M$. It is \emph{equivariant} if $\Phi(gP)=\pi(g)\Phi(P)$ (\lean{EqForm}), and \emph{ramified} if $\sum_{s\in\Fq^\times}\Phi(sP)=0$ for every $P$ (\lean{Mram}). A vector $\phi_0\in M$ is \emph{ramified at} $P$ if it is $\Phi(P)$ for a ramified equivariant form whose values are continuous automorphic functions (\lean{RamAt}).
+
+\begin{lemma}[stabilizer criterion]\label{lem:R1}
+A vector $\phi_0$ is ramified at $P$ if and only if it is continuous and automorphic, it is fixed by $\pi(x)$ for every $x$ in the stabilizer of $P$, and $\sum_{s}\pi(g_s)\phi_0=0$.
+\end{lemma}
+
+\begin{proof}
+If $\phi_0=\Phi(P)$ with $\Phi$ equivariant, then $\pi(x)\phi_0=\Phi(xP)=\phi_0$ for $x$ in the stabilizer, and $\sum_s\pi(g_s)\phi_0=\sum_s\Phi(sP)=0$. Conversely, given $\phi_0$ fixed by the stabilizer, define $\Phi(gP)=\pi(g)\phi_0$; this is well defined because $gP=g'P$ forces $g^{-1}g'$ into the stabilizer, and it is defined on all pairs by transitivity (\lean{formAt}, \lean{formAt_eq}). It is equivariant by construction. Since the scalar and linear actions commute, $s(gP)=g\,g_sP$, so $\sum_s\Phi(s\,gP)=\pi(g)\sum_s\pi(g_s)\phi_0=0$. Each value is a translate of $\phi_0$ and so is continuous and automorphic (\lean{ramifiedLevel_stabilizer_iff_all_data}).
+\end{proof}
+
+\paragraph{The local operators.} For $\epsilon\in\Fq^\times$ and an additive character $\chi$ of conductor $1$, the archive defines $\mathrm{sOp}(\epsilon)\phi_0=\langle\epsilon\rangle F^{*}\Phi(P)$, where $\Phi$ is the form attached to $\phi_0$ by Lemma~\ref{lem:R1}, $\langle\epsilon\rangle\Phi(P')=\Phi(\epsilon P')$ is the diamond operator and $F^{*}\Phi(P')=\sum_{P_1}\chi(-\langle P_1,P'\rangle)\,\Phi(P_1)$ is a sum over the pairs $P_1$ with $P_1$ and $P'$ sharing a kernel lattice, weighted by the cross pairing (\lean{sOp}, \lean{FFStar}). The archive uses the following local fact, which it proves outside the internal residual blocks (\lean{ramBijective_holds}, not in any exclusive set): $\mathrm{sOp}(\epsilon)$ is a finite linear combination of the translations $\pi(g)$, it maps the vectors ramified at $P$ bijectively onto themselves, and on equivariant ramified forms it is $\langle\epsilon\rangle F^{*}$, which preserves ramification (\lean{RamBijective}). Because every pair $P_1$ in the sum is $g_1P'$ for some $g_1$, the combination of translations is explicit, and the inverse on ramified vectors comes from the operator identities between $\langle\epsilon\rangle$ and $F^{*}$ (\lean{OperatorIdentities}).
+
+\section{From representatives to all adelic points}
+
+\begin{lemma}[diamond translates of representatives]\label{lem:R2}
+Let $h_c$ be the representative of a class $c$ at index $b$, $v\mid T$ the place of $p_i$ and $g_s$ with $g_sQ_i=sQ_i$. Then
+\[
+\rT_b(\phi,y)\big(h_c\,\mathrm{gl}_i(g_s)\big)=\mathrm{dilT}(e(s),c)\,\phi\big(\mathrm{dil}(e(s),c)\big)(y)
+\]
+for a bijection $e$ of $\Fq^\times$ onto the units of the residue field of $v$.
+\end{lemma}
+
+\begin{proof}
+Right translation by $\mathrm{gl}_i(g_s)$ changes the adelic point only at $v$. There the frame is integral and trivial off the level prime (\lean{frameGl_int}, \lean{frameImage_trivial_off_levelPrime}), $g_s$ preserves the standard lattice, and it multiplies the level functional by $s$, read in the residue field through the last row of the inverse frame (\lean{lastRow_inv_frame}, \lean{resField_equiv}). So the chart point of $h_c\,\mathrm{gl}_i(g_s)$ is the diamond chart point of $c$ at $v$ with scalar $e(s)$, the chart point with the same decorated lattice and the functional at $v$ scaled (\lean{exists_chartPoint_rightTranslate_stabilizer_splitPlace}, \lean{ptOf_gl_dia}). By the chart description of $\rT_b$ the value there is the class transport of $\phi$ at the class of that diamond point, which is the definition of $\mathrm{dilT}$ and $\mathrm{dil}$ (\lean{chartScalarForm_adelicPoint_eq_classTransport}, \lean{chOf_dil}, \lean{rd_dia_sum}).
+\end{proof}
+
+\begin{lemma}[extension to all points]\label{lem:R3}
+If $\sum_s\rT_b(\phi,y')(h_c\,\mathrm{gl}_i(g_s))=0$ for all classes $c$ of index $b$ and all $y'$, then $\sum_s\rT_b(\phi,y)(x\,\mathrm{gl}_i(g_s))=0$ for all adelic $x$.
+\end{lemma}
+
+\begin{proof}
+Write $x=\gamma h_cg\kappa$ with $\kappa\in U_b$. By Proposition~2(ii) of the leaf report the component of $\kappa$ at $v$ lies in the stabilizer of $Q_i$. That stabilizer equals the stabilizer of $sQ_i$, so $\kappa_s'=g_s^{-1}\kappa_vg_s$ fixes $Q_i$ and $\kappa\,\mathrm{gl}_i(g_s)=\mathrm{gl}_i(g_s)\,\kappa'_s$ with $\kappa'_s\in U_b$, and $\chi_b(\kappa'_s)=\chi_b(\kappa)$ because $\chi_b$ is trivial on the stabilizer at the level places (Proposition~2(i) of the leaf report). The element $g$ at infinity commutes with $\mathrm{gl}_i(g_s)$. By the law \eqref{eq:law} applied at the points $h_c\,\mathrm{gl}_i(g_s)$, the sum at $x$ is $\chi_b(\kappa)$ times the sum at $h_c$ with $y'$, which vanishes (\lean{diamondTranslateSum_eq_zero_of_chartRepresentatives}).
+\end{proof}
+
+\section{The two propositions}
+
+\begin{proposition}[ramification is local]\label{prop:ram}
+For every $\phi\in F_j$, every $b$ and $y$, the function $\rT_b(\phi,y)$ is continuous and automorphic, and $\phi$ is twist-ramified if and only if every $\rT_b(\phi,y)$ is ramified at every $Q_i$.
+\end{proposition}
+
+\begin{proof}
+Automorphy is the law \eqref{eq:law} with $\kappa=1$. Continuity: $\rT_b(\phi,y)$ is invariant under the open subgroup $U_b$ on the right up to the finite-valued character $\chi_b$, hence locally constant in the finite adeles, and it is continuous at infinity because the class transport is (\lean{rd_continuous}). Stabilizer invariance at $Q_i$ is \eqref{eq:law} with $\kappa=\mathrm{gl}_i(x)$, $x$ fixing $Q_i$, together with Proposition~2(i) of the leaf report. By Lemma~\ref{lem:R1}, ramification of $\rT_b(\phi,y)$ at $Q_i$ is then equivalent to $\sum_s\pi(g_s)\rT_b(\phi,y)=0$. By Lemma~\ref{lem:R3} it suffices to check this at the representatives, and there Lemma~\ref{lem:R2} turns it into $\sum_s\mathrm{dilT}(s,c)\phi(\mathrm{dil}(s,c))=0$ (\lean{diaSum_iff}, \lean{ram_iff_scalar_ram}).
+\end{proof}
+
+\begin{proposition}[Hecke combinations at the level places]\label{prop:hecke}
+Let $c$ be a finite linear combination of adelic elements supported at the level places, and $\phi\in F_j$ such that the right convolution $c*\rT_b(\phi,y)$ is fixed by $\mathrm{gl}_i(x)$ for every $x$ fixing $Q_i$, for all $b,y,i$. Then $\phi'(e,z)=\big(c*\rT_{b(e)}(\phi,z)\big)(h_e)$ lies in $F_j$ and $\rT_b(\phi',y)=c*\rT_b(\phi,y)$.
+\end{proposition}
+
+\begin{proof}
+Right convolution by $c$ commutes with left translation by rational elements and with the action at infinity, and it commutes with the components of $U_b$ away from the level places because $c$ is supported at the level places. At the level places the components of $U_b$ lie in the stabilizers of the $Q_i$, under which $c*\rT_b(\phi,y)$ is invariant by hypothesis, and $\chi_b$ is trivial there. So $c*\rT_b(\phi,y)$ satisfies the law \eqref{eq:law} (\lean{trc_rd_laws}). In particular its values at the representatives are invariant under the class stabilizers, which is the condition for $\phi'$ to lie in $F_j$ (\lean{trans_stab}, \lean{mem_Fi}). Two functions satisfying \eqref{eq:law} that agree at the representatives agree everywhere, which gives $\rT_b(\phi',y)=c*\rT_b(\phi,y)$ (\lean{twTransAct}).
+\end{proof}
+
+\begin{proof}[Proof of the head]
+For $\eta\in(\Fq^\times)^r$ let $c_\eta$ be the product over $i$ of the translation combinations realizing $\mathrm{sOp}(\eta_i)$ at $p_i$; it is supported at the level places and $c_\eta*\varphi$ equals the composite of the local operators (\lean{comb_foldr}). Let $\phi$ be twist-ramified. By Proposition~\ref{prop:ram} each $\rT_b(\phi,y)$ is ramified at every $Q_i$, which is part (i) of the head. The operator at $p_i$ preserves ramification at $Q_i$ by the local fact above, and preserves ramification at $Q_{i'}$ for $i'\ne i$ because it is a combination of translations at a different place, which commute with $\mathrm{gl}_{i'}$ (\lean{sOp_keeps}, \lean{foldr_keeps}). So $c_\eta*\rT_b(\phi,y)$ is ramified at every $Q_i$, in particular fixed by the stabilizers (\lean{ramAt_fixed}). Proposition~\ref{prop:hecke} gives a column form $S_j(\eta)\phi$ with $\rT_b(S_j(\eta)\phi,y)=c_\eta*\rT_b(\phi,y)$, and Proposition~\ref{prop:ram} shows it is twist-ramified (\lean{twS}). Finally, if $\phi$ vanishes on the classes outside the image of the reading, then $\rT$ vanishes at their representatives, the local operators send $0$ to $0$ (\lean{foldr_sOp_zero_fun}), and the value of $S_j(\eta)\phi$ at such a class is the value of $\rT_b(S_j(\eta)\phi,y)$ at its representative (\lean{scalarForms_on_charts_of_trueColumnTuple}), which is $0$. So $S_j(\eta)\phi$ is \lean{RamL} (\lean{twS_ramL}).
+\end{proof}
+
+\section{Counts}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{6.0cm}r>{\rr}p{5.3cm}}
+\toprule
+block & theorems & reconstruction\\
+\midrule
+\lean{TwLev'} closure (closed in the leaf pass) & 97 & Proposition~2 of the leaf report\\
+\lean{ram_iff_scalar_ram} (with \lean{diaSum_iff}, \lean{rd_dia_sum}, \lean{rd_continuous}) & 54 & Lemmas~\ref{lem:R1}--\ref{lem:R3}, Proposition~\ref{prop:ram}\\
+\lean{twTransAct} (with \lean{trans_stab}, \lean{trc_rd_laws}, \lean{mem_Fi}) & 17 & Proposition~\ref{prop:hecke}\\
+\lean{twS}, \lean{twS_ramL} and glue & 13 & proof of the head\\
+\midrule
+D5 & 181 & \textbf{closed}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}\small
+\begin{tabular}{>{\rr}p{1.0cm}>{\rr}p{6.2cm}r r}
+\toprule
+head & declaration & before & now\\
+\midrule
+D1, D2, D3 & & 0 & 0\\
+D5 & \lean{AdForm.twS_ramL} & 84 & 0\\
+D7 & \lean{QVecJoin.step_mid}, \lean{step_top} & 76 & 76\\
+D8 & \lean{T.true_geometry_row_column_entry_alt} & 46 & 46\\
+D9 & \lean{T.true_geometry_twist_value_alt} & 28 & 27\\
+\midrule
+R4-D & distinct & 233 & 149\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent With the bundle witness ($195$) and R4-E ($459$) the residual in the heads is about $195+149+459\approx800$ theorems, against about $890$ before this pass. The $102$ shared theorems of E1b and the $243$ of K-a to K-c are counted separately, as before. The tuple-construction block now consists of D7, D8 and D9.
+
+\appendix
+\section{Scripts and limits}
+\Lpath{scripts/d5_final.py} closes the head and recomputes D7 to D9; it reads \Lpath{d2r_final.pkl} of the D2 pass. Read in full were \lean{twS_ramL}, \lean{twS} with \lean{comb_foldr}, \lean{sOp_keeps} and \lean{foldr_keeps}, \lean{ram_iff_scalar_ram}, \lean{diaSum_iff}, \lean{rd_dia_sum}, and the definitions \lean{TwRam'}, \lean{TwTrans'}, \lean{TwS'}, \lean{RamIff}, \lean{RamBijective}, \lean{RamAt}, \lean{IsRam}, \lean{EqForm}, \lean{Mram}, \lean{FFStar}, \lean{sOp}, \lean{formAt}, \lean{Frame}, \lean{RamT} and \lean{TwDat.rd}. Read at the statement were \lean{exists_chartPoint_rightTranslate_stabilizer_splitPlace}, \lean{chartScalarForm_adelicPoint_eq_classTransport}, \lean{diamondTranslateSum_eq_zero_of_chartRepresentatives}, \lean{rd_continuous}, \lean{heckeCombination_scalarForm_values_stabiliser_invariant}, \lean{heckeCombination_scalarForm_keeps_adelicLaws} and \lean{mem_Fi}. The local fact \lean{ramBijective_holds} lies outside every exclusive set of the three blocks and is not counted here. Nothing was built or run in Lean.
+
+\end{document}

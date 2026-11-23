@@ -1,0 +1,326 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathpazo}
+\usepackage[no-math]{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\setmonofont[Scale=0.84]{DejaVu Sans Mono}
+\usepackage{booktabs,longtable,array,tabularx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\setlist{itemsep=2pt,topsep=3pt}
+\linespread{1.04}
+
+\urlstyle{tt}
+\newcommand{\lean}[1]{\nolinkurl{#1}}
+\newcommand{\Lpath}[1]{\nolinkurl{#1}}
+\emergencystretch=3em
+\newcommand{\PC}[1]{PC-#1}
+
+\newtheorem{proposition}{Proposition}
+\renewcommand{\theproposition}{\Alph{proposition}}
+\newtheorem{lemma}{Lemma}[proposition]
+\theoremstyle{remark}
+\newtheorem*{status}{Status}
+
+\title{Orphan and interface pass\\[2pt]\large Pre-synthesis audit of the RH--Alpöge reconstruction}
+\author{Claude, for Jimmie Adriazola}
+\date{22 November 2026}
+
+\begin{document}
+\maketitle
+
+\section{Verdict}
+
+\textbf{Orphan-free verdict: YES.} After this pass every live internal mathematical dependency on the route to \lean{riemannHypothesis} that the dependency maps and this pass can see has an owner and a closure status. The claim has three limits, stated in Section~\ref{sec:limits}. The status is often not \emph{closed}. Several items are owned residuals.
+
+The five targets of the assignment resolve as follows.
+\begin{enumerate}
+\item \lean{global_model_power_free} is live through two consumers, both in \PC{2}. It is Proposition~\ref{prop:A} below and is \textbf{closed modulo a named external theorem}, the toroidal integral models with Faltings--Chai and Lan degeneration data (\lean{PartI}). That statement is already on the verification boundary. The internal glue between \lean{PartI} and power-freeness is four lemmas, reconstructed here.
+\item The PC4.13 handoff is reconstructed as Proposition~\ref{prop:B}. The hypotheses \lean{AllFamilyConditions}~\lean{W}, \lean{a.Is} and \lean{a.True} are produced on the live route for every bundle carrying a bundle witness, for every word and for every tuple index. The quantifiers are in the right order and the family object is the one constructed upstream. \textbf{No clause is missing.} The unread bodies are R4-D (\PC{4}) and the bundle-witness producer \lean{bwit_exists_alt} (\PC{6}).
+\item The class-data producers of \lean{KerX}, \lean{PerX}, \lean{RdX} are stated as Proposition~\ref{prop:C}. The constants of the three laws are built from one real datum $\rho$ before the tuple index is chosen, so the uniformity the seesaw needs is structural. \textbf{Mechanism reconstructed, internal leaves remain} (\PC{4}).
+\item The three ownerless interface checks close. IF-1 and IF-2 are definitional wiring, checked in source, and IF-3 becomes Proposition~\ref{prop:C}.
+\item The archive has \textbf{150} \lean{Fact} instances, not 54. None introduces an unproved hypothesis. One group (Bessel non-vanishing) is an external theorem missing from the boundary. Three groups (gauge volume of $U(k)$, a Jacobian constant, a Capelli eigenvalue) are internal propositions that no package owned. They are assigned here to a new \PC{6} small-leaf group SL-6.
+\end{enumerate}
+
+\section{Method}\label{sec:method}
+
+I unpacked \Lpath{lean.tar.gz} (sha256 \texttt{9631b4f0\dots fc7af2491d}, matching the Kernel Replay record) and built a declaration index of all $175{,}187$ files. The index has $1{,}066{,}087$ declarations. For each it records the full name, the enclosing namespace, the active \lean{open} commands and the identifier tokens of header and body, with structure fields recorded as aliases of their structure. A token is resolved to a declaration when its full name is a namespace prefix of the caller, or an opened namespace, followed by the token. This gives a forward graph with $9.85$ million edges. Its closure from \lean{riemannHypothesis} has $767{,}908$ declarations. It over-approximates use, because a name in a discarded \lean{first} alternative counts and twin names in several namespaces are all reached.
+
+A forward closure of this kind is evidence, never proof. Every live path quoted in this report was therefore read edge by edge. Each edge was confirmed by a call site in the caller's text naming the callee, and an edge whose callee has a short shared name was confirmed with its namespace. Two candidate paths failed this test. Both are reported as undecided. The paths are in \Lpath{Orphan_Interface_Pass_Dependency_Map.md}.
+
+Two kinds of use are invisible to the token graph, typeclass resolution and dot notation on local variables. Instances are treated separately in Section~\ref{sec:facts}. Proof bodies were read as text and nothing was built or run. No file of the project was edited.
+
+\section{Liveness of the targets}
+
+\begin{center}\small
+\begin{tabularx}{\textwidth}{>{\raggedright}p{3.6cm}>{\raggedright}p{4.3cm}>{\raggedright\arraybackslash}X}
+\toprule
+target & first live consumer & live path (top) \\
+\midrule
+\lean{global_model_power_free} & \lean{hodge_cpt_global_nefness}; \lean{numerical_triviality_of_good_reduction} & \lean{deepStR_of_use}, \lean{good_tower_volume_theorem_bis}, \lean{volumeTheoremX_of_inputs}, \lean{m2_of_good_tower} (21 steps); second path through \lean{rootFlatOnHodge} (24 steps)\\
+PC4.13 hypotheses & \lean{Fam.colSide_alt} & \lean{miStarRow_alt_alt}, \lean{miStar_row_alt_alt}, \lean{miStar2_of_allTrue_alt_alt}, \lean{famAllQ_of_allTrue_alt} (24 steps)\\
+class data (R4-E) & \lean{kerX_of_clsPinD}, \lean{perX_of_clsPinD}, \lean{rdX_of_clsPinD} & \lean{lawsLinks_of_geo_rows_cols_alt} under \lean{famAllQ_of_allTrue_alt} (26 steps)\\
+IF-1, IF-2 & \lean{eventual_L3_of_covolume_alt} & \lean{linked_bundles_l3_of_open_alt}, \lean{nonempty_hyps_definite_side_of_closed_bound} (10 steps)\\
+\lean{Fact} instances & by typeclass resolution & Section~\ref{sec:facts}\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{\texorpdfstring{\lean{global_model_power_free}}{global\_model\_power\_free}}\label{sec:A}
+
+\subsection{The Lean statement and the objects}
+
+\lean{GlobalTheory.T.global_model_power_free} (\Lpath{AutomorphicSpectrum/Proofs/GeometryProofs/GlobalModelPowerFreeStatement.lean:10}) redirects to \lean{Ar.GlobalFib.global_fibPF} (\Lpath{GlobalModelPowerFree.lean}, 157 lines, read in full). Its data are a CM field $E$ with host $H$, a unitary PEL datum $D$ of signature $(p,q)$, Shimura varieties $X_l$ for every level $l$, a level $l$ good at every prime, and a coefficient field $F$ with ring of integers $\mathcal O_F$. They also include a global model $Y$ over $\mathcal O_F$, a structure \lean{Model}. It is a normal, flat, projective $\mathcal O_F$-scheme whose generic fibre contains the Shimura variety over $F$ as a dense open subscheme. It comes with a semi-abelian family $t=(G,\iota,L)$ over $Y$ (the structure \lean{SAB}). Here $G\to Y$ is a semi-abelian scheme with an $\mathcal O_E$-action $\iota$, and $L$ is a rigidified, symmetric, cubical line bundle on $G$ adjoint for $\iota$ and compatible with the action of $w_0$. On the abelian locus $L$ is the principal polarization of the PEL family. The definitions are in \Lpath{ToFirst.lean} and \Lpath{UniformisationConclusion.lean}.
+
+For a geometric point $x$ of $Y$ the predicate \lean{GeomPF} $t$ $x$ asserts three things. The fibre $G_x$ is an extension $0\to T\to G_x\xrightarrow{q}B\to 0$ of an abelian variety $B$ by a split torus $T$ (\lean{TorusExtension}). There is a line bundle $M$ on $B$ with $K(M)$ trivial (\lean{Out.KTriv}: the only translations $b$ with $t_b^*M\otimes M^{-1}$ trivial are $b=0$). And $L|_{G_x}\cong q^*M$. \lean{FibPF} $t$ $z$ asserts \lean{GeomPF} at some geometric point over $z$. \lean{PowFns} $t$ asserts that for every $n$ the map $\Gamma(Y,\mathcal O_Y)\to\Gamma(G^n,\mathcal O_{G^n})$ is bijective, with $G^n$ the $n$-fold fibre power over $Y$.
+
+So the object claimed to be power-free is the semi-abelian family over the global model, and "power-free" means principal polarization of the abelian part of every degenerate fibre, together with constancy of functions on its fibre powers.
+
+\subsection{The proposition}
+
+\begin{proposition}[power-freeness of the global model]\label{prop:A}
+Let $E$, $H$, $D$, $F$ and the global model $(Y,t)$ be as above, with $l$ good at every prime. Suppose that for every prime $p$ and every place $W$ of $F$ over $p$ there is a family of local integral models $Y_{p,W,i}$ over the valuation ring $\mathcal O_{F,W}$, one for each index $i$, with the following properties.
+\begin{enumerate}[label=(\roman*)]
+\item (\lean{SplitFibres}) For every point $x$ of $Y_{p,W,i}$ there is a finite separable extension $k$ of $\kappa(x)$ over which the fibre of $G$ is a split torus extension.
+\item (\lean{N3}) Let $R$ be a complete Noetherian normal local domain of characteristic zero, $\xi\colon\operatorname{Spec}R\to Y_{p,W,i}$ a morphism whose generic point lands in the abelian locus, and $t_R$ a semi-abelian family cartesian over $t$ along $\xi$ whose special fibre is a split torus extension. Then $t_R$ admits a PEL Mumford uniformisation. That means degeneration data consisting of a principally polarized abelian scheme $(A,M)$ over $R$ with $K(M)$ trivial, a character group $X$, periods $c\colon X\to A$ and a trivialisation $\psi$, together with isomorphisms between the thickenings of $G$ modulo $\mathfrak m^{e+1}$ and those of the Raynaud extension of $A$ by the torus with characters $X$. These isomorphisms match $L$ with the pullback of $M$ at every level $e$.
+\end{enumerate}
+Suppose finally that $Y$ dominates every $Y_{p,W,i}$. For every embedding $b\colon\mathcal O_F\to\mathcal O_{F,W}$ there is then a morphism $\delta\colon Y\times_{\mathcal O_F}\mathcal O_{F,W}\to Y_{p,W,i}$ and semi-abelian families on the fibre product cartesian over both $t$ and $t_{p,W,i}$. Then
+\begin{enumerate}[label=(\alph*)]
+\item $\Gamma(Y,\mathcal O_Y)\to\Gamma(G^n,\mathcal O_{G^n})$ is bijective for every $n$;
+\item for every point $z\in Y$ with residue characteristic $p$, some geometric fibre of $G$ over $z$ is a split torus extension $0\to T\to G_{\bar z}\xrightarrow{q}B\to0$ with $L|_{G_{\bar z}}\cong q^*M$ and $K(M)$ trivial.
+\end{enumerate}
+\end{proposition}
+
+The hypotheses (i), (ii) and domination are exactly the fields of \lean{Top.IsGlobal} used by \lean{m2_of_good_tower} (\Lpath{GoodTowerM2.lean:19}). They are produced on the live route by \lean{Rec.exists_isGlobal} (\Lpath{ExistsIsGlobal.lean:33}) from \lean{Top.partI_holds}, inside \lean{Plug.vs_tower} (\Lpath{FullIntersectionGoodLevel.lean:18}).
+
+\subsection{Proof}
+
+The proof uses four lemmas.
+
+\begin{lemma}[functions on a generically abelian semi-abelian scheme, \lean{HtPt.Cf.pow_fns}]\label{lem:A1}
+Let $X$ be reduced and locally Noetherian, and $G\to X$ semi-abelian with abelian fibres at the generic points of $X$. Then $\Gamma(X,\mathcal O_X)\to\Gamma(G^n,\mathcal O_{G^n})$ is bijective.
+\end{lemma}
+\begin{proof}
+Write $\pi\colon G^n\to X$ and $e$ for the unit section. Injectivity follows from $e^*\pi^*=\mathrm{id}$. For $f\in\Gamma(G^n,\mathcal O)$ put $g=f-\pi^*e^*f$. Over a generic point $\eta$ of $X$ the geometric fibre of $G^n$ is a power of an abelian variety, proper and geometrically connected, so $f$ is constant on it and equal to $(e^*f)(\eta)$. Thus $g$ vanishes on the fibres over the generic points. Since $\pi$ is flat, every generic point of $G^n$ lies over a generic point of $X$. Since $G^n$ is smooth over the reduced scheme $X$, it is reduced, so $g=0$. The archive argues the same way (\lean{bijective_of_generic}, with properness of the geometric generic fibres from \lean{pow_proper}).
+\end{proof}
+
+\begin{lemma}[base change, \lean{HtPt.Cf.geompf_bc}, \lean{fibpf_pull}]\label{lem:A2}
+\lean{GeomPF} is preserved by extension of the field of a geometric point, and it is invariant along cartesian maps of semi-abelian families. Consequently \lean{FibPF} $t_2$ $z$ holds if and only if \lean{FibPF} $t$ $f(z)$ holds, for every cartesian map $t_2\to t$ over $f$.
+\end{lemma}
+\begin{proof}
+Torus extensions, the line bundles $L$ and $q^*M$, and the isomorphism between them pull back along field extensions and along cartesian maps. The condition $K(M)=0$ is stable under base change, because the group $K(M)$ is formed compatibly with base change (\lean{kTriv_pull}). For the converse direction of the equivalence the archive chooses a common algebraically closed field dominating two geometric points (\lean{exists_common}).
+\end{proof}
+
+\begin{lemma}[a complete dominating DVR, \lean{ModelFib.exists_complete_dvr}]\label{lem:A3}
+Let $A$ be a Noetherian local domain that is not a field and $k$ a finite extension of its residue field. There is a complete discrete valuation ring $R$ with an injective local map $A\to R$ and an embedding $k\hookrightarrow\kappa(R)$ over $\kappa(A)$.
+\end{lemma}
+\begin{proof}
+A DVR dominating $A$ exists (EGA II 7.1.7). The archive proves this in \lean{DominatingDVR.full} from Krull--Akizuki and a blow-up chart. Complete it, and enlarge the residue field to contain $k$ by the gonflement construction for complete local rings (EGA $0_{\mathrm{III}}$ 10.3.1). References are from memory.
+\end{proof}
+
+\begin{lemma}[uniformisation gives power-freeness, \lean{HtPt.Cg.unif_pf}]\label{lem:A4}
+If a semi-abelian family $t_R$ over a local domain $R$ admits a PEL Mumford uniformisation, then \lean{GeomPF} holds at the closed point.
+\end{lemma}
+\begin{proof}
+Read the uniformisation datum at level $e=0$. The Raynaud extension modulo $\mathfrak m$ gives $0\to T\to G_0\xrightarrow{q}A_0\to0$ with $T$ split of character group $X$ (\lean{exists_extension}). The datum's isomorphism \lean{w}~\lean{0} gives $L|_{G_0}\cong q^*(M|_{A_0})$, after the identification \lean{P.bundle} of the uniformisation's line bundle with $L$. The field \lean{D.P.ktriv} of the polarized abelian scheme $(A,M)$ gives $K(M)$ trivial over $R$, hence over $A_0$ by base change.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:A}]
+(a) is Lemma~\ref{lem:A1} applied to $Y$, which is reduced (it is normal) and locally Noetherian (it is of finite type over $\mathcal O_F$). Its generic points lie in the abelian locus because $Y_F$ contains the Shimura variety as a dense open subscheme over which $G$ is abelian (\lean{ab_gen}).
+
+(b) Let $z$ have residue characteristic $p$. The prime of $\mathcal O_F$ under $z$ contains $p$. By Chevalley's extension theorem there is a valuation ring $W\subset\mathbb C$ dominating it (\lean{exists_place_over}). Lift $z$ to a point $z'$ of $Y\times_{\mathcal O_F}\mathcal O_{F,W}$ and map it to $y=\delta(z')$ in $Y_{p,W,i}$. The stalk $\mathcal O_{Y_{p,W,i},y}$ is a normal Noetherian local domain. It has characteristic zero, because a generic point of characteristic zero specializes to $y$ (\lean{charZero_stalk}), and it is not a field, because $p$ lies in its maximal ideal. By (i) the fibre over $y$ splits over a finite separable $k/\kappa(y)$. Lemma~\ref{lem:A3} gives a complete DVR $R$ dominating the stalk with $k\subset\kappa(R)$. Pull $t_{p,W,i}$ back to $\operatorname{Spec}R$. The generic point of $R$ maps to the generic point of the stalk, which lies in the abelian locus, and the special fibre is split by base change of (i) (\lean{gtBaseChange}). Hypothesis (ii) gives a uniformisation, and Lemma~\ref{lem:A4} gives \lean{GeomPF} at the closed point of $R$. Lemma~\ref{lem:A2} extends this to the algebraic closure of $\kappa(R)$, which is a geometric point over $y$, so \lean{FibPF} holds at $y$. Lemma~\ref{lem:A2} applied twice along the two cartesian maps of the domination transports \lean{FibPF} to $z'$ and then to $z$.
+\end{proof}
+
+\subsection{Why \PC{2} needs it, and the external input}
+
+There are two consumers. \lean{hodge_cpt_global_nefness} (\Lpath{HodgeCptGlobalNefBound.lean:15}) feeds \lean{FibPF} at characteristic-$p$ points to \lean{root_lines_unramified_primes}. That theorem turns \lean{GeomPF} into the tangent statement \lean{TanPF} and then into the injectivity \lean{tanpf_inj} of Wave~2 \S13, and it gives nefness at $p\notin S_B$ (Proposition~2.B(ii) of \PC{2}). \lean{Xgn.numerical_triviality_of_good_reduction} (\Lpath{NumericalTrivialityOfGoodReduction.lean:588}) gives numerical triviality modulo $p$ of the Hodge lines at good primes. Through \lean{numTriv_offS} and \lean{local_system_split_fibres} it feeds \lean{rootFlatOnHodge}, which is the D3 condition of Proposition~2.C.
+
+The named external input is \lean{PartI}, the existence of integral toroidal compactifications of PEL unitary Shimura varieties with the properties \lean{N0}, \lean{N2}, \lean{SplitFibres}, \lean{N3}, \lean{N4}, \lean{N6}. Its local content (ii) is the degeneration theorem for principally polarized semi-abelian schemes over complete normal Noetherian bases, in PEL form, together with the fact that a principal polarization of the generic fibre induces a principal polarization $\lambda_A$ of the abelian part. The sources are Faltings--Chai, \emph{Degeneration of abelian varieties}, Chapters~II, III and IV, and Lan, \emph{Arithmetic compactifications of PEL-type Shimura varieties}, Chapters~4 to 6. Chapter references are from memory. \lean{PartI} is already on the boundary (\Lpath{Post_Closure_Verification_Boundary.md}, "Layer 3 statements under \lean{DeepStR}"). The archive proves it internally through \lean{partI_of_semistableReduction}. That proof uses Grothendieck's semistable reduction theorem (\lean{SS.semistableReductionSt}), a uniformisation theorem over DVRs, the six abelian-scheme laws \lean{all_six_abelian_scheme_laws_hold} (shared with \PC{7}) and the arc-family theorem \lean{arcFam_closed}. That proof is Layer~3 and not a residual by the standard of this audit.
+
+\emph{For the fidelity pass.} The cited statement must include the transfer of principality from $\lambda_\eta$ to $\lambda_A$, which Lemma~\ref{lem:A4} uses through \lean{ktriv}. It must also apply to every complete Noetherian normal local domain mapping to $Y_{p,W,i}$, which is the form \lean{N3} quantifies over. A complete Noetherian local ring is excellent, so the hypothesis "excellent normal" of the degeneration theorem holds.
+
+\begin{status}
+\textbf{Closed modulo named external theorem} (\lean{PartI}). Owner \PC{2}. Lemmas~\ref{lem:A1} to \ref{lem:A4} and the proof of Proposition~\ref{prop:A} are reconstructed. Each was read at least at the top of its proof. The classical inputs of Lemma~\ref{lem:A3} (Krull--Akizuki, completion, gonflement) were not reread in the archive.
+\end{status}
+
+\section{The PC4.13 handoff}\label{sec:B}
+
+\subsection{The chain on the live route}
+
+PC4.13 is \lean{Fam.colSide_alt} (\Lpath{TPS/ColSide.lean:35}), where \Lpath{TPS/} abbreviates \Lpath{Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/}. Its hypotheses are \lean{AllFamilyConditions}~\lean{W}, a word $u$, a geometric member $a$ with \lean{a.Is}, \lean{a.True} and $iA=\mathrm{id}$, family constants $k$, and rows with \lean{Is} and \lean{Same}. The live route reaches it as follows, every edge read.
+\begin{center}\small
+\lean{miStarRow_alt_alt} $\to$ \lean{main_theorem_published_results_final_alt_alt} $=$ \lean{Fam.miStar_row_alt_alt} $\to$ \lean{main_theorem_from_published_results_alt_alt_alt_alt_alt} $\to$ \lean{Fam.miStar2_of_allTrue_alt_alt} $\to$ \lean{MiTop.famAllQ_of_allTrue_alt} $\to$ \lean{true_geometry_family_invariance_alt} $\to$ \lean{Fam.colSide_alt}.
+\end{center}
+At each level the hypotheses are produced, not assumed.
+
+\paragraph{Bundle level.} \lean{Fam.miStar_row_alt_alt} (\Lpath{TPS/MainTheoremPublishedResultsFinal.lean:24}) has as hypothesis the row statement \lean{RowE} (\lean{IsGoodE}~\lean{p.s}) (\lean{BundleLinkage}~\lean{p}) (\lean{BundlePointConditions}). \lean{RowE} (\Lpath{ValidForConstructedPointClassesEventuallyWorking.lean:261}) means the following. Eventually in the parameters, for every good point $\beta$ and every bundle condition $b$ that is linked, the property holds. A bundle is linked when it carries a \lean{BundleWitness} (\Lpath{TPS/TwistedBundle.lean:57}). The row hypothesis is produced by \lean{point_lines_of_cusp_rapid_decay} $=$ \lean{PtRowsAt.good_linked_ptR_of_cuspRapidDecay} (\Lpath{TPS/BundlePackEqAdelicData.lean:102}). The scale constants come from \lean{exists_constants_for_parameters_scale_bundle} with $C_l\ge\max(1801,C_{l,0})$, the gap from \lean{Core.Rk.HdNc.hd_nc}, and the other six fields from the witness. Then \lean{true_pack_of_bundle_witness} $=$ \lean{Fam.truePack_of_bWit_alt} (\Lpath{TPS/TruePackOfBWit.lean:35}) builds \lean{TruePackAlt}~\lean{(packB_alt}~\lean{b)}, that is, \lean{AllFamilyConditions} for $W=$\lean{packB_alt}~\lean{b}, field by field. \lean{PackageHypotheses} comes from \lean{pkHyp_of_real_alt}, \lean{ValidRealPackage} from \lean{colsStd_of_bWit_alt} and \lean{characters_match_bundle_alt}, \lean{GeometricFamilyConditions} from \lean{exists_read_at_packB_of_bWit}, \lean{TwStdAlt} and the level condition from the witness, and the recursion from the witness's realisation.
+
+\paragraph{Member level.} \lean{MiTop.famAllQ_of_allTrue_alt} (\Lpath{TPS/FamAllQOfAllTrue.lean:38}) obtains, for every word $u$, a member $a$ with \lean{a.Is}, \lean{a.True}, $iA=\mathrm{id}$ and \lean{Framed} from \lean{all_true_family_datum_alt} $=$ \lean{GeoExists.exists_geoAll_alt} (\Lpath{TPS/CoreDataOfPoint.lean:133}). That theorem takes the explicit standard geometry \lean{xgeo} (standard lattice frames and vacuum vectors) from \lean{XGeoStd.exists_xgeo_alt}. It takes the moved-vacuum constants from \lean{exists_const_movedVacuum_all_tuples}, which uses strong approximation for $SU$ (\lean{Published.StrongApproxSU}), and the core data from \lean{core_data_of_point} (with \lean{DiscreteSeriesCover}, \lean{HarishChandraModules}). Two facts enter here. The Gauss prime $T_u$ of the word is prime (\lean{base_fields_primes_ok}), and the twist places avoid the primes of the base (\lean{Q_notMem_of_ok}). Both are fields of objects built upstream.
+
+\paragraph{Index level.} Inside \lean{colSide_alt}, for every tuple index $t$ of the family, \lean{readsExists_alt} gives a quadratic-extension datum $J_t$ with \lean{J_t.Reads}. The twist places of $t$ are the finite set \lean{(pk_z}~\lean{W).Q}~\lean{t}, a datum of $W$. At each place the local existence theorem \lean{exists_good} chooses a local quadratic-extension datum, and the local choices are glued by \lean{exists_bij} through the product decomposition \lean{twistIndexSet_eq_prod_localRepresentatives} of the twist index set. The remaining producers take $J_t$ and \lean{J_t.Reads} as input. These are the row-pair constants (\lean{true_geometry_row_pair_relation_alt_alt_alt}, giving $s_t,\zeta_t,\rho_t$), the volume data (\lean{true_geometry_exists_volume_data_alt}), the local twist values (\lean{true_geometry_twist_local_value_alt}) and the joint twist relation (\lean{true_geometry_joint_twist_relation_alt}). The kernel Weil data (\lean{true_geometry_exists_kernel_alt} $=$ \lean{KomExist.exists_compactOpen_alt}) are chosen for every index $t$ and step $j$ from the family characters at $t$, by existence of Weil data (\lean{weilDatumExists}) for the Hecke characters \lean{isHecke_mu}. They do not depend on $J_t$. They are matched to $J_t$ through the clause \lean{J_t.Reads.chr}, which says that the characters of $J_t$ are the family characters.
+
+\subsection{The handoff theorem}
+
+\begin{proposition}[family selection for PC4.13]\label{prop:B}
+Fix extension parameters $p$ and the record route of \PC{6}. Eventually in the parameters, the following holds for every good point $\beta$ and every bundle condition $b$ at $\beta$ that carries a bundle witness $w$. Put $W=\mathrm{packB}(b)$.
+\begin{enumerate}[label=(\roman*)]
+\item (package) $W$ satisfies the six family conditions: the package hypotheses, validity of the real package, the geometric family conditions, standardness of the twists, the level condition, and non-emptiness of the realisation recursion.
+\item (members) For every word $u$ there is a geometric member $a$ of $W$ at $u$ that is true and framed, with $iA$ the identity.
+\item (indices) For every tuple index $t$ of $W$ there is a quadratic-extension datum $J_t$ at the twist places of $t$ that reads them injectively and surjectively, with the family characters and the prescribed local restrictions. Given $J_t$ there are row-pair constants, nonzero volume constants, local twist values and a joint twist relation compatible with $J_t$, and kernel Weil data at $t$, built from the family characters at $t$, whose characters agree with those of $J_t$.
+\end{enumerate}
+Consequently there are a column choice, pinned tuples, rescaled tuples and a family satisfying the column condition and the column output condition. This is the conclusion of PC4.13.
+\end{proposition}
+
+\emph{Why the hypotheses hold.} (i) is extracted from the witness and the scale constants (bookkeeping, \lean{truePack_of_bWit_alt}, 12 lines, and \lean{good_linked_ptR_of_cuspRapidDecay}, 21 lines, both read). (ii) is an explicit standard choice plus strong approximation for $SU$. (iii) is a finite product of independent local existence statements, glued by a product decomposition.
+
+\emph{Simultaneity.} Nothing in (ii) or (iii) couples different words or different indices. The twist places, characters, level and pins are fixed in $W$ by (i), the same for every word, so they are compatible across the family by construction. Within one index the later data are produced from $J_t$, in that order. The kernel data at $t$ are produced from the family characters before $J_t$, and they are matched to $J_t$ by \lean{J_t.Reads.chr}. Because the twist places of one index are distinct and lie outside the primes of the base, the local choices at different places are independent.
+
+\emph{Quantifiers.} The order is: eventually in the parameters, for all points and linked bundles; for all words there exists a member; for all indices there exists $J_t$; then data depending on $(t,J_t)$. This is the order in which \lean{colSide_alt} consumes them.
+
+\emph{Object identity.} The $W$ handed to \lean{colSide_alt} is \lean{packB_alt}~\lean{b} for the very bundle $b$ of the row. In \lean{miStar_row_alt_alt} and in \lean{good_linked_ptR_of_cuspRapidDecay}, the bundle of the row and the bundle of the witness are identified through the Sigma equality $\langle\beta.D,\beta.O,b\rangle=\langle q.w.D\,q.Z,q.O,b'\rangle$ given by the linkage. It is eliminated by \lean{rfl}, so the two are the same object.
+
+\emph{What the statement does not include.} Proposition~\ref{prop:B} is guarded by the linkage. It says nothing for a bundle without a witness. That linked bundles exist where \lean{MIstar2} is consumed is the non-vacuity question of \PC{6}. The producer is \lean{SelAll.bwit_exists_alt} (\Lpath{TPS/BwitExists.lean:53}, live), which gives for every record-compatible realisation a bundle with a witness, together with \lean{exBL_isLinked_prmR_alt} on the non-vacuity route \lean{hypotheses_nonempty_of_unramified_exponents_alt} (live). These are the record cores of row 7.5 of the orphan audit.
+
+\begin{status}
+\textbf{Handoff reconstructed. No missing clause and no earliest gap.} Owners: (i) \PC{6}, because it reads the record witness; (ii) and (iii) \PC{4} (R4-D). The bodies of the twelve \lean{T.true_geometry_*} producers (R4-D, 15{,}760 theorems by Wave~4's count) and of \lean{bwit_exists_alt} remain unread. Their mechanism is the one stated, and the selection is of known kind (explicit standard choices, strong approximation, independent local choices at finitely many places).
+\end{status}
+
+\section{The class data behind \texorpdfstring{\lean{KerX}, \lean{PerX}, \lean{RdX}}{KerX, PerX, RdX}}\label{sec:C}
+
+\subsection{The laws}
+
+For a commutative datum $c$ and a family of tuples $(t_s)_{s\in\mathcal T}$, the laws (\Lpath{LatticeFrames/ValLastX.lean:200--210}) read as follows.
+\begin{align*}
+\text{\lean{KerX}}\colon\ &\forall j<m\ \forall y,P\ \exists a\ \forall s\ \forall\psi\in\mathrm{Ram}_j\ \forall\gamma,\\
+&\qquad\sum_\alpha \mathrm{lift}_{\ker_{s,j}(\alpha,\gamma)}\bigl(\mathrm{rd}_{s,j}(\alpha,\psi,y)\bigr)=c_K(s,j)\sum_{y'}a(y')\,\mathrm{rd}_{s,j+1}(\gamma,K_j\psi,y'),\\
+\text{\lean{PerX}}\colon\ &\forall n\ \forall y,v\ \exists a\in\mathbb C\ \forall s\ \forall\psi\ \forall F,\quad \mathrm{per}_{s,T}\bigl(\mathrm{rd}_{s,n}(\cdot,\psi,y),F(v)\bigr)=c_P(s)\,a\,\mathrm{tail}_s(\psi,F),\\
+\text{\lean{RdX}}\colon\ &\forall j\le m\ \exists\chi\ \forall s\ \forall\psi\ \forall\alpha,y,\quad \mathrm{rd}_{s,j}(\alpha,\psi,y)\ \text{is continuous automorphic of central character}\ \chi.
+\end{align*}
+In each law the existential datum ($a$, or $\chi$) comes before the family index $s$. The seesaw transport (\lean{mainX_of_lawsX}) compares different members of the family, and it needs exactly this uniformity.
+
+\subsection{The class data}
+
+\begin{proposition}[class data, R4-E]\label{prop:C}
+Let $W$ satisfy the family conditions, $u$ a word, $f$ a family character with the leading reading at its top, rows satisfying \lean{RowOK}, and a column choice satisfying the column condition of PC4.13. Then there is a real datum $\rho$ for the common datum $c$, independent of the tuple index, with the following components. It has frames $\mathrm{fr}_j\colon c.\mathrm{Fr}_j\simeq\mathrm{Fr}(N_j)$ with $N_j=\operatorname{rank}X_j$. For each archimedean $\tau$ it has dominant weights $\lambda_j(\tau)$ of $U(N_j)$, multiplicities $n_j$, exponents $s_S$, $s_D$ and nonzero scalars $s_c$. It has unitary representations $r_j$ of the compact groups $G_\infty(X_j)$ on the frames, with the centre acting by scalars, top data $B_T,\sigma_T,J$, and the low maps. For every tuple index $t$ there are
+\begin{enumerate}[label=(\roman*)]
+\item a kernel class datum: for each step $j$ and character $\beta$, a finite set of classes for an open compact subgroup $U_j(\beta)$ with a character, representatives, the values of the readings on classes and frames, and the pairings between consecutive steps;
+\item a top class datum: a finite set of classes of an open compact subgroup of $G(\mathbb A_f)$ for the top space $T$, representatives, and linear functionals on functions of frames;
+\end{enumerate}
+both satisfying their axioms (\lean{ClsK.Is}, \lean{ClsT.Is}).
+\end{proposition}
+
+\emph{Producer and choices.} \lean{AdForm.clsPinD_of_famCol_of_trueW} (\Lpath{TPS/ClsPinDOfFamCol.lean:22}, 71 lines, top read) sets $\rho=$\lean{realOf}~\lean{u}~\lean{(pk_z}~\lean{W)}~\lean{f.g}~\lean{s}~\lean{J}. Here the jet scales $s$ come from \lean{exists_nonzero_jetScale_trueColumns} and the translates $J$ from \lean{exists_translates_of_values_frames}, and neither depends on $t$. The kernel datum at $t$ comes from \lean{kernelPart_laws_of_columnPins} applied to the column pins of $\mathrm{col}(t)$. Those pins were built in PC4.13 from $J_t$, so they depend on the twist places of $t$. The top datum at $t$ comes from the level condition at $t$, through \lean{ClassesAtPrimes} at a finite bad set chosen for $t$, the readings \lean{ReadsP} and the tail-coefficient identity.
+
+\emph{From class data to the laws.} The three reductions (read in full) are these.
+\begin{itemize}
+\item \lean{kerX_of_clsPinD} (37 lines). \lean{thetaLifts_all_charts_eq_classSum} writes the theta lift of a reading through the kernel as a finite sum over the classes of the kernel datum. \lean{KJAvg.avg_span} writes the average over the compact group of the resulting frame function as a finite combination of frame translates. This is Schur orthogonality for the irreducible representation of highest weight $\lambda_j$. The coefficients $a$ are built from $\rho$ alone. The kernel datum of $t$ is used only afterwards, to evaluate both sides at $t$.
+\item \lean{perX_of_clsPinD} (144 lines). The integral over the top space is a class sum (\lean{integral_eq_classSum}). \lean{unitaryAverage_translate_eq_smul_branchingMap} turns the average of translates into a scalar $a$ times the branching map $U(N_n)\downarrow U(N_T)$, by multiplicity one of the branching and Schur's lemma, with $a$ built from $\rho$.
+\item \lean{rdX_of_clsPinD} (20 lines). The central character is $\chi(z)=\prod_\tau(\operatorname{tr}r_j(z,\tau)/N_j)^{\lvert\lambda_j(\tau)\rvert}$, because the centre acts by scalars on frames (\lean{r_center_scalar}). Continuity and automorphy come from the seesaw scalar-form laws on class data.
+\end{itemize}
+
+\emph{Hidden dependence.} None. The constants depend on $(u,f,\text{row},\text{col})$ through $\rho$, and the laws are stated for the fixed family \lean{(a.fam}~\lean{row}~\lean{col).t}. The twist places of $t$, the bad set of $t$ and $J_t$ enter the kernel and top data of $t$ and the readings $\mathrm{rd}_{t,j}$, which the laws quantify after $\forall s$.
+
+\begin{status}
+\textbf{Mechanism reconstructed; internal leaves remain.} Owner \PC{4} (R4-E). The six producers under \lean{clsPinD_of_famCol_of_trueW} remain unread. They are \lean{exists_jetS}, \lean{jOf_exists}, \lean{realOf_is}, \lean{clsKL_is}, \lean{exists_readsG_of_level} and \lean{exists_clsT_of_pinTop}, about 17{,}000 lines by Focused Wave~5's bound and 6{,}227 theorems by Wave~4's reference closure. The external inputs are Schur orthogonality, multiplicity-one branching for unitary groups and finiteness of class numbers. The first two are on the boundary row "standard monomial theory; Pieri, branching, Weyl dimension formula".
+\end{status}
+
+\section{The three ownerless interface checks}\label{sec:IF}
+
+\begin{center}\small
+\begin{tabularx}{\textwidth}{>{\raggedright}p{0.9cm}>{\raggedright}p{2.6cm}>{\raggedright}p{2.5cm}>{\raggedright}X>{\raggedright\arraybackslash}p{1.8cm}}
+\toprule
+check & producer & consumer & proposition and finding & verdict, owner\\
+\midrule
+IF-1 & \lean{topCovolG_alt_alt} (\PC{2}). Its conclusion \lean{CovolumeBoundOfX} quantifies over points with \lean{RowsTAlt}, i.e.\ \lean{PointConditions'} and \lean{RecTied} & \lean{eventual_L3_of_covolume_alt} in \lean{linked_bundles_l3_of_open_alt} (\PC{6}) & The consumer applies \lean{L3} at the summand selection $\sigma\tau'$, a compatible selection. It establishes \lean{PointConditions'} there by \lean{evW_pRows_of_rows_alt} and \lean{RecTied} by \lean{evW_of_atAll}, and passes $\langle h_p,h_g\rangle$ as \lean{RowsTAlt}. Slijepčević's compatibly ruled points are the ruled conditions without the tie conditions, plus the recursive-realisation ties (his Theorem~8.1). These are exactly \lean{PointConditions'} and \lean{RecTied}. So on this route (COV) is needed only at compatibly ruled points, which answers his question "whether compatibly ruled points are ruled" for the purposes of the proof. Definitional wiring. & \textbf{Closed.} \PC{2} (statement), \PC{6} (call)\\
+IF-2 & \lean{Formalism.DivisionValues.lcv} $=\frac{2}{[K:\mathbb Q]}\log\mathrm{ht}$ & \lean{Formalism.L2.Indef.L3}, the inequality $\mathrm{lcv}(X_W(j),M_j)/D$ $\le l_3(j)$ & Slijepčević's (COV) is the inequality $\tfrac{2}{D[K_S:\mathbb Q]}\log\operatorname{covol}(M_j,X_W(j))$ $\le l_3(j)$, over the CM field $K_S$ of the row datum. The factor $2/[K:\mathbb Q]$ is inside the archive's \lean{lcv}, $K$ is the base field of the row datum, and the covolume is the hermitian height \lean{HN.ht}. The two statements coincide. Definitional. & \textbf{Closed.} \PC{2}\\
+IF-3 & \lean{clsPinD_of_famCol_of_trueW} & \lean{kerX/perX/rdX_of_clsPinD} & R4-E had no human-level proposition. It now has one, Proposition~\ref{prop:C}. Genuine mathematics. & \textbf{Interface closed}; content owned by \PC{4} (Section~\ref{sec:C})\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{The \texorpdfstring{\lean{Fact}}{Fact} instances (V16)}\label{sec:facts}
+
+\subsection{Population and liveness}
+
+Parsing every \lean{instance} declaration and keeping those whose declared type is \lean{Fact}~\lean{_} gives \textbf{150} instances, 114 global and 36 local or scoped. Focused Wave~5 counted 54 "of the form \lean{instance}~\lean{:}~\lean{Fact}~\lean{_}". No form of search of the archive reproduces 54 (the nearest are 51 and 74), and the 150 contain every instance any such search finds. No instance body contains \lean{sorry} or an axiom, and the archive has no \lean{sorry} and no \lean{axiom} declaration.
+
+An instance is never cited by name, so liveness was decided by consumers. An instance is live when a live declaration requires \lean{Fact}~\lean{P} for its proposition $P$, through a binder \lean{[Fact}~\lean{P]} or through \lean{Fact.out} at type $P$. This was decided individually for the substantive groups F4 and F5. For F1 to F3 it does not matter, since each is discharged by a term whose content is decidable, definitional or a projection.
+
+\subsection{Grouped classification}
+
+\begin{center}\small
+\begin{longtable}{>{\raggedright}p{2.7cm}r>{\raggedright}p{5.2cm}>{\raggedright\arraybackslash}p{5.3cm}}
+\toprule
+group & no. & assertion & classification\\
+\midrule\endhead
+F1a numeric & 22 & primality of numerals, $0<2\pi$, $1<4$, $\dim\mathbb R^1=1$, $\Delta\ne0$ of a fixed curve & definitional bookkeeping (\lean{norm_num}, \lean{decide}, \lean{rfl})\\
+F1b irrationality & 12 & $r^2\ne a+br$ for all $r$ in $\mathbb Q$, $\mathbb Q_2$ or $\mathbb Q_3$ ($\sqrt2,\sqrt{-1},\sqrt{-2},\sqrt{-7},\sqrt{29},\sqrt{-d}$); $X^2+1$ irreducible & definitional bookkeeping (elementary valuation or sign argument in the instance)\\
+F2 structure fields & 69 & a prime or an irreducible polynomial that is a field of an object already built: \lean{D.host.g}~\lean{k}, \lean{D.host.d}, \lean{D.host.q}, residue characteristics, members of a finset of primes & immediate from already closed hypotheses; the producer of the structure owns the content (the host construction, \lean{supplyChi}, reconstructed in the manuscript)\\
+F3 inclusions, topology & 28 & $K\le$ compositum, fixed fields, the maximal real subfield, openness of integral matrices in completions, $\lVert p\rVert<1$, $p$ not a unit & definitional bookkeeping\\
+F4a decay & 4 & \lean{CoefWeightedLoc} ($\times2$), \lean{DecLow} ($\times2$): integrability and decay of lowest-$K$-type matrix coefficients of discrete series at large gap & substantive and external: V14 (Harish-Chandra, Trombi--Varadarajan type); \lean{DecLow} should be added to V14 by name\\
+F4b classical & 3 & \lean{DiscreteSeriesExistsG}, \lean{HighestWeightExists}, \lean{KFinDense} & substantive and external: Harish-Chandra's existence of discrete series, Cartan--Weyl, density of $K$-finite vectors; to be named on the boundary\\
+F4c Bessel & 2 & \lean{BesselNVG}, \lean{BesselNVGap}: non-vanishing of the Bessel functional on a lowest-$K$-type matrix coefficient under interlacing & \textbf{substantive and external, not on the boundary}\\
+F4d hermitian & 1 & \lean{HermRepUnram} & substantive and external, owned by \PC{5} (Hasse norm theorem)\\
+F4e formal degree & 1 & \lean{DsigHC}: the record's $d_\sigma(\tau)$ equals Harish-Chandra's formal degree & substantive, reduced to the formal degree formula (on the boundary); the discharging \lean{OwnFacts.FD.dsig_eq} is not circular\\
+F4f dead & 4 & \lean{LowKMultOneG}, \lean{deg_DSUniqG}, \lean{DiscreteSeriesUniqueBesselGapped}, \lean{HCMultDSG} & dead as instances\\
+F5a gauge volume & 2 & \lean{GaugeVolUD}: total gauge mass of $U(k)$ is $\prod_{i<k}(2\pi)^{i+1}/i!$ & \textbf{substantive, internal, previously unowned}\\
+F5b Jacobian & 1 & \lean{RhsWLim}: limit of measure ratios equal to $\mathrm{wbConst}^{-1}$ & \textbf{substantive, internal, previously unowned}\\
+F5c Capelli & 1 & \lean{CoefCapAll}: Capelli operator acts on carrier coefficients by the infinitesimal-character scalar & \textbf{substantive, internal, previously unowned}; mechanism reconstructed\\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\subsection{Exceptions}
+
+\paragraph{F4c, Bessel non-vanishing.} \lean{BesselNVGap} (\Lpath{SettingBlocks.lean:406}) asserts the following. Take a discrete series $\sigma$ of the group $H_{pk}$ with parameter $\lambda_{48}(v,b)$ satisfying \lean{GapBig}, a finite-dimensional representation $\pi$ of Harish-Chandra type $u$ with $(u,v,b)$ interlacing and of half-integral difference, a lowest-$K$-type unit vector $w$, and Haar measures on the two factors. Then for some $x,x_0$ the integral $\int\langle\sigma(x_0)w,\sigma(p_1p_2)\sigma(x)w\rangle\,\overline{\psi(p_2)}\,\pi(p_1)^{-1}$ is nonzero. Since $w$ is cyclic, this is non-vanishing of the Bessel functional on $\sigma\otimes\pi$. That is the existence half of the local Gan--Gross--Prasad branching for discrete series of real unitary groups (H.~He, Invent.\ Math.\ 2017; R.~Beuzart-Plessis, Astérisque 2020; both from memory). The interlacing condition is its parametrisation. The boundary lists only the uniqueness half (Jiang--Sun--Zhu). The archive proves the statement (\lean{DS.Lap.TopClosed.besselNVG} $=$ \lean{besselNVG_of_nv}~\lean{nvAll}), so this is a missing boundary item, not a missing proof. Live consumers are \lean{LitS.PfNVG.besselNVG} under \lean{ampUnif_holds} and \lean{BesselDiscreteSeries.besselNVGap} under \lean{wuDecayOfGap}. \emph{Proposed V21.}
+
+\paragraph{F5, three internal propositions behind \lean{Fact}.} They are live leaves of \lean{theoremS_leaves_of_carrierG} on the \lean{LinkS} row route through \lean{at_choice_alt} and \lean{sLp_sO_hTF_of_siegelWeil}. Final~4 lists \lean{kFinDense_holds} at statement level and none of the three. I assign them to a new \PC{6} small-leaf group SL-6.
+\begin{itemize}
+\item \lean{GaugeVolUD} (\lean{Pf.GV.gaugeVolU}, 18 lines over \lean{ratio_tendsto}). The classical content is the volume of $U(k)$, by induction through $U(k)/U(k-1)=S^{2k-1}$ (Macdonald, 1980, from memory). The archive's value $\prod_{i<k}(2\pi)^{i+1}/i!$ is $2^{k(k-1)/2}$ times the Riemannian volume $\prod_{j\le k}2\pi^j/(j-1)!$. The norm of the gauge coordinates is $\sum_a x_a^2+2\sum_{p\in\mathrm{Low}\,k}\lvert x_p\rvert^2$ with $\lvert\mathrm{Low}\,k\rvert=k(k-1)/2$ (\Lpath{JacConstGVol.lean:187--196}), which accounts for that factor. The normalisation is therefore consistent. I checked the ratio numerically for $k=5$. The limit argument itself is unread.
+\item \lean{RhsWLim} (\lean{RankOneChart.rhsWLim} $=$ \lean{rhsWLim_of_leaves}). The proposition says that the ratio of the pushed measure of a small ball to its volume tends to $\mathrm{wbConst}^{-1}$. It is assembled from seven named leaves: Haar density on unitary charts, the polar form of the invariant measure on the hyperboloid, the chart measure formula, the gauge measure of the stabiliser, the gauge volume of $U(k)$, tube-mass asymptotics and orbit representatives. The mechanism is polar coordinates on the hyperboloid orbit, uniqueness of Haar measure and Lebesgue differentiation. The seven leaves are unread.
+\item \lean{CoefCapAll} (\lean{coefCap_carrierInT_own}, 69 lines, read at top). The carrier coefficient \lean{fcT} is $\langle a,\sigma(PhQ)b\rangle$ times a rank-one operator, a matrix coefficient of the discrete series $\sigma$. The Capelli element is central and acts on the smooth vectors of $\sigma$ by the scalar of its infinitesimal character (\lean{gapped_infinitesimal_character}, \lean{actU_qdet}). Right equivariance passes the eigen-equation to the coefficient (\lean{capelliH_cf_rect}). The external input is the Capelli identity with the Harish-Chandra homomorphism, and Capelli and Molev are already on the boundary. \emph{Mechanism reconstructed.}
+\end{itemize}
+
+\paragraph{F4a, F4b, F4e.} These are covered by boundary rows but not named there by their archive statements. \lean{DecLow}, \lean{DiscreteSeriesExistsG}, \lean{HighestWeightExists}, \lean{KFinDense} and the formal-degree identity \lean{DsigHC} should be listed by name, so that the fidelity pass compares the right statements.
+
+\textbf{Certification.} No \lean{Fact} instance silently introduces an unproved hypothesis. Every instance is a proof term. Their contents are bookkeeping (F1 to F3, 131 instances), published-type theorems already on the boundary or owned (F4a, F4b, F4d, F4e), one published-type theorem missing from the boundary (F4c), dead instances (F4f), and three internal propositions now assigned (F5). The full list of 150 is in \Lpath{Fact_Instance_Audit.md}.
+
+\section{Undecided liveness inherited from the pre-synthesis audit}
+
+The two \lean{UniqGap} declarations, \lean{isProdCuspChar_good}, Jacquet--Shalika's \lean{secondCohomologyBound_of_boundaryBound}, \lean{StrongApproxSU}, \lean{ZeroFreeHalf.main} and \lean{zeroCount_holds} are \textbf{live} on paths checked edge by edge. Their owners are those already named, the \PC{6} sweep (R8) or the boundary. \lean{UpperTheory.V.Pa.secondCohomologyBound_of_boundaryBound} stays \textbf{undecided}, because its only candidate path runs through a local hypothesis called \lean{key}, a false edge. The \lean{HidaSetting} structures, \lean{ArithmeticGeometryHyps}, \lean{PublishedTypesAtPlace} and \lean{explicit_formula_used} are not reached by the namespace-resolved graph, which is evidence of deadness but not proof. The eight shared names \lean{core2}, \dots, \lean{alInj} were not retested. The table is in \Lpath{Orphan_Table.md}.
+
+\section{Final internal residual list}\label{sec:residuals}
+
+The list leaves out external-source fidelity and the package-local residuals already held by Agent~6. It contains every internal live item that this pass found unowned or newly stated, with its owner.
+\begin{center}\small
+\begin{tabularx}{\textwidth}{>{\raggedright}p{4.4cm}>{\raggedright}p{1.4cm}>{\raggedright}p{1.6cm}>{\raggedright\arraybackslash}X}
+\toprule
+residual & owner & size & status\\
+\midrule
+\lean{bwit_exists_alt}, \lean{exBL_isLinked_prmR_alt} (existence of linked bundles) & \PC{6} & medium & record core; live; produces the witnesses that Proposition~\ref{prop:B}(i) consumes; not in Wave~6\\
+R4-D bodies below \lean{colSide_alt} & \PC{4} & major & Proposition~\ref{prop:B}(ii), (iii); mechanism stated\\
+R4-E bodies below \lean{clsPinD_of_famCol_of_trueW} & \PC{4} & major & Proposition~\ref{prop:C}; mechanism reconstructed\\
+SL-6a \lean{GaugeVolUD} & \PC{6} & small & classical; normalisation consistent; limit argument unread\\
+SL-6b \lean{RhsWLim} & \PC{6} & small & mechanism stated; seven leaves unread\\
+SL-6c \lean{CoefCapAll} leaves \lean{capelliH_cf_rect}, \lean{gapped_infinitesimal_character} & \PC{6} & small & mechanism reconstructed\\
+\lean{UpperTheory.V.Pa.secondCohomologyBound_of_boundaryBound}; the eight shared names of §1.1 & \PC{6} sweep & small & liveness undecided\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+For the fidelity pass, outside this list: proposed V21 (Bessel non-vanishing, F4c); \lean{DecLow} under V14; \lean{DiscreteSeriesExistsG}, \lean{HighestWeightExists}, \lean{KFinDense} and \lean{DsigHC} by name; and for \lean{PartI}, the principality transfer and the generality of the base demanded by \lean{N3} (Section~\ref{sec:A}).
+
+\section{Limits of this pass}\label{sec:limits}
+
+The YES of Section~1 rests on three things.
+\begin{enumerate}
+\item The dependency graph resolves names through namespaces and \lean{open}s. It does not follow typeclass resolution (handled separately for \lean{Fact}), simp sets or dot notation on local variables. A dependency reached only in those ways and not named in any report would escape it.
+\item "Closed" is the human-proof standard. Lean bodies below the named propositions were not read unless stated, and nothing was compiled.
+\item Liveness of two families of declarations is undecided (Section~9). Each has an owner if live.
+\end{enumerate}
+
+\bigskip\noindent\small Sources read: the Lean archive under \Lpath{src/lean/src} (files cited by path); \Lpath{Pre_Synthesis_Audit/}; \Lpath{Post_Closure_Synthesis/}; \Lpath{Final_Six_Wave_1} to \Lpath{_6}; \Lpath{Focused_Final_Wave_5}; \Lpath{Final_4_LinkS_LocalArch}; S.~Slijepčević, \emph{Outline of Alpöge's proof of the generalised Riemann hypothesis}, arXiv 2611.00812v1, Definition~6.16 and Theorem~8.1. Published references are cited from memory where marked.
+
+\end{document}

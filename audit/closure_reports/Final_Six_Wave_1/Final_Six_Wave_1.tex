@@ -1,0 +1,534 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{lmodern}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,columns=fullflexible}
+\usepackage[hidelinks]{hyperref}
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+\newcommand{\mP}{\textsf{[P]}}
+\newcommand{\mPt}{\textsf{[P top]}}
+\newcommand{\mS}{\textsf{[S]}}
+\newcommand{\mN}{\textsf{[N]}}
+\newcommand{\rr}{\raggedright\arraybackslash}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\Fq}{\mathbb F}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\title{Final six-agent closure wave, Agent 1\\ PC-1, the local finite-flat and integral Hodge--Tate package below \texttt{FamEx.TestPt.testFacts}}
+\author{Agent 1 of the final six-agent closure wave\\ Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026 (final version, after the \texttt{ck}-interface check)}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+I am Agent 1. My assignment is PC-1 of \Lpath{Post_Closure_Internal_Residuals.md}, whose earliest blocker is \lean{FamEx.TestPt.testFacts}. I reconstruct the proof of \lean{testFacts} field by field. Its conclusion is the six-field structure \lean{LieLatticeData.Facts}, and every field is an exact equality of lattices over $\cO_C$ except one inclusion that is used as a hypothesis. The three Frobenius fields reduce to \lean{flagStatement_holds}, which I read, and below it to an internal proof of Raynaud's classification of rank-one $\Fq$-vector space schemes (Raynaud 1974, Th\'eor\`eme 1.4.1), Cartier duality of Hopf orders, Stickelberger's valuation of Gauss sums, the quotient theory of finite flat group schemes, and a product squeeze that uses the tightness of the Hopf order. The kernel and image fields reduce to elementary lattice algebra plus a formal layer that transports Fargues's integral Hodge--Tate sequence (\lean{FarguesHodgeTate}, boundary V12) to the archive's chart coordinates. The archive proves that the choice-defined Chern change \lean{ck} does not depend on the flag, and I checked the existence interface of \lean{ck} over the whole archive: the choice-defined numbers leave the local Chern calculus at exactly one place, \lean{TopRel.relations}, through \lean{CkRelations.key}, which demands an explicit flag pair and builds the flag model from it. No vacuous branch reaches the live route. On Jimmie Adriazola's instruction after this check, PC-1 stops at the human-proof boundary: the Fargues transport (C1), the tightness producer (C2) and the internal Hodge--Tate datum of abelian schemes (C6) are recorded as unexpanded formal packages that implement known mathematics, with the small formal leaves C3 to C5 and the unchanged parts (b) to (e). The verdict is CLOSED MODULO NAMED EXTERNAL THEOREMS at the human-proof boundary. The task that remains is the statement-against-source fidelity check of the named inputs, first \lean{FarguesHodgeTate}. No gap, circularity or level-dependent error was found. The numerical checks of Appendix \ref{app:checks} all pass. Nothing in \Lpath{src/lean} was built or run, no existing archive file was edited, and nothing here is a verification of the archive or a proof of RH.
+\end{abstract}
+
+\tableofcontents
+
+\section{Scope, method and marks}
+
+I read the three files of \Lpath{Claude_Audit_Core/Post_Closure_Synthesis/}, the PC-1 sections of the report of \Lpath{Final_Closure_Wave_1}, and the \lean{testFacts} subtree of \Lpath{src/lean/src} as text. To read the source quickly I staged the archive's own \Lpath{lean.tar.gz} (the fourteen parts) into the workspace and checked that it has the same 175\,187 Lean files as \Lpath{src/lean/src} and the same hashes on the two files I compared. I rebuilt a declaration index (1\,051\,155 fully qualified names) and a use-based dependency tool. The tool parses proof bodies (not imports), resolves qualified names and names in opened namespaces, and does not traverse definitions. It overcounts a little, because a token can resolve to two declarations, and it is the source of every line count below.
+
+Marks. \mP{} proof body read. \mPt{} top of the proof read, children at statement level. \mS{} statement read. \mN{} independent numerical or symbolic check run in this session.
+
+\textbf{Size of the package.} The use-closure of \lean{testFacts} is 4\,142 theorem and lemma declarations in 849 files, 53\,167 lines. This matches the 50\,664-line upper bound of Final Closure Wave 1. It does not contain \lean{GR.Top.main} or \lean{ordinaryCurve_of_hodgeTate}, because \lean{testFacts} receives \lean{HodgeTateDatumStatement} and \lean{OrdinaryCurveStatement} as hypotheses. The closure splits as follows.
+
+\begin{center}
+\begin{tabular}{>{\rr}p{9.4cm}rr}
+\toprule
+group (roots) & closure & exclusive\\
+\midrule
+Frobenius layer (\lean{PtDx.main}, \lean{stepGraph_snd_eq_kk}, \lean{kernel_stepGraph}, \lean{flagStatement_holds}) & 12\,454 & 6\,795\\
+subquotient (\lean{quotient_zarhin_hodge_tate_subquotient}) & 7\,274 & 1\,508\\
+kernel and image layer (\lean{ordinary_curve_model_relay}, \lean{htLift}, \lean{pt_seq_lin}) & 40\,376 & 26\,900\\
+tightness (\lean{tight_hopf_order_test}) & 8\,458 & 0 (inside the previous row)\\
+test-point data (five producers) & 13\,131 & 729\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{What \texttt{testFacts} proves}\label{sec:top}
+
+\mP{} \lean{GlobalTheory.CompanionTheory.Ar.Num.FamEx.TestPt.testFacts} (\Lpath{Development/AutomorphicSpectrum/Proofs/GeometryProofs/OrdinaryCurveHodgePrime.lean}, 137 lines).
+
+\textbf{Setting.} $p$ is an odd prime of $S$, prime to $\operatorname{disc}(E)$ and Hodge--Tate free for the Hodge-compact model $\mathfrak M$. $O$ is the DVR above $p$, $w\in O$ satisfies $w^{p-1}=u\,p$ with $u$ a unit (this is \lean{IsOrbit}; in the producers $w=\zeta_p-1$). $G=\lean{GenTors}\,\mathfrak M\,p$ is the $p$-torsion datum, $P$ a chart pack, $\Fq$ the residue field of $\cO_E$ at a prime above $p$, $n=D.p+D.q$, and $\Sigma$ a Frobenius orbit of labels with permutation $\varphi'$. A test point is a complete algebraically closed field $C\supseteq\Omega$ with valuation ring $\cO_C$ containing the chart ring. $\chi_\tau:\Fq\to\cO_C$ is a multiplicative lift of the residue embedding $\sigma_\tau$.
+
+\textbf{Conclusion.} For the base change $D=(\lean{chartD}\ldots)_{\cO_C}$ of the lattice datum, \lean{Facts} holds with $w$ and $\chi$, that is, for every $\tau\in\Sigma$ and every coordinate $i<n$,
+\begin{align*}
+&\text{(le\_af)}\quad w\,\cO_C^n\subseteq \mathrm{af}_\tau,\qquad
+\text{(im)}\quad \operatorname{im}H_\tau=\omega_\tau,\qquad
+\text{(ker)}\quad \ker H_\tau=w^{-1}\mathrm{Lie}_\tau,\\
+&\text{(dx)}\quad \mathrm{dId}_\tau(i)=\mathrm{xId}_\tau(i),\qquad
+\text{(onto)}\quad \mathrm{pr}_2\,\mathrm{stepGraph}_\tau(i)=\mathrm{kk}_\tau(i),\\
+&\text{(inj)}\quad \mathrm{stepGraph}_{\varphi'\tau}(i)\cap(C\times 0)=\operatorname{span}_{\cO_C}\{c^p : c\in\mathrm{xId}_\tau(i)\}.
+\end{align*}
+Here $M\subseteq C^{\Fq^n}$ is the Hopf algebra of $G[p]$ as functions on $G[p](C)\cong\Fq^n$, $\mathrm{af}_\tau=\{\ell\in C^n : x\mapsto\sum_j\ell_j\chi_\tau(x_j)\text{ is congruent mod }p\text{ to an element of }M\}$, $\mathrm{hh}_\tau$ is its dual lattice, $H_\tau$ is the Hodge--Tate pairing read through the graph lattices $\Gamma_\tau,\Delta_\tau$, $\mathrm{xId}_\tau(i)$ is the set of $c$ such that some $g\in M$ equals $c\,\chi_\tau(x_i)$ on $\{x_j=0\text{ for }j>i\}$, $\mathrm{dId}_\tau(i)$ is the set of $c$ that occur as $\ell_i$ for some $\ell\in\mathrm{af}_\tau$ with $\ell_j=0$ for $j<i$, $\mathrm{kk}_\tau(i)$ is the set of $m$ such that $(g,m)\in\Theta_\tau$ for some $g$ vanishing on $\{x_j=0\text{ for }j\ge i\}$, and $\mathrm{stepGraph}_\tau(i)$ is the set of $(t,m)$ with $(t\,\chi_\tau(x_i),m)\in\Theta_\tau$ modulo functions vanishing on $\{x_j=0\text{ for }j>i\}$. All definitions are in \Lpath{Definitions/CommutativeAlgebra/LieLatticeData.lean}, which I read in full.
+
+\textbf{Assembly.} The proof obtains, in order, the base-changed \lean{Base} (\lean{lattice_base_change_larger_ring_holds}), the Hopf orders $AA$ of $G[p](C)$ and $AW$ of $\Fq^n$ with $AW=M$ and $\Fq$-stability (\lean{arith_variety_prime_global_relay}), \lean{IsAbFactor} and \lean{IsTight} of $AA$ (\lean{arith_variety_model_hodge_relay}), a fundamental character $\sigma'$ and exponents $e$ with $\chi_\tau=\sigma'^{p^{e\tau}}$ and $\sigma'^{p^{e(\varphi'\tau)}}=\sigma'^{p^{e\tau+1}}$ (\lean{arith_variety_prime_hodge_total}), \lean{FlagConcl} for $AW$ (\lean{abelian_factor_tight_field_action} applied to \lean{quotient_zarhin_hodge_tate_subquotient}), the three $\Theta$-clauses (\lean{chartD_th_sqIdeal_mem_and_smul_mem_and_eig_mem_sqIdeal}), the inclusion (le\_af) (\lean{arith_variety_model_prime_total}), and the exact-sequence data of $H_\tau$ (\lean{arith_variety_prime_hodge_estimate}, \lean{ordinary_curve_model_relay}). It then closes the six fields.
+
+\begin{center}
+\begin{tabular}{>{\rr}p{1.6cm}>{\rr}p{5.6cm}>{\rr}p{6.6cm}}
+\toprule
+field & producer & status in this report\\
+\midrule
+le\_af & \lean{w_mul_forms_le_af} = \lean{Xgn.test_leaf_lattice} & \mPt, reduces to \lean{leaf_abFactor} (Zarhin, Hodge--Tate datum)\\
+im, ker & \lean{pt_seq_lin} with \lean{htLift}, \lean{test_group_point_exists} & \lean{pt_seq_lin} and \lean{typed} \mP{} elementary; Fargues translation layer internal (Section \ref{sec:ker})\\
+dx & \lean{PtDx.main} & \mP{} closed to \lean{FlagConcl} (Section \ref{sec:frob})\\
+onto & \lean{stepGraph_snd_eq_kk} & \mP{} closed to \lean{FlagConcl}-free inputs and the cotangent sequence of $G\to G/K$\\
+inj & \lean{PtInj.kernel_stepGraph} & \mP{} closed to \lean{FlagConcl}, onto, and an elementary length lemma\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The Frobenius facts}\label{sec:frob}
+
+\subsection{Objects}
+Let $N$ be a finite $\Fq$-vector space and $A\subseteq C^N$ a Hopf order over $\cO_C$ (\lean{HopfOrder}, \Lpath{ReciprocityTheory/DualLattices/TensorSpan.lean}): a lattice of integral functions containing $1$, closed under products, comultiplication and antipode. $A$ is $\Fq$-stable if $g(a\,\cdot)\in A$ for $g\in A$ and $a\in\Fq$. $I=\{g\in A: g(0)=0\}$ is the augmentation ideal and $I^2$ the span of products. For a multiplicative character $\chi:\Fq\to\cO_C$, $\operatorname{eig}(A,\chi)=\{g\in A: g(ax)=\chi(a)g(x)\}$ and $\Omega_\chi(A)=\operatorname{eig}(A,\chi)/(I^2\cap\operatorname{eig})$. Since $|\Fq^\times|=q-1$ is a unit in $\cO_C$, the projector $\mathrm{proj}_\chi g(x)=(q-1)^{-1}\sum_{a\in\Fq^\times}\chi^{-1}(a)g(ax)$ preserves $A$, $I$, $I^2$, additivity mod $p$ and invariance under any $\Fq$-subspace (\lean{stable_hopf_order_fundamental_character}, \mS). A character $\sigma$ is fundamental if $\sigma(a+b)\equiv\sigma(a)+\sigma(b)\bmod p$, that is, $\sigma$ is the Teichm\"uller lift of a field embedding $\Fq\to k_C$. \mP{} \lean{FundGen.main} shows that a fundamental $\sigma$ has order $q-1$, every character is $\sigma^m$ with $1\le m\le q-1$, and the fundamental characters are exactly $\sigma^{p^s}$, $0\le s<f$, where $q=p^f$.
+
+For a basis $b$ of $N$ let $K_i=\operatorname{span}(b_0,\ldots,b_{i-1})$. The step order $S_i=\lean{stepOrder}(A,K_i,b_i)$ is the Hopf order of the rank-one subquotient $(K_i+\Fq b_i)/K_i\cong\Fq$, read on the line $a\mapsto a\,b_i$ (\mPt{} \lean{Rc.step}). For each $i$ and $s$:
+\begin{itemize}[nosep]
+\item the Raynaud ideal $\mathrm{x}_{i,s}=\{c: c\,\sigma^{p^s}\in S_i\}=(c_{i,s})$;
+\item the Hodge--Tate ideal $\mathrm{d}_{i,s}=\{c:\exists g\in A\text{ additive mod }p,\ g(ax)\equiv\sigma^{p^s}(a)g(x),\ g|_{K_i}\equiv0,\ g(b_i)\equiv c\bmod p\}$ (\lean{idealD});
+\item $\delta_{i,s}$ with $c_{i,s}^p=\delta_{i,s}\,c_{i,s+1}$.
+\end{itemize}
+\textbf{\lean{FlagConcl}} (\Lpath{PolarisedFlagStatement.lean}) asserts that $c_{i,s}\neq0$, that $\mathrm{x}_{i,s}=\mathrm{xIdeal}(\lean{stepOrderRes})=\mathrm{d}_{i,s}=(c_{i,s})$, that $c_{i,s}^p=\delta_{i,s}c_{i,s+1}$, that $\Omega_{\sigma^{p^{s+1}}}(S_i)$ has length $v(\delta_{i,s})$, that $\Omega_{\sigma^{p^{s+1}}}(A)$ has length $\prod_i v(\delta_{i,s})$, and the same product over $i<j$ for the restriction of $A$ to $K_j$. Lengths are products of valuations of elementary divisors (\lean{HasLen}), written multiplicatively.
+
+\subsection{\texttt{dx}: \texttt{PtDx.main}}
+\mP{} \lean{GlobalTheory.CompanionTheory.Ar.Num.PtDx.main} (\Lpath{AlgebraProofs/MemFirstLatticeIff.lean}, 330 lines). Write $V_{i+1}=\{x: x_j=0,\ j>i\}$. Two translations are proved.
+\begin{enumerate}[nosep]
+\item \lean{xId_iff}. $c\in\mathrm{xId}_\tau(i)$ if and only if $c\in\mathrm{xIdeal}(\lean{stepOrderRes}(M,K_i,b_i),\sigma^{p^{e\tau}})$, because every $x\in V_{i+1}$ is $x_i b_i+k$ with $k\in K_i$ (\lean{step_decomp}, \lean{step_coord}).
+\item \lean{dId_forward}, \lean{dId_backward}. $c\in\mathrm{dId}_\tau(i)$ if and only if $c\in\mathrm{d}_{i,e\tau}$. Forward: from $\ell$ with $\ell_j=0$ for $j<i$ and $m\in M$ with $m\equiv S:=\sum_j\ell_j\chi(x_j)$, the function $m$ is additive mod $p$ because $S$ is, satisfies $m(ax)\equiv\chi(a)m(x)$, vanishes mod $p$ on $K_i$ and has $m(b_i)\equiv\ell_i$. Integrality of $\ell_j$ comes from evaluating at $b_j$. Backward: an additive-mod-$p$ $g$ is congruent to $\sum_j g(b_j)\chi(x_j)$ by induction on the number of summands (\lean{fund_pow} gives fundamentality of $\sigma^{p^k}$ by the binomial theorem).
+\end{enumerate}
+Then \lean{FlagConcl} gives $\mathrm{xIdeal}(\lean{stepOrderRes})=(c)=\mathrm{d}$, so $\mathrm{dId}=\mathrm{xId}$. \textbf{Closed modulo \lean{FlagConcl}.}
+
+\subsection{\texttt{onto}: \texttt{stepGraph\_snd\_eq\_kk}}
+\mP{} \lean{GlobalTheory.CompanionTheory.Ar.Num.stepGraph_snd_eq_kk} (\Lpath{AlgebraProofs/HopfOrderLatticeBase.lean}, 242 lines). The inclusion $\mathrm{pr}_2\mathrm{stepGraph}\subseteq\mathrm{kk}$ is immediate. For the converse take $(g,m)\in\Theta_\tau$ with $g|_{V_i}=0$.
+\begin{enumerate}[nosep]
+\item \lean{exists_inv_add_sq}. $g=h+q$ with $h\in A$, $h(0)=0$, $h$ invariant under translation by $V_i$, and $q\in I^2$. This is clause (iv) of \lean{SubgroupFreenessStatement}, discharged by \lean{ReciprocityTheory.PGsh.L2.h3}: if $g\in I_A$ and $g|_K\in I_{A_K}^2$ then $g\in I_{A^K}A+I_A^2$. In ordinary terms it is the right exactness $\omega_{G/K}\to\omega_G\to\omega_K\to0$ of the cotangent sequence for $0\to K\to G\to G/K\to0$. Its proof (\mP{} \lean{mem_sup_of_restrictToSubgroup_mem_sq}) reduces it to $\ker(A\to A_K)=I_{A^K}A$ (\lean{mem_of_restrictToSubgroup_eq_zero}), the statement that $G\to G/K$ is a $K$-torsor.
+\item $(h,m)=(g,m)-(q,0)\in\Theta_\tau$, because $(I^2,0)\subseteq\Theta_\tau$ (first $\Theta$-clause).
+\item Average: $H=\mathrm{proj}_{\chi_\tau}h$ satisfies $(H,m)\in\Theta_\tau$ (second $\Theta$-clause, $\cO_C$-stability, and $(q-1)^{-1}\in\cO_C$ because $v(q)<1$), is $V_i$-invariant and $\chi_\tau$-equivariant. On $V_{i+1}$ this forces $H(x)=H(b_i)\,\chi_\tau(x_i)$ (\lean{eq_on_step}).
+\end{enumerate}
+So $(H(b_i),m)\in\mathrm{stepGraph}_\tau(i)$. \textbf{Closed modulo the torsor statement \lean{h3}} (Section \ref{sec:boundary}).
+
+\subsection{\texttt{inj}: \texttt{kernel\_stepGraph}}
+\mP{} \lean{GlobalTheory.CompanionTheory.Ar.Num.PtInj.kernel_stepGraph} (\Lpath{AlgebraProofs/ValMulLeOfCyclicKer.lean}, 680 lines). Write $s_0=e\tau$, $\sigma_1=\sigma^{p^{s_0+1}}$, $c=c_{i,s_0}$, $c'=c_{i,s_0+1}$, so $\chi_\tau^p=\chi_{\varphi'\tau}$ and $c^p=\delta c'$ with $\delta=\delta_{i,s_0}$.
+
+$\supseteq$. If $g\in M$ equals $c\,\chi_\tau(x_i)$ on $V_{i+1}$, then $g^p\in I^2$ (as $p\ge2$), hence $(a\,g^p,0)\in\Theta_{\varphi'\tau}$, and $g^p=c^p\chi_{\varphi'\tau}(x_i)$ on $V_{i+1}$. So $a\,c^p$ lies in the left side.
+
+$\subseteq$. Let $(t,0)\in\mathrm{stepGraph}_{\varphi'\tau}(i)$. By \lean{xId_iff} at $\sigma_1$, $t=k\,c'$. The proof shows $v(k)\le v(\delta)$, so $k/\delta\in\cO_C$ and $t=(k/\delta)c^p$.
+\begin{enumerate}[nosep]
+\item \lean{val_mul_le_of_cyclic_ker}. If $\pi:B\to D$ is a surjection of $\cO_C$-modules of finite length whose kernel is cyclic generated by $a$, and $k a=0$, then $v(k)\cdot\mathrm{len}(D)\le\mathrm{len}(B)$. The proof builds a block matrix $X$ with $\det X=k\prod d_j$ whose cokernel surjects onto $B$ (\lean{hasLen_coker_det'}, \lean{hasLen_le_of_surjective}). Elementary.
+\item \lean{step_bound} applies this to $B=\Omega_{\sigma_1}(A|_{K_{i+1}})$, $D=\Omega_{\sigma_1}(A|_{K_i})$, $a$ the class of $c'\sigma_1(x_i)$. The kernel is cyclic by \textsf{onto} at $\varphi'\tau$ (\lean{hopf_order_lattice_base}), and $k a\in I^2$ by the third $\Theta$-clause ($\Theta\cap(\mathrm{eig}\times0)\subseteq I^2$).
+\item \lean{FlagConcl} gives $\mathrm{len}(B)=\prod_{l\le i}v(\delta_{l,s_0})$ and $\mathrm{len}(D)=\prod_{l<i}v(\delta_{l,s_0})$, so $v(k)\le v(\delta_{i,s_0})$.
+\end{enumerate}
+This is Raynaud's relation $X_s^p=\delta_sX_{s+1}$ seen on the graph lattice. \textbf{Closed modulo \lean{FlagConcl}.}
+
+\section{\texttt{FlagConcl}: \texttt{flagStatement\_holds}}\label{sec:flag}
+
+\mP{} \lean{GlobalTheory.CompanionTheory.Ar.GR.flagStatement_holds} (\Lpath{AlgebraProofs/FlagComparisonTheorem.lean}, 320 lines) proves \lean{FlagStatement}: for an $\Fq$-stable tight Hopf order $A$ on $N$ whose flag subgroups have the generic additive-function property \lean{GenAF}, \lean{FlagConcl} holds for every basis and every fundamental $\sigma$. The supplier \lean{flagConcl_directFactor_of_subquotient} first passes from the Hopf order of $G[p](C)$ to the retract on $\Fq^n$ (\lean{Re.ret_hopf}, \lean{Re.ret_tight}, \mS) and obtains \lean{GenAF} from \lean{SubquotientStatement}.
+
+\subsection{The rank-one input is Raynaud's theorem}\label{sec:raynaud}
+For a single $\Fq$-stable Hopf order $S$ on $\Fq$ (order $q$), the archive proves the following, all \mP{} or \mPt.
+\begin{enumerate}[nosep]
+\item \mP{} \lean{eig_rank_one}. Each $\mathrm{xIdeal}(S,\chi)$ is principal and nonzero, and $\operatorname{eig}(S,\chi)=\{c\,\chi: c\in\mathrm{xIdeal}\}$. Elementary: a lattice in $C^{\Fq}$ meets the line $C\chi$ in a principal fractional ideal.
+\item \mS{} \lean{Ri.r_decomp}. $I_S=\bigoplus_{m=1}^{q-1}\cO_C\,c_m\sigma^m$, $S=\cO_C1\oplus I_S$, and the colength of $S$ is $\prod_m v(c_m)$.
+\item \mP{} \lean{rank_one_sum} with \mS{} \lean{Ri.r_dual} and \mP{} \lean{gauss_value}. The Cartier dual $S^D=\mathrm{Fourier}(\text{dual lattice of }S)$ is an $\Fq$-stable Hopf order, $(\mathrm{colen}\,S\cdot\mathrm{colen}\,S^D)^2=v(p)^{fq}$, and for $\chi\ne1$, $v(c_\chi)\,v(c^D_\chi)=v(g(\chi^{-1}))$ where $g$ is the Gauss sum. For fundamental $\chi$ this is $v(p)^{1/(p-1)}$, by \lean{gauss_value}: $g(\sigma^{-1})=(\zeta-1)(y-1)$ with $v(y)<1$ (\lean{ReciprocityTheory.PGsh.gaussCongruence}), which is Stickelberger's congruence, and $v(\zeta_p-1)^{p-1}=v(p)$.
+\item \mP{} \lean{Pmono.r_mono} with \mP{} \lean{Pmono.count}. Monomial law: for $m=\sum_n d_np^n$ with $0\le d_n<p$, $\mathrm{xIdeal}(S,\sigma^m)=(\prod_nc_n^{d_n})$ where $c_n=c_{p^n}$. Proof by a squeeze. Monomials lie in $S$ and in $S^D$, so $v(X_d)\ge\prod v(c_n)^{d_n}$ and $v(X^D_d)\ge\prod v(c^D_n)^{d_n}$. The colength identity of item 3 and $(v(c_n)v(c_n^D))^{p-1}=v(p)$ give $\prod_d X_dX^D_d=\prod_d\prod_n(c_nc_n^D)^{d_n}$ (\lean{prod_digits_sq}, a digit-reversal pairing). Equality of a product of termwise inequalities forces termwise equality.
+\item \mP{} \lean{fundamental_ideal_frobenius_product} with \mP{} \lean{Ra.carry}. $\{r: r\,\sigma^{p^{n+1}}\in I^2\}=(c_n^p)$, $c_n^p=\delta_nc_{n+1}$, and $\Omega_{\sigma^{p^{n+1}}}(S)\cong\cO_C/\delta_n$. The carry lemma: if $y_n\in(0,1]$ is $f$-periodic with $y_n^p\le y_{n+1}$, then $\prod y_n^{e_n}\le y_j^p$ whenever $\sum e_n\ge2$ and $\sum e_np^n\equiv p^{j+1}\bmod q-1$. It bounds every product of two eigenfunctions landing in the $\sigma^{p^{j+1}}$-eigenspace.
+\item \mS{} \lean{fundamental_ideal_frobenius_valuation}. $S$ is spanned by the monomials $\prod_n(c_n\sigma^{p^n})^{d_n}$, $d_n<p$, and $\mathrm{colen}(S)^2=(\prod_nv(c_n))^{q(p-1)}$.
+\item \mS{} \lean{non_fundamental_eigen_le_square_augmentation}. $\operatorname{eig}(S,\chi)\subseteq I^2$ for non-fundamental $\chi$.
+\end{enumerate}
+These are exactly the statements of Raynaud's classification: an $\Fq$-vector space scheme of order $q$ over $\cO_C$ is $\operatorname{Spec}\cO_C[X_0,\ldots,X_{f-1}]/(X_n^p-\delta_nX_{n+1})$ with $X_n$ in the $\sigma^{p^n}$-isotypic part, and its Cartier dual has $\delta_n\delta_n'=w$ with $v(w)=v(p)$. Over $\cO_C$ every isotypic part of such a Hopf order is free of rank one (torsion-free finitely generated over a valuation ring, generic rank one), so every rank-one $\Fq$-stable Hopf order is a Raynaud scheme. The function $X_n$ on $G(C)=\Fq$ is $c_n\sigma^{p^n}$. Raynaud, \emph{Sch\'emas en groupes de type $(p,\ldots,p)$}, Bull.\ SMF 102 (1974), Th\'eor\`eme 1.4.1, is the classification; the archive's proof is different (a valuation squeeze through Cartier duality and Stickelberger) and is self-contained.
+
+\mN{} I checked items 3 to 6 exactly in $\mathbb Z_q[\zeta_p]$ to precision $p^{10}$ for the Hopf order $\operatorname{span}\{a\mapsto\psi(ha)\}$ (for $f=1$ this is $\mu_p$) with $(p,f)\in\{(3,1),(5,1),(7,1),(3,2)\}$: fundamental characters have $v(c)=1/(p-1)$, the monomial law holds for every $m$, $v(\delta_n)=1$, and $2(v(\mathrm{colen}\,S)+v(\mathrm{colen}\,S^D))=fq$. I also tested the carry lemma on random periodic sequences for $(p,f)\in\{(2,2),(3,1),(3,2),(5,1),(2,3)\}$ (the scripts are in Appendix \ref{app:checks}).
+
+\subsection{Raynaud ideals sit inside Hodge--Tate ideals}
+\mP{} \lean{idealX_le_idealD} (\Lpath{AlgebraProofs/StableHopfOrderSubgroupGeneration.lean}) shows $\mathrm{x}_{i,s}\subseteq\mathrm{d}_{i,s}$ for fundamental characters, assuming \lean{GenAF} for $K_i$. Let $y_n=v(c_n)$ on the orbit of $\tau$, so $y_n^p\le y_{n+1}$ and $y_{n+f}=y_n$.
+\begin{enumerate}[nosep]
+\item If $y_n^p<y_{n+1}$ (i.e.\ $\delta_n$ is not a unit) then $c_{n+1}\in\mathrm{d}_{n+1}$. \mP{} \lean{Rd.a_nonunit_of}. Take $g_0\in A^{K_i}$ with $g_0(ab_i)=c_{n+1}\tau^{p^{n+1}}(a)$. \lean{GenAF} says $A^{K_i}$ is generated as an algebra by its additive-mod-$p$ elements, so $g_0=h+w$ with $h$ additive mod $p$, $h(0)=0$, and $w\in I^2$ (\lean{adjoin_decomp}). On the line, the $\tau^{p^{n+1}}$-coefficient $\rho$ of $w$ lies in $(c_n^p)$ by item 5 of Section \ref{sec:raynaud}, so $v(\rho)\le y_n^p<y_{n+1}$. Hence $c_{n+1}-\rho$ has the valuation of $c_{n+1}$ and lies in $\mathrm{d}_{n+1}$ through $\mathrm{proj}\,h$.
+\item \mS{} \lean{Rd.a_pow}. $c\in\mathrm{d}_n\Rightarrow c^p\in\mathrm{d}_{n+1}$, because $(x+y+pz)^p\equiv x^p+y^p\bmod p$ for integral $x,y,z$.
+\item If every $\delta_n$ is a unit, $y_0=y_0^{q}$ forces $y_0=1$, so the step is \'etale and $\mathrm{x}=\cO_C$; \mS{} \lean{hopf_order_ideals_eq_top} then gives a fundamental $\tau'$ with $\mathrm{d}=\cO_C$.
+\end{enumerate}
+Propagating 1 and 2 around the orbit gives $c_{n}\in\mathrm{d}_{n}$ for all $n$.
+
+\subsection{The squeeze}
+The remaining inputs of \lean{flagStatement_holds} are length statements along the flag, all \mS:
+\lean{Rb.flag_D} (there are $d_{i,s}$ with $\mathrm{d}_{i,s}=(d_{i,s})$ and $\mathrm{len}\,\mathrm{AFQuot}(A)=\prod_{i,s}v(d_{i,s})$),
+\lean{Rc.flag_colen} ($\mathrm{colen}(A)^{q}=(\prod_i\mathrm{colen}(S_i))^{|N|}$, transitivity of discriminants along the flag, from clause (iii) of \lean{h3}),
+\lean{Rc.om_split} ($\Omega(A)=\bigoplus_\chi\Omega_\chi(A)$),
+\lean{Rd.flag_om} ($\prod_i\mathrm{len}\,\Omega_\chi(S_i)\le\mathrm{len}\,\Omega_\chi(A)$),
+\lean{Rd.gr_partial} (equality propagates to partial flags), and
+\lean{stable_hopf_order_fundamental_ideal} (lengths $L_\chi$ with $\prod_\chi L_\chi=\mathrm{len}\,\Omega(A)$).
+Tightness of $A$ says $c_A^{|N|(p-1)}=c_N^2$ and $c_O^{|N|}=c_N^2$, where $c_A=\mathrm{len}\,\mathrm{AFQuot}$, $c_N=\mathrm{colen}$, $c_O=\mathrm{len}\,\Omega$.
+
+\mP{} \lean{Rh.grcount}. With $x_{t,s}=v(c_{t,s})\le D_{t,s}=v(d_{t,s})$, $\prod D=c_A$, $(\prod x)^{|N|(p-1)}=c_N^2$ (from \lean{flag_colen} and item 6), $\prod_t v(\delta_{t,s})\le L_{s+1}$, $\prod_sL_{s+1}=c_O$, $\prod v(\delta)=(\prod x)^{p-1}$ (from $c^p=\delta c'$ around each orbit), and the two tightness identities, one gets $\prod x=c_A=\prod D$, hence $x=D$ termwise, and then $c_O=\prod v(\delta)$, hence $\prod_tv(\delta_{t,s})=L_{s+1}$ for each $s$. Every step is an equality of positive reals forced by a product of termwise inequalities.
+
+\mN{} For a rank-one Raynaud scheme with arbitrary $v(\delta_n)\in[0,1]$, the archive's structure statements give $v(c_N)=\tfrac{q(p-1)}2\sum_na_n$, $v(c_O)=\sum_n e_n=(p-1)\sum_na_n$ and $v(c_A)=\sum_na_n$ (additive valuations, $e_n=pa_n-a_{n+1}$). I checked in exact arithmetic on 120 random cases that both tightness identities hold, so the exponents $|N|(p-1)$ and $|N|$ in \lean{IsTight} are the right normalisation (Appendix \ref{app:checks}).
+
+\textbf{Status of \lean{FlagConcl}.} Closed in ordinary mathematics modulo: Raynaud 1974, Th\'eor\`eme 1.4.1 and Cartier duality (internal proofs read at the top), Stickelberger's congruence (internal), the quotient theory of finite flat group schemes (\lean{h3}, internal), the length bookkeeping leaves listed above, and the two hypotheses \lean{IsTight} and \lean{GenAF}.
+
+\section{Kernel and image of the Hodge--Tate pairing}\label{sec:ker}
+
+\subsection{The lattice algebra is elementary}
+\mP{} \lean{Xgn.t_pt_seq_lin} (\Lpath{XPtSeqLin.lean}, 92 lines). Given an exact sequence $0\to C^{r}\xrightarrow{h_b}C^{n}\xrightarrow{h_t}C^{s}$, $w\neq0$, $w\cO_C^n\subseteq\mathrm{af}\subseteq\cO_C^n$, $h_t(\cO_C^n)=\omega^{\mathrm{HT}}$, $h_b^{-1}(\cO_C^n)=W$, the graph descriptions $\Delta=\{(b,c): wb\in\cO_C^n,\ c-h_tb\in\omega^{\mathrm{HT}}\}$ and $\Gamma=\{(a,b): wa\in W,\ b-h_ba\in\cO_C^n\}$, and the two Fargues-type inputs
+\[
+h_t(\mathrm{hh})=\omega,\qquad h_b^{-1}(\mathrm{hh})=w^{-1}\mathrm{Lie},
+\]
+it follows that $\operatorname{im}H=\omega$ and $\ker H=w^{-1}\mathrm{Lie}$. The proof uses $\cO_C^n\subseteq\mathrm{hh}\subseteq w^{-1}\cO_C^n$, which comes from $w\cO_C^n\subseteq\mathrm{af}\subseteq\cO_C^n$ by duality. \textbf{Closed.} The graph descriptions and $h_b,h_t$ are produced by \lean{htLift} = \lean{Xgn.test_lift_exists} (\mS, 67 lines, closure 1\,581).
+
+\mP{} \lean{TestGroupPoint.typed} (\Lpath{Typed.lean}, 215 lines) proves the two Fargues-type inputs from matrix data over $\cO_C$: $H_m$ (Hodge--Tate matrix of a Tate basis), $E_g$ (Weil pairing, invertible, $E_gE_i=1$), the additive-function lattice $\mathrm{AF}$, $c$ with $v(c)=v(w)$, and hypotheses $h_0$ to $h_4$ and \lean{hdual}, which say respectively that $c\cdot\mathrm{AF}$-type vectors lie in $\mathrm{AF}$, that the rows of $H_m$ lie in $\mathrm{AF}$, that $yE_g\in\mathrm{AF}$ forces $H_my\in c\,\cO_C^g$, that the image of $\{y: yE_g\in\mathrm{AF}\}$ under $H_m$ covers $c\,\cO_C^g$ modulo $p$, that every $u$ lifts to an $\mathrm{AF}$-integral $x$ with $H_mx=u$, and that $W$ is controlled by the dual Hodge--Tate data up to $v(w)$. It is linear algebra over a rank-one valuation ring and uses $v(p)\le v(w)^2$, which holds because $p\ge3$. \textbf{Closed.}
+
+\subsection{Where Fargues enters, and what remains}
+\mPt{} \lean{PositivityTheory.Xgn.test_group_point_exists} (= \lean{ordinary_curve_model_relay}, \Lpath{TestGroupPointExists.lean}, 194 lines) produces the hypotheses of \lean{typed} from
+\begin{itemize}[nosep]
+\item \lean{TestGroupPoint.point_data} and its child \lean{TestGroupPoint.reducesAt_pack} (closure about 28\,000 lines): it builds the level-$p^R$ torsion coordinates and the Weil pairing on the chart (\lean{exists_isParam}, \lean{exists_coords}, \lean{exists_levPairing}), identifies the pairing with $\zeta^{a\,e(x,x')}$, and calls \lean{reducesAt_of} with \lean{pointHT_of_fargues_hodge_tate}. \mP{} \lean{HT.Fargues.pointHT} builds the $p$-divisible group of the semi-abelian scheme as an ordered tower of Hopf orders (\lean{ordTower}, from \lean{semiabelian_adic_torsion_one} to \lean{_four}, \mS) and applies \lean{polarised_divisible_group_exists} to \lean{FarguesHodgeTate};
+\item \lean{Sgp.core_pull} (from the Hopf order, \lean{IsTight}, and the Weil pairing), \lean{TestGroupPoint.lattices}, \lean{hdual_chart}, \lean{hq_chart}, \lean{exists_der}, \lean{pt_af_type_main} (\mS).
+\end{itemize}
+The mathematics is the integral Hodge--Tate sequence $0\to\mathrm{Lie}(G)(1)\to T_pG\otimes\cO_C\to\omega_{G^D}\to0$ for the $p$-divisible group $G$ at the test point, whose defect is killed by $p^{1/(p-1)}$ and whose kernel is the orthogonal of $\ker(\mathrm{dlog})$ under the normalised Weil pairing (Fargues, \emph{L'isomorphisme entre les tours de Lubin--Tate et de Drinfeld}, Progr.\ Math.\ 262, Chapitre II), read at level $p$ in the coordinates of the chart. The archive's \lean{FarguesHodgeTate} has exactly two clauses, image $\supseteq\kappa\,\omega$ for $v(\kappa)^{p-1}\le v(p)$ ($v(4)$ when $p=2$, not on this route) and the kernel characterisation, and is on the boundary as V12. The translation from that abstract statement to the chart lattices is internal and was not read below its top. This is package C1 of the register in Section \ref{sec:final}, an unexpanded formal package; it is not a residual of the human proof.
+
+\section{Hypotheses of the Frobenius layer}\label{sec:hyp}
+
+\textbf{Tightness and abelian factor.} \mPt{} \lean{Xgn.tight_hopf_order_test} (\Lpath{SplitMultiplicativeHopfOrder.lean}, 1\,114 lines) and its core \lean{TightHopfOrder.core}. The test point may lie over the boundary of the toroidal compactification, so the $p$-torsion of the degenerating abelian scheme over a complete local ring $R$ is uniformised (\lean{exists_unif}, \lean{exists_struct}) as a product of a multiplicative part $\mu\otimes M$, the torsion $B[p]$ of a polarised abelian scheme, and a constant part $Q$. \lean{Stight.BadRed.main} (\mS, closure 9\,525) proves \lean{IsAbFactor} and \lean{IsTight} for the product from \lean{HodgeTateDatumStatement} and \lean{OrdinaryCurveStatement}. The identities themselves are the degree relations $v(\mathrm{disc})=|G|\deg\omega_G$ and $(p-1)\,\mathrm{len}\,\mathrm{AFQuot}=\deg\omega_G$, checked above in the rank-one case. \textbf{Formal package C2, read at the top.}
+
+\textbf{\lean{GenAF}.} \mP{} \lean{subquotientStatement_of_quotient_zarhin_hodgeTate} (47 lines) gets \lean{SubquotientStatement} from \lean{QuotientByFiniteFlatStatement}, \lean{ZarhinStatement} and \lean{HodgeTateDatumStatement} through \lean{tors_pts_finite} (\mP, 10 lines), \lean{Rf.tors_hopf} (\mS), \lean{sub_abelianScheme} (\mS, closure 7\,186) and \lean{Re.ret_hopf} (\mS). The mechanism: for a subgroup $K$ of the torsion, the quotient $A/K$ is again a polarisable abelian scheme (finite flat quotient, then Zarhin's trick for a principal polarisation), so its $p$-torsion Hopf order has a Hodge--Tate datum, whose coordinates are additive mod $p$ and generate (clause \lean{h4} of \lean{HodgeTateDatum}). \textbf{Formal leaf C4, statements read.}
+
+\textbf{Test-point data.} \lean{Xgn.test_order_sections} (\mS, 24 lines, closure 10\,991), \lean{Xgn.teichmuller_test_function} (\mS, the three $\Theta$-clauses), \lean{Xgn.test_character_exists} (\mP, the Teichm\"uller exponents from \lean{IsFrobLabels}, elementary), \lean{Xgn.test_leaf_lattice} (\mPt, (le\_af) from \lean{leaf_abFactor}: $c_p\cdot\{\text{additive mod }p\}\subseteq A+p$ with $v(c_p)^{p-1}=v(p)$, then $w=t\,c_p$), \lean{Xgn.character_data_base_change} (\mS, elementary base change of lattices). \textbf{Formal leaf C5, statements read.}
+
+\textbf{The abelian-scheme inputs.} \mPt{} \lean{GR.Top.main} (\Lpath{AlgebraProofs/PtEqOneOfGZero.lean}) proves \lean{HodgeTateDatumStatement}: for every polarised abelian scheme over $\cO_C$ there are a torsion representation and a \lean{HodgeTateDatum}, i.e.\ an alternating unimodular Weil matrix $E$, a Hodge--Tate matrix $H_t$ and its dual $B_t$ with $B_t^{\mathsf T}H_t-H_t^{\mathsf T}B_t=c_p\,E$, coordinates of $H_t$ and $B_t$ represented mod $p$ by elements of the torsion Hopf order, and $I/I^2\cong(\cO_C/p)^g$. The proof goes through \lean{formal_group_chart_family} (formal group laws on a chart of the abelian scheme). Its use-closure is large (about 110\,000 lines with overcount). \lean{ordinaryCurve_of_hodgeTate} (closure 10\,172) supplies an elliptic curve over $\cO_C$ with ordinary torsion. \textbf{Formal package C6, the largest, read at the top.}
+
+\section{The required checks}\label{sec:required}
+
+\textbf{(3) Exactness of the local identity.} Every field of \lean{Facts} is an equality except (le\_af), which is an inclusion used as a hypothesis of \lean{pt_seq_lin}. Above \lean{testFacts} the chain \lean{lattice_facts_of_normal}, \lean{GoodModel.relations}, \lean{local_comparison_of_orbits} read in Final Closure Wave 1 is a chain of equalities. The identity
+\[
+\mathrm{ck}_k(\mathrm{Lie}_\tau,W_\tau)+\mathrm{ck}_k(\omega_\tau,\omega^{\mathrm{HT}}_\tau)=h_\tau-\frac{\lambda_\tau}{p-1},\qquad p^kh_\tau=h_{\varphi'\tau}+\lambda_{\varphi'\tau}
+\]
+is exact, with $(p-1)\,\mathrm{rootNum}(w)=\mathrm{rootNum}(p)$ from $w^{p-1}=up$, and \textsf{inj} is the precise Frobenius input of the second relation.
+
+\textbf{(4) No level-dependent error.} The level $R=\mathfrak M.R(p)\ge4$ enters \lean{testFacts} only through \lean{DualSeq} at precision $p^{R-2}$ and through the primitive $p^R$-th root $\zeta$, of which the proof uses $\zeta^{p^{R-1}}$, a primitive $p$-th root, and $w=\zeta_p-1$. In \lean{test_group_point_exists} the level is used as \lean{hdual_chart} with $M=R-2$ under the hypothesis $1\le R-2$, which only asks for enough precision; nothing in \lean{Facts} or in \lean{GoodModel.relations} depends on $R$. The Hodge--Tate constant is $w=\zeta_p-1$ at every level.
+
+\textbf{(5) Flag independence. Now closed.} \lean{ck} and \lean{rootNum} (\Lpath{InstFintypeSumElim.lean}) are defined by \lean{Classical.choice} of a \lean{FlagModel}. The archive proves \lean{FlagIndependence.Statement} as \lean{GlobalTheory.CompanionTheory.CommAlg.FlagIndependence.main} = \lean{A_s_flagindep.of_items} (\mP) from \lean{PairNumberExpansionIndependence.proof}, \lean{HsymmPairFlagIndependence.proof}, \lean{FlagIndependence.proof} and \lean{SymmetricSpanHsymm.proof} (\mPt), with \lean{VerticalDivisorsCommute} discharged by \lean{cut_effective_divisor}. It is used, through \lean{T.flag_independence} and \lean{flag_model_value_independent}, in \lean{ck_rootNum_eq_pairNum_on_flagPair} (\mP), which computes \lean{ck} on any explicit flag pair, and in \lean{SubQuotient.proof}, \lean{ScalarQuotient.proof} and \lean{PairCocycle}. So \lean{ck} is the intrinsic change of Chern character (the splitting principle on the special fibre), and the caveat of Final Closure Wave 1 is removed. The existence side, that a flag model is always present where \lean{ck} is used, is settled in Section \ref{sec:ckif}.
+
+\textbf{(6) Is the internal version stronger than the literature input?} Yes, in two places. \lean{FlagStatement} combines Raynaud's coordinates with the Hodge--Tate ideals and proves that they coincide for tight Hopf orders, which is not a single published statement. \lean{HodgeTateDatumStatement} gives an integral Hodge--Tate datum for every polarised abelian scheme over $\cO_C$, built from formal groups, which overlaps with Fargues's theorem but is proved independently and is used alongside \lean{FarguesHodgeTate}.
+
+\textbf{(2), (7) Boundary placement.} See Section \ref{sec:boundary}.
+
+
+\section{The existence interface of \texttt{ck} on the live route}\label{sec:ckif}
+
+\textbf{The issue.} \lean{ck} and \lean{rootNum} (\Lpath{GroundTheory/HeightsAndTheta/Heights/DiscreteValuationNumbers/InstFintypeSumElim.lean}, lines 249 and 259) are defined by cases: if a \lean{FlagModel} for the pair of chart bundles exists, the value is the pair number of \lean{Classical.choice} of one; otherwise it is $0$. A lemma about \lean{ck} is a true statement about this defined number, but if the second branch ever fed an identity that the rest of the route reads as a Chern number, that identity could hold vacuously. The question is whether any choice-defined value leaves the local Chern calculus without a flag model behind it.
+
+\textbf{Method.} I scanned every declaration of the archive (1\,051\,155 names) for the tokens \lean{ck} and \lean{rootNum} resolving to the \lean{NumbersDVR.Bundles} definitions, in statements and proof bodies. Then, for each hit and each statement relay of a hit, I searched the whole source for its uses and classified every user. Separately I computed the use-closure of \lean{GlobalTheory.CompanionTheory.Ar.Plug.deepStR_of_use}, the live producer of \lean{DeepStR}; it contains \lean{testFacts}, \lean{goodOrigin_linked}, \lean{GoodModel.relations}, \lean{TopRel.relations} and \lean{familyExistsPos_holds}. (The closure computed from \lean{Main.lean} breaks at typeclass and \lean{Fact} arguments, which carry no tokens, so I rooted at \lean{deepStR_of_use}.)
+
+\textbf{Result 1. The family is closed.} Forty-three declarations mention the choice-defined \lean{ck} or \lean{rootNum}: the two definitions, the local Chern lemmas (\lean{Cocycle.main} for the chain rule, \lean{QuotAdd.main} and \lean{SubQuotCk.CkAdd} for additivity, \lean{Constants.main} for scaling, \lean{ck_rootNum_dual}, \lean{CkLinePow.main}, \lean{LineCk.main}, \lean{CkFlagSum.main}, \lean{CkTransport.main}, \lean{CkPullBirat.main}, \lean{QuotIsoCk.main}, \lean{ck_eq_of_quotEquiv}, \lean{Xgn.t_rootnum_dual}), the relation producers (\lean{HodgeTate.main}, \lean{RelH.relH_main}, \lean{RelK.main}, \lean{GoodModel.relations}, \lean{BiratJoin.ckRelations_descend}, the definition \lean{CkRelations}), the bridges \lean{ck_rootNum_eq_pairNum_on_flagPair} and \lean{ChernClassOnFlagPair.proof}, thirteen \lean{GlobalTheory.T} statement relays, \lean{ChernClassOnFlagPair.Statement}, and five statement definitions in \Lpath{SameGenericSymm.lean}. The token scan missed \lean{CkRelations.key}, \lean{CkRelations.main_of} and \lean{CkRelations.main}; I added them by hand. Every user of every one of them is another member of the list, with one exception named below. The apparent outside users that a plain text search returns (for instance under \lean{UnivCocycle.main}, \lean{RealPeriodCocycle.main}, \lean{LieHodgeTate.main}) are different declarations with the same last name component; I opened each.
+
+\textbf{Result 2. There is one exit, and it needs a flag pair.} The only declaration outside the family that consumes a statement about the choice-defined numbers is \mP{} \lean{GlobalTheory.CompanionTheory.Ar.Num.TopRel.relations} (\Lpath{AlgebraProofs/ArithmeticRelationsStatementHolds.lean}). It takes \lean{CkRelations} from \lean{lattice_family_ckRelations} and converts it with \lean{uniformizer_model_perm_module_lattice} = \mP{} \lean{CkRelations.main_of} (\Lpath{AlgebraProofs/UniformizerModelPermModuleLattice.lean}). Its lemma \mP{} \lean{CkRelations.key} has the hypothesis \lean{IsFlagPair}$\,\varpi\,x\,E\,E'\,b\,b'\,T.x\,T.x'\,T.f\,T.g$ for the explicit \lean{LocPair} $T$ and concludes
+\[
+\mathrm{ck}(E,E')=T.\mathrm{ck}=\mathrm{pairNum}(T),\qquad k\cdot\mathrm{rootNum}(E;a)=\mathrm{laNum}(a,T.x)\quad(a\neq0).
+\]
+It gets these from \lean{ChernClassOnFlagPair.Statement}, proved by \mP{} \lean{ChernClassOnFlagPair.proof} (\Lpath{PTwinCkOnFlagPair.lean}, line 74) through \lean{ChernFlagPairRootPolynomial.main}. That proof feeds the given flag pair to \lean{JoinPointFlagModel.proof}, which returns an explicit flag model $F_0$ on a joined model; it records $\mathrm{Nonempty}(\mathrm{FlagModel})$ from $F_0$, unfolds \lean{ck} into its first branch (\lean{dif_pos}), and moves from \lean{Classical.choice} to $F_0$ by \lean{flag_model_value_independent} (and \lean{flag_model_root_independent} for \lean{rootNum}). So at the exit the choice-defined number is the pair number of the given flag pair, and the zero branch cannot occur.
+
+\textbf{Result 3. The exported statements use no choice.} What \lean{TopRel.relations} exports is \lean{Relations} (\Lpath{Definitions/DivisibilityTowers/BundleChernComparison.lean}), stated with \lean{LocPair.ck}, which is \lean{pairNum} on explicit flag data. The statements downstream, \lean{LabelChernComparison}, \lean{BundleChernComparison}, \lean{FlagChernComparison} and \lean{HodgeLatticeFlagBound}, are stated the same way.
+
+\textbf{Result 4. The flag pairs are supplied on the route.} \mP{} \lean{model_on_hodge_of_family_pos} (\Lpath{GeometryProofs/ModelOnHodgeFromFamily.lean}, lines 60 to 135) builds the flag pairs it passes to \lean{arithmetic_relations_statement_holds}: \lean{arith_variety_dedekind_constants} gives bundles $B,B'$ with \lean{IsFlagPair} for \lean{labelPair}$\,D\,T\,s$ (the de Rham against Hodge--Tate side), \lean{flag_pair_chart_bundle_compat} gives the dual side for \lean{omPair}$\,D\,T\,s$, and \lean{model_descent_valuation_fibre} carries both to the DVR extension $O'$. Here $T$ is the global flag of \lean{Fl.TwoLevels}, the same $T$ that appears in the conclusion of \lean{HodgeLatticeFlagBound}. So the numbers related at each good prime are the Chern numbers of the actual flags that \lean{DeepStR} uses.
+
+\textbf{Conclusion.} The \lean{ck}-existence interface is clean on the live route. Combined with flag independence (Section \ref{sec:required}), \lean{ck} is the intrinsic change of Chern character wherever its value matters, and the risk recorded in the first version of this report is removed.
+
+\section{External verification boundary}\label{sec:boundary}
+
+\begin{center}
+\begin{tabular}{>{\rr}p{4.3cm}>{\rr}p{4.6cm}>{\rr}p{5.2cm}}
+\toprule
+published statement & archive declarations & proposed status\\
+\midrule
+Fargues's integral Hodge--Tate sequence (Fargues 2008, Ch.\ II) & \lean{FarguesHodgeTate}, \lean{FarguesExact} (hypotheses) & unchanged, V12\\
+Zarhin's trick; quotient of an abelian scheme by a finite flat subgroup & \lean{ZarhinStatement}, \lean{QuotientByFiniteFlatStatement} (hypotheses) & unchanged, V12 and Layer 3\\
+Raynaud 1974, Th\'eor\`eme 1.4.1, with Cartier duality $\delta_n\delta'_n=w$ & \lean{eig_rank_one}, \lean{Ri.r_decomp}, \lean{Ri.r_dual}, \lean{rank_one_sum}, \lean{Pmono.r_mono}, \lean{fundamental_ideal_frobenius_product}, \lean{fundamental_ideal_frobenius_valuation}, \lean{non_fundamental_eigen_le_square_augmentation} & internal proof of a published statement; propose V20 as Layer 3 (not a hypothesis)\\
+Stickelberger's congruence, $v(g(\omega^{-1}))=1/(p-1)$ (Washington, \emph{Cyclotomic Fields}, Ch.\ 6) & \lean{gauss_value}, \lean{gaussCongruence} & internal proof, Layer 3\\
+Quotients of finite flat group schemes, $G\to G/K$ a $K$-torsor; cotangent right exactness; transitivity of discriminants (SGA 3, Exp.\ V; Raynaud 1967) & \lean{ReciprocityTheory.PGsh.L2.h3} (\lean{exists_coset_basis}, \lean{mem_of_restrictToSubgroup_eq_zero}, \lean{hasColength_eq_pow_mul_pow}, \lean{mem_sup_of_restrictToSubgroup_mem_sq}), \lean{Rc.exists_quo}, \lean{Rc.invres} & internal proof, Layer 3\\
+Cartier duality of Hopf orders (Tate--Oort 1970, \S1) & \lean{ReciprocityTheory.PGsh.L2.h1} & internal proof, Layer 3\\
+\bottomrule
+\end{tabular}
+\end{center}
+The matching in the third to sixth rows is at the level of mathematical content. A fidelity pass (statement against source, both directions) is still needed before these rows are cited as the published theorems, as for every V-row.
+
+\section{Parts (b) to (e) of PC-1}
+
+I did not reopen parts (b) to (e) below the statement level, except flag independence. Their status:
+\begin{itemize}[nosep]
+\item (b) the producers of \lean{familyExistsPos_holds} (\mPt, read in this session): \lean{Orbit.orbit_exists} (closure 275), \lean{nonempty_genTors} (4\,501), \lean{PackEx.chartPack_exists} (25\,615), \lean{FamLat.lat_main} (\mPt; the sandwich $\mathrm{dR}\subseteq\mathrm{HT}\subseteq w^{-1}\mathrm{dR}$ comes from \lean{exists_sandwich_of_hodge_tate_free} and \lean{cp_ratio_unramified_odd_prime}, i.e.\ from \lean{FarguesHodgeTate}), \lean{Seq.seq_holds}, \lean{chartD_fun_clauses}, \lean{Over.funfam_holds}, \lean{SeqFam.seqfam_holds}. The closures overlap heavily (the chart and torsion geometry); recorded as C7 in the register of unexpanded formal packages;
+\item (c) local Chern calculus: flag independence closed (above); the chain rule, additivity, scaling, duality and $p$-th power lemmas remain at statement level;
+\item (d) model change and (e) trivial flag and sandwich: unchanged.
+\end{itemize}
+
+\section{Final report}\label{sec:final}
+
+\subsection*{Verdict}
+\textbf{CLOSED MODULO NAMED EXTERNAL THEOREMS}, at the human-proof boundary.
+
+This verdict records where PC-1 stops, as decided by Jimmie Adriazola after the \lean{ck} check of Section \ref{sec:ckif} came back clean. The proof of the local identity is reconstructed in ordinary mathematics down to named published theorems. The formal packages C1, C2 and C6 below implement known mathematics and are recorded as unexpanded formal packages, not as internal residuals of the human proof. They were not read below their tops, and this report does not claim that they were.
+
+\subsection*{1. What closed}
+\begin{itemize}[nosep]
+\item \lean{testFacts} itself, with the exact decomposition into six fields and their producers (\mP).
+\item The three Frobenius facts: \lean{PtDx.main}, \lean{stepGraph_snd_eq_kk}, \lean{PtInj.kernel_stepGraph} (\mP), closed to \lean{FlagConcl}, the torsor and cotangent statement \lean{h3}, and elementary length algebra (\lean{val_mul_le_of_cyclic_ker}, \lean{step_bound}).
+\item \lean{FlagConcl}: \lean{flagStatement_holds} (\mP), \lean{idealX_le_idealD} (\mP), \lean{Rd.a_nonunit_of} (\mP), \lean{Rh.grcount} (\mP), \lean{Pmono.count} (\mP), \lean{Ra.carry} (\mP), \lean{fundamental_ideal_frobenius_product} (\mP), \lean{eig_rank_one} (\mP), \lean{rank_one_sum} (\mP), \lean{gauss_value} (\mP), \lean{FundGen.main} (\mP). The rank-one layer is an internal proof of Raynaud 1974, Th\'eor\`eme 1.4.1.
+\item The lattice algebra of kernel and image: \lean{t_pt_seq_lin} (\mP) and \lean{typed} (\mP).
+\item Flag independence of \lean{ck} and \lean{rootNum}, and the existence interface of \lean{ck} over the whole archive (Section \ref{sec:ckif}).
+\item Exactness and level independence of the local identity.
+\end{itemize}
+
+\clearpage
+\subsection*{2. Remaining internal residuals of the human proof}
+\textbf{Internal residuals of the human proof: none.}
+
+\textbf{Register of unexpanded formal packages implementing known mathematics.} These are recorded so that a later formal audit knows where the Lean text below the human proof has not been read. Rows C1, C2 and C6 are the packages named in the instruction. Rows C3 to C5 are small formal leaves whose mathematics is stated in Sections \ref{sec:flag} to \ref{sec:hyp}. Row C7 is the part of PC-1 that this wave did not reopen; the Post-Closure Synthesis already describes it as standard internal bookkeeping of a known mechanism.
+\begin{longtable}{>{\rr}p{3.4cm}>{\rr}p{3.6cm}>{\rr}p{3.0cm}>{\rr}p{1.3cm}>{\rr}p{2.6cm}}
+\toprule
+declarations & known mathematics implemented & downstream & size & reading status\\
+\midrule
+\endhead
+C1. \lean{TestGroupPoint.reducesAt_pack}, \lean{point_data}, \lean{HT.Fargues.pointHT} children (\lean{polarised_divisible_group_exists}, \lean{semiabelian_adic_torsion_one} to \lean{_four}), \lean{Sgp.core_pull}, \lean{TestGroupPoint.lattices}, \lean{hdual_chart}, \lean{exists_der} (\Lpath{ChowMahlerFamilies/}) & Fargues's integral Hodge--Tate sequence for the $p$-divisible group at the test point, read at level $p$ in chart coordinates; supplies $h_0$ to $h_4$ and \lean{hdual} of \lean{typed} & im, ker of \lean{Facts} & medium (about 27\,000 exclusive lines) & top read\\
+C2. \lean{Stight.BadRed.main}, \lean{TightHopfOrder.exists_struct}, \lean{exists_unif} & uniformisation of a degenerating abelian scheme (multiplicative, abelian and \'etale parts of the $p$-torsion) and the degree relations $v(\mathrm{disc})=|G|\deg\omega_G$, $(p-1)\,\mathrm{len}\,\mathrm{AFQuot}=\deg\omega_G$ & \lean{IsTight}, \lean{IsAbFactor} & medium & top read\\
+C6. \lean{GR.Top.main} (\lean{formal_group_chart_family}, \lean{hodge_tate_datum_reduce_scalars}), \lean{GR.ordinaryCurve_of_hodgeTate} & integral Hodge--Tate datum of a polarised abelian scheme over $\cO_C$ from its formal group; an ordinary elliptic curve over $\cO_C$ & C2, C4, hypotheses of \lean{testFacts} & large & top read\\
+C3. \lean{hopf_order_ideals_eq_top}, \lean{Rb.flag_D} (\lean{aflatT}, \lean{triang_strong}), \lean{Rd.flag_om}, \lean{Rd.gr_partial} (\lean{Rb.fund_ex}, \lean{Rc.subquo}, \lean{Rc.om_step}), \lean{Rc.om_split}, \lean{Rc.flag_colen}, \lean{Rc.step} (\Lpath{HodgeTatePoints/}) & length bookkeeping along a flag of a finite flat group scheme; \'etale case of the ideal comparison & \lean{FlagConcl} & small to medium & statements read\\
+C4. \lean{sub_abelianScheme}, \lean{Re.ret_hopf}, \lean{Re.ret_tight}, \lean{Rf.tors_hopf} & quotient of an abelian scheme by a finite flat subgroup with Zarhin's trick; retracts & \lean{FlagConcl} & small to medium & statements read\\
+C5. \lean{Xgn.test_order_sections}, \lean{Xgn.teichmuller_test_function}, \lean{TestLeafLattice.leaf_abFactor}, \lean{Xgn.test_lift_exists}, \lean{Xgn.character_data_base_change} & test-point Hopf orders, $\Theta$-clauses, (le\_af), the exact sequence of $H_\tau$, base change & all fields & small & statements read\\
+C7. PC-1 parts (b), (c) other than flag independence, (d), (e) & construction of the lattice family, local Chern calculus on DVR models, model change, trivial flag & \lean{FamilyExistsPos}, \lean{GoodModel.relations} & medium & as in \Lpath{Post_Closure_Internal_Residuals.md}\\
+\bottomrule
+\end{longtable}
+The Raynaud rank-one layer, Stickelberger, \lean{h1} and \lean{h3} are internal proofs of published statements and are on the boundary as Layer 3 items (Section \ref{sec:boundary}).
+
+\subsection*{3. External verification boundary}
+Section \ref{sec:boundary}. Unchanged hypotheses: \lean{FarguesHodgeTate}, \lean{FarguesExact}, \lean{ZarhinStatement}, \lean{QuotientByFiniteFlatStatement}. Newly matched (Layer 3, internal proofs): Raynaud 1974 Th\'eor\`eme 1.4.1 with Cartier duality, Stickelberger's congruence, quotients and Cartier duality of finite flat group schemes. V20 should be recorded as matched in content, pending the fidelity pass.
+
+\textbf{Remaining task: statement-against-source fidelity.}\label{sec:fidelity} The human-proof reconstruction of PC-1 is complete. What remains is to compare each named input with its published source in both directions, so that the archive's Lean statement neither asks more nor gives more than the published theorem. In order of priority:
+\begin{enumerate}[nosep]
+\item \lean{FarguesHodgeTate} against Fargues, \emph{L'isomorphisme entre les tours de Lubin--Tate et de Drinfeld}, Chapitre II. Two clauses: the image of the Hodge--Tate map contains $\kappa\,\omega_{G^D}$ whenever $v(\kappa)^{p-1}\le v(p)$, and $\ker(\alpha_G\otimes\cO_C)$ is the orthogonal of $\ker(\mathrm{dlog})$. The comparison must check the archive's \lean{PDivGroup}, \lean{hodgeTateLinear}, \lean{dlogLinear} and the pairing normalisation \lean{muTate} against Fargues's conventions. This is the input on which the $1/(p-1)$ of the local identity rests.
+\item \lean{FarguesExact}, \lean{ZarhinStatement}, \lean{QuotientByFiniteFlatStatement} (V12, Layer 3).
+\item The Layer 3 matches of Section \ref{sec:boundary}: Raynaud 1974, Th\'eor\`eme 1.4.1 with Cartier duality; Stickelberger's congruence; quotients and Cartier duality of finite flat group schemes.
+\end{enumerate}
+
+\subsection*{4. Risk audit}
+\begin{itemize}[nosep]
+\item \textbf{Vacuous \lean{ck}. Cleared.} The single exit of the choice-defined numbers demands an explicit flag pair and builds a flag model from it, and the flag pairs are supplied on the route (Section \ref{sec:ckif}).
+\item \textbf{Fidelity of \lean{FarguesHodgeTate}.} The kernel clause uses the archive's own \lean{PDivGroup}, \lean{hodgeTateLinear}, \lean{dlogLinear} and the normalised pairing \lean{muTate}. A two-way comparison with Fargues 2008 Ch.\ II is the remaining task (Section \ref{sec:fidelity}). Moderate until done.
+\item \textbf{Unexpanded formal packages.} C1, C2 and C6 are accepted at the human-proof boundary on the strength of their statements and tops. A defect inside them would be a formalisation defect in a known argument, not a gap in the mathematics. Low for the human proof, open for a line-by-line formal audit.
+\item \textbf{Tightness normalisation.} The exponents of \lean{IsTight} agree with the rank-one Raynaud computation \mN. Low.
+\item \textbf{Characteristic $2$.} The route assumes $p\neq2$ (\lean{hp2}); \lean{gauss_value} excludes $q=2$ and \lean{rank_one_sum} treats it separately. No issue.
+\item \textbf{Circularity.} None. \lean{testFacts} takes \lean{HodgeTateDatumStatement} and \lean{OrdinaryCurveStatement} as hypotheses; their producers do not use the tower or \lean{DeepStR}.
+\item \textbf{Overcounting.} Line counts come from a heuristic use-closure and overlap between groups. They size the work and are not exact.
+\end{itemize}
+
+\subsection*{5. Single earliest blocker}
+None for the human proof. The remaining task is the statement-against-source fidelity check of Section \ref{sec:fidelity}. For a later formal audit the first package to expand is C1, starting at \lean{PositivityTheory.Xgn.TestGroupPoint.reducesAt_pack} (\Lpath{Development/WeilBound/CoreStatements/TorusUniformisation/ChowMahlerFamilies/ReducesAtOfWithE.lean}, line 82).
+
+\subsection*{6. Does this assignment still block the statement ``The entire RH proof has been reconstructed in ordinary mathematics modulo named external theorems''?}
+No, at the human-proof boundary adopted here. The local identity at a good prime is reconstructed in ordinary mathematics down to Fargues's integral Hodge--Tate sequence, Zarhin's trick, quotients of abelian schemes by finite flat subgroups (hypotheses of the archive), and Raynaud's classification, Cartier duality, Stickelberger's congruence and the quotient theory of finite flat group schemes (internal proofs of published statements). The choice-defined Chern numbers are intrinsic and non-vacuous on the live route. The formal implementation in C1, C2 and C6 (with the small leaves C3 to C5 and the unchanged C7) is listed in the register and was not read below its top; it is not counted as a residual of the human proof. The remaining task for PC-1 is the fidelity check of Section \ref{sec:fidelity}, beginning with \lean{FarguesHodgeTate}.
+
+\appendix
+\section{Numerical checks}\label{app:checks}
+The three scripts below were run in the session workspace with Python 3 and exact rational arithmetic. They are reproduced here so that the checks can be rerun; no file was added to the archive.
+\subsection*{\texttt{raynaud\_mu\_check.py}}
+\begin{lstlisting}[language=Python]
+# Exact p-adic check of the Raynaud rank-one package on the Hopf order of the constant/multiplicative pair over F_q.
+# Hopf order A_mu := span_{O} { a -> psi(h a) : h in F_q }  (the Cartier dual of the constant scheme; for f=1 this is mu_p),
+# realised inside functions F_q -> C.  For each character sigma^m (sigma = Teichmuller), c_m generates
+# {c : c*sigma^m in A_mu}.  Checks: (i) fundamental characters m=p^n have v(c)=1/(p-1) (Stickelberger),
+# (ii) Raynaud monomial law v(c_m) = sum_n d_n v(c_{p^n}) for m = sum d_n p^n (archive's r_mono),
+# (iii) c_{p^n}^p = delta_n c_{p^{n+1}} with v(delta_n)=1 (multiplicative case, delta = p*unit),
+# (iv) duality (c * cD)^(p-1) = v(p) per fundamental character (cD = 1 for the etale dual),
+# (v) colength identity 2(v(cN)+v(cD)) = f q  (rank_one_sum), with v(cN)=sum_m v(c_m).
+from fractions import Fraction as Fr
+import itertools
+K=10
+def run(p,f,minpoly):
+    q=p**f; M=p**K
+    # unramified ring W = Z/p^K[t]/(minpoly), elements as tuples length f
+    def wadd(a,b): return tuple((x+y)%M for x,y in zip(a,b))
+    def wmul(a,b):
+        r=[0]*(2*f-1)
+        for i,x in enumerate(a):
+            for j,y in enumerate(b): r[i+j]=(r[i+j]+x*y)%M
+        # reduce t^f = -sum minpoly[k] t^k (minpoly monic, coefficients list low->high length f)
+        for d in range(2*f-2,f-1,-1):
+            c=r[d]; r[d]=0
+            for k in range(f): r[d-f+k]=(r[d-f+k]-c*minpoly[k])%M
+        return tuple(r[:f])
+    one=tuple([1]+[0]*(f-1)); zero=tuple([0]*f)
+    def wpow(a,e):
+        r=one
+        while e:
+            if e&1: r=wmul(r,a)
+            a=wmul(a,a); e>>=1
+        return r
+    def vw(a):
+        return min((vpz(x) for x in a),default=10**9)
+    def vpz(x):
+        x%=M
+        if x==0: return 10**9
+        k=0
+        while x%p==0: x//=p; k+=1
+        return k
+    # finite field F_q elements as tuples mod p; Teichmuller lift T(a)=lift(a)^{q^K}
+    Fq=list(itertools.product(range(p),repeat=f))
+    def lift(a): return tuple(x%M for x in a)
+    T={a: wpow(lift(a),q**K) if any(a) else zero for a in Fq}
+    # additive character psi(a)=zeta^{Tr(a)}, Tr: F_q->F_p computed via Frobenius on t-representation mod p
+    def fmul(a,b):
+        r=wmul(lift(a),lift(b)); return tuple(x%p for x in r)
+    def ffrob(a):
+        r=one; base=lift(a); e=p
+        return tuple(x%p for x in wpow(base,p))
+    def tr(a):
+        s=a; acc=a
+        for _ in range(f-1):
+            s=ffrob(s); acc=tuple((x+y)%p for x,y in zip(acc,s))
+        assert all(x==0 for x in acc[1:]) or f==1, acc
+        return acc[0]
+    # ring Z_q[zeta_p] = W[pi]/E(pi), E Eisenstein = Phi_p(1+pi)
+    from math import comb
+    E=[sum(comb(i,k) for i in range(p)) for k in range(p)]  # coeffs of Phi_p(1+pi), degree p-1, leading 1
+    # element: list of p-1 W-coeffs in pi-basis
+    def zmul(a,b):
+        r=[zero]*(2*(p-1)-1)
+        for i,x in enumerate(a):
+            for j,y in enumerate(b): r[i+j]=wadd(r[i+j],wmul(x,y))
+        for d in range(len(r)-1,p-2,-1):
+            c=r[d]; r[d]=zero
+            for k in range(p-1):
+                r[d-(p-1)+k]=wadd(r[d-(p-1)+k], wmul(c,tuple((-E[k]*x)%M for x in one)))
+        return r[:p-1]
+    def zadd(a,b): return [wadd(x,y) for x,y in zip(a,b)]
+    zeta=[one,one]+[zero]*(p-3) if p>2 else [one]  # 1+pi
+    def zpow(e):
+        r=[one]+[zero]*(p-2); b=zeta
+        e%=p
+        for _ in range(e): r=zmul(r,b)
+        return r
+    def vz(a):
+        best=None
+        for i,x in enumerate(a):
+            w=vw(x)
+            if w>=10**8: continue
+            val=Fr(w)+Fr(i,p-1)
+            best=val if best is None or val<best else best
+        return best
+    def wsc(c,z): return [wmul(c,x) for x in z]
+    # A_mu basis functions g_h(a)=psi(h a); coefficient of sigma^m: c_m determined by Fourier:
+    # c*sigma^m = sum_h b_h g_h with b_h = (c/q) sum_a sigma^m(a) psi(-h a); need all b_h integral.
+    # so v(c_m) = v(q) - min_h v(sum_a sigma^m(a) psi(-h a)).
+    res={}
+    for m in range(1,q):
+        mn=None
+        for h in Fq:
+            s=[zero]*(p-1)
+            for a in Fq:
+                if not any(a): continue
+                sm=wpow(T[a],m)
+                ha=fmul(h,a); e=(-tr(ha))%p
+                s=zadd(s,wsc(sm,zpow(e)))
+            vv=vz(s)
+            if vv is None: continue
+            mn=vv if mn is None or vv<mn else mn
+        res[m]=Fr(f)-mn
+    return res
+for (p,f,mp) in [(3,1,[0]),(5,1,[0]),(7,1,[0]),(3,2,[1,0]),(2,2,[1,1])]:
+    if p==2: continue
+    q=p**f
+    res=run(p,f,mp)
+    fund=[res[p**n] for n in range(f)]
+    ok_mono=all(res[m]==sum(((m//p**n)%p)*fund[n] for n in range(f)) for m in range(1,q))
+    cN=sum(res.values())
+    print(f'p={p} f={f}: v(c) at fundamental chars',[str(x) for x in fund],
+          '| monomial law',ok_mono,'| v(delta_n)=p v(c_n)-v(c_{n+1})=',[str(p*fund[n]-fund[(n+1)%f]) for n in range(f)],
+          '| 2(v cN + v cD)=',2*cN,'vs f q=',f*q)
+\end{lstlisting}
+\subsection*{\texttt{carry\_count\_check.py}}
+\begin{lstlisting}[language=Python]
+# Random tests of the elementary valuation lemmas used in the Raynaud rank-one package.
+import random, itertools, math
+random.seed(7)
+def carry_ok(p,f,trials=3000):
+    q=p**f
+    for _ in range(trials):
+        # periodic y_n in (0,1] with y_n^p <= y_{n+1}: build log-valuations a_n>=0 with p a_n >= a_{n+1}
+        a=[random.random()*2 for _ in range(f)]
+        # enforce p a_n >= a_{n+1} cyclically by scaling attempts
+        ok=all(p*a[n] >= a[(n+1)%f]-1e-12 for n in range(f))
+        if not ok: continue
+        y=lambda n: math.exp(-a[n%f])
+        for e in itertools.product(range(p+2),repeat=f):
+            if sum(e)<2: continue
+            m=sum(e[n]*p**n for n in range(f))
+            for j in range(f):
+                if (m - p**(j+1)) % (q-1)==0:
+                    lhs=math.prod(y(n)**e[n] for n in range(f)); rhs=y(j)**p
+                    if lhs>rhs*(1+1e-9): return False,(p,f,a,e,j)
+    return True,None
+for p,f in [(2,2),(3,1),(3,2),(5,1),(2,3)]:
+    print('carry',p,f,carry_ok(p,f,400))
+\end{lstlisting}
+\subsection*{\texttt{tight\_rank\_one.py}}
+\begin{lstlisting}[language=Python]
+# Additive-valuation check of the IsTight identities for a rank-one Raynaud F_q-scheme (q=p^f) over O_C,
+# using the archive's own structural statements:
+#   v(c_m) = sum_n d_n a_n  (fundamental_ideal_frobenius_valuation / r_mono), m = sum d_n p^n,
+#   c_n^p = delta_n c_{n+1}  (fundamental_ideal_frobenius_product): e_n = p a_n - a_{n+1} in [0,1],
+#   len(Omega) = sum_n e_n, colength v(cN) = sum_{m=1}^{q-1} v(c_m), len(AFQuot) = sum_n a_n (flag_D with d=c).
+# Tightness: cO^q = cN^2 and cA^{q(p-1)} = cN^2, i.e. q*O = 2N and q(p-1)*A = 2N additively.
+import random, itertools
+from fractions import Fraction as Fr
+random.seed(3)
+def check(p,f):
+    q=p**f
+    e=[Fr(random.randint(0,12),12) for _ in range(f)]
+    # solve p a_n - a_{n+1} = e_n cyclically
+    import numpy as np
+    M=[[Fr(0)]*f for _ in range(f)]
+    for n in range(f): M[n][n]+=p; M[n][(n+1)%f]-=1
+    # Gaussian elimination over Fractions
+    A=[row[:]+[e[n]] for n,row in enumerate(M)]
+    for i in range(f):
+        piv=next(r for r in range(i,f) if A[r][i]!=0); A[i],A[piv]=A[piv],A[i]
+        for r in range(f):
+            if r!=i and A[r][i]!=0:
+                fac=A[r][i]/A[i][i]; A[r]=[x-fac*y for x,y in zip(A[r],A[i])]
+    a=[A[i][f]/A[i][i] for i in range(f)]
+    assert all(x>=0 for x in a) and all(p*a[n]-a[(n+1)%f]==e[n] for n in range(f))
+    N=sum(sum(d[n]*a[n] for n in range(f)) for d in itertools.product(range(p),repeat=f))
+    O=sum(e); Aq=sum(a)
+    return q*O==2*N, q*(p-1)*Aq==2*N, (p,f,[str(x) for x in e])
+ok=True
+for (p,f) in [(3,1),(5,1),(3,2),(2,3),(5,2),(7,1)]:
+    for _ in range(20):
+        r=check(p,f); ok&=r[0] and r[1]
+print('rank-one Raynaud tightness identities hold in all random cases:',ok)
+\end{lstlisting}
+
+\section*{Files read in this session}
+Whole: \Lpath{OrdinaryCurveHodgePrime.lean}, \Lpath{LieLatticeData.lean}, \Lpath{MemFirstLatticeIff.lean}, \Lpath{HopfOrderLatticeBase.lean}, \Lpath{ValMulLeOfCyclicKer.lean}, \Lpath{FlagComparisonTheorem.lean}, \Lpath{CharacterIdealPrincipalEigen.lean}, \Lpath{FundamentalIdealFrobeniusProduct.lean}, \Lpath{ExistsSplitIdempotentConjugation.lean}, \Lpath{GaussSumValuationTeichmuller.lean}, \Lpath{ProdDigits.lean}, \Lpath{PmonoCount.lean}, \Lpath{EqOfProdEq.lean}, \Lpath{RdNonunit.lean}, \Lpath{StableHopfOrderSubgroupGeneration.lean}, \Lpath{XPtSeqLin.lean}, \Lpath{IsTight.lean}, \Lpath{StepOrderRes.lean}, \Lpath{PolarisedFlagStatement.lean}, \Lpath{HodgeTateDatumStatement.lean}, \Lpath{OrdinaryCurveStatement.lean}, \Lpath{FarguesHodgeTate.lean}, \Lpath{FarguesExact.lean}, \Lpath{QuotientByFiniteFlatStatement.lean}, \Lpath{ZarhinStatement.lean}, \Lpath{AbelianFactorTightFieldAction.lean}, \Lpath{QuotientZarhinHodgeTateSubquotient.lean}, \Lpath{ImportsBis.lean}, \Lpath{SubgroupFreenessStatement.lean}, \Lpath{PointHTOfFarguesHodgeTate.lean}, \Lpath{IsPolLatticePlane.lean} (to line 80), \Lpath{SameGenericFlagDifference.lean}, \Lpath{XSFlagindep.lean}, \Lpath{FlagIndependence.lean}, \Lpath{StatementsFlagIndependence.lean}. In part: \Lpath{RcFlag.lean} (lines 195 to 261), \Lpath{RbAflat.lean} (295 to 341), \Lpath{RaCarry.lean} (1 to 30), \Lpath{TeichmullerCharacterOrderGenerates.lean} (106 to 120), \Lpath{TestGroupPointExists.lean}, \Lpath{ReducesAtOfWithE.lean} (82 to 200), \Lpath{Typed.lean} (11 to 40), \Lpath{SplitMultiplicativeHopfOrder.lean} (986 to 1114), \Lpath{TestCharacterExists.lean} (176 to 201), \Lpath{TestLeafLattice.lean} (235 to 273), \Lpath{FamilyPosOfHodgeTateInputs.lean} (62 to 129), \Lpath{ArithVarietyModelPrimeBound.lean} (187 to 229), \Lpath{PtEqOneOfGZero.lean} (76 to 132), \Lpath{CotangentSurjective.lean} (the \lean{HodgeTateDatum} structure), \Lpath{MemSupOfRestrictToSubgroupMemSq.lean} (88 to 132), \Lpath{InstFintypeSumElim.lean} (230 to 275), \Lpath{PFlagIndependence.lean} (32 to 60), and the statements of every declaration named in Sections \ref{sec:flag} to \ref{sec:hyp}. Reports: the three files of \Lpath{Post_Closure_Synthesis/} and the PC-1 sections of \Lpath{Final_Closure_Wave_1}.
+
+\end{document}

@@ -1,0 +1,282 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\sloppy
+\newcommand{\lean}[1]{\nolinkurl{#1}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\cO}{\mathcal O}
+\title{Residual R-2: the integral Hodge--Tate sequence at $p=2$\\[2pt]\large RH--Alpöge reconstruction}
+\author{Claude, for Jimmie Adriazola}
+\date{22 November 2026}
+\begin{document}
+\maketitle
+
+\section{Scope and inputs}
+
+The final external fidelity pass left one residual at the prime $2$. PC-2 uses an integral Hodge--Tate statement at $p=2$ on its nefness route, the printed theorem of Fargues has the standing hypothesis $p\ne2$, and the archive proves the statement internally with a constant $4$. This report decides whether that residual, R-2, closes as ordinary mathematics. It edits no project file.
+
+The Lean archive was copied as the fourteen parts of \texttt{lean.tar.gz}. Their concatenation has sha256 \texttt{9631b4f0\dots49c7fc}, which is the checksum recorded in \texttt{Claude\_Kernel\_Replay/Kernel\_Replay\_Report.md}, and all 175{,}190 per-file hashes of \texttt{Source\_Manifest\_sha256.txt} match the unpacked tree. The other inputs are \texttt{Final\_External\_Fidelity} with its ledger and source map, \texttt{Final\_Six\_Wave\_1} and \texttt{Final\_Six\_Wave\_2} (PC-1 and PC-2), and the orphan and interface pass. Two published texts were read through page fetches of their arXiv versions, Scholze--Weinstein, \emph{Moduli of $p$-divisible groups} (arXiv:1211.6357v2, Camb.\ J.\ Math.\ 1 (2013) 145--237), and Anschütz--Le Bras, \emph{Prismatic Dieudonné theory} (arXiv:1907.10525v4, Forum Math.\ Pi 11 (2023) e2). Journal numbering was not opened and is taken to agree with the arXiv versions.
+
+Lean paths are abbreviated as \texttt{AS} for \texttt{Development/AutomorphicSpectrum}, \texttt{AV} for \texttt{Development/AbelianVarietyTheory} and \texttt{WB} for \texttt{Development/WeilBound}.
+
+\section{The live statement}\label{sec:live}
+
+\subsection{The Lean objects}
+
+A \lean{PDivGroup p O} (\texttt{AV/Definitions/Divisors/ToSpanSingletonConstGenInjective.lean}, line 12) is a system of finite projective cocommutative Hopf algebras $A_n$ over $\cO$ of rank $p^{nh}$ with surjections $A_{n+1}\to A_n$ whose kernels are the ideals cut out by $[p^n]$. This is Tate's definition of a $p$-divisible group $G$ of height $h$ with $G[p^n]=\operatorname{Spec}A_n$. In the same file \lean{Tate} is $T_pG(\cO)$, \lean{omega} is $\omega_G=\varprojlim_n I_n/I_n^2$ with $I_n$ the augmentation ideal of $A_n$, and \lean{dual} is the Cartier dual $G^D$. The map \lean{dlog} (line 938) sends $\chi\in T_pG^D=\operatorname{Hom}(G,\mu_{p^\infty})$ to $\chi^*(dT/T)$, computed at level $n$ as the class of $u_n-1$ for the group-like element $u_n\in A_n$ attached to $\chi$. So \lean{dlog} is $\alpha_{G^D}\colon T_pG^D\to\omega_G$. The map \lean{hodgeTate} (line 1035) is \lean{dlog} of $G^D$ composed with biduality, which is $\alpha_G\colon T_pG\to\omega_{G^D}$. \lean{pairing} (line 1088) is the Weil pairing $(x,\chi)\mapsto\chi\circ x\in T_p\mu_{p^\infty}$, and \lean{muTate} $\zeta$ is the element of $T_p\mu_{p^\infty}$ given by a compatible system of $p$-power roots of unity. The definitions agree with the standard ones, which settles the interface item on \lean{dlogLinear} and \lean{muTate} left open in the ledger.
+
+\subsection{The declarations}
+
+\lean{FarguesHodgeTate} (\texttt{AS/PublishedTheorems/Algebra$_2$/FarguesHodgeTate.lean}) has two clauses for $G$ over the $p$-adically complete valuation ring $\cO$ of an algebraically closed field $C$ of characteristic zero with $v(p)<1$. Clause (i) says $\kappa\,\omega_{G^D}\subseteq\operatorname{im}(\alpha_G\otimes\cO)$ when $v(\kappa)\le v(4)$ for $p=2$ and $v(\kappa)^{p-1}\le v(p)$ for odd $p$. Clause (ii) is \lean{FarguesExact} (same folder), the statement that $\ker(\alpha_G\otimes\cO)$ is the orthogonal of $\ker(\alpha_{G^D}\otimes\cO)$ for the $\cO$-bilinear form $B$ with $e(x,\chi)=\zeta^{B(x,\chi)}$. The valuation $v$ is multiplicative with values in $\mathbb R_{\ge0}$, so $v(\kappa)\le v(4)$ means $\kappa\in4\cO$.
+
+The consumer is \lean{PointHT} (\texttt{AS/Statements/GeometryStatements/IsPolLatticePlane.lean}, line 42). Its constant hypothesis is \lean{IsHTConst} (line 29), $\kappa\ne0$ and $v(\kappa)^{p-1}\le v(p)$ for every $p$, so at $p=2$ it asks $\lvert\kappa\rvert\le\lvert2\rvert$. PC-2 feeds it the constant of \lean{IsCp} (\texttt{AS/Definitions/GlobalGeometry/IntegralClosureHeightEqOneOfLiesOver.lean}, line 14), which is $\kappa=4$ at $p=2$ and $\kappa=\zeta_p-1$ at odd $p$. The lemma \lean{isHTConst_of_isCp} gives \lean{IsHTConst} for this $\kappa$ and $\kappa\mid p^2$.
+
+\subsection{What is consumed}
+
+The PC-2 nefness route passes from \lean{FarguesHodgeTate} through \lean{pointHT}, \lean{exists_HTPoint} and \lean{dlog_lagrangian} (\texttt{AS/Proofs/AlgebraProofs/TateMapDualHomBidual.lean}, line 151). I searched the 57 files that mention \lean{FarguesHodgeTate}, and the whole archive, for uses of its content. The hypothesis is opened in one place, line 193 of that file, and it takes the second component. Every other use passes the hypothesis on unchanged or turns it into \lean{PointHT}. \textbf{Clause (i) of \lean{FarguesHodgeTate} is never used.} The cokernel bound that \lean{dlog_lagrangian} needs comes from \lean{coker_dlog_killed} (\texttt{AS/Proofs/AlgebraProofs/DvdMulOfGroupLikeVal.lean}, line 416), which does not assume \lean{FarguesHodgeTate} and has the sharp hypothesis $v(\kappa)^{p-1}\le v(p)$ for every prime.
+
+The output of \lean{dlog_lagrangian} fills two fields of the record \lean{HTPoint} (\texttt{AS/Definitions/CommutativeAlgebra/OmStable.lean}), namely $\kappa$\texttt{\_mem} ($\kappa\,\omega\subseteq\operatorname{ht}(T)$) and \lean{lagr} (the kernel of $\operatorname{ht}$ is its own orthogonal). So the live mathematics at $p=2$ is the following.
+
+\begin{proposition}[R-2, exact live form]\label{prop:live}
+Let $C$ be an algebraically closed field of characteristic zero, complete for an absolute value with $\lvert2\rvert<1$, and let $\cO$ be its valuation ring. Let $G$ be a $2$-divisible group of height $h$ over $\cO$ whose cotangent module $\omega_G$ is free of rank $h/2$. Let $\lambda\colon G\to G^D$ be a homomorphism with $T_2\lambda$ bijective, let $e$ be the Weil pairing and $\zeta$ a compatible system of primitive $2^n$-th roots of unity in $\cO$, and suppose the $\cO$-bilinear form $B$ on $\cO\otimes T_2G$ with $e(y,\lambda x)=\zeta^{B(x,y)}$ for $x,y\in T_2G$ is alternating. Put $f=\alpha_{G^D}\circ(1\otimes T_2\lambda)\colon\cO\otimes T_2G\to\omega_G$. Then
+\begin{enumerate}[label=(\roman*),nosep]
+\item $4\,\omega_G\subseteq f(\cO\otimes T_2G)$, and more generally $\kappa\,\omega_G\subseteq f(\cO\otimes T_2G)$ for every $\kappa\in\cO$ with $\lvert\kappa\rvert\le\lvert2\rvert$,
+\item $\ker f=\{x\in\cO\otimes T_2G : B(x,y)=0\text{ for all }y\in\ker f\}$.
+\end{enumerate}
+\end{proposition}
+
+Part (i) is the $2$-adic cokernel bound for $\alpha_{G^D}$ transported by $\lambda$. Part (ii) is the Lagrangian property, which the archive derives from clause (ii) of \lean{FarguesHodgeTate} together with part (i). The two general statements behind it are Theorem~\ref{thm:A} (cokernel bound, every prime) and Proposition~\ref{prop:B} (kernel orthogonality, every prime). The hypotheses come from \lean{PointHT}. The group $G$ is the $p$-divisible group of a semi-abelian scheme over a locally noetherian base pulled back along a point $\operatorname{Spec}\cO\to S$, with a full torsion tower indexed by a unimodular alternating lattice (\lean{IsPolLattice}), $\cO_E$-action, and $2\operatorname{rk}\operatorname{Lie}=\operatorname{rk}\Lambda$. The passage from the semi-abelian scheme to a \lean{PDivGroup} with these properties is the archive's \lean{ordTower} and belongs to PC-1 and PC-2, outside R-2.
+
+\section{What the archive proves at $p=2$}\label{sec:archive}
+
+{\small\begin{longtable}{L{4.4cm}L{5.0cm}L{5.8cm}}
+\toprule
+Declaration & File & Content\\
+\midrule
+\lean{coker_dlog_killed} & \lean{AS/Proofs/AlgebraProofs/DvdMulOfGroupLikeVal.lean} 416 & $\kappa\,\omega_G\subseteq\operatorname{im}\alpha_{G^D}$ for $v(\kappa)^{p-1}\le v(p)$, all $p$. Live.\\
+\lean{dvd_mul_of_dvd_dlog} & same, 354 & level-$n$ step (Lemma~\ref{lem:level})\\
+\lean{dvd_mul_of_groupLike} & same, 137 & integrality plus nearly primitive bound\\
+\lean{exists_diag} & same, 191 & Smith normal form over a valuation ring\\
+\lean{NearlyPrimitive.norm_smul_le_one} & \lean{AV/Proofs/IwasawaDecomposition/NormSmulLeOneOfPrimitiveBoundedPowers.lean} 231 & Lemma~\ref{lem:np}, divided powers\\
+\lean{norm_factorial_inv_le} & same, 34 & Legendre, $\lvert1/n!\rvert\le\lvert p\rvert^{-n/(p-1)}$\\
+\lean{isIntegral_inv_smul_of_closed} & \lean{AV/Proofs/IwasawaDecomposition/IsIntegralOfDivisibleCharacters.lean} & Lemma~\ref{lem:int}\\
+\lean{hodgeTateCokerSharp} & \lean{WB/CoreStatements/HodgeTatePoints/Farsharp.lean} 103 & second proof of the sharp bound, for $\alpha_G$, by a membership criterion and $p$-adic limits (\lean{FarsharpB.lean})\\
+\lean{farguesHodgeTate_of_farguesExact} & \lean{WB/.../XXgzFarOfExact.lean} 50 & clause (i) from \lean{hodgeTateCokerSharp}, using $v(4)=v(2)^2\le v(2)$, with clause (ii) equal to \lean{FarguesExact}\\
+\lean{farguesExact_of_hodge} & \lean{WB/.../FarguesExactOfPrismatic.lean} 56 & \lean{FarguesExact} from \lean{Published.PrismaticDieudonneHodge}\\
+\lean{prismaticDieudonneHodge} & \lean{Development/AutomorphicArithmetic/ThetaCorrespondence/PrismaticDieudonne/PrismaticDieudonneHodge.lean} 19 & \lean{PrismaticDieudonneHodge} proved internally from window and frame data\\
+\lean{dlog_lagrangian} & \lean{AS/Proofs/AlgebraProofs/TateMapDualHomBidual.lean} 151 & Proposition~\ref{prop:live}, from \lean{coker_dlog_killed} and \lean{FarguesExact}\\
+\bottomrule
+\end{longtable}}
+
+The answer to Task 2 has three parts.
+
+\emph{Clause (i) comes from a short integral argument, valid for every prime, and $4$ is a weakening.} The archive proves the sharp bound $\lvert\kappa\rvert\le\lvert p\rvert^{1/(p-1)}$ twice, and neither proof uses Fargues, Anschütz--Le Bras or prismatic Dieudonné theory. At $p=2$ the sharp bound is $\lvert\kappa\rvert\le\lvert2\rvert$. The constant $4$ enters in two places. The statement \lean{FarguesHodgeTate} asks $v(\kappa)\le v(4)$, and \lean{farguesHodgeTate_of_farguesExact} reduces this to the sharp bound by $v(4)=v(2)^2\le v(2)$. Independently, \lean{IsCp} chooses $\kappa=4$ at $p=2$ because PC-2 reserves a factor $p^2$ in its charts (Section~\ref{sec:pc2}), and $4=2^2$.
+
+\emph{Clause (ii) comes from prismatic Dieudonné theory.} \lean{Published.PrismaticDieudonneHodge} (\texttt{AV/PublishedTheorems/Divisors$_2$/InjectiveOfSmulMemRange.lean}, line 62) asserts a functor $G\mapsto M(G)$ to finite free $A_{\inf}(\cO)$-modules of rank $h$ with a Frobenius divisible by $\varphi(\xi)$, a Hodge filtration $\omega_G\hookrightarrow M/\xi M\twoheadrightarrow\operatorname{Lie}G^D$, the normalizations at $\mathbb Q_p/\mathbb Z_p$ and $\mu_{p^\infty}$, and full faithfulness on $\operatorname{Hom}(\mathbb Q_p/\mathbb Z_p,\mu_{p^\infty})$. This is the shape of Anschütz--Le Bras, Theorem~1.4.4 (= 4.6.10) with Remark~1.4.2, for the perfectoid ring $\cO$. From it the archive builds a Hodge--Tate datum (\lean{HodgeTateSandwichAt}), proves $p^2\omega_G\subseteq\operatorname{span}\alpha_{G^D}(T_pG^D)$ (\lean{pDivGroup_omega_finite_free_and_p_sq_mem_dlog_span}), and describes $\ker\alpha_G$ as the set of $x$ for which $c\,B(x,\cdot)$ factors through $\alpha_{G^D}$ for some $c\ne0$ (\lean{ker_hodgeTateLinear}). \lean{farguesExact_of_hodge} then gets \lean{FarguesExact} with the factor $p^2$, which is a second appearance of $4$ at $p=2$. The internal proof of \lean{PrismaticDieudonneHodge} runs through \lean{hasDatum_biconn_of}, \lean{exists_bFrame} and the window-matrix lemmas, which I did not open.
+
+\emph{The combination.} Clause (i) at $p=2$ is a short integral argument with a weakening of a sharper bound. Clause (ii) at $p=2$ uses prismatic Dieudonné theory in the archive. For the human proof, clause (ii) needs much less (Section~\ref{sec:ii}).
+
+\section{Human proof of the cokernel bound}\label{sec:i}
+
+Throughout, $p$ is any prime, $C$ is an algebraically closed field of characteristic zero, complete for an absolute value $\lvert\cdot\rvert$ with $\lvert p\rvert<1$, and $\cO=\{\lvert x\rvert\le1\}$. Rescaling the absolute value by a positive power does not change any statement below, so we take $\lvert p\rvert=p^{-1}$. For a $p$-divisible group $H$ over $\cO$ we use the following standard facts (Tate, \emph{$p$-divisible groups}, 1967, and Messing, LNM 264, 1972). The archive proves each of them internally.
+\begin{enumerate}[label=(F\arabic*),nosep]
+\item $H[p^n]=\operatorname{Spec}A_n$ with $A_n$ a finite projective cocommutative Hopf algebra. Cartier duality identifies $\cO$-algebra maps $A_n^\vee=\operatorname{Hom}_\cO(A_n,\cO)\to\cO$ with group-like elements of $A_n$, and group-like elements of $A_n$ with $H^D[p^n](\cO)$.
+\item The map $T_pH^D\to H^D[p^n](\cO)$ is surjective, and $T_pH^D$ is free of rank $h$ over $\mathbb Z_p$.
+\item With $I_n=\ker\varepsilon$, $\omega_n=I_n/I_n^2$ and $d(a)=a-\varepsilon(a)\bmod I_n^2$, one has $d(ab)=\varepsilon(a)d(b)+\varepsilon(b)d(a)$, and $\omega_H=\varprojlim\omega_n$ maps onto $\omega_n$ with kernel $p^n\omega_H$.
+\item If $u\in A_n$ is the group-like element of $\chi_n\in H^D[p^n](\cO)$, then $d(u)$ is the level-$n$ image of $\alpha_{H^D}(\chi)=\chi^*(dT/T)$.
+\item (Kaplansky 1949) A valuation ring is an elementary divisor ring, so every finite matrix over $\cO$ has a Smith normal form.
+\end{enumerate}
+
+\begin{lemma}[Legendre]\label{lem:leg}
+For every $n\ge0$, $\lvert1/n!\rvert\le p^{n/(p-1)}$.
+\end{lemma}
+\begin{proof}
+Write $n!=p^vm$ with $p\nmid m$. Then $\lvert m\rvert=1$ and Legendre's formula gives $(p-1)v=n-s_p(n)\le n$, where $s_p(n)$ is the sum of the base-$p$ digits of $n$. So $\lvert1/n!\rvert=p^v\le p^{n/(p-1)}$.
+\end{proof}
+
+At $p=2$ the lemma reads $\lvert1/n!\rvert\le2^n$, with equality when $n$ is a power of $2$.
+
+Let $A$ be a cocommutative Hopf algebra over $\cO$ that is finitely generated and projective as an $\cO$-module, with multiplication $m$, comultiplication $\Delta$ and counit $\varepsilon$. Let $B_1=\operatorname{Hom}_\cO(A,C)$ and $B_2=\operatorname{Hom}_\cO(A\otimes A,C)$ with their convolution products, and put
+\[
+\lVert f\rVert=\sup_{a\in A}\lvert f(a)\rvert,\qquad\lVert F\rVert=\sup_{t\in A\otimes A}\lvert F(t)\rvert .
+\]
+These are finite because $A$ is finitely generated. For $f,g\in B_1$ define $\Delta^*f=f\circ m\in B_2$ and $(f\boxtimes g)(a\otimes b)=f(a)g(b)$. Since $m$ is a map of coalgebras, $\Delta^*$ is a $C$-algebra homomorphism, and so are $f\mapsto f\boxtimes\varepsilon$ and $f\mapsto\varepsilon\boxtimes f$, with $(f\boxtimes\varepsilon)(\varepsilon\boxtimes g)=f\boxtimes g$. The ultrametric inequality and $\Delta(A)\subseteq A\otimes A$, $m(A\otimes A)\subseteq A$ give
+\begin{equation}\label{eq:norms}
+\lVert FG\rVert\le\lVert F\rVert\lVert G\rVert,\qquad\lVert\Delta^*f\rVert\le\lVert f\rVert,\qquad\lVert f\boxtimes g\rVert=\lVert f\rVert\lVert g\rVert .
+\end{equation}
+
+\begin{lemma}[nearly primitive elements]\label{lem:np}
+Let $A$, $B_1$, $B_2$ and the norms be as above. Let $y\in B_1$ satisfy $K:=\sup_{k\ge0}\lVert y^k\rVert<\infty$ and $\lVert\Delta^*y-y\boxtimes\varepsilon-\varepsilon\boxtimes y\rVert\le1$. Then $\lVert cy\rVert\le1$ for every $c\in C$ with $\lvert c\rvert\le p^{-1/(p-1)}$.
+\end{lemma}
+
+\begin{proof}
+First let $\lvert c\rvert<p^{-1/(p-1)}$, so that $\rho:=p^{1/(p-1)}\lvert c\rvert<1$. Put $z=cy$ and $e=\Delta^*y-y\boxtimes\varepsilon-\varepsilon\boxtimes y$, so that
+\[
+\Delta^*z=s+ce,\qquad s=z\boxtimes\varepsilon+\varepsilon\boxtimes z .
+\]
+Both algebras contain $\mathbb Q$, so the divided powers $\gamma_n(x)=x^n/n!$ are defined, they commute with algebra homomorphisms, and $\gamma_n(x+x')=\sum_{a+b=n}\gamma_a(x)\gamma_b(x')$ for commuting $x,x'$. Lemma~\ref{lem:leg} and \eqref{eq:norms} give
+\[
+t_n:=\lVert\gamma_n(z)\rVert\le\rho^nK,\qquad\lVert\gamma_l(ce)\rVert\le\rho^l\lVert e\rVert^l\le\rho^l<1\quad(l\ge1).
+\]
+Suppose $t_1>1$. Since $t_n\to0$, the maximum $M=\max_nt_n$ is attained, and we let $k$ be the largest index with $t_k=M$. Then $M\ge t_1>1$, and $k\ge1$ because $t_0=\lVert\varepsilon\rVert=1$. Apply $\gamma_{2k}$ to $\Delta^*z=s+ce$ and expand $\gamma_m(s)=\sum_{a+b=m}\gamma_a(z)\boxtimes\gamma_b(z)$. Isolating the term $(a,b)=(k,k)$ in $\gamma_{2k}(s)$ gives
+\[
+\gamma_k(z)\boxtimes\gamma_k(z)=\Delta^*\gamma_{2k}(z)-\sum_{l=1}^{2k}\gamma_{2k-l}(s)\,\gamma_l(ce)-\sum_{\substack{a+b=2k\\(a,b)\ne(k,k)}}\gamma_a(z)\boxtimes\gamma_b(z).
+\]
+The left side has norm $M^2$ by \eqref{eq:norms}. On the right, $\lVert\Delta^*\gamma_{2k}(z)\rVert\le t_{2k}\le M<M^2$. Each $\gamma_m(s)$ has norm at most $M^2$, so each term of the first sum has norm less than $M^2$. In the second sum one of $a,b$ exceeds $k$, so $t_at_b<M^2$ by the choice of $k$. The ultrametric inequality makes the right side smaller than $M^2$ in norm, which is a contradiction. Hence $\lVert cy\rVert=t_1\le1$.
+
+Now let $\lvert c\rvert=p^{-1/(p-1)}$ and suppose $\lVert cy\rVert>1$. Choose $n\ge1$ with $\lVert cy\rVert^n>p$ and $b\in C$ with $b^n=p$, which exists because $C$ is algebraically closed. Then $\lvert bc\rvert<p^{-1/(p-1)}$, so the first case gives $\lvert b\rvert\,\lVert cy\rVert\le1$, and raising to the $n$-th power gives $\lVert cy\rVert^n\le p$, a contradiction.
+\end{proof}
+
+\begin{lemma}[integrality]\label{lem:int}
+Let $A$ and $B_1$ be as above and let $D\colon A\to\cO$ be $\cO$-linear. Let $q\in\cO\setminus\{0\}$ divide $D(u)$ for every group-like element $u$ of $A$. Then $y=q^{-1}D\in B_1$ is integral over $\cO$, and $\sup_k\lVert y^k\rVert<\infty$.
+\end{lemma}
+
+\begin{proof}
+The algebra $B_1=A^\vee\otimes_\cO C$ is finite over $C$, and commutative because $A$ is cocommutative. Let $\alpha$ be a root of the minimal polynomial $\mu$ of $D$ over $C$. If $D-\alpha$ were a unit, then $\mu=(T-\alpha)g$ would give $g(D)=0$ with $\deg g<\deg\mu$. So $D-\alpha$ lies in a maximal ideal $\mathfrak m$ of $B_1$, and $B_1/\mathfrak m=C$ because $C$ is algebraically closed. The composite $A^\vee\to B_1\to C$ takes values that are integral over $\cO$, since $A^\vee$ is finite over $\cO$, and $\cO$ is integrally closed in $C$. So it is an $\cO$-algebra map $\chi\colon A^\vee\to\cO$, and by (F1) there is a group-like $u\in A$ with $\chi(g)=g(u)$. Hence $\alpha=\chi(D)=D(u)\in q\cO$. Write $\mu=\prod_i(T-\alpha_i)$. Then $y$ is a root of $\prod_i(T-q^{-1}\alpha_i)\in\cO[T]$, which is monic, so $y$ is integral over $\cO$. Every power of $y$ lies in the $\cO$-span of $1,y,\dots,y^{r-1}$ with $r=\deg\mu$, so $\lVert y^k\rVert\le\max_{i<r}\lVert y^i\rVert$.
+\end{proof}
+
+\begin{lemma}[one level]\label{lem:level}
+Let $H$ be a $p$-divisible group over $\cO$, $n\ge0$, $q\in\cO\setminus\{0\}$ with $q\mid p^n$, and $\varphi\colon\omega_H\to\cO$ an $\cO$-linear map with $q\mid\varphi(\alpha_{H^D}(\chi))$ for all $\chi\in T_pH^D$. Then $q\mid\kappa\,\varphi(w)$ for every $w\in\omega_H$ and every $\kappa\in\cO$ with $\lvert\kappa\rvert^{p-1}\le\lvert p\rvert$.
+\end{lemma}
+
+\begin{proof}
+Let $A=A_n$ and keep the notation of (F3). The reduction $\bar\varphi=\varphi\bmod q$ vanishes on $p^n\omega_H$ since $q\mid p^n$, so by (F3) it factors as $\bar\varphi=\psi\circ\pi_n$ with $\pi_n\colon\omega_H\to\omega_n$ the level map and $\psi\colon\omega_n\to\cO/q$. As $A$ is projective, $\psi\circ d\colon A\to\cO/q$ lifts to an $\cO$-linear $D\colon A\to\cO$. The Leibniz rule of (F3) gives
+\begin{equation}\label{eq:leib}
+q\mid D(ab)-\varepsilon(a)D(b)-\varepsilon(b)D(a)\qquad(a,b\in A).
+\end{equation}
+For a group-like $u\in A$, (F1) and (F2) give $\chi\in T_pH^D$ whose level-$n$ point corresponds to $u$, and (F4) gives $D(u)\equiv\psi(d(u))=\bar\varphi(\alpha_{H^D}(\chi))\equiv0\bmod q$. By Lemma~\ref{lem:int}, $y=q^{-1}D$ has bounded powers. By \eqref{eq:leib}, $\Delta^*y-y\boxtimes\varepsilon-\varepsilon\boxtimes y$ takes values in $\cO$ on pure tensors $a\otimes b$, hence on all of $A\otimes A$, so its norm is at most $1$. Lemma~\ref{lem:np} with $c=\kappa$ gives $\lVert\kappa y\rVert\le1$, that is $q\mid\kappa D(a)$ for all $a\in A$. Given $w\in\omega_H$, pick $a\in A$ with $d(a)=\pi_n(w)$. Then $D(a)\equiv\bar\varphi(w)\bmod q$, and $\kappa\varphi(w)\equiv\kappa D(a)\equiv0\bmod q$.
+\end{proof}
+
+\begin{theorem}[integral cokernel bound, every prime]\label{thm:A}
+Let $p$ be a prime, $C$ an algebraically closed field of characteristic zero, complete for an absolute value with $\lvert p\rvert<1$, and $\cO$ its valuation ring. Let $H$ be a $p$-divisible group over $\cO$ whose cotangent module $\omega_H$ is free of finite rank, and let $\alpha_{H^D}\colon\cO\otimes_{\mathbb Z_p}T_pH^D\to\omega_H$ be the $\cO$-linear extension of $\chi\mapsto\chi^*(dT/T)$. Then
+\[
+\kappa\,\omega_H\subseteq\alpha_{H^D}(\cO\otimes T_pH^D)\qquad\text{for every }\kappa\in\cO\text{ with }\lvert\kappa\rvert^{p-1}\le\lvert p\rvert .
+\]
+For $p=2$ the hypothesis is $\lvert\kappa\rvert\le\lvert2\rvert$, and it holds for $\kappa=2$ and $\kappa=4$.
+\end{theorem}
+
+\begin{proof}
+Let $S=\alpha_{H^D}(\cO\otimes T_pH^D)$. It is spanned by the images $g_1,\dots,g_m$ of a $\mathbb Z_p$-basis of $T_pH^D$ (F2). Fix a basis of $\omega_H$ and apply (F5) to the matrix of the $g_k$. This gives a basis $e_1,\dots,e_r$ of $\omega_H$ with coordinate functionals $\varphi_j$ and elements $d_j\in\cO$ such that $d_je_j\in S$ and $d_j\mid\varphi_j(s)$ for every $s\in S$. If $\kappa=0$ there is nothing to prove. Otherwise $\cO$ is $p$-adically separated, so there is $n$ with $p^n\nmid\kappa$. Fix $j$. If $d_j\mid p^n$, Lemma~\ref{lem:level} with $q=d_j$ and $\varphi=\varphi_j$ gives $d_j\mid\kappa\varphi_j(e_j)=\kappa$, so $\kappa e_j=(\kappa/d_j)\,d_je_j\in S$. If $d_j\nmid p^n$, then $p^n\mid d_j$ because $\cO$ is a valuation ring, so $p^n\mid\varphi_j(s)$ for all $s\in S$, and Lemma~\ref{lem:level} with $q=p^n$ gives $p^n\mid\kappa$, which was excluded. So $\kappa e_j\in S$ for every $j$, and $\kappa\,\omega_H\subseteq S$.
+\end{proof}
+
+Applied to $H=G^D$, with $G^{DD}=G$, Theorem~\ref{thm:A} gives clause (i) of \lean{FarguesHodgeTate} for $\alpha_G$ at every prime, in the sharp form $\lvert\kappa\rvert\le\lvert p\rvert^{1/(p-1)}$. Applied to $H=G$ and transported by $\lambda$ it gives part (i) of Proposition~\ref{prop:live}.
+
+\begin{remark}[why $p=2$ is allowed, where the bound comes from, why $4$ suffices]
+The prime enters the argument in one place, Lemma~\ref{lem:leg}, which holds for every prime. The exponent $1/(p-1)$ is the radius of convergence of the exponential series, which is what the divided powers $\gamma_n(cy)$ measure in Lemma~\ref{lem:np}. At $p=2$ the theorem gives $\lvert\kappa\rvert\le\lvert2\rvert$, and $\lvert4\rvert=\lvert2\rvert^2<\lvert2\rvert$, so $\kappa=4$ is covered with one factor of $2$ to spare. Fargues's Chapter~II proves the same bound for odd $p$, and Theorem~\ref{thm:A} also covers that case, so the citation of Fargues for clause (i) becomes a printed confirmation for odd $p$.
+\end{remark}
+
+\begin{remark}[credit]
+The mechanism, a nearly primitive element of a finite Hopf algebra controlled through the convergence of the exponential, is the classical source of the exponent $1/(p-1)$ in integral $p$-adic Hodge theory. I did not locate a printed statement of Lemma~\ref{lem:np} in this form. The argument written here is the archive's, and it is credited to Alpöge and his colleagues.
+\end{remark}
+
+\section{Human proof of the kernel statement}\label{sec:ii}
+
+\begin{theorem}[Scholze--Weinstein 2013, Proposition 5.1.6(iii)]\label{thm:SW}
+Let $C$ be a complete algebraically closed extension of $\mathbb Q_p$, $G$ a $p$-divisible group over $\cO_C$ and $T=T_pG$. The sequence
+\[
+0\to\operatorname{Lie}G\otimes C(1)\xrightarrow{\alpha_{G^D}^\vee(1)}T\otimes C\xrightarrow{\alpha_G}(\operatorname{Lie}G^D\otimes C)^\vee\to0
+\]
+is exact.
+\end{theorem}
+
+The arXiv statement has no hypothesis $p\ne2$, and the paper treats $p=2$ explicitly where its Dieudonné theory needs it (Lemma~4.2.2, where $w^4$ replaces $w^p$, and Lemma~4.2.6). The paper says part (iii) is taken from Fargues's Chapter~II, Appendix~C, and also proves it, reducing exactness to $\alpha_G\circ\alpha_{G^D}^\vee(1)=0$ and checking this for $T\otimes\mathbb Q_p/\mathbb Z_p$ through $t=\log[\varepsilon]$. Here $(\operatorname{Lie}G^D)^\vee=\omega_{G^D}$ and $\alpha_G$ is the map of Section~\ref{sec:live}.
+
+\begin{lemma}[saturation, B-FHT.1]\label{lem:sat}
+Let $\cO$ be a valuation ring with fraction field $C$, $M$ a free $\cO$-module of finite rank and $N$ a free $\cO$-module. For an $\cO$-linear $g\colon M\to N$, $\ker g=M\cap\ker(g_C)$ and $C\cdot\ker g=\ker(g_C)$ inside $M_C=M\otimes C$.
+\end{lemma}
+
+\begin{proof}
+If $x\in M$ and $g_C(x)=0$, then $g(x)\in N$ maps to zero in $N_C$, and $N$ is torsion-free, so $g(x)=0$. If $z\in\ker g_C$, choose $a\in\cO\setminus\{0\}$ with $az\in M$. Then $az\in M\cap\ker g_C=\ker g$, so $z\in C\cdot\ker g$.
+\end{proof}
+
+\begin{proposition}[kernel orthogonality, every prime]\label{prop:B}
+Let $C$ be a complete algebraically closed extension of $\mathbb Q_p$ and $G$ a $p$-divisible group over $\cO=\cO_C$ with $\omega_G$ and $\omega_{G^D}$ free of finite rank. Let $T=T_pG$, $T'=T_pG^D$, let $\zeta$ be a compatible system of primitive $p^n$-th roots of unity, and let $B$ be the $\cO$-bilinear form on $(\cO\otimes T)\times(\cO\otimes T')$ with $e(x,\chi)=\zeta^{B(x,\chi)}$ for $x\in T$, $\chi\in T'$. Then
+\[
+\ker(\alpha_G\otimes\cO)=\{x\in\cO\otimes T : B(x,y)=0\text{ for all }y\in\ker(\alpha_{G^D}\otimes\cO)\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Write $\alpha=\alpha_G\otimes\cO$ and $\alpha'=\alpha_{G^D}\otimes\cO$. The Weil pairing is perfect, so $B_C$ is a perfect pairing between $T\otimes C$ and $T'\otimes C$, and $\alpha_{G^D}^\vee(1)$ in Theorem~\ref{thm:SW} is the transpose of $\alpha'_C$ for it. The image of a transpose is the annihilator of the kernel, so Theorem~\ref{thm:SW} says $\ker\alpha_C=(\ker\alpha'_C)^\perp$. By Lemma~\ref{lem:sat}, $\ker\alpha=(\cO\otimes T)\cap\ker\alpha_C$ and $\ker\alpha'_C=C\cdot\ker\alpha'$. For $x\in\cO\otimes T$, bilinearity gives $B(x,\ker\alpha')=0$ if and only if $B_C(x,\ker\alpha'_C)=0$. Hence
+\[
+\{x : B(x,\ker\alpha')=0\}=(\cO\otimes T)\cap(\ker\alpha'_C)^\perp=(\cO\otimes T)\cap\ker\alpha_C=\ker\alpha .
+\]
+The choice of $\zeta$ rescales $B$ by a unit of $\mathbb Z_p$, which does not change an orthogonal.
+\end{proof}
+
+At $p=2$ this is clause (ii) of \lean{FarguesHodgeTate}, that is \lean{FarguesExact}. Freeness of $\omega_G$ and $\omega_{G^D}$ is standard (Messing, Chapter~II), and the archive proves it in \lean{pDivGroup_omega_finite_free_and_p_sq_mem_dlog_span}.
+
+\begin{proposition}[Lagrangian property, every prime]\label{prop:C}
+Let $C$, $\cO$ and $G$ be as in Proposition~\ref{prop:B}, with $G$ of height $h$, $\omega_G$ free of rank $h/2$, and $\lambda\colon G\to G^D$ a homomorphism with $T\lambda$ bijective such that the form $B$ on $\cO\otimes T$ defined by $e(y,\lambda x)=\zeta^{B(x,y)}$ is alternating. Let $f=\alpha_{G^D}\circ(1\otimes T\lambda)$. Then $\kappa\,\omega_G\subseteq f(\cO\otimes T)$ for every $\kappa\in\cO$ with $\lvert\kappa\rvert^{p-1}\le\lvert p\rvert$, and $\ker f=\{x : B(x,\ker f)=0\}$.
+\end{proposition}
+
+\begin{proof}
+Since $T\lambda$ is bijective, the first claim is Theorem~\ref{thm:A} for $H=G$. Put $M=\cO\otimes T$, $W=\ker f$ and $N=\ker\alpha$, and for a submodule $S\subseteq M$ write $\dim S$ for $\dim_C(C\cdot S)$. Functoriality of the Hodge--Tate map gives $\alpha_{G^D}\circ T\lambda=(\lambda^D)^*\circ\alpha_G$, and an alternating $B$ means $\lambda^D=-\lambda$ under $G^{DD}=G$. So $f=-\lambda^*\circ\alpha_G$ and $N\subseteq W$. (The archive proves this identity in \lean{tateMap_dualHom_bidual}.) For $y\in M$, $\lambda y\in\ker\alpha'$ if and only if $y\in W$, and $B_e(x,\lambda y)=B(y,x)=-B(x,y)$, where $B_e$ is the form of Proposition~\ref{prop:B}. So Proposition~\ref{prop:B} reads $N=\{x\in M : B(x,W)=0\}$. Take $\kappa\ne0$ as in the first claim. Then $C\cdot f(M)\supseteq\omega_G\otimes C$, so $\dim f(M)\ge h/2$ and $\dim W\le h/2$. The form $B$ is perfect because $e$ is perfect and $T\lambda$ is bijective, and the argument of Proposition~\ref{prop:B} gives $N=M\cap(C\cdot W)^\perp$, hence $C\cdot N=(C\cdot W)^\perp$ and $\dim N=h-\dim W\ge\dim W$. With $N\subseteq W$ this forces $C\cdot N=C\cdot W$. If $x\in W$ there is $a\ne0$ with $ax\in N$, and $N$ is saturated, being an orthogonal, so $x\in N$. Hence $W=N=\{x : B(x,W)=0\}$. This is the argument of \lean{le_of_finrank}.
+\end{proof}
+
+At $p=2$, Proposition~\ref{prop:C} is Proposition~\ref{prop:live}.
+
+\section{The PC-2 application}\label{sec:pc2}
+
+Proposition 2.B(ii) of PC-2 asks that dominant weights be nef on the fibres of the root model $M(B,c)$ at every $\ell\in S_B=\{\ell\le B\}\cup\texttt{bad}$, and \lean{RootTower.two_mem} puts $2\in\texttt{bad}$. The chain is as follows.
+\begin{enumerate}[nosep]
+\item \lean{or_m1nef} (\texttt{AS/Proofs/DivisibilityProofs/GoodTowerM1Nef.lean}) takes \lean{FarguesHodgeTate} from \lean{Top.Given} and calls \lean{rootModel_nefAt_of_hodgeCpt} at each $\ell\in S_B$.
+\item \lean{rootModel_nefAt_of_hodgeCpt} calls \lean{trivFlagMod_rootLines_model} with the ring $o=\mathbb Z_{(\ell)}$ inside the function field, and \lean{triv_flag_mod_of_hodge_tate_free_of_root_lines} produces, on each chart of the Hodge component $\mathfrak M$, the constant $\kappa$ of \lean{IsCp}, so $\kappa=4$ at $\ell=2$, with $\kappa\mid\ell^2$ in the chart ring.
+\item At a point of the chart over $\mathbb Z_\ell$, \lean{PointHT} at $\kappa$ gives an \lean{HTPoint}, a lattice $\omega$ and a Hodge--Tate map $\operatorname{ht}$ with $\kappa\,\omega\subseteq\operatorname{ht}(T)$ and $\ker\operatorname{ht}$ Lagrangian. These are the two parts of Proposition~\ref{prop:live}, through \lean{exists_HTPoint} and \lean{dlog_lagrangian}.
+\item \lean{chart_sequence} uses $\kappa\,\ell^{R_\ell-2}\mid\ell^{R_\ell}$ with $R_\ell=4$ to make the chart Hodge--Tate sequence exact modulo $\ell^{R_\ell-2}=\ell^2$. This is where the factor $\ell^2$ is reserved, and $\kappa=4$ at $\ell=2$ uses all of it.
+\item The resulting \lean{TrivFlagMod} modulo $\ell^2$ implies \lean{TrivFlagMod} modulo $\ell$, and \lean{trivflag_nef_fibre} turns it into \lean{NefAt}, nefness of dominant weights on the fibre at $\ell$.
+\end{enumerate}
+
+Proposition 2.A(ii) at $\ell\in S_B$ (\lean{OmVB}) and the Hodge--Tate sandwich used by \lean{has_ref} reach the same \lean{PointHT} through \lean{exists_sandwich_of_hodge_tate_free}, so the closure below covers them at $\ell=2$ as well. The log-denominator bound weights $\ell=2$ by \lean{htExp}$(2)=2=v_2(4)$ and odd $\ell$ by $1/(\ell-1)$. This is the normalization PC-2 already uses in $\mathrm{cost}_2(B)$, and nothing in it changes. With the sharp bound one could take $\kappa=2$ and \lean{htExp}$(2)=1$, which PC-2 does not need.
+
+The normalizations are compatible. Theorem~\ref{thm:A} needs $\lvert\kappa\rvert\le\lvert2\rvert$, PC-2 uses $\kappa=4$, and \lean{IsHTConst} checks exactly $\lvert4\rvert\le\lvert2\rvert$. Proposition~\ref{prop:B} is insensitive to the choice of $\zeta$, and PC-2 normalizes the pairing by the compatible system $\zeta$ of \lean{PointHT}.
+
+\section{Source map}
+
+{\small\begin{longtable}{L{3.6cm}L{5.4cm}L{5.8cm}}
+\toprule
+Source & What it contributes & Status at $p=2$\\
+\midrule
+Fargues, Progr.\ Math.\ 262 (2008), Ch.~II, Thm~II.1.1 & cokernel killed by $p^{1/(p-1)}$ and the complex property & standing hypothesis $p\ne2$, so it contributes nothing at $p=2$. For odd $p$ it is a printed confirmation of Theorem~\ref{thm:A} and of Proposition~\ref{prop:B}\\
+Scholze--Weinstein, Camb.\ J.\ Math.\ 1 (2013), Prop.~5.1.6(iii) & rational exactness of the Hodge--Tate sequence over $\cO_C$ & the one external input of R-2, no $p\ne2$ hypothesis\\
+Scholze--Weinstein, Prop.~4.3.6 & $p^{1/(p-1)+\epsilon}$ bound over perfectoid $(T,T^+)$ & not used. Its proof for $(C,\cO_C)$ is Fargues's Thm~II.1.1, so it does not settle $p=2$ independently\\
+Anschütz--Le Bras, Forum Math.\ Pi 11 (2023), Thm~1.4.4 (= 4.6.10), Rem.~1.4.2, §5.4 & prismatic Dieudonné module over $A_{\inf}(\cO_C)$, Hodge filtration, étale comparison & the shape of \lean{Published.PrismaticDieudonneHodge}, which the archive's proof of \lean{FarguesExact} uses. No restriction on $p$. Not needed on the human route\\
+Tate (1967), Messing (LNM 264) & facts (F1) to (F4), freeness of $\omega$ & standard, all $p$\\
+Kaplansky (1949) & (F5), Smith normal form over a valuation ring & standard\\
+Legendre & Lemma~\ref{lem:leg} & all $p$\\
+Archive (Alpöge and colleagues) & Lemmas~\ref{lem:np}, \ref{lem:int}, \ref{lem:level}, Theorem~\ref{thm:A}, Proposition~\ref{prop:C} & reconstructed above\\
+\bottomrule
+\end{longtable}}
+
+\section{Verdict}
+
+\textbf{A.} The exact $p=2$ proposition is Proposition~\ref{prop:live}. It splits into Theorem~\ref{thm:A} at $p=2$ ($\lvert\kappa\rvert\le\lvert2\rvert$, used with $\kappa=4$) and Proposition~\ref{prop:B} at $p=2$, combined in Proposition~\ref{prop:C}.
+
+\textbf{B.} The human proof is Sections~\ref{sec:i} and~\ref{sec:ii}. The cokernel bound is proved in full from standard facts. The kernel statement is proved from Theorem~\ref{thm:SW} by the saturation lemma.
+
+\textbf{C.} Fargues contributes nothing at $p=2$. Scholze--Weinstein, Proposition~5.1.6(iii), is the one published theorem on the human route, used at the rational level. Anschütz--Le Bras is the published model of the archive's route to clause (ii), which the human proof does not need.
+
+\textbf{D.} PC-2 consumes Proposition~\ref{prop:live} through \lean{PointHT} at $\kappa=4$, in Proposition 2.B(ii) at $\ell=2$, and in 2.A(ii) and the sandwich at $\ell=2$ (Section~\ref{sec:pc2}).
+
+\textbf{E.} Classification of R-2: \textbf{CLOSED INTERNALLY USING PUBLISHED INPUT.} The integral statement at $p=2$ needs no printed source. Clause (i) is closed internally from standard facts. Clause (ii) is closed internally from the rational exactness theorem of Scholze--Weinstein, which is printed for all $p$.
+
+\medskip
+\textbf{Is R-2 closed at the human-proof boundary? YES.}
+\medskip
+
+Three items remain, and none of them is a gap in the human proof. Proposition~5.1.6(iii) was read through a page fetch of arXiv:1211.6357v2, so a check against the journal version, and of its proof at $p=2$, belongs with the other literature-verification entries. The internal proof of \lean{PrismaticDieudonneHodge} from window and frame data was not opened, and the human route does not use it. Freeness of $\omega_G$ at the points used by PC-2 comes from \lean{lie_free_finite} inside the semi-abelian torsion package of PC-1 and PC-2, outside R-2.
+
+\end{document}

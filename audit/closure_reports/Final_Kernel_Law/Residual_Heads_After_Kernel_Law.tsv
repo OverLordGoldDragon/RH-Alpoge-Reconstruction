@@ -1,0 +1,24 @@
+package	id	head	ledger_exclusive_theorems	recount	after_kernel_law	status_this_pass	mechanism_or_note
+exBL/bwit	W1 (was X1)	GlobalTheory.Mem.R3.SelC.square_integrable_columns_of_witnesses	313	313	64	RESIDUAL (column reading)	kernel core hyps_of_isTw/chTh_ok_chi closed by Proposition A (249 thm); remaining: colRecC glue, chKerC_congr, jetK_chi, exists_eNu, isSelfDualLattice_normOne_ideal_rankOne, StepZero.majAt_eq_classSum, exists_read_fam, DecoFin/EvRowSurjective leaves; normal-form leaf idxMatNF_of_isTw + twNF_imp_matNF (5)
+exBL/bwit	(X1 core)	GlobalTheory.Mem.Col2.TC.RcHyp.hyps_of_isTw / chTh_ok_chi	254	254	5	CLOSED except normal-form leaf	ThEquivP of every step kernel = Proposition A(iii): transport (theta_coset_indicator_natural), base-vector covariance (eqP_car), chi-law, product formula (muProdLaw_of, md_prod), jet chain rule (jetMap_pullD), weight law; admissibility (stepC_ok_deg, jetAddDeg_of) read in full
+exBL/bwit	W2 (was X7)	GlobalTheory.Mem.Top.Bl.WPt.exists_pinned_spectral_data_compatible + exists_kernel_spectral_data_at_witnesses	95	95	95	RESIDUAL	untouched
+exBL/bwit	W3 (was X2 leaf)	GlobalTheory.T.reFace_zero_part_conventions_chosen_again	30	36	36	RESIDUAL	untouched
+R4-D	D1	dat_exists children (row_pair_property, row_pair_relation_alt_alt, twist_quadratic_value)	741	735	735	RESIDUAL	untouched
+R4-D	D2	exists_good, commutation_identity, commutation_property	571	147	147	RESIDUAL	untouched (recount resolves exists_good to one declaration; ledger value kept in totals)
+R4-D	D3	chain_step_value, chain_step_identity, exists_volume_constant	516	515	515	RESIDUAL	untouched
+R4-D	D5	GlobalTheory.AdForm.twS_ramL	182	181	181	RESIDUAL	untouched
+R4-D	D6	GlobalTheory.KRamT.kernel_keeps_ramT	97	96	0	CLOSED (disappears)	Proposition A(iv) (ent_smul via th_move, scal_theta, opOf_equiv) + diamond invariance (th_dia, rho_dia) + weight preservation (kmap_mem_valC, sharp_mem_range) + averaging argument; all read in full or reduced to Proposition A
+R4-D	D7	GlobalTheory.QVecJoin.step_mid / step_top	88	83	83	RESIDUAL	untouched
+R4-D	D8	GlobalTheory.T.true_geometry_row_column_entry_alt	61	46	46	RESIDUAL	untouched
+R4-D	D9	GlobalTheory.T.true_geometry_twist_value_alt	51	43	43	RESIDUAL	untouched
+R4-E	E1a	thetaKernel_eq_jet_thC leaves: four_expand, heisO_halfA_eq, heisO_conjHalf_eq, periodLatticeHalves_reps_finite_index, stdChar_symplectic_halfPeriodLattice_eq_one (+ jet/parity glue)	204	191	191	MECHANISM RECONSTRUCTED; leaves remain	not an instance of Proposition A; Proposition E: Weil-datum Heisenberg intertwining, finite Fourier expansion at split places, half-component vacuum identities, reading map intertwines rational Heisenberg translates
+R4-E	E1b	movedDatum_eq_finiteDatum_representativePair (tw_resid_datum) + chr_moves_eq_rho_base	-	13 (+102 shared)	13 (+102 shared)	RESIDUAL (newly counted shared part)	datum transport under finite adelic moves (rational approximation); determinant-root characters; the 102 are shared by R4-D and R4-E and were counted under no head
+R4-E	E1c	GlobalTheory.AdForm.LevLaw.lev_law + clsKL_real	97+13	103	103	RESIDUAL	untouched
+R4-E	E2	GlobalTheory.AdForm.exists_clsT_of_pinTop	85	85	85	RESIDUAL	untouched
+R4-E	E3	GlobalTheory.AdForm.JetScales.exists_jetS	35	35	35	RESIDUAL	untouched
+R4-E	E4	GlobalTheory.AdForm.realOf_is	29	29	29	RESIDUAL	untouched
+R4-E	E5	GlobalTheory.AdForm.exists_readsG_of_level	27	27	27	RESIDUAL	untouched
+shared	K-a	IntegralLatticeDensity.rational_integrality_link / hermitian_form_integral_values / arithmetic_hermitian_form	-	105	105	LEAF (statement level, newly counted)	q = (sqrt d/2) H integral on Lambda(L,L'): Riemann form of the CM elliptic lattice times the trace form
+shared	K-b	IntegralLatticeDensity.SO.stdOK	-	41	41	LEAF (statement level, newly counted)	standard data: Lambda(std,std) self-dual, alpha semicharacter, theta_0 spans the theta space
+shared	K-c	split data inside sqSplit_of, muOneL_of, muOneR_of	-	97	97	LEAF (statement level, newly counted)	move triangles and squares are split, so Weil's triple constant is 1
+shared	(K closed)	Weil constants J1/J2, reduction_of/e3a/e3b, chi-law and eqLaw wrappers, transport and jets	-	208	0	CLOSED	Section B of the report (Lemma W: Cayley determinant and Gauss sum, exact because ranks are even)

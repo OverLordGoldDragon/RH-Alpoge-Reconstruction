@@ -1,0 +1,301 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm,amssymb}
+\IfFileExists{newtxtext.sty}{\usepackage{newtxtext,newtxmath}}{\usepackage{lmodern}}
+\usepackage{booktabs,array,longtable}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\ExplSyntaxOn
+\tl_new:N \l__rep_name_tl
+\cs_new_protected:Npn \rep_name:n #1
+  {
+    \tl_set:Nx \l__rep_name_tl { \tl_to_str:n {#1} }
+    \regex_replace_all:nnN { ([a-z0-9])([A-Z]) } { \1\c{allowbreak}\2 } \l__rep_name_tl
+    \regex_replace_all:nnN { ([\/\_\.]) } { \1\c{allowbreak} } \l__rep_name_tl
+    \texttt { \l__rep_name_tl }
+  }
+\NewDocumentCommand{\lean}{m}{\rep_name:n {#1}}
+\NewDocumentCommand{\Lpath}{m}{\rep_name:n {#1}}
+\ExplSyntaxOff
+\newcommand{\FR}[1]{\textsf{FR-#1}}
+\newcommand{\PC}[1]{\textsf{PC-#1}}
+\newcommand{\Ok}{\mathcal O}
+\newcommand{\rd}{\mathrm{rd}}
+\newcommand{\N}{\mathrm N}
+\newcommand{\vol}{\mathrm{vol}}
+\newtheorem{prop}{Proposition}
+\renewcommand{\theprop}{P\arabic{prop}}
+\theoremstyle{remark}
+\newtheorem*{status}{Status}
+\sloppy
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+\title{\PC{5} as a human-proof proposition package\\ \large The \FR{12} counting, mass and local-model layer}
+\author{Agent 5. Working report for Jimmie Adriazola, prepared by Claude}
+\date{22 November 2026}
+\begin{document}
+\maketitle
+
+\noindent This note replaces theorem-by-theorem descent through the implementation of \FR{12} with a list of mathematical propositions. Each proposition is stated with its hypotheses and conclusion, the mechanism of its proof, the published theorems it uses, its exact consumer in the archive, what I reconstructed, and what Lean implementation stays unread. It builds on \Lpath{Final_Six_Wave_5.pdf} of this folder and on the multiplicity-engine assembly read by Final Wave~B. Nothing in \Lpath{src/lean} was built or run, and no existing file was edited. \Lpath{FM/} abbreviates \Lpath{Development/AbelianVarietyTheory/Proofs/FlagMeasures/}, and \Lpath{SWL/} abbreviates \Lpath{Development/AbelianVarietyTheory/BlockTheory/SiegelWeilLocal/}.
+
+\section{Setting}
+
+$E$ is a CM field, unramified over its totally real subfield $F$, with $[F:\mathbb Q]=f$, root discriminant $\rd_E$ and $\N$ the absolute norm. $V$ is a nondegenerate hermitian space over $E$ of dimension $n$ and signature $(p,q)$ at every real place, $G=\mathrm U(V)$, and $\Lambda\subset V$ is an $\Ok_E$-lattice. Haar measures are gauge-normalized (\lean{IsGaugeAll}), $\mathcal F\subset G(\mathbb A_F)$ is a fundamental domain for $G(F)$, and $\mu$ the corresponding measure. For $x\in G(\mathbb A_F)$, $\Lambda_x$ is the translated lattice with its archimedean metrics, and its Harder--Narasimhan (canonical) filtration has slopes; $\mathrm{least}(x)$ is its smallest size and \lean{stepLt}$(x,\tfrac12)$ the largest sublattice with all sizes below $\tfrac12$. A \emph{type} $(j,\tau)$ records the ranks $j_i$ and sizes $\tau_i<\tfrac12$ of the steps of the canonical isotropic flag. Throughout $L=nf\log n$.
+
+\section{The propositions}
+
+\subsection*{A. Lattice counting for the loop rows of \FR{12}(a)}
+
+\begin{prop}[\lean{count_terms_gramClass_over_sublattice}]\label{p:ct}
+Let $\Lambda$ be a unimodular hermitian $\Ok_E$-lattice, $X\subset V$ totally isotropic of rank $r_S$, $z\in\Lambda$ primitive with $h(z,z)=-T$ for a rational prime $T$, and $L_0$ the projected definite lattice of the complement. Fix a Gram matrix $Z$ of size $r_S+1$ with $\N(\text{row minor})\le Q$ and $\N(G_Z)\le Q$, a sublattice $P\le L_0$ of corank $s\ge1$ with $\det P\le D_e$. If $N_T^2\le H$, $D_e\le H^3$ and $Q\le H^2$ with $N_T=T^f$, then the number of terminal flags $F'$ with $\hat Z(F,F')$ unitriangularly equivalent to $Z$ and $P\subseteq\mathrm{seen}(F,F')$, counted modulo frame-fixing integral unipotents, is at most
+\[
+N_T^{2r_S}D_e^{r_S}\,9^{sf}\,H^{9s+9sr_S+16r_S^2}.
+\]
+\end{prop}
+\emph{Mechanism.} $\det L_0=N_T$ by unimodular duality on the saturated sublattice $\Lambda\cap(X+Ez)$. Each class gives a lift $\varphi\colon P\to X_\Lambda$, unique because a row minor of $Z$ is nonzero; modulo Eichler transvections there are at most $(N_T^2Q)^{r_S}$ lifts, by $[L_0^\#:L_0]=N_T^2$ and $\#\mathrm{Hom}(P,X)/\mathrm{Hom}(M,X)=[M:P]^{\mathrm{rk}X}$. For a fixed lift the $W$-components satisfy $T\,h(y,y)=G_Z$ for the cofactor combination $y$; a product-ball packing bound counts $y$ by $9^{sf}(D_e^2N_T^2Q)^{s}$, the residue modulo the row space by $(D_e^2N_T^2Q)^{sr_S}$, and the skew solutions $x^{\mathsf H}Y+Y^{\mathsf H}x=0$ modulo central unipotents by $Q^{2r_S^2}$.
+\emph{Named inputs.} Minkowski's class-number bound; Cramer's rule; Ext over Dedekind domains.
+\emph{Downstream.} The three loop lemmas of \ref{p:loop}.
+\begin{status}Reconstructed in full, constants checked (Section~2 of \Lpath{Final_Six_Wave_5.pdf}). Unread formal implementation: none of mathematical content; the library statements \lean{kernelRowSpace}, \lean{cofVecAdjugate}, \lean{omegaNorm}, \lean{homRestrictIndex} were read as statements.\end{status}
+
+\begin{prop}[Row lattices over a genus, \lean{mean_rows_eq_mean_genus}]\label{p:fib}
+Let $T\ge3$ be a prime splitting completely in $E$. For every isometry-invariant function $N$ on lattices of the definite space,
+\[
+\Bigl(\sum_{\Lambda}w(\Lambda)\,N(L_0(\Lambda))\Bigr)\mathrm{mass}(L_0)=\Bigl(\sum_\Lambda w(\Lambda)\Bigr)\sum_{L'\in\mathrm{gen}(L_0)}\frac{N(L')}{\#\mathrm{Aut}\,L'},
+\]
+the left sum over representatives of row lattices with weights $1/\#\mathrm{Aut}$.
+\end{prop}
+\emph{Mechanism.} The projection $\Lambda\mapsto L_0(\Lambda)$ lands in one genus; over each genus member there are exactly $(T-1)^f$ unimodular gluings of $L'\oplus\langle-T\rangle$, one choice of isotropic glue in $\mathbb F_T^\times$ at each of the $f$ split places; two row lattices with the same glued middle lattice are conjugate by an integral unipotent fixing the flag. Orbit-stabilizer on the fibration gives the identity, and $(T-1)^f$ cancels.
+\emph{Named inputs.} Jacobowitz's local classification of unimodular hermitian lattices (1962), Landherr's theorem (1936), weak approximation for $\mathrm U(V)$ at finitely many primes. All three are proved inside the archive.
+\emph{Downstream.} \lean{PairMean.main} (\ref{p:loop}).
+\begin{status}Fibration argument (\lean{rows_sum}) read and reconstructed. Unread: the bodies of \lean{RowGlue.main}, \lean{rowsLift}, \lean{RowsGenus.main}, \lean{GluingNum.gluingNum}, about $9{,}000$ lines implementing the three named inputs and the glue count.\end{status}
+
+\begin{prop}[Hermitian mass formula, \lean{MaxMass} and \lean{SiegelMassRatio}]\label{p:mass}
+For a CM field $E$ unramified over $F$ and each $n\ge1$ there is $c(E,n)>0$ such that every maximal integral lattice $M$ in a totally positive definite hermitian space of dimension $n$ has $\mathrm{mass}(M)=c(E,n)\,\lambda_{\max}(M)$, and for orthonormal lattices of ranks $m$ and $m-1$, $m\ge3$,
+\[
+\frac{\mathrm{mass}_m}{\mathrm{mass}_{m-1}}=\frac{\bigl((m-1)!\,(v_E/\pi)^m\bigr)^{f}}{\sqrt{(2v_E)^{f}}}\,L(m,\eta),\qquad v_E=\rd_E/2 .
+\]
+\end{prop}
+\emph{Mechanism.} Siegel's induction on rank. The genus sum $\sum_M\#\{v\in M:h(v,v)\le j^2\}/\#\mathrm{Aut}M$ is computed as $j\to\infty$ in two ways, by volume and by sorting vectors by norm with local density ratios and the singular series; equating leading terms gives the ratio.
+\emph{Named inputs.} Siegel's mass formula in Braun's hermitian form (Abh. Math. Sem. Hamburg 14, 1941) and the exact unitary mass formula (Shimura; Gan--Hanke--Yu, Duke Math. J. 107, 2001); the Hasse norm theorem for quadratic extensions (behind \lean{HermRepUnram}). Citations from memory.
+\emph{Downstream.} \ref{p:mean} through \lean{mass_integralLattices_discriminantOrder_le}; the induction step of \ref{p:vstep} uses the same right-hand side \lean{massRatioRightSide}.
+\begin{status}Top-level proof (\lean{MaxFormula.main}, \lean{massConst_all}, \lean{massConst_succ}) read. Unread: \lean{liStat}, \lean{Step.tendsto_left}, \lean{Step.tendsto_right} and the local-density library, about $25{,}000$ to $35{,}000$ lines. This is the natural stopping point at the published mass formula after a statement match.\end{status}
+
+\begin{prop}[Genus mean of primitive sublattices, \lean{mean_count_primitive_sublattices_over_genus}]\label{p:mean}
+Under the standing hypotheses, with $\log\rd_E\le L_{\mathrm{sc}}/c_0$ and $C\ge\max(16,1/c_0)$, for $2\le s\le k$, $d_e\ge1$ and $H\ge b^{Cm^2f}$,
+\[
+\sum_{L'\in\mathrm{gen}(L_0)}\frac{\#\mathrm{Prim}_{k-s}(L',d_e)}{\#\mathrm{Aut}L'}\le\mathrm{mass}(L_0)\Bigl(\frac{d_e}{N_T}\Bigr)^{k}(d_eN_T)^{Cs+C\log f}\,\Xi_s(H),
+\]
+with $\Xi_s=\mathrm{mass}_s\mathrm{mass}_{k-s}/\mathrm{mass}_k$ in the middle range and $(Ck)^{kf}(HN_T)^{Ck}$ at the ends.
+\end{prop}
+\emph{Mechanism.} An upper bound, not an asymptotic. Rank-$j$ subspaces of discriminant $n$ fall into few isometry orbits; Witt's extension theorem lets each orbit be counted by the product of the masses of the subspace and of its complement; each mass is bounded by \ref{p:mass} through $\mathrm{mass}(\text{disc }n)\le\mathrm{mass}_j\,n^{(j+l)/2}$; the ends are short-vector counts.
+\emph{Named inputs.} \ref{p:mass}; Witt's theorem for hermitian spaces. The Schmidt and Siegel mean-value theorems are not used.
+\emph{Downstream.} Hypotheses \lean{H1} of \lean{PairMean.main} and \lean{hP} of \lean{GenericMean.main}.
+\begin{status}Top two levels read (\lean{PrimMeanRow.main}, \lean{PrimMean.main}); the arithmetic \lean{num_mid}, \lean{num_top} checked. Unread: \lean{few_orbits_subspaces_hermitian_lattice_discriminant}, \lean{witt_extension_totally_definite_hermitian}, \lean{orbitStabilizerMass_subspace_cyclicDiscriminant_le}, \lean{StdMass}, \lean{CyclicGenus}, \lean{RowPerpMass}, \lean{PrimCount}.\end{status}
+
+\begin{prop}[Loop-row means: \lean{PairMean}, \lean{GenericMean}, \lean{partners_le}, \lean{height_bounds}]\label{p:loop}
+Under the standing hypotheses and \ref{p:ct}, \ref{p:fib}, \ref{p:mean}, the weighted means over row lattices of pair counts, generic counts and partner counts satisfy the polynomial bounds in $N_T$, $d_e$, $H$ stated in the four declarations, and every flag Gram matrix has a unitriangular representative whose minors are at most $4^{r+1}((r+1)!)^2(\sqrt{[E:\mathbb Q]}\,|d_E|^{1/[E:\mathbb Q]})^{2(r+1)}$ times the leading-minor sizes.
+\end{prop}
+\emph{Mechanism.} Each mean is a sum over sublattices $P$ of determinant $d_e$ of \ref{p:ct}, weighted by the genus mean \ref{p:mean} after \ref{p:fib}. The Gram reduction uses the covering radius of $\Ok_E$.
+\emph{Named inputs.} Minkowski's bound.
+\emph{Downstream.} \lean{RowCounts.uniform_counts} $\to$ \lean{LoopRowBoundsGap.rows_along_family} $\to$ the loop-row hypothesis \lean{hLp} of \lean{theoremS_link} ($\to$ \lean{LinkS}).
+\begin{status}All four top bodies read. Unread: about $4{,}000$ lines of small children (\lean{ExistsPartnerLift}, \lean{IdxNOneMulAbsNorm}, \lean{ExponentDivisorSumLe}, \lean{NormPowLeCardFlagQuotient}, \lean{ExistsZEquivGramBoundedMinors}).\end{status}
+
+\subsection*{B. Constants and record inequalities}
+
+\begin{prop}[Gap constant and record inequalities]\label{p:rec}
+(i) $16\cdot(10^6)^2\cdot(4\cdot11+6)=8\cdot10^{14}$. (ii) If $C\ge8\cdot10^{14}(A+4)$, $A\ge2C_g\ge0$, $C_l\ge2C$ and $\log\rd_E\le L_{\mathrm{sc}}/C_l$ with $L_{\mathrm{sc}}>1$, $C_l\ge2$, then $C\,r^{19}f^5(L_{\mathrm{sc}}+\log\rd_E)\le C_lr^{19}f^5L_{\mathrm{sc}}$, and $C_l\ge1.6\cdot10^{15}(C_g+4)$.
+(iii) For a family member at scale $x$ with $X=x^{\varepsilon/100}\ge\max(2C_l,2,5/\theta)$, $\theta=\varepsilon/100$, and $q,d\le X^{21}$, one has $\log\rd_E\le L_{\mathrm{sc}}/C_l$.
+\end{prop}
+\emph{Mechanism.} (ii) is $L+\log\rd_E\le2L$. (iii) is $C_l(1+3X/\theta+X^{21})\le X+\tfrac35X^3+X^{22}\le X^{100}=L_{\mathrm{sc}}$. The inequality $C_l\ge2C$ is a threshold of the ordered choice of family constants (\lean{FamP.Large} with \lean{linkThresholds}): $C_l=\min(C_{fL},C_w,C_\Delta,C_{\mathrm{Count}},C_{h0r},C_{\mathrm{gap}})$ and each is chosen after $C$.
+\emph{Downstream.} \lean{count_parameters_of_hyp} $\to$ \lean{CountTheoremHypotheses} $\to$ \lean{CountHyp} (gap field), and \lean{GramSize.main}, \lean{height_bounds}, \lean{PrimMeanRow.main} (as $\rd_E\le b$).
+\begin{status}Reconstructed and checked numerically. Remaining condition, owned by \PC{6}: the class of families contains \lean{Large} members with the size bounds \lean{SizeQD}.\end{status}
+
+\begin{prop}[\lean{NearUnip}]\label{p:nu}
+Let $g_0$ be a prime splitting completely in $E$ with $4n< g_0$, $0< c\le10^{-5}$, $\epsilon=c/(n^8f^2)$, $\delta=3\sqrt{n\epsilon}$. If $\gamma\in G(F)$ is integral at level $g_0$ and $\epsilon$-near the identity at every real place after conjugation by $x$, then $(\gamma-1)^n=0$, and $\delta<\tfrac14$, $\delta qnf\le\tfrac1{100}$ for $q^2\le n$.
+\end{prop}
+\emph{Mechanism.} $\gamma$ is unipotent modulo the radical ideal $g_0\Ok_E$, so $\mathrm{tr}\gamma^j\equiv n\pmod{g_0}$; nearness gives $\lvert\tau(\mathrm{tr}\gamma^j-n)\rvert\le3n< g_0$ at every embedding; a nonzero multiple of $g_0$ has a conjugate of size at least $g_0$, so $\mathrm{tr}\gamma^j=n$ for $j\le n$ and $\gamma$ is unipotent.
+\emph{Downstream.} \lean{near_terms_one_type} $\to$ \lean{nearModerate} $\to$ the near region of \ref{p:count}.
+\begin{status}Reconstructed in full (\lean{near_unipotent}, \Lpath{FM/ConjPowOfMulEqOne.lean:93}); call-site hypotheses come from \lean{CountHyp}. Nothing unread.\end{status}
+
+\subsection*{C. Local models of \FR{12}(g)}
+
+\begin{prop}[\lean{ClK}, \lean{localModelK_holds}]\label{p:clk}
+For each row level $i$ and finite set $Y$ of points there are finitely many places $p$, local points $\eta_p(x)$, local classes $\mathrm{cl}_p(x)$, scalars $d_p(x)$ and $a(x)\ge0$ with
+\[
+\mathrm{Kr}_i(x,y)=a(x)a(y)\prod_p[\mathrm{cl}_px=\mathrm{cl}_py]\,d_p(x)\overline{d_p(y)}\,K_p(\eta_px,\eta_py)\qquad(x,y\in Y).
+\]
+\end{prop}
+\emph{Mechanism.} The global kernel is defined as a restricted product of local kernels. At places outside a finite set $B\supseteq\bigcup_{x\in Y}\mathrm{bad}(x)$ the local data are spherical and $K_p(e,e)=1$ (\lean{kp_ePt}, \lean{ptUnitAE}); the levels $i=0$ and $i> r_S+1$ are degenerate. Positivity of each $K_p$ is the orbit decomposition $K_p(w,w')=\sum_{[C,e,\lambda]}B(w)\overline{B(w')}/\#\mathrm{Aut}$ (\lean{gram_kernel_identity}, read by Wave~B).
+\emph{Downstream.} \lean{LocalModelAt} $\to$ the row positivity \lean{RowsDomAt} $\to$ \lean{LinkS}.
+\begin{status}Mechanism and top-level case split read. Unread: the body of \lean{clK_core} in \Lpath{LocModel.lean} for the middle levels (about $6{,}700$ new lines with its children). Classical content: tensor factorization of a restricted product.\end{status}
+
+\begin{prop}[\lean{ClT}, \lean{localModelT_holds}]\label{p:clt}
+At the top level, $\mathrm{Kr}_{r_S+1}(h\vee t,\,h'\vee t')=0$ whenever $t\ne t'$ are nonzero.
+\end{prop}
+\emph{Mechanism.} The top-level kernel \lean{KtopG} is zero unless the two points have the same kind, and the kind of $h\vee t$ records $t$.
+\begin{status}Read in full (\Lpath{.../RankPointCounts/DataCut.lean:411}). Nothing unread.\end{status}
+
+\subsection*{D. The counting engine}
+
+The engine is one theorem, \lean{CountingTheorem} (\Lpath{SWL/LatticeCountingTheorem.lean:10}), proved by \lean{countingTheorem_of_volumeStep} (\Lpath{FM/UnitaryAutomorphicCountingOfCompactDualVolumeRat.lean:37}). Its assembly was reconstructed by Final Wave~B and is restated as \ref{p:count}. The propositions \ref{p:vstep} to \ref{p:rows} are its inputs.
+
+\begin{prop}[Volume step, \lean{VolumeStep}]\label{p:vstep}
+For $n\ge3$ and a sign $s$ with the corresponding signature entry positive, there are a hermitian space $V'$ of dimension $n-1$ with $V=V'\perp\langle\pm1\rangle$ and
+\[
+\frac{\vol_{\mathrm{gauge}}(G)}{\mathrm{volU}(n)^{f}}=\frac{\vol_{\mathrm{gauge}}(G')}{\mathrm{volU}(n-1)^{f}}\cdot\frac{\bigl((n-1)!\,(v_E/\pi)^n\bigr)^f}{\sqrt{(2v_E)^f}}\,L(n,\eta).
+\]
+\end{prop}
+with $\mathrm{volU}(m)=2^{m(m-1)/2}\prod_{l\le m}2\pi^l/(l-1)!$. \emph{Mechanism.} Weil's proof of the mass formula. Integrate the theta sum over vectors with $h(y,y)=\pm1$ against a Gaussian over $\mathcal F$. Siegel--Weil for one vector evaluates it as $\vol(\mathcal F)$ times a product of local densities (\lean{SiegelMean}); unfolding the same integral gives $\vol(G')$ times the archimedean Gaussian integral (\lean{GaugeUnfold}); equating gives the step. The chain is \lean{oneVectorCc_of_siegelWeil} $\to$ \lean{siegelMeanCc_of_oneVectorCc} (compactly supported test functions) $\to$ \lean{siegelMean_of_cc} (Gaussian limit) $\to$ \lean{volumeStep_of_siegelMean}.
+\emph{Named inputs.} V6, Siegel--Weil for unitary groups in Weil's convergent range ($2n< M$, coefficient form; Weil, Acta Math. 113, 1965; Ichino).
+\emph{Downstream.} \ref{p:absvol}, \ref{p:flag}, \ref{p:nonzero}, hence \ref{p:count}.
+\begin{status}\lean{oneVectorCc_of_siegelWeil} read in full; chain read at statement level. Unread: \lean{siegelMeanCc_of_oneVectorCc}, \lean{volumeStep_of_siegelMean}, about $25{,}000$ lines of measure-theoretic unfolding and approximation.\end{status}
+
+\begin{prop}[\lean{AbsoluteVolume}]\label{p:absvol}
+If $q^2\le n$, $n\ge8$, $X\ge2$, $\rd_E\le X$ and $2f\rd_E\le X^2$, then $\vol_{\mathrm{gauge}}(G)\le X^{n^2f}$.
+\end{prop}
+\emph{Mechanism.} Iterate \ref{p:vstep} down to rank two; each factor is at most $X^{O(m)f}$ by $(m-1)!\le m^m$, $v_E\le X$ and $L(m,\eta)\le\zeta(2)^{2f}$; the low-rank base is bounded by an explicit volume estimate. The exponents sum to at most $n^2f$. I did not read which base estimate the proof uses.
+\emph{Downstream.} Deep region of \ref{p:count}; finite dimensionality \lean{finiteDimensional_rowsSpace_discreteSeriesCount}.
+\begin{status}Statement and mechanism read. Unread: \lean{absoluteVolume_of_volumeStep} (about $4{,}600$ new lines).\end{status}
+
+\begin{prop}[Unfolding and flag measure, \lean{UnfoldBound} and \lean{FlagMeasureBound}]\label{p:flag}
+If $2q+2\le n$ and $j$ is a composition with $\sum j_i\le q$, then for measurable $B$ in the simplex,
+\[
+\frac{\mu\bigl(\{x\in\mathcal F:\ x\text{ has type }(j,\tau),\ \tau\in B\}\bigr)}{\mu(\mathcal F)}\le\kappa(E,p,q,j)\int_B\mathrm{dens}_{n,f,j}(\tau)\,d\tau,
+\]
+with $\mathrm{dens}=\mathrm{layerProd}(\tau)\prod_i2fj_i/\tau_i$ and $\kappa$ the explicit constant \lean{kapBd}.
+\end{prop}
+\emph{Mechanism.} The canonical isotropic flag of $\Lambda_x$ is unique, so $x$ of a given type lies in one Siegel set of the parabolic $P_j$ stabilizing it. Unfold $\mathcal F\cap\mathrm{type}(j)$ to $P_j(F)\backslash$ (Siegel set) and integrate in Iwasawa coordinates $G=NMK$ (\lean{IwasawaFormula}); the unipotent radical contributes its covolume, bounded by the sizes of the graded pieces (\lean{RadicalCovolume}); the Levi contributes $\vol\mathrm{GL}_{j_i}$ (Siegel's volume, \lean{GenLinVolume}) and the gauge volume of the rank $n-2\sum j_i$ group; the ratio to $\vol(G)$ is \lean{VolumeRatio} from \ref{p:vstep}.
+\emph{Named inputs.} Borel--Harish-Chandra reduction theory; Grayson--Stuhler canonical filtration of hermitian lattices (self-duality makes it isotropic); Siegel's volume of $\mathrm{GL}_j(\Ok_E)\backslash\mathrm{GL}_j(E_\infty)^1$.
+\emph{Downstream.} \ref{p:nonzero}, the near and far regions of \ref{p:count}.
+\begin{status}Statements and the assembly \lean{isotropicFlagProbabilityBound_of_volumeRatio} read at top level. Unread: \lean{unfoldBound}, \lean{IwasawaFormula}, \lean{RadicalCovolume} bodies.\end{status}
+
+\begin{prop}[\lean{ConstantBound}]\label{p:const}
+If $\sum j_i=J\le q$, $\log n\ge15$, $q^2\le n$, $\log(2v_E)\le e^{n}$ and $\log f\le\sqrt n$, then $\kappa(E,p,q,j)\le\exp(-\tfrac12Jnf\log n)$.
+\end{prop}
+\emph{Mechanism.} $\kappa$ is a product of $v_E^{-f\dim N_j/2}\le1$, a power of $2$ that is at most $1$, the ratio $\bigl(\vol\mathrm U(p)\vol\mathrm U(q)/\vol\mathrm U(p-J)\vol\mathrm U(q-J)\prod\vol\mathrm U(j_i)\bigr)^f$ with $\vol\mathrm U(m)=\prod_{l\le m}2\pi^l/(l-1)!$, residues of $\zeta_E$ and values $\zeta_E(l)$, $L(M,\eta)^{-1}$. Stirling gives $\log(\vol\mathrm U(p)/\vol\mathrm U(p-J))\le-J(p\log p-2.15p)$; the residue is at most $(e\log|d_E|/(2(2f-1)))^{2f-1}\le e^{(2f-1)(n+1)}$; the zeta and $L$ factors are at most $\zeta(2)^{O(fJ)}$. Since $p\ge n-\sqrt n$ and $\log n\ge15$, the total is at most $-\tfrac12Jnf\log n$.
+\emph{Named inputs.} Louboutin's bound for residues of Dedekind zeta functions (\lean{ResidueBound}; J. Number Theory, about 2000, cited from memory).
+\begin{status}Reconstructed here. Numerically checked with these crude bounds for $\log n\in\{15,17\}$, $f\in\{1,4,40\}$, $J$ from $1$ to $q$ and three composition shapes; the smallest ratio of the required to the obtained exponent is $1.54$. Unread: the Lean body of \lean{flag_explicit_constant_le_exp_neg_half}.\end{status}
+
+\begin{prop}[\lean{NonzeroFlagBound}]\label{p:nonzero}
+If $\log n\ge15$, $q^2\le n$, $\log\rd_E\le e^n$ and $\log f\le\sqrt n$, then
+\[
+\mu\bigl(\{x\in\mathcal F:\ \mathrm{stepLt}(x,\tfrac12)\ne0\}\bigr)/\mu(\mathcal F)\le e^{-L/3}.
+\]
+\end{prop}
+\emph{Mechanism.} A point with a short step has a type $(j,\tau)$ with $J=\sum j_i\in\lbrack1,q\rbrack$ (canonical isotropic flag). For each of the $2^{J-1}$ compositions of $J$, \ref{p:flag} with $\int\mathrm{dens}\le1$ (\lean{lintegral_flagSizeDensity_le_one}) and \ref{p:const} give $e^{-JL/2}$. Summing, $\sum_{J\ge1}2^{J-1}e^{-JL/2}\le e^{-L/2}/(1-2e^{-L/2})\le e^{-L/3}$ for $L\ge15$.
+\emph{Downstream.} \lean{flagRare_of_nonzeroFlagBound} $\to$ rare region of \ref{p:count}.
+\begin{status}Top-level body of \lean{nonzeroFlagBound} read in full and reconstructed. Unread: the canonical-flag existence and uniqueness (\lean{CanonicalFlagExistsUniqueSemistable}) and \lean{lintegral_flagSizeDensity_le_one}.\end{status}
+
+\begin{prop}[\lean{near_count}]\label{p:near}
+If $0<\delta<\tfrac14$ and $x$ has type $(j,\tau)$, then $\{\gamma\in G(F):\ x^{-1}\gamma x\in K_f,\ \lVert x^{-1}\gamma x-1\rVert_v\le\delta\ \forall v\}$ is finite with at most $\mathrm{layerProd}_{n,f,j}(\tau;\,1+12\delta/\cdot)$ elements.
+\end{prop}
+\emph{Mechanism.} An element close to the identity preserves the canonical filtration of $\Lambda_x$ (its steps are determined by sizes, and $\delta<\tfrac14$ cannot move a vector across a gap of size ratio). It therefore acts on each graded piece and between pieces by maps of size at most $1+O(\delta)$ relative to the size ratios $\tau_i/\tau_k$, $\tau_i\tau_k$; a packing count in each block gives the factor $(1+12\delta/\lambda)$ to the power of the block dimension.
+\emph{Named inputs.} Grayson--Stuhler canonical filtration; lattice-point packing.
+\emph{Downstream.} \lean{near_terms_one_type} $\to$ near region of \ref{p:count} (bound $e^{-L/4}$ times the main term).
+\begin{status}Statement and import structure read. Unread: the $584$-line \Lpath{FM/PowLePowRatio.lean} body and its children (about $10{,}800$ lines). The constant $12$ is not checked, but it enters only as $(1+12\delta/\lambda)$ against a decay of order $e^{-L}$.\end{status}
+
+\begin{prop}[\lean{DeepKernelBound}]\label{p:deep}
+Under \lean{CountHyp}, for $x$ with $\mathrm{least}(x)<\tau^*$ the diagonal kernel $K(x,x)=\sum_\gamma\varphi(x^{-1}\gamma x)$ satisfies the explicit bound of \Lpath{SWL/DeepKernelBound.lean:20}, polynomial in $1/\mathrm{least}(x)$, $g$, $\rd_E$, $b$, with exponent $O(qn^2f)$.
+\end{prop}
+\emph{Mechanism.} \lean{PtBound} bounds $\lvert\varphi\rvert$ by the discrete-series decay; the number of $\gamma$ in each shell around the deep point is counted by lattice points of the translated lattice in balls, which grows polynomially in the inverse first minimum. The deep region has measure $e^{-L/3}$ by \ref{p:nonzero} and finite total volume by \ref{p:absvol}.
+\emph{Named inputs.} Discrete-series decay (Harish-Chandra; Schmid, through \lean{DecGap}, closed by Final LowerRisk).
+\emph{Downstream.} \lean{deepRegion_kernelDiagonal_bound} $\to$ deep region of \ref{p:count}.
+\begin{status}Statement read; Wave~B read the deep assembly. Unread: \lean{deep_kernel_bound_of_ptBound} (about $37{,}000$ new lines with children).\end{status}
+
+\begin{prop}[Row idempotents: \lean{RowsAdd}, \lean{RowsGood}, \lean{EtUnip}]\label{p:rows}
+For the label idempotents $e_T(S)$ on $G(\mathbb A_f)$: the counted dimension is additive over labels, $\dim(S)=\sum_{t\in S}\dim\{t\}$; the number of row indices with label $t$ equals $\dim\{t\}$ for good labels; and the support of $e_T(\mathrm{cyl}_k S)$ consists of elements unipotent modulo $g_{1-k}$.
+\end{prop}
+\emph{Mechanism.} The $e_T(\{t\})$ are orthogonal projections summing to $e_T(S)$, so the traces add; the row dictionary matches labels with Gelfand--Graev type idempotents on $\mathrm{GL}_r(\mathbb F_g)$; the support statement is the reduction of the idempotent modulo $g$.
+\emph{Downstream.} \lean{allRows_at_record} $\to$ \lean{irr_row_closed} $\to$ \lean{LinkIRR}.
+\begin{status}Definitions read. Unread: about $21{,}000$ lines, mostly \lean{rowsGood_holds}. Hypotheses \lean{RowsFinDim} and \lean{GapHyp} are supplied upstream.\end{status}
+
+\begin{prop}[\lean{CountingTheorem}]\label{p:count}
+For every $C_g$ there is $n_0$ such that, for every automorphic datum satisfying \lean{CountHyp} ($n\ge n_0$, $q^2\le n$, $\log\rd_E\le e^n$, $\log f\le\sqrt n$, level $g\le b^{C_g}$, $g_0$ a split prime with $4n< g_0$, and discrete-series gap at least $8\cdot10^{14}(C_g+4)n^{19}f^5\log(b\,\rd_E)$), the space is finite dimensional and $\lvert D-M\rvert\le e^{-L/16}M$, where $D$ is the multiplicity and $M=d_\pi\vol$ the main term.
+\end{prop}
+\emph{Mechanism.} $D=\int_{\mathcal F}K(x,x)\,dx$ for the projection $R(\varphi)$ with a discrete-series matrix coefficient $\varphi$. The identity term gives $M$. Thick points ($\mathrm{least}\ge\tau^*$) split $\gamma\ne1$ into near terms (\ref{p:nu}, \ref{p:near}, \ref{p:flag}, \ref{p:const}: at most $e^{-L/4}M$) and far terms (gap decay: at most $e^{-n^2f}M$). Deep points contribute at most $e^{-n^2f}D$ (\ref{p:deep}, \ref{p:absvol}), and rare flags have probability at most $e^{-L/3}$ (\ref{p:nonzero}).
+\emph{Downstream.} \lean{count_constants_of_siegelWeil} $\to$ \lean{CountAllPointsClass} $\to$ the dimension clause of \lean{LinkS}; \lean{allRows_at_record} $\to$ \lean{LinkIRR}.
+\begin{status}Assembly reconstructed by Final Wave~B; its use of \ref{p:nu} and of the gap constant verified here.\end{status}
+
+\section{Is a bespoke mechanism unresolved?}
+
+\begin{longtable}{p{0.18\textwidth}p{0.3\textwidth}p{0.22\textwidth}p{0.22\textwidth}}
+\toprule
+Item & Mechanism & Status & Unread implementation\\
+\midrule
+\ref{p:ct} \lean{count_terms} & duality, lifts, packing & reconstructed & none\\
+\ref{p:nu} \lean{NearUnip} & trace congruence and size & reconstructed & none\\
+\ref{p:rec} records & ordered thresholds; size bounds & reconstructed (\PC{6} owns \lean{Large}) & none\\
+\ref{p:mass} mass formula & Siegel's rank induction & published input & 25k to 35k lines\\
+\ref{p:fib}, \ref{p:mean}, \ref{p:loop} & fibration; Witt and masses; sums of \ref{p:ct} & mechanism reconstructed & about 15k lines\\
+\ref{p:clk}, \ref{p:clt} & restricted tensor product & reconstructed; \ref{p:clt} read & 6.7k lines\\
+\ref{p:vstep}, \ref{p:absvol} & Weil's unfolding of Siegel--Weil & mechanism known; V6 & about 30k lines\\
+\ref{p:flag}, \ref{p:const}, \ref{p:nonzero} & reduction theory, Stirling, Louboutin & \ref{p:const}, \ref{p:nonzero} reconstructed & about 45k lines\\
+\ref{p:near}, \ref{p:deep} & canonical filtration, lattice counts & mechanism known; constants absorbed & about 48k lines\\
+\ref{p:rows} & orthogonal idempotents, Gelfand--Graev & mechanism known & about 21k lines\\
+\ref{p:count} & pre-trace formula, four regions & reconstructed (Wave~B) & none at assembly level\\
+\bottomrule
+\end{longtable}
+
+No item needs a mechanism that is not a named classical one. The quantitative statements that are specific to this archive are \ref{p:const}, \ref{p:nonzero}, \ref{p:near}, \ref{p:deep}, \ref{p:absvol} and the explicit $\kappa$ of \ref{p:flag}. I derived \ref{p:const} and \ref{p:nonzero} here. The other three enter \ref{p:count} through bounds of size $e^{-L/4}$, $e^{-n^2f}$ and $X^{n^2f}$ against a required relative error $e^{-L/16}$, so a constant error of polynomial size in $n$, $f$, $\rd_E$ would not change the conclusion; only a mistake in the order of the exponent would, and the mechanisms fix that order.
+
+\section{Comparison with Slijep\v{c}evi\'c}\label{sec:slij}
+
+S.~Slijep\v{c}evi\'c, \emph{Outline of Alp\"oge's proof of the generalised Riemann hypothesis}, arXiv:2611.00812v1 (21 November 2026), cited below as [S]. The comparison uses Sections 1.3, 1.4, 6.3 to 6.5, 7, 11 and Appendix A.7 to A.9 of [S]. Two facts frame it. First, [S] places \FR{12} inside Proposition~6.18 (the definite-side family structure) and says that proposition is proved ``in outline''; Section~11 adds that ``the choice of auxiliary lattices and measures'' and the linking statements are ``described in words, not stated''. Second, its acknowledgements say Claude Code agents read the same Lean development, so [S] is an independent \emph{exposition} of the same formal source, not an independent proof.
+
+\subsection*{Concordance}
+
+Abbreviations in the table: \emph{none} means [S] has no matching statement; \emph{words} means it describes the mechanism in a phrase; O means the proof is in outline; U means [S] says it does not understand it.
+
+\begin{longtable}{p{0.07\textwidth}p{0.27\textwidth}p{0.13\textwidth}p{0.21\textwidth}p{0.22\textwidth}}
+\toprule
+Ours & Match in [S] & Agreement & References & Ours further\\
+\midrule
+\ref{p:ct} & none & n/a & none & full statement and proof\\
+\ref{p:fib} & none (Landherr in A.7) & n/a & confirms Landherr [77] & genus fibration, glue count $(T-1)^f$\\
+\ref{p:mass} & A.7 ``mass formula, adelic class mass of a definite hermitian lattice [113]''; Prop.~6.18 step~7 & agrees; [S] does not state the formula & sharpens ours to Shimura, \emph{Euler products and Eisenstein series} (AMS 1997) & explicit ratio formula; archive proves it by Siegel's induction\\
+\ref{p:mean} & none & n/a & none & statement; Schmidt and Siegel mean values not used\\
+\ref{p:loop} & none & n/a & none & four statements and their consumer\\
+\ref{p:rec} & Def.~6.15 (threshold datum $K=(k_{\mathrm{pre}},t,k_{\mathrm{mid}},k_{\mathrm{last}})$, ``large'', ``closed''); Def.~6.16 (number datum with $C$, $C_H$) & agrees with the archive's \lean{TransportedAlt}, \lean{Large}, \lean{Closed} & none & the two record inequalities derived from it; $8\cdot10^{14}$ checked\\
+\ref{p:nu} & none & n/a & none & full proof\\
+\ref{p:clk}, \ref{p:clt} & Prop.~7.3 local facts (spherical vectors, multiplicity one at ramified places), O & compatible; [S] is about theta agreement, not the counting kernel & Howe duality [86], [42] is not used here & both statements; \ref{p:clt} read in full\\
+\ref{p:vstep} & Prop.~6.18 step~7: ``the convergent Siegel--Weil formula, compared in two adjacent ranks, gives a ratio of masses of standard hermitian lattices'', O & agrees & confirms and extends V6: Weil [133], Kudla--Rallis [73], Ichino [59], Harris--Kudla--Sweet [49] & exact formula and the four-step chain\\
+\ref{p:absvol} & none & n/a & none & statement\\
+\ref{p:flag} & ``Siegel sets'' in step~2; Grayson [45], Stuhler [121] used for slopes in \S4 & mechanism names agree & confirms Grayson--Stuhler and Borel--Harish-Chandra [17] & statement with $\kappa$; link to canonical flag\\
+\ref{p:const} & none & n/a & none & derived and checked\\
+\ref{p:nonzero} & none & n/a & none & derived\\
+\ref{p:near} & none & n/a & none & statement\\
+\ref{p:deep} & A.8 ``quantitative form at parameters far from the walls'' & agrees on the input & confirms [48], [103] & statement\\
+\ref{p:rows} & Prop.~6.18 step~2 and Prop.~6.20: Green's parametrisation [46], O & agrees & confirms Green [46] & three statements\\
+\ref{p:count} & Prop.~6.18 ingredient: ``a choice of auxiliary lattices and measures by a counting argument based on the Siegel--Weil volume identity'', words, U (\S11) & agrees in mechanism & none beyond the above & full statement with $e^{-L/16}$ and its four regions\\
+\bottomrule
+\end{longtable}
+
+\subsection*{Focus points}
+
+\emph{Mass formula.} [S] names one input, Shimura [113], for ``the adelic class mass of a definite hermitian lattice'', and separately says that Siegel--Weil in adjacent ranks gives a ratio of masses. The archive uses two routes, and the package separates them. \ref{p:mass} (maximal lattices, Siegel's induction by ball counts) feeds the genus mean \ref{p:mean} of \FR{12}(a). \ref{p:vstep} (Siegel--Weil for one vector plus unfolding) feeds the counting engine of \FR{12}(e). Both reach the same right-hand side \lean{massRatioRightSide}. Shimura's book is a better citation for the boundary than the ones I gave from memory.
+
+\emph{Siegel--Weil volume and counting step.} This is the place [S] marks as unstated. \ref{p:vstep} states it: integrating the theta sum of vectors of norm $\pm1$ over $\mathcal F$ gives $\vol(\mathcal F)$ times local densities by Siegel--Weil, and unfolding gives $\vol(G')$ times a Gaussian integral, so the gauge volumes of adjacent ranks differ by the explicit factor. \ref{p:absvol}, \ref{p:flag}, \ref{p:nonzero} and \ref{p:count} then turn that volume identity into the count.
+
+\emph{Auxiliary lattices and measures.} [S] does not say what they are. In the package they are the unimodular row lattices $\Lambda$ with an isotropic flag and a primitive $z$ with $h(z,z)=-T$, $T$ a split prime (\ref{p:ct}, \ref{p:fib}); the projected definite lattices $L_0$ with $\det L_0=N_T$ (\ref{p:ct}); the translated lattices $\Lambda_x$ with their canonical filtrations (\ref{p:flag}, \ref{p:near}); and gauge-normalized Haar measures (\lean{IsGaugeAll}) on $G(\mathbb A_F)$, under which \ref{p:vstep} holds.
+
+\emph{Row-lattice and genus counting.} \ref{p:ct}, \ref{p:fib}, \ref{p:mean} and \ref{p:loop} have no counterpart in [S]. This is the largest gain.
+
+\emph{Strong approximation.} [S] lists strong approximation for special unitary groups (Kneser [70], Platonov--Rapinchuk [100]) as used in Sections 6 and 7 without saying where. The steps reconstructed here use weak approximation at finitely many primes, inside the archive's proof of \ref{p:fib}, and do not use strong approximation. Final Closure Wave~4 recorded \lean{StrongApproxSU} as a hypothesis of parents of \FR{12}; I did not trace it in this package, so its place in \FR{12} is not settled here.
+
+\emph{Local models.} [S] lists local facts on the Weil representation for theta agreement (Prop.~7.3). \ref{p:clk} and \ref{p:clt} are statements about the counting kernel. They are consistent with those facts, but they are not the same statements, and Howe duality does not enter them.
+
+\emph{Final engine and the family structure.} [S] says the family structure rests on four row conditions (COV), (ON), (LOW), (FUN) and that it cannot locate where (ON) and (LOW) are proved. The counting engine \ref{p:count} does not prove those conditions. It feeds the archive's \lean{LinkS} dimension clause through \lean{CountAllPointsClass}, and \lean{LinkIRR} through \lean{allRows_at_record}. [S]'s ``linking statement at levels two and three'' is said to use Chebotarev, local Tate duality and the Euler characteristic, which belong to other packages. So the package fills the counting ingredient of Proposition~6.18. It does not close (ON), (LOW), the linking statements or the construction of Proposition~6.20.
+
+\subsection*{Answer}
+
+The comparison corroborates the verdict \emph{closed modulo named external theorems at the level of mathematical propositions} for \PC{5}, in a limited sense. [S] confirms the mechanisms (the Siegel--Weil ratio of masses in adjacent ranks, Siegel sets, Grayson--Stuhler, Green's parametrisation, discrete series at large gap) and every named input of the package. It also improves two citations, the mass formula (Shimura 1997) and Siegel--Weil (Kudla--Rallis, Harris--Kudla--Sweet). It contradicts nothing. It is not an independent proof, since it reads the same development and states none of \ref{p:ct}--\ref{p:count}. The package goes further than [S] in four places. It states and proves the row-lattice counting \ref{p:ct}--\ref{p:loop}, which [S] omits. It states the Siegel--Weil volume and counting step \ref{p:vstep}--\ref{p:count} that [S] calls unstated, and names the auxiliary lattices and measures. It derives the record inequalities and \lean{NearUnip} from the threshold mechanism that [S] gives as Definition~6.15. And it separates the two mass-formula routes. It does not close the parts of Proposition~6.18 that lie outside \FR{12}.
+
+\section*{Verdict}
+
+\textbf{CLOSED MODULO NAMED EXTERNAL THEOREMS, at the level of mathematical propositions.} \PC{5} is the propositions \ref{p:ct} to \ref{p:count}. Each has a stated hypothesis and conclusion, a classical mechanism, and an exact consumer. The named external inputs are V6 (Siegel--Weil, convergent range), the hermitian mass formula (Braun; Shimura; Gan--Hanke--Yu), Louboutin's residue bound, Grayson--Stuhler canonical filtrations, Borel--Harish-Chandra reduction theory, Siegel's volume of $\mathrm{GL}_j$, Harish-Chandra and Schmid on discrete series, Witt, Landherr, Jacobowitz, weak approximation, the Hasse norm theorem and Minkowski's bound. No genuinely bespoke mechanism remains unresolved.
+
+What this verdict does not cover: about $150{,}000$ lines of Lean implementation of \ref{p:fib}, \ref{p:mass}, \ref{p:mean}, \ref{p:clk}, \ref{p:vstep}--\ref{p:deep} and \ref{p:rows} have not been read, and the explicit constants of \ref{p:near}, \ref{p:deep} and \ref{p:absvol} are taken from their statements. That is a formal-audit item, not a mathematical gap. \PC{5} no longer blocks the statement ``the entire RH proof has been reconstructed in ordinary mathematics modulo named external theorems'' in the human-proof sense, provided \PC{6} supplies \lean{Large} families.
+
+\end{document}

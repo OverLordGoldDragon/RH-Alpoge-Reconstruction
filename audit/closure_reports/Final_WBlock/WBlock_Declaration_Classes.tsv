@@ -1,0 +1,562 @@
+declaration	kind	file:line	head	mechanism	set
+Bl.general_b_fact_third_bis.goal1	theorem	Lemmata/GeneralBFactThirdBis/Imports.lean:7	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.IndefR.Cx.CxData.theta_jR_inj	theorem	Formalism/LocalToGlobal/IndefiniteReal/EigSumLeComapSemi.lean:114	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Cx.part_iff_rows3	theorem	Formalism/LocalToGlobal/IndefiniteReal/LiftCoordinatesInGoodPartFamily.lean:100	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Cx.subspaces_stable_in_block	theorem	Formalism/LocalToGlobal/IndefiniteReal/PrimitiveStatementsBaseLevel.lean:30	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat.BaseW	structure	Formalism/LocalToGlobal/IndefiniteReal/LinksW.lean:140	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat.IsFam	structure	Formalism/LocalToGlobal/IndefiniteReal/LinksChar.lean:155	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat.IsGrp	structure	Formalism/LocalToGlobal/IndefiniteReal/LinksChar.lean:122	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat.IsModels	structure	Formalism/LocalToGlobal/IndefiniteReal/LinksChar.lean:232	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat3.IsScal	structure	Formalism/LocalToGlobal/IndefiniteReal/ZeroPartEigenvalueConvention.lean:217	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat3.WeakCharacterisation	structure	Formalism/LocalToGlobal/IndefiniteReal/ZeroPartEigenvalueConvention.lean:259	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat3.phase	abbrev	Formalism/LocalToGlobal/IndefiniteReal/ZeroPartEigenvalueConvention.lean:232	W3	Q5 zero-part conventions	B
+Formalism.IndefR.Links.RealDat3.weak_characterisation_with_error	theorem	Formalism/LocalToGlobal/IndefiniteReal/WeakCharacterisationWithError.lean:41	W3	Q5 zero-part conventions	B
+Formalism.L2.Col.Deco.up_congr	theorem	Formalism/LocalToGlobal/Columns/DecoFin.lean:1687	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.DecoSet.smul_mem_upSet	theorem	Formalism/LocalToGlobal/Columns/DecoFin.lean:1411	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.DecoSet.upSet	def	Formalism/LocalToGlobal/Columns/StdLatUnimodular.lean:687	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.DecoSet.upSet_finite	theorem	Formalism/LocalToGlobal/Columns/DecoFin.lean:1784	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.GSD.pairAt_add_left	theorem	Formalism/LocalToGlobal/Columns/ToHLatLemmas.lean:282	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.GSD.pairAt_add_right	theorem	Formalism/LocalToGlobal/Columns/ToHLatLemmas.lean:286	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.GSD.pairAt_smul_left	theorem	Formalism/LocalToGlobal/Columns/ToHLatLemmas.lean:290	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.GSD.pairAt_smul_right	theorem	Formalism/LocalToGlobal/Columns/ToHLatLemmas.lean:296	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.Mu0H	def	Formalism/LocalToGlobal/Columns/ToHLat.lean:96	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.NlamG	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:239	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.NuAt	def	Formalism/LocalToGlobal/Columns/FiniteSumNonzeroLargeDepth.lean:1338	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.NuC	def	Formalism/LocalToGlobal/Columns/FiniteSumNonzeroLargeDepth.lean:1343	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.Serv	structure	Formalism/LocalToGlobal/Columns/FiniteSumNonzeroLargeDepth.lean:1315	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.TUmC	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:233	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.UG	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:92	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.UOp	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:129	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.UprodC	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:227	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.VVTc	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:224	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.exists_finite_reps	theorem	Formalism/LocalToGlobal/Columns/DecoFin.lean:1766	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.expTc	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:230	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.fintype_GLs	instance	Formalism/LocalToGlobal/Columns/RowForms.lean:318	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.latH	def	Formalism/LocalToGlobal/Columns/ToHLat.lean:90	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.latH_maj	theorem	Formalism/LocalToGlobal/Columns/ToHLatLemmas.lean:496	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.ramIncl	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:175	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.ramInclH	def	Formalism/LocalToGlobal/Columns/ToHLat.lean:102	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.ramInclH_norm	theorem	Formalism/LocalToGlobal/Columns/ToHLatLemmas.lean:512	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.ramifiedColumnLattice	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:163	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.ramifiedSublattice	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:171	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.scaledRamifiedLattice	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:236	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.topsP	def	Formalism/LocalToGlobal/Columns/ScaledRamifiedLattice.lean:219	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.upA_congr	theorem	Formalism/LocalToGlobal/Columns/DecoFin.lean:1684	W1	Q1 column record of the base tuple	B
+Formalism.L2.Col.upA_le_of_sub	theorem	Formalism/LocalToGlobal/Columns/DecoFin.lean:1671	W1	Q1 column record of the base tuple	B
+Formalism.L2.DIV.DefFam3.stable3_rows	theorem	Formalism/LocalToGlobal/Divisibility/InertPartitionLePartF.lean:367	W3	Q5 zero-part conventions	B
+Formalism.L2.DIV.Member.ExtendedDataRemainder	structure	Formalism/LocalToGlobal/Divisibility/MemberDIV.lean:109	W1	Q1 column record of the base tuple	B
+Formalism.L2.DIV.evC_res_lvl	theorem	Formalism/LocalToGlobal/NumberFieldFamilies/EvRowSurjective.lean:102	W1	Q1 column record of the base tuple	B
+Formalism.L2.DIV.evRow_res	theorem	Formalism/LocalToGlobal/NumberFieldFamilies/EvRowSurjective.lean:65	W1	Q1 column record of the base tuple	B
+Formalism.L2.DIV.evRow_res_lvl	theorem	Formalism/LocalToGlobal/NumberFieldFamilies/EvRowSurjective.lean:70	W1	Q1 column record of the base tuple	B
+Formalism.L2.Ker.Cd.Hf_eq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IsAdmissibleFlagPairOfUnitriangularLeftAutomorph.lean:42	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.Inhab.Adm_std	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdLat.lean:82	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.Inhab.mem_stdL	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdLat.lean:12	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.Inhab.single_mem_stdL	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdLat.lean:16	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.Inhab.star_mem_range	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdLat.lean:26	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.Inhab.stdL_isSD	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdLat.lean:34	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.Bf	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:106	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.Bf_comb	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:127	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.Bf_lat	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:323	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.Bf_sub_zsmul_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:111	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.Bf_sub_zsmul_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:116	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.Bf_swap	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:108	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.HYYIntRec	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:403	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.OKc	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:23	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.area_spec	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:136	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.bK	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:50	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.bK_mem	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:48	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.bK_sq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:302	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.b_sq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:44	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.bb	abbrev	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:19	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.be	abbrev	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.be_sq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:33	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.cast_toNat	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:133	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.conj_be	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:36	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.coord_eq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:278	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.cramer	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:121	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.d_mod	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:39	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.d_pos	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:26	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.div_okc	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:333	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.good_of_okc	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:287	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.half_int	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:294	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.im_coord	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:283	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.okc_conj	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:273	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.okc_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:260	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.okc_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:90	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.okc_pair	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:330	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.om	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:307	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.ph	abbrev	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:258	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.ph_om	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:314	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.phi_b	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:42	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.sq_sqrtC	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:30	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.AR.sqrt_pos	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:28	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.CU.emb_conj	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndep.lean:82	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.CU.star_conj	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndep.lean:66	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.DiscrNe	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ProvisionExtensionLink.lean:271	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.Hf_embV	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:93	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.algKC	abbrev	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:27	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.bE_mem	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:36	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.embA	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:29	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.embA_bij	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:39	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.embT_K	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:128	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.embT_inj	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:17	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.emb_cases	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:147	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.emb_conj	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:89	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.exists_int_clearing_order_denominators	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:366	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.galE_sigmaOf	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:120	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.lam_mem	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:483	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.natMul_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:290	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.one_mem_inverse_halfDifferent	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:353	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.sigmaOf_galE	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThU.lean:123	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.FL.sum_tau_trace	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:67	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.HfArithRec	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:113	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.HfArithRec_of_int	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfArith.lean:418	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.HfGenRec	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:111	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.HfGenRec_of_arith	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HfTrace.lean:122	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.HfIntRec	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopNorm.lean:633	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.HfIntRec_of_gen	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:120	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Good	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:17	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.HfInt	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:297	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.HfInt_closure	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:60	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.HfInt_mono	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:76	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_add_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:19	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_add_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:306	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_herm	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:26	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_neg_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:40	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_neg_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:45	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_self_im	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:310	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_smul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:50	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_zero_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:36	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.Hf_zero_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:38	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.La_le_gen	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:85	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.genLa	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:80	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.good_add	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:22	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.good_neg	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:30	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.good_zero	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/LinkThIndepOfGen.lean:20	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.neg_one_zpow_congr	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:347	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.self_int	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:318	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.IO.sqrt_d_pos	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IopIso.lean:301	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.LinkBaseNe	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/Family.lean:46	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.LinkDeltaNe	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseLinkOfNonzeroDelta.lean:28	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.LinkQInt	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseLinkOfNonzeroDelta.lean:34	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.betaSemi	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:242	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.betaStd	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:228	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.denom	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:59	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.down	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:306	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.e4	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:89	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.exists_nat_clearing_order_denominators	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:197	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.exists_nat_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:41	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.fg_of_nsmul_le	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:73	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.fourth_power_le_closure_embeddings	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:159	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.gen_mem	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:150	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.half	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:226	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.hst	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:213	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.hθ	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:219	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.hθ'	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:222	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.idx₁	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:335	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.idx₂	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:330	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.int_mem_inverse_half_different	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:189	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.lamMM_smul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:140	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.lam_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:124	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.lam_theta	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:137	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.mem_iff	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:210	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.put4	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:154	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.reix	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:91	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.reix_isom	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:108	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.reix_pow	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:99	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.selfDual	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:232	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.selfDual_img	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:18	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.stdOK	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:341	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.theta_eq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:132	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.theta_val	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:216	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.SO.up	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/StdOKP.lean:254	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.TrOK	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:140	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.cO	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:47	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.conj_int	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:44	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.hYY_eq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:41	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:38	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_add_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:53	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_add_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:57	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_esmul_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:77	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_esmul_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:81	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_hom	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:121	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_hom_gen	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:87	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_smul_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:67	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_smul_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:71	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_zero_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:61	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.sE_zero_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:64	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.smul_entry	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:49	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.trOK_YY	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:174	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.trOK_add	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:145	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.trOK_gen	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:161	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.trOK_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:148	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.trOK_zero	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:143	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.trace_conj_integral	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:153	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.TI.trace_isIntegral	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:16	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.arithmetic_hermitian_form	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:221	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.base_linkage_nonempty	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/Family.lean:82	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.delta_nonzero_link	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseLinkOfNonzeroDelta.lean:76	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.discrNe	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseLinkOfNonzeroDelta.lean:17	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.hermitian_form_integral_values	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ThIndep.lean:16	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.hermitian_pairing_integral	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/HermitianPairingIntegral.lean:215	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.lamOf_zero	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/Family.lean:76	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.IntegralLatticeDensity.rational_integrality_link	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseLinkOfNonzeroDelta.lean:85	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.KQuad	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:780	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.NegOneNorm	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/JArith.lean:17	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.isIntegral_int	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SecondConstantHolds.lean:25	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.isIntegral_sqrt	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SecondConstantHolds.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.mulO	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/JArith.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.mulO_adj	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/JArith.lean:63	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.negOneNorm	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SecondConstantHolds.lean:29	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.star_int	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/JArith.lean:43	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.J.star_sqrt_neg	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SecondConstantHolds.lean:18	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.al_form	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:173	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.al_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:304	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.altE_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:333	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colP	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:103	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colPM	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:202	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colP_apply	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:117	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colP_colP	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:128	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colP_mem_la	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:244	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colP_orth	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:136	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colSw	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:108	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colSwM	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:207	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colSw_apply	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:119	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colSw_form	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:166	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colSw_la	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:265	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colSw_p	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:153	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.colSw_sw	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:144	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.form_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:292	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.la_stab	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:37	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.mem_stdL	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:69	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.muOneL_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuFinal.lean:59	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.muOneR_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuFinal.lean:89	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.mulO_apply	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:53	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.mulO_colP	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:182	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.mulO_inv	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:356	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.mulO_la	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:56	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.mulO_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:288	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.mulO_rowP	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:179	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowP	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:93	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowPM	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:192	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowP_apply	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:113	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowProjection_mem_lattice	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:215	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowProjection_orthogonal	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:131	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowProjection_rowProjection	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:126	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowSw	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:98	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowSwM	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:197	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowSw_apply	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:115	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowSw_form	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:160	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowSw_la	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:235	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowSw_p	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:147	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.rowSw_sw	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:142	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.signData_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuFinal.lean:17	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.swp	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:73	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.swpE	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:91	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.swp_lt	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:86	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.swp_swp	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:79	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.swp_val	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:76	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Mu.yy_stab	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/MuConc.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.MuOneL	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/RightMoveTrianglesOfUnit.lean:15	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.MuOneR	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/RightMoveTrianglesOfUnit.lean:24	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SD	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/Reduction.lean:22	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Sq.PolFam	structure	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqFacts.lean:17	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Sq.SqSplit	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqFacts.lean:59	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.Sq.sqFam	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqFacts.lean:55	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.Good	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:47	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.HH	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:38	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.SplitPair	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLInput.lean:14	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.al_of_q	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:86	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.bet	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:45	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.bet_add_left	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:56	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.bet_add_right	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:61	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.bet_phi	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:66	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.coe_ne	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:16	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.cp	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:42	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.cp_eq_qq_add_sub	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:105	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.exists_int_eq_add_two_mul_of_exp_eq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:91	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.exists_n	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLComm.lean:46	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.exists_n_one	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLComm.lean:28	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.exists_smul_mem	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLComm.lean:23	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.formV_apply'	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.formV_phi	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:24	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.good3	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMain.lean:14	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.good_of_lat	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:159	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.good_of_law	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:112	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.homL_mul_min	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:49	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.homL_mul_pres	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:41	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.law_of_good	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:139	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.mem_homL	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.mul_smul_mem	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLComm.lean:15	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.negpow	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:81	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.osmul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:14	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.phi	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:79	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.phi_La	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:97	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.phi_apply	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:84	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.phi_embV	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:89	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.phi_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:121	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.phi_one	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:112	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.phi_sub	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:116	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.qq	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:40	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.qq_add	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:51	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.sqSplit_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMain.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.sum_three_comm	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLLaw.lean:14	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.SquareSplitPairs.yy_mul	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/SqLMat.lean:61	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.admissible_of_integral_conj_le	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/NormOneUnitIdealAlt.lean:50	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.embT_star'	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/GMConjTranspose.lean:18	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.formV_herm'	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/NormOneUnitIdealAlt.lean:16	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.sd0	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/NormOneUnitIdealAlt.lean:54	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PairingIndexBounds.Eq.tripleData_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/ColumnDataEquations/RightMoveTrianglesOfUnit.lean:33	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PeriodExists	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:820	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.PhiNonReal	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:793	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.Hf	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:95	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.La	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:91	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.Pos	structure	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:326	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.TVar	abbrev	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:344	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.Tor	structure	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:79	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.VC	abbrev	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:83	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.YYl	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:61	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.admitted	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:179	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.al	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:98	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.embV	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:88	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.hYY	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:67	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.hh	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:509	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.homL	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:56	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.letterOf	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:321	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.posG	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:317	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.sE	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:503	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.TaylorLogMetric.tor0	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:85	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.bE_sq	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:37	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.bK	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:55	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.b_mem_K	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:53	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.blockFourfold_hOne_eq_hOne	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IsAdmissibleFlagPairOfUnitriangularLeftAutomorph.lean:768	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.d_pos	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:35	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.emb4	def	Formalism/LocalToGlobal/KernelLattices/ColumnData/IsAdmissibleFlagPairOfUnitriangularLeftAutomorph.lean:706	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.finrank_K	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:57	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.formV_apply	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IsAdmissibleFlagPairOfUnitriangularLeftAutomorph.lean:32	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.kQuad	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:229	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.lamMM	def	Formalism/LocalToGlobal/KernelLattices/ColumnData.lean:642	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.matH_hOne	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/IsAdmissibleFlagPairOfUnitriangularLeftAutomorph.lean:102	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.periodExists	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:322	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.periodExists_of	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:273	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.phiNonReal	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:242	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.phi_b	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:30	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.Cd.phi_nonreal	theorem	Formalism/LocalToGlobal/KernelLattices/ColumnData/BaseExP.lean:159	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+Formalism.L2.Ker.coupling_index_set_finite	theorem	Formalism/LocalToGlobal/KernelLattices/KernelLocalFactors/ColInst.lean:330	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Cls.JointsStd.exists_vG_over	theorem	Development/AbelianVarietyTheory/Definitions/LatticeFrames/FinAfLocalIdele.lean:30	W2	Q4 joints of the standard character	B
+GlobalTheory.Core.Cls.JointsStd.finAf_localIdele	theorem	Development/AbelianVarietyTheory/Definitions/LatticeFrames/FinAfLocalIdele.lean:153	W2	Q4 joints of the standard character	B
+GlobalTheory.Core.Cls.JointsStd.idem_comp	theorem	Development/AbelianVarietyTheory/Definitions/LatticeFrames/FinAfLocalIdele.lean:123	W2	Q4 joints of the standard character	B
+GlobalTheory.Core.Cls.JointsStd.om_std	theorem	Development/AbelianVarietyTheory/Definitions/LatticeFrames/FinAfLocalIdele.lean:78	W2	Q4 joints of the standard character	B
+GlobalTheory.Core.Cls.JointsStd.piBar_std	theorem	Development/AbelianVarietyTheory/Definitions/LatticeFrames/FinAfLocalIdele.lean:56	W2	Q4 joints of the standard character	B
+GlobalTheory.Core.ColNorm.majAt_eq_ipAt	theorem	Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/NrmStepZeroEq.lean:27	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.ColNorm.nrm_stepZero_eq	theorem	Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/NrmStepZeroEq.lean:54	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.ColNorm.secR	def	Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/NrmStepZeroEq.lean:18	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Ht2.ColMatch	def	Development/AbelianVarietyTheory/Definitions/LatticeFrames/ColMatchAll.lean:55	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Ht2.ColMatchAll	def	Development/AbelianVarietyTheory/Definitions/LatticeFrames/ColMatchAll.lean:59	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Ht2.CplData	structure	Development/AbelianVarietyTheory/Definitions/LatticeFrames/ColMatchAll.lean:21	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Ht2.IsRow	def	Development/AbelianVarietyTheory/Definitions/LatticeFrames/ColMatchAll.lean:52	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Ht2.RowsK	abbrev	Development/AbelianVarietyTheory/Definitions/LatticeFrames/ColMatchAll.lean:19	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Ht2.colMatchAll	theorem	Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ColMatchAll.lean:12	W1	Q1 column record of the base tuple	B
+GlobalTheory.Core.Ht2.nrm	abbrev	Development/AbelianVarietyTheory/Definitions/LatticeFrames/PairLeIffPairHtLe.lean:16	W1	Q1 column record of the base tuple	B
+GlobalTheory.Cp.ColRec3.ofS	def	Development/AbelianVarietyTheory/Definitions/GlobalTwisting/DivRows3GIff.lean:47	W1	Q1 column record of the base tuple	B
+GlobalTheory.Cp.SquareIntegrableColumns.ofS	def	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ServTIff.lean:44	W1	Q1 column record of the base tuple	B
+GlobalTheory.HilbertInClosure.algThrough	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:31	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.exists_eq_of_isAlgebraic	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:14	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.finrank_div	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:34	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.hilbert_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:128	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.isAbelianGalois_iff	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:67	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.isRayField_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:38	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.le_of_algHom	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:51	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.map_mem_of_normal	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:115	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.numberField_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:26	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.HilbertInClosure.qbEquiv	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsEqOfIsAlgebraic.lean:20	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Col2.EMt.eMtTied	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EMtTied.lean:12	W2	A  assembly of the record-compatible extension	B
+GlobalTheory.Mem.Col2.LowerTie.lowerMap_tieTw_alt	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/LowerMapTieTw.lean:15	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.Col2.LowerTie.lowerMap_tw_gen	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/LowerMapTwGen.lean:14	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.Col2.StepZero.card_stab	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EmbFColZeroMemMram.lean:137	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.Col2.StepZero.majAt_eq_classSum	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EmbFColZeroMemMram.lean:33	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.Col2.StepZero.valDatum	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EmbFColZeroMemMram.lean:22	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.Col2.TC.KerSK.ch_cast	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TiedSKOfStd.lean:22	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.Col2.TC.KerSK.rowSG_heq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TiedSKOfStd.lean:10	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.Col2.TC.KerSK.sharp_heq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TiedSKOfStd.lean:17	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.Col2.TC.RcHyp.idxMatNF_of_isTw	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/EvaluationDatumOkBaseTuple.lean:88	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.CyclotomicFieldContainment.cycField_le_map	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:48	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.ksQ_eq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:69	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.le_map_of_qb_le	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:37	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.muFld_le_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:42	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.natCard_codeWordStages_finiteGroup_eq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:14	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.oTied_of_ksExact	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:140	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.rootOrders_ne_zero	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:28	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.rootsField_le_iff	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:22	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.valsOf_subset_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:58	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.CyclotomicFieldContainment.valueField_le_map	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCardCodeWordStagesFiniteGroupEq.lean:62	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.adjoin_weberSet_one	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsRayFieldInRestrictScalars.lean:31	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.card_filter_le_log_classNumber	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/CardFilterLeLogClassNumber.lean:26	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.discField_le_iff	theorem	Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/FixedCoefficientFieldInComplex.lean:349	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.exists_kPsiField_generators	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/CardFilterLeLogClassNumber.lean:37	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.hilbertField_eq	theorem	Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/FixedCoefficientFieldInComplex.lean:369	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.isRayFieldIn_hilbertField	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsRayFieldInRestrictScalars.lean:62	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.kPsiField_eq	theorem	Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/FixedCoefficientFieldInComplex.lean:399	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Fld.typeNorm_ne_zero	theorem	Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/FixedCoefficientFieldInComplex.lean:388	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.HD.KC	abbrev	Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/HostPins.lean:23	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.HD.mem_qb	theorem	Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/HostPins.lean:21	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.JointsTrue.isDetLift_local	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsDetLiftLocal.lean:19	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.JointsTrue.joints_of_standard_character	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/JointsSTrue.lean:17	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.KPsiRam.prime_dvd_discr_iSup_kPsi	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PrimeDvdOfMemDifferent.lean:85	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.KPsiRam.prime_dvd_of_mem_different	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PrimeDvdOfMemDifferent.lean:14	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.KPsiRam.sup_adjoin_root	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PrimeDvdOfMemDifferent.lean:24	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.KPsiRam.sup_adjoin_roots	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PrimeDvdOfMemDifferent.lean:60	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.KPsiRam.typeNorm_mem	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PrimeDvdOfMemDifferent.lean:79	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.R3.SelC.args_pinned_heq_zsOf_mem_eq	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:169	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.chKerC_congr	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ChKerCCongr.lean:34	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.chiRec_eq_chi	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:283	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.colPins_colK'	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:68	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.colRecC	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColRecCEvBijective.lean:44	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.colRecK	abbrev	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRowsOfHeqData.lean:117	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.cstT	abbrev	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColRecCEvBijective.lean:16	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.cstT_tup	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColRecCEvBijective.lean:25	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.detId_rank_one	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:271	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_coord	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:59	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_cpl	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ChKerCCongr.lean:97	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_eNu	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ChKerCCongr.lean:112	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_lvlEquiv	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:109	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_moved	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRowsOfHeqData.lean:16	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_read	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:142	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_readC_wU_eq_id	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:146	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_read_fam	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRowsOfHeqData.lean:36	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_rowsKC_colPins_alt	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:89	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.exists_square_integrable_columns_of_data	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:180	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.face_pt	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ChKerCCongr.lean:156	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.heq_app	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRowsOfHeqData.lean:248	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.iT_heq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRowsOfHeqData.lean:108	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.idxT	abbrev	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColRecCEvBijective.lean:19	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.idxT_ok	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColRecCEvBijective.lean:36	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.idxT_tup	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColRecCEvBijective.lean:27	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.isSelfDualLattice_normOne_ideal_rankOne	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:228	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.jA_row_alt	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:128	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.jetK_chi	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ChKerCCongr.lean:75	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.kerOf_congr	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ChKerCCongr.lean:26	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.ker_chi_eq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:303	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.lamOfCol_colK_eq_lamTrue	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:65	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.mem_iff_XgE	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:50	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.mem_iff_trace	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:16	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.nuT_eq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:169	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.of_forall_ix	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColRecCEvBijective.lean:29	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.pack_heq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRowsOfHeqData.lean:229	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.perCol_eq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ChKerCCongr.lean:137	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.rowCast_lin	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:93	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.rowG_ok	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:106	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.squareIntegrableColumnsOfKernel	def	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:31	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.square_integrable_columns_of_witnesses	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/ExistsRowsKCColPins.lean:213	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.tup_heq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsRowsOfHeqData.lean:85	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.SelC.wtTie_base	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsSelfDualLatticeNormOneIdealRankOne.lean:182	W1	Q1 column record of the base tuple	B
+GlobalTheory.Mem.R3.XE_updS_zeroLam	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/XEUpdSZeroLam.lean:14	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.cx_XE_scal	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:67	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.cx_galD_scal	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:72	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.furtherRows_updatedScalars	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherRowsUpdatedScalars.lean:57	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.further_face_statements_independent_of_error	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherFaceStatementsIndependentOfError.lean:75	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.galD_zeroLam	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:60	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.isKap_congr	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:20	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.isLamP_congr	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:31	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.lamN_zeroLam	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:12	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.majAt_eq_zero_of_self	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:20	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.partAt_updS_reFace	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:65	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.partPr_of_bot	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:35	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.pins_updS	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherRowsUpdatedScalars.lean:45	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.prim_updS	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherRowsUpdatedScalars.lean:14	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.qp_bot	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:131	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFaceErr	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherFaceStatementsIndependentOfError.lean:11	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFaceRead	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherFaceStatementsIndependentOfError.lean:83	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFaceReadL	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherFaceStatementsIndependentOfError.lean:94	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFace_errEq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherFaceStatementsIndependentOfError.lean:18	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFace_keep	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherFaceStatementsIndependentOfError.lean:25	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFace_keep_back	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/FurtherFaceStatementsIndependentOfError.lean:33	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFace_prim	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReFacePrim.lean:13	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.reFace_zero_parts	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReFaceZeroPartConventionsChosenAgain.lean:17	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.read_updS_keep	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReadUpdSKeep.lean:14	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.rowXE_congr	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:47	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.scalReadL	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/XEUpdSZeroLam.lean:26	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.scal_zeroLam	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:73	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.scalarsZeroPartConvention_fixedPlace	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:105	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.thmA_zeroLam	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:52	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.thmB_zeroLam	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PartAtUpdSReFace.lean:44	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.zeroLam	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:94	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.zeroLam_of_ne	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:97	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.zeroLam_of_zero	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:117	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.zeroLam_off	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:109	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.R3.zeroLam_pos	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ScalarsZeroPartConventionFixedPlace.lean:122	W3	Q5 zero-part conventions	B
+GlobalTheory.Mem.RayDiscr.card_not_mem	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:176	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.RayDiscr.exists_ideal	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:16	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.RayDiscr.exists_intTrace_not_mem	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:116	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.RayDiscr.inertia_pow	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:60	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.RayDiscr.natAbs_discr_dvd	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:227	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.RayDiscr.natCast_mem_differentIdeal	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:192	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.RayDiscr.not_sq_dvd	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:153	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.RayDiscr.pow_absNorm_sub_one	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NatCastMemDifferentIdeal.lean:51	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.Mem.Top.Bl.ColW.cf_eq	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsTiedDataReciprocity.lean:56	W2	A  assembly of the record-compatible extension	B
+GlobalTheory.Mem.Top.Bl.WPt.colsTwTied	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColsTwTied.lean:18	W2	A  assembly of the record-compatible extension	B
+GlobalTheory.Mem.Top.Bl.WPt.exists_pinned_spectral_data_compatible	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TiedDataSAssemble.lean:55	W2	A  assembly of the record-compatible extension	B
+GlobalTheory.Mem.Top.Bl.WPt.extraTied_col	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExtraTiedCol.lean:10	W2	A  assembly of the record-compatible extension	B
+GlobalTheory.Mem.Top.Bl.WitSK.of_sigma_eq	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TiedSKAtWitnesses.lean:18	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.Top.Bl.exists_core_parameters_agree	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/NTiedAllAtWit.lean:17	W2	A  assembly of the record-compatible extension	B
+GlobalTheory.Mem.Top.Bl.exists_kernel_spectral_data_at_witnesses	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TiedSKAtWitnesses.lean:23	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.Top.Bl.tiedDataS_assemble_alt	theorem	Development/AutomorphicArithmetic/ThetaCorrespondence/ThetaPairLifts/ThirdPlaceSeries/TiedDataSAssemble.lean:20	W2	A  assembly of the record-compatible extension	B
+GlobalTheory.Mem.TypePrimes.Red.columnCharacter_reduction_eq_exp	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:111	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.Red.exists_nat_sub_mem	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:101	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.Red.lowIdeal	def	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:52	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.Red.lowIdeal_isPrime	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:70	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.Red.mem_lowIdeal	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:68	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.Red.psiG_of_loc	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:250	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.Red.residue_eq_zero_of_val	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:82	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.Red.val_le_one	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ColumnCharacterReductionEqExp.lean:42	W2	Q4 joints of the standard character	B
+GlobalTheory.Mem.TypePrimes.psiG_true	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/PsiGTrue.lean:9	W2	Q4 joints of the standard character	B
+GlobalTheory.Proof.TwistedNormalForms.comb_castAdd	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TwistedNormalForms.lean:49	W1	Q1 column record of the base tuple	B
+GlobalTheory.Proof.TwistedNormalForms.comb_natAdd	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TwistedNormalForms.lean:30	W1	Q1 column record of the base tuple	B
+GlobalTheory.Proof.TwistedNormalForms.sum_ite_zero_eq_atN	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TwistedNormalForms.lean:18	W1	Q1 column record of the base tuple	B
+GlobalTheory.Proof.TwistedNormalForms.twNF_imp_matNF	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/TwistedNormalForms.lean:62	W1	Q1 column record of the base tuple	B
+GlobalTheory.QNF.IdxMatNF	def	Development/AbelianVarietyTheory/Definitions/GlobalTwisting/IdxMatNF.lean:28	W1	Q1 column record of the base tuple	B
+GlobalTheory.SmallFieldPieces.abelOver_of_isAbelianGalois	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:88	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.coprime_discr	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:132	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.discr_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:45	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.exists_pieces	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:195	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.exists_twelfth_root	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:189	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.finrank_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:41	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.isHilbertCF_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:97	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.kPsi_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:153	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.map_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:34	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.qb_KC	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:68	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.qb_cycField	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:57	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.qb_eq_of_map	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:31	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.qb_imField	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:48	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.qb_mono	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:39	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.ray_qb	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:139	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.SmallFieldPieces.squarefree_modulus	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPieces.lean:122	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.T.exists_smallField_classFieldPieces	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsSmallFieldClassFieldPiecesStatement.lean:9	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.T.reFace_zero_part_conventions_chosen_again	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ReFaceZeroPartConventionsChosenAgainStatement.lean:11	W3	Q5 zero-part conventions	B
+GlobalTheory.T.standardAddChar_placeIdempotent_div_prime	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/StandardAddCharPlaceIdempotentDivPrimeStatement.lean:9	W2	Q4 joints of the standard character	B
+GlobalTheory.UnramInRay.isModulus_of_top	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NonemptyAlgHomRayField.lean:14	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.UnramInRay.nonempty_algHom_rayField	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/NonemptyAlgHomRayField.lean:21	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.UnramModulus.inInertia_restrict	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsModulusTopOfIsTotallyComplex.lean:13	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.UnramModulus.isModulus_top	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsModulusTopOfIsTotallyComplex.lean:42	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.UnramModulus.rayIdl_le	theorem	Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/IsModulusTopOfIsTotallyComplex.lean:30	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.isGalois_finrank_discr_adjoin_sqrt_neg_prime	theorem	Development/AbelianVarietyTheory/Proofs/JetHarmonics/QuadraticFieldDiscPrimeThreeModFour.lean:106	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.minpoly_eq_of_quadratic_irrational	theorem	Development/AbelianVarietyTheory/Proofs/JetHarmonics/QuadraticFieldDiscPrimeThreeModFour.lean:21	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.natAbs_discr_of_sq_eq_neg_prime	theorem	Development/AbelianVarietyTheory/Proofs/JetHarmonics/QuadraticFieldDiscPrimeThreeModFour.lean:32	W2	Q3 class-field pieces of the small field	B
+GlobalTheory.sqrtNeg_not_mem_range	theorem	Development/AbelianVarietyTheory/Proofs/JetHarmonics/QuadraticFieldDiscPrimeThreeModFour.lean:9	W2	Q3 class-field pieces of the small field	B
+PI.KerLat.PerPair	def	Formalism/PeriodIntegrals/KerLat.lean:8	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+PI.KerLat.PerPairProof.im_ne	theorem	Formalism/PeriodIntegrals/UnitaryGroupMassFormula/PeriodPairIndependence/IndepOfImNe.lean:37	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+PI.KerLat.PerPairProof.indep_of_im_ne	theorem	Formalism/PeriodIntegrals/UnitaryGroupMassFormula/PeriodPairIndependence/IndepOfImNe.lean:10	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+PI.KerLat.PerPairProof.perPair	theorem	Formalism/PeriodIntegrals/UnitaryGroupMassFormula/PeriodPairIndependence/IndepOfImNe.lean:60	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.Reformulated.B.IntegralClosureCriterion.OKc	def	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralClosureCriterion.lean:13	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.Reformulated.B.IntegralClosureCriterion.be	def	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralClosureCriterion.lean:9	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.Reformulated.B.IntegralClosureCriterion.okc_of	theorem	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralClosureCriterion.lean:18	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.Reformulated.B.StarSqrtNeg.star_sqrt_neg	theorem	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/StarSqrtNeg.lean:22	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.Reformulated.B.WeightThresholdDefs.core	theorem	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/WeightThresholdDefs.lean:7	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.Reformulated.B.WeightThresholdDefs.exists_smul_mem	theorem	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/WeightThresholdDefs.lean:21	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.adjoin_sqrt_eq_rat_span	theorem	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/AdjoinSqrtEqRatSpan.lean:3	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+UpperTheory.integral_quadratic_half_int	theorem	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralQuadraticHalfInt.lean:47	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+conj_eq_neg_of_sq	lemma	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/StarSqrtNeg.lean:9	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+even_sub_of_norm	lemma	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralQuadraticHalfInt.lean:29	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+exists_periodPairOfIdeal	theorem	Formalism/PeriodIntegrals/OrbitalBoundsConclusion/KerPerPair.lean:5	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+int_of_isIntegral_cast	lemma	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralQuadraticHalfInt.lean:3	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
+int_of_sq_mul	lemma	Development/AutomorphicArithmetic/IntegralCasts/CapelliIdentities/IntegralQuadraticHalfInt.lean:9	W1	Q2 integrality and split data of the Fock period lattices (K-a, K-b, K-c)	J
