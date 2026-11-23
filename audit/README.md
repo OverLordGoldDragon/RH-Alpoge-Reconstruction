@@ -6,7 +6,7 @@ The reports were prepared by Claude (Anthropic) as working reports for Jimmie Ad
 
 ## Current synthesis
 
-These three files are the most recent audit state, and the public documents at the root of the repository follow them.
+These three files were the most recent audit state on 21 November 2026. They are kept as historical records. The current status is [`../STATUS.md`](../STATUS.md), and the later closure, source-fidelity and final certification reports are not yet in this directory.
 
 | File | Content |
 |---|---|

@@ -1,5 +1,7 @@
 # Proof dependency map
 
+> **Note, 22 November 2026.** The status marks below are those of 21 November 2026. The internal packages PC-1 to PC-7 that the marks *[reconstructed above PC-n]* refer to have since been closed at the human-proof boundary. See [`STATUS.md`](STATUS.md).
+
 This is the argument of the archive in mathematical order, from the analytic criterion to the conclusion. It is a map of mathematics, not a history of the audit and not a list of Lean declarations. Lean names appear in `code` where they help a reader find the corresponding statement in the manuscript or the archive. Section references (§) are to [`RH_Route_Notes.pdf`](RH_Route_Notes.pdf).
 
 Status marks used below.

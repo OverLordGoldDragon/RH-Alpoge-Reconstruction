@@ -11,9 +11,10 @@ title: >-
 abstract: >-
   A reconstruction, in conventional mathematical language, of the Lean proof
   archive released by Levent Alpöge on November 20, 2026. The architecture and
-  major mechanisms of the argument are reconstructed end to end. A finite set
-  of isolated internal proof packages remains under audit, together with a
-  separate literature-verification boundary. On November 21, 2026, the Lean
+  major mechanisms of the argument are reconstructed end to end. A final
+  dependency audit of November 22, 2026 finds no unresolved internal
+  residual on the live proof route, and the source-fidelity check of the
+  external theorem boundary is under way. On November 21, 2026, the Lean
   and Mathlib communities certified that both the statement and the proof in
   the archive are correct.
 authors:
