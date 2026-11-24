@@ -2,24 +2,15 @@
 
 The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude. The current manuscript states precisely each internal step that still lacks a conventional proof and each published input whose exact form still needs verification (see [Current status](#current-status)). I am actively working to complete those proofs and to compress the manuscript so that it reads more clearly. My ultimate hope is that this makes the process of human verification easier for the community.
 
-**[Read the manuscript](manuscript/main.pdf)** · 269 pages · revised 24 November 2026. The conventional proof remains conditional. To see which steps still need a proof and where the argument uses them, see [Section 19, p. 263](manuscript/main.pdf#page=263).
+**[Read the manuscript](manuscript/main.pdf)** · 287 pages · revised 24 November 2026.
 
 ## Current status
 
-**24 November 2026.** Section 14 now gives the finite-group arguments for the level idempotents. Section 17 proves that the second Galois cohomology group in the argument is finite. Its order still needs a uniform bound. Section 18 derives the required interval of scales from the stated Selmer hypothesis.
+Section 14 gives the volume and flag estimates, the decay away from the identity and the count of near orbits. Section 17 constructs the classical automorphic points from base change and gives a proposed uniform bound for the order of the second Galois cohomology group.
 
-I am working on six steps in the proof. Section 19.1 gives their precise statements.
+That last bound (K1) is where I see the clearest opportunity to shorten the reconstruction. The archive takes 21 steps. In Section 17.4.3 I bound the number of generators and their orders separately. Together the two estimates give the required bound, even at the small primes. This proof still needs an independent human check and has no Lean certification. If it holds up, one substantial part of the argument admits a shorter proof. I would like to know how much more can be simplified in the same spirit.
 
-| Step | What remains to prove |
-| --- | --- |
-| Base change (N1) | Construct one unitary base change whose constituents satisfy the local conditions at every place. |
-| Classical points (N2) | Use that base change to construct a classical automorphic point and its Galois representation on each required isotypic component. |
-| Volumes and flags (C1) | Prove the compactly supported Siegel mean formula with the measures used in the multiplicity estimate, then deduce the volume and flag bounds. |
-| Decay (C2) | Prove the discrete-series decay estimates needed to bound the far orbits and the kernel at depth. |
-| Near orbits (C3) | Count the near orbits by filtration and combine the count with the flag and decay estimates. |
-| Effective finiteness (K1) | Bound the order of the cohomology group in Section 17 uniformly in the twist, field degree and discriminant. |
-
-Section 19.2 lists the other hypotheses the manuscript still uses. I will keep tracing each open step through the Lean archive and checking the cited theorems until a reader can verify the whole argument from the paper and its references.
+The arguments are written for a reader working from the paper and its references. [Section 18.7](manuscript/main.pdf#page=281) identifies the hypotheses still needed for the final deduction and the published results whose precise application needs checking.
 
 ## The argument and its reconstruction
 

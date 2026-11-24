@@ -2,7 +2,7 @@
 
 ## 24 November 2026
 
-The [269-page manuscript](../manuscript/main.pdf) remains conditional. Section 19.1 states the six assertions under investigation in this revision. Section 19.2 records the other hypotheses used in the reconstruction. The [README](../README.md#current-status) summarizes the current work.
+The [manuscript](../manuscript/main.pdf) now treats the volume, decay and near-orbit estimates in Section 14 and the base change, classical points and uniform cohomological bound in Section 17. The alternative argument for the last bound awaits independent human verification. Section 18.7 records the hypotheses still needed for the deduction of RH. See the [current status](../README.md#current-status).
 
 ## 23 November 2026, evening
 

@@ -269,7 +269,7 @@ Condition (ix) is compatible with the lower bound $\lvert\mathcal W\rvert\ge C_0
 
 
 
-Hypothesis~\ref{r6:R6:thm:records} collects in one statement the inequalities proved in Sections~\ref{sec:lifts} to~\ref{sec:twisted}. Condition (a) is the choice of the words in Lemma~\ref{r3:sizecond}. Conditions (K1) and (K2) are Theorems~\ref{r2:A1} and~\ref{r2:A2} with the divisibility of Theorem~\ref{r1:thm:R1main}. Condition (K3) is Theorem~\ref{r3:A3} with Theorems~\ref{w2:S}, \ref{w2:I} and~\ref{w2:B}. Condition (K4) is Theorem~\ref{r4:R4:A4} with Theorem~\ref{r5:thm:DIVinN}. Condition (K5) is Theorem~\ref{r5:thm:Ebound}. Conditions (K6) and (K7) are proved in Section~\ref{r4:sec:R4}, and (K8) is Theorem~\ref{r4:R4:A7} with $\mu(N_u)\le\mu_{\max}(N_u)$. Each of these results is proved here from hypotheses stated in its section, and Section~\ref{sec:frontier} lists those hypotheses. The conditions (K1) to (K8) are stated with the exponents and constants of the formal proof, and some of the cited results give an inequality of a slightly different shape. Theorem~\ref{r3:A3} gives (K3) without the term $\log\lvert\mathcal W\rvert$, which only strengthens it, and Theorem~\ref{r2:A2} gives the two halves of (K2), the upper half without the term $C_\ast mB_0$. \notgiven{We have not checked line by line that the constants and exponents of Sections~\ref{sec:lifts} to~\ref{sec:twisted} give (K1) to (K8) with absolute $e_D$ and $e_L$, so Hypothesis~\ref{r6:R6:thm:records} is not proved here even modulo the hypotheses of those sections.}
+Hypothesis~\ref{r6:R6:thm:records} collects in one statement the inequalities proved in Sections~\ref{sec:lifts} to~\ref{sec:twisted}. Condition (a) is the choice of the words in Lemma~\ref{r3:sizecond}. Conditions (K1) and (K2) are Theorems~\ref{r2:A1} and~\ref{r2:A2} with the divisibility of Theorem~\ref{r1:thm:R1main}. Condition (K3) is Theorem~\ref{r3:A3} with Theorems~\ref{w2:S}, \ref{w2:I} and~\ref{w2:B}. Condition (K4) is Theorem~\ref{r4:R4:A4} with Theorem~\ref{r5:thm:DIVinN}. Condition (K5) is Theorem~\ref{r5:thm:Ebound}. Conditions (K6) and (K7) are proved in Section~\ref{r4:sec:R4}, and (K8) is Theorem~\ref{r4:R4:A7} with $\mu(N_u)\le\mu_{\max}(N_u)$. Each of these results is proved here from hypotheses stated in its section. The conditions (K1) to (K8) are stated with the exponents and constants of the formal proof, and some of the cited results give an inequality of a slightly different shape. Theorem~\ref{r3:A3} gives (K3) without the term $\log\lvert\mathcal W\rvert$, which only strengthens it, and Theorem~\ref{r2:A2} gives the two halves of (K2), the upper half without the term $C_\ast mB_0$. \notgiven{We have not checked line by line that the constants and exponents of Sections~\ref{sec:lifts} to~\ref{sec:twisted} give (K1) to (K8) with absolute $e_D$ and $e_L$, so Hypothesis~\ref{r6:R6:thm:records} is not proved here even modulo the hypotheses of those sections.}
 
 The proof of Theorem~A below uses Hypothesis~\ref{r6:R6:thm:records} for one admissible datum at each scale. The conditions (K1) to (K8) depend on the window and the base through the field $E$, the ranks and the sets $T$ and $T_2$.
 
@@ -441,3 +441,75 @@ Proposition~\ref{r6:R6:prop:errors} bounds the right side by $x^{C\varepsilon}\m
 The constant $C$ does not depend on $\varepsilon$ or on $\psi_0$, which is the uniformity that the last step of the proof of Theorem~\ref{mainthm} uses. With $C=3$ that proof gives $\zeta(s)\ne0$ and $L(s,\chi^{(i)})\ne0$ for $\operatorname{Re}s>\frac12+7\varepsilon$, for every $0<\varepsilon<\varepsilon_1$, and so for $\operatorname{Re}s>\frac12$.
 
 The three primes of (D5) are congruent to $1$ modulo $15\,Q_Sqd$. The construction of the level structure of the lifts uses two primes congruent to $1$ modulo $\operatorname{lcm}(15,Q_Sqd)$ and a third prime, different from them, congruent to $1$ modulo $Q_Sqd$, all at most $(Q_Sqd)^{C_8}$ for a constant $C_8$. Since $\operatorname{lcm}(15,Q_Sqd)$ divides $15\,Q_Sqd$, the primes of (D5) have these properties with $C_8=2A_L(1+A_L)^2$, because $15\le Q_Sqd$ gives $(15\,Q_Sqd)^{A_L(1+A_L)^2}\le(Q_Sqd)^{2A_L(1+A_L)^2}$.
+
+\subsection{Hypotheses in the final deduction}\label{sec:frontier}
+
+\paragraph{The chain and the Hecke bounds.}\label{fr:sec:chain}\label{fr:sec:loss}
+Proposition~\ref{a8:prop:N1} gives the frame valuation under the step-character
+and determinant normalizations of Definition~\ref{a8:def:frame}.
+Hypotheses~\ref{r1:hyp:H2} and~\ref{r1:hyp:H3} concern the odd-position
+lattices and the normalized kernel. In the Hecke bound, Theorem~\ref{w1:thm:B7}
+controls the isotypic projector, Proposition~\ref{w1:prop:C7} bounds the
+window loss, and Lemma~\ref{w1:lem:A9} combines the final share estimates.
+Hypothesis~\ref{r2:engines} still requires the individual share estimates,
+the comparisons between levels and the construction of the test systems.
+Corollary~\ref{r2:cor:L2} uses the Weyl lattice model. Proposition~\ref{r2:prop:Z1}
+requires a polynomial bound for the constant of the base weights.
+The colength at the auxiliary prime in (L7) is a further input.
+
+\paragraph{Periods and multiplicities.}\label{fr:sec:frame}
+Theorem~\ref{w2:Bproof} uses the seesaw relation, its nonzero pairing
+and the period identifications. Theorem~\ref{w3s:thm:T2} proves the
+double-step identity from the general and local Weil representation
+laws. Lemma~\ref{w2:see:rat} specifies the three period identities
+needed for rationality. The multiplicity calculation requires the
+label identifications and the pre-trace hypotheses of
+Subsections~\ref{w2x:sec:rows} and~\ref{w2x:sec:count}.
+The estimates on individual rows in Theorem~\ref{w2:Sproof} also
+require the kernel expansion, the main row, the loop rows and the
+degenerate terms. Lemma~\ref{w39:sizes} proves the two exponential
+size inequalities with $r_S=m/2-1$.
+
+\paragraph{Heights and local terms.}\label{fr:sec:heights}\label{fr:sec:local}
+The kernel norm uses the common integral Weber value and the period
+identities in Section~\ref{r4:sec:R4}. The final pairing requires its
+factorization through the branching map. For the covolume bound,
+Theorem~\ref{cov:main} specifies the descent, flat twist and lattice
+comparisons under its hypotheses (I1)--(I17).
+Hypothesis~\ref{w3:W3:unif} gives a lower bound for the average of
+component slopes with the term $q\,\operatorname{spread}(u)$ in the
+error. The flat twist gives the main term in the covolume inequality.
+The exact change of integral structure at good primes still enters the
+uniformity in the level. At the auxiliary and inert places the degree
+and orbit bounds enter Corollary~\ref{r5:cor:A5}.
+
+\paragraph{Twisted places and assembly.}\label{fr:sec:twisted}\label{fr:sec:assembly}
+Theorem~\ref{w4:thm:decomp} separates the plus and minus parts, including
+the prime $2$. Proposition~\ref{w4:prop:pluschar} separates the character
+summands when the group order is a unit. The generic estimate uses
+(OneChar) and (Count). The two rank-four cases also require propagation
+of automorphy and rigidity as in Subsection~\ref{tw:rankfour}.
+The rank-two local comparison in Subsection~\ref{tw:levelpoints} applies
+to Hilbert modular forms in the stated normalization.
+For the twisted lattice, Propositions~\ref{lk:prop:ident} and~\ref{lk:prop:gd}
+identify the congruence module and reduce its estimate to per-component
+bounds. The Wach lifting estimate, the bounds for the other local rows,
+and the integral theta-series comparisons still enter that argument.
+Proposition~\ref{lk:prop:d0} shows why $\dim M_j=D_0$ suffices at the
+last step. Theorem~\ref{r5:thm:DIVinN} uses only $d^0_j\le D_0$.
+
+\paragraph{Published inputs.}\label{fr:sec:audit}
+Section~\ref{sec:field} uses Gallagher's Theorem~7 and the exceptional-zero
+bound (C8) for (C7), and the ray class case of Thorner--Zaman with Stark's
+bound for (C9). For the local arguments Berger's de Rham theorem is
+Th\'eor\`eme~0.6, equivalently Th\'eor\`eme~5.19, of~\cite{berger02}.
+For algebraic Hecke characters the Hodge jumps at $\tau$ have sign
+$-n_\tau$ in the local Artin convention. In the CM functional equation
+the archimedean phase at infinity type $2m$ is
+$\mathrm{i}^{\,\sum_i|2m_i|}$: substituting $2m$ in the local phase gives
+this equality since the exponent is even.
+The Rallis inner product identity still requires the comparison of the
+Petersson norm with the operators of Proposition~\ref{w3:W3:HLprop}.
+The mass and formal-degree formulas must use the measures of the
+dimension estimate. The final implication to Theorem~\ref{thm:intro}
+remains conditional on the hypotheses above.
