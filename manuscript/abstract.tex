@@ -1,7 +1,7 @@
 \begin{abstract}
 On November 20, 2026, Levent Alp\"oge announced a proof of the Riemann hypothesis, found in collaboration with Claude and released as a Lean development. The Lean and Mathlib communities subsequently certified the formal statement and proof. This manuscript reconstructs the argument in conventional mathematics.
 
-The proof reduces the Riemann hypothesis to a one-sided square-root bound for weighted prime sums. Alp\"oge obtains this bound through a number-field analogue of Stepanov's method. A chain of theta lifts gives increasing divisibility at inert primes, and slope inequalities for the associated hermitian lattices control the competing losses. The manuscript develops the analytic reduction, the local divisibility mechanism and the arithmetic accounting, together with substantial parts of the automorphic, geometric and Galois-theoretic machinery needed to assemble the argument.
+To exclude zeros to the right of the critical line, it suffices to bound the error in certain weighted prime sums from above by $O_\varepsilon(X^{1/2+\varepsilon})$ on suitable intervals. In Stepanov's method an auxiliary function vanishes to high order at the rational points of a curve over a finite field. Over a number field, each theta lift contributes divisibility at inert primes. For a sum of length $X$, a chain of about $\sqrt X$ lifts plays the role of the order of vanishing.
 
 The reconstruction is not yet complete. Section~\ref{sec:frontier} states the remaining base-change, local realization, counting and cohomological estimates, together with the hypotheses still used in the paper. The goal is a human-readable proof that can be checked independently of the Lean development.
 \end{abstract}
