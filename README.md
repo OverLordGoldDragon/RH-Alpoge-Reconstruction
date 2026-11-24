@@ -1,5 +1,15 @@
 # Human-readable reconstruction of the Alpöge/Claude RH argument
 
+> **Status, 23 November 2026, evening. A brief update on the Alpöge RH reconstruction.**
+>
+> This morning I posted a manuscript and repository status reflecting the result of a global dependency audit: every live internal dependency in the Lean route had been assigned either to a reconstructed mathematical mechanism or to an explicit external boundary. I want to clarify that this was a statement about coverage of the formal route, not a claim that every internal theorem had already been written out as a complete conventional proof.
+>
+> A referee pass this afternoon pushed the human-proof audit further and found that the list of open statements in the current manuscript is incomplete. The largest newly exposed piece is a $\mathrm{GSp}_4$ argument that had been absorbed into the non-generic cases. The referee also isolated several points that need specialist attention, including `RegDet`, a patching step that moves between different points, and the role of the internal theorem `AdjointLiftingTheorem`. No false statement was identified; the effect of the pass was to make the remaining frontier more precise.
+>
+> A separate reconciliation of the external boundary also found a substantial number of literature inputs that are used by the route but are not yet represented in the current external-theorem ledger, most of them foundational results in automorphic forms and representation theory. I am therefore treating the present manuscript as a reconstruction in progress rather than a finished conventional proof. The next step is to produce a complete verification map of the remaining internal and external obligations, referee that map, and then work through the resulting finite list systematically.
+>
+> I am leaving the earlier status material in place so that the chronology of the reconstruction and its corrections remains visible.
+>
 > **Status, 23 November 2026.** The reconstruction has now reached a 225-page working manuscript, [`manuscript/main.pdf`](manuscript/main.pdf). Reconciling the final dependency audit with the manuscript clarified an important distinction in the status reported here on 22 November. The audit closed the live Lean dependency graph at the level of dependency identification and mathematical packaging. Every live internal dependency had been located, assigned to a reconstructed component, or isolated behind an explicit boundary. The audit did **not** mean that every internal statement on that route had already been written out with a complete conventional proof.
 >
 > The current manuscript makes that boundary explicit. Its Section 19 lists the internal statements for which a conventional proof is still being reconstructed, together with the published inputs whose exact forms still need source verification. The manuscript therefore does **not yet** constitute a proof of the Riemann hypothesis independent of the Lean development.

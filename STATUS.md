@@ -1,5 +1,17 @@
 # Status
 
+## 23 November 2026, evening
+
+A brief update on the Alpöge RH reconstruction.
+
+This morning I posted a manuscript and repository status reflecting the result of a global dependency audit: every live internal dependency in the Lean route had been assigned either to a reconstructed mathematical mechanism or to an explicit external boundary. I want to clarify that this was a statement about coverage of the formal route, not a claim that every internal theorem had already been written out as a complete conventional proof.
+
+A referee pass this afternoon pushed the human-proof audit further and found that the list of open statements in the current manuscript is incomplete. The largest newly exposed piece is a $\mathrm{GSp}_4$ argument that had been absorbed into the non-generic cases. The referee also isolated several points that need specialist attention, including `RegDet`, a patching step that moves between different points, and the role of the internal theorem `AdjointLiftingTheorem`. No false statement was identified; the effect of the pass was to make the remaining frontier more precise.
+
+A separate reconciliation of the external boundary also found a substantial number of literature inputs that are used by the route but are not yet represented in the current external-theorem ledger, most of them foundational results in automorphic forms and representation theory. I am therefore treating the present manuscript as a reconstruction in progress rather than a finished conventional proof. The next step is to produce a complete verification map of the remaining internal and external obligations, referee that map, and then work through the resulting finite list systematically.
+
+I am leaving the earlier status material in place so that the chronology of the reconstruction and its corrections remains visible.
+
 ## 23 November 2026
 
 The current manuscript is [`manuscript/main.pdf`](manuscript/main.pdf), a 225-page working document. Reconciling the final dependency audit of 22 November with the manuscript clarified what the audit verdict below means. The audit closed the live Lean dependency graph at the level of dependency identification and mathematical packaging. Every live internal dependency had been located, assigned to a reconstructed component, or isolated behind an explicit boundary. The verdict `|R_internal| = 0` does **not** mean that every internal statement on that route has been written out with a complete conventional proof.
