@@ -2,7 +2,7 @@
 
 ## 24 November 2026
 
-The [269-page manuscript](../manuscript/main.pdf) remains conditional. Section 19.1 states the six assertions in the current Kimi wave. Section 19.2 records the other hypotheses used in the reconstruction. The [README](../README.md#current-status) summarizes the current work.
+The [269-page manuscript](../manuscript/main.pdf) remains conditional. Section 19.1 states the six assertions under investigation in this revision. Section 19.2 records the other hypotheses used in the reconstruction. The [README](../README.md#current-status) summarizes the current work.
 
 ## 23 November 2026, evening
 
