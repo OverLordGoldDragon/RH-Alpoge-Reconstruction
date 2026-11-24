@@ -128,7 +128,7 @@ This is \eqref{w2:perlaw}.
 \end{proof}
 
 \begin{remark}\label{w2:rem:perlaw}
-The argument shows $c_u>0$. The identity \eqref{w2:perlaw} does not need $P_T\in L^2([G])$, nor that $P_T$ is fixed by the archimedean projector. Both facts are needed to know that $P_T\in\mathcal H$, which Lemma~\ref{w2:anchor} uses.
+The argument shows $c_u>0$. The identity \eqref{w2:perlaw} does not need $P_T\in L^2([G])$, nor that $P_T$ is fixed by the archimedean projector. Both facts are needed to know that $P_T\in\mathcal H$, which Definition~\ref{w2:anchor} uses.
 \end{remark}
 
 \begin{corollary}[transfer of relations from Bessel periods to Poincar\'e pairings]\label{w2:bottom}
@@ -170,7 +170,7 @@ There are a central element $z\in G(\Af)$, a linear map $U_u$ of $V_{u,v}$ with 
 \[
 \sum_i\alpha_i\,\per\Bigl(T_{x_i}(\xi),\,R_{(y,x_u)}R_z\overline{\theta_{x_i}}\Bigr)=0\qquad\text{for every }\xi\in V_\sigma\text{ and }y\in G_\infty.
 \]
-Moreover $X_u$ contains an element $x_0$ with $T_{x_0}=\iota_u(U_u\varphi_0)$ for some $\varphi_0$ and $\theta_{x_0}=R_z^{-1}\mathcal P_u\iota_u(U_u\varphi_0)$.
+For some $x_0\in X_u$ the pairing $\int_{[G]}R_z\overline{\theta_{x_0}}\,P_{T_{x_0}}$ is nonzero.
 \end{hypothesis}
 
 \begin{hypothesis}[dictionaries]\label{w2:H-dict}
@@ -181,13 +181,11 @@ The space $\mathcal H$ consists of bounded continuous functions on $G(\A)$, left
 For $\varphi\in V_u$ and $y\in Y$ the number $(B_{u,v}(\varphi\otimes1))(y\otimes1)$ lies in $\sigma_v(K)$ and equals $\sigma_v(B_u(\varphi)(y))$.
 \end{hypothesis}
 
-\begin{lemma}[anchor]\label{w2:anchor}
-Assume Hypotheses~\ref{w2:H-see} and~\ref{w2:H-dict}, and assume $\mathcal P_u\iota_u(U_u\varphi_0)\ne0$. Put $\mu_u(x)=\int_{[G]}R_z\overline{\theta_x}\,P_{T_x}$ for $x\in X_u$. Then $\mu_u(x_0)\ne0$.
-\end{lemma}
-
-\begin{proof}
-With $P=\mathcal P_u\iota_u(U_u\varphi_0)\in\mathcal H$ one has $R_z\theta_{x_0}=P$, so $\mu_u(x_0)=\int_{[G]}\overline P\,P=\lVert P\rVert^2>0$.
-\end{proof}
+\begin{definition}\label{w2:anchor}
+For $x\in X_u$ put $\mu_u(x)=\int_{[G]}R_z\overline{\theta_x}\,P_{T_x}$.
+The last condition of Hypothesis~\ref{w2:H-see} asks for a pair $x_0$
+with $\mu_u(x_0)\ne0$.
+\end{definition}
 
 \begin{lemma}\label{w2:punz}
 Assume $\lVert K_{uu}-1\rVert_\HS^2\le e_0\,d^S_u$ and $\dim\iota_u(V_{u,v})>e_0\,d^S_u$. Then there is $\varphi_0\in V_{u,v}$ with $\mathcal P_u\iota_u(U_u\varphi_0)\ne0$.
@@ -200,13 +198,13 @@ For $w\in\mathcal C_u$ one has $\lVert\mathcal P_uw\rVert^2=c_u\langle w,K_{uu}w
 Under the conclusion of Theorem~\ref{w2:S}, $e_0\le\tfrac12$ for large $x$, and $\dim\iota_u(V_{u,v})=d_u\ge(1-2f/T_u)d^S_u>\tfrac12d^S_u$ by Lemma~\ref{r3:ramshare}, since $T_u\ge b>8f$. So Lemma~\ref{w2:punz} applies.
 
 \begin{theorem}\label{w2:Bproof}
-Assume \ref{w2:P1} to \ref{w2:P5} for the word $u$, Hypotheses~\ref{w2:H-see}, \ref{w2:H-dict} and \ref{w2:H-rat}, and $\mathcal P_u\iota_u(U_u\varphi_0)\ne0$. Then \eqref{w2:besselid} holds for $u$ with $\mathcal V$ the unitary operator of $Y_v$ defined by $\mathbf s(\mathcal VF)=R_z\mathbf s(F)$, with $\mathcal U_u=r_u^{-1}U_u$ and with a number $a_u\ne0$. If the hypotheses hold for every $u\in W$ with one $z$, then $\mathcal V$ does not depend on $u$ and Theorem~\ref{w2:B} holds.
+Assume \ref{w2:P1} to \ref{w2:P5} for the word $u$, Hypotheses~\ref{w2:H-see}, \ref{w2:H-dict} and \ref{w2:H-rat}. Then \eqref{w2:besselid} holds for $u$ with $\mathcal V$ the unitary operator of $Y_v$ defined by $\mathbf s(\mathcal VF)=R_z\mathbf s(F)$, with $\mathcal U_u=r_u^{-1}U_u$ and with a number $a_u\ne0$. If the hypotheses hold for every $u\in W$ with one $z$, then $\mathcal V$ does not depend on $u$ and Theorem~\ref{w2:B} holds.
 \end{theorem}
 
 \begin{proof}
 By Lemma~\ref{w2:central} and Hypothesis~\ref{w2:H-dict}, $R_z$ restricts to a unitary operator of $\mathbf s(Y_v)$, and since $\mathbf s$ is a conjugate linear isometry onto its image, $\mathcal V=\mathbf s^{-1}R_z\mathbf s$ is a linear unitary operator of $Y_v$.
 
-Let $\mu_u$ be as in Lemma~\ref{w2:anchor}. Every $\theta_x\in\mathcal H$ is bounded, and so is $R_z\overline{\theta_x}$, which is left $G(F)$-invariant and right $(K_2,\overline{\chi_2})$-equivariant by Lemma~\ref{w2:central}. Hypothesis~\ref{w2:H-see} and Corollary~\ref{w2:bottom} show that every linear relation among the values of $\lambda_u$ holds among the values of $\mu_u$. By Lemma~\ref{w2:anchor}, $\mu_u(x_0)\ne0$. Lemma~\ref{w2:prop} gives $\kappa_u\ne0$ with $\mu_u=\kappa_u\lambda_u$ on $X_u$. On $V_{u,v}\times Y_v$ this reads
+Let $\mu_u$ be as in Definition~\ref{w2:anchor}. Every $\theta_x\in\mathcal H$ is bounded, and so is $R_z\overline{\theta_x}$, which is left $G(F)$-invariant and right $(K_2,\overline{\chi_2})$-equivariant by Lemma~\ref{w2:central}. Hypothesis~\ref{w2:H-see} and Corollary~\ref{w2:bottom} show that every linear relation among the values of $\lambda_u$ holds among the values of $\mu_u$. By Hypothesis~\ref{w2:H-see}, $\mu_u(x_0)\ne0$. Lemma~\ref{w2:prop} gives $\kappa_u\ne0$ with $\mu_u=\kappa_u\lambda_u$ on $X_u$. On $V_{u,v}\times Y_v$ this reads
 \[
 \kappa_u\,(B_{u,v}\varphi)(F)=\int_{[G]}\overline{R_z\mathbf s(F)}\;\mathcal P_u\iota_u(U_u\varphi)=\bigl\langle\mathbf s(\mathcal VF),\mathcal P_u\iota_u(U_u\varphi)\bigr\rangle_{\mathcal H}=r_u\bigl\langle\mathbf s(\mathcal VF),\mathcal P_u\iota_u\mathcal U_u\varphi\bigr\rangle_{\mathcal H}.
 \]
@@ -214,7 +212,330 @@ So \eqref{w2:besselid} holds with $a_u=r_u/\kappa_u\ne0$, and $\mathcal U_u=r_u^
 \end{proof}
 
 \begin{remark}[what Theorem~\ref{w2:Bproof} leaves open]\label{w2:rem:Bopen}
-Hypothesis~\ref{w2:H-see} combines a definition and a relation. The period map is defined from the period $\mathrm{perCol}$ of the chain of theta lifts on the definite side. The seesaw relation transfers relations among the numbers $c(t)\,\mathrm{perCol}$ to relations among the local Bessel periods of the indefinite theta lifts translated by $z$, with $c(t)=c_{\mathrm{top}}(t)s/c_{\mathrm{bot}}(t)$. The seesaw relation is the one statement among the inputs with mathematical content beyond this section. Its proof needs the chain of seesaw identities for the unitary dual pairs of the theta tower, the anisotropic Siegel--Weil formula, the analytic theory of Siegel Eisenstein series, and the local matching of the doubling zeta integrals that give the constants $c_{\mathrm{top}}$ and $c_{\mathrm{bot}}$.
+Hypothesis~\ref{w2:H-see} combines a definition and a relation. The period map is defined from the period $\mathrm{perCol}$ of the chain of theta lifts on the definite side. The seesaw relation transfers relations among the numbers $c(t)\,\mathrm{perCol}$ to relations among the local Bessel periods of the indefinite theta lifts translated by $z$, with $c(t)=c_{\mathrm{top}}(t)s/c_{\mathrm{bot}}(t)$. The constants of the double step come from the volumes and local scalar factors in Theorem~\ref{w3s:thm:T2}. The Siegel--Weil and doubling identities enter the surjectivity in Hypothesis~\ref{w2:see:H-links}.
+\end{remark}
+
+\subsubsection{The chain of seesaw transfers}\label{w2:sec:seesaw}
+
+The transfer follows from the theta tower identities in Hypothesis~\ref{w2:see:H-laws} and the period identifications in Hypothesis~\ref{w2:see:H-links}.
+
+\paragraph{The tower.} Let $m=2n+2$ be the (even) number of lifts of the chain. The construction gives hermitian spaces $V_0,\dots,V_m$ and $T$ over $E$, definite hermitian spaces $X_0,\dots,X_m$ with an orthogonal decomposition $X_m=T\oplus L$, and $h\mapsto\epsilon(h)$ the induced embedding $\mathrm U(T)\to\mathrm U(X_m)$. For $0\le j$ and $\rho\ge0$ with $j+2\rho+2=m$ there is a Bessel datum of rank $\rho$ at level $j$, and $\mathcal B^\rho_j(\phi,f)$ denotes the Bessel period \eqref{w2:per} of a function $f$ on $\mathrm U(V_j)(\A)$ against a function $\phi$ on $\mathrm U(X_j)(\A)$, with the fixed additive character $\psi$. For $e=\sum_ge(g)\,g$ a finitely supported combination of finite adelic points put $\mathrm{tr}(e)f=\sum_ge(g)R_gf$.
+
+For $j\le m-1$ let $\mathcal S_j$ be the space of smooth vectors of the archimedean Fock model at level $j$ and $\mathcal S_T$ the one of $T$. The space $\mathcal C_j$ consists of linear maps $G\colon\mathcal S_j\to\mathcal A(\mathrm U(V_j))$, and $\mathcal A$ denotes the space of automorphic functions. Define $\mathcal C_T$ for $T$ in the same way. The theta lifts of the chain are linear maps
+\[
+\iota_j\colon\mathcal C_{j+1}\to\mathcal C_j\quad(j\le m-2),\qquad\iota_T\colon\mathcal C_T\to\mathcal C_{m-1},
+\]
+and $\Theta_j(f;P)$ denotes the theta integral of a function $f$ on $\mathrm U(V_{j+1})$ against the theta kernel attached to a polynomial Fock vector $P$, with $\Theta_T$ the same for $T$. The maps $\mathrm{It}_j\colon\mathcal P_j\otimes\mathcal S_{j+1}\to\mathcal S_j$ and $\mathrm{It}_T\colon\mathcal P_T\otimes\mathcal S_T\to\mathcal S_{m-1}$ are the tensor maps of the Fock models.
+
+The tower is indexed by a set $\mathcal T$ of tuples. For each $s\in\mathcal T$ and each level $j$ the construction gives a finite set $\mathrm{Ch}_j$, combinations $e_{j,\alpha}$ with finite support for $\alpha\in\mathrm{Ch}_j$, a set $\mathrm{Col}_j$ of columns with a subset $\mathrm{Ram}_j$, maps $S_j\colon\mathrm{Col}_j\to\mathrm{Col}_j$ and $K_j\colon\mathrm{Col}_j\to\mathrm{Col}_{j+1}$ preserving the subsets $\mathrm{Ram}$, a set $\mathrm{Fr}_j$ of frames, reading functions $\mathrm{rd}_j(\alpha,\psi',y)$ on $\mathrm U(X_j)(\A)$ for $\psi'\in\mathrm{Col}_j$ and $y\in\mathrm{Fr}_j$, a tail $\mathrm{tail}(\psi',F)\in\C$ for $\psi'\in\mathrm{Col}_m$ and $F\in\mathcal C_T$, and complex numbers $c_I(j),c_V(j),c_K(j),c_P$. The dependence on $s$ is not written. Put
+\begin{equation}\label{w2:see:per}
+\mathrm{per}^\rho_j(\psi',G;y,v)=\sum_{\alpha\in\mathrm{Ch}_j}\mathcal B^\rho_j\bigl(\mathrm{rd}_j(\alpha,\psi',y),\ \mathrm{tr}(e_{j,\alpha})\,G(v)\bigr)\qquad(G\in\mathcal C_j,\ v\in\mathcal S_j),
+\end{equation}
+$\mathrm{up}_0\psi'=\psi'$ and $\mathrm{up}_{k+1}\psi'=K_{2k+1}K_{2k}S_{2k}\,\mathrm{up}_k\psi'$ for $\psi'\in\mathrm{Col}_0$, and define the top and bottom constants
+\begin{equation}\label{w2:see:const}
+W_k=\prod_{l=0}^{k-1}c_V(2l)\,c_K(2l)\,c_K(2l+1),\qquad c_{\mathrm{top}}=W_{n+1}\,c_P,\qquad c_{\mathrm{bot}}=\prod_{j=0}^{m-1}c_I(j).
+\end{equation}
+The lift $\iota_T$ has the factor $c_I(m-1)$, so $c_{\mathrm{bot}}$ is the product of the constants of all $m$ lifts.
+
+\begin{hypothesis}[laws of the theta tower]\label{w2:see:H-laws}
+For every tuple the following hold.
+\begin{enumerate}[label=(T\arabic*),leftmargin=*]
+\item\label{w2:see:T1} (Lift law.) For $G\in\mathcal C_{j+1}$, $P\in\mathcal P_j$ and $v\in\mathcal S_{j+1}$, $\Theta_j(G(v);P)=c_I(j)\,(\iota_jG)(\mathrm{It}_j(P\otimes v))$, and the same holds for $\iota_T$ with $c_I(m-1)$. All $c_I(j)$ are nonzero.
+\item\label{w2:see:T2} (Double-step seesaw identity.) Let $j+2(\sigma+1)+2=m$, $P_1\in\mathcal P_j$, $P_2\in\mathcal P_{j+1}$, and let $a$ and $a'$ be archimedean points of $\mathrm U(V_{j+1})$ and $\mathrm U(V_{j+2})$. There is a bivacuum kernel $C$, depending on $(j,\sigma,P_1,P_2,a,a')$ and not on the tuple, such that for $\psi'\in\mathrm{Ram}_j$, $y$, $G\in\mathcal C_{j+2}$ and $v$, the integrand of $\mathcal B^{\sigma+1}_j$ applied to the double lift $\Theta_j(\Theta_{j+1}(G(v);P_2);P_1)$, integrated first over the Jacobi quotient at level $j+1$ translated by $a$ and then over the Bessel quotient at level $j+2$ translated by $a'$, converges absolutely and equals
+\[
+c_V(j)\sum_{\beta}\mathcal B^\sigma_{j+2}\bigl(\mathrm{two}_j(\mathrm{rd}_j(\cdot,S_j\psi',y),C)_\beta,\ \mathrm{tr}(e_{j+2,\beta})\,R_{a'}G(v)\bigr),
+\]
+where $\mathrm{two}_j$ is the bilift of the reading functions through the kernels of levels $j$ and $j+1$ composed with $C$.
+\item\label{w2:see:T3} (Kernel law.) For every bivacuum kernel $C$ and every $y$ there are coefficients $a(y')$, finitely many nonzero and independent of the tuple and of $\psi'\in\mathrm{Ram}_j$, with
+\[
+\mathrm{two}_j(\mathrm{rd}_j(\cdot,\psi',y),C)_\beta=c_K(j)\,c_K(j+1)\sum_{y'}a(y')\,\mathrm{rd}_{j+2}\bigl(\beta,K_{j+1}K_j\psi',y'\bigr).
+\]
+\item\label{w2:see:T4} (Last-step identity.) For $j=m-2$, $P_1\in\mathcal P_j$, $P_2\in\mathcal P_T$ there is a bivacuum kernel $C$ independent of the tuple with
+\[
+\mathrm{per}^0_j\bigl(\psi',\Theta_j(\Theta_T(F(w);P_2);P_1);y\bigr)=c_V(j)\,\mathrm{perT}\bigl(\mathrm{two}_j(\mathrm{rd}_j(\cdot,S_j\psi',y),C),F(w)\bigr),
+\]
+where $\mathrm{perT}(\phi,f)=\sum_\beta\int_{[\mathrm U(T)]}\mathrm{tr}(e_{T,\beta})f(h)\,\phi_\beta(\epsilon(h))\,dh$.
+\item\label{w2:see:T5} (Top period.) For $y$ and $w$ there is $b(y,w)\in\C$, independent of the tuple, of $\psi'\in\mathrm{Ram}_m$ and of $F$, with $\mathrm{perT}(\mathrm{rd}_m(\cdot,\psi',y),F(w))=c_P\,b(y,w)\,\mathrm{tail}(\psi',F)$.
+\item\label{w2:see:T6} (Unfolding of the double step.) If for every pair $(a,a')$ of archimedean points the iterated integrals in \ref{w2:see:T2} of a finite family of tuples, with coefficients $\alpha_i$, have values $v_i$ with $\sum_i\alpha_iv_i=0$, then $\sum_i\alpha_i\,\mathcal B^{\sigma+1}_j$ of the corresponding double lifts vanishes.
+\item\label{w2:see:T7} (Density.) The vectors $\mathrm{It}_j(P_1\otimes\mathrm{It}_{j+1}(P_2\otimes v))$, and the vectors $\mathrm{It}_j(P_1\otimes\mathrm{It}_T(P_2\otimes v))$, span a subspace on which a finite linear relation among the functionals $v\mapsto\mathrm{per}^\rho_j(\psi_i,G_i;y,v)$ implies the same relation on all of $\mathcal S_j$.
+\item\label{w2:see:T8} (Archimedean translation.) For an archimedean point $a'$ of $\mathrm U(V_{j})$ there is a linear map $\tau_{a'}$ of $\mathcal S_j$ with $R_{a'}G(v)=G(\tau_{a'}v)$ for every $G\in\mathcal C_j$ and every tuple, and $\mathcal B^\rho_j$ is linear in each argument.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{proposition}[one double step]\label{w2:see:step}
+Assume Hypothesis~\ref{w2:see:H-laws}. Let $j+2(\sigma+1)+2=m$, let $s_1,\dots,s_\ell$ be tuples, $\alpha_i\in\C$, $\psi_i\in\mathrm{Ram}_j$ and $G_i\in\mathcal C_{j+2}$, all for the tuple $s_i$. If
+\[
+\sum_i\alpha_i\,c_V(j)c_K(j)c_K(j+1)\,\mathrm{per}^\sigma_{j+2}\bigl(K_{j+1}K_jS_j\psi_i,G_i;y,v\bigr)=0\qquad\text{for all }y,v,
+\]
+then
+\[
+\sum_i\alpha_i\,c_I(j)c_I(j+1)\,\mathrm{per}^{\sigma+1}_j\bigl(\psi_i,\iota_j\iota_{j+1}G_i;y,v\bigr)=0\qquad\text{for all }y,v.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix $y$. By \ref{w2:see:T7} it suffices to prove the second identity at $v=\mathrm{It}_j(P_1\otimes\mathrm{It}_{j+1}(P_2\otimes w))$. Two applications of \ref{w2:see:T1} give
+\[
+c_I(j)c_I(j+1)\,(\iota_j\iota_{j+1}G_i)(v)=\Theta_j\bigl(\Theta_{j+1}(G_i(w);P_2);P_1\bigr),
+\]
+so the left side of the second identity is $\sum_i\alpha_i\,\mathrm{per}^{\sigma+1}_j$ of the double lifts. By \ref{w2:see:T6} it suffices to show, for fixed archimedean points $(a,a')$, that the iterated integrals $v_i$ satisfy $\sum_i\alpha_iv_i=0$. Let $C$ be the kernel of \ref{w2:see:T2} for $(j,\sigma,P_1,P_2,a,a')$. Then \ref{w2:see:T2}, \ref{w2:see:T3} applied to $S_j\psi_i\in\mathrm{Ram}_j$, and \ref{w2:see:T8} give
+\[
+v_i=c_V(j)c_K(j)c_K(j+1)\sum_{y'}a(y')\,\mathrm{per}^\sigma_{j+2}\bigl(K_{j+1}K_jS_j\psi_i,G_i;y',\tau_{a'}w\bigr),
+\]
+with $a(y')$ and $\tau_{a'}$ independent of $i$. Hence $\sum_i\alpha_iv_i=\sum_{y'}a(y')\cdot0=0$ by the hypothesis at $(y',\tau_{a'}w)$.
+\end{proof}
+
+\begin{proposition}[last step]\label{w2:see:last}
+Assume Hypothesis~\ref{w2:see:H-laws} and let $j=m-2$. Let $s_i$, $\alpha_i$, $\psi_i\in\mathrm{Ram}_j$ and $F_i\in\mathcal C_T$ be finitely many data. If
+\[
+\sum_i\alpha_i\,c_V(j)c_K(j)c_K(j+1)\,c_P\ \mathrm{tail}\bigl(K_{j+1}K_jS_j\psi_i,F_i\bigr)=0,
+\]
+then $\sum_i\alpha_i\,c_I(j)c_I(j+1)\,\mathrm{per}^0_j(\psi_i,\iota_j\iota_TF_i;y,v)=0$ for all $y,v$.
+\end{proposition}
+
+\begin{proof}
+By \ref{w2:see:T7} take $v=\mathrm{It}_j(P_1\otimes\mathrm{It}_T(P_2\otimes w))$. By \ref{w2:see:T1} the $i$-th term is
+\[
+ \alpha_i\,\mathrm{per}^0_j(\psi_i,\Theta_j(\Theta_T(F_i(w);P_2);P_1);y).
+\]
+By \ref{w2:see:T4}, \ref{w2:see:T3} and \ref{w2:see:T5} this equals
+\[
+\sum_{y'}a(y')\,b(y',w)\,\alpha_i\,c_V(j)c_K(j)c_K(j+1)\,c_P\ \mathrm{tail}\bigl(K_{j+1}K_jS_j\psi_i,F_i\bigr).
+\]
+The sum over $i$ vanishes for each $y'$ by hypothesis.
+\end{proof}
+
+\begin{theorem}[transfer along the tower]\label{w2:see:main}
+Assume Hypothesis~\ref{w2:see:H-laws}. Let $s_i$, $\alpha_i$, $\psi_i\in\mathrm{Ram}_0$ and $F_i\in\mathcal C_T$ be finitely many data. If
+\[
+\sum_i\alpha_i\,c_{\mathrm{top}}(s_i)\,\mathrm{tail}\bigl(\mathrm{up}_{n+1}\psi_i,F_i\bigr)=0,
+\]
+then for all $y\in\mathrm{Fr}_0$ and $v\in\mathcal S_0$
+\[
+\sum_i\alpha_i\,c_{\mathrm{bot}}(s_i)\,\mathrm{per}^n_0\bigl(\psi_i,\ \iota_0\iota_1\cdots\iota_{m-2}\iota_TF_i;y,v\bigr)=0 .
+\]
+\end{theorem}
+
+\begin{proof}
+Since $S$ and $K$ preserve the subsets $\mathrm{Ram}$, $\mathrm{up}_k\psi_i\in\mathrm{Ram}_{2k}$ for $2k\le m$. Since $\mathrm{up}_{n+1}\psi_i=K_{2n+1}K_{2n}S_{2n}\,\mathrm{up}_n\psi_i$ and $c_{\mathrm{top}}=W_n\,c_V(2n)c_K(2n)c_K(2n+1)\,c_P$, Proposition~\ref{w2:see:last} with $j=2n$, columns $\mathrm{up}_n\psi_i$ and coefficients $\alpha_iW_n$ gives
+\begin{equation}\label{w2:see:start}
+\sum_i\alpha_iW_n\,c_I(2n)c_I(2n+1)\,\mathrm{per}^0_{2n}\bigl(\mathrm{up}_n\psi_i,\iota_{2n}\iota_TF_i;y,v\bigr)=0 .
+\end{equation}
+We show by induction on $k$ the following statement $(\mathrm A_k)$. If $2k+2\rho+2=m$, $G_i\in\mathcal C_{2k}$ and $\sum_i\beta_iW_k\,\mathrm{per}^\rho_{2k}(\mathrm{up}_k\psi_i,G_i;y,v)=0$ for all $y,v$, then $\sum_i\beta_i\prod_{j<2k}c_I(j)\,\mathrm{per}^{k+\rho}_0(\psi_i,\iota_0\cdots\iota_{2k-1}G_i;y,v)=0$ for all $y,v$. For $k=0$ there is nothing to prove. If $(\mathrm A_k)$ holds and the hypothesis of $(\mathrm A_{k+1})$ holds with $\rho$, then $W_{k+1}=W_k\,c_V(2k)c_K(2k)c_K(2k+1)$, and Proposition~\ref{w2:see:step} at $j=2k$, $\sigma=\rho$ with coefficients $\beta_iW_k$ gives $\sum_i\beta_iW_k\,c_I(2k)c_I(2k+1)\,\mathrm{per}^{\rho+1}_{2k}(\mathrm{up}_k\psi_i,\iota_{2k}\iota_{2k+1}G_i;y,v)=0$. Then $(\mathrm A_k)$ with $\rho+1$ and coefficients $\beta_ic_I(2k)c_I(2k+1)$ gives $(\mathrm A_{k+1})$. Finally $(\mathrm A_n)$ with $\rho=0$, $\beta_i=\alpha_ic_I(2n)c_I(2n+1)$ and $G_i=\iota_{2n}\iota_TF_i$ applies to \eqref{w2:see:start}, and $\prod_{j<2n}c_I(j)\cdot c_I(2n)c_I(2n+1)=c_{\mathrm{bot}}$ because $m=2n+2$.
+\end{proof}
+
+\paragraph{The word $u$.} Fix a word $u$. The tower attached to $u$ has its tuples indexed by the set of tuples $t$ of the chain datum, with the base tuple $\mu_0$, and $\mathrm{perCol}_t(\varphi,F)$ denotes the period of the chain on the definite side at the tuple $t$, for $\varphi\in V_{u,v}$ and a $K$-rational vector $F$ of the good part at $t$. By the definition of the period map, $(B_{u,v}\varphi)(\iota_0(q))=\mathrm{perCol}_{\mu_0}(\varphi,q)$ for $q$ in the good part at $\mu_0$, and these vectors $\iota_0(q)$ span $Y_v$. Let $\mathcal R_0$ be the space of row forms at level $0$, the span of the theta lifts of level $0$ that the construction uses, and for $F$ as above let $\mathcal R_F\in\mathcal R_0$ be the row form of $F$. Let $b\in\mathrm U(V_0)(\A)$ be the translation of the Bessel datum of the word, with $z$ and $x_u$ as in Hypothesis~\ref{w2:H-see} related to it by the pinning relation of the construction, and write
+\[
+\mathfrak b_u(\varphi,\mathcal R;y,v)=\mathcal B^n_0\bigl(\mathrm{rd}^u_0(\varphi,y),\ R_b\,\mathcal R(v)\bigr)
+\]
+for the local Bessel period at level $0$ of the translated row form $\mathcal R$ against the column $\varphi$.
+
+\begin{hypothesis}[dictionaries of the tower]\label{w2:see:H-links}
+There are maps $\mathrm{col}_0(t,\cdot)\colon V_{u,v}\to\mathrm{Col}_0$ and $\mathrm{col}_m\colon\mathrm{Col}_0\to\mathrm{Col}_m$ such that the following hold for every tuple $t$.
+\begin{enumerate}[label=(D\arabic*),leftmargin=*]
+\item\label{w2:see:D1} $\mathrm{col}_0(t,\varphi)\in\mathrm{Ram}_0$ and $\mathrm{per}^n_0(\mathrm{col}_0(t,\varphi),G;y,v)=\mathfrak b_u(\varphi,G;y,v)$ for every $G\in\mathcal C_0$.
+\item\label{w2:see:D2} If $G\in\mathcal C_T$ is the leading map of $F$, then $\mathrm{tail}(\mathrm{col}_m\mathrm{col}_0(t,\varphi),G)=\mathrm{perCol}_t(\varphi,F)$.
+\item\label{w2:see:D3} For every $F$ there is $G\in\mathcal C_T$, the leading map of $F$, with $\iota_0\cdots\iota_{m-2}\iota_TG=\mathcal R_F$.
+\item\label{w2:see:D4} Every $\mathcal R\in\mathcal R_0$ equals $\iota_0\cdots\iota_{m-2}\iota_TG$ for some $G\in\mathcal C_T$ at the base tuple $\mu_0$.
+\item\label{w2:see:D5} There are a linear bijection $S$ of $V_{u,v}$, $r>0$ and $\varsigma\ne0$ with $\lVert S\varphi\rVert=r\lVert\varphi\rVert$ and $\mathrm{tail}(\mathrm{up}_{n+1}\mathrm{col}_0(t,\varphi),G)=\varsigma\,\mathrm{tail}(\mathrm{col}_m\mathrm{col}_0(t,S\varphi),G)$ for all $t$, $\varphi$ and $G$.
+\item\label{w2:see:D6} $c_{\mathrm{top}}(t)\ne0$.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{corollary}[the seesaw relation]\label{w2:see:cor}
+Assume Hypotheses~\ref{w2:see:H-laws} and~\ref{w2:see:H-links}. Put $U_u=S^{-1}$, $r_u=r^{-1}$ and
+\begin{equation}\label{w2:see:ct}
+c(t)=\frac{c_{\mathrm{top}}(t)\,\varsigma}{c_{\mathrm{bot}}(t)}\ne0,\qquad p_{\mathcal R}(\varphi_0)=\frac{c_{\mathrm{top}}(\mu_0)}{c_{\mathrm{bot}}(\mu_0)}\,\mathrm{tail}\bigl(\mathrm{up}_{n+1}\mathrm{col}_0(\mu_0,S^{-1}\varphi_0),G_{\mathcal R}\bigr)
+\end{equation}
+for $\mathcal R\in\mathcal R_0$, with $G_{\mathcal R}$ chosen by \ref{w2:see:D4}. Then $\lVert U_u\varphi\rVert=r_u\lVert\varphi\rVert$, and for finitely many data $(\varphi_{0,i},\mathcal R_i)$, $(t_k,\varphi_k,F_k)$ and coefficients $\alpha_i,\alpha'_k$ with
+\[
+\sum_i\alpha_i\,p_{\mathcal R_i}(\varphi_{0,i})+\sum_k\alpha'_k\,c(t_k)\,\mathrm{perCol}_{t_k}(\varphi_k,F_k)=0
+\]
+one has, for all $y$ and $v$,
+\[
+\sum_i\alpha_i\,\mathfrak b_u(U_u\varphi_{0,i},\mathcal R_i;y,v)+\sum_k\alpha'_k\,\mathfrak b_u(U_u\varphi_k,\mathcal R_{F_k};y,v)=0 .
+\]
+\end{corollary}
+
+\begin{proof}
+The norm statement follows from $\lVert S\psi\rVert=r\lVert\psi\rVert$ with $\psi=S^{-1}\varphi$, and $c(t)\ne0$ follows from \ref{w2:see:D6}, $\varsigma\ne0$ and \ref{w2:see:T1}. For each $k$ choose $G_k$ by \ref{w2:see:D3}. Apply Theorem~\ref{w2:see:main} to the family consisting of the tuples $\mu_0$ (indices $i$) and $t_k$ (indices $k$), the columns $\mathrm{col}_0(\mu_0,S^{-1}\varphi_{0,i})$ and $\mathrm{col}_0(t_k,S^{-1}\varphi_k)$, the elements $G_{\mathcal R_i}$ and $G_k$, and the coefficients $\alpha_i/c_{\mathrm{bot}}(\mu_0)$ and $\alpha'_k/c_{\mathrm{bot}}(t_k)$. Its hypothesis is the displayed relation, because by \ref{w2:see:D5} and \ref{w2:see:D2}
+\[
+\frac{c_{\mathrm{top}}(t_k)}{c_{\mathrm{bot}}(t_k)}\,\mathrm{tail}\bigl(\mathrm{up}_{n+1}\mathrm{col}_0(t_k,S^{-1}\varphi_k),G_k\bigr)=\frac{c_{\mathrm{top}}(t_k)\,\varsigma}{c_{\mathrm{bot}}(t_k)}\,\mathrm{perCol}_{t_k}(\varphi_k,F_k)=c(t_k)\,\mathrm{perCol}_{t_k}(\varphi_k,F_k),
+\]
+and the $i$-terms are $\alpha_ip_{\mathcal R_i}(\varphi_{0,i})$ by definition. Its conclusion, after the factors $c_{\mathrm{bot}}$ cancel, is $\sum_i\alpha_i\,\mathrm{per}^n_0(\mathrm{col}_0(\mu_0,S^{-1}\varphi_{0,i}),\mathcal R_i;y,v)+\sum_k\alpha'_k\,\mathrm{per}^n_0(\mathrm{col}_0(t_k,S^{-1}\varphi_k),\mathcal R_{F_k};y,v)=0$, using \ref{w2:see:D3} and \ref{w2:see:D4}, and \ref{w2:see:D1} turns this into the assertion.
+\end{proof}
+
+\begin{remark}[passage to Hypothesis~\ref{w2:H-see}]\label{w2:see:rem}
+Take $X_u$ to consist of the pairs $(\varphi,F)\in V_{u,v}\times Y_v$ and the pairs $(\varphi_0,\mathcal R)$ with $\mathcal R\in\mathcal R_0$, with $\lambda_u(\varphi,F)=(B_{u,v}\varphi)(F)$ and $\lambda_u(\varphi_0,\mathcal R)=p_{\mathcal R}(\varphi_0)/c(\mu_0)$. Only the base tuple $t=\mu_0$ is needed. A relation among the values of $\lambda_u$ with complex $F$ is a relation with $K$-rational $F$ after expanding $F$ in a $K$-basis of the good part, because both sides are linear in $F$, and multiplying the relation by $c(\mu_0)$ turns it into the hypothesis of Corollary~\ref{w2:see:cor} with the same coefficients. The conclusion of the corollary is the conclusion of Hypothesis~\ref{w2:H-see}, once the local Bessel period $\mathfrak b_u(U_u\varphi,\mathcal R;y,v)$ is identified with $\mathrm{per}(T_x(\xi),R_{(y,x_u)}R_z\overline{\theta_x})$ through the pinning relation between $b$, $z$ and $x_u$ and the row dictionary $\mathcal R_F\leftrightarrow\mathbf s(F)$ of Hypothesis~\ref{w2:H-dict}. Lemma~\ref{w2:prop} uses only relations with one or two terms, so Hypothesis~\ref{w2:H-see} may be weakened to such relations without changing Theorem~\ref{w2:Bproof}. The anchor of Lemma~\ref{w2:anchor} may be any $x_0=(\varphi_0,\mathcal R)$ with $\mu_u(x_0)\ne0$. The exact values of $c_{\mathrm{top}}$, $c_{\mathrm{bot}}$ and $\varsigma$ do not enter Theorem~\ref{w2:B}, because the number $a_u=r_u/\kappa_u$ absorbs them. Only $c(\mu_0)\ne0$ is used there, while the unit property of $c(t)/c(\mu_0)$ at the primes of the chain is used for the integral structure of the period maps.
+\end{remark}
+
+\begin{lemma}[rationality]\label{w2:see:rat}
+Assume that $B_u(\varphi)(y)=\mathrm{Pt}_{\mu_0}(\varphi,q_y)$ for $\varphi\in V_u$ and $y\in Y$, where $\mathrm{Pt}_{\mu_0}$ is the $K$-bilinear period of the chain on the definite side at the base tuple and $q_y$ is the $K$-rational vector of the good part with $\iota_0(q_y)=y$. Assume also $\mathrm{perCol}_{\mu_0}(\varphi\otimes1,q\otimes1)=\sigma_v(\mathrm{Pt}_{\mu_0}(\varphi,q))$ and $(B_{u,v}\varphi)(\iota_0q)=\mathrm{perCol}_{\mu_0}(\varphi,q)$. Then Hypothesis~\ref{w2:H-rat} holds.
+\end{lemma}
+
+\begin{proof}
+For $\varphi\in V_u$ and $y\in Y$, $(B_{u,v}(\varphi\otimes1))(y\otimes1)=\mathrm{perCol}_{\mu_0}(\varphi\otimes1,q_y\otimes1)=\sigma_v(\mathrm{Pt}_{\mu_0}(\varphi,q_y))=\sigma_v(B_u(\varphi)(y))$, which lies in $\sigma_v(K)$.
+\end{proof}
+
+
+
+\subsubsection{The double-step seesaw identity}\label{w3s:sec}
+
+This subsection proves the double-step identity (T2) of Hypothesis~\ref{w2:see:H-laws}. The identity is an iterated integral over two quotients of finite adelic groups. We show that the integral collapses to an integral over the finitely many places of the tuple, with a volume factor $\kappa_j$, and we identify the result with the bilift of the reading functions through one kernel $C$ that does not depend on the tuple. The analytic unfolding over the archimedean and automorphic variables is not part of (T2). It is item (T6), where rapid decay of cusp forms enters.
+
+\paragraph{Quotient integrals.} Let $\mathbf G$ be a second countable locally compact group with a left Haar measure $\mu$, and let $R\subset\mathbf G$ be a closed subgroup with a left Haar measure $\rho$. We say that a function $f\colon\mathbf G\to\C$ has the \emph{absolutely convergent quotient integral} $z$ over $R\backslash\mathbf G$, and write $\int^{\mathrm{abs}}_{R\backslash\mathbf G}f=z$, if there is $F\in L^1(\mathbf G,\mu)$ such that for every $g\in\mathbf G$ the function $r\mapsto F(rg)$ is $\rho$-integrable, $f(g)=\int_RF(rg)\,d\rho(r)$, and $z=\int_{\mathbf G}F\,d\mu$. For two such pairs $(\mathbf G_1,R_1)$, $(\mathbf G_2,R_2)$ and a function $I$ on $\mathbf G_1\times\mathbf G_2$, we say that $I$ has the \emph{absolutely convergent iterated quotient integral} $z$ if there is $f_1\colon\mathbf G_1\to\C$ with $\int^{\mathrm{abs}}_{R_1\backslash\mathbf G_1}f_1=z$ and $\int^{\mathrm{abs}}_{R_2\backslash\mathbf G_2}I(q_1,\cdot)=f_1(q_1)$ for every $q_1\in\mathbf G_1$. These are the formal notions \texttt{IsQuotIntL1} and \texttt{Iter2}.
+
+\begin{lemma}[uniqueness]\label{w3s:lem:uniq}
+Assume that $\mathbf G$ and $R$ are unimodular. If $\int^{\mathrm{abs}}_{R\backslash\mathbf G}f=z$ and $\int^{\mathrm{abs}}_{R\backslash\mathbf G}f=z'$, then $z=z'$. The value is linear in $f$, it vanishes for $f=0$, and $\int^{\mathrm{abs}}_{R\backslash\mathbf G}R_bf=\int^{\mathrm{abs}}_{R\backslash\mathbf G}f$ for every $b\in\mathbf G$, where $R_bf(g)=f(gb)$.
+\end{lemma}
+
+\begin{proof}
+Since the modular functions of $\mathbf G$ and $R$ are both trivial, there is a right $\mathbf G$-invariant Radon measure $\dot\mu$ on $R\backslash\mathbf G$ with $\int_{\mathbf G}F\,d\mu=\int_{R\backslash\mathbf G}\int_RF(rg)\,d\rho(r)\,d\dot\mu(g)$ for every $F\in L^1(\mathbf G)$ \cite[\S2.6]{w2folland}. Hence $z=\int_{R\backslash\mathbf G}f\,d\dot\mu$ depends only on $f$, and linearity follows. If $F$ is a witness for $f$, then $R_bF$ is a witness for $R_bf$, and $\int R_bF\,d\mu=\int F\,d\mu$ because $\mu$ is right invariant.
+\end{proof}
+
+\begin{lemma}[collapse to a factor]\label{w3s:lem:collapse}
+Let $\mathbf G$ be a second countable locally compact unimodular group, and let $G_1,G_2\subset\mathbf G$ be closed unimodular subgroups whose elements commute with each other and for which $(a,b)\mapsto ab$ is a homeomorphism $G_1\times G_2\to\mathbf G$. Let $R\subset\mathbf G$ be a closed unimodular subgroup such that $ab\in R$ with $a\in G_1$, $b\in G_2$ implies $a,b\in R$. Put $R_i=R\cap G_i$. Let $K_i\subset G_i$ be compact open subgroups and $K=K_1K_2$. Let $\mu,\rho,\mu_1,\rho_1$ be Haar measures on $\mathbf G,R,G_1,R_1$ with $\mu_1(K_1)=1$ and $\rho_1(R_1\cap K_1)=1$. Let $f\colon\mathbf G\to\C$ satisfy
+\begin{enumerate}[label=(\roman*),leftmargin=*]
+\item $f(rg)=f(g)$ for $r\in R$ and $g\in\mathbf G$;
+\item $f(gk)=f(g)$ for $k\in K_2$ and $g\in\mathbf G$;
+\item $f(g)\ne0$ implies $g\in RG_1K_2$.
+\end{enumerate}
+If $\int^{\mathrm{abs}}_{R_1\backslash G_1}f|_{G_1}=z$, then
+\[
+\int^{\mathrm{abs}}_{R\backslash\mathbf G}f=\frac{\mu(K)}{\rho(R\cap K)}\,z .
+\]
+\end{lemma}
+
+\begin{proof}
+The product map is a continuous homomorphism because $G_1$ and $G_2$ commute, so it is an isomorphism of topological groups $G_1\times G_2\cong\mathbf G$. By the hypothesis on $R$, it restricts to an isomorphism $R_1\times R_2\cong R$, and $R_1,R_2$ are closed. The modular function of $R_1\times R_2$ is the product of those of $R_1$ and $R_2$, so $R_1$ and $R_2$ are unimodular. By uniqueness of Haar measure there are Haar measures $\mu_2$ on $G_2$ and $\rho_2$ on $R_2$ with $\mu=\mu_1\otimes\mu_2$ and $\rho=\rho_1\otimes\rho_2$ under these isomorphisms. The group $R_2\cap K_2$ is compact and open in $R_2$, so $0<\rho_2(R_2\cap K_2)<\infty$, and likewise $0<\mu_2(K_2)<\infty$.
+
+\emph{Step 1.} We show $f(ab)=f(a)\,\mathbf 1_{R_2K_2}(b)$ for $a\in G_1$ and $b\in G_2$. If $b=r_2k$ with $r_2\in R_2$ and $k\in K_2$, then $ab=r_2ak$, so (ii) and (i) give $f(ab)=f(r_2a)=f(a)$. If $f(ab)\ne0$, then (iii) gives $ab=r_1r_2xk$ with $r_i\in R_i$, $x\in G_1$, $k\in K_2$, that is $ab=(r_1x)(r_2k)$, and uniqueness of the decomposition gives $b=r_2k\in R_2K_2$.
+
+\emph{Step 2.} Let $F_1\in L^1(G_1)$ be a witness for $f|_{G_1}$, and put $F(ab)=F_1(a)\,\mathbf 1_{K_2}(b)/\rho_2(R_2\cap K_2)$. Then $F\in L^1(\mathbf G)$ and $\int_{\mathbf G}F\,d\mu=z\,\mu_2(K_2)/\rho_2(R_2\cap K_2)$. For $g=ab$ and $r=r_1r_2$ we have $F(rg)=F_1(r_1a)\mathbf 1_{K_2}(r_2b)/\rho_2(R_2\cap K_2)$. The second factor is the indicator of the set $R_2\cap K_2b^{-1}$, of measure at most $\rho_2(R_2\cap K_2)$, so $r\mapsto F(rg)$ is $\rho$-integrable and Fubini's theorem gives
+\[
+\int_RF(rg)\,d\rho(r)=f(a)\,\frac{\rho_2(R_2\cap K_2b^{-1})}{\rho_2(R_2\cap K_2)} .
+\]
+If $b=r_0k\in R_2K_2$, then $R_2\cap K_2b^{-1}=(R_2\cap K_2)r_0^{-1}$, which has measure $\rho_2(R_2\cap K_2)$ because $\rho_2$ is right invariant. If $R_2\cap K_2b^{-1}$ is nonempty, then $b\in R_2K_2$. So the right side equals $f(a)\mathbf 1_{R_2K_2}(b)$, which is $f(ab)$ by Step 1. Hence $\int^{\mathrm{abs}}_{R\backslash\mathbf G}f=z\,\mu_2(K_2)/\rho_2(R_2\cap K_2)$.
+
+\emph{Step 3.} By the hypothesis on $R$, $R\cap K=(R_1\cap K_1)(R_2\cap K_2)$. Hence $\mu(K)=\mu_1(K_1)\mu_2(K_2)=\mu_2(K_2)$ and $\rho(R\cap K)=\rho_1(R_1\cap K_1)\rho_2(R_2\cap K_2)=\rho_2(R_2\cap K_2)$.
+\end{proof}
+
+\paragraph{The double-step integrand.} We use the notation of Subsection~\ref{w2:sec:seesaw}. For $0\le i<m$ the pair $(\mathrm U(V_i),\mathrm U(V_{i+1}))$ acts on functions on $W_i(\A)$, $W_i=\Hom(V_{i+1},V_i)$, by the Weil representation $\omega_i$ of the tuple attached to $\psi$ and to the splitting characters of the tuple. The pairs $(\mathrm U(X_i),\mathrm U(X_{i+1}))$ of definite spaces act on functions on $W'_i(\A)$ in the same way, by $\omega'_i$. For a finitely supported function $e$ on $W_i(\Af)$ put $\mathrm{comb}(e)\Phi=\sum_ue(u)\,\mathrm{heis}(u)\Phi$, where $\mathrm{heis}(u)$ is the Heisenberg translation by $u$ with the character $\psi$. We say that $e$ is \emph{supported at} a set $P$ of places if every $u$ in its support has trivial components outside $P$. For self-dual lattices $N_i\subset V_i$ and a set $P$ of finite places, a theta function $\Phi$ on $W_i(\A)$ is \emph{vacuum at} $P$ if it is invariant under the Heisenberg action of the lattice $\Hom(N_{i+1},N_i)\otimes\prod_{p\in P}\cO_p$, so that its component at $p\in P$ is a multiple of the characteristic function of that lattice. For finitely supported functions $e$ on $W'_i(\Af)$ and $e'$ on $W'_{i+1}(\Af)$ and a function $C$ on $W'_i(\A)\times W'_{i+1}(\A)$ write $\mathrm{biComb}(e,e')C(u,v)=\mathrm{comb}(e)\bigl(u'\mapsto\mathrm{comb}(e')C(u',\cdot)(v)\bigr)(u)$.
+
+Fix $j$ and $\sigma$ with $j+2(\sigma+1)+2=m$. The Bessel datum of rank $\sigma+1$ at level $j$, the Fourier--Jacobi datum of rank $\sigma+1$ at level $j+1$ and the Bessel datum of rank $\sigma$ at level $j+2$ give closed subgroups of $\mathrm U(V_{j+1})(\A)$ and $\mathrm U(V_{j+2})(\A)$. Their intersections with the finite adelic groups $\mathbf G_{j+1}=\mathrm U(V_{j+1})(\Af)$ and $\mathbf G_{j+2}=\mathrm U(V_{j+2})(\Af)$ are denoted $R_J$ and $R_B$, with Haar measures $\rho_J$, $\rho_B$, and $\mu_{j+1},\mu_{j+2}$ are the Haar measures of $\mathbf G_{j+1},\mathbf G_{j+2}$ fixed by the construction. For theta functions $\Phi_1$ on $W_j(\A)$ and $\Phi_2$ on $W_{j+1}(\A)$, a function $\phi$ on $\mathrm U(X_j)(\A)$ and points $g,h_1,h_2$ of $\mathrm U(V_j)(\A)$, $\mathrm U(V_{j+1})(\A)$, $\mathrm U(V_{j+2})(\A)$, let
+\[
+\mathbf H(\Phi_1,\Phi_2;\phi;g,h_1,h_2)=\mathrm{hand}_{\mathrm{FB}}\Bigl(\mathrm{hand}_{\mathrm{BF}}\bigl(\phi,\mathrm{flat}_{\mathrm{BF}}(\omega_j(g,h_1)\Phi_1)\bigr),\ \mathrm{flat}_{\mathrm{FB}}(\omega_{j+1}(h_1,h_2)\Phi_2)\Bigr)
+\]
+be the function on $\mathrm U(X_{j+2})(\A)$ obtained by the Bessel-to-Fourier--Jacobi step at level $j$ followed by the Fourier--Jacobi-to-Bessel step at level $j+1$ (formal \texttt{Chain.hand}). Here $\mathrm{flat}_{\mathrm{BF}}$ and $\mathrm{flat}_{\mathrm{FB}}$ are the partial integrations of a theta function along the unipotent directions of the two flags, taken with Haar measures of covolume one, $\mathrm{hand}_{\mathrm{BF}}$ integrates $\phi$ over $[\mathrm U(X_j)]$ against the restricted kernel, and $\mathrm{hand}_{\mathrm{FB}}$ contracts the result with the second kernel. The map $\mathbf H$ is bilinear in $(\Phi_1,\Phi_2)$.
+
+The contracted kernel of two theta functions $\Psi_1,\Psi_2$ is the function $\mathrm{ctr}(\Psi_1,\Psi_2)$ on $W'_j(\A)\times W'_{j+1}(\A)$ given by the integral over the link variable of the product $\mathrm{flat}_{\mathrm{FB}}\Psi_2\cdot\mathrm{flat}_{\mathrm{BF}}\Psi_1$ (formal \texttt{Comm.ctr}). For a function $C$ on $W'_j(\A)\times W'_{j+1}(\A)$ and a function $\phi$ on $\mathrm U(X_j)(\A)$ the bilift is
+\[
+\mathrm{bl}_j(\phi,C)(h_2)=\int_{[\mathrm U(X_{j+1})]}\int_{[\mathrm U(X_j)]}\phi(h_0)\,\Bigl(\omega'_{j+1}(h_1,h_2)\bigl(v\mapsto\omega'_j(h_0,h_1)C(\cdot,v)(0)\bigr)\Bigr)(0)\,dh_0\,dh_1,
+\]
+and for a family $\phi=(\phi_\alpha)_{\alpha\in\mathrm{Ch}_j}$ the double kernel lift of Hypothesis~\ref{w2:see:H-laws} is $\mathrm{two}_j(\phi,C)_\beta=\sum_{\alpha,\gamma}\mathrm{bl}_j\bigl(\phi_\alpha,\mathrm{biComb}(\mathrm{dd}_j(\alpha,\gamma),\mathrm{dd}_{j+1}(\gamma,\beta))C\bigr)$ for $\beta\in\mathrm{Ch}_{j+2}$, where $\mathrm{dd}_i$ are the kernel combinations of the tuple. A \emph{bivacuum kernel} is a continuous $C$ that is a theta function vacuum at every finite place in each variable, and it is \emph{real} if it is moreover smooth in the archimedean directions of both variables.
+
+For a tuple $s$, archimedean points $a\in\mathrm U(V_{j+1})_\infty$, $a'\in\mathrm U(V_{j+2})_\infty$, polynomial Fock vectors $P_1,P_2$, a column $\psi'\in\mathrm{Ram}_j$, a frame $y$, $G\in\mathcal C_{j+2}$ and $v\in\mathcal S_{j+2}$, the \emph{double-step integrand} is the function on $\mathbf G_{j+1}\times\mathbf G_{j+2}$
+\begin{equation}\label{w3s:integrand}
+I_s(q_1,q_2)=\sum_{\alpha\in\mathrm{Ch}_j}\sum_ge_{j,\alpha}(g)\,\mathcal B^\sigma_{j+2}\Bigl(\mathbf H\bigl(\mathrm{pt}_j(P_1),\mathrm{pt}_{j+1}(P_2);\mathrm{rd}_j(\alpha,\psi',y);g,aq_1,a'q_2\bigr),\ R_{a'q_2}G(v)\Bigr),
+\end{equation}
+where $\mathrm{pt}_i(P)$ is the theta function of the tuple at level $i$ attached to $P$ (formal \texttt{Tup.integrand}). It is the integrand of $\mathcal B^{\sigma+1}_j$ on the double lift after the two unfoldings, as a function of the two finite adelic variables.
+
+\begin{hypothesis}[general laws of the Weil representation]\label{w3s:hyp:gen}
+\begin{enumerate}[label=(W\arabic*),leftmargin=*]
+\item\label{w3s:W1} (Disjoint places.) Heisenberg combinations supported at disjoint sets of places commute. A combination supported at $P$ maps theta functions vacuum at a set $P'$ disjoint from $P$ to theta functions vacuum at $P'$, and it commutes with $\omega_i(g,h)$ for $g,h$ with trivial components at $P$. A theta function is vacuum at $P\cup P'$ if and only if it is vacuum at $P$ and at $P'$.
+\item\label{w3s:W2} (Normalized steps.) The maps $\mathrm{flat}_{\mathrm{BF}}$ and $\mathrm{flat}_{\mathrm{FB}}$ on theta functions depend only on the Bessel and Fourier--Jacobi data and not on the remaining data of the step of the tuple. Consequently $\mathrm{ctr}(\Psi_1,\Psi_2)$ does not depend on the tuple.
+\item\label{w3s:W3} (Representation.) $\omega_i$ is a representation of $\mathrm U(V_i)(\A)\times\mathrm U(V_{i+1})(\A)$, and archimedean and finite adelic points commute.
+\item\label{w3s:W4} (Bi-action.) For theta data on $(X_j,X_{j+1})$ and $(X_{j+1},X_{j+2})$ and a bikernel $C$ that is a theta function in each variable, the two actions $\omega'_j$, $\omega'_{j+1}$ on the two variables of $C$ commute and preserve this property (formal \texttt{BiAct}, Lean theorem \texttt{seeSawWeilBiAction\_commutes}).
+\item\label{w3s:W5} (Flat maps.) The flat maps send theta functions to theta functions and their defining integrals converge absolutely (formal \texttt{FlatLaw}, Lean theorem \texttt{flatLaw}).
+\item\label{w3s:W6} (Seesaw exchange.) For $\phi$ continuous and left $\mathrm U(X_j)(F)$-invariant and theta functions $\Xi_1,\Xi_2$ on the reduced spaces, $\mathrm{hand}_{\mathrm{FB}}\bigl(\mathrm{hand}_{\mathrm{BF}}(\phi,\Xi_1),\Xi_2\bigr)=\mathrm{bl}_j\bigl(\phi,\mathrm{contr}(\Xi_1,\Xi_2)\bigr)$, where $\mathrm{contr}$ is the contraction over the link variable, so that $\mathrm{ctr}(\Psi_1,\Psi_2)=\mathrm{contr}(\mathrm{flat}_{\mathrm{BF}}\Psi_1,\mathrm{flat}_{\mathrm{FB}}\Psi_2)$
+(formal \texttt{ContrLaw}, Lean theorem \texttt{contrLaw}). Its proof is Fubini's theorem for a bounded continuous integrand on the product of a compact fundamental domain of $[\mathrm U(X_j)]$ and a fundamental domain of covolume one of the link lattice, followed by the factorization of the Weil representation of an orthogonal sum $V^0=A\oplus L$ as the tensor product of the Weil representations of $A$ and $L$, with splitting characters multiplying (\texttt{weil\_datum\_product\_compatibility}).
+\item\label{w3s:W7} (Linearity.) $\mathcal B^\sigma_{j+2}(c\phi',c'f)=cc'\,\mathcal B^\sigma_{j+2}(\phi',f)$ and $\mathbf H(c\Phi_1,c'\Phi_2;\dots)=cc'\,\mathbf H(\Phi_1,\Phi_2;\dots)$.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{hypothesis}[local laws of the tuple]\label{w3s:hyp:loc}
+There are data common to all tuples, namely finite disjoint sets $g\mathrm P$ and $t\mathrm P$ of finite places, self-dual lattices $N_i\subset V_i$, base points $b_i\in\mathbf G_i$, compact open subgroups $J_i$ of $\mathrm U(V_i)(F_{g\mathrm P})$, theta functions $\Psi_i(P;a,a')$ on $W_i(\A)$ vacuum at every finite place, combinations $e^G_i$, $d^G_i$ supported at $g\mathrm P$, combinations $d^T_i$ and an operator $\mathrm{op}_j=\sum_k\mathrm{biComb}(u_k,u'_k)$ supported at $t\mathrm P$, a number $c_G(j)$, a set $\mathrm{RamAd}_j$ of continuous automorphic functions on $\mathrm U(X_j)(\A)$ with a map $\mathrm{Sad}_j$ of it into itself. Put $K_i=\{\kappa k:\kappa\text{ stabilizes }N_i\text{ away from }g\mathrm P,\ k\in J_i\}$ and
+\[
+\kappa_j=\frac{\mu_{j+1}(K_{j+1})}{\rho_J(R_J\cap K_{j+1})}\cdot\frac{\mu_{j+2}(K_{j+2})}{\rho_B(R_B\cap K_{j+2})} .
+\]
+For each tuple $s$ there are a finite set $Q=Q_s$ of finite places disjoint from $g\mathrm P\cup t\mathrm P$, numbers $\mathrm{sc}_i$, $c_Q(j)$, $c_T(j)$, combinations $e^Q_i$, $d^Q_i(\alpha,\gamma)$ supported at $Q$, and finitely supported functions $\varepsilon_{i,\alpha}$ on $\mathrm U(V_i)(F_Q)$, such that the following hold.
+\begin{enumerate}[label=(L\arabic*),leftmargin=*]
+\item\label{w3s:L1} (Vacuum form.) $\omega_i(ab_i,a'b_{i+1})\,\mathrm{pt}_i(P)=\mathrm{sc}_i\,\mathrm{comb}(e^G_i)\,\mathrm{comb}(e^Q_i)\,\Psi_i(P;a,a')$ for archimedean $a,a'$. Moreover $e_{i,\alpha}(g)=\varepsilon_{i,\alpha}(gb_i^{-1})$, the combination $\mathrm{dd}_i(\alpha,\gamma)$ acts on theta functions as $\mathrm{comb}(d^Q_i(\alpha,\gamma))\,\mathrm{comb}(d^G_i)\,\mathrm{comb}(d^T_i)$, for $\psi'\in\mathrm{Ram}_j$ one has $\mathrm{rd}_j(\alpha,\psi',y)\in\mathrm{RamAd}_j\cap\mathrm{FX}_{j,\alpha}$ and $\mathrm{rd}_j(\alpha,S_j\psi',y)=\mathrm{Sad}_j(\mathrm{rd}_j(\alpha,\psi',y))$, and for $G\in\mathcal C_i$ and archimedean $a$ the function $R_{ab_i}G(v)$ is automorphic, lies in $\mathrm{FY}_i$ and is invariant under the stabilizer of $N_i$ at the places outside $g\mathrm P\cup Q$. Here $\mathrm{FX}_{j,\alpha}$ and $\mathrm{FY}_i$ are sets of functions given with the tuple (formal \texttt{VTup.FX}, \texttt{VTup.FY}).
+\item\label{w3s:L2} (Cells.) Let $\Psi_1,\Psi_2$ be theta functions vacuum at every finite place, put $\Phi^0_i=\mathrm{comb}(e^G_{j+i-1})\mathrm{comb}(e^Q_{j+i-1})\Psi_i$, let $\phi_\alpha\in\mathrm{RamAd}_j$, let $f=R_{a'b_{j+2}}G(v)$ and
+\[
+I^0(q_1,q_2)=\sum_\alpha\sum_g\varepsilon_{j,\alpha}(g)\,\mathcal B^\sigma_{j+2}\bigl(\mathbf H(\Phi^0_1,\Phi^0_2;\phi_\alpha;g,q_1,q_2),R_{q_2}f\bigr).
+\]
+Write $\mathbf G_{i,Q}$ for the points of $\mathrm U(V_i)$ at $Q$ and $K_i=K_{i,Q}K'_i$ with $K_{i,Q}$ the stabilizer of $N_i$ at $Q$ and $K'_i$ the part of $K_i$ away from $Q$. Then $I^0$ is left invariant under $R_J$ in $q_1$ and under $R_B$ in $q_2$, right invariant under $K'_{j+1}$ in $q_1$ and under $K'_{j+2}$ in $q_2$, and $I^0(q_1,q_2)\ne0$ implies $q_1\in R_J\mathbf G_{j+1,Q}K'_{j+1}$, and also $q_2\in R_B\mathbf G_{j+2,Q}K'_{j+2}$ when $q_1\in\mathbf G_{j+1,Q}$.
+\item\label{w3s:L3} (Twist places.) Let $\rho_{J,Q},\mu_{j+1,Q},\rho_{B,Q},\mu_{j+2,Q}$ be Haar measures on $R_J\cap\mathbf G_{j+1,Q}$, $\mathbf G_{j+1,Q}$, $R_B\cap\mathbf G_{j+2,Q}$, $\mathbf G_{j+2,Q}$ giving $K_{j+1,Q}$, $K_{j+2,Q}$ and their intersections with $R_J$, $R_B$ the volume one. For theta functions $\Psi'_1,\Psi'_2$ vacuum at $Q$, continuous automorphic $\phi_\alpha\in\mathrm{FX}_{j,\alpha}$ and automorphic $f\in\mathrm{FY}_{j+2}$, the function
+\[
+(q_1,q_2)\mapsto\sum_\alpha\sum_g\varepsilon_{j,\alpha}(g)\,\mathcal B^\sigma_{j+2}\bigl(\mathbf H(\mathrm{comb}(e^Q_j)\Psi'_1,\mathrm{comb}(e^Q_{j+1})\Psi'_2;\phi_\alpha;g,q_1,q_2),R_{q_2}f\bigr)
+\]
+on $\mathbf G_{j+1,Q}\times\mathbf G_{j+2,Q}$ has the absolutely convergent iterated quotient integral
+\[
+c_Q(j)\sum_\beta\mathcal B^\sigma_{j+2}\Bigl(\sum_{\alpha,\gamma}\mathrm{bl}_j\bigl(\phi_\alpha,\mathrm{biComb}(d^Q_j(\alpha,\gamma),d^Q_{j+1}(\gamma,\beta))\,\mathrm{ctr}(\Psi'_1,\Psi'_2)\bigr),\ \mathrm{tr}(\varepsilon_{j+2,\beta})f\Bigr).
+\]
+\item\label{w3s:L4} (Level places.) For theta functions $\Psi_1,\Psi_2$ vacuum at $g\mathrm P$,
+$\mathrm{ctr}(\mathrm{comb}(e^G_j)\Psi_1,\mathrm{comb}(e^G_{j+1})\Psi_2)=c_G(j)\,\mathrm{biComb}(d^G_j,d^G_{j+1})\,\mathrm{ctr}(\Psi_1,\Psi_2)$.
+\item\label{w3s:L5} (Places of $t\mathrm P$.) For theta functions $\Psi_1,\Psi_2$ vacuum at $t\mathrm P$, combinations $d,d'$ supported away from $t\mathrm P$ and $\phi\in\mathrm{RamAd}_j$,
+\begin{multline*}
+\mathrm{bl}_j\bigl(\phi,\mathrm{biComb}(d,d')\,\mathrm{ctr}(\Psi_1,\Psi_2)\bigr)\\
+=c_T(j)\,\mathrm{bl}_j\bigl(\mathrm{Sad}_j\phi,\ \mathrm{biComb}(d,d')\,\mathrm{biComb}(d^T_j,d^T_{j+1})\,\mathrm{op}_j\,\mathrm{ctr}(\Psi_1,\Psi_2)\bigr),
+\end{multline*}
+and $\mathrm{op}_j\,\mathrm{ctr}(\Psi_1,\Psi_2)$ is a real bivacuum kernel when $\Psi_1,\Psi_2$ are vacuum at every finite place.
+\item\label{w3s:L6} (Normalization.) $c_V(j)=\kappa_j\,\mathrm{sc}_j\,\mathrm{sc}_{j+1}\,c_Q(j)\,c_G(j)\,c_T(j)$.
+\end{enumerate}
+\end{hypothesis}
+
+\begin{theorem}[the double-step identity (T2)]\label{w3s:thm:T2}
+Assume Hypotheses~\ref{w3s:hyp:gen} and~\ref{w3s:hyp:loc}. Let $j+2(\sigma+1)+2=m$, let $P_1,P_2$ be polynomial Fock vectors and $a\in\mathrm U(V_{j+1})_\infty$, $a'\in\mathrm U(V_{j+2})_\infty$. Put $\Psi_1=\Psi_j(P_1;1,a)$, $\Psi_2=\Psi_{j+1}(P_2;a,a')$ and $C=\mathrm{op}_j\,\mathrm{ctr}(\Psi_1,\Psi_2)$. Then $C$ is a real bivacuum kernel that depends only on $(j,\sigma,P_1,P_2,a,a')$ and not on the tuple. For every tuple $s$, every $\psi'\in\mathrm{Ram}_j$, $y$, $G\in\mathcal C_{j+2}$ and $v$, the integrand \eqref{w3s:integrand} has an absolutely convergent iterated quotient integral over $R_J\backslash\mathbf G_{j+1}$ and then $R_B\backslash\mathbf G_{j+2}$, equal to
+\begin{equation}\label{w3s:value}
+c_V(j)\sum_{\beta\in\mathrm{Ch}_{j+2}}\mathcal B^\sigma_{j+2}\Bigl(\mathrm{two}_j\bigl(\mathrm{rd}_j(\cdot,S_j\psi',y),C\bigr)_\beta,\ \mathrm{tr}(e_{j+2,\beta})\,R_{a'}G(v)\Bigr),
+\end{equation}
+with $c_V(j)=c_V(j)(s)=\kappa_j\,\mathrm{sc}_j(s)\,\mathrm{sc}_{j+1}(s)\,c_Q(j)(s)\,c_G(j)\,c_T(j)(s)$ and $\kappa_j>0$ independent of $s$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1, the kernel.} The functions $\Psi_1,\Psi_2$ belong to the common data, and by \ref{w3s:W2} so does $\mathrm{ctr}(\Psi_1,\Psi_2)$. Hence $C$ depends only on $(j,\sigma,P_1,P_2,a,a')$. It is a real bivacuum kernel by \ref{w3s:L5}. The groups $K_{j+1}$ and $K_{j+2}$ are compact and open, and their intersections with $R_J$ and $R_B$ are compact open subgroups of $R_J$ and $R_B$, so the four volumes in $\kappa_j$ are positive and finite and $\kappa_j>0$. It does not involve the tuple.
+
+\emph{Step 2, the twist places.} Fix $s$, $\psi'$, $y$, $G$, $v$, and put $\phi_\alpha=\mathrm{rd}_j(\alpha,\psi',y)$, which lies in $\mathrm{RamAd}_j\cap\mathrm{FX}_{j,\alpha}$ by \ref{w3s:L1}, and $f=R_{a'b_{j+2}}G(v)$, which is automorphic and lies in $\mathrm{FY}_{j+2}$ by \ref{w3s:L1}. The functions $\Psi_i$ are vacuum at every finite place, so by \ref{w3s:W1} the functions $\Psi'_i=\mathrm{comb}(e^G_{j+i-1})\Psi_i$ are vacuum at $Q$, because $Q$ and $g\mathrm P$ are disjoint, and $\mathrm{comb}(e^Q)\Psi'_i=\Phi^0_i$ in the notation of \ref{w3s:L2}, because combinations at disjoint places commute. By \ref{w3s:L3} the restriction of the function $I^0$ of \ref{w3s:L2} to $\mathbf G_{j+1,Q}\times\mathbf G_{j+2,Q}$ has an absolutely convergent iterated quotient integral $z_Q$ for the measures normalized at $Q$, with $z_Q$ the value displayed in \ref{w3s:L3} for $\mathrm{ctr}(\Psi'_1,\Psi'_2)$. Let $f_Q$ be the corresponding inner function on $\mathbf G_{j+1,Q}$.
+
+\emph{Step 3, collapse of the inner integral.} Apply Lemma~\ref{w3s:lem:collapse} to $\mathbf G=\mathbf G_{j+2}$, $G_1=\mathbf G_{j+2,Q}$, $G_2$ the points away from $Q$, $R=R_B$, $K_1=K_{j+2,Q}$, $K_2=K'_{j+2}$. The groups involved are the finite adelic points of unitary groups, which are unimodular, and the Bessel and Fourier--Jacobi subgroups, which are semidirect products of a unipotent group by a unitary group and are unimodular by the argument of Lemma~\ref{w2:unimod}. The finite adelic unitary group is the restricted product of its local groups, which gives the product decomposition and the splitting of $R_B$, since $R_B$ is the group of finite adelic points of an $F$-subgroup. For $q_1\in\mathbf G_{j+1,Q}$ the function $I^0(q_1,\cdot)$ satisfies (i) to (iii) by \ref{w3s:L2}, so its quotient integral over $R_B\backslash\mathbf G_{j+2}$ converges absolutely with value $\nu_{j+2}f_Q(q_1)$, where $\nu_{j+2}=\mu_{j+2}(K_{j+2})/\rho_B(R_B\cap K_{j+2})$. For an arbitrary $q_1\in\mathbf G_{j+1}$, either $I^0(q_1,\cdot)=0$, and the inner integral is $0$, or by \ref{w3s:L2} $q_1=r\,x\,k$ with $r\in R_J$, $x\in\mathbf G_{j+1,Q}$, $k\in K'_{j+1}$, and $I^0(q_1,\cdot)=I^0(x,\cdot)$ by the invariances of \ref{w3s:L2}. Let $f_1(q_1)$ be the value of the inner integral. By Lemma~\ref{w3s:lem:uniq} it is well defined, and the invariances and support of $I^0$ in $q_1$ pass to $f_1$. On $\mathbf G_{j+1,Q}$ one has $f_1=\nu_{j+2}f_Q$.
+
+\emph{Step 4, collapse of the outer integral.} Lemma~\ref{w3s:lem:collapse}, applied to $\mathbf G_{j+1}$, $R_J$, $K_{j+1}=K_{j+1,Q}K'_{j+1}$ and the function $f_1$, shows that $f_1$ has the absolutely convergent quotient integral $\nu_{j+1}\nu_{j+2}z_Q=\kappa_jz_Q$ over $R_J\backslash\mathbf G_{j+1}$, with $\nu_{j+1}=\mu_{j+1}(K_{j+1})/\rho_J(R_J\cap K_{j+1})$. So $I^0$ has the absolutely convergent iterated quotient integral $\kappa_jz_Q$.
+
+\emph{Step 5, base points.} For $p_1\in\mathbf G_{j+1}$, $p_2\in\mathbf G_{j+2}$ and $g'$ in the support of $\varepsilon_{j,\alpha}$, \ref{w3s:W3} gives $(g'b_j,a\,p_1b_{j+1})=(g',p_1)(b_j,ab_{j+1})$ and $(a\,p_1b_{j+1},a'\,p_2b_{j+2})=(p_1,p_2)(ab_{j+1},a'b_{j+2})$. By \ref{w3s:L1},
+\begin{align*}
+\omega_j(g'b_j,a\,p_1b_{j+1})\,\mathrm{pt}_j(P_1)&=\mathrm{sc}_j\,\omega_j(g',p_1)\Phi^0_1,\\
+\omega_{j+1}(a\,p_1b_{j+1},a'\,p_2b_{j+2})\,\mathrm{pt}_{j+1}(P_2)&=\mathrm{sc}_{j+1}\,\omega_{j+1}(p_1,p_2)\Phi^0_2,
+\end{align*}
+and $R_{a'p_2b_{j+2}}G(v)=R_{p_2}f$. Since $e_{j,\alpha}(g)=\varepsilon_{j,\alpha}(gb_j^{-1})$, \ref{w3s:W7} gives $I_s(p_1b_{j+1},p_2b_{j+2})=\mathrm{sc}_j\mathrm{sc}_{j+1}\,I^0(p_1,p_2)$. The right translations by $b_{j+1}^{-1}$ and $b_{j+2}^{-1}$ preserve absolutely convergent quotient integrals with their values (Lemma~\ref{w3s:lem:uniq}). Hence $I_s$ has the absolutely convergent iterated quotient integral $\mathrm{sc}_j\mathrm{sc}_{j+1}\kappa_jz_Q$.
+
+\emph{Step 6, the value.} By \ref{w3s:L4} and \ref{w3s:W1}, \ref{w3s:W4},
+\begin{multline*}
+\mathrm{biComb}(d^Q_j(\alpha,\gamma),d^Q_{j+1}(\gamma,\beta))\,\mathrm{ctr}(\Psi'_1,\Psi'_2)\\
+=c_G(j)\,\mathrm{biComb}\bigl(d^Q_j(\alpha,\gamma)d^G_j,\ d^Q_{j+1}(\gamma,\beta)d^G_{j+1}\bigr)\,\mathrm{ctr}(\Psi_1,\Psi_2),
+\end{multline*}
+where products of combinations denote composition of the operators. These combinations are supported away from $t\mathrm P$. By \ref{w3s:L5}, then \ref{w3s:L1} for $\mathrm{dd}$ and for $\mathrm{Sad}_j$,
+\[
+\sum_{\alpha,\gamma}\mathrm{bl}_j\bigl(\phi_\alpha,\mathrm{biComb}(d^Q_j(\alpha,\gamma),d^Q_{j+1}(\gamma,\beta))\,\mathrm{ctr}(\Psi'_1,\Psi'_2)\bigr)=c_G(j)\,c_T(j)\,\mathrm{two}_j\bigl(\mathrm{rd}_j(\cdot,S_j\psi',y),C\bigr)_\beta .
+\]
+Finally $\mathrm{tr}(e_{j+2,\beta})R_{a'}G(v)=\mathrm{tr}(\varepsilon_{j+2,\beta})R_{a'b_{j+2}}G(v)=\mathrm{tr}(\varepsilon_{j+2,\beta})f$, because $e_{j+2,\beta}(g)=\varepsilon_{j+2,\beta}(gb_{j+2}^{-1})$ and $a'$ commutes with $b_{j+2}$. By \ref{w3s:W7} the iterated integral of Step 5 equals $\kappa_j\mathrm{sc}_j\mathrm{sc}_{j+1}c_Q(j)c_G(j)c_T(j)$ times the sum in \eqref{w3s:value}, and \ref{w3s:L6} identifies the constant with $c_V(j)$.
+\end{proof}
+
+\begin{proposition}[nonvanishing of $c_V(j)$]\label{w3s:prop:cV}
+Under \ref{w3s:L6}, $c_V(j)(s)\ne0$ if and only if $\mathrm{sc}_j(s)$, $\mathrm{sc}_{j+1}(s)$, $c_Q(j)(s)$, $c_G(j)$ and $c_T(j)(s)$ are all nonzero.
+\end{proposition}
+
+\begin{proof}
+This is $\kappa_j>0$ (Step 1 of the proof of Theorem~\ref{w3s:thm:T2}) together with \ref{w3s:L6}.
+\end{proof}
+
+\begin{remark}[normalization]\label{w3s:rem:corr}
+The constant $c_V(j)$ depends on the tuple through $\mathrm{sc}_j$, $\mathrm{sc}_{j+1}$, $c_Q(j)$ and $c_T(j)$. The object that does not depend on the tuple is the kernel $C$, together with the volume factor $\kappa_j$. In Proposition~\ref{w2:see:step} the constants $c_V(j)c_K(j)c_K(j+1)$ stand inside the sum over the tuples $s_i$, and the proof needs only that one kernel $C$ serves all tuples, so that the coefficients $a(y')$ of the kernel law (T3) can be pulled out of the sum. Nonvanishing of $c_V(j)(s)$ is not used in Proposition~\ref{w2:see:step} or Theorem~\ref{w2:see:main}. It enters only through $c_{\mathrm{top}}(t)\ne0$ in (D6), and Proposition~\ref{w3s:prop:cV} reduces it to the nonvanishing of the five scalars of the construction.
+\end{remark}
+
+\begin{remark}[what remains]\label{w3s:rem:open}
+Theorem~\ref{w3s:thm:T2} reduces (T2) to Hypotheses~\ref{w3s:hyp:gen} and~\ref{w3s:hyp:loc}. Items \ref{w3s:W1} to \ref{w3s:W7} are general properties of the Weil representation, the flat maps and the Bessel period, and \ref{w3s:W6} is Fubini's theorem combined with the tensor factorization of the Weil representation of an orthogonal sum. The proof above uses \ref{w3s:W1} to \ref{w3s:W4} and \ref{w3s:W7} directly. Items \ref{w3s:W5} and \ref{w3s:W6} are used in the formal derivation of the cell properties \ref{w3s:L2} and of the twist-place law \ref{w3s:L3}. Items \ref{w3s:L1} to \ref{w3s:L6} are local computations of the construction at the twist places $Q$, at the level places $g\mathrm P$, at the places $t\mathrm P$ and at the places where every datum is unramified. Of these, \ref{w3s:L3} is the local double-step identity at the twist places. The Siegel--Weil formula and the doubling method do not enter (T2). They enter Hypothesis~\ref{w2:see:H-links} only through the surjectivity (D4).
 \end{remark}
 
 \subsection{The share of irreducible rows}\label{w2:sec:irr}
@@ -407,6 +728,275 @@ Under \eqref{w2:sizes} the terms of $W(g_k)+f/g_k$ are bounded as follows for la
 The irreducibility certificates \ref{w2:G2} to \ref{w2:G5} are used later, where Jordan\'s theorem enters. Theorem~\ref{w2:I} itself is a count and does not use them.
 \end{remark}
 
+\subsubsection{The level idempotents at the auxiliary primes}\label{w2x:sec:wt}
+Let $g$ be a prime, $\F=\F_g$, and let $\psi_0\colon\F\to\C^\times$ be a nontrivial additive character. Put $G_n=\GL_n(\F)$, let $U_n\subset G_n$ be the group of upper unitriangular matrices, and index rows and columns by $0,\dots,n-1$. For a subgroup $H$ of a finite group $G$ and a character $\lambda\colon H\to\C^\times$ put
+\[
+e(H,\lambda)=\lvert H\rvert^{-1}\sum_{h\in H}\overline{\lambda(h)}\,h\in\C[G].
+\]
+This is a self-adjoint idempotent with $e(H,\lambda)(1)=\lvert H\rvert^{-1}$. For a representation $(\pi,V)$ of $G$ the operator $\pi(e(H,\lambda))$ is the orthogonal projection onto $V^{(H,\lambda)}=\{v\in V:\pi(h)v=\lambda(h)v\ (h\in H)\}$. For $a\in\C[G]$ and a class function $\chi$ on $G$ put $\tr(a,\chi)=\sum_{x\in G}a(x)\chi(x)$. If $\chi=\chi_\pi$ is the character of $\pi$, then $\tr(a,\chi_\pi)=\Tr\pi(a)$, so
+\begin{equation}\label{w39:trmult}
+\tr\bigl(e(H,\lambda),\chi_\pi\bigr)=\dim V^{(H,\lambda)}=\dim\Hom_H(\lambda,\pi|_H).
+\end{equation}
+Since the class functions are the linear combinations of the irreducible characters and $\tr(a,\cdot)$ is linear, an identity between the numbers \eqref{w39:trmult} for all irreducible $\pi$ is an identity of $\tr(a,\cdot)$ on all class functions.
+
+\paragraph{Pattern groups.}
+
+Let $I=\{0,\dots,N-1\}$ and let $\prec$ be a strict partial order on $I$, that is, an irreflexive transitive relation. Write $a\preceq b$ for $a=b$ or $a\prec b$. The \emph{pattern group} of $\prec$ is
+\[
+U_\prec=\{u\in\GL_N(\F):u_{aa}=1\text{ for all }a,\ u_{ab}=0\text{ unless }a\prec b\text{ or }a=b\}.
+\]
+
+\begin{lemma}\label{w39:pattern}
+(i) $U_\prec$ is a subgroup of $\GL_N(\F)$ of order $g^{\#\{(a,b):a\prec b\}}$.
+(ii) Let $E$ be a set of pairs $(a,b)$ with $a\prec b$, and let $c\colon E\to\F$. Suppose that for every $(a,b)\in E$ there is no $m$ with $a\prec m\prec b$. Then $\lambda_{E,c}(u)=\psi_0\bigl(\sum_{(a,b)\in E}c_{ab}u_{ab}\bigr)$ is a character of $U_\prec$.
+\end{lemma}
+
+\begin{proof}
+(i) For $u,v\in U_\prec$, $(uv)_{ab}=\sum_mu_{am}v_{mb}$, and a nonzero term needs $a\preceq m\preceq b$. By transitivity $a\preceq b$, and if $a=b$ the only term is $m=a$, because $a\prec m\prec a$ would give $a\prec a$. So $uv\in U_\prec$ with unit diagonal. Write $u=1+x$. Every product $x^j$ is supported on pairs $a\prec b$, and $x^N=0$ because a strictly increasing chain in $I$ has at most $N$ elements. Hence $u^{-1}=\sum_{j<N}(-x)^j\in U_\prec$. The entries at the pairs $a\prec b$ are free, which gives the order.
+(ii) For $u,v\in U_\prec$ and $(a,b)\in E$ we have $(uv)_{ab}=u_{ab}+v_{ab}+\sum_{a\prec m\prec b}u_{am}v_{mb}=u_{ab}+v_{ab}$.
+\end{proof}
+
+\begin{lemma}[one double coset]\label{w39:mackey}
+Let $H$ be a finite group with subgroups $H_1,H_2$ and characters $\lambda_i\colon H_i\to\C^\times$ that agree on $H_1\cap H_2$. Suppose that for $i\in\{1,2\}$ and every $h\in H\setminus H_i$ there is $a\in H_i$ with $h^{-1}ah\in H_i$ and $\lambda_i(h^{-1}ah)\ne\lambda_i(a)$. Then $\operatorname{Ind}_{H_1}^H\lambda_1\cong\operatorname{Ind}_{H_2}^H\lambda_2$. Consequently, for every finite group $G\supseteq H$ and every representation $\pi$ of $G$, $\dim\pi^{(H_1,\lambda_1)}=\dim\pi^{(H_2,\lambda_2)}$, and $\tr(e(H_1,\lambda_1),\chi)=\tr(e(H_2,\lambda_2),\chi)$ for every class function $\chi$ on $G$.
+\end{lemma}
+
+\begin{proof}
+For subgroups $A,B\subseteq H$ and characters $\alpha,\beta$, Mackey's formula (J.-P. Serre, \emph{Linear representations of finite groups}, \S7.4) gives
+\[
+\bigl\langle\operatorname{Ind}_A^H\alpha,\operatorname{Ind}_B^H\beta\bigr\rangle_H=\sum_{h\in A\backslash H/B}\bigl\langle\alpha,\beta^h\bigr\rangle_{A\cap hBh^{-1}},\qquad\beta^h(y)=\beta(h^{-1}yh).
+\]
+Each term is $1$ if $\alpha=\beta^h$ on $A\cap hBh^{-1}$ and $0$ otherwise. Take $A=B=H_i$ and $\alpha=\beta=\lambda_i$. For $h\notin H_i$ the element $a$ of the hypothesis lies in $H_i\cap hH_ih^{-1}$ and satisfies $\lambda_i^h(a)=\lambda_i(h^{-1}ah)\ne\lambda_i(a)$, so the term of $h$ vanishes. The double coset of $1$ contributes $1$. Hence $\operatorname{Ind}_{H_i}^H\lambda_i$ is irreducible. Next take $A=H_1$, $B=H_2$. The term of $h=1$ is $1$ because $\lambda_1=\lambda_2$ on $H_1\cap H_2$, and the other terms are nonnegative, so the two irreducible induced representations have a common constituent and are isomorphic. By Frobenius reciprocity and transitivity of induction, $\dim\pi^{(H_i,\lambda_i)}=\dim\Hom_G(\operatorname{Ind}_H^G\operatorname{Ind}_{H_i}^H\lambda_i,\pi)$, which does not depend on $i$. The last claim follows from \eqref{w39:trmult} and linearity.
+\end{proof}
+
+\begin{lemma}[exchange]\label{w39:exchange}
+Let $\prec_1,\prec_2$ be strict partial orders on $I$ whose union $\prec$ is again a strict partial order. Let $p,q\in I$, $W\subseteq I\setminus\{p,q\}$, and let $E$ be a set of pairs with a function $c\colon E\to\F$. Assume the following.
+\begin{enumerate}[label=(X\arabic*),leftmargin=*]
+\item\label{w39:X1} The pairs with $a\prec_1b$ and not $a\prec_2b$ are the pairs $(p,w)$, $w\in W$. The pairs with $a\prec_2b$ and not $a\prec_1b$ are the pairs $(w,q)$, $w\in W$.
+\item\label{w39:X2} $(p,q)\in E$ and $c_{pq}\ne0$.
+\item\label{w39:X3} If $w\in W$, $x\preceq p$ and $w\preceq y$, then $x\prec_1y$, and $(x,y)\in E$ only for $(x,y)=(p,q)$.
+\item\label{w39:X4} If $w\in W$, $x\preceq w$ and $q\preceq y$, then $x\prec_2y$, and $(x,y)\in E$ only for $(x,y)=(p,q)$.
+\item\label{w39:X5} For $(a,b)\in E$ and $j\in\{1,2\}$ there is no $m$ with $a\prec_jm\prec_jb$.
+\end{enumerate}
+Then $\lambda=\lambda_{E,c}$ is a character of $U_{\prec_1}$ and of $U_{\prec_2}$, and $\dim\pi^{(U_{\prec_1},\lambda)}=\dim\pi^{(U_{\prec_2},\lambda)}$ for every representation $\pi$ of every finite group containing $U_\prec$.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{w39:pattern} the groups $H=U_\prec$, $H_1=U_{\prec_1}$, $H_2=U_{\prec_2}$ satisfy $H_1,H_2\subseteq H$, and by \ref{w39:X5} $\lambda$ is a character of $H_1$ and of $H_2$. The two characters are given by one formula, so they agree on $H_1\cap H_2$. We verify the hypothesis of Lemma~\ref{w39:mackey}.
+
+Let $h\in H\setminus H_1$. By \ref{w39:X1} the pairs of $\prec$ outside $\prec_1$ are the pairs $(w,q)$, so $h_{wq}\ne0$ for some $w\in W$. Since $p\prec_1w$, the element $a=1+tE_{pw}$ lies in $H_1$ for every $t\in\F$. Then $(h^{-1}ah)_{xy}=\delta_{xy}+t\,(h^{-1})_{xp}h_{wy}$. A nonzero off-diagonal entry needs $(h^{-1})_{xp}\ne0$ and $h_{wy}\ne0$, so $x\preceq p$ and $w\preceq y$ because $h,h^{-1}\in U_\prec$, and \ref{w39:X3} gives $x\prec_1y$. Hence $h^{-1}ah\in H_1$. By \ref{w39:X3} the only pair of $E$ among these is $(p,q)$, and $(h^{-1})_{pp}=1$, so $\lambda(h^{-1}ah)=\psi_0(c_{pq}t\,h_{wq})$. By \ref{w39:X3} with $(x,y)=(p,w)$ the pair $(p,w)$ lies in $E$ only if $w=q$, which is excluded, so $\lambda(a)=1$. Since $c_{pq}h_{wq}\ne0$ and $\psi_0\ne1$ there is $t$ with $\psi_0(c_{pq}t\,h_{wq})\ne1$.
+
+Let $h\in H\setminus H_2$. Then $h^{-1}\notin H_2$, and by \ref{w39:X1} $(h^{-1})_{pw}\ne0$ for some $w\in W$. Put $a=1+tE_{wq}\in H_2$. The off-diagonal entries of $h^{-1}ah$ are $t\,(h^{-1})_{xw}h_{qy}$ with $x\preceq w$ and $q\preceq y$, so \ref{w39:X4} gives $h^{-1}ah\in H_2$ and $\lambda(h^{-1}ah)=\psi_0(c_{pq}t\,(h^{-1})_{pw})$, while $\lambda(a)=1$ because $(w,q)\in E$ would force $w=p$. Choose $t$ as before.
+\end{proof}
+
+\paragraph{Exchange of roots.}
+
+Let $k\ge1$ and $s\ge0$ be integers and $N=k+2s+1$. Put $W=\{s,\dots,s+k-1\}$, $c_0=s+k$, and $O=I\setminus W=\{0,\dots,s-1\}\cup\{c_0,\dots,N-1\}$ with its natural order. Define
+\[
+U_J=\{u\in U_N:u_{a,c_0}=0\ (a\in W)\},\qquad U'=\{u\in U_N:u_{a,k}=0\ (0\le a<k)\},
+\]
+\[
+\psi_J(u)=\psi_0\Bigl(\sum_{(a,b)\in E}u_{ab}\Bigr),\qquad\psi'(u)=\psi_0\Bigl(\sum_{l=0}^{N-2}u_{l,l+1}\Bigr),
+\]
+where $E$ is the set of pairs $(a,b)$ that are consecutive in $O$ (the pairs $(l,l+1)$ with $l+1<s$, the pair $(s-1,c_0)$ when $s\ge1$, and the pairs $(l,l+1)$ with $l\ge c_0$) together with the pairs $(l,l+1)$ with $l,l+1\in W$. Put $e_J=e(U_J,\psi_J)$, $e'=e(U',\psi')$ and $e_U=e(U_N,\psi')$. In the construction $(N,k,s)=(r,k,r_S)$ with $r_S=m/2-1$, and $e_J$ is the local factor of the level idempotent at every place above $g_0$ and $g_1$.
+
+\begin{theorem}[exchange of roots]\label{w39:thmA}\label{w2x:exch}
+For every class function $\chi$ on $G_N$, $\tr(e_J,\chi)=\tr(e',\chi)$. Equivalently $\dim\pi^{(U_J,\psi_J)}=\dim\pi^{(U',\psi')}$ for every representation $\pi$ of $G_N$.
+\end{theorem}
+
+\begin{proof}
+For $0\le i\le s$ let $T_i=\{b\in O:b>i\}$ if $i<s$ and $T_s=\{c_0+1,\dots,N-1\}$. Define $a\prec_ib$ if one of the following holds: $a,b\in W$ and $a<b$; $a,b\in O$ and $a<b$; $a\in O$, $a<i$ and $b\in W$; $a\in W$ and $b\in T_i$.
+
+\emph{$\prec_i$ is a strict partial order.} It is contained in no cycle because a relation from $W$ to $O$ ends in $T_i\subseteq\{b>i\}$ and a relation from $O$ to $W$ starts in $\{a<i\}$, so no chain passes from $W$ to $O$ and back to $W$. Transitivity is checked on the four types. For $a\prec_iw\prec_ib$ with $a,b\in O$ and $w\in W$ we have $a<i<b$ when $b<s$, and $a<s\le c_0\le b$ otherwise, so $a<b$. For $w\prec_ib\prec_ib'$ with $b,b'\in O$ we have $b'>b$, and $b\in T_i$ implies $b'\in T_i$ since $T_i$ is an upper set of $O$ (for $i<s$ it is $\{b\in O:b>i\}$, and $T_s$ is the top of $O$). The remaining cases are immediate.
+
+\emph{The character.} Each pair of $E$ is a covering pair of $\prec_i$. For a pair $(a,b)$ consecutive in $O$ no element of $O$ lies between, and $a\prec_iw\prec_ib$ with $w\in W$ needs $a<i$ and $b\in T_i$. If $b<s$ then $b=a+1\le i$ contradicts $b>i$. If $b=c_0$ then $a=s-1<i$ forces $i=s$, and $c_0\notin T_s$. If $b>c_0$ then $a\ge c_0>i$. For a pair $(l,l+1)$ in $W$ an intermediate element of $O$ would need $l\prec_im\prec_il+1$, that is $m\in T_i$ and $m<i$, which is impossible. By Lemma~\ref{w39:pattern} $\psi_J=\lambda_{E,1}$ is a character of every $U_{\prec_i}$.
+
+\emph{The end points.} For $i=s$ the relation $\prec_s$ consists of the pairs $a<b$ other than $(w,c_0)$, $w\in W$, so $U_{\prec_s}=U_J$. For $i=0$ let $\sigma$ be the permutation of $I$ with $\sigma(a)=s+a$ for $a<k$, $\sigma(a)=a-k$ for $k\le a<k+s$, and $\sigma(a)=a$ for $a\ge k+s$. It maps $\{0,\dots,k-1\}$ increasingly onto $W$ and $\{k,\dots,N-1\}$ increasingly onto $O$. A direct check of the four types gives $\sigma(a)\prec_0\sigma(b)$ if and only if $a<b$ and not ($a<k$ and $b=k$), and $(\sigma(a),\sigma(b))\in E$ if and only if $b=a+1\ne k$. With the permutation matrix $P$, $Pe_a=e_{\sigma(a)}$, we get $(P^{-1}uP)_{ab}=u_{\sigma(a)\sigma(b)}$, hence $P^{-1}U_{\prec_0}P=U'$ and $\psi_J(PuP^{-1})=\psi'(u)$ for $u\in U'$ (the entry $u_{k-1,k}$ vanishes on $U'$). Since $\chi$ is a class function, $\tr(e(U_{\prec_0},\psi_J),\chi)=\tr(e',\chi)$.
+
+\emph{One step.} Let $1\le i\le s$. We apply Lemma~\ref{w39:exchange} to $\prec_1=\prec_i$, $\prec_2=\prec_{i-1}$, $p=i-1$, $q=i$ if $i<s$ and $q=c_0$ if $i=s$, the set $W$ and $E$ with $c\equiv1$. Note that $q$ is the successor of $p$ in $O$. The union $\prec$ is the relation of the same four types with $\{a<i\}$ in the third type and $T'=\{b\in O:b\ge i\}$ in the fourth, which is a strict partial order by the argument above. Condition \ref{w39:X1} holds because $\{a\in O:a<i\}\setminus\{a<i-1\}=\{i-1\}$ and $T_{i-1}\setminus T_i=\{q\}$. Condition \ref{w39:X2} holds because $(p,q)$ is consecutive in $O$. For \ref{w39:X3} let $x\preceq p$ and $w\preceq y$ with $w\in W$. Since $p\in O$ and no element of $W$ precedes $p$ (that would need $p\ge i$), $x\in O$ and $x\le i-1$. Either $y\in W$, and then $x\prec_iy$ by the third type, or $y\in O$ with $y\ge i>x$, and then $x\prec_iy$ by the second type. A pair of $E$ of this form joins two consecutive elements $x<y$ of $O$ with $x\le i-1<i\le y$, so it is $(p,q)$. For \ref{w39:X4} let $x\preceq w$ and $q\preceq y$. Then $y\in O$ with $y\ge q\ge i$, because nothing in $W$ follows $q\ge i$ in $\prec$. If $x\in W$ then $y\in T_{i-1}$, and if $x\in O$ then $x<i\le y$. In both cases $x\prec_{i-1}y$, and a pair of $E$ of this form has $x\in O$, $x<i\le q\le y$, $x,y$ consecutive in $O$, so it is $(p,q)$. Condition \ref{w39:X5} was verified above. Lemma~\ref{w39:exchange} gives $\tr(e(U_{\prec_i},\psi_J),\chi)=\tr(e(U_{\prec_{i-1}},\psi_J),\chi)$.
+
+Chaining the steps $i=s,s-1,\dots,1$ with the two end points proves the theorem. For $s=0$ there is no step and $U_{\prec_0}=U_{\prec_s}$.
+\end{proof}
+
+\paragraph{Column expansion.}
+
+For $n\ge1$ let $P_n\subseteq G_n$ be the mirabolic subgroup of matrices whose last row is $(0,\dots,0,1)$. Embed $G_{n-1}\subseteq P_n$ by $h\mapsto\operatorname{diag}(h,1)$ and let $Y_n=\{y(x):x\in\F^{n-1}\}$, where $y(x)$ is the unipotent matrix with last column $(x,1)$. Then $P_n=G_{n-1}\ltimes Y_n$, $hy(x)h^{-1}=y(hx)$, and $U_n=U_{n-1}\ltimes Y_n$. For $0\le i\le n-1$ let
+\[
+\psi^{(i)}_n(u)=\psi_0\Bigl(\sum_{0\le l\le n-2,\ l\ne i-1}u_{l,l+1}\Bigr)\qquad(u\in U_n),
+\]
+so that $\psi^{(0)}_n=\psi_n$ is the generic character. For a representation $\tau$ of $P_n$ put
+\[
+A(\tau)=\dim\tau^{(U_{n-1},\psi_{n-1})},\qquad B_i(\tau)=\dim\tau^{(U_n,\psi^{(i)}_n)}\quad(0\le i\le n-1).
+\]
+For a representation $\rho$ of $G_n$ put $\mathcal W(\rho)=\dim\rho^{(U_n,\psi_n)}$.
+
+\begin{lemma}[orbits of the unipotent group]\label{w39:orbits}
+Let $m\ge1$ and let $\sigma$ be a representation of $P_m$. For $0\le j\le m-2$ let $S_j=\{u\in U_{m-1}:u_{jl}=0\ (l>j)\}$, and for $c\in\F^\times$ let $\chi'_{j,c}(s\,y(x))=\psi_{m-1}(s)\psi_0(cx_j)$ on $S_jY_m$. Then $\chi'_{j,c}$ is a character and
+\[
+A(\sigma)=B_{m-1}(\sigma)+\sum_{j=0}^{m-2}\sum_{c\in\F^\times}X_{j,c}(\sigma),\qquad X_{j,c}(\sigma)=\dim\sigma^{(S_jY_m,\chi'_{j,c})}.
+\]
+\end{lemma}
+
+\begin{proof}
+For a row vector $\mu\in\F^{m-1}$ let $\sigma_\mu=\{v:\sigma(y(x))v=\psi_0(\mu x)v\}$. Since $Y_m$ is abelian, $\sigma=\bigoplus_\mu\sigma_\mu$, and $\sigma(h)\sigma_\mu=\sigma_{\mu h^{-1}}$ for $h\in G_{m-1}$. The group $U_{m-1}$ acts on row vectors by $\mu\mapsto\mu u^{-1}$. Its orbits are $\{0\}$ and, for $0\le j\le m-2$ and $c\in\F^\times$, the sets $O_{j,c}$ of $\mu$ with $\mu_l=0$ for $l<j$ and $\mu_j=c$. Indeed $\mu u^{-1}$ has the same first nonzero coordinate as $\mu$, and $c\,e_j^{T}(1+\sum_{l>j}c^{-1}\mu_lE_{jl})=\mu$ for $\mu\in O_{j,c}$. The stabilizer of $c\,e_j^T$ is $S_j$, which therefore fixes the character $\psi_0(cx_j)$ of $Y_m$, so $\chi'_{j,c}$ is a character of $S_j\ltimes Y_m$. The sum $\sigma_{O}=\bigoplus_{\mu\in O}\sigma_\mu$ over one orbit is $U_{m-1}$-stable and isomorphic to $\operatorname{Ind}_{S_j}^{U_{m-1}}\sigma_{ce_j}$, so by Frobenius reciprocity $\dim\sigma_O^{(U_{m-1},\psi_{m-1})}=\dim\sigma_{ce_j}^{(S_j,\psi_{m-1})}=X_{j,c}(\sigma)$. The orbit $\{0\}$ gives $\sigma^{Y_m}$, and $\dim(\sigma^{Y_m})^{(U_{m-1},\psi_{m-1})}=B_{m-1}(\sigma)$ because $\psi^{(m-1)}_m(uy)=\psi_{m-1}(u)$.
+\end{proof}
+
+\begin{lemma}[induction from the mirabolic subgroup]\label{w39:indP}
+Let $m\ge1$ and let $\sigma$ be a representation of $P_m$. For $0\le j\le m-1$ let $Y_m^{<j}=\{y(x):x_l=0\ (l\ge j)\}$ and $H_j=U_{m-1}Y_m^{<j}$, and for $c\in\F^\times$ let
+\[
+\chi_{j,c}(u\,y(x))=\psi_0\Bigl(\sum_{0\le l\le m-3,\ l\ne j-1}u_{l,l+1}+c\,x_{j-1}\Bigr),
+\]
+with $x_{-1}=0$. Then $\chi_{j,c}$ is a character of the group $H_j$ and
+\[
+\mathcal W\bigl(\operatorname{Ind}_{P_m}^{G_m}\sigma\bigr)=\sum_{j=0}^{m-1}\sum_{c\in\F^\times}D_{j,c}(\sigma),\qquad D_{j,c}(\sigma)=\dim\sigma^{(H_j,\chi_{j,c})}.
+\]
+\end{lemma}
+
+\begin{proof}
+By Mackey's formula and Frobenius reciprocity,
+\[
+\mathcal W(\operatorname{Ind}_{P_m}^{G_m}\sigma)=\sum_{x\in U_m\backslash G_m/P_m}\dim\sigma^{(x^{-1}(U_m\cap xP_mx^{-1})x,\ \psi_m(x\,\cdot\,x^{-1}))}.
+\]
+The map $gP_m\mapsto e_{m-1}^Tg^{-1}$ identifies $G_m/P_m$ with the nonzero row vectors, and $U_m$ acts by $\mu\mapsto\mu u^{-1}$. As in Lemma~\ref{w39:orbits} the orbits are indexed by $(j,c)$ with $0\le j\le m-1$ and $c\in\F^\times$, with representative $c\,e_j^T$ and stabilizer $U_{(j)}=\{u\in U_m:u_{jl}=0\ (l>j)\}$. Let $\beta$ be the bijection of $I$ with $\beta(l)=l$ for $l<j$, $\beta(j)=m-1$ and $\beta(l)=l-1$ for $l>j$, let $w$ be the permutation matrix with $we_l=e_{\beta(l)}$, and let $t=\operatorname{diag}(1,\dots,1,c)$. Then $x$ with $x^{-1}=tw$ satisfies $e_{m-1}^Tx^{-1}=c\,e_j^T$, so $U_m\cap xP_mx^{-1}=U_{(j)}$. Since $(wzw^{-1})_{\beta(a)\beta(b)}=z_{ab}$ and $\beta$ is increasing on $I\setminus\{j\}$, the group $wU_{(j)}w^{-1}$ consists of the matrices of $U_m$ whose block on $\{0,\dots,m-2\}$ is arbitrary in $U_{m-1}$ and whose last column is supported on the rows $l<j$ (these come from the entries $(l,j)$). Conjugation by $t$ rescales the last column, so $x^{-1}U_{(j)}x=H_j$. For $z\in H_j$ put $u=xzx^{-1}=w^{-1}(t^{-1}zt)w$, so $u_{ab}=(t^{-1}zt)_{\beta(a)\beta(b)}$ and $(t^{-1}zt)_{a,m-1}=c\,z_{a,m-1}$ for $a<m-1$. The superdiagonal entries of $u$ are $u_{l,l+1}=z_{l,l+1}$ for $l+1<j$, $u_{j-1,j}=c\,z_{j-1,m-1}$, $u_{j,j+1}=0$, and $u_{l,l+1}=z_{l-1,l}$ for $l>j$. Hence $\psi_m(xzx^{-1})=\chi_{j,c}(z)$.
+\end{proof}
+
+\begin{lemma}\label{w39:DX}
+In the notation of Lemmas~\ref{w39:orbits} and~\ref{w39:indP}, $D_{j+1,c}(\sigma)=X_{j,c}(\sigma)$ for $0\le j\le m-2$ and $c\in\F^\times$.
+\end{lemma}
+
+\begin{proof}
+On $I=\{0,\dots,m-1\}$ let $a\prec_1b$ mean $a<b\le m-2$, or $b=m-1$ and $a\le j$, and let $a\prec_2b$ mean $a<b\le m-2$ and $a\ne j$, or $b=m-1>a$. Then $U_{\prec_1}=H_{j+1}$ and $U_{\prec_2}=S_jY_m$. Let $E$ consist of the pairs $(l,l+1)$ with $0\le l\le m-3$, $l\ne j$, with coefficient $1$, and of $(j,m-1)$ with coefficient $c$. On $H_{j+1}$ the character $\lambda_{E,c}$ is $\chi_{j+1,c}$. On $S_jY_m$ it is $\chi'_{j,c}$, because $(s\,y(x))_{j,m-1}=(sx)_j=x_j$ when the row $j$ of $s$ is $e_j^T$. If $j=m-2$ the two relations coincide. Otherwise we apply Lemma~\ref{w39:exchange} with $p=j$, $q=m-1$ and $W=\{j+1,\dots,m-2\}$. The union of the two relations is the natural order $<$. \ref{w39:X1} holds by definition. \ref{w39:X3}: if $x\le j<w\le y$ then $x\prec_1y$, and a pair $(x,x+1)$ with $x\le j<x+1$ has $x=j$ and is not in $E$, so only $(j,m-1)$ occurs. \ref{w39:X4}: if $x\le w$ and $y\ge m-1$ then $y=m-1$ and $x\prec_2y$, and $(x,m-1)\in E$ only for $x=j$. \ref{w39:X5}: the pairs $(l,l+1)$ are covering pairs of $<$. An element $b$ with $j\prec_1b\prec_1m-1$ would satisfy $b>j$ and $b\le j$. An element $b$ with $j\prec_2b$ equals $m-1$. Lemma~\ref{w39:exchange} applies since $P_m\supseteq U_m=U_\prec$.
+\end{proof}
+
+\begin{proposition}\label{w39:propM}
+For every $n\ge1$ and every representation $\tau$ of $P_n$,
+\[
+A(\tau)=B_{n-1}(\tau)+\sum_{i=0}^{n-2}(g-1)g^{\,n-2-i}B_i(\tau).
+\]
+\end{proposition}
+
+\begin{proof}
+For $n=1$ both sides equal $\dim\tau$. Let $n\ge2$ and assume the claim for $n-1$. Put $m=n-1$ and let $\theta(y(x))=\psi_0(x_{n-2})$, a character of $Y_n$ whose stabilizer in $G_{m}$ for the action $\mu\mapsto\mu h^{-1}$ on row vectors is $P_m$. Clifford theory as in the proof of Lemma~\ref{w39:orbits}, now with the transitive action of $G_m$ on nonzero row vectors, gives $\tau|_{G_m}\cong\tau^{Y_n}\oplus\operatorname{Ind}_{P_m}^{G_m}\sigma$ with $\sigma=\tau^{(Y_n,\theta)}$, a representation of $P_m$. Since $\psi^{(n-1)}_n$ is trivial on $Y_n$, $\mathcal W(\tau^{Y_n})=B_{n-1}(\tau)$. For $0\le i\le n-2$ the character $\psi^{(i)}_n$ restricts to $\theta$ on $Y_n$ and to $\psi^{(i)}_m$ on $U_m$, so $B_i(\tau)=B_i(\sigma)$, the right side computed in $P_m$.
+
+By Lemmas~\ref{w39:indP}, \ref{w39:DX} and~\ref{w39:orbits},
+\[
+\mathcal W(\operatorname{Ind}_{P_m}^{G_m}\sigma)=\sum_cD_{0,c}(\sigma)+\sum_{j=0}^{m-2}\sum_cX_{j,c}(\sigma)=(g-1)A(\sigma)+\bigl(A(\sigma)-B_{m-1}(\sigma)\bigr),
+\]
+because $H_0=U_{m-1}$ and $\chi_{0,c}=\psi_{m-1}$. By the induction hypothesis $gA(\sigma)-B_{m-1}(\sigma)=(g-1)B_{m-1}(\sigma)+\sum_{i\le m-2}(g-1)g^{m-1-i}B_i(\sigma)=\sum_{i=0}^{m-1}(g-1)g^{m-1-i}B_i(\sigma)$. Adding $B_{n-1}(\tau)$ and using $B_i(\sigma)=B_i(\tau)$ and $m-1-i=n-2-i$ gives the claim.
+\end{proof}
+
+For a representation $\pi$ of $G_N$ and $0\le i\le N-1$ put $W_i(\pi)=\dim\pi^{(U_N,\psi^{(i)}_N)}$, so that $W_0(\pi)=\Tr\pi(e_U)$.
+
+\begin{theorem}[column expansion]\label{w39:thmB}\label{w2x:der}
+Let $1\le k<N$. For every representation $\pi$ of $G_N$,
+\[
+\Tr\pi(e')=\sum_{i=0}^{k-1}\bigl(g^{k-i}-g^{k-i-1}\bigr)W_i(\pi)+W_k(\pi).
+\]
+\end{theorem}
+
+\begin{proof}
+Put $n=k+1\le N$ and embed $G_n\subseteq G_N$ in the upper left corner. Let $Q\subseteq U_N$ be the group of $u\in U_N$ whose upper left $n\times n$ block is $1$, and $\psi_Q(z)=\psi_0(\sum_{l=n-1}^{N-2}z_{l,l+1})$, a character of $Q$. For $p\in P_n$ the conjugate $pzp^{-1}$ replaces the upper right block $X$ of $z$ by $pX$ and keeps the lower right block, and the row $n-1$ of $pX$ equals that of $X$, so $P_n$ normalizes $Q$ and fixes $\psi_Q$. Hence $\tau=\pi^{(Q,\psi_Q)}$ is a representation of $P_n$. Every $u\in U_N$ factors uniquely as $u=u_0z$ with $u_0\in U_n$ and $z\in Q$, and $u_0$ is the upper left block of $u$. Thus $U'=U_kQ$ with $U_k\subseteq G_k\subseteq P_n$, and $\psi'(u_0z)=\psi_k(u_0)\psi_Q(z)$, because the row $k=n-1$ of $u_0$ is $e_k^T$. Hence $\Tr\pi(e')=\dim\tau^{(U_k,\psi_k)}=A(\tau)$. In the same way $\psi^{(i)}_N(u_0z)=\psi^{(i)}_n(u_0)\psi_Q(z)$ for $0\le i\le k$, since the omitted entry $(i-1,i)$ lies in the upper left block, so $W_i(\pi)=B_i(\tau)$. Proposition~\ref{w39:propM} with $n=k+1$ and $(g-1)g^{k-1-i}=g^{k-i}-g^{k-i-1}$ ends the proof.
+\end{proof}
+
+\begin{corollary}[Hypothesis~\ref{w2:H-wt}]\label{w39:Hwt}\label{w2x:idem}\label{w2x:cmp}
+Let $(N,k,s)=(r,k,r_S)$ with $k\ge1$. The element $e_J$ is a self-adjoint idempotent with $e_J(1)=g^{k-N(N-1)/2}>0$, and for every family $(E_c)$ of orthogonal central idempotents of $\C[G_N]$ with $\sum_cE_c=1$, in particular for the label idempotents of Section~\ref{w2:sec:irr},
+\[
+(1-1/g)\,\mathrm{wt}(e_U,c)\le\mathrm{wt}(e_J,c)\qquad\text{for every }c.
+\]
+\end{corollary}
+
+\begin{proof}
+$U_J$ is a subgroup (Lemma~\ref{w39:pattern}, it is $U_{\prec_s}$) defined in $U_N$ by $k$ vanishing entries above the diagonal, so $e_J(1)=\lvert U_J\rvert^{-1}=g^ke_U(1)$. By Theorems~\ref{w39:thmA} and~\ref{w39:thmB} and $W_i\ge0$, $\Tr\pi(e_J)\ge(g^k-g^{k-1})W_0(\pi)=g^k(1-1/g)\Tr\pi(e_U)$ for every irreducible $\pi$. For $a\in\C[G_N]$, $(aE_\pi)(1)=\lvert G_N\rvert^{-1}\dim\pi\,\Tr\pi(a)$. Summing over the $\pi$ with $E_\pi E_c=E_\pi$ gives $(e_JE_c)(1)\ge g^k(1-1/g)(e_UE_c)(1)$, and dividing by $e_J(1)=g^ke_U(1)$ gives the claim.
+\end{proof}
+
+\begin{lemma}\label{w2x:trace}
+Let $a\in\C[G_N]$ be an idempotent and $c$ a label. Then
+\[
+(aE_c)(1)=\frac1{\lvert G_N\rvert}\sum_{\pi\text{ of label }c}\dim\pi\cdot\operatorname{rk}\pi(a)\ \ge0,\qquad\sum_c(aE_c)(1)=a(1).
+\]
+In particular Lemma~\ref{w2:wtprob} holds for every idempotent $a$ with $\operatorname{Re}a(1)>0$, self-adjoint or not.
+\end{lemma}
+
+\begin{proof}
+The central idempotent of $\pi$ is $E_\pi=\frac{\dim\pi}{\lvert G_N\rvert}\sum_x\overline{\chi_\pi(x)}\,x$, and $\overline{\chi_\pi(x^{-1})}=\chi_\pi(x)$, so $(aE_\pi)(1)=\sum_xa(x)E_\pi(x^{-1})=\frac{\dim\pi}{\lvert G_N\rvert}\Tr\pi(a)$. The trace of an idempotent operator is its rank. Summing over the $\pi$ of label $c$ gives the first identity. Summing over all $c$ gives $\sum_\pi\frac{\dim\pi}{\lvert G_N\rvert}\Tr\pi(a)$, which is the trace of $a$ in the left regular representation divided by $\lvert G_N\rvert$, that is $a(1)$.
+\end{proof}
+
+\subsubsection{Rows, labels and the cylinder idempotents}\label{w2x:sec:rows}
+
+Let $(\tau)$ be the orthonormal eigenbasis of $\mathcal H$ of Section~\ref{w2:sec:irr}. For $k\in\{0,1\}$ let $\mathcal G_k=\prod_{w\in\Pi_k}\GL_N(\F_{g_k})$ be the quotient of the level at $g_k$, and for a set $S$ of label tuples at $k$ let $\Pi_S=\sum_{t\in S}\bigotimes_{w\in\Pi_k}E_{t_w}$, a central idempotent of $\C[\mathcal G_k]$. The level idempotent factors as $e=e^{(k)}\otimes\bigotimes_{w\in\Pi_k}e_{k,w}$, with $e^{(k)}$ supported away from $g_k$, and we put $e_S=e\,\Pi_S$.
+
+\begin{hypothesis}[label dictionary]\label{w2x:H-lab}
+(i) For $k\in\{0,1\}$ and every set $S$ of label tuples at $k$, the space of automorphic forms of Section~\ref{w2:sec:statements} defined with $e_S$ in place of $e$ has dimension $\#\{\tau:\mathrm{lab}_k(\tau)\in S\}$. (ii) There is an injective map $\iota$ from an index set of the rows of $R$ to the eigenbasis whose image is the set of $\tau$ whose label tuples at $g_0$ and at $g_1$ are both good, and $\mathrm{lab}_k(\iota(\sigma))$ is the label tuple of the row $\sigma$.
+\end{hypothesis}
+
+Indeed the mutually orthogonal central idempotents $E_t$ indexed by pairs of label tuples sum to $1$ and commute with $e$. Hence $\mathcal H$ is the orthogonal direct sum of the spaces $R(E_t)\mathcal H$. An orthonormal basis adapted to this sum gives (i) by taking dimensions. For (ii), suppose each row basis vector lies in a good summand and every good summand lies in the row space. Then the row space is precisely the sum over good $t$. Choosing a bijection of the two bases separately in each summand gives the required row indices.
+
+\begin{lemma}\label{w2x:DS}
+The element $e_S$ is a self-adjoint idempotent, and $D^*(e_S)=D^*\,w_k(S)$, where $D^*(e')$ denotes the product of the formal degree, the volume of $[G]$ and $\operatorname{Re}e'(1)$.
+\end{lemma}
+
+\begin{proof}
+$\Pi_S$ is a self-adjoint central idempotent of $\C[\mathcal G_k]$, so it commutes with $\bigotimes_we_{k,w}$, and the product of two commuting self-adjoint idempotents is a self-adjoint idempotent. The coefficient at $1$ of a tensor product is the product of the coefficients at $1$, so
+\[
+e_S(1)=e^{(k)}(1)\sum_{t\in S}\prod_{w\in\Pi_k}(e_{k,w}E_{t_w})(1)=e(1)\sum_{t\in S}\prod_{w\in\Pi_k}\frac{(e_{k,w}E_{t_w})(1)}{e_{k,w}(1)}.
+\]
+By Lemma~\ref{w2x:trace} every factor is real, and $e_{k,w}(1)>0$ by Corollary~\ref{w39:Hwt}, so the right side is $e(1)\,w_k(S)$ and $D^*(e_S)=D^*w_k(S)$.
+\end{proof}
+
+\subsubsection{The multiplicity formula}\label{w2x:sec:count}
+
+We prove Hypotheses~\ref{w2:H-cnt} and~\ref{w2:H-DIM} from three analytic statements about the pre-trace formula, which are not proved here. Let $\varphi_\infty(y)=d_\infty\prod_{v}\overline{\langle\pi_v(y_v)w_v,w_v\rangle}$, where $w_v$ is a unit lowest $K$-type vector of the discrete series $\pi_v$ at the real place $v$ and $d_\infty$ is the product of the formal degrees. For a self-adjoint idempotent $e'$ of the Hecke algebra of $G(\Af)$ put $\varphi=\varphi_\infty\otimes e'$, let $R(\varphi)$ be its right convolution operator on $L^2([G])$, let $D(e')$ be the dimension of the space of Section~\ref{w2:sec:statements} defined with $e'$, and let $D^*(e')=d_\infty\vol([G])\operatorname{Re}e'(1)$. Let $\mathfrak F$ be a fundamental domain for $G(F)$ in $G(\A)$ and $n=\dim V=r$.
+
+\begin{hypothesis}[pre-trace inputs, not proved here]\label{w2x:H-pre}
+There are absolute constants $c_1>0$, $c_b>0$, and for every $A\ge1$ constants $n_0$, $C_A$ and $A_1$, such that the following holds for every datum with $n\ge n_0$ whose level and Harish-Chandra parameters satisfy the bounds of the construction with the constant $A$, whose idempotent $e'$ is of positive type and supported on a compact open subgroup that is unipotent modulo an auxiliary prime split in $E$ and larger than $4n$, and whose Harish-Chandra parameters have gap at least $h$ at every real place, with
+\begin{equation}\label{w2x:gap}
+h\ge C_A\,n^{19}f^5\log(b\,\mathrm{rd}_E),\qquad\log f\le\sqrt n,\qquad\log\log b\le c_b\,nf\log n.
+\end{equation}
+\begin{enumerate}[label=(\roman*),leftmargin=*]
+\item $R(\varphi)$ is an orthogonal projection of rank $D(e')$.
+\item For almost every $x\in\mathfrak F$ the series $\sum_{\gamma\in G(F)}\varphi(x^{-1}\gamma x)$ converges absolutely, and its sum is $\sum_j\lvert F_j(x)\rvert^2$ for every orthonormal basis $(F_j)$ of the range of $R(\varphi)$.
+\item There is a measurable $M\subset\mathfrak F$ such that, with $\eta=\exp(-c_1nf\log n)$,
+\[
+\begin{gathered}
+\vol(\mathfrak F\setminus M)\le\eta\vol(\mathfrak F),\\
+\Bigl\lvert\int_M\sum_{\gamma\ne1}\varphi(x^{-1}\gamma x)\,dx\Bigr\rvert\le A_1\eta D^*(e'),\\
+\Bigl\lvert\int_{\mathfrak F\setminus M}\sum_{\gamma}\varphi(x^{-1}\gamma x)\,dx\Bigr\rvert\le A_1e^{-n^2f}D(e').
+\end{gathered}
+\]
+\end{enumerate}
+\end{hypothesis}
+
+\begin{theorem}\label{w2x:count}
+Under Hypothesis~\ref{w2x:H-pre} put $c=c_1/2$. There is $n_1(A)$ such that every datum as in Hypothesis~\ref{w2x:H-pre} with $n\ge n_1(A)$ satisfies $\lvert D(e')-D^*(e')\rvert\le\exp(-c\,nf\log n)\,D^*(e')$.
+\end{theorem}
+
+\begin{proof}
+Write $D=D(e')$, $D^*=D^*(e')$ and $K(x)=\sum_\gamma\varphi(x^{-1}\gamma x)$. By (i) and (ii), integrating $\sum_j\lvert F_j\rvert^2$ over $\mathfrak F$ gives $D=\int_{\mathfrak F}K$. The term $\gamma=1$ is $\varphi(1)=d_\infty e'(1)$, because $\lVert w_v\rVert=1$. Since $e'$ is a self-adjoint idempotent, $e'(1)=\lVert e'\delta_1\rVert^2$ is real and nonnegative, so $\varphi(1)\vol(\mathfrak F)=D^*$. Splitting $\mathfrak F=M\cup(\mathfrak F\setminus M)$ gives
+\[
+D-D^*=-\varphi(1)\vol(\mathfrak F\setminus M)+\int_M\sum_{\gamma\ne1}\varphi(x^{-1}\gamma x)\,dx+\int_{\mathfrak F\setminus M}K,
+\]
+and $\varphi(1)\vol(\mathfrak F\setminus M)\le\eta D^*$, so by (iii) $\lvert D-D^*\rvert\le(1+A_1)\eta D^*+A_1\theta D$ with $\theta=e^{-n^2f}$. Take $n$ so large that $A_1\theta\le\frac12$ and $n\ge c_1\log n$. Then $D\le2(1+(1+A_1)\eta)D^*\le2(2+A_1)D^*$, and $\theta\le\eta$, so $\lvert D-D^*\rvert\le B\eta D^*$ with $B=1+A_1+2A_1(2+A_1)$. Finally $B\eta\le\eta^{1/2}=\exp(-c\,nf\log n)$ once $c\,nf\log n\ge\log B$.
+\end{proof}
+
+\begin{corollary}\label{w2x:cnt}
+Assume Hypotheses~\ref{w2x:H-lab} and~\ref{w2x:H-pre}, and that the construction satisfies \eqref{w2x:gap} with $n=r$ for $e$ and for every $e_S$, the unipotent condition for $e_S$ being imposed at the prime $g_{1-k}$. Then for $x$ large Hypothesis~\ref{w2:H-cnt} holds with $\varepsilon_C=\exp(-c\,rf\log r)\le\frac12$, and Hypothesis~\ref{w2:H-DIM} holds with the same $c$.
+\end{corollary}
+
+\begin{proof}
+The set $S$ of all tuples has $e_S=e$ and $D(e)=D_{\mathrm{all}}$, so Theorem~\ref{w2x:count} gives Hypothesis~\ref{w2:H-DIM} and the first clause of Hypothesis~\ref{w2:H-cnt}. For general $S$, Lemma~\ref{w2x:DS} shows that $e_S$ is a self-adjoint idempotent with $D^*(e_S)=D^*w_k(S)$, and Hypothesis~\ref{w2x:H-lab}(i) gives $D(e_S)=\#\{\tau:\mathrm{lab}_k(\tau)\in S\}$. Theorem~\ref{w2x:count} applied to $e_S$ is the second clause. Since $r\ge100$ and $f\ge x^2$, $\exp(-c\,rf\log r)\le\frac12$ for $x$ large.
+\end{proof}
+
+\subsubsection{Sizes}\label{w2x:sec:sizes}
+
+\begin{lemma}\label{w2x:sizes}
+Let $0<\varepsilon<\frac1{52}$, $J\ge1$ and $\varepsilon_z=\varepsilon/J$. Suppose $x^{2+8\varepsilon}\le n$, $x^{9/2+10\varepsilon}\le k\le2x^{9/2+10\varepsilon}$, $m\le2n\le k$, $g_0,g_1\ge(kb)^8$ and $\min(q,d)\ge\exp(x^{\varepsilon_z/6})$. Then \eqref{w2:sizes} holds with $\varepsilon'=\varepsilon_z$, $C_s=6$, $N=r=k+m-1$ and $f=2n$, for $x\ge4$ large in terms of $\varepsilon$.
+\end{lemma}
+
+\begin{proof}
+$g_k\ge(kb)^8\ge b^8=e^{8x^\varepsilon}\ge e^{8x^{\varepsilon_z}}$. Next $f=2n\ge x^2$, and $f\le k\le2x^{9/2+10\varepsilon}\le x^5$ since $\varepsilon<\frac1{52}$ and $x$ is large, so $f\le x^6$ and $m\le f\le x^6$. The rank satisfies $k\le r\le2k\le4x^{9/2+10\varepsilon}\le x^6$, and $r\ge k\ge x^{9/2}\ge100$. The last condition is the hypothesis on $q$ and $d$.
+\end{proof}
+
+
+
 \subsection{Near orthogonality of Bessel Poincar\'e series}\label{w2:sec:S}
 
 \subsubsection{Assembly}
@@ -484,14 +1074,14 @@ For $u\ne u'$ apply Theorem~\ref{w2:pair} to the terms other than the degenerate
 
 \subsubsection{The inputs from the construction}\label{w2:sec:Sinputs}
 
-Proposition~\ref{w2:assembly} and Corollary~\ref{w2:offdiag} reduce Theorem~\ref{w2:S} to the following statements about the concrete Gram operators.
+Put $r_S=m/2-1$, the rank parameter of a row. The ambient rank remains $r=k+m-1$. Proposition~\ref{w2:assembly} and Corollary~\ref{w2:offdiag} reduce Theorem~\ref{w2:S} to the following statements about the concrete Gram operators.
 
 \begin{hypothesis}[S-KE, kernel expansion]\label{w2:H-KE}
 For every pair of words the unfolding of $\langle\mathcal P_uT,\mathcal P_{u'}T'\rangle$ converges absolutely and produces a term family with (a) to (d) of Theorem~\ref{w2:pair}, $P_g=(1+3/g_1)^f(1+3/g_2)^f$, $\mathrm{part}(\mathrm{id})=0$ and $\mathrm{part}(\mathrm{deg})=0$ for $u\ne u'$, $\mathrm{part}(\mathrm{id})=1$ for $u=u'$.
 \end{hypothesis}
 
 \begin{hypothesis}[S-MR, main row]\label{w2:H-MR}
-$\Sigma(\mathrm{sc}(\mathrm{gen}))\le(1+\delta)e_1\,d^S_ud^S_{u'}/D^*$ for $u\ne u'$, with $0\le\delta\le b^{-7}$ and $1\le e_1\le\exp(12f2^{-(k-2r-2)})$; and $\Sigma(\mathrm{sc}(\mathrm{gen}))\le\gamma_B(d^S_u)^2/D^*$ for $u=u'$, with $\gamma_B=\exp(C_Bm^5f\log b)$.
+$\Sigma(\mathrm{sc}(\mathrm{gen}))\le(1+\delta)e_1\,d^S_ud^S_{u'}/D^*$ for $u\ne u'$, with $0\le\delta\le b^{-7}$ and $1\le e_1\le\exp(12f2^{-(k-2r_S-2)})$; and $\Sigma(\mathrm{sc}(\mathrm{gen}))\le\gamma_B(d^S_u)^2/D^*$ for $u=u'$, with $\gamma_B=\exp(C_Bm^5f\log b)$.
 \end{hypothesis}
 
 \begin{hypothesis}[S-LR, loops]\label{w2:H-LR}
@@ -499,7 +1089,7 @@ Each of the sums $\lvert\Sigma\rvert(\mathrm{big}(\mathrm{gen}\cup\mathrm{ng}))$
 \end{hypothesis}
 
 \begin{hypothesis}[S-NG, nongeneric terms]\label{w2:H-NG}
-$\Sigma(\mathrm{one}(\mathrm{ng}))\le2^{-(k-2r-5)}\exp(C_4m^5f\log b)\,dd$.
+$\Sigma(\mathrm{one}(\mathrm{ng}))\le2^{-(k-2r_S-5)}\exp(C_4m^5f\log b)\,dd$.
 \end{hypothesis}
 
 \begin{hypothesis}[S-DG, degenerate terms]\label{w2:H-DG}
@@ -511,8 +1101,20 @@ $\lvert D_{\mathrm{all}}-D^*\rvert\le\exp(-c\,rf\log r)\,D^*$ for an absolute $c
 \end{hypothesis}
 
 \begin{hypothesis}[S-SZ, sizes]\label{w2:H-SZ}
-$b=e^{x^\varepsilon}\ge16$, $(kb)^8\le g_1,g_2$, $f\le k^8b$, $70\log b\le k$, $k\ge8\log\Gamma_0$, $C_\Gamma\ge\max(C_B,C_4)+1$, the quantities $\exp(-\tfrac13kf\log k)$ and $2^{-(k-2r-5)}\exp(C_4m^5f\log b)$ are at most $b^{-14}$, $12f2^{-(k-2r-2)}\le b^{-14}$, and $c\,rf\log r\ge x^{\varepsilon/8}$.
+$b=e^{x^\varepsilon}\ge16$, $(kb)^8\le g_1,g_2$, $f\le k^8b$, $70\log b\le k$, $k\ge8\log\Gamma_0$, $C_\Gamma\ge\max(C_B,C_4)+1$, the quantities $\exp(-\tfrac13kf\log k)$ and $2^{-(k-2r_S-5)}\exp(C_4m^5f\log b)$ are at most $b^{-14}$, $12f2^{-(k-2r_S-2)}\le b^{-14}$, and $c\,rf\log r\ge x^{\varepsilon/8}$.
+We also require $32\le k$, $4r_S+12\le k$ and $8C_4m^5f\log b\le k$.
 \end{hypothesis}
+
+\begin{lemma}[sizes]\label{w39:sizes}
+Let $b=e^{x^\varepsilon}$, and let $m,k,n$ be as in Proposition~\ref{ranks} with $f=2n$, $r_S=m/2-1$. For $x$ large in terms of $\varepsilon$ and $C_4$: $32\le k$, $4r_S+12\le k$, $f\le k$, $70\log b\le k$, $8C_4m^5f\log b\le k$, and consequently
+\[
+12f2^{-(k-2r_S-2)}\le b^{-14},\qquad2^{-(k-2r_S-5)}\exp(C_4m^5f\log b)\le b^{-14}.
+\]
+\end{lemma}
+
+\begin{proof}
+By Proposition~\ref{ranks}, $m\le2\sqrt x$, $f=2n\le4x^{2+8\varepsilon}$ and $k\ge x^{9/2+10\varepsilon}$. So $4r_S+12=2m+8\le k$, $f\le k$, $70x^\varepsilon\le k$, and $8C_4m^5f\log b\le1024\,C_4x^{9/2+9\varepsilon}\le k$ for large $x$. From $4r_S+12\le k$ we get $k-2r_S-2\ge k/2+4$ and $k-2r_S-5\ge k/2+1$. Then $12f2^{-(k-2r_S-2)}\le f2^{-k/2}\le e^{-k/5}$ since $f\le k\le e^{(\frac{\log2}2-\frac15)k}$ for $k\ge32$, and $2^{-(k-2r_S-5)}e^{C_4m^5f\log b}\le2^{-k/2}e^{k/8}\le e^{-k/5}$. Finally $e^{-k/5}\le b^{-14}$ because $70\log b\le k$.
+\end{proof}
 
 \begin{theorem}\label{w2:Sproof}
 Hypotheses~\ref{w2:H-KE} to~\ref{w2:H-SZ} imply Theorem~\ref{w2:S} for $x$ large in terms of $\varepsilon$ and $C_0$.
@@ -530,4 +1132,38 @@ Theorem~\ref{w2:S} assumes \eqref{w2:window}. Theorem~\ref{r3:A3} uses its concl
 Lemma~\ref{w2:punz} derives the nonvanishing used in the proof of Theorem~\ref{w2:B} from the diagonal clause of Theorem~\ref{w2:S}. Theorem~\ref{w2:S} is a statement about Poincar\'e series alone and its inputs \ref{w2:H-KE} to \ref{w2:H-SZ} do not involve the period maps, so there is no cycle. Theorem~\ref{r3:A3} uses all three theorems.
 \end{remark}
 
-\notgiven{Hypotheses~\ref{w2:H-see} to~\ref{w2:H-SZ} are not proved here.} Section~\ref{fr:sec:frame} describes their content and status.
+Subsection~\ref{fr:sec:frame} records the hypotheses on the periods, multiplicities and individual rows used here.
+
+\subsubsection{The error in the multiplicity formula}\label{count:error}
+
+Let $n$ denote the rank in the counting theorem, $f$ the degree of the
+totally real field, $D$ the multiplicity and $M$ the identity contribution.
+With the Haar measures used for the formal degrees $d_v$, one has
+$M=(\prod_{v\mid\infty}d_v)\operatorname{vol}(\mathfrak F)
+\operatorname{Re}e(1)$ for the level idempotent $e$. In particular $M\ge0$.
+The trace estimate also requires finite dimensionality of the multiplicity
+space. In the varying-rank estimate the gap in the weights is at least
+\[
+  8\cdot10^{14}(C_g+4)n^{19}f^5\log(b\,\mathrm{rd}_E),
+\]
+where the level parameter $g$ satisfies $1\le g\le b^{C_g}$.
+The hypotheses include a common signature $(p,q)$ with $q^2\le n$,
+a prime $g_0>4n$ split completely in $E$, and the bounds
+$\log f\le\sqrt n$, $\log\log\mathrm{rd}_E\le n$,
+$\log\log b\le nf\log n/16$, and $|\lambda_{v,i}|\le b^2$.
+
+Put $L=nf\log n$, $\delta=\exp(-n^2f)$, and $X=|D-M|$.
+The required orbit estimates give
+\[
+ X\le (2e^{-L/4}+\delta)M+\delta D .
+\]
+For $n\ge e^{15}$ put $\eta=e^{-L/16}$. Then $240\le L\le n^2f$,
+so $e^{-L/4},\delta\le\eta/8$ and $\delta\le1/2$. Since $D\le M+X$,
+\[
+ X\le (2e^{-L/4}+2\delta)M+\delta X
+   \le \tfrac12\eta M+\tfrac12X .
+\]
+Thus $|D-M|\le e^{-nf\log n/16}M$. The volume, decay, and near-orbit
+estimates used in the first inequality are stated in
+Subsection~\ref{fr:current}. A fixed-level finiteness theorem alone gives
+no bound for $X$.

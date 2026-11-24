@@ -1,5 +1,5 @@
 
-\section{The loss and the hypotheses \eqref{A1} and \eqref{A2}}\label{r2:sec:loss}
+\section{The loss and the hypotheses \texorpdfstring{\eqref{A1} and \eqref{A2}}{(3.1) and (3.2)}}\label{r2:sec:loss}
 
 This section proves the hypotheses \eqref{A1} and \eqref{A2} of Proposition~\ref{acct} for every $u_0\in A_0$. Hypothesis \eqref{A1} compares the sum $S$ over primes with the total gain $\Gamma$, a number defined below from the valuation estimates of Section~\ref{sec:chaindiv}, the nondegeneracy exponents of the Hecke operators, and a choice of weights. Hypothesis \eqref{A2} compares the slope of a lattice $N_u$ with the slope of the base lattice $M_u$. The lattice $N_u$ is the sublattice of $M_u$ spanned locally by images of powers of Hecke operators, rescaled at each place by the gain. Its slope exceeds that of $M_u$ by the gain minus the colength of the sublattice, and the colength is controlled by a nondegeneracy theorem for Hecke operators on integral forms of representations of $\mathrm{GL}_k$ along the edges of the building.
 
@@ -201,7 +201,7 @@ D^{\mathrm{II}}&=\Big\lceil K_{DII}N^+(\nu_1^3+r_0^5+k^2)\log_pa+2r_0n'c_G+r_0N^
 t^{\mathrm{II}}&=K_{tII}\,r_0\,N(t_0)\Big(\frac{\mathrm{La}\,a}{pk}+a\,p^{-L_1(p)}+c_0+kQ_p\Big)+2r_0n'c_G,\\
 \kappa^{\mathrm{II}}&=\min\big(1,\ K_{kII}\,N(t_0)\,r_0^2\,k\,x^{-26}\big),\\
 D^{\mathrm I}&=\Big\lceil K_{DI}N^+x^{26}(\nu_1^5+k^3)\log_pa\Big\rceil,\\
-t^{\mathrm I}(a,b)&=\sum_{y\ \mathrm{odd}}\min\Big(b_y,\frac{a_{y-d(y)}}{p^{d(y)}}\Big)+K_{\kappa1}N(t_0)\nu_1\Big(\frac a{p^2}+\frac{\mathrm{La}\,a}{pk}\Big)+K_{\kappa2}N(t_0)\big(Q_pc_6+kQ_p+k\log_pa+c_G\big)+2n'c_G,
+t^{\mathrm I}(a,b)&=\sum_{y\ \mathrm{odd}}\min\Big(b_y,\frac{a_{y-d(y)}}{p^{d(y)}}\Big)+K_{\kappa1}N(t_0)\nu_1\Big(\frac a{p^2}+\frac{\mathrm{La}\,a}{pk}\Big)\\ &\quad {}+K_{\kappa2}N(t_0)\big(Q_pc_6+kQ_p+k\log_pa+c_G\big)+2n'c_G,
 \end{align*}
 where the sum runs over the odd tops $y$ of the orbit, $d(y)$ is the distance from $y$ back to the nearest even top (an odd number by Lemma~\ref{r2:evenorder}, and $0$ if there is none, in which case the term is $0$), and $c_6=8(D^{\mathrm I}+1)+K_{\kappa2}N^+k\log_pa+4N^+c_G+2n'c_G$.
 
@@ -305,10 +305,10 @@ P(N)=\operatorname{span}_{\cO_w}\Big\{p^{\sum_{v\in\cV\setminus B}S_v}\,y_B^mF:\
 \begin{proposition}\label{r2:walk}
 Let $\pi$ be an element of a commutative ring $R$, let $\Lambda(\sigma)$ be $R$-submodules of an $R$-module $X$ indexed by the families of slots $\sigma\in\{\mathrm{du},\mathrm{ba},\mathrm{ba}^+\}^{\cV}$, let $y_v$ for $v\in\cV$ be commuting endomorphisms of $X$, and let $a_v,b_v,c_v,c_0,S_v\in\mathbb N$, $m\ge1$ and $\beta\ge0$. Suppose that for all $\sigma$ and $v$
 \begin{gather*}
-\Lambda(\sigma[v\leftarrow\mathrm{du}])\subset\Lambda(\sigma[v\leftarrow\mathrm{ba}])\subset\Lambda(\sigma[v\leftarrow\mathrm{ba}^+]),\qquad
+\Lambda(\sigma[v\leftarrow\mathrm{du}])\subset\Lambda(\sigma[v\leftarrow\mathrm{ba}])\subset\Lambda(\sigma[v\leftarrow\mathrm{ba}^+]),\\
 \pi^{a_v}\Lambda(\sigma[v\leftarrow\mathrm{ba}^+])\subset\Lambda(\sigma[v\leftarrow\mathrm{ba}]),\\
-\pi^{b_v}\Lambda(\sigma[v\leftarrow\mathrm{ba}])\subset\Lambda(\sigma[v\leftarrow\mathrm{du}]),\quad
-\pi^{c_v}\Lambda(\sigma[v\leftarrow\mathrm{ba}^+])\subset\Lambda(\sigma[v\leftarrow\mathrm{du}]),\quad
+\pi^{b_v}\Lambda(\sigma[v\leftarrow\mathrm{ba}])\subset\Lambda(\sigma[v\leftarrow\mathrm{du}]),\\
+\pi^{c_v}\Lambda(\sigma[v\leftarrow\mathrm{ba}^+])\subset\Lambda(\sigma[v\leftarrow\mathrm{du}]),\\
 y_v\Lambda(\sigma[v\leftarrow\mathrm{ba}^+])\subset\Lambda(\sigma[v\leftarrow\mathrm{du}]),
 \end{gather*}
 and that for every $B\subset\cV$ with $\lvert B\rvert=\beta+1$ there is a finite set $G_B\subset\Lambda(\sigma_B)$ with
@@ -375,7 +375,9 @@ p^{\lceil\tau\rceil+\beta S}M\subset P(M)+\operatorname{span}(p^{e_p}C_\beta),\q
 \]
 The term $B=\emptyset$ of $P(M)$ gives $p^{\sum_vS_v}M\subset P(M)$. Lemma~\ref{r2:layers} with $\Lambda=M$, $\tau=\lceil\tau(p)\rceil$, $\beta_0=\lvert\cV\rvert$ and $S_{\mathrm{top}}=\sum_vS_v$ gives
 \[
-\operatorname{length}\big(M/(P(M)\cap p^{\lceil\tau\rceil}M)\big)\le v_w(p)\Big(\rk(M)\lceil\tau\rceil+S\,d^{\mathrm{na}}\sum_{\beta\ge0}\mathrm{Sig}(p)^{\beta+1}\Big)\le v_w(p)\rk(M)\big(\tau(p)+2S\,\mathrm{Sig}(p)\big),
+\begin{aligned}
+\operatorname{length}\big(M/(P(M)\cap p^{\lceil\tau\rceil}M)\big)&\le v_w(p)\Big(\rk(M)\lceil\tau\rceil+S\,d^{\mathrm{na}}\sum_{\beta\ge0}\mathrm{Sig}(p)^{\beta+1}\Big)\\ &\le v_w(p)\rk(M)\big(\tau(p)+2S\,\mathrm{Sig}(p)\big),
+\end{aligned}
 \]
 using $\mathrm{Sig}(p)\le\frac12$, $d^{\mathrm{na}}=\rk M$ (by (F3) the lattices $M\subset M^{\mathrm{na}}$ have the same rank), and $\lceil\tau(p)\rceil=\tau(p)$, an integer. The right side is $v_w(p)\rk(M)(\tau(p)+\mathrm{io}(p))$ by Definition~\ref{r2:localq}. Finally, the inclusion $M^{\mathrm{ram}}\to M$ induces an injection of $M^{\mathrm{ram}}/\NP_w$ into $M/(P(M)\cap p^{\lceil\tau\rceil}M)$, because $\NP_w=M^{\mathrm{ram}}\cap\big(P(M)\cap p^{\lceil\tau\rceil}M\big)$.
 \end{proof}
@@ -425,7 +427,7 @@ Suppose the inputs (L1) to (L8) and the size conditions (Z) of Subsection~\ref{r
 \begin{enumerate}
 \item[(i)] $\mu^M_u+\Gamma+\mathcal L-E_u-e_2\le\mu^N_u$ with
 \[
-e_2=4\,\mathrm{IO}+\mathrm{LT}+\mathrm{RX}+1,\qquad\mathrm{LT}=4\lambda_T\log T_u,\qquad\mathrm{RX}=2\sum_{w\in W_u}\ell_w\le4X''+2\log T_u+2X'' ;
+e_2=4\,\mathrm{IO}+\mathrm{LT}+\mathrm{RX}+1,\quad\mathrm{LT}=4\lambda_T\log T_u,\quad\mathrm{RX}=2\sum_{w\in W_u}\ell_w\le4X''+2\log T_u+2X'' ;
 \]
 \item[(ii)] $\mu_{\max}(N_u)\le\mu_{\max}(M_u)+\Gamma+\mathcal L-E_u$.
 \end{enumerate}
@@ -474,9 +476,9 @@ This subsection compares, prime by prime, the contribution $2\log p\sum_{j,t}\ma
 
 \paragraph{Local losses.} Put $\ell(p)=\log_p(2a)+1$ and $\mathrm{cp}(p)=5c_G\,\ell(p)$. Let $N^\sharp=2x^{2+8\varepsilon}$, which bounds $n_p$ and $N(t_0)$, let $c_0=2b'+2c_G$, and put
 \begin{align*}
-\Theta^{\mathrm{II}}&=r_0(2b'+c_G)+\frac{5r_0C_{31}\log x}{\delta_1}\,(w''+\eta+c_G+N_m)+K_{tII}r_0(c_0+kQ_{p_*})+40C_{31}\log x\big(K_{DII}(\nu_1^3+r_0^5+k^2)\log a+r_0c_0\big)+4,\\
-c_6'&=320C_{31}\log x\big(K_{DI}x^{26}(\nu_1^5+k^3)\log a+1\big)+40K_{\kappa2}C_{31}k\log a\,\log x+\frac{164\,C_{31}c_G\log x}{\delta_1}+8,\\
-\Theta^{\mathrm I}(p)&=\frac{b'}x+\eta+\frac{(K_{\mathrm{Pr}}+2)C_{31}\log x}{\delta_1}(w''+\eta+c_G+N_m)+K_{\kappa2}\big(N^\sharp Q_pc_6'+kQ_p+k\log a+c_G\big)+40K_{DI}C_{31}x^{26}(\nu_1^5+k^3)\log a\log x+4 .
+\Theta^{\mathrm{II}}&=r_0(2b'+c_G)+\frac{5r_0C_{31}\log x}{\delta_1}\,(w''+\eta+c_G+N_m)+K_{tII}r_0(c_0+kQ_{p_*})\\ &\quad {}+40C_{31}\log x\big(K_{DII}(\nu_1^3+r_0^5+k^2)\log a+r_0c_0\big)+4,\\
+c_6'&=320C_{31}\log x\big(K_{DI}x^{26}(\nu_1^5+k^3)\log a+1\big)\\ &\quad {}+40K_{\kappa2}C_{31}k\log a\,\log x+\frac{164\,C_{31}c_G\log x}{\delta_1}+8,\\
+\Theta^{\mathrm I}(p)&=\frac{b'}x+\eta+\frac{(K_{\mathrm{Pr}}+2)C_{31}\log x}{\delta_1}(w''+\eta+c_G+N_m)\\ &\quad {}+K_{\kappa2}\big(N^\sharp Q_pc_6'+kQ_p+k\log a+c_G\big)+40K_{DI}C_{31}x^{26}(\nu_1^5+k^3)\log a\log x+4 .
 \end{align*}
 For a prime $p\in\mathcal P$ of class I with $p<X'$ put
 \[
@@ -488,7 +490,9 @@ and $\mathrm{lo}(p)=\mathrm{cp}(p)$ for the other $p\in\mathcal P$. Put $\mathrm
 \begin{lemma}\label{r2:shift}
 Let $p\in\mathcal P$, $1\le j\le m$, $s\in T$ and $e$ odd, and put $\rho=\pi_p(s,e)$, $A=a_s/p^e$. Then
 \[
-\max\big(0,A-w_j(\rho)\big)\le\max\Big(0,\frac{\mathrm{al}(s)}{p^e}-\mathrm{cap}_j(s,e)\Big)+3c_G\,\mathbf 1[A>w_j(\rho)],\qquad \max\big(0,A-w_j(\rho)\big)\le\frac{\mathrm{al}(s)}{p^e}+\frac{2c_G}{p^e}-\min\big(A,w_j(\rho)\big).
+\begin{aligned}
+\max\big(0,A-w_j(\rho)\big)&\le\max\Big(0,\frac{\mathrm{al}(s)}{p^e}-\mathrm{cap}_j(s,e)\Big)+3c_G\,\mathbf 1[A>w_j(\rho)],\\ \max\big(0,A-w_j(\rho)\big)&\le\frac{\mathrm{al}(s)}{p^e}+\frac{2c_G}{p^e}-\min\big(A,w_j(\rho)\big).
+\end{aligned}
 \]
 For fixed $s$ and $j$, the number of odd $e$ with $A>w_j(\rho)$ is at most $\ell(p)$.
 \end{lemma}
@@ -521,7 +525,9 @@ It remains to show $\mathrm{Pr}_j+\lceil t_{t_0}\rceil+D_p+1\le N(\mathrm{lo}(p)
 
 \emph{Case $p<p_*$.} By \eqref{r2:price}, $\mathrm{Pr}_j\le N\big(r_0(2b'+c_G)+r_0C_{31}\log x(w''+\eta+c_G+N_m)/\delta_1\big)$. The definitions of $t^{\mathrm{II}}$ and $D^{\mathrm{II}}$ give
 \[
-\lceil t^{\mathrm{II}}\rceil+D^{\mathrm{II}}+1\le N\Big(K_{tII}r_0\Big(\frac{\mathrm{La}\,a}{pk}+ap^{-L_1(p)}\Big)+K_{tII}r_0(c_0+kQ_{p_*})+40C_{31}\log x\big(K_{DII}(\nu_1^3+r_0^5+k^2)\log a+r_0c_0\big)+\frac{4r_0C_{31}c_G\log x}{\delta_1}+3\Big).
+\begin{aligned}
+\lceil t^{\mathrm{II}}\rceil+D^{\mathrm{II}}+1&\le N\Big(K_{tII}r_0\Big(\frac{\mathrm{La}\,a}{pk}+ap^{-L_1(p)}\Big)+K_{tII}r_0(c_0+kQ_{p_*})\\ &\qquad {}+40C_{31}\log x\big(K_{DII}(\nu_1^3+r_0^5+k^2)\log a+r_0c_0\big)+\frac{4r_0C_{31}c_G\log x}{\delta_1}+3\Big).
+\end{aligned}
 \]
 The sum of the two bounds is at most $N(\mathrm{lo}(p)-\mathrm{cp}(p))$.
 
@@ -878,14 +884,49 @@ The passage from Theorem~\ref{w1:thm:level} to Hypothesis~\ref{r2:engines}(C) go
 
 \begin{enumerate}[label=(C\arabic*),start=6,leftmargin=*]
 \item \emph{Integrality of the level coefficients}. For a block datum $G$ with all letter degrees and tie parameters at most $2A$, every $u,v_0$ in the level lattice $L_{j,j_p}$ and $l\le J$ satisfy hypothesis (i) of Theorem~\ref{w1:thm:level} with $x_0=\big((t+1)(r+1)+(N+1)r+2(t+1)\big)\lambda_N$, where $\lambda_N=\lfloor\log_p(8A+r)\rfloor+1$ and $T$ is the product of the tie operators of the other ties. The mechanism is that $\mathsf F^l/l!$ acts integrally on integral polynomials, since $\frac1{l!}\mathsf F^l=\sum_{\lvert\kappa\rvert=l}\kappa!\prod_c\partial_{w_c}^{(\kappa_c)}\partial_{e_c}^{(\kappa_c)}$ with divided derivatives $\partial^{(k)}=\partial^k/k!$, and that each tie operator \eqref{w1:eq:tiephi} has denominators $\binom{A_z}j$ of valuation at most $\log_pA_z$ by Kummer's theorem. The bookkeeping of the factorials in $d_F$ against the Fock weights $m!$ on $L_{j,j_p}$ is not written here.
-\item \emph{Numerics}. With $W=\lvert\mathrm{winA}\rvert$, $J\le b_+$, $k=\lfloor Y\,D_{1r}\rfloor$ and $x_0,\lambda_N$ as in (C6), the bracket of Theorem~\ref{w1:thm:level} is at most $5/Y$. The inputs are $kY^2\log a\le a/b'$, which gives $J/W\le 1/Y$, and the definition $D_{1r}=t(Y\kappa_S+C_M\kappa_S)+C_M\kappa_S$ with $\kappa_S=3(s+2)r^2(\log_p(8a+r)+1)$, which makes $(x_0+D_1+\lambda_N)/(k+1)\le 3/Y$. The inequality chain is not written here.
+\item \emph{Window bound}. Under the window and prime inequalities of Proposition~\ref{w1:prop:C7}, the bracket of Theorem~\ref{w1:thm:level} is at most $3/Y$.
 \item \emph{Level decomposition of a block lattice}. The block lattice of a kept block decomposes, up to a loss of $\mathrm{levelPassageLoss}=10(s+1)(r+1)(\log_p(8a+r)+1)+2N_t(r+1)\log_pa$ in the depth, into the level lattices $L_{j,j_p}$ indexed by the $\mathfrak{sl}_2$ levels of the ties, and the block form restricted to a level equals $\langle\Phi_{z}T\cdot,\cdot\rangle/d_F$ with $z=a_+-o_+$. The identity behind it is the following: for the tie with extra variables $x_{z_v},x_{s_v}$ and $P_z(y)=\sum_l\frac{(-1)^l}{(l!)^2\binom{A_z}l}\hat{\mathsf E}^l\mathsf F^l(x_{z_v}^zy)$, one has $\hat{\mathsf F}P_z(y)=0$ and $\langle P_z(y),P_z(y')\rangle=z!\,\langle y,\Phi_zy'\rangle$.
 \item \emph{Averaging over the other ties}. The bad counts $\mathrm{bY}$ of the untwisted level forms, averaged over the top weights of the segment, are at most $(30+C_M)/Y$ times the averaged dimensions. The mechanism is Theorem~\ref{w1:thm:window} applied in each tie coordinate, with the arithmetic progression of tie parameters cut out by the digit classes, and $\varepsilon_i=2S_i/Y_i+(2\kappa+2S_i\lambda/Y_i)/E$ as the error of the $i$-th coordinate.
 \item \emph{Segment assembly}. Summation over blocks, levels and ties, which gives the factor $(t+1)N_1$, and the dichotomy that fixes the split index $\sigma$ uniformly over the window when no power $p^d$ lies in $[(1-2\delta)a/b',(1+2\delta)a/b']$.
 \item \emph{From segment shares to the share of} $\mathrm{LP}$. On every $1$-edge there is a source-test system of rank at least $(1-\kappa_P-\sum_j\kappa_T(j))\dim V/[k]_q$, with $\kappa_P\le C_sNN_1/Y$.
 \end{enumerate}
 
-\notgiven{Statements (C6) to (C11) are not proved here.}
+\notgiven{Statements (C6) and (C8) to (C11) are not proved here.}
+
+\subsubsection{The numerics of the window bound (C7)}\label{w1:sec:C7}
+
+In the setting of (C6) and (C7) let $s$ be the number of tops of the segment, $t=s-\sigma\le s$, $r\ge4$ the number of frame variables of a block, $Y\ge1$, $C_M\ge1$, $\mathrm{winA}$ the window of top weights, an interval of integers with $a/(kY)\le\lvert\mathrm{winA}\rvert\le a+1$, and $b_+\le\frac52b'$ the bottom weight of the next top. Put
+\begin{gather*}
+\lambda_A=\log_p(8a+r)+1,\qquad\Lambda=\lfloor\log_p(8(3s+2)a+r)\rfloor+1,\qquad\kappa_S=3(s+2)r^2\lambda_A,\\
+x_0=\big((t+1)(r+1)+(2s+2)r+2(t+1)\big)\Lambda,\qquad D_{1r}=t\,(Y\kappa_S+C_M\kappa_S)+C_M\kappa_S .
+\end{gather*}
+
+\begin{proposition}\label{w1:prop:C7}
+Suppose $p\ge3s+2$, $p\ge25$, $k\ge5$, $k^2Y^2\le p$ and $pb'<a$. Let $J\le b_+$ be an integer and put $W=\lvert\mathrm{winA}\rvert$, $h=\lceil\log_p(a+1)\rceil$ and $K=\lfloor YD_{1r}\rfloor$. Then $W\le p^h$, $J+1\le p^h$, and
+\[
+\frac JW+\frac{x_0+\lfloor D_{1r}\rfloor+\Lambda+Jh/W}{K+1}\le\frac3Y\le\frac5Y .
+\]
+\end{proposition}
+
+\begin{proof}
+First $J\le\frac52b'<a$, so $J+1\le a+1\le p^h$ and $W\le a+1\le p^h$. From $k^2Y^2b'\le pb'<a$ we get $kYb'<a/(kY)\le W$, so
+\[
+\frac JW\le\frac{5b'}{2kYb'}=\frac5{2kY}\le\frac1{2Y},
+\]
+using $k\ge5$. Next, $8(3s+2)a+r\le(3s+2)(8a+r)$ and $3s+2\le p$ give $\Lambda\le\log_p(8(3s+2)a+r)+1\le\lambda_A+1\le2\lambda_A$, since $\lambda_A\ge1$. Put $c=(t+1)(r+1)+(2s+2)r+2(t+1)+1$. From $t\le s$ and $r\ge4$,
+\[
+2c\le6(s+1)(r+1)+2\le12(s+2)r\le3(s+2)r^2,
+\]
+so $x_0+\Lambda=c\Lambda\le2c\lambda_A\le\kappa_S$. Since $C_M\ge1$ and $t,Y\ge0$, $\kappa_S\le D_{1r}$, and $h\le\log_p(a+1)+1\le\lambda_A\le\kappa_S$. The denominator satisfies $K+1\ge YD_{1r}>0$. Hence
+\[
+\frac{x_0+\lfloor D_{1r}\rfloor+\Lambda+Jh/W}{K+1}\le\frac{2D_{1r}+\frac1{2Y}D_{1r}}{YD_{1r}}=\frac2Y+\frac1{2Y^2}\le\frac2Y+\frac1{2Y},
+\]
+and adding $J/W\le1/(2Y)$ gives $3/Y$.
+\end{proof}
+
+For the medium primes $p\ge p_*=k^2x^{26}$ take $Y=x^{13}$. Then $k^2Y^2\le p$, and $p<X'$ gives $pb'<X'b'=a$.
+
+
 
 Items (C1) to (C5) are Lemmas~\ref{w1:lem:smithbad}, \ref{w1:lem:trunc}, Theorem~\ref{w1:thm:window}, Proposition~\ref{w1:prop:tie} with Theorem~\ref{w1:thm:level}, and Lemma~\ref{w1:lem:jordan}.
 
@@ -1082,7 +1123,92 @@ The remaining steps of engine (B) are the following.
 \item \emph{Transfer}. The contravariant self-duality with loss $\kappa_1(\lambda)+\kappa_1(\lambda^\flat)\le C_K\lvert T\rvert k^2\log_pa$, and surjectivity of multiplication $H^0(\lambda^\flat)\otimes H^0(\lambda^{\mathrm{rest}})\to H^0(\lambda)$ on edge lattices. The surjectivity over $\bZ$ for $\mathrm{GL}_n$ is the projective normality of flag varieties in all characteristics, S.~Ramanan and A.~Ramanathan, \emph{Projective normality of flag varieties and Schubert varieties}, Invent. Math.~79 (1985), 217--224. Its transport to the edge lattices is not written here.
 \end{enumerate}
 
-\notgiven{Statements (B7), (B8) and (B9) are not proved here, apart from the published surjectivity theorem named in (B9).}
+\notgiven{Statements (B8) and (B9) are not proved here, apart from the published surjectivity theorem named in (B9).}
+
+\subsubsection{The norm of the isotypic projector}\label{w1:sec:B7}
+
+Throughout this subsection $\mathcal K$ is a finite extension of $\bQ_p$ with valuation ring $\cO$, $p$ is odd, and $\mathfrak g=\mathfrak{gl}_r(\mathcal K)$ with the standard basis $E_{ab}$. For a positive root $\alpha=\epsilon_a-\epsilon_b$ ($a<b$) write $e_\alpha=E_{ab}$, $f_\alpha=E_{ba}$, $e_\alpha^{(k)}=e_\alpha^k/k!$ and $f_\alpha^{(k)}=f_\alpha^k/k!$. For a finite-dimensional representation $U$ of $\mathfrak g$ in which the $E_{cc}$ act semisimply with integer eigenvalues we write $U_\nu$ for the weight space of $\nu\in\bZ^r$. An $\cO$-lattice $\Lambda\subset U$ is \emph{graded} when $\Lambda=\bigoplus_\nu(\Lambda\cap U_\nu)$, and \emph{admissible} when it is graded and $e_\alpha^{(k)}\Lambda\subset\Lambda$ and $f_\alpha^{(k)}\Lambda\subset\Lambda$ for every positive root $\alpha$ and every $k\ge0$. The \emph{invariant projection} $P_U$ of $U$ is the projection onto $U^{\mathfrak g}$ along the sum of the isotypic components of nontrivial type.
+
+\begin{lemma}\label{w1:lem:invproj}
+Let $U$ be as above, let $\Lambda\subset U$ be an admissible lattice, and let $L\ge0$ be an integer such that $k\le L$ whenever $k\ge1$ and $k\alpha$ is a weight of $U$ for a positive root $\alpha$. Then
+\[
+p^{N}P_U\Lambda\subset\Lambda,\qquad N=\binom r2\big\lfloor\log_p(L+r-1)\big\rfloor .
+\]
+\end{lemma}
+
+\begin{proof}
+The invariant projection kills $U_\nu$ for $\nu\ne0$, because $\mathfrak g$-invariant vectors have weight $0$. Since $\Lambda$ is graded, $P_U\Lambda=P_U(\Lambda\cap U_0)$, and it suffices to treat $x\in\Lambda\cap U_0$.
+
+Let $\mathsf P$ be the extremal projector of Proposition~\ref{w1:prop:extremal}. The weight $0$ is dominant, so $\mathsf P$ is defined on $U_0$ and is the projection of $U_0$ onto $U_0^{\mathfrak n^+}$ along $U_0\cap\mathfrak n^-U$. A vector of $U_0^{\mathfrak n^+}$ is a highest weight vector of weight $0$ or is zero, so it generates a trivial representation and lies in $U^{\mathfrak g}$. Conversely $U^{\mathfrak g}\cap U_0\subset U_0^{\mathfrak n^+}$. In an irreducible representation of highest weight $\lambda\ne0$ every weight vector of weight different from $\lambda$ lies in $\mathfrak n^-$ applied to the representation, so the weight-$0$ part of every nontrivial isotypic component lies in $U_0\cap\mathfrak n^-U$, and $\mathfrak n^-U$ lies in the sum of the nontrivial isotypic components. Hence $\mathsf P=P_U$ on $U_0$.
+
+On $U_0$ the factor of $\alpha=\epsilon_a-\epsilon_b$ in $\mathsf P$ acts as $\sum_{k\ge0}(-1)^k\binom{N_\alpha+k}k^{-1}f_\alpha^{(k)}e_\alpha^{(k)}$ with $N_\alpha=\langle0+\rho,\alpha^\vee\rangle=b-a\le r-1$, as in the proof of Proposition~\ref{w1:prop:extremal}. Each $f_\alpha^{(k)}e_\alpha^{(k)}$ preserves weights, so every factor maps $U_0$ to $U_0$. If $y\in U_0$ and $e_\alpha^{(k)}y\ne0$ with $k\ge1$, then $k\alpha$ is a weight of $U$, so $k\le L$, and Kummer's theorem gives $v\binom{N_\alpha+k}k\le\lfloor\log_p(N_\alpha+k)\rfloor\le\lfloor\log_p(L+r-1)\rfloor$. Since $\Lambda$ is admissible, the factor of $\alpha$ maps $p^{-c}\Lambda\cap U_0$ into $p^{-c-\lfloor\log_p(L+r-1)\rfloor}\Lambda\cap U_0$ for every $c$. There are $\binom r2$ positive roots, so $p^N\mathsf Px\in\Lambda$.
+\end{proof}
+
+\begin{lemma}\label{w1:lem:traceformula}
+Let $V$ be a finite-dimensional representation of $\mathfrak g$ as above, let $\lambda$ be a dominant weight, let $e_\lambda$ be the projection of $V$ onto its isotypic component of type $\lambda$ along the other isotypic components, and suppose that $V$ contains an irreducible subrepresentation $W$ of highest weight $\lambda$. Let $b_1,\dots,b_n$ be a basis of $W$ with dual basis $b_1^*,\dots,b_n^*$, and let $P$ be the invariant projection of $\Hom(W,V)$, on which $X\in\mathfrak g$ acts by $X\cdot\varphi=X\varphi-\varphi X$. Then for every $m\in V$
+\[
+e_\lambda(m)=n\sum_{i=1}^nP\big(b_i^*\otimes m\big)(b_i),
+\]
+where $b_i^*\otimes m$ is the map $w\mapsto b_i^*(w)m$.
+\end{lemma}
+
+\begin{proof}
+Both sides are linear in $m$, so we may take $m$ in an irreducible subrepresentation $U\subset V$ of highest weight $\mu$. The maps $b_i^*\otimes m$ lie in $\Hom(W,U)$, a subrepresentation of $\Hom(W,V)$, and $P$ preserves it, so $P(b_i^*\otimes m)\in\Hom(W,U)^{\mathfrak g}$. If $\mu\ne\lambda$ this space is $0$ by Schur's lemma, and both sides vanish. If $\mu=\lambda$ choose an isomorphism $\psi\colon W\to U$ of representations. Composition with $\psi^{-1}$ identifies $\Hom(W,U)$ with $\mathrm{End}(W)$ as representations, and the invariant projection of $\mathrm{End}(W)$ is $A\mapsto(\tr A/n)\,\mathrm{id}$, because this map is equivariant, idempotent, has image $\mathrm{End}(W)^{\mathfrak g}=\mathcal K\,\mathrm{id}$, and the invariant projection is the unique equivariant projection onto the invariants. Hence $P(b_i^*\otimes m)=\frac1nb_i^*(\psi^{-1}m)\,\psi$ and
+\[
+n\sum_iP(b_i^*\otimes m)(b_i)=\sum_ib_i^*(\psi^{-1}m)\,\psi(b_i)=\psi\psi^{-1}m=m=e_\lambda(m).\qedhere
+\]
+\end{proof}
+
+We return to the setting of Proposition~\ref{w1:prop:projexists}. Let $\mathcal V_d$ be the space of polynomials of multidegree $d$, with $\mathfrak g$ acting through the letters of $S$, and put $\mathcal B_d=\mathcal B\cap\mathcal V_d$ and $\deg_S=\sum_{i\in S}d_i$.
+
+\begin{lemma}\label{w1:lem:Badm}
+$\mathcal B_d$ is an admissible lattice of $\mathcal V_d$, every weight $\nu$ of $\mathcal V_d$ satisfies $-\deg_S\le\nu_c\le\deg_S$, and any two weights $\mu,\omega$ of $\mathcal V_d$ satisfy $\lvert\mu_c-\omega_c\rvert\le\deg_S$ for every $c$.
+\end{lemma}
+
+\begin{proof}
+A monomial $x^\beta$ is a weight vector, of weight $\nu_c=\sum_{i\in S\ \mathrm{vector}}\beta_{i,c}-\sum_{i\in S\ \mathrm{covector}}\beta_{i,c}$, and $\mathcal B_d$ is the direct sum of the lines $\{c\,x^\beta:v(c)+\frac12v(\beta!)\ge0\}$ over the monomials of multidegree $d$. So $\mathcal B_d$ is a graded lattice. It is stable under $E_{ab}^{(k)}$ for $a\ne b$ by Lemma~\ref{w1:lem:divpow}. For the weight bounds, $\sum_{i\in S\ \mathrm{vector}}\beta_{i,c}$ lies between $0$ and $\sum_{i\in S\ \mathrm{vector}}d_i$, and $\sum_{i\in S\ \mathrm{covector}}\beta_{i,c}$ lies between $0$ and $\sum_{i\in S\ \mathrm{covector}}d_i$, so $\nu_c$ lies in an interval of length $\deg_S$ that contains $0$.
+\end{proof}
+
+\begin{theorem}[the norm bound (B7)]\label{w1:thm:B7}
+In the setting of Proposition~\ref{w1:prop:projexists}, put
+\[
+N_S=\binom r2\big\lfloor\log_p(\deg_S+r-1)\big\rfloor .
+\]
+Then $p^{N_S}\pi_{S,\theta}\,\mathcal B_d\subset\mathcal B_d$. Equivalently $v_{\mathrm{BB}}(\pi_{S,\theta}F)\ge-N_S$ for every $F\in\mathcal V_d$ with $v_{\mathrm{BB}}(F)\ge0$. If the value group $v(\mathcal K^\times)$ contains $\frac12\bZ$, which holds when $\cO$ contains an element $\varpi$ with $\varpi^2=p$, then
+\[
+v_{\mathrm{BB}}(\pi_{S,\theta}F)\ge v_{\mathrm{BB}}(F)-N_S\ge v_{\mathrm{BB}}(F)-\binom r2\log_p(2\deg_S+r)\qquad(F\in\mathcal V_d).
+\]
+\end{theorem}
+
+\begin{proof}
+By the proof of Proposition~\ref{w1:prop:projexists}, $\pi_{S,\theta}=\sum_{\lambda\in\Sigma}e_\lambda$, where $\Sigma$ is the finite set of dominant weights $\lambda$ with $\lambda_r\ge\theta$ for which $\mathcal V_d$ has a nonzero isotypic component of type $\lambda$, and $e_\lambda$ is the isotypic projection. Since $\mathcal B_d$ is an $\cO$-module it suffices to show $p^{N_S}e_\lambda\mathcal B_d\subset\mathcal B_d$ for each $\lambda\in\Sigma$.
+
+Fix $\lambda\in\Sigma$ and an irreducible subrepresentation $W\subset\mathcal V_d$ of highest weight $\lambda$. Put $\Lambda_W=\mathcal B_d\cap W$. Since $W$ is spanned by weight vectors and $\mathcal B_d$ is graded, $\Lambda_W=\bigoplus_\omega(\mathcal B_d\cap W_\omega)$, and $\Lambda_W$ is stable under the divided powers $e_\alpha^{(k)}$, $f_\alpha^{(k)}$. It is a free $\cO$-module of rank $n=\dim W$. Choose an $\cO$-basis $b_1,\dots,b_n$ of $\Lambda_W$, which is a $\mathcal K$-basis of $W$, with dual basis $b_i^*$. Let
+\[
+\Lambda_H=\{\varphi\in\Hom(W,\mathcal V_d):\ \varphi(\Lambda_W)\subset\mathcal B_d\},
+\]
+an $\cO$-lattice in $\Hom(W,\mathcal V_d)$, isomorphic to $\Hom_\cO(\Lambda_W,\mathcal B_d)$.
+
+$\Lambda_H$ is graded. For $\varphi\in\Lambda_H$ its component of weight $\nu$ is $\varphi_\nu=\sum_\omega\mathrm{pr}_{\omega+\nu}\circ\varphi\circ\mathrm{pr}_\omega$, where $\mathrm{pr}$ denotes the weight projections. These preserve $\mathcal B_d$ and $\Lambda_W$ because both are graded, so $\varphi_\nu\in\Lambda_H$.
+
+$\Lambda_H$ is stable under divided powers. The operators $L_X\varphi=X\varphi$ and $R_X\varphi=\varphi X$ commute, and $X\cdot\varphi=(L_X-R_X)\varphi$, so for $X=e_\alpha$ or $f_\alpha$
+\[
+X^{(k)}\cdot\varphi=\sum_{i+j=k}(-1)^j\,X^{(i)}\circ\varphi\circ X^{(j)} ,
+\]
+and each term maps $\Lambda_W$ into $\mathcal B_d$ because $X^{(j)}\Lambda_W\subset\Lambda_W$ and $X^{(i)}\mathcal B_d\subset\mathcal B_d$ (Lemma~\ref{w1:lem:Badm}).
+
+The weights of $\Hom(W,\mathcal V_d)\cong W^*\otimes\mathcal V_d$ are the differences $\mu-\omega$ of a weight $\mu$ of $\mathcal V_d$ and a weight $\omega$ of $W$. The weights of $W$ are weights of $\mathcal V_d$, so if $k\alpha=\mu-\omega$ with $\alpha=\epsilon_a-\epsilon_b$ then $k=\mu_a-\omega_a\le\deg_S$ by Lemma~\ref{w1:lem:Badm}. Lemma~\ref{w1:lem:invproj} with $U=\Hom(W,\mathcal V_d)$, $\Lambda=\Lambda_H$ and $L=\deg_S$ gives $p^{N_S}P\Lambda_H\subset\Lambda_H$.
+
+Let $m\in\mathcal B_d$. Then $b_i^*\otimes m\in\Lambda_H$, because $b_i^*(\Lambda_W)\subset\cO$. Hence $p^{N_S}P(b_i^*\otimes m)\in\Lambda_H$, and since $b_i\in\Lambda_W$, the vector $p^{N_S}P(b_i^*\otimes m)(b_i)$ lies in $\mathcal B_d$. Lemma~\ref{w1:lem:traceformula} gives $p^{N_S}e_\lambda(m)=n\sum_ip^{N_S}P(b_i^*\otimes m)(b_i)\in\mathcal B_d$, since $n$ is an integer.
+
+For the second form, $v_{\mathrm{BB}}(cF)=v(c)+v_{\mathrm{BB}}(F)$ and $\mathcal B_d=\{F:v_{\mathrm{BB}}(F)\ge0\}$. The values $v(F_\beta)+\frac12v(\beta!)$ lie in $v(\mathcal K^\times)+\frac12\bZ$, which is $v(\mathcal K^\times)$ under the assumption, so for $F\ne0$ there is $c$ with $v(c)=-v_{\mathrm{BB}}(F)$, and the first statement applied to $cF$ gives the inequality. Finally $\lfloor\log_p(\deg_S+r-1)\rfloor\le\log_p(2\deg_S+r)$.
+\end{proof}
+
+\begin{remark}\label{w1:rem:B7audit}
+In (B7) the loss is $\binom r2\lfloor\log_p(\deg_S+r-1)\rfloor$. Since $\deg_S\le\sum_xd_x$, the bound $e_P=r^2(\log_p(2\sum_xd_x+r)+1)$ in (B8) applies to each projector.
+\end{remark}
+
+
 
 \subsection{Engine (A): the rank of the symbol spaces}\label{w1:sec:A}
 
@@ -1200,5 +1326,74 @@ The remaining steps of engine (A) are the following.
 \item[(A9)] \emph{Assembly of the counts}. The losses $(1-5/Y)$, $(1-1/Y)$, $(1-r/(2Y))$ per top and $(1-1/(32Y))$ per segment multiply to at least $1-\lvert T\rvert r^2k/Y$. The final inequality is elementary once the per-top factors are established, and the per-top factors are not written here.
 \end{enumerate}
 
-\notgiven{Statements (A6), (A7) and (A9) are not proved here.}
+\notgiven{The construction in (A6), (A7) and the individual share bounds in (A9) remain open.}
+
+\subsubsection{The final count of engine (A)}\label{w1:sec:A9final}
+
+\begin{lemma}\label{w1:lem:A9}
+Let $r\ge2$, $k\ge5$, $Y\ge1$, and let $J\le N$ be positive integers with $Nr^2k<Y$. Let $A$ be a real number with $1-\frac1{32Y}\le A\le1$. Then the numbers $1-\frac5Y$, $1-\frac1Y$, $1-\frac r{2Y}$ lie in $[0,1]$ and
+\[
+A^J\Big(\big(1-\tfrac5Y\big)\big(1-\tfrac1Y\big)\big(1-\tfrac r{2Y}\big)\Big)^N\ge1-\frac{Nr^2k}Y .
+\]
+\end{lemma}
+
+\begin{proof}
+Put $u=1/Y$. From $Nr^2ku<1$ and $r^2k\ge20$ we get $u<\frac1{20}$, so $5u\le1$ and $\frac r2u\le\frac{r^2k}{2}u<1$, and $A\ge1-\frac u{32}\ge0$. For numbers $x_1,\dots,x_M\in[0,1]$ one has $\prod_i(1-x_i)\ge1-\sum_ix_i$, by induction on $M$, since $(1-x)(1-y)\ge1-x-y$ for $y\le1$ and $1-\sum$ may be negative. Applying this to $J$ factors $1-\frac u{32}$ and $N$ triples of factors gives a lower bound $1-u\big(\frac J{32}+N(6+\frac r2)\big)\ge1-uN\big(6+\frac1{32}+\frac r2\big)$, because $J\le N$ and $A\ge1-\frac u{32}$. Finally $r^2k-\frac r2\ge r(5r-\frac12)\ge19\ge6+\frac1{32}$.
+\end{proof}
+
+In (A9) the lemma applies with $N=\lvert T\rvert$ (the tops of the orbit), $J$ the number of segments over a period and $A=1-\frac1{32Y}$, once the per-top factors $(1-5/Y)$, $(1-1/Y)$, $(1-r/(2Y))$ and the per-segment factor $(1-1/(32Y))$ are established. The per-top factors are the residual of (A9).
+
+
+
+\subsubsection{The comparison exponent of (L2)}\label{r2:sec:L2}
+
+For a dominant weight $\lambda$ of $\GL_k$ let $V(\lambda)$ be the irreducible representation over $\mathcal K$, $v_\lambda$ a highest weight vector and $v_\lambda^*$ the linear form that is $1$ on $v_\lambda$ and $0$ on the other weight spaces. Let $U_\bZ$ be the $\bZ$-subalgebra of $U(\mathfrak{gl}_k)$ generated by the $E_{ab}^{(n)}$ ($a\ne b$) and the $\binom{E_{cc}}n$. Put
+\[
+\Delta_\cO(\lambda)=U_\bZ\,\cO v_\lambda,\qquad\nabla_\cO(\lambda)=\{x\in V(\lambda):\ v_\lambda^*(ux)\in\cO\ \text{for all }u\in U_\bZ\},
+\]
+and $w(\lambda)=\binom k2\lfloor\log_p(\lambda_1-\lambda_k+k-1)\rfloor$.
+
+\begin{proposition}\label{r2:prop:nabladelta}
+$p^{w(\lambda)}\nabla_\cO(\lambda)\subset\Delta_\cO(\lambda)\subset\nabla_\cO(\lambda)$.
+\end{proposition}
+
+\begin{proof}
+Write $\Delta=\Delta_\cO(\lambda)$, $V=V(\lambda)$, $V^*$ its dual with the contragredient action, and $\Delta'=U_\bZ\,\cO v_\lambda^*\subset V^*$. The algebra $U_\bZ$ is spanned by products $f^{(K)}h\,e^{(K')}$ of ordered divided powers of the negative root vectors, binomials in the $E_{cc}$ and divided powers of the positive root vectors (Kostant). The positive ones kill $v_\lambda$, the binomials act on $v_\lambda$ by integers, and the negative ones lower the weight, so $\Delta\cap V_\lambda=\cO v_\lambda$ and $v_\lambda^*(\Delta)\subset\cO$. Since $\Delta$ is $U_\bZ$-stable this gives $\Delta\subset\nabla_\cO(\lambda)$.
+
+By definition, $x\in\nabla_\cO(\lambda)$ exactly when $\eta(x)\in\cO$ for every $\eta\in\Delta'$, because $\eta=u^{\mathsf c}v_\lambda^*$ with $u^{\mathsf c}$ the image of $u$ under the antipode, which preserves $U_\bZ$. So $\nabla_\cO(\lambda)$ is the $\cO$-dual of $\Delta'$.
+
+Let $U=V\otimes V^*=\mathrm{End}(V)$ and $\Lambda=\Delta\otimes_\cO\Delta'$. The lattices $\Delta$ and $\Delta'$ are spanned by weight vectors and stable under divided powers, and $X^{(n)}(y\otimes\eta)=\sum_{i+j=n}X^{(i)}y\otimes X^{(j)}\eta$, so $\Lambda$ is admissible. The weights of $U$ are differences $\mu-\mu'$ of weights of $V$, whose entries lie between $\lambda_k$ and $\lambda_1$, so $k\alpha=\mu-\mu'$ forces $k\le\lambda_1-\lambda_k$. Lemma~\ref{w1:lem:invproj} with $r=k$ and $L=\lambda_1-\lambda_k$ gives $p^{w(\lambda)}P_U\Lambda\subset\Lambda$. Since $V$ is irreducible, $P_U(A)=\frac{\tr A}{\dim V}\mathrm{id}$, and $v_\lambda\otimes v_\lambda^*\in\Lambda$ has trace $1$. So $\frac{p^{w(\lambda)}}{\dim V}\mathrm{id}\in\Lambda$.
+
+An element $\sum_jy_j\otimes\eta_j$ of $\Lambda$ maps $x\in\nabla_\cO(\lambda)$ to $\sum_j\eta_j(x)y_j\in\Delta$, since $\eta_j(x)\in\cO$. Applied to $\frac{p^{w(\lambda)}}{\dim V}\mathrm{id}$ this gives $p^{w(\lambda)}x\in\dim V\cdot\Delta\subset\Delta$.
+\end{proof}
+
+\begin{corollary}[input (L2)]\label{r2:cor:L2}
+Suppose that, in (F3), $M$ is the lattice of forms with $F(L)\in\bigotimes_v\bigotimes_s\Delta_\cO(\lambda^*_{v,s};L_v^{(s)})\otimes H'(L)$ and $M^{\mathrm{na}}$ the lattice of forms with values in $\bigotimes_v\bigotimes_s\nabla_\cO(\lambda^*_{v,s};L_v^{(s)})\otimes H'(L)$, where the lattices at $L_v^{(s)}$ are the transports of those at $\cO^k$ by any $g$ with $g\cO^k=L_v^{(s)}$. Then $M\subset M^{\mathrm{na}}$ and $p^{e}M^{\mathrm{na}}\subset M$ with $e=\sum_v\sum_{s\in\bZ/n_p}w(\lambda^*_{v,s})$. If moreover every base weight satisfies $\lambda_1-\lambda_k+k-1\le a^2$ and the positions $(v,s)$ number at most $f$, then $e\le fk^2\log_pa$, and (L2) holds with $e_p=\lceil C_efk^2\log_pa\rceil$ for any $C_e\ge1$, so that $e_p\le(C_e+1)fk^2\log_pa$ when $fk^2\log_pa\ge1$.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{r2:prop:nabladelta} transports along $g$, because both lattices are defined from $U_\bZ$ and $g$ intertwines the actions. For lattices $A_s\subset B_s$ with $p^{w_s}B_s\subset A_s$ the tensor products satisfy $\bigotimes A_s\subset\bigotimes B_s$ and $p^{\sum w_s}\bigotimes B_s\subset\bigotimes A_s$, since both are spanned by pure tensors. The conditions on forms are pointwise and equivariance is preserved by scalars, which gives the first claim. For the bound, $\binom k2\le\frac{k^2}2$ and $\lfloor\log_p(\lambda_1-\lambda_k+k-1)\rfloor\le2\log_pa$, so each $w(\lambda^*_{v,s})\le k^2\log_pa$, and there are at most $f$ terms. Since $e\le C_efk^2\log_pa\le e_p$, also $p^{e_p}M^{\mathrm{na}}\subset M$.
+\end{proof}
+
+For the base weights of Theorem~\ref{r2:LPthm} the extreme entries are $a_s\le2a$ and $-b_s\ge-2b'$ at a top, and the other entries have absolute value at most $c_G$, so $\lambda_1-\lambda_k+k-1\le4a+2c_G+k\le a^2$ once $c_G+k\le a$. The positions $(v,s)$ are the elements of $H$, so their number is $n\le f$.
+
+\subsubsection{The bound for $\Pi$ in (Z1)}\label{r2:sec:Z1}
+
+Put $\eta=W+mh_0+1$, with $W$ the number of roots of unity of $E$ and $h_0=2\lceil x^{402}\rceil$ as in Section~\ref{sec:proofA}.
+
+\begin{lemma}\label{r2:lem:W123}
+The nodes $w_{u_0,j}$ of Proposition~\ref{r6:R6:prop:nodes} satisfy (W1), (W2) and (W3) with this $\eta$, and the bottom weights $b_t$ of that proposition.
+\end{lemma}
+
+\begin{proof}
+At a top place, $w_{u_0,j}(0,0,t)=b_t+o_j(t)$ with $o_j(t)=\lfloor b'/x\rfloor+(j-\frac12)h_0$. Since $h_0\ge2$, $o_j(t)\ge b'/x-1+\frac12h_0\ge b'/x$, and $o_j(t)\le b'/x+mh_0\le b'/x+\eta$. At a thick place, $\lceil b\rceil\le b_1(\rho)<\lceil b\rceil+W$ gives $b\le w_{u_0,j}(\rho)\le b+1+W+mh_0=b+\eta$. At a thin place, $b_1(\rho)=\lceil w''\rceil$ gives $w''\le w_{u_0,j}(\rho)\le w''+1+mh_0\le w''+\eta$.
+\end{proof}
+
+\begin{proposition}\label{r2:prop:Z1}
+Suppose that $c_G\le x^{C_c}$ for a constant $C_c$. Then $\Pi\le\exp(x^{\varepsilon/4})$ for $x\ge x_0(\varepsilon,C_c)$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{r6:R6:lem:tr}, $t_r\le x^{401}$. By Proposition~\ref{ranks}, $k\le2x^{9/2+10\varepsilon}$ and $m\le2\sqrt x$, so $N_m=k+m(t_r+1)\le x^{402}$ for large $x$. By the remark after Proposition~\ref{nodes}, $W\le32n^2\le128x^{9/2}$, so $\eta\le128x^{9/2}+2\sqrt x(2x^{402}+2)+1\le x^{403}$ for large $x$. The constants $K_\bullet$ and $C_\bullet$ depend on $\varepsilon$ alone. Hence $\Pi\le\max(x^{403},x^{C_c},K)$ with $K$ depending on $\varepsilon$, which is at most $\exp(x^{\varepsilon/4})$ for large $x$.
+\end{proof}
 

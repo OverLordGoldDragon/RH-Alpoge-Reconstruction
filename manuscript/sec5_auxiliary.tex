@@ -35,10 +35,126 @@ where the inner sum runs over the primitive characters modulo $N$.
 where $\mathfrak m(X;M,b)=\big(\operatorname{li}(X)-\chi_1(b)\operatorname{li}(X^{\beta_1})\big)/\varphi(M)$ for the chosen pair, and $\mathfrak m(X;M,b)=\operatorname{li}(X)/\varphi(M)$ when no such pair exists.
 \item[(C8)] The distance of a real zero from $1$~\cite[Ch.~14]{davenport}. There is $0<c_7\le1$ such that every real zero $\beta$ of $L(s,\chi)$, for a real nonprincipal character $\chi$ modulo $M\ge3$, satisfies $\beta\le1-c_7/(M^{1/2}\log^2M)$.
 \end{enumerate}
-% TODO(external, C7): source fidelity of (C7) is pending in the external-theorem audit.
-% The derivation below from Gallagher [Invent. Math. 11 (1970), Thm 7] has not been
-% compared line by line with Gallagher's paper. See REWRITE_NOTES.md.
-Statement (C7) is the prime number theorem in arithmetic progressions in the range of Linnik, with the exceptional zero kept in the main term. It follows by partial summation from Gallagher's prime number theorem~\cite[Theorem~7]{gallagher}, which gives the sum of $\log p$ over the primes $p\le X$ in a class modulo $q$ with a relative error $O(e^{-c\log X/\log R})$, uniformly for $q\le R$ and $e^{\sqrt{\log X}}\le R\le X^{c'}$, with the exceptional zero in the main term. With $R=\max(M,e^{\sqrt{\log X}})$ this is the error of (C7), and the hypothesis $C_0\log M\log(\log M+2)\le\log X$ gives $R\le X^{c'}$ when $C_0$ is large. A real zero that lies in one of the two exceptional ranges and not in the other contributes $O(X^{\beta_1-1})$ relative to the main term, which is absorbed after $c_6$ is reduced.
+Statement (C7) is the prime number theorem in arithmetic progressions in the range of Linnik, with the exceptional zero kept in the main term. We derive it from Gallagher's theorem on primes in short intervals~\cite[Theorem~7]{gallagher}, together with the uniqueness of the exceptional zero recorded in~\cite[Section~4, display~(26)]{gallagher} and the bound (C8). In Gallagher's notation the starred sum $\sideset{}{^\ast}\sum_\chi$ runs over the primitive characters $\chi$ modulo $q$, and for $q=1$ it consists of the trivial character. We state the two inputs with Gallagher's constants renamed, so that they do not clash with the letters of this section.
+\begin{enumerate}
+\item[(G1)] Gallagher~\cite[Section~4, display~(26)]{gallagher}, \cite[Ch.~14]{davenport}. There is $c_\ast>0$ such that for every $T\ge3$ at most one $L$-function of a primitive character of modulus at most $T$ has a zero $s$ with $\operatorname{Re}s>1-c_\ast/\log T$ and $\lvert\operatorname{Im}s\rvert\le T$. If such a zero exists, it is real and simple, and no other zero of that $L$-function lies in this region. It is called the exceptional zero.
+\item[(G2)] Gallagher~\cite[Theorem~7]{gallagher}. There are $a_\ast>0$, $0<b_\ast\le1$, $d_\ast>0$ and $C_\ast$ with the following property. Let $x\ge2$, $R$ and $h$ be real numbers with $\exp(\sqrt{\log x})\le R\le x^{b_\ast}$ and $x/R\le h\le x$. For a primitive character $\chi$ modulo $q>1$ put $\Delta(\chi)=\sum_{x<p\le x+h}\chi(p)\log p$, and for the trivial character put $\Delta(\chi)=\sum_{x<p\le x+h}\log p-h$. Then
+\[
+\sum_{q\le R}\ \sideset{}{^\ast}\sum_{\chi}\ \lvert\Delta(\chi)\rvert\le C_\ast\,h\,\exp\Big(-a_\ast\frac{\log x}{\log R}\Big),
+\]
+with the following modification. If for a primitive character $\chi'$ of modulus $q'\le R$ the function $L(s,\chi')$ has an exceptional zero $1-\delta$ with $\delta\log R\le d_\ast$, then there is $\xi\in[x,x+h]$ such that the estimate holds after $\Delta(\chi')$ is replaced by $\Delta(\chi')+h\xi^{-\delta}$, and in this case its right side may be multiplied by $(\delta\log R)^2$.
+\end{enumerate}
+Gallagher's proof of (G2) takes $T=R^5$ in (G1), and the factor $(\delta\log R)^2$ comes from the Deuring--Heilbronn widening of the zero-free region together with Siegel's bound $\delta\gg_\varepsilon T^{-\varepsilon}$, so the constant $C_\ast$ is not effective. The derivation below uses the exceptional zero of (G2) for zeros with $\delta\log R\le c_\ast/10$. Such a zero lies in the region of (G1) both for $T=R$ and for $T=R^5$, so the reading of (G2) does not depend on the value of $T$ that Gallagher's statement leaves implicit.
+
+\begin{proof}[Proof of (C7)]
+Put $d_\circ=\min(d_\ast,c_\ast/10,1/16)$ and $a_\circ=\min(a_\ast,d_\circ)$. We show that (C7) holds with
+\[
+c_6=\min\Big(\frac{a_\circ}2,\frac14\Big)^2,\qquad A_0'=112\,(C_\ast+5)+12+\frac{64}{c_7},\qquad C_0=\max\Big(16,\frac4{b_\ast^2},\frac1{d_\circ^2}\Big),
+\]
+where $c_7$ is the constant of (C8).
+
+\emph{Step 1. A form of (G2) with the smaller constant $d_\circ$.} Let $x$, $R$ and $h$ be as in (G2). Suppose first that for a primitive character $\chi'$ of modulus $q'\le R$ the function $L(s,\chi')$ has a real zero $1-\delta$ with $\delta\log R\le d_\circ$. Then $\delta<c_\ast/\log R$ and $\delta<c_\ast/\log R^5$, so by (G1) this zero is the exceptional zero, $\chi'$ is the unique primitive character of modulus at most $R$ whose $L$-function has a zero $1-\delta'$ with $\delta'\log R\le d_\circ$, and $1-\delta$ is the unique such zero of $L(s,\chi')$. The character $\chi'$ is real, because otherwise $L(s,\bar\chi')$ would have the same real zero and $\bar\chi'\ne\chi'$ would contradict (G1). Since $d_\circ\le d_\ast$, (G2) gives $\xi\in[x,x+h]$ with
+\begin{equation}\label{G2a}
+\sum_{q\le R}\ \sideset{}{^\ast}\sum_{\chi}\ \lvert\Delta^\circ(\chi)\rvert\le C_\ast\,(\delta\log R)^2\,h\,\exp\Big(-a_\circ\frac{\log x}{\log R}\Big),
+\end{equation}
+where $\Delta^\circ(\chi)=\Delta(\chi)$ for $\chi\ne\chi'$ and $\Delta^\circ(\chi')=\Delta(\chi')+h\xi^{-\delta}$. Suppose next that no such $\chi'$ exists, and put $\Delta^\circ=\Delta$. If (G2) has no modified term, it gives the bound $C_\ast h\exp(-a_\ast\log x/\log R)$ for $\sum_{q\le R}\sum^\ast_\chi\lvert\Delta^\circ(\chi)\rvert$. If (G2) modifies the term of a character $\chi'$, then $\delta\log R>d_\circ$, so $\lvert\Delta(\chi')\rvert\le\lvert\Delta(\chi')+h\xi^{-\delta}\rvert+hx^{-\delta}$ and $x^{-\delta}\le\exp(-d_\circ\log x/\log R)$. In both cases
+\begin{equation}\label{G2b}
+\sum_{q\le R}\ \sideset{}{^\ast}\sum_{\chi}\ \lvert\Delta^\circ(\chi)\rvert\le(C_\ast+1)\,h\,\exp\Big(-a_\circ\frac{\log x}{\log R}\Big).
+\end{equation}
+
+\emph{Step 2. The choice of the pair.} Let $M$ be divisible by $8$. For a real nonprincipal character $\chi_1$ modulo $M$ the function $L(s,\chi_1)$ is entire and $L(1,\chi_1)\ne0$, so it has finitely many zeros in the interval $1-1/(8\log M)\le s\le1$. Hence the pairs $(\chi_1,\beta_1)$ of (C7) form a finite set. If it is nonempty, we choose a pair with the largest $\beta_1$ and put $\delta_1=1-\beta_1$. This choice is made once for the modulus $M$, before $X$ and $b$ are given. Note that $\log M\ge\log8>2$, that $\log(\log M+2)>1$, and that $\beta_1>1-1/(8\log8)>\frac12$.
+
+\emph{Step 3. The three cases.} Let $X\ge2$ satisfy $C_0\log M\log(\log M+2)\le\log X$, let $b$ be coprime to $M$, and put $R=\max(M,e^{\sqrt{\log X}})$. Then $\log X\ge C_0\log M\ge2C_0\ge32$, and
+\begin{equation}\label{C7ranges}
+\log R\le\frac{b_\ast}2\log X,\qquad M\le X^{1/16},\qquad \frac{\log X}{\log R}=\min\Big(\frac{\log X}{\log M},\sqrt{\log X}\Big)\ge\frac1{d_\circ}.
+\end{equation}
+The first inequality follows from $\log M\le\log X/C_0$ and $\sqrt{\log X}\le\frac{b_\ast}2\log X$, which holds because $\log X\ge8/b_\ast^2$. The second follows from $C_0\ge16$, and the third from $C_0\ge1/d_\circ^2$. We apply Step 1 with this $R$ and distinguish three cases.
+
+In case (A), Step 1 finds a character $\chi'$, and its modulus $q'$ divides $M$. Let $\chi_M$ be the principal character modulo $M$. The character $\chi'\chi_M$ is real and nonprincipal modulo $M$, and $L(s,\chi'\chi_M)=L(s,\chi')\prod_{p\mid M}(1-\chi'(p)p^{-s})$, where no factor vanishes for real $s>0$. Since $\delta\le d_\circ/\log R\le1/(16\log M)$, the pair $(\chi'\chi_M,1-\delta)$ is a pair of (C7). The chosen pair therefore exists and has $\beta_1\ge1-\delta$. Its character $\chi_1$ is induced by a primitive real character $\chi_1^\ast$ of conductor at most $M\le R$, the same factorization gives $L(\beta_1,\chi_1^\ast)=0$, and $(1-\beta_1)\log R\le d_\circ$. The uniqueness in Step 1 gives $\chi_1^\ast=\chi'$ and $\beta_1=1-\delta$. Hence $\chi_1=\chi'\chi_M$, $\delta_1=\delta$, and we put $\varepsilon_b=\chi'(b)\in\{1,-1\}$.
+
+In case (B), Step 1 finds no character $\chi'$ with $q'$ dividing $M$, and (C7) has no pair. We put $\varepsilon_b=0$.
+
+In case (C), Step 1 finds no character $\chi'$ with $q'$ dividing $M$, and the chosen pair exists. We put $\varepsilon_b=\chi_1(b)\in\{1,-1\}$. In this case $\delta_1\log R>d_\circ$, because otherwise the primitive character $\chi_1^\ast$ would be a character $\chi'$ of Step 1 with $q'$ dividing $M$.
+
+In all three cases put $w(t)=1-\varepsilon_bt^{-\delta_1}$ for $t\ge1$, so that $0\le w(t)\le2$.
+
+\emph{Step 4. Orthogonality on a short interval.} Let $X^{1/2}\le x\le X$ and $x/R\le h\le x$. By \eqref{C7ranges}, $\exp(\sqrt{\log x})\le R\le X^{b_\ast/2}\le x^{b_\ast}$, so Step 1 applies to $x$, $R$ and $h$. Put $\vartheta_b(y)=\sum_{p\le y,\,p\equiv b\ (M)}\log p$. Every character $\chi$ modulo $M$ is induced by a unique primitive character $\chi^\ast$ of conductor dividing $M$, the map $\chi\mapsto\chi^\ast$ is a bijection onto these primitive characters (the trivial character modulo $1$ included), and $\chi(n)=\chi^\ast(n)$ for $n$ coprime to $M$~\cite[Ch.~5]{davenport}. Since $x\ge X^{1/2}\ge M$, no prime in $(x,x+h]$ divides $M$, and the orthogonality relations give
+\[
+\varphi(M)\big(\vartheta_b(x+h)-\vartheta_b(x)\big)=\sum_{\chi\bmod M}\bar\chi(b)\sum_{x<p\le x+h}\chi(p)\log p=h+\sum_{q\mid M}\ \sideset{}{^\ast}\sum_{\chi}\ \bar\chi(b)\,\Delta(\chi).
+\]
+In case (A) we write $\Delta(\chi')=\Delta^\circ(\chi')-h\xi^{-\delta_1}$ and use $\bar\chi'(b)=\varepsilon_b$. In cases (B) and (C) every primitive character of conductor dividing $M$ has $\Delta^\circ(\chi)=\Delta(\chi)$, because a character $\chi'$ found in Step 1 has a modulus that does not divide $M$. Bounding the sum over $q\mid M$ by the sum over $q\le R$, we get from \eqref{G2a} and \eqref{G2b}
+\[
+\Big\lvert\varphi(M)\big(\vartheta_b(x+h)-\vartheta_b(x)\big)-h+\varepsilon_b'\,h\xi^{-\delta_1}\Big\rvert\le(C_\ast+1)\,h\,\Gamma(x),
+\]
+where $\varepsilon_b'=\varepsilon_b$ in case (A) and $\varepsilon_b'=0$ in cases (B) and (C), and where
+\[
+\Gamma(x)=\begin{cases}(\delta_1\log R)^2\exp(-a_\circ\log x/\log R)&\text{in case (A)},\\ \exp(-a_\circ\log x/\log R)&\text{in cases (B) and (C)}.\end{cases}
+\]
+In case (A) the numbers $\xi^{-\delta_1}$ and $h^{-1}\int_x^{x+h}t^{-\delta_1}\,dt$ both lie between $(x+h)^{-\delta_1}$ and $x^{-\delta_1}$, and $1-(1+u)^{-\delta_1}\le\delta_1u$ for $u\ge0$, so
+\[
+\Big\lvert h\xi^{-\delta_1}-\int_x^{x+h}t^{-\delta_1}\,dt\Big\rvert\le h\,x^{-\delta_1}\Big(1-\Big(1+\frac hx\Big)^{-\delta_1}\Big)\le\frac{\delta_1h^2}x .
+\]
+In case (C) we use $\int_x^{x+h}t^{-\delta_1}\,dt\le hx^{-\delta_1}\le h\exp(-d_\circ\log x/\log R)\le h\,\Gamma(x)$. In all three cases
+\begin{equation}\label{C7block}
+\Big\lvert\varphi(M)\big(\vartheta_b(x+h)-\vartheta_b(x)\big)-\int_x^{x+h}w(t)\,dt\Big\rvert\le(C_\ast+2)\,h\,\Gamma(x)+\eta\,\frac{h^2}x,
+\end{equation}
+with $\eta=\delta_1$ in case (A) and $\eta=0$ in cases (B) and (C).
+
+\emph{Step 5. A tiling of $(X^{1/2},X\,]$.} Put $X_0=X^{1/2}$, $L=\log(X/X_0)=\frac12\log X$, $\ell=\log(1+1/R)$ and $J=\lfloor L/\ell\rfloor$. Since $L\ge16>2\ell$, we have $J\ge L/\ell-1\ge L/(2\ell)$, so $r=e^{L/J}$ satisfies $1+1/R\le r\le(1+1/R)^2\le1+3/R$. Put $x_j=X_0r^j$ for $0\le j\le J$, so that $x_J=X$, and $h_j=x_{j+1}-x_j=(r-1)x_j$. Then $x_j/R\le h_j\le3x_j/R\le x_j$, and \eqref{C7block} applies to $x=x_j$ and $h=h_j$. Put
+\[
+D(y)=\varphi(M)\big(\vartheta_b(y)-\vartheta_b(X_0)\big)-\int_{X_0}^yw(t)\,dt .
+\]
+The function $\Gamma$ is decreasing, $\sum_jh_j\le X$ and $h_j/x_j\le3/R$, so summing \eqref{C7block} gives
+\begin{equation}\label{C7E}
+\lvert D(x_k)\rvert\le\mathcal E,\qquad \mathcal E=(C_\ast+2)\,X\,\Gamma(X^{1/2})+\frac{3\eta X}R,\qquad 0\le k\le J .
+\end{equation}
+
+\emph{Step 6. Partial summation.} Let $x_j\le t\le x_{j+1}$ and $W_j=\int_{x_j}^{x_{j+1}}w(u)\,du$. Both $\varphi(M)(\vartheta_b(t)-\vartheta_b(x_j))$ and $\int_{x_j}^tw(u)\,du$ are nondecreasing in $t$ and vanish at $t=x_j$. Hence $-W_j\le D(t)-D(x_j)\le D(x_{j+1})-D(x_j)+W_j$, and \eqref{C7E} gives $\lvert D(t)\rvert\le3\mathcal E+W_j$. Stieltjes integration by parts and $D(X_0)=0$ give
+\[
+\varphi(M)\big(\pi(X;M,b)-\pi(X_0;M,b)\big)=\int_{X_0}^X\frac{w(t)}{\log t}\,dt+\frac{D(X)}{\log X}+\int_{X_0}^X\frac{D(t)}{t\log^2t}\,dt .
+\]
+Since $\int_{X_0}^Xdt/(t\log^2t)\le2/\log X$, $\int_{x_j}^{x_{j+1}}dt/(t\log^2t)\le\log r/\log^2x_j\le12/(R\log^2X)$ and $\sum_jW_j\le\log X\int_{X_0}^Xw(t)\,dt/\log t$, the last two terms are at most
+\begin{equation}\label{C7ps}
+\frac{7\,\mathcal E}{\log X}+\frac{12}R\int_{X_0}^X\frac{w(t)}{\log t}\,dt .
+\end{equation}
+
+\emph{Step 7. The main term.} In cases (A) and (C) the substitution $u=t^{\beta_1}$ gives $\operatorname{li}(X^{\beta_1})=\int_{2^{1/\beta_1}}^Xt^{-\delta_1}\,dt/\log t$. Hence
+\[
+\varphi(M)\,\mathfrak m(X;M,b)=\int_2^X\frac{w(t)}{\log t}\,dt+\varepsilon_b\,k_1,\qquad k_1=\int_2^{2^{1/\beta_1}}\frac{t^{-\delta_1}}{\log t}\,dt ,
+\]
+with $0\le k_1\le2/\log2<3$ because $2^{1/\beta_1}\le4$, and the same identity holds in case (B) with $k_1=0$. With $\pi(X_0;M,b)\le X^{1/2}$, $\int_2^{X_0}w(t)\,dt/\log t\le3X^{1/2}$, $\int_{X_0}^Xw(t)\,dt/\log t\le\varphi(M)\mathfrak m(X;M,b)+3$, $\varphi(M)\ge4$ and \eqref{C7ps}, we obtain
+\begin{equation}\label{C7abs}
+\lvert\pi(X;M,b)-\mathfrak m(X;M,b)\rvert\le\frac{7\,\mathcal E}{\varphi(M)\log X}+\frac{12}R\,\mathfrak m(X;M,b)+2X^{1/2}.
+\end{equation}
+
+\emph{Step 8. A lower bound for the main term.} Put $\mu=\min(1,\delta_1\log X)$ in case (A) with $\varepsilon_b=1$, and $\mu=1$ otherwise. If $\varepsilon_b\in\{0,-1\}$, then $\varphi(M)\mathfrak m(X;M,b)\ge\operatorname{li}(X)\ge X/(2\log X)$. If $\varepsilon_b=1$, then $2^{1/\beta_1}\le X^{1/2}$ and $1-e^{-u}\ge\frac12\min(1,u)$ for $u\ge0$ give
+\[
+\varphi(M)\,\mathfrak m(X;M,b)\ge\int_{X^{1/2}}^X\frac{1-t^{-\delta_1}}{\log t}\,dt\ge\big(1-X^{-\delta_1/2}\big)\frac{X-X^{1/2}}{\log X}\ge\frac{\min(1,\delta_1\log X)\,X}{8\log X}.
+\]
+In case (C) the third inequality of \eqref{C7ranges} gives $\delta_1\log X>d_\circ\log X/\log R\ge1$. In every case
+\begin{equation}\label{C7low}
+\varphi(M)\,\mathfrak m(X;M,b)\ge\frac{\mu\,X}{8\log X}.
+\end{equation}
+In case (A) with $\varepsilon_b=1$, (C8) applied to $\chi_1$ gives $\delta_1\ge c_7/(M^{1/2}\log^2M)$. With $\log^2M\le3M^{1/2}$ and $c_7\le1$ this gives $1/\mu\le1+1/(\delta_1\log X)\le4M/c_7$, and the same bound holds when $\mu=1$.
+
+\emph{Step 9. The relative error.} We divide \eqref{C7abs} by $\mathfrak m(X;M,b)$ and use \eqref{C7low}. In case (A), $(\delta_1\log R)^2\le1$ and $(\delta_1\log R)^2/(\delta_1\log X)\le1$ give $\Gamma(X^{1/2})/\mu\le\exp(-a_\circ\log X/(2\log R))$, and $\delta_1\le1$ gives $\eta/\mu\le1$. The same two bounds hold in cases (B) and (C). Therefore
+\[
+\frac{7\,\mathcal E}{\varphi(M)\log X\,\mathfrak m(X;M,b)}\le\frac{56\,\mathcal E}{\mu X}\le56\,(C_\ast+5)\Big(\exp\Big(-\frac{a_\circ\log X}{2\log R}\Big)+\frac1R\Big).
+\]
+By the bound for $1/\mu$, $\varphi(M)\le M\le X^{1/16}$ and $\log X\le X^{1/8}$,
+\[
+\frac{2X^{1/2}}{\mathfrak m(X;M,b)}\le\frac{16\,\varphi(M)\log X}{\mu\,X^{1/2}}\le\frac{64}{c_7}\,M^2X^{-1/2}\log X\le\frac{64}{c_7}\,X^{-1/4}.
+\]
+By the identity in \eqref{C7ranges}, $\exp(-a_\circ\log X/(2\log R))\le e^{-(a_\circ/2)\log X/\log M}+e^{-(a_\circ/2)\sqrt{\log X}}$. Moreover $1/R\le e^{-\sqrt{\log X}}$ and $X^{-1/4}\le e^{-\sqrt{\log X}/4}$. Since $c_6\le a_\circ/2$, $\sqrt{c_6}\le a_\circ/2$ and $\sqrt{c_6}\le\frac14$, each of the three quantities $\exp(-a_\circ\log X/(2\log R))$, $1/R$ and $X^{-1/4}$ is at most $e^{-c_6\log X/\log M}+e^{-\sqrt{c_6\log X}}$. Adding the bounds gives
+\[
+\big\lvert\pi(X;M,b)-\mathfrak m(X;M,b)\big\rvert\le\Big(112\,(C_\ast+5)+12+\frac{64}{c_7}\Big)\Big(e^{-c_6\log X/\log M}+e^{-\sqrt{c_6\log X}}\Big)\,\mathfrak m(X;M,b),
+\]
+which is (C7) with the pair chosen in Step 2.
+\end{proof}
+
+The constants $c_6$, $A_0'$ and $C_0$ are absolute, and $A_0'$ is not effective because Gallagher's factor $(\delta\log R)^2$ rests on Siegel's theorem. The argument uses the factor $(\delta\log R)^2$ of (G2) in an essential way. Without it the first bound of Step 9 would contain $\exp(-a_\circ\log X/(2\log R))/\mu$, and with $\delta_1$ as small as (C8) allows, this quantity is small when $\log X\ge C\log^2M$ for a large constant $C$, a range that the hypothesis $C_0\log M\log(\log M+2)\le\log X$ of (C7) does not give. The short tiles of Step 5 are used for a similar reason, because (G2) does not specify the point $\xi$. On a dyadic interval with $\delta_1\log x$ of size $1$, the uncertainty in $h\xi^{-\delta_1}$ has relative size $1/\log x$ compared with the main term of that interval, and this exceeds the error allowed in (C7).
+
+
 
 \begin{lemma}\label{boxpsi}
 Let $\chi$ be a primitive character modulo $N\ge3$ and let $Q\ge2$. Suppose that $L(s,\chi)\ne0$ for every $s$ with $\operatorname{Re}s>1-\frac1{400}$ and $\lvert\operatorname{Im}s\rvert\le Q$. Then for every $u\ge2$ and every $T$ with $2\le T\le\min(u,Q)$
@@ -613,10 +729,7 @@ For the primes $g_0$ and $g_1$ we use a prime number theorem for a ray class of 
 \begin{enumerate}
 \item[(C9)] There are constants $c,c'>0$ and $A_1\ge1$ such that for every prime $d\equiv3\pmod4$, every integer $M\ge1$ and every $X\ge2$ with $\log(4dM^2)\le c\sqrt{\log X}$, and for every $e^{-c\sqrt{\log X}}\le h\le1$, the number of primes $g$ with $X<g\le X(1+h)$ of the form $g=\pi\bar\pi$ with $\pi\in\mathbb Z[\frac{1+\sqrt{-d}}2]$ and $\pi\equiv1\pmod M$ is at least $c'hX/((4dM^2)^{A_1}\log X)$.
 \end{enumerate}
-% TODO(external, C9): source fidelity pending. (C9) is a prime number theorem for a ray class
-% of an imaginary quadratic field in the Landau--Page range with the exceptional zero in the main
-% term. A citation with the exact uniformity has not been verified. See REWRITE_NOTES.md.
-Statement (C9) is the prime ideal theorem for the ray class group of $\mathbb Q(\sqrt{-d})$ modulo $M$, in the range of Landau and Page~\cite{page} in which the logarithm of the conductor is at most a multiple of $\sqrt{\log X}$, with the possible exceptional zero absorbed into the lower bound. We apply it with $h=1$ and with the logarithm of the conductor at most $10(\log X)^{2/5}$. With $X=(kb)^8$ it gives at least $X^{9/10}$ primes $g$ of the required form between $X$ and $2X$, and the next lemma chooses $g_0$ and $g_1$ among them.
+Statement (C9) follows from Theorem~1.4 of Thorner and Zaman~\cite{thornerzaman19}, applied to the ray class field $L$ of $K=\mathbb Q(\sqrt{-d})$ modulo $M\mathcal O_K$ with $F=\mathbb Q$, $H=\mathrm{Gal}(L/K)$ and $C=\{1\}$, for which $D_K\mathcal Q n_K^{n_K}\le4dM^2$. A prime that splits completely in $L$ has the form $\pi\bar\pi$ with $\pi\equiv1\pmod M$. The possible exceptional zero is a zero of $\zeta_{K'}$ for a quadratic extension $K'/K$ with discriminant at most $d^2M^2$, so Stark's bound~\cite[Theorem~1$'$]{stark74}, in the form~(1-4) of~\cite{thornerzaman19}, gives $1-\beta_1\gg(4dM^2)^{-1}$. With the ray class number at most a constant times $dM^2$ this gives (C9) with $A_1=2$, for every prime $d\equiv3\pmod4$ and every $M\ge1$. With $X=(kb)^8$ the estimate gives at least $X^{9/10}$ such primes between $X$ and $2X$.
 
 \begin{lemma}\label{disjoint}
 For integers $g\ge2$ and $N\ge1$ let $B_N(g)$ be the set that consists of $g$ and of the primes $l$ for which there is an integer $1\le c\le N$ with $l^{4v}>g^{c}$, where $l^{v}$ is the exact power of $l$ that divides $g^{c}-1$. Let $Y\ge2$ be a real number, let $N\ge1$ be an integer, let $\mathcal P$ be a finite set of primes $g$ with $Y\le g\le2Y$, and suppose that

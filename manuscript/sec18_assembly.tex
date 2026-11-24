@@ -24,7 +24,7 @@ Let $J\ge2$, and let $x$, $Y$ and $Y_0$ be real numbers with $3\le Y_0\le Y\le x
 \begin{enumerate}
 \item[(D1$'$)] Primes $q$ and $d$ that satisfy the conclusions of Theorems~\ref{stage1} and~\ref{stage2} with $N_0$, $K=J$, $\varepsilon$, $\tau=\varepsilon$, with $Y_0$ in place of $Y$, and with $z'=z\log^2Y_0$, where $z=Y_0^{\varepsilon/5}$. An integer $e\ge0$ with $x^{2+8\varepsilon}\le c\,2^e\le2x^{2+8\varepsilon}$, where $c$ is the integer of Proposition~\ref{field}(iii). The field $E$, the groups $H$ and $A_0$ and the integer $n=\lvert H\rvert$ of Proposition~\ref{field} for $\psi_0$, $e$, $q$ and $d$, with the identification of $\mathrm{Gal}(E/\mathbb Q)$ with $\mathcal G$ of Section~\ref{sec:field}.
 \item[(D2)--(D5)] The objects (D2) to (D5) of Definition~\ref{def:admissible}.
-\item[(D6)] With $t_0=\lfloor x^{401}\rfloor$, every group $\Sha_l(E,i)$ with $l$ prime and $1\le i<t_0$ has finite length, and $V(E,t_0)\le\exp(\frac12x^{\varepsilon})$.
+\item[(D6)] With $t_0=\lfloor x^{400}\rfloor$, every group $\Sha_l(E,i)$ with $l$ prime and $1\le i<t_0$ has finite length, and $V(E,t_0)\le\exp(\frac12x^{\varepsilon})$.
 \end{enumerate}
 \end{definition}
 
@@ -33,37 +33,51 @@ Condition (D6) asks that $V(E,t_0)\le\sqrt b$ with $b=e^{L_\varepsilon}$ as in \
 The integer $t_r$ of Proposition~\ref{ranks} is the number of copies of the auxiliary space added at each step of the chain, and the twists $i<t_r$ are the twists at which the twisted places are examined. The next lemma shows that (D6) covers all of them.
 
 \begin{lemma}\label{r6:R6:lem:tr}
-Let $0<\varepsilon<\frac1{52}$. There is $x_0$ such that for every $x\ge x_0$ and all integers $n,m,k,t_r$ with $x^{2+8\varepsilon}\le n\le2x^{2+8\varepsilon}$ that satisfy the conclusions of Proposition~\ref{ranks}(i), we have $t_r\le x^{401}-1$.
+Let $0<\varepsilon<\frac1{52}$. There is $x_0$ such that for every $x\ge x_0$ and all integers $n,m,k,t_r$ with $x^{2+8\varepsilon}\le n\le2x^{2+8\varepsilon}$ that satisfy the conclusions of Proposition~\ref{ranks}(i), we have $t_r\le x^{400}-1$.
 \end{lemma}
 
 \begin{proof}
-Put $r=k+m-1$ and $f=2n$, so that $r\le2k\le4x^{9/2+10\varepsilon}$, $f\le4x^{2+8\varepsilon}$, $k-1\le2x^{9/2+10\varepsilon}$ and $m\ge1$. The definition of $n_W$ in Section~\ref{sec:data} gives
+Put $r=k+m-1$ and $f=2n$. Proposition~\ref{ranks}(i) gives $m\ge\sqrt{x\delta_1}=x^{1/2-\varepsilon/16}$, $r\le2k\le4x^{9/2+10\varepsilon}$, $k-1\le2x^{9/2+10\varepsilon}$ and $f\le4x^{2+8\varepsilon}$. Then
 \[
-n_W\le8+10\,r\Big(f+\frac{f^2(k-1)^3L_\varepsilon^2}m\Big)\le8+20\,r\,f^2(k-1)^3x^{2\varepsilon}\le8+10240\,x^{22+58\varepsilon},
+\frac{f^2(k-1)^3L_\varepsilon^2}m\le16\cdot8\,x^{4+16\varepsilon+27/2+30\varepsilon+2\varepsilon-1/2+\varepsilon/16}=128\,x^{17+\frac{769}{16}\varepsilon},
 \]
-and $58\varepsilon<\frac{58}{52}<\frac{23}{20}$. With $T_O=\lceil x^{377}\rceil\le2x^{377}$, the relation $r+t_r=8fr+4+T_On_W$ gives
+and $f\le4x^{17}$, so the definition of $n_W$ gives
 \[
-t_r\le8fr+4+2x^{377}\big(8+10240\,x^{22+23/20}\big)\le x^{401}-1
+n_W\le8+10\,r\Big(f+\frac{f^2(k-1)^3L_\varepsilon^2}m\Big)\le8+5280\,x^{\frac{43}2+\frac{929}{16}\varepsilon}\le8+5280\,x^{22.625},
 \]
-for $x\ge x_0$, because $377+22+\frac{23}{20}<401$.
+because $\frac{929}{16}\varepsilon<\frac{929}{832}<\frac98$. With $T_O\le2x^{377}$ and $8fr\le128x^7$, the relation $r+t_r=8fr+4+T_On_W$ gives $t_r\le128x^7+4+2x^{377}(8+5280x^{22.625})\le x^{400}-1$ for $x\ge x_0$, because $377+22.625<400$.
 \end{proof}
 
-The Selmer bound concerns the Galois representations attached to automorphic forms on unitary groups over the host field. We use it in the following form.
-
-\begin{hypothesis}[Selmer bound on windows, in the form of (D6)]\label{r6:R6:thm:selmer}
-Let $\psi_0$ be a primitive Dirichlet character and let $0<\varepsilon<\frac1{52}$. Let $x_e\ge1$, and let $e(x)$ be a function on $[x_e,\infty)$ with values in the nonnegative integers such that $x^{2+8\varepsilon}\le c\,2^{e(x)}\le2x^{2+8\varepsilon}$ for every $x\ge x_e$, where $c$ is the integer of Proposition~\ref{field}(iii) for $e=e(x)$. There are $J_1\ge1$ and $X_0\ge x_e^{J_1}$ with the following property. Let $X\ge X_0$, put $Y_0=X^{1/J_1}$ and $z=Y_0^{\varepsilon/5}$, and let $q$ and $d$ be primes with $q\equiv3\pmod8$, $e^{z/2}<q\le e^z$, $d\equiv7\pmod{16}$, $e^{z\log^2Y_0/2}<d\le e^{z\log^2Y_0}$, such that $q$ and every odd prime $p\le z$ divide $d+1$. Then there is $Y$ with $Y_0\le Y$ and $Y^2\le X$ such that for every $x$ with $Y\le x\le Y^2$ the field $E$ of Proposition~\ref{field} for $\psi_0$, $e(x)$, $q$ and $d$ satisfies condition (D6) at the scale $x$.
-\end{hypothesis}
-
-Hypothesis~\ref{r6:R6:thm:selmer} is Hypothesis~\ref{w4:thm:vwin} with the normalization of the exponent $e(x)$ of (D1$'$), and with the conditions on $q$ and $d$ written out. Subsection~\ref{tw:sec:vwin} reduces it to two statements and states the normalization question. \notgiven{Hypothesis~\ref{r6:R6:thm:selmer} is not proved here.}
-
-\begin{proposition}\label{r6:R6:prop:dataexist}
-For every primitive Dirichlet character $\psi_0$ and every $0<\varepsilon<\frac1{52}$ there is $J\ge2$ with the following property. For every $y$ there are real numbers $Y_0\le Y$ with $Y\ge y$ such that, for every $x$ with $Y\le x\le Y^{3/2}$, admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$ exist.
+\begin{proposition}[the Selmer window]\label{r6:R6:thm:selmer}
+Assume Hypothesis~\ref{w4:thm:vwin}. Let $\psi_0$ be a primitive Dirichlet character, $0<\varepsilon<\frac1{52}$ and $\alpha=2+8\varepsilon$. Let $x_e\ge1$, let $c_\ast\ge1$ be an integer, and let $e(x)$ be a function on $[x_e,\infty)$ with values in the nonnegative integers such that, for every $x\ge x_e$, the integer $c$ of Proposition~\ref{field}(iii) for $e=e(x)$ equals $c_\ast$ and $x^\alpha\le c_\ast2^{e(x)}\le2x^\alpha$. There are $J_1\ge1$ and $X_0\ge x_e^{J_1}$ with the following property. Let $X\ge X_0$, put $Y_0=X^{1/J_1}$ and $z=Y_0^{\varepsilon/5}$, and let $q$ and $d$ be primes with $q\equiv3\pmod8$, $e^{z/2}<q\le e^z$, $d\equiv7\pmod{16}$, $e^{z\log^2Y_0/2}<d\le e^{z\log^2Y_0}$, such that $q$ and every odd prime $p\le z$ divide $d+1$. Then there is $Y$ with $Y_0\le Y$ and $Y^2\le Y_0^{J_1+1}$ such that for every $x$ with $Y\le x\le Y^{3/2}$ the field $E$ of Proposition~\ref{field} for $\psi_0$, $e(x)$, $q$ and $d$ satisfies (D6) at the scale $x$.
 \end{proposition}
 
 \begin{proof}
-The integer $c$ of Proposition~\ref{field}(iii) divides $o$ and does not depend on $e$ once $2^{e+2}$ is divisible by the power of $2$ in $M_\psi$, as in the proof of Proposition~\ref{dataexist}. The interval from $x^{2+8\varepsilon}$ to $2x^{2+8\varepsilon}$ has ratio $2$, so for $x$ larger than a number $x_e$ it contains a number $c\,2^e$ with this constant $c$, and we fix a function $e(x)$ on $[x_e,\infty)$ as in Hypothesis~\ref{r6:R6:thm:selmer}. Let $J_1$ and $X_0$ be the numbers of Hypothesis~\ref{r6:R6:thm:selmer} for this function, and put $J=\max(J_1,2)$. Let $y$ be given, and let $X\ge X_0$ be so large that $Y_0=X^{1/J_1}$ satisfies $Y_0\ge\max(y,3)$, that $Y_0$ is larger than the numbers $Y_0$ of Theorems~\ref{stage1} and~\ref{stage2} for $N_0$, $K=J$, $\varepsilon$ and $\tau=\varepsilon$, and that every $x\ge Y_0$ is larger than the number $Y_0$ of Proposition~\ref{dataexist}. Put $z=Y_0^{\varepsilon/5}$. Theorem~\ref{stage1} at the scale $Y_0$ gives a prime $q\equiv3\pmod8$ with $e^{z/2}<q\le e^z$ that satisfies its conclusions, because its exceptional set has at most $Y_0^{-\varepsilon}\lvert P\rvert<\lvert P\rvert$ elements. Theorem~\ref{stage2} at the scale $Y_0$, with this $q$ and with $z'=z\log^2Y_0$, gives in the same way a prime $d$ with $e^{z'/2}<d\le e^{z'}$, $d\equiv7\pmod{16}$ and $d\equiv-1$ modulo $q$ and modulo every odd prime $p\le z$, that satisfies its conclusions. These primes satisfy the hypotheses of Hypothesis~\ref{r6:R6:thm:selmer}, which gives $Y$ with $Y_0\le Y$ and $Y^2\le X$. Then $Y\ge y$ and $Y^2\le X=Y_0^{J_1}\le Y_0^J$.
+Put $\theta=c_\ast^{1/\alpha}\ge1$, so that $\theta^\alpha=c_\ast$. Define $e'$ on $[1,\infty)$ by $e'(y)=e(\theta y)$ when $\theta y\ge x_e$ and $e'(y)=\lceil\alpha\log_2y\rceil$ otherwise. In the second case $y^\alpha\le2^{e'(y)}<2y^\alpha$. In the first case
+\[
+y^\alpha=\frac{(\theta y)^\alpha}{c_\ast}\le2^{e(\theta y)}\le\frac{2(\theta y)^\alpha}{c_\ast}=2y^\alpha .
+\]
+So $e'$ satisfies the normalization of Hypothesis~\ref{w4:thm:vwin}, which gives numbers $J\ge1$ and $X'_0$ for $e'$. Put $J_1=J$ and let $X_0\ge\max(X'_0,x_e^{J})$ be so large that $X^{1/J}\ge\theta^{400}$ for $X\ge X_0$.
 
-Let $Y\le x\le Y^{3/2}$. The primes $q,d$ and $e=e(x)$ give (D1$'$) through Proposition~\ref{field}. Since $Y\le x\le Y^{3/2}\le Y^2$, Hypothesis~\ref{r6:R6:thm:selmer} gives (D6). The objects (D2) to (D5) depend on $x$, $n$, $E$ and the conductor of $E$, and the proof of Proposition~\ref{dataexist} constructs them for $x\ge Y_0$ from Propositions~\ref{ranks}, \ref{tops} and~\ref{behrend}, statement (C9), Lemma~\ref{disjoint}, Linnik's theorem and Lemma~\ref{three}.
+Let $X\ge X_0$ and let $q,d$ be as in the statement. These are exactly the conditions of Definition~\ref{w4:def:winpair} for a window pair at scale $Y_0=X^{1/J}$. Hypothesis~\ref{w4:thm:vwin} gives $W_0$ with $Y_0\le W_0\le X^{1/2}$ such that for every $y\in[W_0,W_0^2]$, with $t=\lfloor y^{401}\rfloor$ and $E'=E(\psi_0,e'(y),q,d)$, every $\Sha_l(E',i)$ with $0<i<t$ is finite and $\sum_l\sum_{1\le i<t}\lambda(\Sha_l(E',i))\le\exp(\frac12y^\varepsilon)$.
+
+Put $Y=\theta W_0$. Then $Y\ge W_0\ge Y_0$, and $Y^2=\theta^2W_0^2\le\theta^2X\le X^{1+1/J}=Y_0^{J+1}$ because $X^{1/J}\ge\theta^2$. Let $Y\le x\le Y^{3/2}$ and put $y=x/\theta$. Then $y\ge W_0$, and $y\le\theta^{1/2}W_0^{3/2}\le W_0^2$ because $W_0\ge Y_0\ge\theta$. Since $\theta y=x\ge Y_0\ge x_e$, we have $e'(y)=e(x)$.
+
+The field $E(\psi_0,e(x),q,d)$ of Definition~\ref{w4:def:chifield} is the field $E$ of Proposition~\ref{field} for $\psi_0$, $e(x)$, $q$ and $d$. Indeed $q$ and $d$ are odd primes larger than the conductor $M_\psi$ of $\psi_0$, so $\operatorname{lcm}(2^{e+2},M_\psi,q,d)=\operatorname{lcm}(2^{e+2},M_\psi)\,qd$, and a class $a$ satisfies $(\frac aq)=(\frac ad)=1$ exactly when it is a square modulo $q$ and modulo $d$, so the two fixing groups coincide. By Lemma~\ref{w4:lem:indepS} with $S$ the set of places above $l$, the group $\Sha_l(E,i)$ of Definition~\ref{w4:def:sha} is the group $\Sha_l(E,i)$ of Subsection~\ref{r6:R6:sec:adm}, for every $i\ge1$, and $\lambda(\Sha_l(E,i))=\log l\cdot\operatorname{length}_{\mathbb Z_l}\Sha_l(E,i)$. Since $x^{400}=\theta^{400}y^{400}\le y^{401}$, the integer $t_0=\lfloor x^{400}\rfloor$ is at most $\lfloor y^{401}\rfloor$. Hence every $\Sha_l(E,i)$ with $1\le i<t_0$ is finite, and
+\[
+V(E,t_0)\le\sum_l\sum_{1\le i<\lfloor y^{401}\rfloor}\lambda\big(\Sha_l(E,i)\big)\le\exp\big(\tfrac12y^\varepsilon\big)\le\exp\big(\tfrac12x^\varepsilon\big),
+\]
+because the terms are nonnegative and $y\le x$. This is (D6) at the scale $x$.
+\end{proof}
+
+\begin{proposition}\label{r6:R6:prop:dataexist}
+Assume Hypothesis~\ref{w4:thm:vwin}. For every primitive Dirichlet character $\psi_0$ and every $0<\varepsilon<\frac1{52}$ there is $J\ge2$ with the following property. For every $y$ there are real numbers $Y_0\le Y$ with $Y\ge y$ such that, for every $x$ with $Y\le x\le Y^{3/2}$, admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$ exist.
+\end{proposition}
+
+\begin{proof}
+The integer $c$ of Proposition~\ref{field}(iii) divides $o$ and does not depend on $e$ once $2^{e+2}$ is divisible by the power of $2$ in $M_\psi$, as in the proof of Proposition~\ref{dataexist}. The interval from $x^{2+8\varepsilon}$ to $2x^{2+8\varepsilon}$ has ratio $2$, so for $x$ larger than a number $x_e$ it contains a number $c\,2^e$ with this constant $c$, and we fix a function $e(x)$ on $[x_e,\infty)$ as in Proposition~\ref{r6:R6:thm:selmer}. Let $J_1$ and $X_0$ be the numbers of Proposition~\ref{r6:R6:thm:selmer} for this function, and put $J=J_1+1$. Let $y$ be given, and let $X\ge X_0$ be so large that $Y_0=X^{1/J_1}$ satisfies $Y_0\ge\max(y,3)$, that $Y_0$ is larger than the numbers $Y_0$ of Theorems~\ref{stage1} and~\ref{stage2} for $N_0$, $K=J$, $\varepsilon$ and $\tau=\varepsilon$, and that every $x\ge Y_0$ is larger than the number $Y_0$ of Proposition~\ref{dataexist}. Put $z=Y_0^{\varepsilon/5}$. Theorem~\ref{stage1} at the scale $Y_0$ gives a prime $q\equiv3\pmod8$ with $e^{z/2}<q\le e^z$ that satisfies its conclusions, because its exceptional set has at most $Y_0^{-\varepsilon}\lvert P\rvert<\lvert P\rvert$ elements. Theorem~\ref{stage2} at the scale $Y_0$, with this $q$ and with $z'=z\log^2Y_0$, gives in the same way a prime $d$ with $e^{z'/2}<d\le e^{z'}$, $d\equiv7\pmod{16}$ and $d\equiv-1$ modulo $q$ and modulo every odd prime $p\le z$, that satisfies its conclusions. These primes satisfy the hypotheses of Proposition~\ref{r6:R6:thm:selmer}, which gives $Y$ with $Y_0\le Y$ and $Y^2\le Y_0^{J_1+1}=Y_0^J$. Thus $Y\ge y$.
+
+Let $Y\le x\le Y^{3/2}$. The primes $q,d$ and $e=e(x)$ give (D1$'$) through Proposition~\ref{field}. Since $Y\le x\le Y^{3/2}\le Y^2$, Proposition~\ref{r6:R6:thm:selmer} gives (D6). The objects (D2) to (D5) depend on $x$, $n$, $E$ and the conductor of $E$, and the proof of Proposition~\ref{dataexist} constructs them for $x\ge Y_0$ from Propositions~\ref{ranks}, \ref{tops} and~\ref{behrend}, statement (C9), Lemma~\ref{disjoint}, Linnik's theorem and Lemma~\ref{three}.
 \end{proof}
 
 The proof of Theorem~\ref{mainthm} uses the admissible data through the properties of $q$ and $d$ and through (D2) to (D5). With (D1$'$) in place of (D1), the same proof applies after three changes. First, the bound $\lvert\ell_\psi\rvert\le401\,c_0K\log Y_0$ of Theorems~\ref{stage1}(ii) and~\ref{stage2}(ii) holds with $K=J$, and $Y_0\le x$ gives $\lvert\ell_\psi\rvert\le401\,c_0J\log x$. Second, $\log q\le Y_0^{\varepsilon/5}$ and $\log d\le Y_0^{\varepsilon/5}\log^2Y_0$, so $\log N_\psi\le\lambda=A\,x^{\varepsilon/5}\log^2x$ with a constant $A$ that depends on $\psi_0$ and $J$, and the argument with Proposition~\ref{thinprop} and Corollary~\ref{realbox} is unchanged. Third, Theorems~\ref{stage1}(iii) and~\ref{stage2}(iii) give $\lvert G^\ast_\chi(x)\rvert\le x^{1/2+\varepsilon}$ for $Y_0\le x\le Y_0^J$, an interval that contains the window $[Y,Y^{3/2}]$. The conclusion \eqref{finalbound} then holds on windows $[Y,Y^{3/2}]$ for arbitrarily large $Y$, which is the hypothesis of Corollary~\ref{corA}.
@@ -193,6 +207,67 @@ In the application, $\mathcal W$ is a set of words that index the auxiliary prim
 \begin{hypothesis}[chain records]\label{r6:R6:thm:records}
 There are absolute constants $e_D,e_L\ge0$ with the following property. For every primitive Dirichlet character $\psi_0$ there is $0<\varepsilon_1\le\frac1{52}$, and for every $0<\varepsilon<\varepsilon_1$ and every $J\ge2$ there are $C_\ast\ge1$, $C_H\ge0$ and $x_1$ such that the following holds. Let $x\ge x_1$, and let $Y_0\le Y$ be such that admissible data at the scale $x$ for the window $[Y,Y^{3/2}]$ with base $Y_0$ exist, for this $J$. Then there are admissible data at the scale $x$ for this window with this base, and weights for them, such that for every $u_0\in A_0$ and every choice of the nodes $w_{u_0,j}$ of Proposition~\ref{r6:R6:prop:nodes} there is a chain record with constants $C_\ast$, $C_H$ and exponents $e_D$, $e_L$. One can take $e_D=2$ and $e_L=0$.
 \end{hypothesis}
+
+Fix admissible data at the scale $x$, weights, $u_0\in A_0$ and the nodes $w_{u_0,j}$. Let $\mathcal W$, $T_u$, $N_u$, $M_u$, $h_u$, $R$, $E_{u,j}$, $\mathcal L$, $\Gamma$ and $\mathcal I$ be the objects of the construction, as described after Definition~\ref{r6:R6:def:record}, with $\mathcal I=\mathrm{IO}$ the index loss of Section~\ref{r2:sec:loss}.
+
+\begin{proposition}\label{a8:prop:record}
+Let $C_H\ge0$. Suppose that $x$ is so large that Lemma~\ref{r6:R6:lem:sizes} applies, and that the following hold for every $u\in\mathcal W$.
+\begin{enumerate}
+\item[(i)] The conclusions of Theorems~\ref{r2:A1} and~\ref{r2:A2}, with the constant $C_T$ of (L7), and $\mathrm{IO}\ge0$.
+\item[(ii)] The hypotheses (a), (b), (d), (e) and (f) of Theorem~\ref{r3:A3}, with $\sigma=x^{-C_H}$, with numbers $\eta_0,\eta_1,e_0,\delta'$ that satisfy the conclusions of Lemma~\ref{r3:sizecond}, and with $\delta\le\frac12$.
+\item[(iii)] $\mu_{\min}(R^\vee)=-\mu_{\max}(R)$ and $s+\mu_{\max}(R)\le x^{C_H}b$.
+\item[(iv)] The conclusion of Theorem~\ref{r4:R4:A4} with a constant $C_0\ge1$.
+\item[(v)] The conclusion of Theorem~\ref{r5:thm:Ebound} with the constant $C_E$, for every $1\le j\le m$.
+\item[(vi)] $h_u$ is the number of Definition~\ref{r4:R4:hu}, and the numbers $e^{\max}_P$, $s_j$, $h_{j\rho}$, $e^{\max}_{\lambda,j}$ and $\langle\log\kappa\rangle$ in that definition do not depend on $u$.
+\item[(vii)] The conclusion of Theorem~\ref{r4:R4:A6} with the constant $C_6$, and $\log T_u\le C_1mL_\varepsilon$ and $\lvert\log T_u-\log T_{u'}\rvert\le C_2\log k$ for $u'\in\mathcal W$.
+\item[(viii)] The conclusion of Theorem~\ref{r4:R4:A7} with the constant $C_7$, and $\mu_{\max}(M_u)\le C_3N_Ta\Lambda_a$.
+\item[(ix)] $1\le\lvert\mathcal W\rvert\le2^{k-3}$.
+\end{enumerate}
+Then the objects form a chain record with the constants $C_H$ and
+\[
+C_\ast=\max\big(6,\ C_T+2,\ 50C_0+10,\ C_E,\ C_6+2,\ C_1,\ C_2,\ C_3,\ C_7\big),
+\]
+and the exponents $e_D=1$ and $e_L=0$. Since $x^{\varepsilon}\le x^{2\varepsilon}$, they also form a chain record with $e_D=2$ and $e_L=0$.
+\end{proposition}
+
+\begin{proof}
+We use $N_T\ge1$, $m\ge1$, $k\le a$, $\Lambda_a\ge L_\varepsilon\ge1$ and $B_0\ge0$ from Lemma~\ref{r6:R6:lem:sizes}, and $T_u\ge2$.
+
+(a) is (ix).
+
+(K1) Theorem~\ref{r2:A1} gives $S-\Gamma\le e_1\le(2\log4+1)N_Tmb$ and $0\le\mathrm{IO}\le N_Tmb$, and $2\log4+1<6\le C_\ast$.
+
+(K2) Theorem~\ref{r2:A2}(ii) gives $\mu_{\max}(N_u)\le\mu_{\max}(M_u)+\Gamma+\mathcal L-E_u$, and $C_\ast mB_0\ge0$. Theorem~\ref{r2:A2}(i) gives $\mu(M_u)+\Gamma+\mathcal L-E_u-e_2\le\mu(N_u)$ with $e_2=4\,\mathrm{IO}+\mathrm{LT}+\mathrm{RX}+1$, where $\mathrm{LT}=4\lambda_T\log T_u=C_TN_Tm(\frac ak+b')\log T_u$ and $\mathrm{RX}\le6X''+2\log T_u$. Since $N_Tm(\frac ak+b')\ge1$ and $\log T_u\ge0$,
+\[
+e_2\le4\,\mathrm{IO}+(C_T+2)N_Tm\Big(\frac ak+b'\Big)\log T_u+6X''+1\le\mathrm{Lo}_u .
+\]
+
+(K3) Put $\eta=5\sigma+3\sqrt{\delta'}$ and $\epsilon=2e_0$. Then $\eta\ge0$ and $0\le\epsilon\le\frac14$ because $e_0\le\frac18$, and by Lemma~\ref{r3:sizecond}
+\[
+(\eta+4\sqrt\epsilon)\,x^{C_H}=5\sigma x^{C_H}+\big(3\sqrt{\delta'}+4\sqrt{2e_0}\big)x^{C_H}\le5+1=6 .
+\]
+Let $H>0$ with $H\ge s-\mu_{\min}(R^\vee)$. By (iii), $s+\mu_{\max}(R)\le H$, which is hypothesis (c) of Theorem~\ref{r3:A3}, and the other hypotheses do not involve $H$. Theorem~\ref{r3:A3} gives $s-e_3\le\mu(R^\vee)$ with $e_3=(1-\delta)^{-1}\big(4u_F\log(1+H/u_F)+(\eta+4\sqrt\epsilon)H\big)$, where $\Lambda(u,H)=u\log(1+H/u)$ as in Section~\ref{r3:sec}. Since $\log\lvert\mathcal W\rvert\ge0$, this gives (K3).
+
+(K4) The first two statements are (iii). Theorem~\ref{r4:R4:A4} gives the inequality with $e_4=(50C_0+10)\big(N_Ta\Lambda_a+m\,x^\varepsilon(B_0+N_c)\big)$, which is at most $C_\ast N_Ta\Lambda_a+C_\ast m(B_0+N_c)x^{e_D\varepsilon}$ for $e_D=1$.
+
+(K5) is (v), since $C_E\le C_\ast$.
+
+(K6) By (vi),
+\[
+h_u+A\log T_u=e^{\max}_P+\sum_{j=1}^m\Big(s_j-\sum_\rho h_{j\rho}+e^{\max}_{\lambda,j}\Big)-\langle\log\kappa\rangle,
+\]
+with $A=\sum_{t\in T}a_t$, and the right side does not depend on $u$. So the left side of (K6) is $0$.
+
+(K7) Theorem~\ref{r4:R4:A6} gives the first inequality with $e_6=C_6(L_\varepsilon+m^2L_\varepsilon/k)+2\le(C_6+2)(\Lambda_a+m^2\Lambda_a/k)$, because $L_\varepsilon\le\Lambda_a$ and $\Lambda_a\ge1$. The other two inequalities are (vii).
+
+(K8) The first inequality is Theorem~\ref{r4:R4:A7}, with $C_7\le C_\ast$. The second is (viii). The third holds because $N_u$ is one of the sublattices over which $\mu_{\max}(N_u)$ is the maximum.
+\end{proof}
+
+The exponents $e_D=1$ and $e_L=0$ do not depend on $\psi_0$, $\varepsilon$ or $J$, so they are absolute, and Proposition~\ref{r6:R6:prop:errors} gives $\kappa=\max(2,e_D,e_L+1)=2$ and the constant $C=3$ of Theorem~A, whether one takes $e_D=1$ or $e_D=2$. The constant $C_\ast$ depends on $\varepsilon$ through $C_E$, which Hypothesis~\ref{r6:R6:thm:records} allows.
+
+Condition (ix) is compatible with the lower bound $\lvert\mathcal W\rvert\ge C_0\Gamma_0^2x^{C_H}$ of Lemma~\ref{r3:sizecond}, with $\Gamma_0=\exp(C_\Gamma m^5fL_\varepsilon)$. Indeed $m\le2x^{1/2-\varepsilon/16}$ and $f\le4x^{2+8\varepsilon}$ give $\log\big(C_0\Gamma_0^2x^{C_H}\big)\le\log C_0+256\,C_\Gamma\,x^{9/2+139\varepsilon/16}+C_H\log x$, while $(k-3)\log2\ge\frac12x^{9/2+10\varepsilon}$ for large $x$, and $\frac{139}{16}<10$.
+
+
 
 Hypothesis~\ref{r6:R6:thm:records} collects in one statement the inequalities proved in Sections~\ref{sec:lifts} to~\ref{sec:twisted}. Condition (a) is the choice of the words in Lemma~\ref{r3:sizecond}. Conditions (K1) and (K2) are Theorems~\ref{r2:A1} and~\ref{r2:A2} with the divisibility of Theorem~\ref{r1:thm:R1main}. Condition (K3) is Theorem~\ref{r3:A3} with Theorems~\ref{w2:S}, \ref{w2:I} and~\ref{w2:B}. Condition (K4) is Theorem~\ref{r4:R4:A4} with Theorem~\ref{r5:thm:DIVinN}. Condition (K5) is Theorem~\ref{r5:thm:Ebound}. Conditions (K6) and (K7) are proved in Section~\ref{r4:sec:R4}, and (K8) is Theorem~\ref{r4:R4:A7} with $\mu(N_u)\le\mu_{\max}(N_u)$. Each of these results is proved here from hypotheses stated in its section, and Section~\ref{sec:frontier} lists those hypotheses. The conditions (K1) to (K8) are stated with the exponents and constants of the formal proof, and some of the cited results give an inequality of a slightly different shape. Theorem~\ref{r3:A3} gives (K3) without the term $\log\lvert\mathcal W\rvert$, which only strengthens it, and Theorem~\ref{r2:A2} gives the two halves of (K2), the upper half without the term $C_\ast mB_0$. \notgiven{We have not checked line by line that the constants and exponents of Sections~\ref{sec:lifts} to~\ref{sec:twisted} give (K1) to (K8) with absolute $e_D$ and $e_L$, so Hypothesis~\ref{r6:R6:thm:records} is not proved here even modulo the hypotheses of those sections.}
 
@@ -347,7 +422,7 @@ With the exponents $e_D=2$ and $e_L=0$ of Hypothesis~\ref{r6:R6:thm:records}, $\
 
 \subsection{Proof of Theorem A}\label{r6:R6:sec:thmA}
 
-We prove Theorem~A in the form stated in Section~\ref{sec:reduction}, which asks for one choice of admissible data at each scale of a window, for windows $[Y,Y^{3/2}]$ with $Y$ arbitrarily large.
+Assume Hypotheses~\ref{w4:thm:vwin} and~\ref{r6:R6:thm:records}. We prove Theorem~A in the form stated in Section~\ref{sec:reduction}, which asks for one choice of admissible data at each scale of a window, for windows $[Y,Y^{3/2}]$ with $Y$ arbitrarily large.
 
 \begin{proof}
 Let $e_D$ and $e_L$ be the absolute constants of Hypothesis~\ref{r6:R6:thm:records}, and put $C=\max(2,e_D,e_L+1)+1$, which is $3$ for $e_D=2$ and $e_L=0$. Fix $\psi_0$, let $\varepsilon_1$ be as in Hypothesis~\ref{r6:R6:thm:records}, and fix $0<\varepsilon<\varepsilon_1$. Let $J\ge2$ be the number of Proposition~\ref{r6:R6:prop:dataexist}, and let $C_\ast$, $C_H$ and $x_1$ be the numbers of Hypothesis~\ref{r6:R6:thm:records} for $\varepsilon$ and this $J$. Let $x_0$ be the maximum of $x_1$ and of the numbers $x_0$ of Lemma~\ref{r6:R6:lem:tr}, Corollary~\ref{r6:R6:cor:nodes}, Lemma~\ref{r6:R6:lem:sizes} and Proposition~\ref{r6:R6:prop:errors} for these constants.

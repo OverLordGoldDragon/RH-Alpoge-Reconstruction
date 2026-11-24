@@ -1,5 +1,9 @@
 # Status
 
+## 24 November 2026
+
+The [268-page manuscript](manuscript/main.pdf) remains conditional. Section 19.1 states the six assertions in the current Kimi wave. Section 19.2 records the other hypotheses used in the reconstruction. The [README](README.md#current-status) summarizes the current work.
+
 ## 23 November 2026, evening
 
 A brief update on the Alpöge RH reconstruction.

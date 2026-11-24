@@ -652,7 +652,56 @@ There is an absolute constant $C_{\theta}$ such that for every admissible host a
 \]
 \end{hypothesis}
 
-A sharper bound, mean $\le\frac12(\log\sqrt d-\gamma+\lambda_1)$, follows from two inputs: the expression of $\lVert\theta[t]\rVert^2$ at an unkilled $2$-torsion characteristic through $\lvert\eta(\tau)\rvert^2(\mathrm{Im}\,\tau)^{1/2}$ and a Weber function value (Jacobi's product formula), and the formula of Chowla and Selberg~\cite{chowlaselberg} for the mean of $\log(\lvert\eta\rvert^4\mathrm{Im}\,\tau)$ over the Galois orbit. The Weber function values are algebraic integers whose conjugates are bounded by an absolute constant times a power of $2$ (Weber, \emph{Lehrbuch der Algebra} III, \S\S125--127; Yui and Zagier, Math.\ Comp.\ 66 (1997)), so their contribution to the mean is $O(1)$. \notgiven{We do not write out the identity for $\lVert\theta[t]\rVert^2$ here, so Hypothesis~\ref{w3:W3:K4} is not proved here.}
+A sharper bound,
+\[
+  \frac1{[M:\mathbb Q]}\sum_{\rho:M\to\mathbb C}
+    \log\lVert\theta_0^\rho\rVert^2
+  \leq \frac12\bigl(\log\sqrt d-\gamma+\lambda_1\bigr),
+\]
+follows from a mean-logarithm argument, with no pointwise estimate on Weber
+values.  Put $n=[M:\mathbb Q]$.  For each $\rho$ choose compatible period
+coordinates, and write $y_\rho=\operatorname{Im}\tau_\rho$,
+$\Theta_\rho$ for the norm at zero of the even theta function whose zero is the marked half-period, $E_\rho=|\eta(\tau_\rho)|$,
+$R_\rho=\lVert\theta_0^\rho\rVert^2$, and $A_\rho$ for the area of the
+corresponding lattice.  The theta-null and period-product identities give
+\[
+  \log R_\rho=-\tfrac12\log2-\tfrac12\log y_\rho-2\log\Theta_\rho,
+  \qquad
+  \log A_\rho=\log4+2\log\pi+\log y_\rho+4\log E_\rho .
+\]
+The Weber construction gives an element $X\in M$, the same element for
+all embeddings, such that $X\ne0$, $X$ is integral over $\mathbb Z$, and
+\[
+  |\rho X|=(\Theta_\rho/E_\rho)^{12}
+\]
+for every $\rho$ and every compatible choice of the vanishing even
+characteristic.  Indeed, Jacobi's product formula and the half-period
+identities identify these twelfth powers, up to sign, with the roots of
+$(T-16)^3=jT$; integrality of $j$ gives integrality.  The algebraic expression
+in the torsion coordinates makes the formula compatible with $\rho$
+(Weber, \emph{Lehrbuch der Algebra} III, \S\S125--127; Yui and Zagier,
+\emph{Math.\ Comp.}\ 66 (1997), \S1).  Since $X$ is a nonzero algebraic
+integer, the norm of $X$ is a nonzero rational integer, and consequently
+\[
+  0\leq\sum_\rho\log|\rho X|=12(S_\Theta-S_E),\qquad
+  S_\Theta=\sum_\rho\log\Theta_\rho,\quad S_E=\sum_\rho\log E_\rho .
+\]
+Set $S_y=\sum_\rho\log y_\rho$ and $S_R=\sum_\rho\log R_\rho$.  Averaging the
+two displayed identities and using the Chowla--Selberg formula as in
+Proposition~\ref{r4:R4:period} give
+\[
+  S_R=-\tfrac n2\log2-\tfrac12S_y-2S_\Theta,
+  \qquad
+  S_y+4S_E=n(\gamma-\log2-\log\sqrt d-\lambda_1).
+\]
+Since $S_\Theta\geq S_E$, substitution yields
+\[
+  \frac{S_R}{n}
+  \leq-\tfrac12\log2-\tfrac1{2n}S_y-\tfrac2nS_E
+  =\tfrac12(\log\sqrt d-\gamma+\lambda_1).
+\]
+\notgiven{The transformation/integrality inputs and the compatible period
+normalizations used above are not reproved in this subsection.}
 
 \begin{hypothesis}[class and index counts]\label{w3:W3:K5}
 With $U=fm^2N^2\log(g_0g_1T_u)$ there is an absolute $C_c$ with: the number of classes in each block of the class decomposition at level $i$ is at most $e^{C_cU}$, the number of blocks is at most $e^{C_cU}$, and the coset count of the coupled step is at most $e^{C_cU}$.
@@ -664,7 +713,9 @@ Classes are orbits of an arithmetic group on decorated lattices of a fixed genus
 
 Put $n_j=fN_{j-1}N_j$, $\nu_{j\tau}$ the row weights of the kernel of the lift $j$ at $\tau$, and for an embedding $s$
 \[
-\mathcal S_j(s)=\sum_{\tau}\Big(\sum_i\ph(\nu_{j\tau i})-\lvert\nu_{j\tau}\rvert\log\Omega_{\tau,s}\Big)+n_j\log\lVert\theta_0^s\rVert^2+n_j\log c_\Lambda+2\,\mathrm{MN}_{j,s}+\sum_\tau\big(1+2N_{j-1}N_j\log(2\lvert\nu_{j\tau}\rvert+2)\big),
+\begin{aligned}
+\mathcal S_j(s)&=\sum_{\tau}\Big(\sum_i\ph(\nu_{j\tau i})-\lvert\nu_{j\tau}\rvert\log\Omega_{\tau,s}\Big)+n_j\log\lVert\theta_0^s\rVert^2+n_j\log c_\Lambda\\ &\quad{}+2\,\mathrm{MN}_{j,s}+\sum_\tau\big(1+2N_{j-1}N_j\log(2\lvert\nu_{j\tau}\rvert+2)\big),
+\end{aligned}
 \]
 where $c_\Lambda$ is the constant of Lemma~\ref{w3:W3:supL2} per coordinate.
 
@@ -725,7 +776,7 @@ By definition $c_{\mathrm{Br}}=\prod_{i<N}\prod_{v\in r_i\setminus\{\sigma_i\}}\
 $\lVert\xi_{\mathrm{Br}}\rVert^2\le\prod_{i<j\le N}(\lambda_i-\lambda_j+j-i)\,\lVert\mathrm{hw}_\lambda\rVert^2$. Consequently $\kappa_{\mathrm{Br}}\le\mathrm{sp}(\lambda)^{N(N-1)/2}$.
 \end{hypothesis}
 
-The second sentence follows from the first because each factor of the Weyl product is at most $\mathrm{sp}(\lambda)$. The first is a comparison of Fock norms of two products of minors with the same total degree. The Fock norm of a product of leading minors is a ratio of factorials of shifted weights by the Capelli identity, which should give it. \notgiven{Hypothesis~\ref{w3:W3:xi} is not proved here.}
+The second sentence follows from the first because each factor of the Weyl product is at most $\mathrm{sp}(\lambda)$. The first is a comparison of Fock norms of two products of minors with the same total degree. The Fock norm of a product of leading minors is a ratio of factorials of shifted weights by the Capelli identity. The required comparison includes the normalization of both highest weight vectors. \notgiven{Hypothesis~\ref{w3:W3:xi} is not proved here.}
 
 \subsubsection{Hypothesis~\ref{r4:R4:HP}}
 
@@ -778,7 +829,10 @@ Recall from R4 that Hypothesis~\ref{r4:R4:HT} has three parts. The passage compa
 Let $R\subset F^D$ and $M_1,\dots,M_m\subset F^D$ be lattices with hermitian forms $X_E$ on $R$ and $X_{W_j}$ on $M_j$. Suppose there are invertible matrices $\iota_t$ and $\theta_{j,t}$ indexed by local types $t$, lattices $A_t$ and $T_{j,t}$, and forms $X_{Q,t}$, $X_{T,j,t}$, such that:
 \begin{enumerate}
 \item[(a)] at every finite place $y$, $R_y=\iota_{\mu(y)}A_{\mu(y),y}$;
-\item[(b)] at every archimedean $v$ and for the base type $t_0$, $\det(\iota_{t_0}^*X_E\iota_{t_0})/\det X_{Q,t_0}=\kappa_v^D\prod_j\det(\theta_{j,t_0}^*X_{W_j}\theta_{j,t_0})/\det X_{T,j,t_0}$;
+\item[(b)] at every archimedean $v$ and for the base type $t_0$,
+\[
+\det(\iota_{t_0}^*X_E\iota_{t_0})/\det X_{Q,t_0}=\kappa_v^D\prod_j\det(\theta_{j,t_0}^*X_{W_j}\theta_{j,t_0})/\det X_{T,j,t_0}
+\]
 \item[(c)] at a twisted type $t$ the same identity holds at the distinguished place $v_0$ with $\kappa_{v_0}\rho_t$ in place of $\kappa_{v_0}$, $\rho_t$ the archimedean value of an element of $F$ which is a unit at all finite places.
 \end{enumerate}
 
@@ -843,18 +897,250 @@ There is an absolute constant $C$ such that for every admissible datum and every
 where $U_j$ is bounded by the terms $C_0mx^\varepsilon(B_0+N_c)$ of Hypothesis~\ref{r4:R4:HT}.
 \end{hypothesis}
 
-The proof of Hypothesis~\ref{w3:W3:L3} in the formal proof has the following structure. The covolume of $M_j$ is bounded by minus the slope of its good part (truncation and removal of a bad locus, with a loss $12e^{-x^{\varepsilon z/7}}(\cdots)\le1$), which is bounded below by the slope of the type lattice and then by a core slope. The core slope is bounded below by $-\mathrm{main}_j-C\,U_j$ in two cases. At the top level ($q=0$) the forms live on a definite unitary group, and evaluation at CM points reduces the slope to the degree of the eigenlattices, whose flat part Proposition~\ref{r4:R4:period} computes. At deeper levels the lattice is compared with sections of the automorphic line bundle of weight $w_j$ on a deep cover of the unitary Shimura variety of signature $(p_j,q_j)$. There the inputs are the lower bound of Hypothesis~\ref{w3:W3:unif} for the mean slope of sections on the cover, the flat degree $\frac12(p-q)\,\mathrm{Re}\log\Omega$ per unit weight of the flat twist, and the descent from the cover to the level of the chain. \notgiven{This argument is not written out here, and Hypothesis~\ref{w3:W3:L3} is not proved here.}
+\paragraph{Two normalizations.}
+Let $F$ be a totally complex number field with $n_F=[F:\mathbb Q]/2$ archimedean places. For a hermitian lattice $\Lambda\neq0$ over $\mathcal O_F$ we use the slope $\mu(\Lambda)=\degh(\Lambda)/(n_F\rk\Lambda)$ of \eqref{r4:R4:slope} and we put
+\[
+\delta(\Lambda)=\frac{\degh(\Lambda)}{[F:\mathbb Q]}=\frac12\,\rk(\Lambda)\,\mu(\Lambda).
+\]
+We call $\delta$ the degree in the $[F:\mathbb Q]$-normalization. For an $\mathcal O_F$-sublattice we write $\mu_{\max}(\Lambda)$ for the supremum of $\mu(\Lambda')$ over the nonzero $\mathcal O_F$-submodules $\Lambda'\subseteq\Lambda$. We use four elementary facts. If $\Lambda'\subseteq\Lambda$ have the same rank and the same forms, then $\degh(\Lambda')\le\degh(\Lambda)$. For an integer $g\ge1$, $\mu(g^{-1}\Lambda)=\mu(\Lambda)+2\log g$, because $[g^{-1}\Lambda:\Lambda]=g^{2n_F\rk\Lambda}$. If $\Lambda_1\subseteq\Lambda$ is saturated and we give the quotient its induced forms, then $\degh(\Lambda)=\degh(\Lambda_1)+\degh(\Lambda/\Lambda_1)$. If $y_1,\dots,y_r\in\Lambda$ are linearly independent over $F$ and span $\Lambda\otimes F$, then Hadamard's inequality gives $\degh(\Lambda)\ge-\sum_v\sum_i\log h_v(y_i,y_i)$.
+
+The formal proof measures sections on a cover by a volume slope. Let $Z$ be a component of a cover over a field $F$, let $u$ be a weight with $\deg_Z(u)>0$, where $\deg_Z(u)$ is the top geometric degree of the automorphic line bundle of weight $u$ on $Z$, and let $\Lambda_B(Z;ku)$ be the lattice of integral sections of weight $ku$ for the integral structure of the cutoff $B$ described in Hypothesis~\ref{w3:W3:unif}. With $D_{\mathrm{fl}}$ the dimension of the flag variety put
+\begin{gather*}
+V_B(Z;u;t)=\limsup_{k\to\infty}\frac{D_{\mathrm{fl}}!\,\log\#S_B(Z;8ku;8kt)}{[F:\mathbb Q]\,(8k)^{D_{\mathrm{fl}}+1}},\\
+\sigma_B(Z;u)=\inf_{t\in\mathbb R}\Big(\frac{V_B(Z;u;t)}{\deg_Z(u)}-t\Big),
+\end{gather*}
+where $S_B(Z;v;t)$ is the set of $f\in\Lambda_B(Z;v)$ with $\lVert f\rVert\le e^{t}$ at every frame.
+The number $\sigma_B(Z;u)$ divides by $[F:\mathbb Q]$. On the lattices of the chain and of the covers the formal proof uses $\mu$, which divides by $n_F$. A lower bound without main term for $\sigma_B$ turns into a lower bound for $\mu$ through the factor $2$ of input (I17) below, and that factor multiplies a constant. The main term is compared only in Lemma~\ref{cov:twist}, which is stated for $\mu$ and in which the flat degree $\frac12(p-q)\log\Omega$ per unit weight is a degree $\delta$. Remark~\ref{cov:factor2} records the bookkeeping.
+
+\paragraph{The covolume inequality.}
+Write $\Lambda_B=\log(B\,\mathrm{rd}_E)+|\lambda_1|$ and let $C_{\mathrm{unif}}$ denote the absolute constant in Hypothesis~\ref{w3:W3:unif}.
+
+For the chain we write $p_j=k+j-1$ and $q_j=m-j$, so that $\lvert p_j-q_j-k\rvert\le m$, and we write $w_{j\rho}=e_{j}(\rho)$ for the exponent of index $j$ of the archimedean parameter at $\rho$ (the weights $w_{j\rho}$ of Hypothesis~\ref{r4:R4:HW}). Put
+\[
+\mathrm{main}_j=\sum_{\rho\in\Phi}(p_j-q_j)\,w_{j\rho}\log\Omega,\qquad U=B_0\log\log x,\qquad B_0=fmb\,x^\varepsilon .
+\]
+Since $\log\log x\le x^\varepsilon$ for large $x$ and $m\ge1$, $U\le m\,x^\varepsilon(B_0+N_c)$, so $U$ is admissible as the $U_j$ of Hypothesis~\ref{w3:W3:L3}.
+
+\begin{hypothesis}[covolumes on the chain]\label{cov:H58}
+There is $\varepsilon_1>0$ such that for every $0<\varepsilon\le\varepsilon_1$ and every admissible family there are $C_0\ge0$ and $x_0$ with the following property. For every $x\ge x_0$, every point of the family at $x$, every $1\le j\le m$ and every $C\ge C_0$,
+\[
+\frac{\lcv(M_j)}D\le\mathrm{main}_j+C\,U .
+\]
+\end{hypothesis}
+
+\paragraph{Four lattice lemmas.}
+
+\begin{lemma}[truncation]\label{cov:trunc}
+Let $L\subseteq M$ be hermitian $\mathcal O_F$-lattices with $L\ne0$, let $e$ be an $F$-linear idempotent of $M\otimes F$ with $h_v(ex+(y-ey),ex+(y-ey))=h_v(ex,ex)+h_v(y-ey,y-ey)$ for all $x,y$ and all $v$, and let $g\ge1$ be an integer with $g\,e(L)\subseteq L$. Put $L_1=L\cap\operatorname{im}e$ and $L_0=L\cap\ker e$. Let $0\le\delta_0\le\frac1{12}$ and $Q\ge0$ satisfy $\rk L_0\le3\delta_0\rk L$, $\mu_{\max}(M)\le Q$, $-Q\le\mu(L)$ and $2\log g\le Q$. Then $\mu(L_1)\ge\mu(L)-12\delta_0Q$.
+\end{lemma}
+
+\begin{proof}
+Write $r=\rk L$, $r_1=\rk L_1$ and $r_0=\rk L_0$. For $x\in L$ we have $g\,ex\in L_1$, so $(L_1)\otimes F=e(L\otimes F)$. Since $L\otimes F=e(L\otimes F)\oplus(1-e)(L\otimes F)$ orthogonally, the map $1-e$ identifies $L/L_1$ isometrically with $(1-e)L$, and $r=r_1+r_0$. For $x\in L$ the element $g(1-e)x=gx-g\,ex$ lies in $L\cap\ker e=L_0$, so $L_0\subseteq(1-e)L\subseteq g^{-1}L_0$. If $r_0>0$, then $\mu(L_0)\le\mu_{\max}(M)\le Q$, hence
+\[
+\degh(L/L_1)=\degh((1-e)L)\le\degh(g^{-1}L_0)=n_Fr_0\big(\mu(L_0)+2\log g\big)\le2n_Fr_0Q,
+\]
+and the same bound holds trivially when $r_0=0$. Since $L_1$ is saturated in $L$, $\degh(L_1)=\degh(L)-\degh(L/L_1)\ge n_F(r\mu(L)-2r_0Q)$. From $r_0\le3\delta_0r\le\frac r4$ we get $r_1\ge\frac34r>0$ and $r_0/r_1\le3\delta_0/(1-3\delta_0)\le4\delta_0$. Hence
+\[
+\mu(L_1)-\mu(L)\ge\frac{r\mu(L)-2r_0Q}{r_1}-\mu(L)=\frac{r_0(\mu(L)-2Q)}{r_1}\ge-\frac{3r_0Q}{r_1}\ge-12\delta_0Q,
+\]
+where we used $-Q\le\mu(L)\le\mu_{\max}(M)\le Q$.
+\end{proof}
+
+\begin{lemma}[descent]\label{cov:descent}
+Let $A\ne0$ and $B$ be hermitian $\mathcal O_F$-lattices, let $\varphi_1,\dots,\varphi_n\colon A\otimes F\to B\otimes F$ be $F$-linear maps with $\varphi_h(A)\subseteq B$, with $\bigcap_h\ker\varphi_h=0$ and with $\sum_h\lVert\varphi_hf\rVert_v^2\le e^{2P}\lVert f\rVert_v^2$ for all $f$ and $v$. Suppose that $B$ is spanned over $F$ by elements of $B$ of norm at most $e^\Lambda$ at every place, with $\Lambda\ge0$, and that $n\rk B\le(1+\epsilon)\rk A$ with $\epsilon\ge0$. If $t\le\mu(A)-2P$, then $\mu(B)\ge t-\epsilon(\lvert t\rvert+2\Lambda)$.
+\end{lemma}
+
+\begin{proof}
+Give $B^n$ the orthogonal sum of the forms of $B$ and put $\Phi=(\varphi_h)_h\colon A\to B^n$. The map $\Phi$ is injective with $\lVert\Phi f\rVert_v\le e^P\lVert f\rVert_v$. Put $r=\rk A$ and $N=n\rk B$, so $r\le N\le(1+\epsilon)r$. For a basis $e_1,\dots,e_r$ of $A\otimes F$ in $A$ the index of $\sum\mathcal O_F\Phi e_i$ in $\Phi(A)$ equals that of $\sum\mathcal O_Fe_i$ in $A$, and the Gram determinants satisfy $\det h_v(\Phi e_i,\Phi e_j)\le e^{2Pr}\det h_v(e_i,e_j)$. Hence $\mu(\Phi A)\ge\mu(A)-2P\ge t$. Let $S$ be the saturation of $\Phi(A)$ in $B^n$, so $\degh(S)\ge\degh(\Phi A)\ge n_Frt$. The quotient $B^n/S$ has rank $N-r$ and is spanned over $F$ by images of the elements $(0,\dots,y,\dots,0)$ with $y$ in the given spanning set, whose quotient norms are at most $e^\Lambda$. Choosing $N-r$ of these images linearly independent and applying Hadamard's inequality gives $\degh(B^n/S)\ge-2n_F(N-r)\Lambda$. Therefore $n\degh(B)=\degh(B^n)\ge n_F\big(rt-2\Lambda(N-r)\big)$ and
+\[
+\mu(B)=\frac{n\degh(B)}{n_FN}\ge\frac{rt}N-2\Lambda\frac{N-r}N\ge t-\lvert t\rvert\frac{N-r}N-2\Lambda\frac{N-r}N\ge t-\epsilon(\lvert t\rvert+2\Lambda),
+\]
+because $(N-r)/N\le(N-r)/r\le\epsilon$.
+\end{proof}
+
+\begin{lemma}[from component heights to the slope]\label{cov:mean}
+Let $\mathcal Z$ be a finite nonempty set with $n=\#\mathcal Z$ elements. Let $T,D_{\mathrm{fl}},A,R,c_s,c_c,X,\rho,b_n,\delta'$ and $E$ be real numbers with $D_{\mathrm{fl}}\ge0$, $T\ge3D_{\mathrm{fl}}+5$, $A>0$, $R\ge0$, $c_s,c_c,X\ge0$, $0\le\rho<1$, $b_n>0$, $\delta'>0$ and $E\ge1$, and for $Z\in\mathcal Z$ let $h_Z,s_Z,\delta_Z,r_Z,d_Z$ be real numbers. Assume
+\begin{enumerate}
+\item[(a)] $\delta'\le\delta_Z\le\delta'/(1-\rho)$ and $b_n\delta_Z\le r_Z$ for every $Z$,
+\item[(b)] $h_Z+c_s\ge0$ and $(1-\rho)\max(0,s_Z+c_s)\le h_Z+c_s+c_c$ for every $Z$, and $\frac1n\sum_Zs_Z\ge-X$,
+\item[(c)] $d_Z\ge b_n\delta_Z\big(Th_Z-3(D_{\mathrm{fl}}+1)\lvert h_Z\rvert-A\log(2+\lvert h_Z\rvert)-R\big)$ for every $Z$,
+\item[(d)] $TX\le C_1E$, $Tc_c\le C_1E$, $c_s\big(6D_{\mathrm{fl}}+10+2T\rho\big)\le C_1E$ and $A\log\max(A,1)+R\le C_2E$.
+\end{enumerate}
+Then $2\sum_Zd_Z/\sum_Zr_Z\ge-2(3C_1+C_2+2)E$.
+\end{lemma}
+
+\begin{proof}
+Put $H_Z=h_Z+c_s\ge0$. If $h_Z\ge0$ then $\lvert h_Z\rvert=h_Z$, and if $h_Z<0$ then $\lvert h_Z\rvert=-h_Z\le c_s$, so in both cases $\lvert h_Z\rvert\le h_Z+2c_s$, and $y_Z=h_Z+2c_s\ge0$. For $y\ge0$ the function $A\log(2+y)-y$ is at most $A\log A-A+2$ when $A\ge2$ and at most $A\log2<2$ when $A<2$, so $A\log(2+y)\le y+A\log\max(A,1)+2$. Hence the bracket in (c) satisfies
+\[
+\beta_Z\ge(T-3D_{\mathrm{fl}}-3)h_Z-6(D_{\mathrm{fl}}+1)c_s-(h_Z+2c_s)-A\log\max(A,1)-2-R=a\,h_Z-K_0,
+\]
+with $a=T-3D_{\mathrm{fl}}-4\in[1,T]$ and $K_0=(6D_{\mathrm{fl}}+8)c_s+A\log\max(A,1)+2+R$. By (b), $H_Z\ge(1-\rho)(s_Z+c_s)-c_c$, so $\sum_ZH_Z\ge n\big((1-\rho)(c_s-X)-c_c\big)$. Since $H_Z\ge0$, (a) gives $\sum_Z\delta_ZH_Z\ge\delta'\sum_ZH_Z$ and $\sum_Z\delta_Z\le n\delta'/(1-\rho)$, so
+\[
+\frac{\sum_Z\delta_ZH_Z}{\sum_Z\delta_Z}\ge(1-\rho)\max\Big(0,\frac1n\sum_ZH_Z\Big)\ge(1-\rho)^2(c_s-X)-(1-\rho)c_c .
+\]
+With $h_Z=H_Z-c_s$ and $1-(1-\rho)^2\le2\rho$ this gives $m_\delta:=\sum_Z\delta_Zh_Z/\sum_Z\delta_Z\ge-X-c_c-2\rho c_s$. Hence
+\[
+\frac{\sum_Z\delta_Z(ah_Z-K_0)}{\sum_Z\delta_Z}=a\,m_\delta-K_0\ge-T(X+c_c+2\rho c_s)-K_0=:-K_1 ,
+\]
+using $1\le a\le T$ when $m_\delta<0$. Put $N=\sum_Zd_Z$, so $N\ge b_n\sum_Z\delta_Z(ah_Z-K_0)$ by (c). If $N\ge0$ then $N/\sum_Zr_Z\ge0\ge-K_1$. If $N<0$ then, since $\sum_Zr_Z\ge b_n\sum_Z\delta_Z>0$ by (a), $N/\sum_Zr_Z\ge N/(b_n\sum_Z\delta_Z)\ge-K_1$. By (d) and $E\ge1$, $K_1\le TX+Tc_c+c_s(6D_{\mathrm{fl}}+8+2T\rho)+A\log\max(A,1)+R+2\le(3C_1+C_2+2)E$.
+\end{proof}
+
+\begin{lemma}[flat twist]\label{cov:twist}
+Let $\Psi$ be a finite set and let $a_\tau\in\mathbb Z$ and $c_\tau\in\mathbb R$ for $\tau\in\Psi$. Let $p\ge q\ge0$ be integers and let $\log\Omega,\ L\ge10,\ b,\ U,\ \mathrm{main},\ C_A\ge0,\ l_r,\ m_0\ge0,\ f_r\ge0,\ n_V,\ l_S$ be real numbers with
+\begin{enumerate}
+\item[(a)] $\lvert c_\tau+\frac12(p-q)\log\Omega\rvert\le3qL$ for every $\tau$,
+\item[(b)] $\big\lvert\mathrm{main}-\sum_\tau(p-q)a_\tau\log\Omega\big\rvert\le C_AU$ and $q\,L\sum_\tau\lvert a_\tau\rvert\le C_AU$,
+\item[(c)] $l_r\le2L$, $2m_0\le n_V$, $f_rn_VL\le b$, $b\le U$, $L\le U$ and $l_S\le40L$.
+\end{enumerate}
+Let $\Lambda$ and $\Lambda'$ be hermitian lattices of the same rank with
+\[
+\delta(\Lambda')\ge\delta(\Lambda)+\rk(\Lambda)\Big(\sum_\tau a_\tau c_\tau-q\,l_r\sum_\tau\lvert a_\tau\rvert-m_0f_r\big(\tfrac12\log(2\pi)+l_r\big)-l_S\Big).
+\]
+Then $\mu(\Lambda')\ge\mu(\Lambda)-\mathrm{main}-(11C_A+83)U$.
+\end{lemma}
+
+\begin{proof}
+Since $\mu=2\delta/\rk$, the hypothesis gives $\mu(\Lambda')\ge\mu(\Lambda)+2\Theta$ with $\Theta$ the bracket. By (a), $a_\tau c_\tau\ge-\frac12(p-q)a_\tau\log\Omega-3qL\lvert a_\tau\rvert$, so by (b)
+\[
+2\sum_\tau a_\tau c_\tau\ge-\sum_\tau(p-q)a_\tau\log\Omega-6qL\sum_\tau\lvert a_\tau\rvert\ge-\mathrm{main}-7C_AU .
+\]
+By (c) and (b), $2q\,l_r\sum_\tau\lvert a_\tau\rvert\le4qL\sum_\tau\lvert a_\tau\rvert\le4C_AU$. Since $\log(2\pi)\le2\pi-1\le7$ and $L\ge10$, $\frac12\log(2\pi)+l_r\le3L$, so $2m_0f_r(\frac12\log(2\pi)+l_r)\le3n_Vf_rL\le3b\le3U$. Finally $2l_S\le80L\le80U$. Adding, $2\Theta\ge-\mathrm{main}-(11C_A+83)U$.
+\end{proof}
+
+\begin{remark}[the factor $2$]\label{cov:factor2}
+Lemma~\ref{cov:twist} is the only place where the main term is compared. Its input (a) is the flat degree of input (I13), which is a degree $\delta$ in the $[F:\mathbb Q]$-normalization, namely $\frac12(p-q)\log\Omega$ per unit of the anchor weight up to $3qL$. The conversion $\mu=2\delta/\rk$ doubles it, and the doubled value $\sum_\tau(p-q)a_\tau\log\Omega$ is the main term in the normalization $\mu$ of \eqref{r4:R4:slope}, the normalization of $\lcv(M_j)/D$. This agrees with Definition~\ref{r4:R4:Omega}, where $\log\Omega_\tau$ is $2/[M:\mathbb Q]$ times an arithmetic degree, that is, a slope $\mu$ of a line. The lower bound of Hypothesis~\ref{w3:W3:unif} is a bound for $\sigma_B$, which divides by $[F:\mathbb Q]$, and it enters only through Lemma~\ref{cov:mean} and input (I17), whose factor $2$ appears in the constant $2(3C_1+C_2+2)$.
+\end{remark}
+
+\begin{lemma}[size of the error of Hypothesis~\ref{w3:W3:unif}]\label{cov:size}
+Let $T,f,m,b,L,x,\ell,q$ and $\mathrm{rd}_E$ be positive reals with $L\ge10$, $b=e^L$, $\log\log x\ge1$, $\ell\le9L$ and $\log\mathrm{rd}_E\le2L$, put $U=fmbL\log\log x$, and let $u'$ be a weight and $B$ a real number with $T\lVert u'\rVert_1\le834fmb$, $1\le B\le132b$ and $q\,\mathrm{spread}(u')\le6\lVert u'\rVert_1$. Let $c_B$ be a real number with $0\le c_B\le\log B+20+44\log\mathrm{rd}_E$. Then
+\[
+T\big((\log B+\ell)\lVert u'\rVert_1+q\,\mathrm{spread}(u')\big)\le83400\,U,\qquad T\,c_B\lVert u'\rVert_1\le83400\,U.
+\]
+\end{lemma}
+
+\begin{proof}
+From $B\le132b$ we get $\log B\le\log132+L\le L+22$. Hence $\log B+\ell+6\le10L+28\le100L$ and $c_B\le L+42+88L\le100L$, because $L\ge10$. So both left sides are at most $100L\cdot T\lVert u'\rVert_1\le83400fmbL\le83400U$.
+\end{proof}
+
+\paragraph{The objects of the chain and the inputs.}
+Fix $\varepsilon$, an admissible family, $x$, a point of the family at $x$ and a level $1\le j\le m$. At this level the formal proof attaches to the point hermitian $\mathcal O_F$-lattices $\Lambda^{\mathrm{type}}_j\subseteq\Lambda^{\mathrm{all}}_j$ (forms of the local types inside all forms of the level, with the archimedean norms of the level), an idempotent $e_j$ of $\Lambda^{\mathrm{all}}_j\otimes F$ with a finite group $G_j$, the good part $\Lambda^{\mathrm{good}}_j=\Lambda^{\mathrm{type}}_j\cap\operatorname{im}e_j$ and the bad part $\Lambda^{\mathrm{bad}}_j=\Lambda^{\mathrm{type}}_j\cap\ker e_j$, and a core lattice $\Lambda^{\mathrm{core}}_j$. For $j<m$ it attaches deep covers $Y$ of the unitary Shimura variety of the datum of level $j$, of signature $(p,q)$, with lattices $\Lambda_Y(G)$ of cusp forms of weight $G$ and slopes $\mu_Y(G)=\mu(\Lambda_Y(G))$, a sublattice $\Lambda^{\mathrm{deep}}_Y\subseteq\Lambda_Y(G_k)$ cut out by the forms that come from the chain, the shifted weights $G_s(\pm c_0)$, the weight $u^-$ and the anchor weight $a=(a_\tau)$ with $G_s(-c_0)$ equal, up to an equivalence that preserves lattices, ranks and slopes, to $u^-+a$ shifted by $m_0=n_V/2$. We write $K_j=PP\cdot\kappa_j$ for the size parameter of the level, $T=\mathrm{len}_T\ge1$ for the length of the filtration and $D_{\mathrm{fl}}$ for the dimension of the flag variety. Assume the following bounds with constants independent of $x$, of the point and of $j$, valid for $x\ge x_0$, where $x_0$ and the constants depend only on $\varepsilon$ and the family. We write $C_K,C_D,C_A,C_s,C_m,C_{HS}$ for these constants.
+\begin{enumerate}
+\item[(I1)] (recursion) $\lcv(M_j)/D\le-\mu(\Lambda^{\mathrm{good}}_j)$.
+\item[(I2)] (cut) $e_j$ is idempotent and orthogonal at every embedding, $\lvert G_j\rvert\,e_j(\Lambda^{\mathrm{type}}_j)\subseteq\Lambda^{\mathrm{type}}_j$, $2\log\lvert G_j\rvert\le b$ and $\Lambda^{\mathrm{good}}_j\ne0$.
+\item[(I3)] (bad locus) $\rk\Lambda^{\mathrm{bad}}_j\le3e^{-x^{\varepsilon_z/7}}\rk\Lambda^{\mathrm{type}}_j$, with $\varepsilon_z>0$ a parameter of the family.
+\item[(I4)] (maximal slope) $\mu_{\max}(\Lambda^{\mathrm{all}}_j)\le x^Ab$.
+\item[(I5)] (sizes) $1\le b\le U$, $\lvert\mathrm{main}_j\rvert\le x^{A'}b$, $\lvert\mathrm{main}_j\rvert\le K_j$, $b\le K_j$, and for $j<m$ the set of quotient weights $u_1$ is nonempty and each has $3D_{\mathrm{fl}}+5\le T$, $0\le\rho(u_1)<1$ and $0\le z(u_1)<1$, with $\rho,z$ the numbers of the filtration.
+\item[(I6)] (core comparison) $\mu(\Lambda^{\mathrm{type}}_j)\ge\mu(\Lambda^{\mathrm{core}}_j)-C_KU$.
+\item[(I7)] (top level, CM evaluation) for $j=m$, $\mu(\Lambda^{\mathrm{core}}_m)\ge-\mathrm{main}_m-C_DU$.
+\item[(I8)] (existence) for $j<m$ there is a good deep cover $Y$ at level $j$, and it satisfies the hypotheses of Hypothesis~\ref{w3:W3:unif}.
+\item[(I9)] (ring) $\mu(\Lambda^{\mathrm{deep}}_Y)-2b\le\mu(\Lambda^{\mathrm{core}}_j)$.
+\item[(I10)] (maps) there are $n$ maps $\Lambda_Y(G_s(-c_0))\to\Lambda^{\mathrm{deep}}_Y$ satisfying the hypotheses of Lemma~\ref{cov:descent} with $P=b$, and $n\rk\Lambda^{\mathrm{deep}}_Y\le\rk\Lambda_Y(G_s(c_0))$.
+\item[(I11)] (rank) $\rk\Lambda_Y(G_s(c_0))\le(1+b/K_j)\rk\Lambda_Y(G_s(-c_0))$ and $\Lambda_Y(G_s(-c_0))\ne0$.
+\item[(I12)] (generators) $\Lambda^{\mathrm{deep}}_Y$ is spanned over $F$ by elements of norm at most $e^{K_j}$ at every embedding.
+\item[(I13)] (flat twist) the hypotheses of Lemma~\ref{cov:twist} hold for $\Lambda=\Lambda_Y(u^-)$, $\Lambda'=\Lambda_Y(G_s(-c_0))$, the anchor weight $a$, $c_\tau$ the mean over the components of minus the degree $\delta$ of the flat section of type $\tau$, $\mathrm{main}=\mathrm{main}_j$, $l_r=\log\mathrm{rd}_E$, $f_r=f(p+q)$, $l_S=\sum_{\ell\in S_{\mathrm{bad}}}\log\ell$, with the constant $C_A$.
+\item[(I14)] (heights of components) for $j<m$, every quotient weight $u_1$ and every component $Z$ of $Y$ there are the numbers of Lemma~\ref{cov:mean}, namely the height $h_Z$, the degree $\delta_Z$, the rank $r_Z$ and the degree $d_Z$ of the filtered pieces of weight $u^-$, $b_n=\binom{T-1}{D_{\mathrm{fl}}}$, $A,R$, $c_s$ and a multiplicity cost $c_m\ge0$, satisfying (a), (c), $h_Z+c_s\ge0$, $c_s(6D_{\mathrm{fl}}+10+T(z+2\rho))\le C_sU$, $Tc_m\le C_mU$ and $A\log\max(A,1)+R\le C_{HS}U$.
+\item[(I15)] (comparison of the volume slope with the height) with $u'=u'(u_1)$ the weight attached to $u_1$, $g$ its gap and $B$ as in Hypothesis~\ref{w3:W3:unif}, every real $s\le\sigma_B(Z;u')$ satisfies $(1-\rho)\max(0,s+c_s)\le h_Z+c_s+c_m+c_B\lVert u'\rVert_1$, where $c_B$ is the cost of the Hodge--Tate integral structure up to $B$.
+\item[(I16)] (numerics of the weight) the hypotheses of Lemma~\ref{cov:size} hold for $u'$, $B$, $c_B$ and $T$, and $u'$ satisfies the hypotheses on $u$ and $g$ of Hypothesis~\ref{w3:W3:unif}.
+\item[(I17)] (sum) $\mu_Y(u^-)\ge2\sum_Zd_Z/\sum_Zr_Z$.
+\end{enumerate}
+\notgiven{Inputs (I1)--(I17) are not proved here.}
+
+\begin{theorem}\label{cov:main}
+Assume Hypothesis~\ref{w3:W3:unif} and inputs (I1)--(I17). Put $C_F=11C_A+83$, $C_H=C_s+C_m+83400(1+C_{\mathrm{unif}})$, $C_U=2(3C_H+C_{HS}+2)$, $C_{\mathrm{low}}=\max\big(C_D,2(C_F+C_U)+9\big)$ and $C_0=C_K+C_{\mathrm{low}}+1$. Then Hypothesis~\ref{cov:H58} holds with this $C_0$, for $x$ large in terms of $\varepsilon$, the family, $A$, $A'$ and $C_0$.
+\end{theorem}
+
+\begin{proof}
+Step 1 (slope of the weight $u^-$ on the cover). Let $j<m$, let $Y$ be the cover of (I8) and let $u_1$ be a quotient weight, which exists by (I5). By (I16) and (I8), Hypothesis~\ref{w3:W3:unif} applies to $u'=u'(u_1)$ and its gap $g$, and gives numbers $s_Z\le\sigma_B(Z;u')$ with mean at least $-X$, $X=C_{\mathrm{unif}}\mathrm{err}(u',g)$. By (I15), condition (b) of Lemma~\ref{cov:mean} holds with $c_c=c_m+c_B\lVert u'\rVert_1$. By Lemma~\ref{cov:size}, $TX\le83400\,C_{\mathrm{unif}}U$ and $Tc_c\le(C_m+83400)U$. With (I14) and $2T\rho\le T(z+2\rho)$, condition (d) of Lemma~\ref{cov:mean} holds with $C_1=C_H$, $C_2=C_{HS}$ and $E=U\ge1$. Lemma~\ref{cov:mean} and (I17) give $\mu_Y(u^-)\ge-C_UU$.
+
+Step 2 (flat twist). By (I13) and Lemma~\ref{cov:twist}, $\mu_Y(G_s(-c_0))\ge\mu_Y(u^-)-\mathrm{main}_j-C_FU\ge-\mathrm{main}_j-(C_F+C_U)U$.
+
+Step 3 (descent to the level of the chain). Apply Lemma~\ref{cov:descent} to $A=\Lambda_Y(G_s(-c_0))$, $B=\Lambda^{\mathrm{deep}}_Y$, the maps of (I10), $P=b$, $\Lambda=K_j$, $\epsilon=b/K_j\in[0,1]$ and $t=-\mathrm{main}_j-(C_F+C_U)U-2b$. Its hypotheses hold by (I10), (I11), (I12), (I5) and Step 2. It gives $\mu(\Lambda^{\mathrm{deep}}_Y)\ge t-\epsilon(\lvert t\rvert+2K_j)$. Since $\epsilon K_j=b$, $\epsilon\lvert\mathrm{main}_j\rvert\le b$ and $\epsilon\le1$, we get $\epsilon(\lvert t\rvert+2K_j)\le b+(C_F+C_U)U+2b+2b$, so $\mu(\Lambda^{\mathrm{deep}}_Y)\ge-\mathrm{main}_j-2(C_F+C_U)U-7b$. By (I9) and $b\le U$, $\mu(\Lambda^{\mathrm{core}}_j)\ge-\mathrm{main}_j-(2(C_F+C_U)+9)U$. For $j=m$, (I7) gives $\mu(\Lambda^{\mathrm{core}}_m)\ge-\mathrm{main}_m-C_DU$. In both cases $\mu(\Lambda^{\mathrm{core}}_j)\ge-\mathrm{main}_j-C_{\mathrm{low}}U$.
+
+Step 4 (truncation). Put $\delta_0=e^{-x^{\varepsilon_z/7}}$ and $Q=(x^A+x^{A'}+C_K+C_{\mathrm{low}}+1)U$. Take $x$ so large that $12\delta_0(x^A+x^{A'}+C_K+C_{\mathrm{low}}+1)\le1$, which is possible since $\delta_0$ decays faster than any power of $x$. Then $\delta_0\le\frac1{12}$ and $12\delta_0Q\le U$. By (I6) and Step 3, $\mu(\Lambda^{\mathrm{type}}_j)\ge-\mathrm{main}_j-(C_K+C_{\mathrm{low}})U\ge-x^{A'}b-(C_K+C_{\mathrm{low}})U\ge-Q$ by (I5). By (I4) and (I5), $\mu_{\max}(\Lambda^{\mathrm{all}}_j)\le x^Ab\le Q$, and by (I2), $2\log\lvert G_j\rvert\le b\le Q$. Lemma~\ref{cov:trunc}, with (I2) and (I3), gives $\mu(\Lambda^{\mathrm{good}}_j)\ge\mu(\Lambda^{\mathrm{type}}_j)-U$. By (I1),
+\[
+\frac{\lcv(M_j)}D\le-\mu(\Lambda^{\mathrm{good}}_j)\le\mathrm{main}_j+(C_K+C_{\mathrm{low}}+1)U=\mathrm{main}_j+C_0U\le\mathrm{main}_j+CU
+\]
+for every $C\ge C_0$, since $U\ge0$.
+\end{proof}
+
+The constants $C_K,C_D,C_A,C_s,C_m,C_{HS}$ of the inputs and the constant $C_{\mathrm{unif}}$ of Hypothesis~\ref{w3:W3:unif} are the only constants in $C_0$, and none of them depends on $x$, on the point, on $j$ or on the level of the cover. The constants of the arithmetic Hilbert--Samuel theorem on a single model, which depend on the level, enter only inside the proof of Hypothesis~\ref{w3:W3:unif}, where the limit in the cutoff removes them.
+
+\begin{remark}[the sign of the main term]\label{cov:sign}
+The main term enters Hypothesis~\ref{cov:H58} with the sign $+\mathrm{main}_j$ on the upper bound for $\lcv(M_j)/D$, through $\mu(\Lambda^{\mathrm{core}}_j)\ge-\mathrm{main}_j-C_{\mathrm{low}}U$. The weights are $w_{j\rho}=e_j(\rho)$, the exponents of the archimedean parameters, and the sign of $\mathrm{main}_j$ is that of $\sum_\rho(p_j-q_j)w_{j\rho}\log\Omega$. On the cover the same term is $\sum_\tau(p-q)a_\tau\log\Omega$ for the anchor weight $a$, by (I13) and Lemma~\ref{cov:twist}, where a positive $a_\tau$ lowers $\mu$ by $(p-q)a_\tau\log\Omega$. That the anchor weight is the weight $w_{j+1}(v,s)=\varepsilon_{\tau_{v,s}}-c_j$ of the step character of Proposition~\ref{covariance}(iii) with this sign is condition (N1) of Section~\ref{sec:chain}, which this subsection does not prove.
+\end{remark}
+
+\paragraph{The local lattice relations at good primes.}
+The exact identity at the good primes in the proof of Hypothesis~\ref{w3:W3:unif} uses, at every prime $p$ outside the bad set and every chart of the model over a discrete valuation ring $O$ containing $\zeta_p$ with $w=\zeta_p-1$, $w^{p-1}=u\,p$ for a unit $u$, the following relations. For lattices $E\subseteq E'$ with the same generic fibre let $\mathrm{ck}_k(E,E')$ be the degree on the special fibre of the class of $p_k(E')-p_k(E)$ against the fixed classes $L,Q$ with $Q$ homogeneous of degree $d+1-k$, and for an element $c\in O$ let $\rho_c(E)$ be the degree of $\mathrm{div}(c)\cdot p_{k-1}(E)\cdot Q$. Let $\mathrm{Lie}_\tau\subseteq W_\tau\subseteq w^{-1}\mathrm{Lie}_\tau$ and $\omega^{\mathrm{HT}}_\tau\subseteq\omega_\tau\subseteq w^{-1}\omega^{\mathrm{HT}}_\tau$ be the de Rham and Hodge--Tate lattices, let $X_{\tau,1},\dots,X_{\tau,n}$ be the character ideals of the Hodge--Tate map at the label $\tau$, $T$ the trivial line, $H_\tau$ the lattice dual to the annihilator lattice of the Hodge--Tate map and $T_n$ the standard lattice, and let $\varphi$ be the Frobenius permutation of the labels.
+
+\begin{proposition}\label{cov:ck}
+Let $p\ge2$ and $1\le k\le d+1$. Assume, for every label $\tau$,
+\begin{enumerate}
+\item[(G1)] $\mathrm{ck}_k(\mathrm{Lie}_\tau,W_\tau)+\mathrm{ck}_k(\omega_\tau,\omega^{\mathrm{HT}}_\tau)=\mathrm{ck}_k(T_n,H_\tau)-k\,\rho_w(\mathrm{Lie}_\tau)$,
+\item[(G2)] $(p-1)\rho_w(\mathrm{Lie}_\tau)=\rho_p(\mathrm{Lie}_\tau)$,
+\item[(G3)] $\mathrm{ck}_k(T_n,H_\tau)=(-1)^k\sum_{i=1}^n\mathrm{ck}_k(T,X_{\tau,i})$,
+\item[(G4)] $k\,\rho_p(\mathrm{Lie}_{\varphi\tau})=(-1)^{k-1}\sum_{i=1}^n\big(\mathrm{ck}_k(T,X_{\varphi\tau,i})-p^k\,\mathrm{ck}_k(T,X_{\tau,i})\big)$.
+\end{enumerate}
+Put $h_\tau=(-1)^k\sum_i\mathrm{ck}_k(T,X_{\tau,i})$ and $\lambda_\sigma=k\,\rho_p(\mathrm{Lie}_\sigma)$. Then for every $\tau$
+\[
+\mathrm{ck}_k(\mathrm{Lie}_\tau,W_\tau)+\mathrm{ck}_k(\omega_\tau,\omega^{\mathrm{HT}}_\tau)=h_\tau-\frac{\lambda_\tau}{p-1},\qquad p^kh_\tau=h_{\varphi\tau}+\lambda_{\varphi\tau}.
+\]
+\end{proposition}
+
+\begin{proof}
+By (G1) and (G3) the left side of the first relation is $h_\tau-k\rho_w(\mathrm{Lie}_\tau)$, and by (G2) $k\rho_w(\mathrm{Lie}_\tau)=\lambda_\tau/(p-1)$. For the second relation put $A_i=\mathrm{ck}_k(T,X_{\varphi\tau,i})$ and $B_i=\mathrm{ck}_k(T,X_{\tau,i})$. Then (G4) reads $\lambda_{\varphi\tau}=(-1)^{k-1}\sum_i(A_i-p^kB_i)$, so $h_{\varphi\tau}+\lambda_{\varphi\tau}=(-1)^k\sum_iA_i-(-1)^k\sum_i(A_i-p^kB_i)=p^k(-1)^k\sum_iB_i=p^kh_\tau$.
+\end{proof}
+
+Proposition~\ref{cov:ck} identifies the numbers $h_\tau$ of the relations as the Chern characters of the character ideals of the Hodge--Tate map, so the relations are two exact computations. The first uses the exact sequence that compares $w^{-1}\mathrm{Lie}_\tau/W_\tau$, $H_\tau/T_n$ and $\omega_\tau/\omega^{\mathrm{HT}}_\tau$ together with $\mathrm{div}(w)=\frac1{p-1}\mathrm{div}(p)$. The second uses the fact that the step graph of the Hodge--Tate map at $\varphi\tau$ restricted to the first factor is the span of the $p$-th powers of the character ideal at $\tau$. The Frobenius recursion (Lemma \texttt{w3:U:frob} of the insertion that proves Hypothesis~\ref{w3:W3:unif}) then converts the two relations into (L2). \notgiven{Statements (G1)--(G4), the passage from test points to charts, and the refinement of the models in which they are computed are not proved here.}
+
+
 
 \subsubsection{Uniformity in the level}\label{w3:sec:unif}
 
 The mean slope bound on the covers must hold with a constant independent of the level of the cover, and the level grows with $x$. A uniform arithmetic Hilbert--Samuel theorem for the family of covers would give such a bound. No such theorem is published, and the argument does not use one.
 
 \begin{hypothesis}[uniform mean slope on deep covers]\label{w3:W3:unif}
-Let $Y$ be a deep cover of a unitary Shimura variety of signature $(p,q)$ attached to the host, of level with at most fifteen prime factors, and let $u$ be a strictly antidominant weight. Then the mean slope of the lattice of integral sections of weight $u$ satisfies
+For an integer weight $u=(u_{\tau i})$ on a Shimura datum of signature
+$(p,q)$, regarded in real coordinates, and a real number $g>0$, put
 \[
-\mu(Y;u)\ge\mathrm{vol}\cdot h_{\mathrm{Fl}}(u)-C\big(\Lambda_B\lVert u\rVert_1+\mathrm{spread}(u)\big),\qquad\Lambda_B=\log(B\,\mathrm{rd}_E)+\lvert\lambda_1\rvert,
+  B(u,g)=4\,|\Phi_H|(p+q)^2
+    \Bigl(1+\frac{\max_{\tau,i}|u_{\tau i}|}{g}\Bigr),\qquad
+  \lVert u\rVert_1=\sum_{\tau,i}|u_{\tau i}|,
 \]
-with an absolute constant $C$.
+\[
+  \operatorname{spread}(u)=\sum_{\tau}
+    \Bigl(\max_i u_{\tau i}-\min_i u_{\tau i}\Bigr).
+\]
+Say that $(u,g)$ has a gap when every $u_\tau$ is strictly decreasing and
+\[
+  g\leq |u_{\tau a}-u_{\tau b}|
+  \qquad\text{for all $\tau$ and all $a\ne b$ with $p\leq a$}.
+\]
+Also put
+\[
+  \Lambda_{B(u,g)}=\log\bigl(B(u,g)\,\operatorname{rd}_E\bigr)
+      +|\lambda_1|,
+  \qquad
+  \operatorname{err}(u,g)=\Lambda_{B(u,g)}\lVert u\rVert_1
+      +q\,\operatorname{spread}(u).
+\]
+There is an absolute constant $C\geq0$ with the following property.  For
+every admissible host, every chain datum satisfying its laws with $m^2\leq k$,
+every $1\leq j<m$, and every good deep cover at level $j$ whose level has at
+most fifteen prime factors, and for every pair $(u,g)$ with a gap, there are
+auxiliary real numbers $\operatorname{sl}_Z$, indexed by the components of
+the cover, such that
+\[
+  \operatorname{sl}_Z\leq \operatorname{sl}^{\,B(u,g)}_Z(u)
+  \qquad\text{for every component $Z$},
+\]
+and
+\[
+  \frac1{\#\operatorname{Comp}}
+    \sum_{Z\in\operatorname{Comp}}\operatorname{sl}_Z
+  \geq -C\,\operatorname{err}(u,g).
+\]
+Here $\operatorname{Comp}$ denotes the set of components and
+$\operatorname{sl}^{\,B}_Z(u)$ is the volume slope $\sigma_B(Z;u)$ defined in the covolume calculation, with cutoff $B$, weight $8ku$ and the common archimedean normalization $\xi_R(D)$.
 \end{hypothesis}
 
 The argument for Hypothesis~\ref{w3:W3:unif} uses a tower of models indexed by a prime cutoff $B$. For each $B$ one constructs a normal projective integral model $\mathcal Y_B$ of the toroidal compactification, smooth with good reduction away from the primes $\le B$ and a fixed bad set, with hermitian Hodge line bundles of every weight. On each model the arithmetic self-intersection $P_B(u)$ of the Hodge bundle of weight $u$ is a polynomial in $u$, and the arithmetic Hilbert--Samuel theorem of Gillet--Soul\'e, Zhang and Moriwaki, applied to the single model $\mathcal Y_B$, identifies the leading growth of the lattice of sections with $P_B(u)$. Zhang's inequality for successive minima forces $P_B$ to vanish on the Weyl walls up to $O(\log B/B)$, and an antisymmetry under the simple reflections puts it in the form $\mathrm{vol}\cdot(h_{\mathrm{Fl}}(u)-\alpha\,\mathrm{Sh}(u)-\beta\,\mathrm{Tot}(u))$ up to $O(\log B/B)$. An exact identity at the good primes relates $P_B$ and $P_{B'}$ prime by prime. The constants of the asymptotic steps depend on the model, hence on the level, but the exact identity allows $B\to\infty$, and in the limit these constants disappear. What remains is a point-height constant (a slope bound of Bost's type and the formula of Chowla and Selberg for $\mathbb Q(\sqrt{-d})$), the constant $4$ of a bound for cusp weights, the constant $4$ of the first Chern class, the constant $2$ of the tail over the primes above $B$, and the constant $60$ of a bound of Mertens type, none of which depends on the level. The published inputs are the arithmetic Hilbert--Samuel theorem for each fixed model, Zhang's theorem on successive minima, Hirzebruch--Mumford proportionality, and the existence of toroidal compactifications with their integral models. \notgiven{The construction of the tower, the exact identity at the good primes, and the limit $B\to\infty$ are not written out here, and Hypothesis~\ref{w3:W3:unif} is not proved here.} The uniformity in the level rests on the exactness of the identity at the good primes.

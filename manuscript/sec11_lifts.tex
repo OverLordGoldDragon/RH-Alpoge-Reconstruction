@@ -149,7 +149,15 @@ For $(c,L)\in C_j\times\cL_j$ and $(c',L')\in C_{j+1}\times\cL_{j+1}$ put $N=N_j
 \begin{equation}\label{r1:eq:coords}
 z_{\tau_{v,s},b,a}=u\,\varepsilon^{-1}\,X_{v,s,a,b}\qquad\text{after the frames }\varphi_{c',v}\text{ and }\varphi_{c,v},
 \end{equation}
-with $u$ and $\varepsilon$ as in Proposition~\ref{goodmodel} and Proposition~\ref{ltiso}, and with the coordinates at the elements of $\Phi$ outside the orbits set to zero. Precisely, for even $s$ the matrix $(z_{\tau_{v,s},b,a})_{b,a}$ is $\sigma^s\rho_v(\varphi_{c',v})\,Z\,\sigma^s\rho_v(\varphi_{c,v})^{-1}$ with $Z=u\varepsilon^{-1}(X_{v,s,a,b})_{b,a}$, and for odd $s$ it is $\big(\sigma^s\rho_v(\varphi_{c,v})\,Z^{\mathsf T}\,\sigma^s\rho_v(\varphi_{c',v})^{-1}\big)^{\mathsf T}$, which is the transport of structure by the frames on the conjugate component.
+with $u$ and $\varepsilon$ as in Proposition~\ref{goodmodel} and Proposition~\ref{ltiso}, and with the coordinates at the elements of $\Phi$ outside the orbits set to zero. Put $Z=u\varepsilon^{-1}(X_{v,s,a,b})_{b,a}$. In the two frames,
+\[
+ (z_{\tau_{v,s},b,a})_{b,a}=
+ \begin{cases}
+ \sigma^s\rho_v(\varphi_{c',v})\,Z\,\sigma^s\rho_v(\varphi_{c,v})^{-1}, & s\text{ even},\\
+ \big(\sigma^s\rho_v(\varphi_{c,v})\,Z^{\mathsf T}\,\sigma^s\rho_v(\varphi_{c',v})^{-1}\big)^{\mathsf T}, & s\text{ odd}.
+ \end{cases}
+\]
+The second formula uses the frames on the conjugate component.
 
 \begin{definition}\label{r1:def:kseries}
 The \emph{kernel series} of the pair is the power series
@@ -309,7 +317,11 @@ with $\tilde x\in\Lambda_X$ any lift of $x$; the summand does not depend on the 
 \[
 I_{\Lambda_i\to\Lambda_l}\mathcal S(\mathbf 1_{X_i})=\Big(\frac{[X_i:X_{il}]}{[X_l:X_{il}]}\Big)^{1/2}\mathcal S(\mathbf 1_{X_l})=\Big(\frac{\vol Y_v(N_i,N_i')}{\vol Y_v(N_l,N_l')}\Big)^{1/2}\mathcal S(\mathbf 1_{X_l}).
 \]
-By definition $\theta_{N,N'}=I_{(\mathrm{std},\mathrm{std})\to(N,N')}\theta_0$, and Lemma~\ref{r1:lem:pathsplit} applied to the triple $(\mathrm{std},(N_i,N_i'),(N_l,N_l'))$, which takes at most two values away from $w,\bar w$, gives $I_{\Lambda_i\to\Lambda_l}\theta_{N_i,N_i'}=\theta_{N_l,N_l'}$. Comparing, $k_l\vol(Y_v(N_l,N_l'))^{-1/2}=k_i\vol(Y_v(N_i,N_i'))^{-1/2}=:\kappa$. Hence $\vol(Y_v(N_i,N'_i))^{1/2}\theta_{N_i,N_i'}=\kappa\,\mathcal S(\mathbf 1_{X_i})$ for all $i$, and the first claim follows from the linearity of $\mathcal S$, since $\mathbf 1_{X_i}$ is the reduction of $\mathbf 1_{Y_v(N_i,N_i')}$.
+By definition
+\[
+\theta_{N,N'}=I_{(\mathrm{std},\mathrm{std})\to(N,N')}\theta_0.
+\]
+Lemma~\ref{r1:lem:pathsplit} applied to the triple $(\mathrm{std},(N_i,N_i'),(N_l,N_l'))$, which takes at most two values away from $w,\bar w$, gives $I_{\Lambda_i\to\Lambda_l}\theta_{N_i,N_i'}=\theta_{N_l,N_l'}$. Comparing, $k_l\vol(Y_v(N_l,N_l'))^{-1/2}=k_i\vol(Y_v(N_i,N_i'))^{-1/2}=:\kappa$. Hence $\vol(Y_v(N_i,N'_i))^{1/2}\theta_{N_i,N_i'}=\kappa\,\mathcal S(\mathbf 1_{X_i})$ for all $i$, and the first claim follows from the linearity of $\mathcal S$, since $\mathbf 1_{X_i}$ is the reduction of $\mathbf 1_{Y_v(N_i,N_i')}$.
 
 For the second claim, the lattices $A_c$, $B_c$ and $\Lambda$ of a pair agree at $w,\bar w$, and they agree among the pairs away from $w,\bar w$, because $S$ consists of primes not above $p$. By Proposition~\ref{r1:prop:fourier}, $\theta_{N_i,N_i'}[\Xi]$ is a finite combination of operators $\alpha(x)U_{-x}$ and $\alpha(y)U_y$ applied to $e(N_i,N_i')=\chi_F(N_i,N_i')\theta_{N_i,N_i'}$, with $x$ running over $A/(A\cap B)$ and $y$ over $B/(B\cap\Lambda)$, divided by $[\Lambda\cap A:\Lambda\cap A\cap B]$. These quotients only see the places of $S\cup\bar S$, so the representatives may be chosen in $\Lambda_-$ at $w,\bar w$, hence in every $\Lambda_i$, and the same representatives and the same index serve all $i$. So $\chi_F(N_i,N_i')^{-1}\theta_{N_i,N_i'}[\Xi]=T\theta_{N_i,N_i'}$ for one linear operator $T$, and the first claim applies.
 \end{proof}
@@ -333,6 +345,99 @@ For every orbit $v$ and level $j<m$ there are $a_v,a'_v\in\mathcal O^\times$ suc
 \]
 where $\phi$ is the frame factor $\mu(N,\mathrm{fr})/\mu(N',\mathrm{fr}')$ of~\eqref{stepkernel} times its determinant twists, and the unit $u$ is $a_v^{\len L_v-\len L_{2,v}}a_v'^{\,\len L'_v-\len L'_{2,v}}$ divided by the corresponding ratio of the factors $\chi_F$ of Lemma~\ref{r1:lem:chiunit}. Equivalently, the scalar $s_j$ of Definition~\ref{r1:def:kseries} satisfies $s_j(c,L;c',L')/s_j(c,L_2;c',L_2')=a_v^{\len L_v-\len L_{2,v}}a_v'^{\,\len L'_v-\len L'_{2,v}}$.
 \end{hypothesis}
+
+We use the notation of Subsection~\ref{r1:sec:R1data}. Let $\mathbb A_{E,f}$ be the finite adeles of $E$, and let
+\[
+U^1=\{x\in\mathbb A_{E,f}^\times:\ x\bar x=1\},
+\]
+where the bar is the action of complex conjugation of $E$ on $\mathbb A_{E,f}$. The group $E^1=\{z\in E^\times:z\bar z=1\}$ embeds diagonally in $U^1$. For a finite place $y$ of $E$ we write $\ord_y$ for its normalized valuation, extended to $\mathbb A_{E,f}^\times$ through the component at $y$. For $x\in U^1$ the fractional ideal $(x)=\prod_y\mathfrak P_y^{\ord_y(x)}$ has norm one. We write $\ord_p$ for the valuation of $\mathbb C_p$ with $\ord_p(p)=1$.
+
+\begin{definition}[step characters and the frame factor]\label{a8:def:frame}
+Let $0\le j<m$.
+\begin{enumerate}
+\item[(i)] A \emph{step character} of level $j+1$ is a continuous homomorphism $\mu_{j+1}\colon U^1\to\mathbb C^\times$ with algebraic values and the following two properties. First, $\mu_{j+1}(\kappa)=1$ for every orbit $v$ and every $\kappa\in U^1$ that is a unit at $w$ and at $\bar w$ and equals $1$ at every other finite place. Second, there are integers $\varepsilon_\tau$, $\tau\in\Phi$, and an integer $c_j$ such that
+\begin{equation}\label{a8:eq:inftype}
+\mu_{j+1}(z)=\prod_{\tau\in\Phi}\tau(z)^{\varepsilon_\tau}\quad(z\in E^1),\qquad w_{j+1}(v,s)=\varepsilon_{\tau_{v,s}}-c_j
+\end{equation}
+for every orbit $v$ and every position $s$ of $v$.
+\item[(ii)] Assume that every frame $\varphi_{c,v}$ of Definition~\ref{r1:def:chain} has $\ord\det\varphi_{c,v}=0$. For each component $c\in C_j$ fix an element $g_c$ of the unitary group of $h_{N_j}$ over $\mathbb A_{E,f}$, and for each orbit $v$ and each $W_v$-lattice $L_v\subset Q_v^{N_j}$ an element $h_{c,v}(L_v)$ of that group which is trivial at every finite place of $E^+$ other than $v$, such that
+\[
+N_j(c,L)=g_c\prod_vh_{c,v}(L_v)\cdot\mathcal O_E^{N_j}.
+\]
+Such elements exist because the unitary group at a split place $v$ is $\GL_{N_j}(E_w)$, which acts transitively on the $W_v$-lattices of $E_w^{N_j}$. The \emph{determinant idele} of $(c,L)$ is $d_j(c,L)=\det g_c\prod_v\det h_{c,v}(L_v)\in U^1$.
+\item[(iii)] With $a_j=\lfloor j(t+1)/2\rfloor$, $N=N_j(c,L)$ and $N'=N_{j+1}(c',L')$, the scalar normalization of the step kernel \eqref{stepkernel} is
+\[
+s_j(c,L;c',L')=p^{\sum_v\mu_v(j+1)(\len L'_v-\len L_v)}\,\iota\Big(\frac{\mu_{j+1}\big(d_{j+1}(c',L')\big)}{\mu_{j+1}\big(d_j(c,L)\big)}\,\chi(\mathfrak d_N)^{-a_j}\,\chi(\mathfrak d_{N'})^{a_{j+1}}\Big).
+\]
+The frame factor of \eqref{stepkernel} is $\mu(N,\mathrm{fr})=\mu_{j+1}(d_j(c,L))^{-1}$, and the determinant twists are the two powers of $\chi$.
+\end{enumerate}
+\end{definition}
+
+The ideal $\mathfrak d_N$ of Section~\ref{sec:kernels} is the ideal $(d_j(c,L))$, because locally at every finite place the matrix $g_c\prod_vh_{c,v}(L_v)$ maps the standard lattice onto $N$. In particular $\mathfrak d_N$ has norm one.
+
+\begin{lemma}\label{a8:lem:unif}
+Let $v$ be an orbit. The idele $\pi_v$ with component $p$ at $w$, component $p^{-1}$ at $\bar w$ and component $1$ at every other finite place lies in $U^1$, and $(\pi_v)=\mathfrak P_w\mathfrak P_{\bar w}^{-1}$.
+\end{lemma}
+
+\begin{proof}
+Complex conjugation exchanges the components at $w$ and $\bar w$, and $p$ is rational, so the component of $\pi_v\bar\pi_v$ at $w$ is $p\cdot p^{-1}=1$, and the same holds at $\bar w$. The place $w$ is unramified over $p$, so $\ord_w(p)=1$.
+\end{proof}
+
+\begin{lemma}\label{a8:lem:valmu}
+Let $\mu_{j+1}$ be a step character of level $j+1$ and $v$ an orbit. Then $\ord_p\iota\mu_{j+1}(\pi_v)=\mu_v(j+1)$.
+\end{lemma}
+
+\begin{proof}
+Let $h$ be the class number of $E$ and $\beta\in E^\times$ a generator of $(\mathfrak P_w\mathfrak P_{\bar w}^{-1})^h$. Then $\bar\beta$ generates $(\mathfrak P_{\bar w}\mathfrak P_w^{-1})^h$, so $z=\beta/\bar\beta$ lies in $E^1$ and $z\mathcal O_E=(\mathfrak P_w\mathfrak P_{\bar w}^{-1})^{2h}$. By Lemma~\ref{a8:lem:unif} the idele $k=\pi_v^{2h}z^{-1}$ lies in $U^1$ and is a unit at every finite place. A continuous homomorphism from the compact totally disconnected group $U^1\cap\prod_y\mathcal O_y^\times$ to $\mathbb C^\times$ has open kernel, hence finite image, so $\mu_{j+1}(k)$ is a root of unity and $\ord_p\iota\mu_{j+1}(k)=0$. Therefore
+\[
+2h\,\ord_p\iota\mu_{j+1}(\pi_v)=\ord_p\iota\mu_{j+1}(z)=\sum_{\tau\in\Phi}\varepsilon_\tau\,\ord_p\iota\tau(z)
+\]
+by \eqref{a8:eq:inftype}. By \eqref{r1:eq:pos}, $\iota\tau_{v,s}(z)=\sigma^s\rho_v(z)$ for even $s$ and $\iota\tau_{v,s}(z)=\sigma^s\rho_v(\bar z)$ for odd $s$. The field $Q_v=E_w$ is unramified over $\mathbb Q_p$ and $\sigma$ preserves valuations, so $\ord_p\iota\tau_{v,s}(z)$ equals $\ord_w(z)=2h$ for even $s$ and $\ord_w(\bar z)=\ord_{\bar w}(z)=-2h$ for odd $s$. Every $\tau\in\Phi$ satisfies $\iota\tau|_K=\iota|_K$. The embeddings of $E$ into $\mathbb C_p$ that induce $w$ are the maps $\sigma^s\rho_v$, and those that induce $\bar w$ are the maps $x\mapsto\sigma^s\rho_v(\bar x)$, for $s\in\mathbb Z/n'_v$. Their restrictions to $K$ are $\sigma^s\circ\iota|_K$ and $\sigma^{s+1}\circ\iota|_K$, so an embedding $\iota\tau$ with $\tau\in\Phi$ that induces $w$ or $\bar w$ is $\iota\tau_{v,s}$ for some position $s$. Every other $\tau\in\Phi$ induces a place of $E$ above $p$ different from $w$ and $\bar w$, at which $z$ is a unit, so $\ord_p\iota\tau(z)=0$. The orbit $v$ has $\nu_v$ even and $\nu_v$ odd positions, and \eqref{a8:eq:inftype} gives
+\[
+\sum_{\tau\in\Phi}\varepsilon_\tau\,\ord_p\iota\tau(z)=2h\Big(\sum_{s\ \mathrm{even}}\big(w_{j+1}(v,s)+c_j\big)-\sum_{s\ \mathrm{odd}}\big(w_{j+1}(v,s)+c_j\big)\Big)=2h\,\mu_v(j+1).
+\]
+Dividing by $2h$ gives the claim.
+\end{proof}
+
+\begin{lemma}\label{a8:lem:det}
+Let $(c,L)$ and $(c,L_2)$ be lattice tuples of level $j$ that agree at every orbit other than $v$. Then
+\[
+d_j(c,L)=d_j(c,L_2)\,\pi_v^{\len L_{2,v}-\len L_v}\,\kappa
+\]
+with $\kappa\in U^1$ a unit at $w$ and $\bar w$ and equal to $1$ at every other finite place.
+\end{lemma}
+
+\begin{proof}
+By Definition~\ref{a8:def:frame}(ii) the quotient $\kappa'=d_j(c,L)/d_j(c,L_2)=\det h_{c,v}(L_v)/\det h_{c,v}(L_{2,v})$ lies in $U^1$ and equals $1$ away from $w$ and $\bar w$. The component at $w$ of $g_c\,h_{c,v}(L_v)$ maps the standard lattice onto the completion of $N_j(c,L)$ at $w$, which is $\varphi_{c,v}(L_v)$ under $\rho_v$. Since $\det\varphi_{c,v}$ is a unit and $\len L_v=-\ord\det(\text{basis of }L_v)$, we get $\ord_w\det g_c+\ord_w\det h_{c,v}(L_v)=-\len L_v$, and the same with $L_2$. Subtracting, $\ord_w(\kappa')=\len L_{2,v}-\len L_v$. The idele $\kappa=\kappa'\pi_v^{\len L_v-\len L_{2,v}}$ lies in $U^1$, equals $1$ away from $w,\bar w$, and has $\ord_w(\kappa)=0$. From $\kappa\bar\kappa=1$ we get $\ord_{\bar w}(\kappa)=-\ord_w(\kappa)=0$.
+\end{proof}
+
+\begin{proposition}[(N1)]\label{a8:prop:N1}
+Let $s_j$ be as in Definition~\ref{a8:def:frame}. For every orbit $v$ and level $j<m$ put
+\[
+a_v=p^{-\mu_v(j+1)}\,\iota\mu_{j+1}(\pi_v)\,\iota\chi\big((\pi_v)\big)^{a_j},\qquad a'_v=p^{\mu_v(j+1)}\,\iota\mu_{j+1}(\pi_v)^{-1}\,\iota\chi\big((\pi_v)\big)^{-a_{j+1}}.
+\]
+Then $a_v$ and $a'_v$ are units of $\mathcal O_{\mathbb C_p}$, and for all pairs $(c,L;c',L')$ and $(c,L_2;c',L'_2)$ that differ only at $v$
+\[
+\frac{s_j(c,L;c',L')}{s_j(c,L_2;c',L'_2)}=a_v^{\len L_v-\len L_{2,v}}\,a_v'^{\,\len L'_v-\len L'_{2,v}} .
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{a8:lem:valmu} gives $\ord_p\big(p^{\mp\mu_v(j+1)}\iota\mu_{j+1}(\pi_v)^{\pm1}\big)=0$. The ideal $(\pi_v)$ is the inverse of $\mathfrak P_{\bar w}\mathfrak P_w^{-1}$, so $\iota\chi((\pi_v))$ is a unit by Lemma~\ref{r1:lem:chiunit}. Hence $a_v$ and $a'_v$ are units.
+
+Put $\ell=\len L_v$, $\ell_2=\len L_{2,v}$, $\ell'=\len L'_v$ and $\ell'_2=\len L'_{2,v}$. By Lemma~\ref{a8:lem:det} at levels $j$ and $j+1$,
+\[
+d_j(c,L)=d_j(c,L_2)\,\pi_v^{\ell_2-\ell}\,\kappa,\qquad d_{j+1}(c',L')=d_{j+1}(c',L'_2)\,\pi_v^{\ell'_2-\ell'}\,\kappa',
+\]
+and $\mu_{j+1}(\kappa)=\mu_{j+1}(\kappa')=1$ by Definition~\ref{a8:def:frame}(i). Since $\mathfrak d_N=(d_j(c,L))$ and $\chi$ is multiplicative on ideals of norm one, $\chi(\mathfrak d_N)=\chi(\mathfrak d_{N_2})\,\chi((\pi_v))^{\ell_2-\ell}$, where $N_2=N_j(c,L_2)$, and in the same way at level $j+1$. The factors of $s_j$ at the orbits other than $v$ are the same for the two pairs. Collecting the factors,
+\[
+\frac{s_j(c,L;c',L')}{s_j(c,L_2;c',L'_2)}=p^{\mu_v(j+1)\left((\ell'-\ell'_2)-(\ell-\ell_2)\right)}\,\iota\mu_{j+1}(\pi_v)^{(\ell'_2-\ell')-(\ell_2-\ell)}\,\iota\chi\big((\pi_v)\big)^{-a_j(\ell_2-\ell)+a_{j+1}(\ell'_2-\ell')},
+\]
+which is $(a'_v)^{-(\ell'_2-\ell')}\,a_v^{-(\ell_2-\ell)}=a_v^{\ell-\ell_2}\,a_v'^{\,\ell'-\ell'_2}$.
+\end{proof}
+
+For the characters of the chain this calculation requires the unit and infinity-type conditions of Definition~\ref{a8:def:frame}, frames of unit determinant, and a coefficient field containing $\iota\mu_{j+1}(\pi_v)$ and $\iota\chi((\pi_v))$. Under these conditions the two scalars belong to its valuation ring and have valuation zero.
+
 
 \begin{proposition}[the form (S3)]\label{r1:prop:S3}
 Assume (N1). For every orbit $v$, level $j<m$ and components $c,c'$, there is a $\mathbb Z$-linear map $f\mapsto\Xi_v(f)$ from integer-valued locally constant compactly supported functions on $M_{N_{j+1}\times N_j}(Q_v)$ to power series in the variables $X$, depending only on $c,c'$ and the components of the tuples away from $v$, such that
