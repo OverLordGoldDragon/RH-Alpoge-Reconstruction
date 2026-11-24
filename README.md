@@ -1,6 +1,8 @@
 # Human-readable reconstruction of the Alpöge/Claude RH argument
 
-The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude. The current manuscript states precisely each internal step that still lacks a conventional proof and each published input whose exact form still needs verification (see [Current status](#current-status)). I am actively working to complete those proofs and to compress the manuscript so that it reads more clearly. My ultimate hope is that this makes the process of human verification easier for the community.
+The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude.
+
+I wrote this so that mathematicians can read the argument from beginning to end and review it as they would any other paper, without having to consult Lean. Where a proof is missing, I state the hypothesis where it enters. I am still working to fill those gaps and shorten the argument. My hope is to make it easier for others to check the mathematics for themselves.
 
 **[Read the manuscript](manuscript/main.pdf)** · 287 pages · revised 24 November 2026.
 
@@ -10,7 +12,7 @@ Section 14 gives the volume and flag estimates, the decay away from the identity
 
 That last bound (K1) is where I see the clearest opportunity to shorten the reconstruction. The archive takes 21 steps. In Section 17.4.3 I bound the number of generators and their orders separately. Together the two estimates give the required bound, even at the small primes. This proof still needs an independent human check and has no Lean certification. If it holds up, one substantial part of the argument admits a shorter proof. I would like to know how much more can be simplified in the same spirit.
 
-The arguments are written for a reader working from the paper and its references. [Section 18.7](manuscript/main.pdf#page=281) identifies the hypotheses still needed for the final deduction and the published results whose precise application needs checking.
+[Section 18.7](manuscript/main.pdf#page=281) identifies the hypotheses still needed for the final deduction and the published results whose precise application needs checking.
 
 ## The argument and its reconstruction
 
