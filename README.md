@@ -1,8 +1,6 @@
 # Human-readable reconstruction of the Alpöge/Claude RH argument
 
-The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude.
-
-I wrote this so that mathematicians can read the argument from beginning to end and review it as they would any other paper, without having to consult Lean. Where a proof is missing, I state the hypothesis where it enters. I am still working to fill those gaps and shorten the argument. My hope is to make it easier for others to check the mathematics for themselves.
+The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude. The current manuscript states precisely each internal step that still lacks a conventional proof and each published input whose exact form still needs verification (see [Current status](#current-status)). I am actively working to complete those proofs and to compress the manuscript so that it reads more clearly. My ultimate hope is that this makes the process of human verification easier for the community.
 
 **[Read the manuscript](manuscript/main.pdf)** · 287 pages · revised 24 November 2026.
 
@@ -10,9 +8,9 @@ I wrote this so that mathematicians can read the argument from beginning to end 
 
 Section 14 gives the volume and flag estimates, the decay away from the identity and the count of near orbits. Section 17 constructs the classical automorphic points from base change and gives a proposed uniform bound for the order of the second Galois cohomology group.
 
-That last bound (K1) is where I see the clearest opportunity to shorten the reconstruction. The archive takes 21 steps. In Section 17.4.3 I bound the number of generators and their orders separately. Together the two estimates give the required bound, even at the small primes. This proof still needs an independent human check and has no Lean certification. If it holds up, one substantial part of the argument admits a shorter proof. I would like to know how much more can be simplified in the same spirit.
+I would especially welcome a check of §17.4.3. Here we depart from the formal proof and propose a shorter argument for the same cohomological bound (K1). The archive takes 21 steps. We bound the number of generators and their orders separately. The question for a reader is whether these estimates give the required uniform bound even at the small primes. This argument has no Lean certification. If it holds up, I would like to know how much more of the proof we can simplify.
 
-[Section 18.7](manuscript/main.pdf#page=281) identifies the hypotheses still needed for the final deduction and the published results whose precise application needs checking.
+Mathematicians can now read the argument from beginning to end and review it as they would any other paper, without consulting Lean. In [Section 18.7](manuscript/main.pdf#page=281) I list the steps that still need proofs and the places where I still need to check that a published theorem applies.
 
 ## The argument and its reconstruction
 
