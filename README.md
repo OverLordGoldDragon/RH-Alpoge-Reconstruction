@@ -1,6 +1,6 @@
 # Human-readable reconstruction of the Alpöge/Claude RH argument
 
-The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude. The current manuscript states precisely each internal step that still lacks a conventional proof and each published input whose exact form still needs verification (see [Current status](#current-status)). I am actively working to complete those proofs and to compress the manuscript so that it reads more clearly. My ultimate hope is that this makes the process of human verification easier for the community.
+The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude. Mathematicians can now read the manuscript from beginning to end and review it as they would any other paper, without consulting Lean. My next goal is to shorten the proof and make it easier to follow.
 
 **[Read the manuscript](manuscript/main.pdf)** · 287 pages · revised 24 November 2026.
 
