@@ -1,7 +1,7 @@
 \begin{abstract}
 On November 20, 2026, Levent Alp\"oge announced a proof of the Riemann hypothesis, found in collaboration with Claude and released as a Lean development. The Lean and Mathlib communities subsequently certified the formal statement and proof. This manuscript reconstructs the argument in conventional mathematics.
 
-To exclude zeros to the right of the critical line, it suffices to bound the error in certain weighted prime sums from above by $O_\varepsilon(X^{1/2+\varepsilon})$ on suitable intervals. In Stepanov's method an auxiliary function vanishes to high order at the rational points of a curve over a finite field. Over a number field, each theta lift contributes divisibility at inert primes. For a sum of length $X$, a chain of about $\sqrt X$ lifts plays the role of the order of vanishing.
+Stepanov bounds the number of rational points on a curve by making each point count many times among the zeros of a function of bounded pole degree. Alp\"oge applies the same principle to primes. Each theta lift contributes a power of every inert prime under consideration. The logarithm of the resulting divisibility gives a weighted sum of primes, which a slope inequality bounds from above. Chaining about $\sqrt X$ lifts balances the errors for sums of length $X$ and yields the one-sided square-root estimate needed to exclude zeros to the right of the critical line.
 
 The reconstruction is not yet complete. Section~\ref{sec:frontier} states the remaining base-change, local realization, counting and cohomological estimates, together with the hypotheses still used in the paper. The goal is a human-readable proof that can be checked independently of the Lean development.
 \end{abstract}
