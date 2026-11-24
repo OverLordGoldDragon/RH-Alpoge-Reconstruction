@@ -6,20 +6,20 @@ The purpose of this repository is to provide a human-readable proof of the Riema
 
 ## Current status
 
-**24 November 2026.** The revision gives the finite-group arguments for the level idempotents in Section 14, distinguishes finiteness from the effective cohomology bound in Section 17, and derives the window needed in Section 18 from the stated Selmer hypothesis.
+**24 November 2026.** Section 14 now gives the finite-group arguments for the level idempotents. Section 17 proves that the second Galois cohomology group in the argument is finite. Its order still needs a uniform bound. Section 18 derives the required interval of scales from the stated Selmer hypothesis.
 
-The current Kimi wave concerns six open assertions in Section 19.1.
+I am working on six steps in the proof. Section 19.1 gives their precise statements.
 
-| | Assertion under investigation |
+| Step | What remains to prove |
 | --- | --- |
-| N1 | Establish unitary base change with one choice of constituents satisfying the local conditions at every place. |
-| N2 | Construct the classical automorphic point and its Galois representation on each required isotypic component, using N1. |
-| C1 | Prove the compactly supported Siegel mean with the required measures and deduce the volume and flag bounds. |
-| C2 | Prove the discrete-series decay estimates and deduce the far-orbit and deep-kernel bounds. |
-| C3 | Bound the near orbits by filtration and combine the estimates with C1 and C2. |
-| K1 | Bound the order of the second Galois cohomology group uniformly in the twist, field degree and discriminant. |
+| Base change (N1) | Construct one unitary base change whose constituents satisfy the local conditions at every place. |
+| Classical points (N2) | Use that base change to construct a classical automorphic point and its Galois representation on each required isotypic component. |
+| Volumes and flags (C1) | Prove the compactly supported Siegel mean formula with the measures used in the multiplicity estimate, then deduce the volume and flag bounds. |
+| Decay (C2) | Prove the discrete-series decay estimates needed to bound the far orbits and the kernel at depth. |
+| Near orbits (C3) | Count the near orbits by filtration and combine the count with the flag and decay estimates. |
+| Effective finiteness (K1) | Bound the order of the cohomology group in Section 17 uniformly in the twist, field degree and discriminant. |
 
-Section 19.2 records the other hypotheses still used in the manuscript. I will continue tracing these steps through the archive and checking the published inputs until the argument can be read and verified in full.
+Section 19.2 lists the other hypotheses the manuscript still uses. I will keep tracing each open step through the Lean archive and checking the cited theorems until a reader can verify the whole argument from the paper and its references.
 
 ## The argument and its reconstruction
 
@@ -33,10 +33,10 @@ I began at the Lean declaration `riemannHypothesis` and worked backwards through
 
 | Material | Where to find it |
 | --- | --- |
-| Manuscript and LaTeX source | [Current manuscript](manuscript/) · [Earlier 66-page manuscript](RH_Route_Notes.pdf) and [source](RH_Route_Notes.tex) |
+| Manuscript and LaTeX source | [PDF](manuscript/main.pdf) and [source](manuscript/) · [Earlier 66-page manuscript](RH_Route_Notes.pdf) and [source](RH_Route_Notes.tex) |
 | Structure of the argument | [Proof dependency map](PROOF_DEPENDENCY_MAP.md) · [Published theorems](EXTERNAL_THEOREMS.md) |
 | Reconstruction history | [Dated status reports](STATUS.md) · [21 November reconstruction](RECONSTRUCTION_STATUS.md) |
-| Verification | [Archive version and replay instructions](SOURCE_MANIFEST.md) · [Audit reports](audit/README.md) |
+| Verification | [Archive version and instructions for checking the Lean proof](SOURCE_MANIFEST.md) · [Audit reports](audit/README.md) |
 | Citation and reuse | [Citation](CITATION.cff) · [License](LICENSE) |
 
 ## How to help
