@@ -1,6 +1,8 @@
 # Human-readable reconstruction of the Alpöge/Claude RH argument
 
-The goal of this repository is a proof of the Riemann hypothesis that a mathematician can read and check from the paper and its cited literature. The argument is due to Levent Alpöge and Claude. I am reconstructing it from their Lean development, including its extension to Dirichlet $L$-functions.
+The purpose of this repository is to provide a human-readable proof of the Riemann hypothesis. Given how quickly this has all developed, I cannot guarantee that everything in this repository is correct. All priority of the results belongs to Levent and Claude. The current manuscript states precisely each internal step that still lacks a conventional proof and each published input whose exact form still needs verification (see [Current status](#current-status)). I am actively working to complete those proofs and to compress the manuscript so that it reads more clearly. My ultimate hope is that this makes the process of human verification easier for the community.
+
+This repository contains a reconstruction, in conventional mathematical language, of the argument in the Lean archive that Levent Alpöge released on 20 November 2026 together with a four-page note ([Alpöge, *Remark*](https://alpo.ge/remark.pdf)). In that note, Alpöge states his belief that he has, working with Claude, discovered a proof of the Riemann hypothesis, and that the method also gives the generalized Riemann hypothesis for Dirichlet $L$-functions. On 21 November 2026, the Lean and Mathlib communities published a joint statement, endorsed by the Lean FRO and the Mathlib Initiative, certifying that both the statement and the proof of the Riemann hypothesis in Alpöge's Lean library are correct ([Lean community blog, *Lean verification of the Riemann Hypothesis*](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)).
 
 **[Read the manuscript](manuscript/main.pdf)** · 268 pages · revised 24 November 2026. The conventional proof remains conditional. Section 19 begins on page 262.
 
@@ -20,8 +22,6 @@ The current Kimi wave concerns six open assertions in Section 19.1.
 | K1 | Bound the order of the second Galois cohomology group uniformly in the twist, field degree and discriminant. |
 
 Section 19.2 records the other hypotheses still used in the manuscript. I will continue tracing these steps through the archive and checking the published inputs until the argument can be read and verified in full.
-
-This repository contains a reconstruction, in conventional mathematical language, of the argument in the Lean archive that Levent Alpöge released on 20 November 2026 together with a four-page note ([Alpöge, *Remark*](https://alpo.ge/remark.pdf)). In that note, Alpöge states his belief that he has, working with Claude, discovered a proof of the Riemann hypothesis, and that the method also gives the generalized Riemann hypothesis for Dirichlet $L$-functions. On 21 November 2026, the Lean and Mathlib communities published a joint statement, endorsed by the Lean FRO and the Mathlib Initiative, certifying that both the statement and the proof of the Riemann hypothesis in Alpöge's Lean library are correct ([Lean community blog, *Lean verification of the Riemann Hypothesis*](https://leanprover-community.github.io/blog/posts/riemann-hypothesis/)).
 
 ## What this repository contains
 
@@ -139,6 +139,23 @@ Please report findings as GitHub issues, naming the manuscript section, the tabl
 > **Status, 22 November 2026.** The internal reconstruction phase is complete. A final dependency audit starting from the Lean theorem `riemannHypothesis` finds no unresolved internal mathematical residuals on the live proof route. The exact-edge live subgraph contains 766,788 declarations, including 622,409 theorems. Every live internal mathematical dependency has been reconstructed at the human-proof level, assigned to an already reconstructed package, or transferred to an explicit external theorem boundary. The remaining work is source-fidelity verification of those external inputs and reconciliation of the audit into the human-readable manuscript. Details are in [`STATUS.md`](STATUS.md). The certification report and its tables are in [`audit/final_certification/`](audit/final_certification/), and every report it cites is in [`audit/`](audit/).
 >
 > This repository does not claim an independent proof of RH by the reconstruction author. The proof being reconstructed is Alpöge's formally verified proof. The manuscript posted here predates the final audit and has not yet been reconciled with it.
+
+### Manuscript status recorded on 23 November 2026
+
+Status as of 23 November 2026. [`STATUS.md`](STATUS.md) gives the details.
+
+The manuscript [`manuscript/main.pdf`](manuscript/main.pdf) proves the Riemann hypothesis from the published theorems it cites and from a finite list of internal statements that it states precisely and does not yet prove. Each such statement appears as a numbered hypothesis at its point of use, and Section 19 collects them with their dependencies. The open internal statements are the following.
+
+- The residual engines of the nondegeneracy of Hecke operators that controls the loss (Section 12).
+- The normalization and odd-transfer statements that make the theta lifts a chain datum (Section 11).
+- The automorphic inputs for Bessel Poincaré series, namely the kernel expansion, the multiplicity formula, the main-row and loop-row estimates, and the seesaw relation in the theta tower behind the Bessel identity (Section 14).
+- The covolume bound with a constant uniform in the level of deep covers, and a few norm and multiplicity statements in the height computation (Section 15).
+- The bound for Tate–Shafarevich groups on windows of scales and the congruence bound at the twisted places (Section 17).
+- The check that Sections 11 to 17 give the conditions on the chain used in the proof of Theorem A (Section 18).
+
+One finding concerns the strength of these statements. The bound for Tate–Shafarevich groups on windows implies a bound in the direction of Vandiver's conjecture that is stronger than the published bounds of Soulé (1999) and of de la Torre Durán (2026). The Lean development derives it from an automorphy statement for residually reducible Galois representations that lies outside the hypotheses of the published automorphy lifting theorems for residually reducible representations. The manuscript states this step as a hypothesis and does not claim it.
+
+No statement on the route has failed. The Lean development proves each of the statements above, and the Lean and Mathlib communities certified that development on 21 November 2026. The remaining work is to write their proofs as conventional mathematics, to finish the comparison of the cited published theorems with their sources, and to compress the exposition.
 
 ## Record of 22 November 2026
 
