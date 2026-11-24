@@ -2,7 +2,7 @@
 
 > **Historical record.** This file records the state of 21 November 2026. The final internal audit of 22 November 2026 closed the internal packages listed here, and [`STATUS.md`](STATUS.md) supersedes this file.
 
-Status as of 21 November 2026. This document is the authoritative public statement of the reconstruction state. It follows the post-closure synthesis in [`audit/Post_Closure_Synthesis.pdf`](audit/Post_Closure_Synthesis.pdf) and its companion files [`audit/Post_Closure_Internal_Residuals.md`](audit/Post_Closure_Internal_Residuals.md) and [`audit/Post_Closure_Verification_Boundary.md`](audit/Post_Closure_Verification_Boundary.md), and it agrees with Sections 1.3 and 11 of [`RH_Route_Notes.pdf`](RH_Route_Notes.pdf). If this file and those sources disagree, the sources govern and this file should be corrected.
+Status as of 21 November 2026. This document is the authoritative public statement of the reconstruction state. It follows the post-closure synthesis in [`audit/Post_Closure_Synthesis.pdf`](../audit/Post_Closure_Synthesis.pdf) and its companion files [`audit/Post_Closure_Internal_Residuals.md`](../audit/Post_Closure_Internal_Residuals.md) and [`audit/Post_Closure_Verification_Boundary.md`](../audit/Post_Closure_Verification_Boundary.md), and it agrees with Sections 1.3 and 11 of [`RH_Route_Notes.pdf`](../archive/route-notes/RH_Route_Notes.pdf). If this file and those sources disagree, the sources govern and this file should be corrected.
 
 ## 1. Summary
 
@@ -46,7 +46,7 @@ The geometric core is **reconstructed** from the Lean text in ordinary mathemati
 
 ## 3. Remaining internal audit packages
 
-These are independent. A shared dependency is listed once, at the package that holds it. Lean names are given second, for locating the statements. File and line references for every item are in [`audit/Post_Closure_Internal_Residuals.md`](audit/Post_Closure_Internal_Residuals.md).
+These are independent. A shared dependency is listed once, at the package that holds it. Lean names are given second, for locating the statements. File and line references for every item are in [`audit/Post_Closure_Internal_Residuals.md`](../audit/Post_Closure_Internal_Residuals.md).
 
 ### PC-1. Local finite-flat / integral Hodge–Tate package at a good prime
 

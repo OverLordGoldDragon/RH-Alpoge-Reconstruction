@@ -2,7 +2,7 @@
 
 ## 24 November 2026
 
-The [268-page manuscript](manuscript/main.pdf) remains conditional. Section 19.1 states the six assertions in the current Kimi wave. Section 19.2 records the other hypotheses used in the reconstruction. The [README](README.md#current-status) summarizes the current work.
+The [268-page manuscript](../manuscript/main.pdf) remains conditional. Section 19.1 states the six assertions in the current Kimi wave. Section 19.2 records the other hypotheses used in the reconstruction. The [README](../README.md#current-status) summarizes the current work.
 
 ## 23 November 2026, evening
 
@@ -18,7 +18,7 @@ I am leaving the earlier status material in place so that the chronology of the 
 
 ## 23 November 2026
 
-The current manuscript is [`manuscript/main.pdf`](manuscript/main.pdf), a 225-page working document. Reconciling the final dependency audit of 22 November with the manuscript clarified what the audit verdict below means. The audit closed the live Lean dependency graph at the level of dependency identification and mathematical packaging. Every live internal dependency had been located, assigned to a reconstructed component, or isolated behind an explicit boundary. The verdict `|R_internal| = 0` does **not** mean that every internal statement on that route has been written out with a complete conventional proof.
+The current manuscript is [`manuscript/main.pdf`](../manuscript/main.pdf), a 225-page working document. Reconciling the final dependency audit of 22 November with the manuscript clarified what the audit verdict below means. The audit closed the live Lean dependency graph at the level of dependency identification and mathematical packaging. Every live internal dependency had been located, assigned to a reconstructed component, or isolated behind an explicit boundary. The verdict `|R_internal| = 0` does **not** mean that every internal statement on that route has been written out with a complete conventional proof.
 
 The manuscript proves the Riemann hypothesis from the published theorems it cites and from a finite list of internal statements that it states precisely, as numbered hypotheses at their points of use, and does not yet prove. Section 19 of the manuscript collects these statements with their dependencies and gives the source-verification status of the cited published theorems. The manuscript therefore does **not yet** constitute a proof of the Riemann hypothesis independent of the Lean development.
 
@@ -37,7 +37,7 @@ The proof being reconstructed is Alpöge's formally verified proof. This reposit
 The internal reconstruction phase is complete. The next phases are
 
 1. the source-fidelity check of the external theorem boundary,
-2. the reconciliation of the audit into the manuscript [`RH_Route_Notes.pdf`](RH_Route_Notes.pdf), which predates the final audit,
+2. the reconciliation of the audit into the manuscript [`RH_Route_Notes.pdf`](../archive/route-notes/RH_Route_Notes.pdf), which predates the final audit,
 3. an independent line-by-line check of the resulting human proof.
 
 ## 2. Internal residual verdict
@@ -82,7 +82,7 @@ The final pass also found items that were under-owned or lay upstream of several
 The source-fidelity check of the external theorem boundary is not complete.
 
 - The largest external region identified by the final audit runs from `Row0b` to `galoisLocalGlobalStrong_recParameter`. It supplies the existence and local–global compatibility of Galois representations for regular algebraic polarized cuspidal representations over CM fields. The manuscript cites Harris–Taylor, Shin, Chenevier–Harris and Caraiani for it. This region has not yet had a detailed source-fidelity check.
-- The certification added two external rows, the Taylor–Wiles–Kisin patching region and the Néron–Ogg–Shafarevich criterion (used by `dvd_discr_torsionField`). The full list of external declarations is [`audit/final_certification/Global_External_Boundary.tsv`](audit/final_certification/Global_External_Boundary.tsv).
+- The certification added two external rows, the Taylor–Wiles–Kisin patching region and the Néron–Ogg–Shafarevich criterion (used by `dvd_discr_torsionField`). The full list of external declarations is [`audit/final_certification/Global_External_Boundary.tsv`](../audit/final_certification/Global_External_Boundary.tsv).
 - The rest of the boundary is listed in [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md) as of 21 November 2026. The source-fidelity audit since then has matched, corrected or reclassified part of it, and has not covered all of it.
 
 ## 6. Reconstruction, formal certification and human verification
@@ -97,6 +97,6 @@ These are three different things.
 
 ## 7. Documents
 
-- The manuscript [`RH_Route_Notes.pdf`](RH_Route_Notes.pdf) predates the final audit. Its Section 1.3 and Section 11 describe the state of 21 November 2026, when internal packages were still under audit.
-- The final certification is in [`audit/final_certification/`](audit/final_certification/). [`Global_Residual_Reconciliation.tsv`](audit/final_certification/Global_Residual_Reconciliation.tsv) names, for each former residual, the report that closed it. Those reports are in [`audit/closure_reports/`](audit/closure_reports/) and [`audit/pre_synthesis/`](audit/pre_synthesis/).
-- [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md), [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md), [`PROOF_DEPENDENCY_MAP.md`](PROOF_DEPENDENCY_MAP.md) and the files in [`audit/`](audit/) are kept as records of the reconstruction and its corrections. Where they differ from this file, this file is more recent.
+- The manuscript [`RH_Route_Notes.pdf`](../archive/route-notes/RH_Route_Notes.pdf) predates the final audit. Its Section 1.3 and Section 11 describe the state of 21 November 2026, when internal packages were still under audit.
+- The final certification is in [`audit/final_certification/`](../audit/final_certification/). [`Global_Residual_Reconciliation.tsv`](../audit/final_certification/Global_Residual_Reconciliation.tsv) names, for each former residual, the report that closed it. Those reports are in [`audit/closure_reports/`](../audit/closure_reports/) and [`audit/pre_synthesis/`](../audit/pre_synthesis/).
+- [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md), [`EXTERNAL_THEOREMS.md`](EXTERNAL_THEOREMS.md), [`PROOF_DEPENDENCY_MAP.md`](PROOF_DEPENDENCY_MAP.md) and the files in [`audit/`](../audit/) are kept as records of the reconstruction and its corrections. Where they differ from this file, this file is more recent.

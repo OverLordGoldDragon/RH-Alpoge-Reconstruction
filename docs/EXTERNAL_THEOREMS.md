@@ -2,7 +2,7 @@
 
 > **Note, 22 November 2026.** The comparison status below is that of 21 November 2026, before the source-fidelity audit began. That audit has since matched, corrected or reclassified part of this boundary, but not all of it. See [`STATUS.md`](STATUS.md), Section 5.
 
-This file lists the named published or classical theorems at which the reconstruction stops. It is drawn from [`audit/Post_Closure_Verification_Boundary.md`](audit/Post_Closure_Verification_Boundary.md), which is the authoritative and more detailed list. Internal theorems of the archive whose proofs are still unread are a separate list, in [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md). The two lists are disjoint.
+This file lists the named published or classical theorems at which the reconstruction stops. It is drawn from [`audit/Post_Closure_Verification_Boundary.md`](../audit/Post_Closure_Verification_Boundary.md), which is the authoritative and more detailed list. Internal theorems of the archive whose proofs are still unread are a separate list, in [`RECONSTRUCTION_STATUS.md`](RECONSTRUCTION_STATUS.md). The two lists are disjoint.
 
 **No fidelity check against the literature has yet been made for any entry.** Every entry still needs a comparison in both directions. The archive's statement must not be stronger than the published theorem, and the published hypotheses must hold where the archive applies it.
 
